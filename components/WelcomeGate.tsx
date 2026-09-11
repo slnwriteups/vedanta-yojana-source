@@ -83,11 +83,20 @@ export function WelcomeGate({
           <button
             type="button"
             onClick={begin}
-            className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-medium text-[var(--surface)] transition-opacity hover:opacity-90"
+            className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--surface)] transition-opacity hover:opacity-90"
           >
-            Jñānayātrām Pravartaya
+            Begin
           </button>
-          <p className="text-xs text-[var(--muted)]">Tap to enter the app</p>
+          {/*
+           * Matches mobile/components/WelcomeScreen.tsx: "Begin" is the
+           * button's own legible label (Sanskrit transliteration isn't
+           * immediately readable on first launch), and the original
+           * primary label, "Jñānayātrām Pravartaya", is kept as a caption
+           * underneath rather than removed, so the screen keeps its
+           * Sanskrit invocation without making the one interactive
+           * control on the screen ambiguous.
+           */}
+          <p className="text-xs text-[var(--muted)]">Jñānayātrām Pravartaya</p>
         </div>
       </div>
     </>
