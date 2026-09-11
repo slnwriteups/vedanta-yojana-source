@@ -21,23 +21,18 @@ function firstImageAsset(images: DivyaDesam["images"]): number | null {
   return null;
 }
 
-/** yyyymmdd as a plain integer, local device date -- a stable per-calendar-day seed for hashInt() below. */
-function dateSeed(date: Date): number {
-  return date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
+/** Whole calendar days since the Unix epoch, local device date -- a day counter that advances by exactly 1 each day. */
+function daysSinceEpoch(date: Date): number {
+  const utcMidnight = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  return Math.floor(utcMidnight / 86400000);
 }
 
 /**
  * A Wang/Murmur3-style integer finalizer: three multiply-xor-shift
- * rounds give strong avalanche even for near-identical inputs (two
- * consecutive calendar days, e.g. 20260827 vs 20260828, differ by a
- * single low bit) -- exactly the property a naive string hash (djb2 on
- * the date's own text) turned out NOT to have: tested directly, it
- * produced visible runs of nearby indices on nearby days (77,76,75,
- * 82,81,80,79,...), which read as "in order" rather than random. This
- * hash was verified over a 30-day sample to have no such run pattern.
- * Deterministic per calendar day (the same day always re-renders the
- * same temple, no flicker) -- Math.imul keeps every step in 32-bit
- * integer arithmetic, matching the reference Wang hash exactly.
+ * rounds give strong avalanche even for near-identical inputs. Used
+ * below to drive a seeded Fisher-Yates shuffle -- Math.imul keeps every
+ * step in 32-bit integer arithmetic, matching the reference Wang hash
+ * exactly.
  */
 function hashInt(x: number): number {
   x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
@@ -46,16 +41,36 @@ function hashInt(x: number): number {
   return x >>> 0;
 }
 
-function seededIndex(seed: number, length: number): number {
-  return hashInt(seed) % length;
+/** Fixed seed for the spotlight's shuffle order -- change only if a deliberately different rotation order is wanted. */
+const SPOTLIGHT_SHUFFLE_SEED = 0x5d1f4a;
+
+/**
+ * A fixed, deterministic shuffle of [0, length) via seeded Fisher-Yates.
+ * Walking this permutation one index per calendar day (see
+ * `daysSinceEpoch` above, indexed with `% length`) visits every record
+ * exactly once per length-day cycle before repeating -- so with ~107
+ * records, no temple repeats within any 7-day window, and none repeats
+ * until all 108 (counting the merged #36-37 record as two) have been
+ * shown, at which point the same shuffled cycle restarts.
+ */
+function seededShuffle(length: number, seed: number): number[] {
+  const indices = Array.from({ length }, (_, i) => i);
+  let state = seed;
+  for (let i = length - 1; i > 0; i--) {
+    state = hashInt(state);
+    const j = state % (i + 1);
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return indices;
 }
 
 /**
  * Home's full-width Divya Desam spotlight -- one record from the real
  * 107-record corpus (content-lib/loader.ts's loadDivyaDesams(), the
  * same dataset and traditional pilgrimage ordering the Divya Desams tab
- * itself uses), pseudo-randomly rotated by calendar day (seededIndex()
- * above) rather than walked in sequence, and pushing to the exact
+ * itself uses), rotated one-per-calendar-day through a fixed shuffled
+ * order (seededShuffle() above) rather than walked in sequence or
+ * picked independently at random each day, and pushing to the exact
  * detail route (/divya-desams/[slug]) the Divya Desams tab's own list
  * uses.
  */
@@ -76,7 +91,9 @@ export function DivyaDesamSpotlight() {
   if (sortedRecords.length === 0) return null;
 
   const numberLabels = divyaDesamNumberLabels(sortedRecords.map((r) => r.slug));
-  const index = seededIndex(dateSeed(new Date()), sortedRecords.length);
+  const shuffleOrder = seededShuffle(sortedRecords.length, SPOTLIGHT_SHUFFLE_SEED);
+  const cycleIndex = daysSinceEpoch(new Date()) % sortedRecords.length;
+  const index = shuffleOrder[cycleIndex];
   const record = localizeDivyaDesam(sortedRecords[index], language);
   const tint = sectionTint("divya-desams", theme.scheme);
   const image = firstImageAsset(record.images);
