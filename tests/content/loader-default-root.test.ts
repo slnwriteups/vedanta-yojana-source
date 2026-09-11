@@ -83,7 +83,10 @@ test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book",
   assert.ok(ramaBook);
   assert.equal(ramaBook?.title, "Sri Rama Charithram");
   const ramaChapters = loadChapters("sri-rama-charithram");
-  assert.equal(ramaChapters.length, 7);
+  // Split into 75 individual chapters (one per traditional sub-section
+  // within each of the 7 Kandas) rather than 7 Kanda-level entries --
+  // see content/library/sri-rama-charithram/book.json's chapterOrder.
+  assert.equal(ramaChapters.length, 75);
 
   const bhagavatamBook = loadBook("srimad-bhagavata-kathasagaram");
   assert.ok(bhagavatamBook);

@@ -157,22 +157,26 @@ test("14: chapter title is exact (re-confirms test 10 from the detail-page's own
   assert.equal(loaded?.title, stored.title);
 });
 
-test("15/16: chapter body and its paragraph structure are preserved -- the page passes the whole chapter through to LocalizedChapterBody, which renders localizeChapter()'s result straight through, unmodified", () => {
+test("15/16: chapter body and its paragraph structure are preserved -- the page passes the whole chapter through to LocalizedChapterBody, which renders localizeChapter()'s result through only the same well-tested, non-fabricating helper mobile also applies (stripLeadingDuplicateTitle), never an ad-hoc transformation", () => {
   // The detail page itself no longer renders chapter.body directly: since
   // the reader's language preference is only known client-side (static
   // export, no per-request server), localization moved into
   // LocalizedChapterBody.tsx (content-lib/i18n.ts's localizeChapter,
   // which returns the record completely untouched for English/no
-  // translation). The content-fidelity guarantee this test protects --
-  // no rewriting/trimming/case-changing of the stored body -- still
-  // holds, just checked at its new location.
+  // translation). displayBody additionally strips a leading line that
+  // exactly duplicates the chapter's own title (content-lib/
+  // text-format.ts's stripLeadingDuplicateTitle, exact-match only, has
+  // its own dedicated test coverage, and mirrors mobile's identical
+  // chapter-screen behavior) -- a deliberate, tested display transform,
+  // not the kind of ad-hoc mangling this test exists to catch.
   const pageSource = read("app/library/[book]/[chapter]/page.tsx");
   assert.ok(pageSource.includes("chapter={chapter}"), "expected the raw chapter record to be passed to LocalizedChapterBody");
 
   const bodySource = read("components/library/LocalizedChapterBody.tsx");
-  assert.ok(bodySource.includes("text={localized.body}"), "expected localizeChapter()'s body to be passed through verbatim");
+  assert.ok(bodySource.includes("stripLeadingDuplicateTitle(localized.body, localized.title)"), "expected only stripLeadingDuplicateTitle applied to localizeChapter()'s body");
+  assert.ok(bodySource.includes("text={displayBody}"), "expected the stripped-title body to be passed to LongFormSection");
   assert.ok(
-    !/localized\.body\.replace|localized\.body\.trim|localized\.body\.toLowerCase|localized\.body\.toUpperCase|chapter\.body\.replace|chapter\.body\.trim|chapter\.body\.toLowerCase|chapter\.body\.toUpperCase/.test(
+    !/localized\.body\.replace|localized\.body\.trim|localized\.body\.toLowerCase|localized\.body\.toUpperCase|chapter\.body\.replace|chapter\.body\.trim|chapter\.body\.toLowerCase|chapter\.body\.toUpperCase|displayBody\.replace|displayBody\.trim|displayBody\.toLowerCase|displayBody\.toUpperCase/.test(
       bodySource
     ),
     "found a transformation applied to the chapter body"

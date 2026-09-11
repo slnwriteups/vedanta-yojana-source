@@ -79,7 +79,7 @@ test("exactly 1 held-back unresolved record exists (Page150)", () => {
   assert.equal(unresolvedFiles.length, 1);
 });
 
-test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+8(sri-rama-charithram: 1 book.json + 7 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+70(jaya: 1 book.json + 69 chapters) = 289", () => {
+test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+70(jaya: 1 book.json + 69 chapters) = 357", () => {
   // Phase 6E added content/_provenance/ -- one small JSON file per Divya
   // Desam record that received a category-B text supplement and/or a
   // book-sourced image/shrine from "108 Divyadesam 2nd Edition.pdf" (101
@@ -129,9 +129,14 @@ test("no unexpected content records: total /content file count matches exactly 1
   // own size unchanged in this count): 293 -> 289. The book's status and
   // every remaining chapter's status also moved draft -> published at
   // the same time (see the "B:" status tests below), removing the
-  // now-inaccurate "Draft -- under review" badge.
+  // now-inaccurate "Draft -- under review" badge. Sri Rama Charithram's
+  // 7 Kanda-level chapters were then each split into their traditional
+  // internal sub-sections (75 total, one Chapter record per section
+  // instead of one per Kanda -- see content/library/sri-rama-charithram/
+  // book.json's chapterOrder), replacing the 7 chapter files with 75:
+  // 289 -> 357 (net +68, the book.json itself unchanged).
   const total = countFilesRecursive(path.join(REPO_ROOT, "content"));
-  assert.equal(total, 289);
+  assert.equal(total, 357);
 });
 
 function countFilesRecursive(dir: string): number {

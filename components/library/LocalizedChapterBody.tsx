@@ -6,6 +6,7 @@ import { localizeChapter } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useReadingPreferences } from "@/lib/reading-preferences-context";
 import { useT } from "@/lib/ui-strings";
+import { stripLeadingDuplicateTitle } from "@/content-lib/text-format.ts";
 import { LongFormSection } from "@/components/shared/LongFormSection";
 
 /**
@@ -37,6 +38,12 @@ export function LocalizedChapterBody({
   const { preferences } = useReadingPreferences();
   const t = useT();
   const localized = useMemo(() => localizeChapter(chapter, language), [chapter, language]);
+  // Mirrors mobile's chapter screen: some chapter bodies repeat their own
+  // title as a leading line (a leftover of the source material's own
+  // formatting) -- redundant under a screen that already shows the same
+  // title in its own <h1> above, so it's stripped for display only, the
+  // stored body itself untouched. Exact-match only, never fuzzy.
+  const displayBody = localized.body ? stripLeadingDuplicateTitle(localized.body, localized.title) : localized.body;
 
   return (
     <>
@@ -51,8 +58,8 @@ export function LocalizedChapterBody({
       {images}
 
       <div style={{ "--reading-font-scale": preferences.fontScale } as React.CSSProperties}>
-        {localized.body ? (
-          <LongFormSection text={localized.body} />
+        {displayBody ? (
+          <LongFormSection text={displayBody} />
         ) : (
           <p className="prose-body text-[var(--muted)]">{t("noChapterContentYet")}</p>
         )}
