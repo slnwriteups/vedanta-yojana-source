@@ -3,16 +3,14 @@ import { notFound } from "next/navigation";
 import { loadDivyaDesam, loadDivyaDesams } from "@/content-lib/loader";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
-import { TempleInformation } from "@/components/divya-desams/TempleInformation";
 import { RecordImages } from "@/components/shared/RecordImages";
-import { LongFormSection } from "@/components/shared/LongFormSection";
-import { SthalaPuranamWithImages } from "@/components/divya-desams/SthalaPuranamWithImages";
-import { ShrineDetails } from "@/components/divya-desams/ShrineDetails";
 import { ShrineLinks } from "@/components/divya-desams/ShrineLinks";
 import { ResourceLinks } from "@/components/divya-desams/ResourceLinks";
+import { LocalizedDivyaDesamContent } from "@/components/divya-desams/LocalizedDivyaDesamContent";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
+import { resolveImageHref } from "@/lib/image-file";
 
 /**
  * Phase 5K -- real, loader-driven Divya Desam detail page.
@@ -82,6 +80,16 @@ export default async function DivyaDesamDetailPage({
   const topImages = record.images.filter((img) => img.placement !== "after-sthala-puranam");
   const afterSthalaPuranamImages = record.images.filter((img) => img.placement === "after-sthala-puranam");
 
+  // Resolved here (server-side, needs node:fs via resolveImageHref) and
+  // passed down as plain data -- SthalaPuranamWithImages renders inside
+  // the client-side LocalizedDivyaDesamContent (its `text` prop must
+  // react to the reader's language preference), so it can no longer do
+  // this lookup itself.
+  const resolvedAfterSthalaPuranamImages = afterSthalaPuranamImages.flatMap((image) => {
+    const href = resolveImageHref(image.sourceAssetUuid);
+    return href ? [{ image, href }] : [];
+  });
+
   return (
     <div className="space-y-10">
       <JsonLd
@@ -97,30 +105,18 @@ export default async function DivyaDesamDetailPage({
         current={record.displayName}
       />
 
-      <div className="space-y-2">
-        <DraftBadge status={record.status} needsReview={record.migration.needsReview} />
-        <h1 className="page-title">{record.displayName}</h1>
-      </div>
-
-      <TempleInformation info={record.templeInformation} />
-      {/* Kept right beside Temple Information's own "How to reach" field
-          (not down with the narrative sections below) so a traveler gets
-          the travel note and the actual clickable map together, in one
-          place, before anything else. */}
-      <ShrineLinks shrines={record.shrines} />
-      <RecordImages images={topImages} />
-      {record.sthalaPuranam ? (
-        afterSthalaPuranamImages.length > 0 ? (
-          <SthalaPuranamWithImages text={record.sthalaPuranam} images={afterSthalaPuranamImages} />
-        ) : (
-          <LongFormSection heading="Sthala Puranam" text={record.sthalaPuranam} />
-        )
-      ) : null}
-      {record.azhwarPasuram ? (
-        <LongFormSection heading="Azhwar Pasuram" text={record.azhwarPasuram} />
-      ) : null}
-      <ShrineDetails shrines={record.shrines} />
-      <ResourceLinks resources={record.resources} />
+      <LocalizedDivyaDesamContent
+        record={record}
+        badge={<DraftBadge status={record.status} needsReview={record.migration.needsReview} />}
+        // Kept right beside Temple Information's own "How to reach" field
+        // (not down with the narrative sections below) so a traveler gets
+        // the travel note and the actual clickable map together, in one
+        // place, before anything else.
+        shrineLinks={<ShrineLinks shrines={record.shrines} />}
+        topImages={<RecordImages images={topImages} />}
+        resourceLinks={<ResourceLinks resources={record.resources} />}
+        resolvedAfterSthalaPuranamImages={resolvedAfterSthalaPuranamImages}
+      />
     </div>
   );
 }

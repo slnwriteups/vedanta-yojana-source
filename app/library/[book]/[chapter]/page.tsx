@@ -4,7 +4,9 @@ import { loadBook, loadBooks, loadChapter, loadChapters } from "@/content-lib/lo
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { RecordImages } from "@/components/shared/RecordImages";
-import { LongFormSection } from "@/components/shared/LongFormSection";
+import { LocalizedChapterBody } from "@/components/library/LocalizedChapterBody";
+import { ReadingPositionTracker } from "@/components/library/ReadingPositionTracker";
+import { BookmarkButton } from "@/components/library/BookmarkButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
@@ -77,20 +79,14 @@ export default async function LibraryChapterPage({
         current={chapter.title}
       />
 
-      <div className="space-y-2">
-        <DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />
-        <h1 className="page-title">{chapter.title}</h1>
-      </div>
+      <ReadingPositionTracker bookSlug={book.slug} chapterSlug={chapter.slug} />
 
-      <RecordImages images={chapter.images} />
-
-      {chapter.body ? (
-        <LongFormSection text={chapter.body} />
-      ) : (
-        <p className="prose-body text-[var(--muted)]">
-          No content is available for this chapter yet.
-        </p>
-      )}
+      <LocalizedChapterBody
+        chapter={chapter}
+        badge={<DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />}
+        bookmarkButton={<BookmarkButton bookSlug={book.slug} chapterSlug={chapter.slug} />}
+        images={<RecordImages images={chapter.images} />}
+      />
     </div>
   );
 }

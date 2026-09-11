@@ -33,9 +33,21 @@ content-lib/
 │         comments — corpus.ts is the only file that touches the loader)
 ├── i18n.ts       localize{DivyaDesam,Book,Chapter,Knowledge}() — applies a
 │   │             record's own translations[language] over its English base,
-│   │             field-by-field, non-mutating. Currently consumed only by
-│   │             the mobile app (see mobile-app-is-the-goal in project
-│   │             memory) — the website never calls these.
+│   │             field-by-field, non-mutating. Consumed by both runtimes:
+│   │             the mobile app directly, and the website from small
+│   │             "use client" leaf components (e.g. components/divya-desams/
+│   │             LocalizedDivyaDesamContent.tsx) — the reader's language
+│   │             preference is only known client-side on a static export,
+│   │             so the site itself always prerenders English and swaps
+│   │             in a translation after mount.
+├── ordering.ts   sourcePageNumber()/divyaDesamNumberLabels() — the shared
+│   │             traditional-pilgrimage-order sort, used by both runtimes'
+│   │             Divya Desam index pages
+├── divya-desam-region-labels.ts   regionLabel() — native-script
+│   │             transliterations of the seven regional classifications
+├── divya-desam-spotlight.ts   pickSpotlightRecord() and its seeded-shuffle
+│   │             day-rotation math, shared by both runtimes' home-screen
+│   │             "Divya Desam Spotlight" card
 └── text-format.ts   splitIntoReadableParagraphs() and related pure prose
                       chunking helpers shared by both runtimes
 ```

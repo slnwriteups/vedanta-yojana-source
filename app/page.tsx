@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_DESCRIPTION, SITE_NAME, getSiteOrigin, siteUrl } from "@/lib/site";
+import { DivyaDesamSpotlightSection } from "@/components/divya-desams/DivyaDesamSpotlightSection";
 
 export const metadata: Metadata = {
   alternates: { canonical: siteUrl("/") },
@@ -61,6 +62,8 @@ export default function HomePage() {
           being prepared for publication.
         </p>
       </div>
+
+      <DivyaDesamSpotlightSection />
 
       <div className="grid gap-6 sm:grid-cols-2">
         {SECTIONS.map((section) => (

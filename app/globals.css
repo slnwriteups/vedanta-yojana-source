@@ -8,26 +8,71 @@
  * Kannada/Pasuram-specific rules, which belong to a later presentation
  * phase.
  */
+/*
+ * Palette values are mobile/theme.ts's lightColors/darkColors, verbatim
+ * -- the web and mobile apps use the exact same design system, per the
+ * project's 100%-parity goal, so light/dark mode look identical on
+ * both. --surface-alt and --overlay are mobile tokens web didn't have
+ * before (surfaceAlt: a slightly tinted surface for selected/active
+ * states, e.g. SettingsControls' pill buttons; overlay: a scrim behind
+ * modal-style content, e.g. WelcomeGate/OnboardingGate).
+ */
 :root {
-  --background: #fbfaf7;
+  --background: #fbf9f5;
   --surface: #ffffff;
+  --surface-alt: #f3efe7;
   --foreground: #211c16;
   --muted: #6b6259;
   --border: #e3dcd0;
   --accent: #7a3b2e;
   --focus-ring: #7a3b2e;
+  --overlay: rgba(33, 28, 22, 0.85);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #17130f;
-    --surface: #1e1912;
-    --foreground: #ece5d8;
-    --muted: #a89c8c;
-    --border: #332c22;
-    --accent: #dd9a80;
-    --focus-ring: #dd9a80;
+    --background: #1a1712;
+    --surface: #231e18;
+    --surface-alt: #2b241d;
+    --foreground: #f1ece2;
+    --muted: #a89e90;
+    --border: #3a332a;
+    --accent: #d99879;
+    --focus-ring: #d99879;
+    --overlay: rgba(0, 0, 0, 0.9);
   }
+}
+
+/*
+ * Manual theme override (Settings > Appearance), set via
+ * document.documentElement.dataset.theme by ThemeProvider. Declared
+ * after the media query above so an explicit choice always wins over
+ * the OS default; when no override is set (dataset.theme absent), the
+ * media query above still governs, including on first paint before JS
+ * runs.
+ */
+:root[data-theme="light"] {
+  --background: #fbf9f5;
+  --surface: #ffffff;
+  --surface-alt: #f3efe7;
+  --foreground: #211c16;
+  --muted: #6b6259;
+  --border: #e3dcd0;
+  --accent: #7a3b2e;
+  --focus-ring: #7a3b2e;
+  --overlay: rgba(33, 28, 22, 0.85);
+}
+
+:root[data-theme="dark"] {
+  --background: #1a1712;
+  --surface: #231e18;
+  --surface-alt: #2b241d;
+  --foreground: #f1ece2;
+  --muted: #a89e90;
+  --border: #3a332a;
+  --accent: #d99879;
+  --focus-ring: #d99879;
+  --overlay: rgba(0, 0, 0, 0.9);
 }
 
 body {
@@ -56,7 +101,12 @@ body {
   }
 
   .prose-body {
-    @apply text-base leading-relaxed;
+    @apply leading-relaxed;
+    /* Multiplier set by a --reading-font-scale custom property on an
+       ancestor (see components/library/LocalizedChapterBody.tsx) --
+       defaults to 1 (the base 1rem size) when no reader preference has
+       been applied yet, e.g. before hydration or outside the reader. */
+    font-size: calc(1rem * var(--reading-font-scale, 1));
   }
 
   .eyebrow {

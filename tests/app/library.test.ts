@@ -157,10 +157,26 @@ test("14: chapter title is exact (re-confirms test 10 from the detail-page's own
   assert.equal(loaded?.title, stored.title);
 });
 
-test("15/16: chapter body and its paragraph structure are preserved -- the page passes chapter.body straight through, unmodified", () => {
-  const source = read("app/library/[book]/[chapter]/page.tsx");
-  assert.ok(source.includes("text={chapter.body}"), "expected the raw chapter.body to be passed through verbatim");
-  assert.ok(!/chapter\.body\.replace|chapter\.body\.trim|chapter\.body\.toLowerCase|chapter\.body\.toUpperCase/.test(source), "found a transformation applied to chapter.body");
+test("15/16: chapter body and its paragraph structure are preserved -- the page passes the whole chapter through to LocalizedChapterBody, which renders localizeChapter()'s result straight through, unmodified", () => {
+  // The detail page itself no longer renders chapter.body directly: since
+  // the reader's language preference is only known client-side (static
+  // export, no per-request server), localization moved into
+  // LocalizedChapterBody.tsx (content-lib/i18n.ts's localizeChapter,
+  // which returns the record completely untouched for English/no
+  // translation). The content-fidelity guarantee this test protects --
+  // no rewriting/trimming/case-changing of the stored body -- still
+  // holds, just checked at its new location.
+  const pageSource = read("app/library/[book]/[chapter]/page.tsx");
+  assert.ok(pageSource.includes("chapter={chapter}"), "expected the raw chapter record to be passed to LocalizedChapterBody");
+
+  const bodySource = read("components/library/LocalizedChapterBody.tsx");
+  assert.ok(bodySource.includes("text={localized.body}"), "expected localizeChapter()'s body to be passed through verbatim");
+  assert.ok(
+    !/localized\.body\.replace|localized\.body\.trim|localized\.body\.toLowerCase|localized\.body\.toUpperCase|chapter\.body\.replace|chapter\.body\.trim|chapter\.body\.toLowerCase|chapter\.body\.toUpperCase/.test(
+      bodySource
+    ),
+    "found a transformation applied to the chapter body"
+  );
 });
 
 test("17: chapter status reaches the page (DraftBadge reused, now renders nothing since this book's chapters are published)", () => {

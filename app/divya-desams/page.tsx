@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { DivyaDesam } from "@/content-lib/schemas";
 import { loadDivyaDesams, loadKnowledgeRecord } from "@/content-lib/loader";
+import { sourcePageNumber, divyaDesamNumberLabels } from "@/content-lib/ordering.ts";
 import { DivyaDesamCard } from "@/components/divya-desams/DivyaDesamCard";
 import { siteUrl } from "@/lib/site";
 
@@ -22,52 +22,15 @@ export const metadata: Metadata = {
  * `migration.sourcePageId` ("page.PageN") as the sort key -- the same
  * source/migration provenance already used to order the recovered book's
  * chapters during the earlier full-content migration, applied here as a
- * presentation-layer sort (no content or schema change).
+ * presentation-layer sort (no content or schema change). See
+ * content-lib/ordering.ts for the shared implementation (also used by
+ * lib/sitemap.ts and the mobile app).
  */
-function sourcePageNumber(record: DivyaDesam): number {
-  const match = record.migration.sourcePageId.match(/^page\.Page(\d+)$/);
-  if (!match) {
-    throw new Error(
-      `Cannot derive a source-ordered position for "${record.slug}": sourcePageId "${record.migration.sourcePageId}" does not match the expected "page.PageN" shape.`
-    );
-  }
-  return parseInt(match[1], 10);
-}
-
-/**
- * Traditional 1-108 Divya Desam numbering, derived positionally from
- * the same source-page order used for sorting above -- not a new
- * schema field.
- *
- * The corpus has exactly one exception: "Tiruttetriambalam
- * Tirumanikoodam" is a single content record combining what the source
- * book numbers as two separate Divya Desams (#36 and #37 -- confirmed
- * against its own "108-36"/"108-37" image assets), so that one record
- * displays as "36-37" and the running count advances by two only there.
- * Every other record advances by one.
- */
-const MERGED_DIVYA_DESAM_SLUG = "tiruttetriambalam-tirumanikoodam";
-
-function divyaDesamNumberLabels(sortedRecords: DivyaDesam[]): Map<string, string> {
-  const labels = new Map<string, string>();
-  let next = 1;
-  for (const record of sortedRecords) {
-    if (record.slug === MERGED_DIVYA_DESAM_SLUG) {
-      labels.set(record.slug, `${next}-${next + 1}`);
-      next += 2;
-    } else {
-      labels.set(record.slug, String(next));
-      next += 1;
-    }
-  }
-  return labels;
-}
-
 export default function DivyaDesamsIndexPage() {
   const records = [...loadDivyaDesams()].sort(
-    (a, b) => sourcePageNumber(a) - sourcePageNumber(b)
+    (a, b) => sourcePageNumber(a.migration.sourcePageId) - sourcePageNumber(b.migration.sourcePageId)
   );
-  const numberLabels = divyaDesamNumberLabels(records);
+  const numberLabels = divyaDesamNumberLabels(records.map((record) => record.slug));
 
   // Links to the "Introduction" record only when it actually resolves
   // through the loader -- never a fabricated link to content that

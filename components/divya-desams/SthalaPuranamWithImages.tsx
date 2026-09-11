@@ -1,5 +1,4 @@
 import type { ImageEntry } from "@/content-lib/schemas";
-import { resolveImageHref } from "@/lib/image-file";
 import { splitIntoReadableParagraphs } from "@/content-lib/text-format";
 
 /**
@@ -25,7 +24,7 @@ import { splitIntoReadableParagraphs } from "@/content-lib/text-format";
  * "after Sthala Puranam" behavior, so this is purely additive.
  */
 
-interface ResolvedImage {
+export interface ResolvedImage {
   image: ImageEntry;
   href: string;
 }
@@ -86,13 +85,16 @@ function ImageRow({ images }: { images: ResolvedImage[] }) {
   );
 }
 
-export function SthalaPuranamWithImages({ text, images }: { text: string; images: ImageEntry[] }) {
-  const resolved = images.flatMap((image) => {
-    const href = resolveImageHref(image.sourceAssetUuid);
-    return href ? [{ image, href }] : [];
-  });
-
-  const segments = buildSegments(text, resolved);
+/**
+ * `images` are pre-resolved (uuid -> public URL already looked up) by
+ * the caller rather than resolved here, so this component has no
+ * `node:fs` dependency and can render inside a client component (needed
+ * so `text` can react to a client-side language preference) -- see
+ * lib/image-file.ts's resolveImageHref, called server-side in
+ * app/divya-desams/[slug]/page.tsx before this component ever mounts.
+ */
+export function SthalaPuranamWithImages({ text, images }: { text: string; images: ResolvedImage[] }) {
+  const segments = buildSegments(text, images);
 
   return (
     <section aria-labelledby="sthala-puranam-heading" className="max-w-2xl space-y-4">

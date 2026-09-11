@@ -9,15 +9,26 @@ today through both a website and a native mobile app.
 
 | | Website (repo root) | Mobile (`mobile/`) |
 |---|---|---|
-| Framework | Next.js | Expo (React Native) |
-| Status | **legacy/maintenance-only** | **the real, active target** |
-| Deploy | Vercel, auto-deploys from `main` | not yet submitted to app stores |
+| Framework | Next.js (`output: "export"`, fully static) | Expo (React Native) |
+| Status | **co-equal target — full feature parity** | **co-equal target — full feature parity** |
+| Deploy | GitHub Pages, auto-deploys from `main` | not yet submitted to app stores |
 | Detail | — | see `mobile/README.md` |
 
-New feature work targets the mobile app. The website still gets bug
-fixes and content updates, but is not a co-equal target for new
-features — see `mobile/README.md` for the full reasoning and the exact
-split of what's shared vs. rewritten between the two.
+Both runtimes now carry the same feature set: content translation
+(Tamil/Kannada/Hindi), a manual light/dark theme override, reading
+preferences (font scale), reading-position memory, bookmarks, a
+settings/onboarding flow, book cover art, and a daily-rotating "Divya
+Desam Spotlight" card — ported from mobile's implementation onto the
+website rather than redesigned, sharing the framework-agnostic pieces
+(`content-lib/i18n.ts`, `content-lib/ordering.ts`,
+`content-lib/divya-desam-spotlight.ts`, `lib/preferences.ts`,
+`lib/ui-strings.ts`, and every `*-context.ts` file) directly. Only the
+React Native-specific plumbing (AsyncStorage, `useColorScheme`,
+`expo-router`, haptics) has a web-specific equivalent (`lib/storage.ts`,
+`components/providers/*`). See `mobile/README.md` for mobile's own
+detail; the split of what's shared vs. platform-specific between the
+two is documented in each new web file's doc comment, tracing back to
+its mobile source.
 
 ## Content pipeline
 

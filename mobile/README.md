@@ -1,10 +1,12 @@
 # Vedanta Yojana — Mobile
 
-This is the **real, active target** for the project — a React Native +
-Expo app for iOS, Android, and tablet. The Next.js website at the
-repository root is legacy/maintenance-only; new feature work targets this
-app first. (Historical note: this README once described a Phase 6A
-foundation with "no real screens." That is no longer true — see below.)
+This is a React Native + Expo app for iOS, Android, and tablet. It
+was originally the sole active-development target while the Next.js
+website at the repository root stayed legacy/maintenance-only; the
+website has since been brought to full feature parity (see the root
+README's "The two runtimes" section), so both are now co-equal targets.
+(Historical note: this README once described a Phase 6A foundation with
+"no real screens." That is no longer true — see below.)
 
 ## What exists today
 

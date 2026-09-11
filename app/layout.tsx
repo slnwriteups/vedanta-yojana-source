@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { WelcomeGate } from "@/components/WelcomeGate";
+import { OnboardingGate } from "@/components/OnboardingGate";
+import { AppProviders } from "@/components/providers/AppProviders";
 import { getSiteOrigin, siteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 import { resolveImageHref } from "@/lib/image-file";
 import "./globals.css";
@@ -48,8 +50,8 @@ export const metadata: Metadata = {
 // via the Next.js-supported Viewport export.
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fbfaf7" },
-    { media: "(prefers-color-scheme: dark)", color: "#17130f" },
+    { media: "(prefers-color-scheme: light)", color: "#fbf9f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1712" },
   ],
 };
 
@@ -61,16 +63,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)] antialiased">
-        <WelcomeGate imageHref={resolveImageHref(WELCOME_IMAGE_UUID)} audioHref={`${BASE_PATH}/audio/vy-welcome.mp3`}>
-          <a href="#main-content" className="skip-link">
-            Skip to content
-          </a>
-          <SiteHeader />
-          <main id="main-content" className="site-container flex-1 py-10 sm:py-12">
-            {children}
-          </main>
-          <SiteFooter />
-        </WelcomeGate>
+        <AppProviders>
+          <WelcomeGate imageHref={resolveImageHref(WELCOME_IMAGE_UUID)} audioHref={`${BASE_PATH}/audio/vy-welcome.mp3`}>
+            <OnboardingGate>
+              <a href="#main-content" className="skip-link">
+                Skip to content
+              </a>
+              <SiteHeader />
+              <main id="main-content" className="site-container flex-1 py-10 sm:py-12">
+                {children}
+              </main>
+              <SiteFooter />
+            </OnboardingGate>
+          </WelcomeGate>
+        </AppProviders>
       </body>
     </html>
   );

@@ -4,6 +4,7 @@ import { loadBook, loadBooks, loadChapters } from "@/content-lib/loader";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { ChapterListItem } from "@/components/library/ChapterListItem";
+import { LocalizedBookHeader } from "@/components/library/LocalizedBookHeader";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
@@ -64,10 +65,7 @@ export default async function LibraryBookPage({
 
       <div className="space-y-2">
         <DraftBadge status={book.status} needsReview={book.migration.needsReview} />
-        <h1 className="page-title">{book.title}</h1>
-        {book.description ? (
-          <p className="prose-body max-w-2xl text-[var(--muted)]">{book.description}</p>
-        ) : null}
+        <LocalizedBookHeader book={book} />
       </div>
 
       <div className="space-y-3">
