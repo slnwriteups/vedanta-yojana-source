@@ -4,8 +4,10 @@ import { noResultsLabel } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
 
 /**
- * Three distinct, deliberate states -- never "no query = show everything":
- *   - no query supplied (or blank/whitespace-only) -> initial state
+ * Three distinct states, matching mobile's own FlatList exactly:
+ *   - no query supplied (or blank/whitespace-only) -> renders nothing,
+ *     same as mobile's empty FlatList before any text is typed (the
+ *     input's own placeholder/hint already communicates what to search)
  *   - query supplied, zero matches -> explicit no-results state (wording
  *     matches mobile's noResultsLabel() exactly, localized)
  *   - query supplied, one or more matches -> the results list, with a
@@ -22,14 +24,7 @@ export function SearchResults({
   results: SearchResultData[];
   language: LanguageCode | null;
 }) {
-  if (!query) {
-    return (
-      <p className="prose-body text-[var(--muted)]">
-        Enter a search term above to find Divya Desams, Library chapters, and
-        Knowledge records.
-      </p>
-    );
-  }
+  if (!query) return null;
 
   if (results.length === 0) {
     return <p className="prose-body text-[var(--muted)]">{noResultsLabel(language, query)}</p>;

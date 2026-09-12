@@ -93,7 +93,9 @@ export function LocalizedChapterBody({
               </p>
             ) : null}
           </div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">{localizedBook.title}</p>
+          <p className="truncate text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+            {localizedBook.title}
+          </p>
           <h1 className="page-title">{localized.title}</h1>
         </div>
         {bookmarkButton}
@@ -129,6 +131,7 @@ export function LocalizedChapterBody({
           {localizedPrevious ? (
             <Link
               href={`/library/${bookSlug}/${localizedPrevious.slug}`}
+              aria-label={`Previous chapter: ${localizedPrevious.title}`}
               className="min-h-[44px] rounded-md border border-[var(--border)] p-3 hover:border-[var(--accent)]"
             >
               <p className="eyebrow text-[var(--muted)]">{t("pagerPrevious")}</p>
@@ -140,6 +143,7 @@ export function LocalizedChapterBody({
           {localizedNext ? (
             <Link
               href={`/library/${bookSlug}/${localizedNext.slug}`}
+              aria-label={`Next chapter: ${localizedNext.title}`}
               className="min-h-[44px] rounded-md border border-[var(--border)] p-3 text-right hover:border-[var(--accent)]"
             >
               <p className="eyebrow text-[var(--muted)]">{t("pagerNext")}</p>

@@ -71,7 +71,7 @@ export default async function LibraryBookPage({
 
       <div className="space-y-3">
         {chapters.length > 0 ? (
-          <ol role="list" className="divide-y divide-[var(--border)]">
+          <ol role="list" className="space-y-3">
             {chapters.map((chapter, index) => (
               <ChapterListItem key={chapter.slug} bookSlug={book.slug} chapter={chapter} position={index + 1} />
             ))}

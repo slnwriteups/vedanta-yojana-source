@@ -52,13 +52,15 @@ export function LocalizedDivyaDesamContent({
         <h1 className="page-title">{localized.displayName}</h1>
       </div>
 
+      {topImages}
+
       <TempleInformation info={localized.templeInformation} language={language} />
       {/* Kept right beside Temple Information's own "How to reach" field
           (not down with the narrative sections below) so a traveler gets
           the travel note and the actual clickable map together, in one
-          place, before anything else. */}
+          place. Matches mobile's own [slug].tsx screen order: images,
+          then Temple Information, then the Shrine Locations/Maps links. */}
       <ShrineLinks shrines={record.shrines} language={language} />
-      {topImages}
       {localized.sthalaPuranam ? (
         resolvedAfterSthalaPuranamImages.length > 0 ? (
           <SthalaPuranamWithImages

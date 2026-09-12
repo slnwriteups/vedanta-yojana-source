@@ -30,7 +30,7 @@ export function SocialButton({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${label}${translateUi("opensInBrowserSuffix", language)}`}
-      className="inline-flex min-h-9 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 text-sm font-semibold text-[var(--accent)] hover:border-[var(--accent)]"
+      className="inline-flex min-h-11 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--surface-alt)] px-3 py-1.5 text-sm font-semibold text-[var(--accent)] hover:border-[var(--accent)]"
     >
       <InstagramGlyph />
       {label}

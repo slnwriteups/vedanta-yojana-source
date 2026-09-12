@@ -1,5 +1,6 @@
 import type { ImageEntry } from "@/content-lib/schemas";
 import { resolveImageHref } from "@/lib/image-file";
+import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
 
 /**
  * Renders images[] as static files under public/images/, resolved from
@@ -44,17 +45,13 @@ export function RecordImages({ images }: { images: ImageEntry[] }) {
   if (resolved.length === 0) return null;
 
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {resolved.map(({ image, href }) => (
-        <img
-          key={image.assetId}
-          src={href}
-          alt={image.alt ?? ""}
-          data-alt-status={image.altStatus}
-          loading="lazy"
-          className="aspect-square w-full rounded-md border border-[var(--border)] object-cover"
-        />
-      ))}
-    </div>
+    <ImageLightboxGrid
+      images={resolved.map(({ image, href }) => ({
+        id: image.assetId,
+        href,
+        alt: image.alt ?? "",
+        altStatus: image.altStatus,
+      }))}
+    />
   );
 }

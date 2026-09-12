@@ -1,5 +1,6 @@
 import type { ImageEntry } from "@/content-lib/schemas";
 import { splitIntoReadableParagraphs } from "@/content-lib/text-format";
+import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
 
 /**
  * Renders Sthala Puranam interleaved with the images the source itself
@@ -70,18 +71,14 @@ function buildSegments(text: string, images: ResolvedImage[]): Segment[] {
 
 function ImageRow({ images }: { images: ResolvedImage[] }) {
   return (
-    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-      {images.map(({ image, href }) => (
-        <img
-          key={image.assetId}
-          src={href}
-          alt={image.alt ?? ""}
-          data-alt-status={image.altStatus}
-          loading="lazy"
-          className="aspect-square w-full rounded-md border border-[var(--border)] object-cover"
-        />
-      ))}
-    </div>
+    <ImageLightboxGrid
+      images={images.map(({ image, href }) => ({
+        id: image.assetId,
+        href,
+        alt: image.alt ?? "",
+        altStatus: image.altStatus,
+      }))}
+    />
   );
 }
 

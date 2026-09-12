@@ -34,8 +34,8 @@ export function ShrineLinks({ shrines, language }: { shrines: Shrine[]; language
               rel="noopener noreferrer"
               className="inline-block rounded-md border border-[var(--border)] px-3 py-2 hover:border-[var(--accent)] hover:underline"
             >
-              {shrine.label ?? translateUi("viewOnGoogleMaps", language)}
-              <span className="sr-only"> (opens in a new tab)</span>
+              {shrine.label ?? translateUi("viewOnGoogleMaps", language)} ↗
+              <span className="sr-only">{translateUi("opensInBrowserSuffix", language)}</span>
             </a>
           </li>
         ))}

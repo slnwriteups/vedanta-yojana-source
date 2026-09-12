@@ -34,7 +34,7 @@ export default function LibraryIndexPage() {
       <LocalizedPageHeading stringKey="tabLibrary" />
 
       {books.length > 0 ? (
-        <ul role="list" className="divide-y divide-[var(--border)]">
+        <ul role="list" className="space-y-3">
           {books.map((book) => (
             <BookCard key={book.slug} book={book} chapterCount={loadChapters(book.slug).length} />
           ))}

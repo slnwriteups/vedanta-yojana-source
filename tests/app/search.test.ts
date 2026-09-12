@@ -79,9 +79,9 @@ test("31: no result href references a filesystem path or content-extraction", ()
 // UI (32-40)
 // ---------------------------------------------------------------------------
 
-test("32: the search page has a distinct initial-state branch for no/blank query", () => {
+test("32: the search page has a distinct initial-state branch for no/blank query, matching mobile's empty-until-typed behavior", () => {
   const resultsSource = read("components/search/SearchResults.tsx");
-  assert.ok(resultsSource.includes("Enter a search term"));
+  assert.ok(resultsSource.includes("if (!query) return null;"));
 });
 
 test("33/34: the search query is read from the URL, preserved in the form input, and now filters live on every keystroke (matching mobile's onChangeText behavior)", () => {

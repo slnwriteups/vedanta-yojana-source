@@ -151,11 +151,9 @@ function SearchExperience() {
       </div>
 
       {unavailable ? (
-        <p className="prose-body text-[var(--muted)]">
-          Search is temporarily unavailable. Please reload the page to try again.
-        </p>
+        <p className="prose-body text-[var(--muted)]">{translateUi("searchUnavailableMessage", language)}</p>
       ) : !corpus && trimmedQuery ? (
-        <p className="prose-body text-[var(--muted)]">Searching…</p>
+        <p className="prose-body text-[var(--muted)]">{translateUi("searchLoadingMessage", language)}</p>
       ) : (
         <SearchResults query={trimmedQuery} results={results} language={language} />
       )}

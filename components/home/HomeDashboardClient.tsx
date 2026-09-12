@@ -94,20 +94,20 @@ export function HomeDashboardClient({
         <div className="space-y-2">
           <p className="eyebrow">{t("homeGetStartedLabel")}</p>
           <div className="grid gap-3 sm:grid-cols-2">
-            <Link
+            <GetStartedCard
               href="/divya-desams"
-              className="block rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 transition-colors hover:border-[var(--accent)]"
-            >
-              <h2 className="section-heading">{t("tabDivyaDesams")}</h2>
-              <p className="mt-2 text-sm text-[var(--muted)]">{t("divyaDesamsCardSubtitle")}</p>
-            </Link>
-            <Link
+              title={t("tabDivyaDesams")}
+              subtitle={t("divyaDesamsCardSubtitle")}
+              monogram="D"
+              tintColor={sectionTint("divya-desams", theme)}
+            />
+            <GetStartedCard
               href="/library"
-              className="block rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 transition-colors hover:border-[var(--accent)]"
-            >
-              <h2 className="section-heading">{t("tabLibrary")}</h2>
-              <p className="mt-2 text-sm text-[var(--muted)]">{t("libraryCardSubtitle")}</p>
-            </Link>
+              title={t("tabLibrary")}
+              subtitle={t("libraryCardSubtitle")}
+              monogram="L"
+              tintColor="var(--accent)"
+            />
           </div>
         </div>
       )}
@@ -117,5 +117,46 @@ export function HomeDashboardClient({
       <PanchangamCard panchangam={panchangam} />
       <SankalpamCard panchangam={panchangam} />
     </div>
+  );
+}
+
+/**
+ * Web port of mobile's shared ContentCard (mobile/components/ContentCard.tsx)
+ * as rendered for Home's two "Get Started" entry points, which have no
+ * cover photo: a thin left-edge tint stripe plus a tinted monogram
+ * swatch in place of a thumbnail -- previously missing entirely on web,
+ * which rendered these two tiles as plain bordered text blocks.
+ */
+function GetStartedCard({
+  href,
+  title,
+  subtitle,
+  monogram,
+  tintColor,
+}: {
+  href: string;
+  title: string;
+  subtitle: string;
+  monogram: string;
+  tintColor: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="relative flex items-center gap-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 transition-colors hover:border-[var(--accent)]"
+    >
+      <span aria-hidden className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: tintColor }} />
+      <span
+        aria-hidden
+        className="flex h-14 w-14 flex-none items-center justify-center rounded-md text-lg font-bold"
+        style={{ backgroundColor: tintColor, color: "#fffaf5" }}
+      >
+        {monogram}
+      </span>
+      <div>
+        <h2 className="section-heading">{title}</h2>
+        <p className="mt-1 text-sm text-[var(--muted)]">{subtitle}</p>
+      </div>
+    </Link>
   );
 }

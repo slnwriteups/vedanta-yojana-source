@@ -344,6 +344,18 @@ const UI_STRINGS = {
     kn: ", ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆಯುತ್ತದೆ",
     hi: ", ब्राउज़र में खुलता है",
   },
+
+  // Web-only, no mobile equivalent: mobile's search corpus is built
+  // in-memory synchronously (buildMobileSearchCorpus()), so it can never
+  // be "still loading" or "failed to load" the way web's fetched
+  // search-index.json can.
+  searchLoadingMessage: { en: "Searching…", ta: "தேடுகிறது…", kn: "ಹುಡುಕುತ್ತಿದೆ…", hi: "खोज रहे हैं…" },
+  searchUnavailableMessage: {
+    en: "Search is temporarily unavailable. Please reload the page to try again.",
+    ta: "தேடல் தற்காலிகமாகக் கிடைக்கவில்லை. மீண்டும் முயற்சிக்க பக்கத்தை மீண்டும் ஏற்றவும்.",
+    kn: "ಹುಡುಕಾಟ ತಾತ್ಕಾಲಿಕವಾಗಿ ಲಭ್ಯವಿಲ್ಲ. ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಲು ಪುಟವನ್ನು ಮರುಲೋಡ್ ಮಾಡಿ.",
+    hi: "खोज अस्थायी रूप से अनुपलब्ध है। पुनः प्रयास करने के लिए पृष्ठ को रीलोड करें।",
+  },
 } satisfies Record<string, UiStringEntry>;
 
 export type UiStringKey = keyof typeof UI_STRINGS;

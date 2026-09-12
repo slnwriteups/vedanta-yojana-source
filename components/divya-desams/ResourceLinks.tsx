@@ -33,8 +33,8 @@ export function ResourceLinks({ resources, language }: { resources: ResourceEntr
               rel="noopener noreferrer"
               className="inline-block rounded-md border border-[var(--border)] px-3 py-2 hover:border-[var(--accent)] hover:underline"
             >
-              {pasuramResourceLabel(language, resource.language)}
-              <span className="sr-only"> (opens in a new tab)</span>
+              {pasuramResourceLabel(language, resource.language)} ↗
+              <span className="sr-only">{translateUi("opensInBrowserSuffix", language)}</span>
             </a>
           </li>
         ))}
