@@ -50,55 +50,71 @@ export function WelcomeGate({
 
   function begin() {
     window.sessionStorage.setItem(SEEN_KEY, "1");
-    audioRef.current?.pause();
+    // A real click/tap is a genuine user gesture, so this play() call
+    // (unlike the mount-time attempt above) is NOT blocked by the
+    // browser's autoplay policy -- this is the actual, working fallback
+    // the comment above already described, not just the mount attempt.
+    // Left playing (not paused) so it's audible over the transition into
+    // the app rather than being silenced the instant it could finally
+    // start.
+    void audioRef.current?.play().catch(() => {});
     setShowWelcome(false);
   }
-
-  if (!showWelcome) return <>{children}</>;
 
   return (
     <>
       {children}
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="welcome-heading"
-        className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 overflow-y-auto bg-[var(--background)] px-6 py-10 text-center"
-      >
-        <audio ref={audioRef} src={audioHref} preload="auto" />
-        {imageHref ? (
-          <img
-            src={imageHref}
-            alt="Swami Vedanta Desikan, with the invocation verse in Sanskrit"
-            className="h-auto max-h-[45vh] w-auto max-w-full"
-          />
-        ) : null}
-        <div className="space-y-2">
-          <h1 id="welcome-heading" className="text-2xl font-semibold text-[var(--foreground)]">
-            Welcome to Vedanta Yojana
-          </h1>
-          <p className="text-sm text-[var(--muted)]">Yatra Jñānam Pravahati</p>
+      {/*
+       * Rendered unconditionally (not just while the overlay below is
+       * shown) so the element stays mounted -- and therefore actually
+       * keeps playing -- once begin() starts it and dismisses the
+       * overlay. Unmounting an <audio> element stops it instantly, which
+       * would have silently defeated the whole "let it play over the
+       * transition" fix if this lived inside the `showWelcome`-only
+       * block below.
+       */}
+      <audio ref={audioRef} src={audioHref} preload="auto" />
+      {showWelcome ? (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="welcome-heading"
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 overflow-y-auto bg-[var(--background)] px-6 py-10 text-center"
+        >
+          {imageHref ? (
+            <img
+              src={imageHref}
+              alt="Swami Vedanta Desikan, with the invocation verse in Sanskrit"
+              className="h-auto max-h-[45vh] w-auto max-w-full"
+            />
+          ) : null}
+          <div className="space-y-2">
+            <h1 id="welcome-heading" className="text-2xl font-semibold text-[var(--foreground)]">
+              Welcome to Vedanta Yojana
+            </h1>
+            <p className="text-sm text-[var(--muted)]">Yatra Jñānam Pravahati</p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <button
+              type="button"
+              onClick={begin}
+              className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--surface)] transition-opacity hover:opacity-90"
+            >
+              Begin
+            </button>
+            {/*
+             * Matches mobile/components/WelcomeScreen.tsx: "Begin" is the
+             * button's own legible label (Sanskrit transliteration isn't
+             * immediately readable on first launch), and the original
+             * primary label, "Jñānayātrām Pravartaya", is kept as a caption
+             * underneath rather than removed, so the screen keeps its
+             * Sanskrit invocation without making the one interactive
+             * control on the screen ambiguous.
+             */}
+            <p className="text-xs text-[var(--muted)]">Jñānayātrām Pravartaya</p>
+          </div>
         </div>
-        <div className="flex flex-col items-center gap-2">
-          <button
-            type="button"
-            onClick={begin}
-            className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--surface)] transition-opacity hover:opacity-90"
-          >
-            Begin
-          </button>
-          {/*
-           * Matches mobile/components/WelcomeScreen.tsx: "Begin" is the
-           * button's own legible label (Sanskrit transliteration isn't
-           * immediately readable on first launch), and the original
-           * primary label, "Jñānayātrām Pravartaya", is kept as a caption
-           * underneath rather than removed, so the screen keeps its
-           * Sanskrit invocation without making the one interactive
-           * control on the screen ambiguous.
-           */}
-          <p className="text-xs text-[var(--muted)]">Jñānayātrām Pravartaya</p>
-        </div>
-      </div>
+      ) : null}
     </>
   );
 }
