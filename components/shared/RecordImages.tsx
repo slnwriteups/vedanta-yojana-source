@@ -24,12 +24,14 @@ import { resolveImageHref } from "@/lib/image-file";
  * judgment that the images are actually decorative.
  */
 /**
- * `idSuffix` disambiguates the section id when a page renders this
- * component more than once (Phase 6E-C follow-up: a record's images may
- * now split into a top group and an after-Sthala-Puranam group) -- two
- * elements sharing one id is invalid HTML and breaks aria-labelledby.
+ * No "Images" heading: mobile's ContentImage.tsx deliberately dropped it
+ * ("it rendered at the exact same weight as real section headings...
+ * implying equal informational content where there was none; a gallery
+ * of real photos doesn't need a label saying 'Images' any more than
+ * body text needs one saying 'Text'") -- matched here for the same
+ * reason.
  */
-export function RecordImages({ images, idSuffix = "" }: { images: ImageEntry[]; idSuffix?: string }) {
+export function RecordImages({ images }: { images: ImageEntry[] }) {
   // An image whose UUID has no matching file is dropped rather than
   // rendered with a src that is certain to 404. Resolution happens here,
   // during the static pre-render, so a missing asset is visible at build
@@ -41,25 +43,18 @@ export function RecordImages({ images, idSuffix = "" }: { images: ImageEntry[]; 
 
   if (resolved.length === 0) return null;
 
-  const headingId = `images-heading${idSuffix}`;
-
   return (
-    <section aria-labelledby={headingId} className="space-y-3">
-      <h2 id={headingId} className="section-heading">
-        Images
-      </h2>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-        {resolved.map(({ image, href }) => (
-          <img
-            key={image.assetId}
-            src={href}
-            alt={image.alt ?? ""}
-            data-alt-status={image.altStatus}
-            loading="lazy"
-            className="aspect-square w-full rounded-md border border-[var(--border)] object-cover"
-          />
-        ))}
-      </div>
-    </section>
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      {resolved.map(({ image, href }) => (
+        <img
+          key={image.assetId}
+          src={href}
+          alt={image.alt ?? ""}
+          data-alt-status={image.altStatus}
+          loading="lazy"
+          className="aspect-square w-full rounded-md border border-[var(--border)] object-cover"
+        />
+      ))}
+    </div>
   );
 }

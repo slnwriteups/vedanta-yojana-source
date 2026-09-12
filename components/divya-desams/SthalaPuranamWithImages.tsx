@@ -92,14 +92,25 @@ function ImageRow({ images }: { images: ResolvedImage[] }) {
  * so `text` can react to a client-side language preference) -- see
  * lib/image-file.ts's resolveImageHref, called server-side in
  * app/divya-desams/[slug]/page.tsx before this component ever mounts.
+ * `heading` is passed in already localized (LocalizedDivyaDesamContent.tsx
+ * translates ui-strings.ts's `sthalaPuranamHeading`, the same key
+ * mobile's [slug].tsx screen uses) rather than looked up here.
  */
-export function SthalaPuranamWithImages({ text, images }: { text: string; images: ResolvedImage[] }) {
+export function SthalaPuranamWithImages({
+  text,
+  images,
+  heading,
+}: {
+  text: string;
+  images: ResolvedImage[];
+  heading: string;
+}) {
   const segments = buildSegments(text, images);
 
   return (
     <section aria-labelledby="sthala-puranam-heading" className="max-w-2xl space-y-4">
       <h2 id="sthala-puranam-heading" className="section-heading">
-        Sthala Puranam
+        {heading}
       </h2>
       <div className="space-y-5">
         {segments.map((segment) =>

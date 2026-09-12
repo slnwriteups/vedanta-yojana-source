@@ -4,8 +4,6 @@ import { loadDivyaDesam, loadDivyaDesams } from "@/content-lib/loader";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { RecordImages } from "@/components/shared/RecordImages";
-import { ShrineLinks } from "@/components/divya-desams/ShrineLinks";
-import { ResourceLinks } from "@/components/divya-desams/ResourceLinks";
 import { LocalizedDivyaDesamContent } from "@/components/divya-desams/LocalizedDivyaDesamContent";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
@@ -108,13 +106,7 @@ export default async function DivyaDesamDetailPage({
       <LocalizedDivyaDesamContent
         record={record}
         badge={<DraftBadge status={record.status} needsReview={record.migration.needsReview} />}
-        // Kept right beside Temple Information's own "How to reach" field
-        // (not down with the narrative sections below) so a traveler gets
-        // the travel note and the actual clickable map together, in one
-        // place, before anything else.
-        shrineLinks={<ShrineLinks shrines={record.shrines} />}
         topImages={<RecordImages images={topImages} />}
-        resourceLinks={<ResourceLinks resources={record.resources} />}
         resolvedAfterSthalaPuranamImages={resolvedAfterSthalaPuranamImages}
       />
     </div>

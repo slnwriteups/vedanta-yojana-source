@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { WelcomeGate } from "@/components/WelcomeGate";
 import { OnboardingGate } from "@/components/OnboardingGate";
 import { AppProviders } from "@/components/providers/AppProviders";
@@ -73,7 +72,6 @@ export default function RootLayout({
               <main id="main-content" className="site-container flex-1 py-10 sm:py-12">
                 {children}
               </main>
-              <SiteFooter />
             </OnboardingGate>
           </WelcomeGate>
         </AppProviders>

@@ -1,5 +1,7 @@
 import type { Shrine } from "@/content-lib/schemas";
 import { paragraphsForReading } from "@/content-lib/text-format";
+import { shrineOrdinalLabel, translateUi, type UiStringKey } from "@/lib/ui-strings";
+import type { LanguageCode } from "@/lib/preferences";
 
 /**
  * Renders each shrine's OWN temple information/prose, distinct from the
@@ -11,16 +13,20 @@ import { paragraphsForReading } from "@/content-lib/text-format";
  * renders nothing and existing single-shrine records' pages are
  * unaffected.
  *
+ * Heading/field labels/ordinal fallback are localized the same way as
+ * TempleInformation.tsx and mobile's [slug].tsx screen (shrinesHeading,
+ * fieldMoolavar/etc., shrineOrdinalLabel).
+ *
  * Deliberately NOT built by reusing <TempleInformation> per shrine: that
  * component hard-codes a single "temple-information-heading" id, which
  * would collide across multiple shrine instances on the same page.
  */
 
-const FIELD_LABELS: Record<"moolavar" | "thayaar" | "vimanam" | "theertham", string> = {
-  moolavar: "Moolavar",
-  thayaar: "Thayaar",
-  vimanam: "Vimanam",
-  theertham: "Theertham",
+const FIELD_LABEL_KEYS: Record<"moolavar" | "thayaar" | "vimanam" | "theertham", UiStringKey> = {
+  moolavar: "fieldMoolavar",
+  thayaar: "fieldThayaar",
+  vimanam: "fieldVimanam",
+  theertham: "fieldTheertham",
 };
 
 const FIELD_ORDER: ("moolavar" | "thayaar" | "vimanam" | "theertham")[] = [
@@ -40,7 +46,7 @@ function ProseBlock({ text }: { text: string }) {
   );
 }
 
-export function ShrineDetails({ shrines }: { shrines: Shrine[] }) {
+export function ShrineDetails({ shrines, language }: { shrines: Shrine[]; language: LanguageCode | null }) {
   const detailed = shrines.filter(
     (s) => s.name || s.templeInformation || s.sthalaPuranam || s.azhwarPasuram
   );
@@ -49,10 +55,10 @@ export function ShrineDetails({ shrines }: { shrines: Shrine[] }) {
   return (
     <section aria-labelledby="shrine-details-heading" className="space-y-8">
       <h2 id="shrine-details-heading" className="section-heading">
-        Shrines
+        {translateUi("shrinesHeading", language)}
       </h2>
       {detailed.map((shrine, index) => {
-        const heading = shrine.name ?? shrine.label ?? `Shrine ${index + 1}`;
+        const heading = shrine.name ?? shrine.label ?? shrineOrdinalLabel(language, index + 1);
         const headingId = `shrine-detail-${index}-heading`;
         const presentFields = shrine.templeInformation
           ? FIELD_ORDER.filter((key) => shrine.templeInformation?.[key])
@@ -70,7 +76,7 @@ export function ShrineDetails({ shrines }: { shrines: Shrine[] }) {
               <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
                 {presentFields.map((key) => (
                   <div key={key}>
-                    <dt className="eyebrow">{FIELD_LABELS[key]}</dt>
+                    <dt className="eyebrow">{translateUi(FIELD_LABEL_KEYS[key], language)}</dt>
                     <dd className="prose-body mt-1">{shrine.templeInformation?.[key]}</dd>
                   </div>
                 ))}

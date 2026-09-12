@@ -1,20 +1,22 @@
 import Link from "next/link";
 import type { SearchResult as SearchResultData } from "@/content-lib/search";
 import { DraftBadge } from "@/components/shared/DraftBadge";
+import { translateUi, type UiStringKey } from "@/lib/ui-strings";
+import type { LanguageCode } from "@/lib/preferences";
 
-/** Content-type label shown as visible text -- never color-only. */
-const TYPE_LABELS: Record<SearchResultData["type"], string> = {
-  "divya-desam": "Divya Desam",
-  book: "Book",
-  chapter: "Chapter",
-  knowledge: "Knowledge",
+/** Content-type label shown as visible text -- never color-only. Localized via ui-strings.ts, the same keys mobile's search.tsx uses. */
+const RESULT_TYPE_LABEL_KEYS: Record<SearchResultData["type"], UiStringKey> = {
+  "divya-desam": "filterDivyaDesam",
+  book: "filterBook",
+  chapter: "filterChapter",
+  knowledge: "filterKnowledge",
 };
 
-export function SearchResult({ result }: { result: SearchResultData }) {
+export function SearchResult({ result, language }: { result: SearchResultData; language: LanguageCode | null }) {
   return (
     <li className="py-4">
       <p className="eyebrow">
-        {TYPE_LABELS[result.type]}
+        {translateUi(RESULT_TYPE_LABEL_KEYS[result.type], language)}
         {result.parentTitle ? ` · ${result.parentTitle}` : ""}
       </p>
       <Link href={result.href} className="font-medium hover:underline">

@@ -46,13 +46,6 @@ test("SiteHeader links to every required top-level route", () => {
   }
 });
 
-test("SiteFooter links to a subset of the required top-level routes", () => {
-  const source = read("components/SiteFooter.tsx");
-  for (const href of ["/divya-desams", "/library", "/about"]) {
-    assert.ok(source.includes(`href: "${href}"`), `SiteFooter missing link to ${href}`);
-  }
-});
-
 test("dynamic Divya Desam/Book/Chapter routes plus the introduction route use the content loader and call notFound() rather than reading /content JSON directly", () => {
   const dd = read("app/divya-desams/[slug]/page.tsx");
   const book = read("app/library/[book]/page.tsx");

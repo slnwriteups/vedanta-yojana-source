@@ -10,21 +10,22 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
 import { bookCoverAsset } from "@/lib/book-covers";
 
 /**
- * One row of the Library index. Chapter count is read directly from the
- * Book record's own `chapterOrder` array (already loaded, no extra
- * loader call needed) -- a structural fact, not a fabricated summary.
- * Author/description are rendered only when actually present; today's
- * one real book has neither, so this section correctly renders nothing
- * extra rather than inventing them.
+ * One row of the Library index. `chapterCount` is passed down from the
+ * server page (loadChapters(book.slug).length -- chapters that actually
+ * load/validate, the same source mobile's Library index uses) rather
+ * than derived here from `book.chapterOrder.length` (the book's merely
+ * declared order), since the loader is server-only. Author/description
+ * are rendered only when actually present; today's real books have
+ * neither, so this section correctly renders nothing extra rather than
+ * inventing them.
  *
  * Client component so title/description follow the reader's language
  * preference (content-lib/i18n.ts's localizeBook), same as every other
  * content list on the site.
  */
-export function BookCard({ book }: { book: Book }) {
+export function BookCard({ book, chapterCount }: { book: Book; chapterCount: number }) {
   const { language } = useLanguage();
   const localized = useMemo(() => localizeBook(book, language), [book, language]);
-  const chapterCount = book.chapterOrder.length;
   const cover = bookCoverAsset(book.slug);
 
   return (

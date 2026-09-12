@@ -5,6 +5,7 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { ChapterListItem } from "@/components/library/ChapterListItem";
 import { LocalizedBookHeader } from "@/components/library/LocalizedBookHeader";
+import { LocalizedText } from "@/components/shared/LocalizedText";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
@@ -69,15 +70,14 @@ export default async function LibraryBookPage({
       </div>
 
       <div className="space-y-3">
-        <h2 className="section-heading">Chapters</h2>
         {chapters.length > 0 ? (
           <ol role="list" className="divide-y divide-[var(--border)]">
-            {chapters.map((chapter) => (
-              <ChapterListItem key={chapter.slug} bookSlug={book.slug} chapter={chapter} />
+            {chapters.map((chapter, index) => (
+              <ChapterListItem key={chapter.slug} bookSlug={book.slug} chapter={chapter} position={index + 1} />
             ))}
           </ol>
         ) : (
-          <p className="prose-body text-[var(--muted)]">No chapters are available yet.</p>
+          <LocalizedText stringKey="noChaptersYet" className="prose-body text-[var(--muted)]" />
         )}
       </div>
     </div>

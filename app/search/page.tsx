@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SearchClient } from "@/components/search/SearchClient";
+import { LocalizedPageHeading } from "@/components/shared/LocalizedPageHeading";
 import { siteUrl } from "@/lib/site";
 
 /**
@@ -23,19 +24,16 @@ export const metadata: Metadata = {
 };
 
 /**
- * A static shell. The query is read, and results are computed, in the
- * browser -- see components/search/SearchClient.tsx for why.
+ * A static shell -- a localized title (matching mobile's Search tab, no
+ * separate description paragraph, mirroring the same Library/Divya
+ * Desams convention) plus the client search experience. The query is
+ * read, and results are computed, in the browser -- see
+ * components/search/SearchClient.tsx for why.
  */
 export default function SearchPage() {
   return (
     <div className="space-y-8">
-      <div className="space-y-3">
-        <h1 className="page-title">Search</h1>
-        <p className="prose-body max-w-2xl text-[var(--muted)]">
-          Search across Divya Desams, the Library, and Knowledge records.
-        </p>
-      </div>
-
+      <LocalizedPageHeading stringKey="tabSearch" />
       <SearchClient />
     </div>
   );

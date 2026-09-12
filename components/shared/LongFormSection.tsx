@@ -23,11 +23,37 @@ import { looksLikeSubheading, paragraphsForReading } from "@/content-lib/text-fo
  * still exactly the same text, just visually set apart from the
  * surrounding prose instead of reading as one undifferentiated block.
  */
-export function LongFormSection({ heading, text }: { heading?: string; text: string }) {
+export function LongFormSection({
+  heading,
+  headingId: explicitHeadingId,
+  text,
+  paragraphIdPrefix,
+}: {
+  heading?: string;
+  /**
+   * Overrides the auto-derived id. Needed whenever `heading` is a
+   * localized (ta/kn/hi) string: deriving an id from non-Latin text via
+   * the a-z0-9 slug below would strip nearly every character, so two
+   * differently-headed sections could collide on the same near-empty id
+   * -- pass a fixed, script-independent id (e.g. "sthala-puranam-heading")
+   * in that case instead.
+   */
+  headingId?: string;
+  text: string;
+  /**
+   * When set, every paragraph gets `id={`${paragraphIdPrefix}-${index}`}`
+   * -- `index` is this paragraph's position in paragraphsForReading(text)'s
+   * own output, the exact index getTableOfContents() (content-lib/
+   * text-format.ts) uses as `paragraphIndex`. This is the web equivalent
+   * of mobile's jumpToSection()/paragraphRefs+measureLayout: a chapter's
+   * table-of-contents entry links straight to `#${paragraphIdPrefix}-N`
+   * rather than needing any imperative scroll code.
+   */
+  paragraphIdPrefix?: string;
+}) {
   const paragraphs = paragraphsForReading(text);
-  const headingId = heading
-    ? `${heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-heading`
-    : undefined;
+  const headingId =
+    explicitHeadingId ?? (heading ? `${heading.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-heading` : undefined);
 
   return (
     <section aria-labelledby={headingId} className="max-w-2xl space-y-3">
@@ -37,11 +63,23 @@ export function LongFormSection({ heading, text }: { heading?: string; text: str
         </h2>
       ) : null}
       <div className="prose-body space-y-5 whitespace-pre-line">
-        {paragraphs.map((paragraph, index) => (
-          <p key={index} className={looksLikeSubheading(paragraph) ? "mt-2 font-bold" : undefined}>
-            {paragraph}
-          </p>
-        ))}
+        {paragraphs.map((paragraph, index) => {
+          const classNames = [
+            looksLikeSubheading(paragraph) ? "mt-2 font-bold" : null,
+            paragraphIdPrefix ? "scroll-mt-6" : null,
+          ]
+            .filter(Boolean)
+            .join(" ");
+          return (
+            <p
+              key={index}
+              id={paragraphIdPrefix ? `${paragraphIdPrefix}-${index}` : undefined}
+              className={classNames || undefined}
+            >
+              {paragraph}
+            </p>
+          );
+        })}
       </div>
     </section>
   );

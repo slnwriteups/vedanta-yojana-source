@@ -48,9 +48,7 @@ export function SiteHeader() {
   return (
     <header className="border-b border-[var(--border)] bg-[var(--background)]">
       <div className="site-container flex items-center justify-between gap-4 py-4">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
-          Vedanta Yojana
-        </Link>
+        <span className="text-lg font-semibold tracking-tight">Vedanta Yojana</span>
 
         <button
           type="button"

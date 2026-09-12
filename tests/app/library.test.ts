@@ -77,9 +77,11 @@ test("4: the real book's status is published (finalized once its 4 misplaced cha
   assert.ok(cardSource.includes("DraftBadge"));
 });
 
-test("5: the Library index page has a graceful empty-state branch (source-level -- no rendering library is installed)", () => {
+test("5: the Library index page has a graceful, localized empty-state branch (source-level -- no rendering library is installed)", () => {
   const source = read("app/library/page.tsx");
-  assert.ok(source.includes("No books are available yet"));
+  assert.ok(source.includes(`stringKey="noBooksYet"`), "expected the empty state to render the localized noBooksYet ui-string, not hard-coded English");
+  const uiStrings = read("lib/ui-strings.ts");
+  assert.match(uiStrings, /noBooksYet:\s*\{[^}]*en:\s*"No books are available yet\."/);
 });
 
 // ---------------------------------------------------------------------------

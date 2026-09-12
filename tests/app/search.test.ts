@@ -84,7 +84,7 @@ test("32: the search page has a distinct initial-state branch for no/blank query
   assert.ok(resultsSource.includes("Enter a search term"));
 });
 
-test("33/34: the search query is read from the URL and preserved in the form input", () => {
+test("33/34: the search query is read from the URL, preserved in the form input, and now filters live on every keystroke (matching mobile's onChangeText behavior)", () => {
   // The read moved from the server page (searchParams) to the browser
   // (useSearchParams) when the static export removed the server. The
   // contract -- /search?q=... drives both the results and the visible
@@ -92,14 +92,16 @@ test("33/34: the search query is read from the URL and preserved in the form inp
   const clientSource = read("components/search/SearchClient.tsx");
   assert.ok(clientSource.includes("useSearchParams"));
   assert.ok(clientSource.includes('searchParams.get("q")'));
+  assert.ok(clientSource.includes("handleChange"), "expected a live onChange handler, not submit-only filtering");
   const formSource = read("components/search/SearchForm.tsx");
-  assert.ok(formSource.includes("defaultValue={query}"));
+  assert.ok(formSource.includes("value={query}"), "expected a controlled input so typing filters live");
 });
 
-test("35/36: SearchResult renders the result title and a visible (non-color-only) type label", () => {
+test("35/36: SearchResult renders the result title and a visible (non-color-only), localized type label", () => {
   const source = read("components/search/SearchResult.tsx");
   assert.ok(source.includes("result.title"));
-  assert.ok(source.includes("TYPE_LABELS"));
+  assert.ok(source.includes("RESULT_TYPE_LABEL_KEYS"));
+  assert.ok(source.includes("translateUi"), "expected the type label to be localized, matching mobile's search.tsx");
 });
 
 test("37: SearchResult renders the parent book title for chapter results", () => {
@@ -107,9 +109,18 @@ test("37: SearchResult renders the parent book title for chapter results", () =>
   assert.ok(source.includes("result.parentTitle"));
 });
 
-test("38: SearchResults has a distinct no-results-state branch", () => {
+test("38: SearchResults has a distinct, localized no-results-state branch matching mobile's noResultsLabel() wording", () => {
   const source = read("components/search/SearchResults.tsx");
-  assert.ok(source.includes("No results found"));
+  assert.ok(source.includes("noResultsLabel"));
+  const uiStrings = read("lib/ui-strings.ts");
+  assert.match(uiStrings, /export function noResultsLabel[\s\S]{0,200}`No results for "\$\{query\}"\.`/);
+});
+
+test("content-type filter chips (Divya Desam/Book/Chapter/Knowledge) exist on web, matching mobile's search.tsx", () => {
+  const source = read("components/search/SearchClient.tsx");
+  assert.ok(source.includes("CONTENT_TYPE_FILTERS"));
+  assert.ok(source.includes("filterResultsByType"));
+  assert.ok(source.includes("toggleType"));
 });
 
 test("39: no migration metadata appears anywhere in the search UI source", () => {

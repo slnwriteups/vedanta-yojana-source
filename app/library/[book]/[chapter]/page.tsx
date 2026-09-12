@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { loadBook, loadBooks, loadChapter, loadChapters } from "@/content-lib/loader";
+import { findAdjacentChapters } from "@/content-lib/chapter-navigation.ts";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { RecordImages } from "@/components/shared/RecordImages";
@@ -61,6 +62,9 @@ export default async function LibraryChapterPage({
   if (!book) notFound();
   const chapter = loadChapter(bookSlug, chapterSlug);
   if (!chapter) notFound();
+  const chapters = loadChapters(bookSlug);
+  const position = chapters.findIndex((c) => c.slug === chapterSlug);
+  const { previous, next } = findAdjacentChapters(chapters, chapterSlug);
 
   return (
     <div className="space-y-8">
@@ -82,7 +86,13 @@ export default async function LibraryChapterPage({
       <ReadingPositionTracker bookSlug={book.slug} chapterSlug={chapter.slug} />
 
       <LocalizedChapterBody
+        book={book}
+        bookSlug={book.slug}
         chapter={chapter}
+        position={position}
+        total={chapters.length}
+        previous={previous}
+        next={next}
         badge={<DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />}
         bookmarkButton={<BookmarkButton bookSlug={book.slug} chapterSlug={chapter.slug} />}
         images={<RecordImages images={chapter.images} />}

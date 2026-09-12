@@ -4,7 +4,7 @@ import { loadKnowledgeRecord } from "@/content-lib/loader";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { RecordImages } from "@/components/shared/RecordImages";
-import { LongFormSection } from "@/components/shared/LongFormSection";
+import { LocalizedKnowledgeContent } from "@/components/knowledge/LocalizedKnowledgeContent";
 import { RelatedContentLinks } from "@/components/knowledge/RelatedContentLinks";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
@@ -55,18 +55,11 @@ export default function DivyaDesamsIntroductionPage() {
         current={record.title}
       />
 
-      <div className="space-y-2">
-        <DraftBadge status={record.status} needsReview={record.migration.needsReview} />
-        <h1 className="page-title">{record.title}</h1>
-      </div>
-
-      <RecordImages images={record.images} />
-
-      {record.body ? (
-        <LongFormSection text={record.body} />
-      ) : (
-        <p className="prose-body text-[var(--muted)]">No content is available yet.</p>
-      )}
+      <LocalizedKnowledgeContent
+        record={record}
+        badge={<DraftBadge status={record.status} needsReview={record.migration.needsReview} />}
+        images={<RecordImages images={record.images} />}
+      />
 
       <RelatedContentLinks items={record.relatedContent} />
     </div>
