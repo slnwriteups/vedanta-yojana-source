@@ -43,6 +43,21 @@ const EKADASHI_ENDPOINT = "https://samekadasi-324123.uc.r.appspot.com/rpc";
 // the live /sankalpam widget, not assumed from the Ekadasi one.
 const SANKALPAM_ENDPOINT = "https://samekadasi-324123.uc.r.appspot.com/rpc";
 
+/**
+ * Both RPC endpoints above send no Access-Control-Allow-Origin header at
+ * all (confirmed directly, not assumed) -- a real browser blocks the
+ * response outright, unlike mobile's React Native fetch, which isn't
+ * subject to browser CORS. This Cloudflare Worker (cloudflare/
+ * panchangam-proxy/worker.js) fetches them server-side and re-adds a
+ * permissive CORS header; it's hard-allowlisted to only these two
+ * hostnames, so it can't be abused as an open proxy to anything else.
+ */
+const PANCHANGAM_PROXY_BASE_URL = "https://vedanta-yojana.soft-rice-6620.workers.dev";
+
+function proxied(url: string): string {
+  return `${PANCHANGAM_PROXY_BASE_URL}/?url=${encodeURIComponent(url)}`;
+}
+
 const FETCH_TIMEOUT_MS = 8000;
 const LOCATION_TIMEOUT_MS = 8000;
 
@@ -378,9 +393,9 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
     const dateParam = formatDateParam(date);
     const timeParam = formatTimeParam(date);
     const [dailyHtml, ekadashiHtml, sankalpamHtml] = await Promise.all([
-      fetchRpcHtml(buildDailyCalUrl(location, dateParam)),
-      fetchRpcHtml(buildEkadashiUrl(location, dateParam)),
-      fetchRpcHtml(buildSankalpamUrl(location, dateParam, timeParam)),
+      fetchRpcHtml(proxied(buildDailyCalUrl(location, dateParam))),
+      fetchRpcHtml(proxied(buildEkadashiUrl(location, dateParam))),
+      fetchRpcHtml(proxied(buildSankalpamUrl(location, dateParam, timeParam))),
     ]);
 
     const parsedDaily = parseDailyCalendar(dailyHtml);
