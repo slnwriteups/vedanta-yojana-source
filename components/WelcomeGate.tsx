@@ -21,17 +21,16 @@ import { useEffect, useRef, useState } from "react";
 
 const SEEN_KEY = "vy-welcome-seen";
 /**
- * How long to keep the welcome screen visible after "Begin" is tapped
- * before actually navigating away. play() on an <audio> element
- * resolves as soon as playback STARTS, not when it's audible/finished --
- * dismissing the screen immediately in that same tick (the original bug
- * here) meant the screen was already gone by the time any sound
- * reached the speaker. This gives the chime a genuine moment to be
- * heard while the welcome screen is still on screen, matching "plays on
- * the welcome screen, then moves to the next page" rather than "moves
- * on, then plays."
+ * Absolute worst-case wait before begin() gives up and navigates away
+ * regardless of the audio's own state -- covers a stalled/slow
+ * connection, a playback error, or any other case where the "ended"
+ * event never fires. Comfortably above the real clip's own ~17.5s
+ * duration (confirmed via `afinfo public/audio/vy-welcome.mp3`) so it
+ * never cuts a normal, successful playback short; only ever kicks in
+ * when something has actually gone wrong. Never strand the visitor on
+ * the welcome screen waiting for audio that isn't coming.
  */
-const BEGIN_DELAY_MS = 1200;
+const AUDIO_FALLBACK_TIMEOUT_MS = 25000;
 
 export function WelcomeGate({
   children,
@@ -65,23 +64,34 @@ export function WelcomeGate({
     if (dismissing) return;
     setDismissing(true);
     window.sessionStorage.setItem(SEEN_KEY, "1");
-    // A real click/tap is a genuine user gesture, so this play() call
-    // (unlike the mount-time attempt above) is NOT blocked by the
-    // browser's autoplay policy -- this is the actual, working fallback
-    // the comment above already described, not just the mount attempt.
-    // The screen itself doesn't dismiss until BEGIN_DELAY_MS later (see
-    // its own comment) so the chime is genuinely heard while the
-    // welcome screen is still showing, not just after it's gone.
-    const playPromise = audioRef.current?.play();
-    if (!playPromise) {
+    const audio = audioRef.current;
+    if (!audio) {
       setShowWelcome(false);
       return;
     }
-    playPromise
-      .then(() => {
-        window.setTimeout(() => setShowWelcome(false), BEGIN_DELAY_MS);
-      })
-      .catch(() => setShowWelcome(false));
+
+    let dismissed = false;
+    function dismiss() {
+      if (dismissed) return;
+      dismissed = true;
+      setShowWelcome(false);
+    }
+
+    // Wait for the clip to actually finish ("ended") before navigating
+    // away -- the welcome screen is meant to play the chime out in
+    // full, not cut it short the instant "Begin" is tapped.
+    audio.addEventListener("ended", dismiss, { once: true });
+    // If playback never starts or never finishes for some other reason
+    // (blocked, a network/decoding error, a stalled connection), don't
+    // strand the visitor here indefinitely.
+    audio.addEventListener("error", dismiss, { once: true });
+    window.setTimeout(dismiss, AUDIO_FALLBACK_TIMEOUT_MS);
+
+    // A real click/tap is a genuine user gesture, so this play() call
+    // (unlike the mount-time attempt above) is NOT blocked by the
+    // browser's autoplay policy. If it was already playing from the
+    // mount-time attempt succeeding, this is a harmless no-op.
+    audio.play().catch(dismiss);
   }
 
   return (
@@ -124,7 +134,10 @@ export function WelcomeGate({
               disabled={dismissing}
               className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--surface)] transition-opacity hover:opacity-90 disabled:opacity-70"
             >
-              Begin
+              {/* Visible feedback for the ~17s wait while the chime plays
+                  out in full -- otherwise a silently disabled button for
+                  that long reads as stuck rather than intentional. */}
+              {dismissing ? "Playing…" : "Begin"}
             </button>
             {/*
              * Matches mobile/components/WelcomeScreen.tsx: "Begin" is the
