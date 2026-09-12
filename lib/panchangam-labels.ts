@@ -17,12 +17,23 @@ import type { LanguageCode } from "./preferences";
  * English value for anything not yet mapped -- a missing entry
  * degrades to English, never a blank or wrong label.
  *
- * Deliberately does NOT cover `festival`, `upcomingEkadashiText`, or
- * `sankalpamText`: those are open-ended prose the calendar API
- * generates fresh per day (dozens of distinct festival names across a
- * year, a full sentence for Ekadashi/Sankalpam), not a small fixed
- * vocabulary -- there is no lookup table that could cover them
- * correctly, unlike the ~45 fixed paksha/tithi/nakshatram values below.
+ * Deliberately does NOT cover `festival`: open-ended prose the calendar
+ * API generates fresh per day (dozens of distinct festival names across
+ * a year), not a small fixed vocabulary -- there is no lookup table
+ * that could cover it correctly, unlike the ~45 fixed paksha/tithi/
+ * nakshatram values below.
+ *
+ * `upcomingEkadashiText`/`sankalpamText` ARE partially covered, by
+ * localizeUpcomingEkadashi()/localizeSankalpamText() below: the actual
+ * date/time/Sanskrit-declaration values inside them are still
+ * open-ended API prose left completely untouched, but the small set of
+ * FIXED English wrapper phrasing around those values ("Next Ekadasi:",
+ * "Sankalpam for X on Y At Z IST and valid through W of following
+ * day:") is itself a closed, known vocabulary -- lib/
+ * panchangam-service.ts's own parseUpcomingEkadashi()/parseSankalpam()
+ * always produce exactly this shape, so it can be safely
+ * pattern-matched and re-templated per language without ever altering
+ * the dynamic values themselves.
  */
 
 const PAKSHA_LABELS: Record<string, { ta: string; kn: string; hi: string }> = {
@@ -99,4 +110,58 @@ export function tithiLabel(tithi: string, language: LanguageCode | null): string
 export function nakshatramLabel(nakshatram: string, language: LanguageCode | null): string {
   if (!language || !nakshatram) return nakshatram;
   return NAKSHATRAM_LABELS[nakshatram]?.[language] ?? nakshatram;
+}
+
+/**
+ * parseUpcomingEkadashi() (lib/panchangam-service.ts) always produces
+ * exactly "Next Ekadasi: {dateSentence}" (or one of the offline/
+ * location-unavailable fallback sentences, which don't match this
+ * shape and are returned untouched). Only the fixed "Next Ekadasi:"
+ * label is replaced; the date sentence itself is left byte-for-byte as
+ * the API returned it.
+ */
+const NEXT_EKADASHI_PREFIX: Record<LanguageCode, string> = {
+  ta: "அடுத்த ஏகாதசி: ",
+  kn: "ಮುಂದಿನ ಏಕಾದಶಿ: ",
+  hi: "अगली एकादशी: ",
+};
+
+export function localizeUpcomingEkadashi(text: string, language: LanguageCode | null): string {
+  if (!language) return text;
+  const match = text.match(/^Next Ekadasi:\s*(.*)$/i);
+  if (!match) return text;
+  return `${NEXT_EKADASHI_PREFIX[language]}${match[1]}`;
+}
+
+/**
+ * parseSankalpam() (lib/panchangam-service.ts) always produces exactly
+ * "Sankalpam for {location} on {date} At {time} IST and valid through
+ * {validUntil} of following day: {declaration}" (or "" when
+ * unavailable, which doesn't match this shape and is returned
+ * untouched). Only the fixed English wrapper phrasing is re-templated
+ * per language; {location}/{date}/{time}/{validUntil} are substituted
+ * verbatim, and {declaration} -- the Sanskrit sankalpam formula itself
+ * ("parAbhava nAma saMvathsare...") -- is appended completely
+ * untranslated, exactly as mobile's own Sankalpam card also always
+ * renders it in Sanskrit regardless of UI language.
+ */
+const SANKALPAM_PATTERN =
+  /^Sankalpam for (.+?) on (.+?) At (.+?) IST and valid through (.+?) of following day:\s*(.*)$/i;
+
+const SANKALPAM_INTRO: Record<LanguageCode, (location: string, date: string, time: string, validUntil: string) => string> = {
+  ta: (location, date, time, validUntil) =>
+    `${location} க்கான சங்கல்பம் — ${date}, ${time} IST முதல் மறுநாள் ${validUntil} வரை செல்லுபடியாகும்:`,
+  kn: (location, date, time, validUntil) =>
+    `${location} ಗಾಗಿ ಸಂಕಲ್ಪ — ${date}, ${time} IST ನಿಂದ ಮರುದಿನ ${validUntil} ವರೆಗೆ ಮಾನ್ಯ:`,
+  hi: (location, date, time, validUntil) =>
+    `${location} के लिए संकल्प — ${date}, ${time} IST से अगले दिन ${validUntil} तक मान्य:`,
+};
+
+export function localizeSankalpamText(text: string, language: LanguageCode | null): string {
+  if (!language) return text;
+  const match = text.match(SANKALPAM_PATTERN);
+  if (!match) return text;
+  const [, location, date, time, validUntil, declaration] = match;
+  const intro = SANKALPAM_INTRO[language](location, date, time, validUntil);
+  return declaration ? `${intro} ${declaration}` : intro;
 }

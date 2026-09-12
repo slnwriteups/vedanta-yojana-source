@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context";
 import { useT } from "@/lib/ui-strings";
-import { nakshatramLabel, pakshaLabel, tithiLabel } from "@/lib/panchangam-labels";
+import { localizeUpcomingEkadashi, nakshatramLabel, pakshaLabel, tithiLabel } from "@/lib/panchangam-labels";
 import type { PanchangamData } from "@/lib/panchangam-service";
 
 /**
@@ -38,7 +38,10 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
             {panchangam.upcomingEkadashiText ? (
-              <Row label={t("homeCalendarEkadashiLabel")} value={panchangam.upcomingEkadashiText} />
+              <Row
+                label={t("homeCalendarEkadashiLabel")}
+                value={localizeUpcomingEkadashi(panchangam.upcomingEkadashiText, language)}
+              />
             ) : null}
           </>
         ) : (

@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context";
 import { useT, type UiStringKey } from "@/lib/ui-strings";
-import { pakshaLabel, tithiLabel } from "@/lib/panchangam-labels";
+import { localizeUpcomingEkadashi, pakshaLabel, tithiLabel } from "@/lib/panchangam-labels";
 import type { PanchangamData } from "@/lib/panchangam-service";
 
 /**
@@ -28,7 +28,9 @@ export function HomeHeader({ panchangam }: { panchangam: PanchangamData | null }
   const pakshaTithi = panchangam
     ? [pakshaLabel(panchangam.paksha, language), tithiLabel(panchangam.tithi, language)].filter(Boolean).join(" ")
     : "";
-  const bannerText = panchangam ? [panchangam.upcomingEkadashiText, pakshaTithi].filter(Boolean).join(" • ") : "";
+  const bannerText = panchangam
+    ? [localizeUpcomingEkadashi(panchangam.upcomingEkadashiText, language), pakshaTithi].filter(Boolean).join(" • ")
+    : "";
 
   return (
     <div className="space-y-1">

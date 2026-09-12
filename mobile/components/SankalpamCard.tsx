@@ -2,6 +2,8 @@ import { Platform, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { shadows } from "../shadows";
 import { useT } from "../ui-strings.ts";
+import { useLanguage } from "../language-context.ts";
+import { localizeSankalpamText } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
 
 /**
@@ -11,10 +13,16 @@ import type { PanchangamData } from "../services/panchangamService.ts";
  * recited in full. Renders nothing while `panchangam` is still loading
  * (null) or once loaded with no usable Sankalpam text (offline
  * fallback) -- never a placeholder card with empty content.
+ *
+ * The fixed English wrapper phrasing ("Sankalpam for X on Y At Z...")
+ * is re-templated per language via localizeSankalpamText
+ * (panchangam-labels.ts); the Sanskrit declaration itself stays
+ * untranslated.
  */
 export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | null }) {
   const theme = useTheme();
   const t = useT();
+  const { language } = useLanguage();
 
   if (!panchangam || !panchangam.sankalpamText) return null;
 
@@ -33,7 +41,7 @@ export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | nul
             },
           ]}
         >
-          {panchangam.sankalpamText}
+          {localizeSankalpamText(panchangam.sankalpamText, language)}
         </Text>
       </View>
     </View>

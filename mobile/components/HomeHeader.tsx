@@ -3,7 +3,7 @@ import { Animated, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { useT, type UiStringKey } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
-import { pakshaLabel, tithiLabel } from "../panchangam-labels.ts";
+import { localizeUpcomingEkadashi, pakshaLabel, tithiLabel } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
 
 /**
@@ -48,7 +48,9 @@ export function HomeHeader({ panchangam }: { panchangam: PanchangamData | null }
   const pakshaTithi = panchangam
     ? [pakshaLabel(panchangam.paksha, language), tithiLabel(panchangam.tithi, language)].filter(Boolean).join(" ")
     : "";
-  const bannerText = panchangam ? [panchangam.upcomingEkadashiText, pakshaTithi].filter(Boolean).join(" • ") : "";
+  const bannerText = panchangam
+    ? [localizeUpcomingEkadashi(panchangam.upcomingEkadashiText, language), pakshaTithi].filter(Boolean).join(" • ")
+    : "";
 
   return (
     <View style={styles.container}>

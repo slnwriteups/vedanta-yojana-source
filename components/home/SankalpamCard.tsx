@@ -1,6 +1,8 @@
 "use client";
 
+import { useLanguage } from "@/lib/language-context";
 import { useT } from "@/lib/ui-strings";
+import { localizeSankalpamText } from "@/lib/panchangam-labels";
 import type { PanchangamData } from "@/lib/panchangam-service";
 
 /**
@@ -11,8 +13,14 @@ import type { PanchangamData } from "@/lib/panchangam-service";
  * Renders nothing while `panchangam` is still loading (null) or once
  * loaded with no usable Sankalpam text (offline fallback) -- never a
  * placeholder card with empty content.
+ *
+ * The fixed English wrapper phrasing ("Sankalpam for X on Y At Z...")
+ * is re-templated per language via localizeSankalpamText
+ * (lib/panchangam-labels.ts); the Sanskrit declaration itself stays
+ * untranslated, exactly as it does on mobile.
  */
 export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | null }) {
+  const { language } = useLanguage();
   const t = useT();
 
   if (!panchangam || !panchangam.sankalpamText) return null;
@@ -25,7 +33,9 @@ export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | nul
           a taller line-height -- a Sankalpam is dense, comma-separated
           Sanskrit prose. */}
       <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5">
-        <p className="prose-body whitespace-pre-line">{panchangam.sankalpamText}</p>
+        <p className="prose-body whitespace-pre-line">
+          {localizeSankalpamText(panchangam.sankalpamText, language)}
+        </p>
       </div>
     </div>
   );
