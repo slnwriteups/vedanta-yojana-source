@@ -1,0 +1,27 @@
+{
+  "title": "Invocation",
+  "slug": "invocation",
+  "order": 1,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "upload:jaya#invocation",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "Invocation\n\nnārāyaṇaṁ namaskṛtya naraṁ caiva narottamam\ndevīṁ sarasvatīṁ vyāsaṁ tato jayam udīrayet\n\nvyāsaṁ vaśiṣṭha-naptāraṁ śakteḥ pautram akalmaṣam\nparāśarātmajaṁ vande śukatātaṁ taponidhim",
+  "images": [],
+  "translations": {
+    "ta": {
+      "title": "மங்களாசரணம்",
+      "body": "மங்களாசரணம்\n\nநாராயணம் நமஸ்க்ருத்ய நரம் சைவ நரோத்தமம் ।\nதேவீம் ஸரஸ்வதீம் வ்யாஸம் ததோ ஜயமுதீரயேத் ॥\n\nவ்யாஸம் வஶிஷ்டநப்தாரம் ஶக்தேஃ பௌத்ரமகல்மஷம் ।\nபராஶராத்மஜம் வந்தே ஶுகதாதம் தபோநிதிம் ॥"
+    },
+    "kn": {
+      "title": "ಮಂಗಳಾಚರಣ",
+      "body": "ಮಂಗಳಾಚರಣ\n\nನಾರಾಯಣಂ ನಮಸ್ಕೃತ್ಯ ನರಂ ಚೈವ ನರೋತ್ತಮಮ್ ।\nದೇವೀಂ ಸರಸ್ವತೀಂ ವ್ಯಾಸಂ ತತೋ ಜಯಮುದೀರಯೇತ್ ॥\n\nವ್ಯಾಸಂ ವಶಿಷ್ಠನಪ್ತಾರಂ ಶಕ್ತೇಃ ಪೌತ್ರಮಕಲ್ಮಷಮ್ ।\nಪರಾಶರಾತ್ಮಜಂ ವಂದೇ ಶುಕತಾತಂ ತಪೋನಿಧಿಮ್ ॥"
+    },
+    "hi": {
+      "title": "मंगलाचरण",
+      "body": "मंगलाचरण\n\nनारायणं नमस्कृत्य नरं चैव नरोत्तमम् ।\nदेवीं सरस्वतीं व्यासं ततो जयमुदीरयेत् ॥\n\nव्यासं वशिष्ठनप्तारं शक्तेः पौत्रमकल्मषम् ।\nपराशरात्मजं वन्दे शुकतातं तपोनिधिम् ॥"
+    }
+  }
+}

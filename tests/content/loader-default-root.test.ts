@@ -98,7 +98,7 @@ test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book",
   assert.ok(jayaBook);
   assert.equal(jayaBook?.title, "JAYA: A Journey of the Mahabharata");
   const jayaChapters = loadChapters("jaya");
-  assert.equal(jayaChapters.length, 69);
+  assert.equal(jayaChapters.length, 70);
 });
 
 test("B: loadKnowledge()/loadKnowledgeRecord() resolve the real Knowledge record", () => {

@@ -79,7 +79,7 @@ test("exactly 1 held-back unresolved record exists (Page150)", () => {
   assert.equal(unresolvedFiles.length, 1);
 });
 
-test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+70(jaya: 1 book.json + 69 chapters) = 357", () => {
+test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+71(jaya: 1 book.json + 70 chapters) = 358", () => {
   // Phase 6E added content/_provenance/ -- one small JSON file per Divya
   // Desam record that received a category-B text supplement and/or a
   // book-sourced image/shrine from "108 Divyadesam 2nd Edition.pdf" (101
@@ -134,9 +134,13 @@ test("no unexpected content records: total /content file count matches exactly 1
   // internal sub-sections (75 total, one Chapter record per section
   // instead of one per Kanda -- see content/library/sri-rama-charithram/
   // book.json's chapterOrder), replacing the 7 chapter files with 75:
-  // 289 -> 357 (net +68, the book.json itself unchanged).
+  // 289 -> 357 (net +68, the book.json itself unchanged). JAYA's source
+  // PDF included a distinct front-matter Invocation page (preceding
+  // Chapter 1, not part of it), split out as its own chapter record per
+  // content/library/jaya/book.json's chapterOrder: 357 -> 358 (net +1,
+  // jaya: 69 -> 70 chapters).
   const total = countFilesRecursive(path.join(REPO_ROOT, "content"));
-  assert.equal(total, 357);
+  assert.equal(total, 358);
 });
 
 function countFilesRecursive(dir: string): number {
