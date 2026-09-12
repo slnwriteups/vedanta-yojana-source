@@ -82,6 +82,20 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
+  /*
+   * The default UI sans stack (Tailwind's own preflight default,
+   * repeated explicitly here) with a real Devanagari-shaping-capable
+   * font (app/layout.tsx's next/font/google Noto Sans Devanagari,
+   * exposed as --font-devanagari) layered in as a fallback. Latin/IAST
+   * text still resolves through the system sans stack exactly as
+   * before; only Devanagari-range characters (a quoted Sanskrit shloka,
+   * or the whole UI when Hindi is selected) fall through to this font
+   * instead of whatever Devanagari substitute a given browser/OS
+   * happens to pick on its own.
+   */
+  font-family:
+    ui-sans-serif, system-ui, sans-serif, var(--font-devanagari), "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 /* Visible focus indicator for every interactive element, everywhere --

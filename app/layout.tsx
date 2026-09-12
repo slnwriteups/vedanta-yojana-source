@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Noto_Sans_Devanagari } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WelcomeGate } from "@/components/WelcomeGate";
 import { OnboardingGate } from "@/components/OnboardingGate";
@@ -9,6 +10,28 @@ import "./globals.css";
 
 const WELCOME_IMAGE_UUID = "a0635841-903d-4856-90a8-eca5becb3c5e";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+/**
+ * A real Devanagari-shaping-capable font (correct conjuncts, matra
+ * reordering, reph, etc.), self-hosted at build time -- no runtime
+ * request to Google's CDN, and no layout-shift-prone external
+ * stylesheet. This was never actually a font problem before now (the
+ * Sanskrit quoted in the JAYA book had literally missing conjunct
+ * characters, a data-extraction bug, fixed at the content level) --
+ * but the browser's default UI font otherwise has no Devanagari glyphs
+ * at all, so without an explicit fallback the OS's own substitute font
+ * varied in quality/style across browsers. Exposed as a CSS variable
+ * (`--font-devanagari`) and layered in globals.css's `body` font stack
+ * as a fallback -- Latin/IAST text keeps using the primary UI font;
+ * only Devanagari-range characters (Hindi UI copy, or a quoted Sanskrit
+ * shloka in any language) fall through to this font.
+ */
+const notoSansDevanagari = Noto_Sans_Devanagari({
+  subsets: ["devanagari"],
+  weight: ["400", "600", "700"],
+  variable: "--font-devanagari",
+  display: "swap",
+});
 
 const siteOrigin = getSiteOrigin();
 
@@ -60,7 +83,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={notoSansDevanagari.variable}>
       <body className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)] antialiased">
         <AppProviders>
           <WelcomeGate imageHref={resolveImageHref(WELCOME_IMAGE_UUID)} audioHref={`${BASE_PATH}/audio/vy-welcome.mp3`}>
