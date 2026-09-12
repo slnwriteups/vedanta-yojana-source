@@ -20,6 +20,18 @@ import { useEffect, useRef, useState } from "react";
  */
 
 const SEEN_KEY = "vy-welcome-seen";
+/**
+ * How long to keep the welcome screen visible after "Begin" is tapped
+ * before actually navigating away. play() on an <audio> element
+ * resolves as soon as playback STARTS, not when it's audible/finished --
+ * dismissing the screen immediately in that same tick (the original bug
+ * here) meant the screen was already gone by the time any sound
+ * reached the speaker. This gives the chime a genuine moment to be
+ * heard while the welcome screen is still on screen, matching "plays on
+ * the welcome screen, then moves to the next page" rather than "moves
+ * on, then plays."
+ */
+const BEGIN_DELAY_MS = 1200;
 
 export function WelcomeGate({
   children,
@@ -31,6 +43,7 @@ export function WelcomeGate({
   audioHref: string;
 }) {
   const [showWelcome, setShowWelcome] = useState(false);
+  const [dismissing, setDismissing] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -49,16 +62,26 @@ export function WelcomeGate({
   }, [showWelcome]);
 
   function begin() {
+    if (dismissing) return;
+    setDismissing(true);
     window.sessionStorage.setItem(SEEN_KEY, "1");
     // A real click/tap is a genuine user gesture, so this play() call
     // (unlike the mount-time attempt above) is NOT blocked by the
     // browser's autoplay policy -- this is the actual, working fallback
     // the comment above already described, not just the mount attempt.
-    // Left playing (not paused) so it's audible over the transition into
-    // the app rather than being silenced the instant it could finally
-    // start.
-    void audioRef.current?.play().catch(() => {});
-    setShowWelcome(false);
+    // The screen itself doesn't dismiss until BEGIN_DELAY_MS later (see
+    // its own comment) so the chime is genuinely heard while the
+    // welcome screen is still showing, not just after it's gone.
+    const playPromise = audioRef.current?.play();
+    if (!playPromise) {
+      setShowWelcome(false);
+      return;
+    }
+    playPromise
+      .then(() => {
+        window.setTimeout(() => setShowWelcome(false), BEGIN_DELAY_MS);
+      })
+      .catch(() => setShowWelcome(false));
   }
 
   return (
@@ -98,7 +121,8 @@ export function WelcomeGate({
             <button
               type="button"
               onClick={begin}
-              className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--surface)] transition-opacity hover:opacity-90"
+              disabled={dismissing}
+              className="rounded-md bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-[var(--surface)] transition-opacity hover:opacity-90 disabled:opacity-70"
             >
               Begin
             </button>
