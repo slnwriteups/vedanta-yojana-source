@@ -190,6 +190,23 @@ export function getTableOfContents(text: string, title: string): TableOfContents
     if (LIST_MARKER.test(paragraph)) return;
     if (paragraph.length < MIN_LABEL_LENGTH || !looksLikeSubheading(paragraph)) return;
 
+    // A quoted verse printed as a 4-line block -- a Devanagari couplet,
+    // blank line, then its IAST-transliteration couplet (e.g. JAYA's
+    // Bhagavad Gita shlokas) -- has its transliteration's SECOND pada
+    // pass every check here by accident: short, no terminal punctuation
+    // (the transliteration convention drops the daṇḍa), followed by
+    // substantial prose. (An earlier version of this check excluded any
+    // candidate whose immediately-preceding paragraph also
+    // looksLikeSubheading() -- too broad: it also silently ate every
+    // real heading in this corpus that happens to follow a short
+    // "Meaning:" label, e.g. Artha Panchakam's actual section titles.)
+    // Detected structurally instead of by guessing at Sanskrit
+    // vocabulary: if the paragraph TWO positions back contains
+    // Devanagari script, this one is the tail end of that same verse
+    // block, not a standalone heading -- Devanagari appears nowhere
+    // else in the corpus today.
+    if (index >= 2 && /[ऀ-ॿ]/.test(paragraphs[index - 2])) return;
+
     const next = paragraphs[index + 1] ?? "";
     if (LIST_MARKER.test(next) || looksLikeSubheading(next)) return;
     if (next.length < MIN_FOLLOWING_LENGTH) return;
