@@ -108,11 +108,20 @@ export function WelcomeGate({
        */}
       <audio ref={audioRef} src={audioHref} preload="auto" />
       {showWelcome ? (
+        // Explicit h-dvh (dynamic viewport height), not just inset-0's
+        // implicit sizing -- on mobile Safari a `fixed` element's height
+        // from `inset-0` alone can be computed against the LARGE
+        // viewport (address bar hidden) even while the bar is actually
+        // showing, so centered content sits higher than the real
+        // visible center and can require a scroll to see the bottom.
+        // `dvh` tracks the actual visible viewport as the browser
+        // chrome shows/hides, keeping the image/heading/button block
+        // genuinely centered on a real phone.
         <div
           role="dialog"
           aria-modal="true"
           aria-labelledby="welcome-heading"
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 overflow-y-auto bg-[var(--background)] px-6 py-10 text-center"
+          className="fixed inset-0 z-[100] flex h-dvh w-screen flex-col items-center justify-center gap-6 overflow-y-auto bg-[var(--background)] px-6 py-10 text-center"
         >
           {imageHref ? (
             <img

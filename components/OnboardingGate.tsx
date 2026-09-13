@@ -46,11 +46,17 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
   return (
     <>
       {children}
+      {/* h-dvh, not just inset-0's implicit sizing -- see WelcomeGate.tsx's
+          identical comment: on mobile Safari a `fixed` element sized only
+          via inset-0 can be computed against the browser's large (address-
+          bar-hidden) viewport even while the bar is showing, so centered
+          content isn't actually centered in what's visible. dvh tracks the
+          real visible viewport as the chrome shows/hides. */}
       <div
         role="dialog"
         aria-modal="true"
         aria-labelledby="onboarding-heading"
-        className="fixed inset-0 z-[90] flex flex-col items-center justify-center gap-8 overflow-y-auto bg-[var(--background)] px-6 py-10"
+        className="fixed inset-0 z-[90] flex h-dvh w-screen flex-col items-center justify-center gap-8 overflow-y-auto bg-[var(--background)] px-6 py-10"
       >
         <div className="w-full max-w-sm space-y-8">
           <div className="space-y-1 text-center">

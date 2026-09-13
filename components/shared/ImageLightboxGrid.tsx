@@ -57,7 +57,7 @@ export function ImageLightboxGrid({ images, className }: { images: LightboxImage
           type="button"
           onClick={() => setOpenIndex(null)}
           aria-label={translateUi("closeImage", language)}
-          className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 bg-[var(--overlay)] p-4"
+          className="fixed inset-0 z-50 flex h-dvh w-screen flex-col items-center justify-center gap-4 bg-[var(--overlay)] p-4"
         >
           <img src={open.href} alt={open.alt} className="max-h-[70vh] max-w-[92vw] object-contain" />
           <span className="text-sm text-[var(--background)] opacity-80">
