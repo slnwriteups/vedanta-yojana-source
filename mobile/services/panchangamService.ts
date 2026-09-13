@@ -313,7 +313,10 @@ function parseUpcomingEkadashi(html: string): string {
   const firstSentence = text.split(/\.\s/)[0]?.trim();
   if (!firstSentence) return "";
   const withPeriod = firstSentence.endsWith(".") ? firstSentence : `${firstSentence}.`;
-  return withPeriod.replace(/^Next Ekadasi for \S+ is on\s*/i, "Next Ekadasi: ");
+  // Non-greedy `.+?`, not `\S+` -- most real city names are one word, but
+  // some (a multi-word geocoded name) aren't, and `\S+` would silently fail
+  // to match those, leaving the raw English sentence completely unprocessed.
+  return withPeriod.replace(/^Next Ekadasi for .+? is on\s*/i, "Next Ekadasi: ");
 }
 
 /**

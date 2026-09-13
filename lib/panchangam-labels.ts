@@ -136,32 +136,49 @@ export function localizeUpcomingEkadashi(text: string, language: LanguageCode | 
 /**
  * parseSankalpam() (lib/panchangam-service.ts) always produces exactly
  * "Sankalpam for {location} on {date} At {time} IST and valid through
- * {validUntil} of following day: {declaration}" (or "" when
+ * {validUntil}[ of following day]: {declaration}" (or "" when
  * unavailable, which doesn't match this shape and is returned
- * untouched). Only the fixed English wrapper phrasing is re-templated
- * per language; {location}/{date}/{time}/{validUntil} are substituted
- * verbatim, and {declaration} -- the Sanskrit sankalpam formula itself
- * ("parAbhava nAma saMvathsare...") -- is appended completely
- * untranslated, exactly as mobile's own Sankalpam card also always
- * renders it in Sanskrit regardless of UI language.
+ * untouched) -- "of following day" only appears when the validity
+ * window actually crosses midnight into the next calendar day; when it
+ * doesn't, the API's own text omits that phrase entirely (confirmed
+ * live: "...valid through 03:19:12 PM: parAbhava..." with no "of
+ * following day" at all). The regex and the localized wording both
+ * have to treat it as optional, not assume it's always present. Only
+ * the fixed English wrapper phrasing is re-templated per language;
+ * {location}/{date}/{time}/{validUntil} are substituted verbatim, and
+ * {declaration} -- the Sanskrit sankalpam formula itself ("parAbhava
+ * nAma saMvathsare...") -- is appended completely untranslated, exactly
+ * as mobile's own Sankalpam card also always renders it in Sanskrit
+ * regardless of UI language.
  */
-const SANKALPAM_PATTERN =
-  /^Sankalpam for (.+?) on (.+?) At (.+?) IST and valid through (.+?) of following day:\s*(.*)$/i;
+// Matches "2:13 PM" / "07:18 PM" / "03:19:12 PM" -- a real time-of-day, with
+// or without seconds. Needed because a bare `:` can't reliably terminate the
+// `validUntil` capture below: the time value ITSELF contains colons
+// ("03:19:12 PM"), so a generic `(.+?):` stops at the first one, inside the
+// time, rather than the one that actually ends the sentence.
+const TIME_OF_DAY = /\d{1,2}:\d{2}(?::\d{2})?\s*[AP]M/.source;
+const SANKALPAM_PATTERN = new RegExp(
+  `^Sankalpam for (.+?) on (.+?) At (${TIME_OF_DAY}) IST and valid through (${TIME_OF_DAY})( of following day)?:\\s*(.*)$`,
+  "i"
+);
 
-const SANKALPAM_INTRO: Record<LanguageCode, (location: string, date: string, time: string, validUntil: string) => string> = {
-  ta: (location, date, time, validUntil) =>
-    `${location} க்கான சங்கல்பம் — ${date}, ${time} IST முதல் மறுநாள் ${validUntil} வரை செல்லுபடியாகும்:`,
-  kn: (location, date, time, validUntil) =>
-    `${location} ಗಾಗಿ ಸಂಕಲ್ಪ — ${date}, ${time} IST ನಿಂದ ಮರುದಿನ ${validUntil} ವರೆಗೆ ಮಾನ್ಯ:`,
-  hi: (location, date, time, validUntil) =>
-    `${location} के लिए संकल्प — ${date}, ${time} IST से अगले दिन ${validUntil} तक मान्य:`,
+const SANKALPAM_INTRO: Record<
+  LanguageCode,
+  (location: string, date: string, time: string, validUntil: string, nextDay: boolean) => string
+> = {
+  ta: (location, date, time, validUntil, nextDay) =>
+    `${location} க்கான சங்கல்பம் — ${date}, ${time} IST முதல்${nextDay ? " மறுநாள்" : ""} ${validUntil} வரை செல்லுபடியாகும்:`,
+  kn: (location, date, time, validUntil, nextDay) =>
+    `${location} ಗಾಗಿ ಸಂಕಲ್ಪ — ${date}, ${time} IST ನಿಂದ${nextDay ? " ಮರುದಿನ" : ""} ${validUntil} ವರೆಗೆ ಮಾನ್ಯ:`,
+  hi: (location, date, time, validUntil, nextDay) =>
+    `${location} के लिए संकल्प — ${date}, ${time} IST से${nextDay ? " अगले दिन" : ""} ${validUntil} तक मान्य:`,
 };
 
 export function localizeSankalpamText(text: string, language: LanguageCode | null): string {
   if (!language) return text;
   const match = text.match(SANKALPAM_PATTERN);
   if (!match) return text;
-  const [, location, date, time, validUntil, declaration] = match;
-  const intro = SANKALPAM_INTRO[language](location, date, time, validUntil);
+  const [, location, date, time, validUntil, followingDayPhrase, declaration] = match;
+  const intro = SANKALPAM_INTRO[language](location, date, time, validUntil, Boolean(followingDayPhrase));
   return declaration ? `${intro} ${declaration}` : intro;
 }

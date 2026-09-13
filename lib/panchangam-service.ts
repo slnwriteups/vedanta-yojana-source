@@ -305,7 +305,12 @@ function parseUpcomingEkadashi(html: string): string {
   const firstSentence = text.split(/\.\s/)[0]?.trim();
   if (!firstSentence) return "";
   const withPeriod = firstSentence.endsWith(".") ? firstSentence : `${firstSentence}.`;
-  return withPeriod.replace(/^Next Ekadasi for \S+ is on\s*/i, "Next Ekadasi: ");
+  // Non-greedy `.+?`, not `\S+` -- a real city name is one word ("Chennai"),
+  // but this app's own "Your Location" placeholder (no reverse geocoding on
+  // web) is two, and `\S+` silently fails to match those, leaving the raw
+  // English sentence completely unprocessed (confirmed live: real API output
+  // with cityfld="Your Location" never got replaced at all).
+  return withPeriod.replace(/^Next Ekadasi for .+? is on\s*/i, "Next Ekadasi: ");
 }
 
 /**
