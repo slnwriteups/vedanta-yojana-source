@@ -187,13 +187,68 @@ becomes a problem — not yet needed.
 cd mobile
 npm install
 npx expo start                          # Expo dev server (Metro) — scan the QR code with Expo Go
+npx expo start --dev-client             # for a custom dev client build (eas build --profile development / expo run:ios), not Expo Go
 npx expo start --android                # (requires Android tooling)
 npx expo start --ios                    # (requires Xcode/iOS tooling)
 npx expo start --tunnel                 # share a live QR code with a remote reviewer, no repo access needed
+npm run start:tunnel                    # dev-client + tunnel — connect from a phone on cellular data / a different network
 node --test tests/*.test.ts             # test suite (Node-native, no Jest) — 44 tests
 ./node_modules/.bin/tsc --noEmit        # TypeScript check
 node scripts/generate-content-manifest.ts   # regenerate the content + image manifest after any /content or public/images change
 ```
+
+### "Unable to connect to server" on a physical device (e.g. a custom dev client build on iPad)
+
+This is the standard React Native/Expo message meaning the device found (or
+tried to find) Metro but couldn't complete the connection. Check, in order:
+
+1. **Local Network permission.** The first time the dev client tries to
+   reach Metro, iOS/iPadOS shows *"[App] Would Like to Find and Connect to
+   Devices on Your Local Network"* (this is what `NSLocalNetworkUsageDescription`
+   and the `NSBonjourServices: ["_dev._tcp"]` entry in `app.json` exist
+   for). If that prompt was denied or dismissed, every later launch fails
+   silently with this exact message. Fix: **Settings → Privacy & Security →
+   Local Network** on the device and enable it for the app; if the app
+   isn't listed there at all, delete and reinstall the dev client so the
+   prompt fires again.
+2. **Start Metro in dev-client mode**, not plain Expo Go mode: `npx expo
+   start --dev-client` (see above).
+3. **Confirm it's actually the same LAN**, not just the same Wi-Fi name —
+   client/AP isolation on mesh routers, guest networks, or band-steered
+   Wi-Fi can block device-to-device traffic under one SSID. Get the dev
+   machine's LAN IP (`ifconfig | grep inet` / `ipconfig`) and load
+   `http://<that-ip>:8081/status` in Safari on the device; if that fails,
+   it's a network problem, not an app problem.
+4. **Dev-machine firewall** blocking inbound connections to Metro's port
+   8081 (macOS prompts "Do you want the application node to accept
+   incoming connections?" — must be allowed).
+5. **Stale cached server URL** in the dev client from a previous
+   session/IP — use the launcher's "Enter URL manually" with the current
+   `<dev-machine-ip>:8081`.
+
+If none of that resolves it, `npx expo start --dev-client --tunnel`
+routes around local-network issues entirely by tunneling through ngrok.
+
+### Developing over cellular data (not just Wi-Fi)
+
+Metro's default LAN mode requires the phone and the dev machine to be on
+the same local network — a phone on cellular data is on a different
+network entirely and cannot reach the dev machine's local IP no matter
+what. There's no app-side setting that changes this; the fix is to run
+Metro in **tunnel mode**, which exposes it through a public ngrok tunnel
+instead of the LAN, so any device with an internet connection (cellular
+included) can reach it:
+
+```
+npm run start:tunnel        # equivalent to: npx expo start --dev-client --tunnel
+```
+
+`@expo/ngrok` is already a devDependency so this works without an
+interactive "may we install a package?" prompt. Tunnel mode is slower
+than LAN (traffic round-trips through ngrok's servers) and needs the dev
+machine to stay online and reachable, but otherwise the app behaves the
+same — the same custom dev client build works with either LAN or tunnel,
+only the URL it connects to changes.
 
 ## Relationship to the web reference app
 
