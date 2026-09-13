@@ -48,7 +48,15 @@ export function SiteHeader() {
   return (
     <header className="border-b border-[var(--border)] bg-[var(--background)]">
       <div className="site-container flex items-center justify-between gap-4 py-4">
-        <span className="text-lg font-semibold tracking-tight">Vedanta Yojana</span>
+        <span className="flex items-center gap-2">
+          <img
+            src={`${BASE_PATH}/icons/app-icon.png`}
+            alt=""
+            aria-hidden="true"
+            className="h-8 w-8 rounded-md object-contain"
+          />
+          <span className="text-lg font-semibold tracking-tight">Vedanta Yojana</span>
+        </span>
 
         <button
           type="button"
