@@ -38,7 +38,7 @@
         "android.permission.ACCESS_FINE_LOCATION"
       ],
       "package": "com.slnwriteups.vedantayojana",
-      "versionCode": 6
+      "versionCode": 7
     },
     "plugins": [
       "expo-router",
