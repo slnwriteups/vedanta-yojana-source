@@ -38,7 +38,7 @@
         "android.permission.ACCESS_FINE_LOCATION"
       ],
       "package": "com.slnwriteups.vedantayojana",
-      "versionCode": 7
+      "versionCode": 8
     },
     "plugins": [
       "expo-router",
@@ -49,6 +49,15 @@
         "expo-location",
         {
           "locationWhenInUsePermission": "Vedanta Yojana uses your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are."
+        }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "enableProguardInReleaseBuilds": true,
+            "enableShrinkResourcesInReleaseBuilds": true
+          }
         }
       ]
     ],
