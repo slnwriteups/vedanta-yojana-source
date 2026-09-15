@@ -1,0 +1,129 @@
+name: Deploy Preview (temporary public deploy repo)
+
+# Phase 1 of the private-source/public-deployment migration. Builds and
+# publishes the SAME verified static export deploy-pages.yml already
+# produces, but to a separate, temporary public repository instead of this
+# repo's own GitHub Pages -- so the real pipeline (build -> verify ->
+# publish) can be exercised end-to-end without touching the current
+# production site at https://slnwriteups.github.io/vedanta-yojana/.
+#
+# deploy-pages.yml is completely untouched and keeps deploying production
+# exactly as before. This workflow is manual-only (workflow_dispatch, no
+# push trigger) for the duration of this testing phase -- it never runs
+# unless someone explicitly triggers it.
+#
+# Once the temporary deploy repository and its scoped credential exist
+# (see the Phase 1 report for exact manual setup steps), this workflow is
+# safe to run repeatedly: every run fully replaces the deploy repo's
+# default branch with a fresh build, so a failed or stale prior run never
+# lingers.
+on:
+  workflow_dispatch:
+    inputs:
+      deploy_repo:
+        description: 'Target "owner/repo" for this run. Leave empty to use the DEPLOY_REPO repository variable.'
+        required: false
+        type: string
+
+# Least privilege: this job only reads the source repo and builds it
+# locally in the runner. It never writes back to THIS repository -- the
+# publish step authenticates to the destination repo with the separate
+# DEPLOY_REPO_TOKEN secret, never with this job's own GITHUB_TOKEN, so
+# GITHUB_TOKEN never needs (and never gets) `contents: write`.
+permissions:
+  contents: read
+
+# A dedicated group, distinct from deploy-pages.yml's "pages" group --
+# this pipeline is unrelated to the production deploy and must never be
+# able to block or race it.
+concurrency:
+  group: deploy-preview-repo
+  cancel-in-progress: false
+
+jobs:
+  build-verify-publish:
+    name: Build, verify, and publish preview artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: Install dependencies (reproducible)
+        run: npm ci
+
+      - name: Build
+        # Identical env vars to deploy-pages.yml's production build -- the
+        # temporary deploy repo intentionally gets a build whose asset
+        # paths still say /vedanta-yojana (per design: this phase verifies
+        # the pipeline and artifact, not the final URL; the temporary
+        # repo's own Pages URL will not match those asset paths yet, and
+        # that mismatch is expected and correct for this phase).
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://slnwriteups.github.io
+          NEXT_PUBLIC_BASE_PATH: /vedanta-yojana
+
+      - name: Disable Jekyll processing
+        run: touch out/.nojekyll
+
+      - name: Remove internal documentation from the public artifact
+        # out/README.md is public/README.md, copied verbatim by `next
+        # build` -- legitimate source documentation for developers (it
+        # explains the /public directory), but it has no function on the
+        # live site and must not cross into the public deploy repo. Removed
+        # here, at the publishing boundary, rather than editing
+        # public/README.md itself, which stays exactly as-is for the
+        # private source repo.
+        run: rm -f out/README.md
+
+      - name: Verify public build is safe to publish
+        # scripts/verify-public-build.ts is the single authoritative
+        # implementation of this gate -- see that file for the complete,
+        # commented check list. A non-zero exit here fails this step,
+        # which stops the job before the publish step ever runs: nothing
+        # is published unless every check in that script passes.
+        run: node scripts/verify-public-build.ts out
+
+      - name: Publish to temporary deploy repository
+        env:
+          DEPLOY_REPO: ${{ inputs.deploy_repo || vars.DEPLOY_REPO }}
+          DEPLOY_TOKEN: ${{ secrets.DEPLOY_REPO_TOKEN }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${DEPLOY_REPO}" ] || [ -z "${DEPLOY_TOKEN}" ]; then
+            echo "DEPLOY_REPO and/or DEPLOY_REPO_TOKEN are not configured yet."
+            echo "Build and verification succeeded -- publish is skipped until the"
+            echo "temporary deploy repository and its scoped credential are manually"
+            echo "created (see the Phase 1 report for exact setup steps)."
+            exit 0
+          fi
+
+          echo "Publishing verified build to ${DEPLOY_REPO}..."
+
+          cd out
+          rm -rf .git
+          git init -q -b publish
+          git config user.name "vedanta-yojana-deploy-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -q -m "Publish verified build from ${{ github.repository }}@${{ github.sha }}"
+
+          # Constructed only in this shell's environment, never echoed or
+          # logged; GitHub Actions also masks the secret's literal value in
+          # any log output as a second layer of protection.
+          git remote add deploy "https://x-access-token:${DEPLOY_TOKEN}@github.com/${DEPLOY_REPO}.git"
+
+          # Force-push a single fresh commit so the destination's default
+          # branch becomes exactly this tree -- a prior run's files can
+          # never survive as stale leftovers.
+          git push --force deploy publish:main
+          git remote remove deploy
+
+          echo "Published to ${DEPLOY_REPO}."
