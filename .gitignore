@@ -33,3 +33,14 @@ yarn-error.log*
 .env
 .vercel
 .env*
+
+# signing/credential material -- should never live in this repo; kept here
+# for defense-in-depth even though no such files are tracked today
+*.key
+*.p12
+*.jks
+*.keystore
+*.mobileprovision
+google-services.json
+GoogleService-Info.plist
+credentials.json
