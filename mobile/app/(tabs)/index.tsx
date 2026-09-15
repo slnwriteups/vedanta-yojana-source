@@ -8,6 +8,7 @@ import { ContinueReadingCard } from "../../components/ContinueReadingCard";
 import { DivyaDesamSpotlight } from "../../components/DivyaDesamSpotlight";
 import { PanchangamCard } from "../../components/PanchangamCard";
 import { SankalpamCard } from "../../components/SankalpamCard";
+import { UpdateBanner } from "../../components/UpdateBanner";
 import { layout, spacing, typography, useTheme } from "../../theme";
 import { sectionTint } from "../../section-tints.ts";
 import { bookCoverAsset } from "../../book-covers.ts";
@@ -15,6 +16,7 @@ import { useLanguage } from "../../language-context.ts";
 import { useT } from "../../ui-strings.ts";
 import { useReadingPosition } from "../../reading-position-context.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../../services/panchangamService.ts";
+import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
 
 /**
  * UI/UX refactor: Home is now a proper dashboard rather than a plain
@@ -59,12 +61,32 @@ export default function HomeScreen() {
     };
   }, []);
 
+  // This app is distributed as a direct-download APK, not through
+  // Google Play, so there's no OS-level background update -- checked
+  // once per app launch (never blocking startup: null just means
+  // "already current" or "couldn't check", not an error) and dismissed
+  // for the rest of this session if the reader taps the ✕.
+  const [update, setUpdate] = useState<UpdateInfo | null>(null);
+  const [updateDismissed, setUpdateDismissed] = useState(false);
+  useEffect(() => {
+    let cancelled = false;
+    checkForUpdate().then((info) => {
+      if (!cancelled) setUpdate(info);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   return (
     <ScrollView
       style={[styles.container, { backgroundColor: theme.colors.background }]}
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}
     >
+      {update && !updateDismissed ? (
+        <UpdateBanner update={update} onDismiss={() => setUpdateDismissed(true)} />
+      ) : null}
       <HomeHeader panchangam={panchangam} />
 
       {resolvedList.length > 0 ? (

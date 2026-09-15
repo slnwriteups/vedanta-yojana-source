@@ -1,0 +1,8 @@
+{
+  "android": {
+    "versionCode": 10,
+    "version": "1.0.0",
+    "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v10/vedanta-yojana.apk",
+    "notes": "Security hardening (removed unused microphone/storage permissions), in-app update checker, and a JAYA content fix."
+  }
+}
