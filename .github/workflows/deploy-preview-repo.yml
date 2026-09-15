@@ -14,12 +14,20 @@ name: Deploy Preview (temporary public deploy repo)
 #
 # Once the temporary deploy repository and its scoped credential exist
 # (see the Phase 1 report for exact manual setup steps), this workflow is
-# safe to run repeatedly: every run fully replaces the deploy repo's
-# default branch with a fresh build, so a failed or stale prior run never
-# lingers. Every publish also (re-)injects the deploy repo's own Pages
-# workflow from ../.github/deploy-repo-pages-workflow.yml, since that
-# repo's tree is otherwise a complete replacement each time -- see the
-# publish step below for why that file must be owned here, not there.
+# safe to run repeatedly: every run fully replaces every file in the
+# deploy repo EXCEPT .github/ (see the publish step below for exactly
+# why), so a failed or stale prior run never leaves anything behind in
+# the actual public artifact.
+#
+# .github/deploy-repo-pages-workflow.yml is the source-of-truth
+# definition of the deploy repo's own Pages workflow, but it is pushed
+# there ONCE, out-of-band, by an administrator (not by this workflow's
+# constrained DEPLOY_REPO_TOKEN) -- GitHub refuses to let a token without
+# `workflow` scope create or update anything under .github/workflows/,
+# which a Contents-only fine-grained PAT deliberately does not have (and
+# should not have: that scope isn't needed for anything else this
+# pipeline does). See that file's own doc comment for the bootstrap
+# command.
 on:
   workflow_dispatch:
     inputs:
@@ -110,32 +118,31 @@ jobs:
 
           echo "Publishing verified build to ${DEPLOY_REPO}..."
 
-          # The publish below force-replaces the deploy repo's entire tree
-          # (by design -- see the publish step's own comments), which would
-          # destroy any file that lived only there, including its own
-          # Pages workflow. So that workflow is owned here, as a template
-          # (.github/deploy-repo-pages-workflow.yml, not itself an active
-          # workflow in this repo), and injected fresh into every publish.
-          mkdir -p out/.github/workflows
-          cp .github/deploy-repo-pages-workflow.yml out/.github/workflows/pages.yml
-
-          cd out
-          rm -rf .git
-          git init -q -b publish
+          # Clone the deploy repo (its .github/workflows/pages.yml was
+          # bootstrapped there once, out-of-band, by an administrator --
+          # see this workflow's top-of-file comment). Constructed only in
+          # this shell's environment, never echoed or logged; GitHub
+          # Actions also masks the secret's literal value in any log
+          # output as a second layer of protection.
+          rm -rf /tmp/deploy-checkout
+          git clone -q --depth 1 "https://x-access-token:${DEPLOY_TOKEN}@github.com/${DEPLOY_REPO}.git" /tmp/deploy-checkout
+          cd /tmp/deploy-checkout
           git config user.name "vedanta-yojana-deploy-bot"
           git config user.email "actions@users.noreply.github.com"
+
+          # Remove every existing top-level entry EXCEPT .git (this
+          # clone's own metadata) and .github (the bootstrapped Pages
+          # workflow -- this token cannot touch it anyway, and it isn't
+          # part of the build artifact). This is the actual "no stale
+          # files survive" guarantee: whatever isn't in the fresh out/
+          # tree we're about to copy in is deleted here first.
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name .github -exec rm -rf {} +
+
+          # Copy in the complete fresh, verified artifact.
+          cp -a "${GITHUB_WORKSPACE}/out/." .
+
           git add -A
-          git commit -q -m "Publish verified build from ${{ github.repository }}@${{ github.sha }}"
-
-          # Constructed only in this shell's environment, never echoed or
-          # logged; GitHub Actions also masks the secret's literal value in
-          # any log output as a second layer of protection.
-          git remote add deploy "https://x-access-token:${DEPLOY_TOKEN}@github.com/${DEPLOY_REPO}.git"
-
-          # Force-push a single fresh commit so the destination's default
-          # branch becomes exactly this tree -- a prior run's files can
-          # never survive as stale leftovers.
-          git push --force deploy publish:main
-          git remote remove deploy
+          git commit -q -m "Publish verified build from ${{ github.repository }}@${{ github.sha }}" --allow-empty
+          git push -q origin HEAD:main
 
           echo "Published to ${DEPLOY_REPO}."

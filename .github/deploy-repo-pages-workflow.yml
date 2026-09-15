@@ -1,20 +1,29 @@
 name: Deploy to GitHub Pages
 
-# This file is a TEMPLATE owned and maintained by the private source
-# repository (.github/deploy-repo-pages-workflow.yml), not an active
+# This file is the SOURCE-OF-TRUTH DEFINITION, owned and maintained by
+# the private source repository (.github/deploy-repo-pages-workflow.yml),
+# of the deploy repository's own Pages workflow. It is not an active
 # workflow in this repository -- it is not under .github/workflows/ here,
 # so it never runs in the source repo itself.
 #
-# .github/workflows/deploy-preview-repo.yml copies this exact file into
-# out/.github/workflows/pages.yml immediately before publishing, so it is
-# included in every complete-replacement push to the deploy repository.
-# This is deliberate: the publish step force-replaces the deploy repo's
-# entire tree on every run (so no stale file from a previous build can
-# ever survive), which means any file that lived ONLY in the deploy repo
-# -- including its own Pages workflow -- would otherwise be destroyed by
-# the very first publish. Owning this file in the source repo and
-# injecting it fresh every time keeps the deploy repo self-sufficient
-# without ever risking drift or loss.
+# It is pushed to the deploy repo's .github/workflows/pages.yml exactly
+# ONCE, out-of-band, by an administrator with normal repo write access --
+# NOT by deploy-preview-repo.yml's constrained DEPLOY_REPO_TOKEN, which
+# deliberately has only Contents:Read/write and nothing else. GitHub
+# refuses to let any token without `workflow` scope create or update a
+# file under .github/workflows/, by design (an anti-privilege-escalation
+# protection: a repo-scoped write credential should not be able to
+# silently plant CI). Since that scope is never needed for anything else
+# this pipeline does, the fix is to never ask for it, not to work around
+# the protection -- deploy-preview-repo.yml's publish step explicitly
+# never touches .github/ on every subsequent run; only this one bootstrap
+# push does. Bootstrap command (run once, as an admin, when the deploy
+# repo is first created):
+#
+#   gh api --method PUT repos/<owner>/<deploy-repo>/contents/.github/workflows/pages.yml \
+#     -f message="Bootstrap: add Pages deploy workflow (one-time, admin-pushed)" \
+#     -f content="$(base64 < .github/deploy-repo-pages-workflow.yml | tr -d '\n')" \
+#     -f branch="main"
 #
 # Minimal by design: the deploy repository contains no source code, no
 # npm tooling, no CI, no CodeQL, no Dependabot config -- only the static
