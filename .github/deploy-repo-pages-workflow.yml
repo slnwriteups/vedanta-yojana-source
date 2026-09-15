@@ -1,0 +1,68 @@
+name: Deploy to GitHub Pages
+
+# This file is a TEMPLATE owned and maintained by the private source
+# repository (.github/deploy-repo-pages-workflow.yml), not an active
+# workflow in this repository -- it is not under .github/workflows/ here,
+# so it never runs in the source repo itself.
+#
+# .github/workflows/deploy-preview-repo.yml copies this exact file into
+# out/.github/workflows/pages.yml immediately before publishing, so it is
+# included in every complete-replacement push to the deploy repository.
+# This is deliberate: the publish step force-replaces the deploy repo's
+# entire tree on every run (so no stale file from a previous build can
+# ever survive), which means any file that lived ONLY in the deploy repo
+# -- including its own Pages workflow -- would otherwise be destroyed by
+# the very first publish. Owning this file in the source repo and
+# injecting it fresh every time keeps the deploy repo self-sufficient
+# without ever risking drift or loss.
+#
+# Minimal by design: the deploy repository contains no source code, no
+# npm tooling, no CI, no CodeQL, no Dependabot config -- only the static
+# artifact and this one workflow, which does nothing but publish whatever
+# tree it's given to GitHub Pages.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Publish
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Exclude this workflow directory from the published artifact
+        # The whole repository IS the artifact here -- there is no build
+        # step in this repository -- but .github/ (this workflow file
+        # itself) must not be served as part of the live site. The
+        # workflow's own definition was already loaded before this step
+        # runs, so removing the file now doesn't affect this run.
+        run: rm -rf .github
+
+      - name: Configure Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+        with:
+          path: .
+          # Next.js's own build already ran `touch out/.nojekyll`
+          # upstream, so this repository's checkout already has it.
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5

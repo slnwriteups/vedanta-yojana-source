@@ -16,7 +16,10 @@ name: Deploy Preview (temporary public deploy repo)
 # (see the Phase 1 report for exact manual setup steps), this workflow is
 # safe to run repeatedly: every run fully replaces the deploy repo's
 # default branch with a fresh build, so a failed or stale prior run never
-# lingers.
+# lingers. Every publish also (re-)injects the deploy repo's own Pages
+# workflow from ../.github/deploy-repo-pages-workflow.yml, since that
+# repo's tree is otherwise a complete replacement each time -- see the
+# publish step below for why that file must be owned here, not there.
 on:
   workflow_dispatch:
     inputs:
@@ -106,6 +109,15 @@ jobs:
           fi
 
           echo "Publishing verified build to ${DEPLOY_REPO}..."
+
+          # The publish below force-replaces the deploy repo's entire tree
+          # (by design -- see the publish step's own comments), which would
+          # destroy any file that lived only there, including its own
+          # Pages workflow. So that workflow is owned here, as a template
+          # (.github/deploy-repo-pages-workflow.yml, not itself an active
+          # workflow in this repo), and injected fresh into every publish.
+          mkdir -p out/.github/workflows
+          cp .github/deploy-repo-pages-workflow.yml out/.github/workflows/pages.yml
 
           cd out
           rm -rf .git
