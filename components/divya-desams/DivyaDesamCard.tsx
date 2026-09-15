@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import type { DivyaDesam } from "@/content-lib/schemas";
+import type { PublicDivyaDesam } from "@/lib/public-content";
 import { localizeDivyaDesam } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -34,7 +34,7 @@ export function DivyaDesamCard({
   number,
   imageHref,
 }: {
-  record: DivyaDesam;
+  record: PublicDivyaDesam;
   number: string;
   imageHref: string | null;
 }) {

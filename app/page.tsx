@@ -5,6 +5,7 @@ import { SITE_DESCRIPTION, SITE_NAME, getSiteOrigin, siteUrl } from "@/lib/site"
 import { DivyaDesamSpotlightSection } from "@/components/divya-desams/DivyaDesamSpotlightSection";
 import { HomeDashboardClient } from "@/components/home/HomeDashboardClient";
 import type { HomeCatalogEntry } from "@/lib/resolve-last-read";
+import { toPublicBook, toPublicChapter } from "@/lib/public-content";
 
 export const metadata: Metadata = {
   alternates: { canonical: siteUrl("/") },
@@ -33,8 +34,8 @@ export default function HomePage() {
   const origin = getSiteOrigin() ? siteUrl("/") : undefined;
 
   const catalog: HomeCatalogEntry[] = loadBooks().map((book) => ({
-    book,
-    chapters: loadChapters(book.slug),
+    book: toPublicBook(book),
+    chapters: loadChapters(book.slug).map(toPublicChapter),
   }));
 
   return (

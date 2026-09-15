@@ -171,8 +171,18 @@ test("15/16: chapter body and its paragraph structure are preserved -- the page 
   // its own dedicated test coverage, and mirrors mobile's identical
   // chapter-screen behavior) -- a deliberate, tested display transform,
   // not the kind of ad-hoc mangling this test exists to catch.
+  //
+  // The page passes `toPublicChapter(chapter)` rather than the raw loader
+  // record (lib/public-content.ts -- strips migration.sourcePageId/
+  // extractionConfidence and each image's sourceAssetUuid/
+  // sourceOriginalName before the record crosses into this Client
+  // Component prop, where Next.js would otherwise serialize those
+  // internal-only fields into the page's public RSC/HTML payload).
+  // toPublicChapter never touches title/body, so this remains an exact
+  // proxy for "no ad-hoc body transformation happens before the
+  // component boundary".
   const pageSource = read("app/library/[book]/[chapter]/page.tsx");
-  assert.ok(pageSource.includes("chapter={chapter}"), "expected the raw chapter record to be passed to LocalizedChapterBody");
+  assert.ok(pageSource.includes("toPublicChapter(chapter)"), "expected the loader chapter record to be passed to LocalizedChapterBody via toPublicChapter, not a hand-rolled transform");
 
   const bodySource = read("components/library/LocalizedChapterBody.tsx");
   assert.ok(bodySource.includes("stripLeadingDuplicateTitle(localized.body, localized.title)"), "expected only stripLeadingDuplicateTitle applied to localizeChapter()'s body");

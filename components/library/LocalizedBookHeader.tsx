@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import type { Book } from "@/content-lib/schemas";
+import type { PublicBook } from "@/lib/public-content";
 import { localizeBook } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -15,7 +15,7 @@ import { sectionTint } from "@/lib/section-tints";
  * text on web, the one place mobile's per-book color coding didn't
  * reach at all.
  */
-export function LocalizedBookHeader({ book }: { book: Book }) {
+export function LocalizedBookHeader({ book }: { book: PublicBook }) {
   const { language } = useLanguage();
   const theme = useTheme();
   const localized = useMemo(() => localizeBook(book, language), [book, language]);

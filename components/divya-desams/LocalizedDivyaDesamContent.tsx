@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, type ReactNode } from "react";
-import type { DivyaDesam } from "@/content-lib/schemas";
+import type { PublicDivyaDesam } from "@/lib/public-content";
 import { localizeDivyaDesam } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { translateUi } from "@/lib/ui-strings";
@@ -37,7 +37,7 @@ export function LocalizedDivyaDesamContent({
   topImages,
   resolvedAfterSthalaPuranamImages,
 }: {
-  record: DivyaDesam;
+  record: PublicDivyaDesam;
   badge: ReactNode;
   topImages: ReactNode;
   resolvedAfterSthalaPuranamImages: ResolvedImage[];

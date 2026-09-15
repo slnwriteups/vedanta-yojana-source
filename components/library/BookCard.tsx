@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import type { Book } from "@/content-lib/schemas";
+import type { PublicBook } from "@/lib/public-content";
 import { localizeBook } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -33,7 +33,7 @@ import { bookCoverAsset } from "@/lib/book-covers";
  * (content-lib/i18n.ts's localizeBook), same as every other content
  * list on the site.
  */
-export function BookCard({ book, chapterCount }: { book: Book; chapterCount: number }) {
+export function BookCard({ book, chapterCount }: { book: PublicBook; chapterCount: number }) {
   const { language } = useLanguage();
   const theme = useTheme();
   const localized = useMemo(() => localizeBook(book, language), [book, language]);

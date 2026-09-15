@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import type { DivyaDesam } from "@/content-lib/schemas";
+import type { PublicDivyaDesam } from "@/lib/public-content";
 import { localizeDivyaDesam } from "@/content-lib/i18n.ts";
 import { regionLabel } from "@/content-lib/divya-desam-region-labels.ts";
 import { useLanguage } from "@/lib/language-context";
@@ -24,7 +24,7 @@ export function DivyaDesamSpotlight({
   numberLabel,
   imageHref,
 }: {
-  record: DivyaDesam;
+  record: PublicDivyaDesam;
   numberLabel: string;
   imageHref: string | null;
 }) {

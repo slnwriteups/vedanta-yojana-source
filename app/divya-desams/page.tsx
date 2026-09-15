@@ -5,6 +5,7 @@ import { resolveImageHref } from "@/lib/image-file";
 import { LocalizedPageHeading } from "@/components/shared/LocalizedPageHeading";
 import { DivyaDesamsIndexClient, type DivyaDesamIndexEntry } from "@/components/divya-desams/DivyaDesamsIndexClient";
 import { siteUrl } from "@/lib/site";
+import { toPublicDivyaDesam, toPublicKnowledge } from "@/lib/public-content";
 
 export const metadata: Metadata = {
   title: "Divya Desams",
@@ -49,18 +50,19 @@ export default function DivyaDesamsIndexPage() {
         break;
       }
     }
-    return { record, number: numberLabels[record.slug] ?? "", imageHref };
+    return { record: toPublicDivyaDesam(record), number: numberLabels[record.slug] ?? "", imageHref };
   });
 
   // Links to the "Introduction" record only when it actually resolves
   // through the loader -- never a fabricated link to content that
   // doesn't exist.
   const introduction = loadKnowledgeRecord("introduction");
+  const publicIntroduction = introduction ? toPublicKnowledge(introduction) : null;
 
   return (
     <div className="space-y-6">
       <LocalizedPageHeading stringKey="tabDivyaDesams" />
-      <DivyaDesamsIndexClient entries={entries} numberLabels={numberLabels} introduction={introduction} />
+      <DivyaDesamsIndexClient entries={entries} numberLabels={numberLabels} introduction={publicIntroduction} />
     </div>
   );
 }

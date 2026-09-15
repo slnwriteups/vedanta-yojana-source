@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
 import { resolveImageHref } from "@/lib/image-file";
+import { toPublicDivyaDesam, toPublicImage } from "@/lib/public-content";
 
 /**
  * Phase 5K -- real, loader-driven Divya Desam detail page.
@@ -85,7 +86,7 @@ export default async function DivyaDesamDetailPage({
   // this lookup itself.
   const resolvedAfterSthalaPuranamImages = afterSthalaPuranamImages.flatMap((image) => {
     const href = resolveImageHref(image.sourceAssetUuid);
-    return href ? [{ image, href }] : [];
+    return href ? [{ image: toPublicImage(image), href }] : [];
   });
 
   return (
@@ -104,7 +105,7 @@ export default async function DivyaDesamDetailPage({
       />
 
       <LocalizedDivyaDesamContent
-        record={record}
+        record={toPublicDivyaDesam(record)}
         badge={<DraftBadge status={record.status} needsReview={record.migration.needsReview} />}
         topImages={<RecordImages images={topImages} />}
         resolvedAfterSthalaPuranamImages={resolvedAfterSthalaPuranamImages}

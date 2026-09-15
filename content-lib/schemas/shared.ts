@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export * from "./language.ts";
+
 /**
  * Shared building blocks used across every content type (Divya Desam,
  * Book, Chapter, Knowledge). Kept deliberately small — only what multiple
@@ -196,30 +198,11 @@ export type RelatedContentRef = z.infer<typeof RelatedContentRefSchema>;
 
 // ---------------------------------------------------------------------------
 // Languages / translations
+//
+// LanguageCodeSchema/LanguageCode/LanguageOption/SUPPORTED_LANGUAGES now
+// live in ./language.ts (re-exported above) -- see that file's doc
+// comment for why.
 // ---------------------------------------------------------------------------
-
-/**
- * The reader-facing language toggle: English is always the base language
- * every record already has (untouched, unmoved -- the plain top-level
- * fields this schema always validated); these three are the only
- * additional languages this app offers. Not a general i18n locale list.
- */
-export const LanguageCodeSchema = z.enum(["ta", "kn", "hi"]);
-export type LanguageCode = z.infer<typeof LanguageCodeSchema>;
-
-export interface LanguageOption {
-  code: LanguageCode;
-  /** English name, used in the language picker alongside the native name. */
-  label: string;
-  /** The language's own name, in its own script. */
-  nativeLabel: string;
-}
-
-export const SUPPORTED_LANGUAGES: LanguageOption[] = [
-  { code: "ta", label: "Tamil", nativeLabel: "தமிழ்" },
-  { code: "kn", label: "Kannada", nativeLabel: "ಕನ್ನಡ" },
-  { code: "hi", label: "Hindi", nativeLabel: "हिन्दी" },
-];
 
 /**
  * A per-language translations object shape shared by every content type:

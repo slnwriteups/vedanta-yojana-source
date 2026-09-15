@@ -2,7 +2,7 @@
 
 import { useMemo, type ReactNode } from "react";
 import Link from "next/link";
-import type { Book, Chapter } from "@/content-lib/schemas";
+import type { PublicBook, PublicChapter } from "@/lib/public-content";
 import { localizeBook, localizeChapter } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useReadingPreferences } from "@/lib/reading-preferences-context";
@@ -52,14 +52,14 @@ export function LocalizedChapterBody({
   bookmarkButton,
   images,
 }: {
-  book: Book;
+  book: PublicBook;
   bookSlug: string;
-  chapter: Chapter;
+  chapter: PublicChapter;
   /** This chapter's 0-indexed position among its book's chapters, or -1 if not found. */
   position: number;
   total: number;
-  previous: Chapter | null;
-  next: Chapter | null;
+  previous: PublicChapter | null;
+  next: PublicChapter | null;
   badge: ReactNode;
   bookmarkButton: ReactNode;
   images: ReactNode;

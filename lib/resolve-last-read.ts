@@ -1,4 +1,5 @@
-import type { Book, Chapter, LanguageCode } from "@/content-lib/schemas";
+import type { LanguageCode } from "@/content-lib/schemas";
+import type { PublicBook, PublicChapter } from "./public-content";
 import { localizeBook, localizeChapter } from "@/content-lib/i18n.ts";
 import { estimateReadingMinutes } from "@/content-lib/text-format.ts";
 import type { LastReadPosition } from "./preferences";
@@ -30,8 +31,8 @@ export interface ResolvedLastRead {
 }
 
 export interface HomeCatalogEntry {
-  book: Book;
-  chapters: Chapter[];
+  book: PublicBook;
+  chapters: PublicChapter[];
 }
 
 function resolveLastRead(

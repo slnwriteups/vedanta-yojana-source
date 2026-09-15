@@ -11,6 +11,7 @@ import { BookmarkButton } from "@/components/library/BookmarkButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
+import { toPublicBook, toPublicChapter } from "@/lib/public-content";
 
 /**
  * Phase 5L -- real, loader-driven Chapter detail page.
@@ -86,13 +87,13 @@ export default async function LibraryChapterPage({
       <ReadingPositionTracker bookSlug={book.slug} chapterSlug={chapter.slug} />
 
       <LocalizedChapterBody
-        book={book}
+        book={toPublicBook(book)}
         bookSlug={book.slug}
-        chapter={chapter}
+        chapter={toPublicChapter(chapter)}
         position={position}
         total={chapters.length}
-        previous={previous}
-        next={next}
+        previous={previous ? toPublicChapter(previous) : null}
+        next={next ? toPublicChapter(next) : null}
         badge={<DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />}
         bookmarkButton={<BookmarkButton bookSlug={book.slug} chapterSlug={chapter.slug} />}
         images={<RecordImages images={chapter.images} />}

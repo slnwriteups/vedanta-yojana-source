@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { DivyaDesam, Knowledge } from "@/content-lib/schemas";
-import { DIVYA_DESAM_REGION_ORDER, type DivyaDesamRegion } from "@/content-lib/schemas/index.ts";
+import type { PublicDivyaDesam, PublicKnowledge } from "@/lib/public-content";
+import { DIVYA_DESAM_REGION_ORDER, type DivyaDesamRegion } from "@/content-lib/schemas/divya-desam-region.ts";
 import { localizeKnowledge } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -40,7 +40,7 @@ function tabCountLabel(tab: DivyaDesamTab, count: number, language: LanguageCode
  * verbatim from mobile/app/(tabs)/divya-desams/index.tsx's
  * traditionalCount(). Without this, "All 108" would read 107.
  */
-function traditionalCount(records: DivyaDesam[], numberLabels: Record<string, string>): number {
+function traditionalCount(records: PublicDivyaDesam[], numberLabels: Record<string, string>): number {
   let total = 0;
   for (const record of records) {
     total += numberLabels[record.slug]?.includes("-") ? 2 : 1;
@@ -49,7 +49,7 @@ function traditionalCount(records: DivyaDesam[], numberLabels: Record<string, st
 }
 
 export interface DivyaDesamIndexEntry {
-  record: DivyaDesam;
+  record: PublicDivyaDesam;
   number: string;
   imageHref: string | null;
 }
@@ -71,7 +71,7 @@ export function DivyaDesamsIndexClient({
 }: {
   entries: DivyaDesamIndexEntry[];
   numberLabels: Record<string, string>;
-  introduction: Knowledge | null;
+  introduction: PublicKnowledge | null;
 }) {
   const { language } = useLanguage();
   const theme = useTheme();

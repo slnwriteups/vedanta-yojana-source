@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import type { Chapter } from "@/content-lib/schemas";
+import type { PublicChapter } from "@/lib/public-content";
 import { localizeChapter } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -26,7 +26,7 @@ export function ChapterListItem({
   position,
 }: {
   bookSlug: string;
-  chapter: Chapter;
+  chapter: PublicChapter;
   /** This chapter's 1-indexed position in the book's own chapter order -- mobile's `index + 1`. */
   position: number;
 }) {

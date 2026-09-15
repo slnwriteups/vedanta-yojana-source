@@ -9,6 +9,7 @@ import { LocalizedText } from "@/components/shared/LocalizedText";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
+import { toPublicBook, toPublicChapter } from "@/lib/public-content";
 
 /**
  * Phase 5L -- real, loader-driven Book detail page.
@@ -66,14 +67,14 @@ export default async function LibraryBookPage({
 
       <div className="space-y-2">
         <DraftBadge status={book.status} needsReview={book.migration.needsReview} />
-        <LocalizedBookHeader book={book} />
+        <LocalizedBookHeader book={toPublicBook(book)} />
       </div>
 
       <div className="space-y-3">
         {chapters.length > 0 ? (
           <ol role="list" className="space-y-3">
             {chapters.map((chapter, index) => (
-              <ChapterListItem key={chapter.slug} bookSlug={book.slug} chapter={chapter} position={index + 1} />
+              <ChapterListItem key={chapter.slug} bookSlug={book.slug} chapter={toPublicChapter(chapter)} position={index + 1} />
             ))}
           </ol>
         ) : (

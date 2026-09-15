@@ -1,4 +1,4 @@
-import type { ImageEntry } from "@/content-lib/schemas";
+import type { PublicImageEntry } from "@/lib/public-content";
 import { splitIntoReadableParagraphs } from "@/content-lib/text-format";
 import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
 
@@ -26,7 +26,7 @@ import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
  */
 
 export interface ResolvedImage {
-  image: ImageEntry;
+  image: PublicImageEntry;
   href: string;
 }
 

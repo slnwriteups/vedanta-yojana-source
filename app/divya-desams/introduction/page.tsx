@@ -9,6 +9,7 @@ import { RelatedContentLinks } from "@/components/knowledge/RelatedContentLinks"
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
+import { toPublicKnowledge } from "@/lib/public-content";
 
 /**
  * The sole Knowledge record (an introduction to the 108 Divyadesams)
@@ -56,7 +57,7 @@ export default function DivyaDesamsIntroductionPage() {
       />
 
       <LocalizedKnowledgeContent
-        record={record}
+        record={toPublicKnowledge(record)}
         badge={<DraftBadge status={record.status} needsReview={record.migration.needsReview} />}
         images={<RecordImages images={record.images} />}
       />

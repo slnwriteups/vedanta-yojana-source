@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, type ReactNode } from "react";
-import type { Knowledge } from "@/content-lib/schemas";
+import type { PublicKnowledge } from "@/lib/public-content";
 import { localizeKnowledge } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { LongFormSection } from "@/components/shared/LongFormSection";
@@ -24,7 +24,7 @@ export function LocalizedKnowledgeContent({
   badge,
   images,
 }: {
-  record: Knowledge;
+  record: PublicKnowledge;
   badge: ReactNode;
   /** Rendered between the title and the body, matching mobile's header -> ContentImage -> Section order. */
   images: ReactNode;

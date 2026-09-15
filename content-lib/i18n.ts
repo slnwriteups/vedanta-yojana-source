@@ -10,9 +10,20 @@ import type { Book, Chapter, DivyaDesam, Knowledge, LanguageCode } from "./schem
  * all) returns the record completely untouched -- these are pure,
  * non-mutating functions; the original English record itself is never
  * altered on disk or in memory.
+ *
+ * Generic over `migration`/`images` (`localizeDivyaDesam`/`localizeChapter`/
+ * `localizeKnowledge`) and `migration` (`localizeBook`): none of these
+ * functions read or write those fields, so they accept either the full
+ * loader type or the web app's narrower `Public*` projection
+ * (lib/public-content.ts, which strips internal migration/provenance
+ * metadata before a record crosses into a Client Component prop) with
+ * identical behavior either way.
  */
 
-export function localizeDivyaDesam(record: DivyaDesam, language: LanguageCode | null): DivyaDesam {
+export function localizeDivyaDesam<T extends Omit<DivyaDesam, "migration" | "images">>(
+  record: T,
+  language: LanguageCode | null
+): T {
   const t = language ? record.translations?.[language] : undefined;
   if (!t) return record;
 
@@ -37,27 +48,36 @@ export function localizeDivyaDesam(record: DivyaDesam, language: LanguageCode | 
         azhwarPasuram: st.azhwarPasuram ?? shrine.azhwarPasuram,
       };
     }),
-  };
+  } as T;
 }
 
-export function localizeChapter(record: Chapter, language: LanguageCode | null): Chapter {
+export function localizeChapter<T extends Omit<Chapter, "migration" | "images">>(
+  record: T,
+  language: LanguageCode | null
+): T {
   const t = language ? record.translations?.[language] : undefined;
   if (!t) return record;
-  return { ...record, title: t.title ?? record.title, body: t.body ?? record.body };
+  return { ...record, title: t.title ?? record.title, body: t.body ?? record.body } as T;
 }
 
-export function localizeKnowledge(record: Knowledge, language: LanguageCode | null): Knowledge {
+export function localizeKnowledge<T extends Omit<Knowledge, "migration" | "images">>(
+  record: T,
+  language: LanguageCode | null
+): T {
   const t = language ? record.translations?.[language] : undefined;
   if (!t) return record;
-  return { ...record, title: t.title ?? record.title, body: t.body ?? record.body };
+  return { ...record, title: t.title ?? record.title, body: t.body ?? record.body } as T;
 }
 
-export function localizeBook(record: Book, language: LanguageCode | null): Book {
+export function localizeBook<T extends Omit<Book, "migration" | "coverImage">>(
+  record: T,
+  language: LanguageCode | null
+): T {
   const t = language ? record.translations?.[language] : undefined;
   if (!t) return record;
   return {
     ...record,
     title: t.title ?? record.title,
     description: t.description ?? record.description,
-  };
+  } as T;
 }

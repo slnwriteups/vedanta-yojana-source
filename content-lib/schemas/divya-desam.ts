@@ -7,6 +7,9 @@ import {
   StatusSchema,
   translationsSchemaFor,
 } from "./shared.ts";
+import { DivyaDesamRegionSchema } from "./divya-desam-region.ts";
+
+export * from "./divya-desam-region.ts";
 
 /**
  * Divya Desam content schema — Phase 5C.
@@ -138,33 +141,11 @@ export type DivyaDesamTranslation = z.infer<typeof DivyaDesamTranslationSchema>;
 export const DivyaDesamTranslationsSchema = translationsSchemaFor(DivyaDesamTranslationSchema);
 
 // ---------------------------------------------------------------------------
-// Region — the traditional seven geographical/regional classifications
-// used in the Sri Vaishnava tradition (never present-day Indian state
-// boundaries), in their canonical presentation order. Derived positionally
-// from the corpus's own existing sourcePageId order (see the region
-// audit that produced this: Chōḻa Nāḍu 1-40, Naḍu Nāḍu 41-42, Toṇḍai
-// Nāḍu 43-64, Malai Nāḍu 65-77, Pāṇḍya Nāḍu 78-95, Vada Nāḍu 96-106,
-// Viṇṇulaga Tiruppatigaḷ 107-108) -- optional because it is being
-// backfilled onto existing records, not required by the source data
-// migration itself.
-// ---------------------------------------------------------------------------
-
-export const DivyaDesamRegionSchema = z.enum([
-  "Chōḻa Nāḍu",
-  "Naḍu Nāḍu",
-  "Toṇḍai Nāḍu",
-  "Malai Nāḍu",
-  "Pāṇḍya Nāḍu",
-  "Vada Nāḍu",
-  "Viṇṇulaga Tiruppatigaḷ",
-]);
-export type DivyaDesamRegion = z.infer<typeof DivyaDesamRegionSchema>;
-
-/** Canonical display order for the seven regions -- matches the enum's own declaration order. */
-export const DIVYA_DESAM_REGION_ORDER: readonly DivyaDesamRegion[] = DivyaDesamRegionSchema.options;
-
-// ---------------------------------------------------------------------------
 // Divya Desam
+//
+// Region (DivyaDesamRegionSchema/DivyaDesamRegion/DIVYA_DESAM_REGION_ORDER)
+// now lives in ./divya-desam-region.ts (re-exported above) -- see that
+// file's doc comment for why.
 // ---------------------------------------------------------------------------
 
 export const DivyaDesamSchema = z.object({

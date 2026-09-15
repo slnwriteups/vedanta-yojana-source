@@ -4,6 +4,7 @@ import { BookCard } from "@/components/library/BookCard";
 import { LocalizedPageHeading } from "@/components/shared/LocalizedPageHeading";
 import { LocalizedText } from "@/components/shared/LocalizedText";
 import { siteUrl } from "@/lib/site";
+import { toPublicBook } from "@/lib/public-content";
 
 export const metadata: Metadata = {
   title: "Library",
@@ -36,7 +37,7 @@ export default function LibraryIndexPage() {
       {books.length > 0 ? (
         <ul role="list" className="space-y-3">
           {books.map((book) => (
-            <BookCard key={book.slug} book={book} chapterCount={loadChapters(book.slug).length} />
+            <BookCard key={book.slug} book={toPublicBook(book)} chapterCount={loadChapters(book.slug).length} />
           ))}
         </ul>
       ) : (

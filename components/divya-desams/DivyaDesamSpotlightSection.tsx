@@ -2,6 +2,7 @@ import { loadDivyaDesams } from "@/content-lib/loader";
 import { sourcePageNumber, divyaDesamNumberLabels } from "@/content-lib/ordering.ts";
 import { pickSpotlightRecord } from "@/content-lib/divya-desam-spotlight.ts";
 import { resolveImageHref } from "@/lib/image-file";
+import { toPublicDivyaDesam } from "@/lib/public-content";
 import { DivyaDesamSpotlight } from "@/components/divya-desams/DivyaDesamSpotlight";
 
 /**
@@ -29,5 +30,5 @@ export function DivyaDesamSpotlightSection() {
     }
   }
 
-  return <DivyaDesamSpotlight record={record} numberLabel={numberLabel} imageHref={imageHref} />;
+  return <DivyaDesamSpotlight record={toPublicDivyaDesam(record)} numberLabel={numberLabel} imageHref={imageHref} />;
 }
