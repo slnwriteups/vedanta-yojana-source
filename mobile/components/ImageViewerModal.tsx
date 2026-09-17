@@ -25,6 +25,15 @@ import { clamp, maxPanOffset, pinchDistance, type ViewerTouch } from "./image-vi
  * screen-reader users have a reliable, ordinary control regardless of
  * whether the gesture layer responds to their input method. Android
  * back (`onRequestClose`) is unaffected by any of this.
+ *
+ * There is deliberately no tap-anywhere-to-close: a single tap used to
+ * dismiss the viewer (after a short delay, to leave room for a second
+ * tap to land as a double-tap-to-zoom instead), but that delay window
+ * put every double-tap's first half in a race with the pinch/pan
+ * gesture recognizer, making zoom feel unreliable. Closing is now only
+ * ever the explicit top-left button (or Android back), so a tap is
+ * always free to mean "maybe the start of a double-tap" with no
+ * competing close-timer.
  */
 
 const MAX_SCALE = 4;
@@ -168,17 +177,6 @@ export function ImageViewerModal({
             animateTo(current.current.scale > 1 ? 1 : DOUBLE_TAP_ZOOM);
             return;
           }
-
-          if (current.current.scale <= 1) {
-            // A single tap closes, but only after the double-tap window
-            // passes with no second tap -- otherwise every double-tap's
-            // first half would close the viewer before the second half
-            // (the actual zoom) could ever land.
-            setTimeout(() => {
-              if (Date.now() - lastTapAt.current >= DOUBLE_TAP_WINDOW_MS) handleClose();
-            }, DOUBLE_TAP_WINDOW_MS);
-            return;
-          }
         }
 
         if (current.current.scale <= 1) animateTo(1, 0, 0);
@@ -212,8 +210,6 @@ export function ImageViewerModal({
         >
           <Text style={styles.closeButtonText}>✕</Text>
         </Pressable>
-
-        <Text style={[styles.hint, { color: theme.colors.background }]}>{t("tapAnywhereToClose")}</Text>
       </View>
     </Modal>
   );
@@ -224,7 +220,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 16,
   },
   gestureArea: {
     alignItems: "center",
@@ -233,7 +228,7 @@ const styles = StyleSheet.create({
   closeButton: {
     position: "absolute",
     top: spacing.xl,
-    right: spacing.lg,
+    left: spacing.lg,
     width: layout.minTouchTarget,
     height: layout.minTouchTarget,
     borderRadius: radius.lg,
@@ -244,9 +239,5 @@ const styles = StyleSheet.create({
     color: "#fffaf5",
     fontSize: 20,
     fontWeight: "700",
-  },
-  hint: {
-    fontSize: 13,
-    opacity: 0.8,
   },
 });
