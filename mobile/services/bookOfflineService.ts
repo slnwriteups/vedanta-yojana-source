@@ -9,8 +9,10 @@ import type { BookFileSystem } from "./bookOfflineCore.ts";
  * This is the one place in mobile/ allowed to touch the network for this
  * feature -- see mobile/tests/offline.test.ts, which fails the build if
  * app/, components/, or content-lib/ reference fetch/XMLHttpRequest/
- * axios, and mobile/services/updateCheckService.ts /
- * pasuramOfflineService.ts for the pre-existing convention this follows.
+ * axios, and mobile/services/updateCheckService.ts for the pre-existing
+ * convention this follows. (Pasurams no longer touch the network at
+ * all -- every Pasuram PDF is bundled into the app, see
+ * pasuramOfflineService.ts.)
  *
  * URLs mirror updateCheckService.ts's VERSION_MANIFEST_URL exactly: the
  * same GitHub Pages deploy (published by the existing, unmodified
@@ -23,10 +25,9 @@ import type { BookFileSystem } from "./bookOfflineCore.ts";
  *
  * This file is just the real expo-file-system adapter, pre-bound onto
  * the actual orchestration logic in bookOfflineCore.ts. That split
- * exists for the same reason pasuramOfflineService.ts is split from
- * pasuramOfflineCore.ts: Node's native TypeScript support refuses to
- * strip types from .ts files under node_modules, so a module with a
- * real, top-level `import ... from "expo-file-system"` crashes under
+ * exists because Node's native TypeScript support refuses to strip
+ * types from .ts files under node_modules, so a module with a real,
+ * top-level `import ... from "expo-file-system"` crashes under
  * `node --test` regardless of whether any given code path actually uses
  * it. mobile/tests/book-offline-service.test.ts exercises
  * bookOfflineCore.ts directly, against a small in-memory fake

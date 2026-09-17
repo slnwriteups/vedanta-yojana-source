@@ -5,23 +5,16 @@ import { mapWithConcurrency } from "./concurrencyPool.ts";
  * The actual download/validate/promote/delete orchestration for offline
  * Library books -- deliberately has ZERO import of expo-file-system, so
  * this file (and therefore this logic) can be loaded and unit-tested
- * under plain `node --test`, the same split pasuramOfflineCore.ts/
- * pasuramOfflineService.ts already established (see that pair's doc
- * comments for why Node's native TypeScript support forces this).
+ * under plain `node --test`, matching image-viewer-math.ts's own
+ * established convention for isolating pure logic from a native import.
  * bookOfflineService.ts re-exports everything from this file, pre-bound
  * to the real filesystem, for app code to import normally.
  *
- * BookFileSystem is NOT PasuramFileSystem reused, even though the two
- * interfaces overlap almost completely (both need documentDirectoryPath/
- * cacheDirectoryPath/fileExists/fileSize/readFileBytes/deleteFile/
- * ensureDirectoryExists/moveFile/downloadFile) -- Phase 22/23 of this
- * task explicitly forbid touching the already-verified Pasuram code, and
- * a book download additionally needs one Pasuram never did: deleting an
- * entire directory at once (a book's local folder holds its book.json
- * PLUS a variable number of downloaded chapter images, all removed
- * together by deleteBook()). Duplicating the shared subset here, with
- * this one extra method, was judged safer than editing
- * pasuramOfflineCore.ts's interface to add a method only books need.
+ * (Pasurams no longer have an equivalent download step at all -- every
+ * Pasuram PDF is now bundled directly into the app, see
+ * pasuramOfflineService.ts -- so BookFileSystem has no sibling
+ * interface to compare itself against anymore; it's just this feature's
+ * own filesystem seam.)
  */
 export interface BookFileSystem {
   readonly documentDirectoryPath: string;
@@ -134,10 +127,9 @@ export interface BookDownloadResult {
 /**
  * Downloads a book's full JSON payload and every image it references,
  * validates all of it, and only then promotes it into the book's real
- * local directory -- mirroring pasuramOfflineCore.ts's downloadPasuram()
- * scratch-then-validate-then-move pattern for the exact same reason
- * (expo-file-system's own docs disclose that a failed download can leave
- * a partially-written file). Every part of a book download (the JSON,
+ * local directory -- a scratch-then-validate-then-move pattern, since
+ * expo-file-system's own docs disclose that a failed download can leave
+ * a partially-written file. Every part of a book download (the JSON,
  * and every referenced image) is fetched into a shared temp directory
  * first; if ANY part fails or fails validation, the whole download is
  * discarded and any existing valid offline copy of this book is left

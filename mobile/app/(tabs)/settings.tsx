@@ -1,7 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SettingsControls } from "../../components/SettingsControls";
 import { SocialButton } from "../../components/SocialButton";
-import { PasuramLibraryDownloads } from "../../components/PasuramLibraryDownloads";
 import { layout, spacing, typography, useTheme } from "../../theme";
 import { useT } from "../../ui-strings.ts";
 
@@ -30,7 +29,6 @@ export default function SettingsScreen() {
       contentContainerStyle={styles.content}
     >
       <SettingsControls />
-      <PasuramLibraryDownloads />
       <View style={styles.section}>
         <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("settingsConnectLabel")}</Text>
         <SocialButton icon="logo-instagram" label="Instagram" url={INSTAGRAM_URL} />

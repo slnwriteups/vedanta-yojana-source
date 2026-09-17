@@ -4,10 +4,9 @@
  * latency at a time) or fully unbounded (a burst of every request at
  * once). Results are returned in the same order as `items`, regardless
  * of which call actually finished first. Zero external imports, so this
- * can be unit-tested under plain `node --test` and reused by both
- * bookOfflineCore.ts (its own CDN) and pasuramOfflineCore.ts
- * (prapatti.org, a third party -- kept to a modest concurrency there to
- * remain a good citizen).
+ * can be unit-tested under plain `node --test` -- used by
+ * bookOfflineCore.ts to download a book's images concurrently instead
+ * of one at a time.
  */
 export async function mapWithConcurrency<T, R>(
   items: readonly T[],

@@ -1,125 +1,91 @@
-import { Directory, File, Paths } from "expo-file-system";
+import { Asset } from "expo-asset";
+import { File } from "expo-file-system";
+import * as IntentLauncher from "expo-intent-launcher";
 import * as Sharing from "expo-sharing";
-import * as core from "./pasuramOfflineCore.ts";
-import type { PasuramFileSystem } from "./pasuramOfflineCore.ts";
+import { Platform } from "react-native";
+import { pasuramAssetByUrl } from "../content-lib/pasuram-manifest.generated.ts";
 
 /**
- * Makes Prapatti.org Pasuram PDFs available offline: download once into
- * app-private persistent storage (Paths.document, never public Downloads,
- * never expo-file-system's reclaimable Paths.cache for the final copy),
- * then open the local copy with zero network contact on every subsequent
- * view. This is the one place in mobile/ allowed to touch the network for
- * this feature -- see mobile/tests/offline.test.ts, which fails the build
- * if app/, components/, or content-lib/ reference fetch/XMLHttpRequest/
- * axios, and mobile/services/updateCheckService.ts for the pre-existing
- * convention this follows.
+ * Every Pasuram PDF Prapatti.org resource referenced by the content
+ * corpus is bundled directly into the app (see
+ * mobile/scripts/generate-pasuram-manifest.ts and
+ * mobile/content-lib/pasuram-manifest.generated.ts) -- there is no
+ * download step, online or offline, and never has been for a reader:
+ * a Pasuram is available the instant the app is installed, exactly
+ * like a Divya Desam image. This file is the one place mobile/ is
+ * allowed to touch expo-asset/expo-intent-launcher/expo-sharing for
+ * this feature -- see mobile/tests/offline.test.ts, which fails the
+ * build if app/, components/, or content-lib/ reference fetch/
+ * XMLHttpRequest/axios.
  *
- * The URL itself (content-lib's ResourceEntry.url, type "pasuram-pdf")
- * is the resource's identity -- getPasuramResourceId() (a pure SHA-256,
- * see pasuramResourceId.ts) maps it deterministically to one local
- * filename, so the 7 PDFs genuinely shared between two Divya Desams, and
- * the handful of records that list the same URL more than once, both
- * collapse to a single downloaded file with no extra bookkeeping.
- *
- * Download safety: expo-file-system's own docs disclose that on Android
- * "if the download fails after it starts, a partially written file may
- * remain at the destination" -- so downloads always land in a scratch
- * subdirectory under Paths.cache first, get validated, and only then get
- * moved into the real pasurams/ directory under Paths.document. A failed
- * or invalid download therefore never touches, and can never corrupt, an
- * existing valid offline copy.
- *
- * This file is just the real expo-file-system/expo-sharing adapter, pre-
- * bound onto the actual orchestration logic in pasuramOfflineCore.ts.
- * That split exists because Node's native TypeScript support refuses to
- * strip types from .ts files under node_modules -- a module that
- * statically imports expo-file-system crashes under `node --test`
- * regardless of whether any given code path actually uses it, so the
- * genuinely test-covered logic has to live somewhere with no such
- * import at all. mobile/tests/pasuram-offline-service.test.ts exercises
- * pasuramOfflineCore.ts directly, against a small in-memory fake
- * filesystem, instead of this file.
+ * `isPasuramAvailable` is trivially pure (a manifest lookup) and has no
+ * native dependency, so it's safe to call from any render. Opening a
+ * PDF still needs real native calls (Asset.downloadAsync() -- a local
+ * copy out of the APK's packaged assets into a real file, not a
+ * network fetch, despite the name -- and either an Android VIEW intent
+ * or iOS's own file preview), so, like every other native-only adapter
+ * in this codebase, this file is not unit-tested under plain
+ * `node --test`; it's exercised via `expo export` and real-device
+ * testing instead.
  */
 
-const realFileSystem: PasuramFileSystem = {
-  get documentDirectoryPath() {
-    return Paths.document.uri;
-  },
-  get cacheDirectoryPath() {
-    return Paths.cache.uri;
-  },
-  fileExists(path) {
-    return new File(path).exists;
-  },
-  fileSize(path) {
-    return new File(path).size;
-  },
-  readFileBytes(path) {
-    return new File(path).bytesSync();
-  },
-  deleteFile(path) {
-    const file = new File(path);
-    if (file.exists) file.delete();
-  },
-  ensureDirectoryExists(path) {
-    const dir = new Directory(path);
-    if (!dir.exists) dir.create({ intermediates: true, idempotent: true });
-  },
-  moveFile(fromPath, toPath) {
-    new File(fromPath).move(new File(toPath));
-  },
-  async downloadFile(url, destinationPath) {
-    // expo-file-system's own static return type doesn't line up exactly
-    // with the `File` class this module otherwise uses (an SDK typing
-    // quirk, not a real distinction) -- the caller only needs the side
-    // effect (a file now exists at destinationPath), so the resolved
-    // value itself is discarded.
-    await File.downloadFileAsync(url, new File(destinationPath));
-  },
-  async canOpenFiles() {
-    return Sharing.isAvailableAsync();
-  },
-  async openFile(path) {
-    await Sharing.shareAsync(path, { mimeType: "application/pdf", dialogTitle: "Open Pasuram" });
-  },
-};
-
-export type {
-  BulkDownloadProgress,
-  BulkDownloadSummary,
-  PasuramDownloadResult,
-  PasuramFileSystem,
-  PasuramOpenResult,
-} from "./pasuramOfflineCore.ts";
-export { isValidPdfBytes } from "./pasuramOfflineCore.ts";
-
-export function getLocalPasuramPath(url: string): string {
-  return core.getLocalPasuramPath(url, realFileSystem);
-}
-
 export function isPasuramAvailable(url: string): boolean {
-  return core.isPasuramAvailable(url, realFileSystem);
+  return url in pasuramAssetByUrl;
 }
 
-export function downloadPasuram(url: string) {
-  return core.downloadPasuram(url, realFileSystem);
+export interface PasuramOpenResult {
+  success: boolean;
+  error?: string;
 }
 
-export function openOfflinePasuram(url: string) {
-  return core.openOfflinePasuram(url, realFileSystem);
-}
+const ACTION_VIEW = "android.intent.action.VIEW";
+/** Intent.FLAG_GRANT_READ_URI_PERMISSION -- required for the PDF reader app (a different process) to read a content:// URI this app's own FileProvider vends. */
+const FLAG_GRANT_READ_URI_PERMISSION = 0x00000001;
 
-export function deleteOfflinePasuram(url: string): void {
-  core.deleteOfflinePasuram(url, realFileSystem);
-}
+/**
+ * Opens a bundled Pasuram PDF directly in the device's PDF reader --
+ * deliberately NOT expo-sharing's ACTION_SEND share sheet, which lists
+ * messaging/email/"send to a contact" apps alongside PDF viewers and
+ * risks a reader tapping the wrong one and sending the file somewhere
+ * instead of just reading it. An Android ACTION_VIEW intent with an
+ * explicit "application/pdf" type is resolved by the OS against apps
+ * that declared themselves capable of *viewing* that type -- normal PDF
+ * readers -- never the ACTION_SEND-only messaging/sharing apps.
+ *
+ * Callers must check isPasuramAvailable() first (or handle a
+ * `success: false` result) rather than assuming every URL the content
+ * corpus references is actually bundled -- the generator warns, but
+ * does not fail the build, if a URL has no matching file under
+ * mobile/assets/pasurams/.
+ */
+export async function openOfflinePasuram(url: string): Promise<PasuramOpenResult> {
+  const assetModule = pasuramAssetByUrl[url];
+  if (assetModule === undefined) {
+    return { success: false, error: "This Pasuram is not available." };
+  }
 
-export function estimatedPasuramLibrarySizeMb(uniqueUrlCount: number): number {
-  return core.estimatedPasuramLibrarySizeMb(uniqueUrlCount);
-}
+  try {
+    const asset = await Asset.fromModule(assetModule).downloadAsync();
+    if (!asset.localUri) {
+      return { success: false, error: "Could not resolve the bundled Pasuram file." };
+    }
 
-export function downloadAllPasurams(
-  urls: readonly string[],
-  onProgress?: (progress: core.BulkDownloadProgress) => void
-) {
-  return core.downloadAllPasurams(urls, realFileSystem, onProgress);
+    if (Platform.OS === "android") {
+      const contentUri = new File(asset.localUri).contentUri;
+      await IntentLauncher.startActivityAsync(ACTION_VIEW, {
+        data: contentUri,
+        type: "application/pdf",
+        flags: FLAG_GRANT_READ_URI_PERMISSION,
+      });
+    } else {
+      // iOS has no Intent/ACTION_VIEW system to target a PDF viewer
+      // specifically -- its own document preview sheet (reached via
+      // expo-sharing here) is the closest platform equivalent, and,
+      // unlike Android's, is not dominated by messaging/send targets.
+      await Sharing.shareAsync(asset.localUri, { mimeType: "application/pdf", UTI: "com.adobe.pdf" });
+    }
+    return { success: true };
+  } catch (error) {
+    return { success: false, error: error instanceof Error ? error.message : "An unknown error occurred." };
+  }
 }
