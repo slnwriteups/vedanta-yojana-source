@@ -87,7 +87,7 @@ test("Library: the book still has all 51 chapters after the UI rewrite", () => {
 });
 
 test("Search: the offline corpus still surfaces a real record for a matching query", () => {
-  const results = searchCorpus(buildMobileSearchCorpus(), "Rangam");
+  const results = searchCorpus(buildMobileSearchCorpus(), "Raṅgam");
   assert.ok(results.some((r) => r.href === "/divya-desams/sri-rangam"));
 });
 

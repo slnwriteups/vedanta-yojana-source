@@ -27,7 +27,7 @@ test("Sri Rangam resolves with real content intact", () => {
   const record = loadDivyaDesam("sri-rangam");
   assert.ok(record, "sri-rangam did not resolve");
   assert.equal(record?.sourceOrder, 5);
-  assert.equal(record?.displayName, "Sri Rangam");
+  assert.equal(record?.displayName, "Shri Raṅgam");
   assert.ok(record?.sthalaPuranam);
 });
 
@@ -61,7 +61,7 @@ test("the recovered Book resolves with its real title and full chapter set", () 
   const ramaBook = loadBook("sri-rama-charithram");
   assert.ok(ramaBook, "sri-rama-charithram did not resolve");
   assert.equal(ramaBook?.title, "Sri Rama Charithram");
-  assert.equal(loadChapters("sri-rama-charithram").length, 7);
+  assert.equal(loadChapters("sri-rama-charithram").length, 75);
 
   const bhagavatamBook = loadBook("srimad-bhagavata-kathasagaram");
   assert.ok(bhagavatamBook, "srimad-bhagavata-kathasagaram did not resolve");
@@ -71,7 +71,7 @@ test("the recovered Book resolves with its real title and full chapter set", () 
   const jayaBook = loadBook("jaya");
   assert.ok(jayaBook, "jaya did not resolve");
   assert.equal(jayaBook?.title, "JAYA: A Journey of the Mahabharata");
-  assert.equal(loadChapters("jaya").length, 69);
+  assert.equal(loadChapters("jaya").length, 70);
 });
 
 test("chapters are ordered ascending by their own `order` field, not manifest/filesystem order", () => {

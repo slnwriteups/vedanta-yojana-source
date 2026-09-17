@@ -45,7 +45,7 @@ test("Divya Desams: 107 records available for the index screen", () => {
 test("Divya Desams: Sri Rangam resolves for the detail screen", () => {
   const record = loadDivyaDesam("sri-rangam");
   assert.ok(record, "sri-rangam did not resolve");
-  assert.equal(record?.displayName, "Sri Rangam");
+  assert.equal(record?.displayName, "Shri Raṅgam");
 });
 
 test("Divya Desams: an unknown slug is handled as not-found, not a crash", () => {
@@ -104,7 +104,7 @@ test("Knowledge: the Introduction record resolves for the Divya Desams introduct
 
 test("Search: the offline corpus surfaces Sri Rangam for a matching query", () => {
   const corpus = buildMobileSearchCorpus();
-  const results = searchCorpus(corpus, "Rangam");
+  const results = searchCorpus(corpus, "Raṅgam");
   assert.ok(
     results.some((r) => r.href === "/divya-desams/sri-rangam"),
     "expected Sri Rangam among the results"
