@@ -1,4 +1,5 @@
 import { BookPayloadSchema, BOOK_PAYLOAD_SCHEMA_VERSION, type BookPayload } from "../../content-lib/mobile-content.ts";
+import { mapWithConcurrency } from "./concurrencyPool.ts";
 
 /**
  * The actual download/validate/promote/delete orchestration for offline
@@ -38,6 +39,14 @@ export interface BookFileSystem {
 }
 
 const BOOKS_DIRECTORY_NAME = "books";
+
+/**
+ * Book images are served from our own GitHub Pages/Fastly-backed CDN
+ * (see bookOfflineService.ts's IMAGE_BASE_URL), not a rate-sensitive
+ * third party, so there's no politeness reason to hold this low -- 6
+ * roughly matches a browser's per-host connection limit.
+ */
+const IMAGE_DOWNLOAD_CONCURRENCY = 6;
 
 function localBookDir(bookSlug: string, fs: BookFileSystem): string {
   return `${fs.documentDirectoryPath}${BOOKS_DIRECTORY_NAME}/${bookSlug}`;
@@ -134,6 +143,10 @@ export interface BookDownloadResult {
  * discarded and any existing valid offline copy of this book is left
  * completely untouched. A book is therefore always either fully
  * available offline or not available at all -- never partially.
+ * Images download up to IMAGE_DOWNLOAD_CONCURRENCY at once (see that
+ * constant); if any fail, the ones already in flight are still allowed
+ * to finish before the whole attempt is discarded, rather than trying
+ * to cancel them.
  */
 export async function downloadBook(
   bookSlug: string,
@@ -160,13 +173,22 @@ export async function downloadBook(
     return { success: false, error: "The downloaded book content was not valid." };
   }
 
-  for (const [uuid, filename] of Object.entries(payload.imageFiles)) {
-    try {
-      await fs.downloadBinaryFile(`${imageBaseUrl}/${filename}`, `${tempDir}/images/${filename}`);
-    } catch (error) {
-      fs.deleteDirectory(tempDir);
-      return { success: false, error: `Failed to download an image (${uuid}): ${describeError(error)}` };
+  const imageResults = await mapWithConcurrency(
+    Object.entries(payload.imageFiles),
+    IMAGE_DOWNLOAD_CONCURRENCY,
+    async ([uuid, filename]) => {
+      try {
+        await fs.downloadBinaryFile(`${imageBaseUrl}/${filename}`, `${tempDir}/images/${filename}`);
+        return { uuid, error: null as string | null };
+      } catch (error) {
+        return { uuid, error: describeError(error) };
+      }
     }
+  );
+  const firstFailedImage = imageResults.find((result) => result.error !== null);
+  if (firstFailedImage) {
+    fs.deleteDirectory(tempDir);
+    return { success: false, error: `Failed to download an image (${firstFailedImage.uuid}): ${firstFailedImage.error}` };
   }
 
   const finalDir = localBookDir(bookSlug, fs);
