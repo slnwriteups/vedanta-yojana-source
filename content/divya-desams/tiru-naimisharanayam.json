@@ -44,13 +44,13 @@
     {
       "language": "Sanskrit",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/english/tirunaimicaaranyampaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/sanskrit/tirunaimicaaranyampaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsuram"
     },
     {
       "language": "Kannada",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/english/tirunaimicaaranyampaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/kannada/tirunaimicaaranyampaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
     },
     {
@@ -62,7 +62,7 @@
     {
       "language": "Tamil",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/english/tirunaimicaaranyampaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/tamil/tirunaimicaaranyampaasurangal.pdf",
       "sourceLabel": "Tamizh Pāsuram"
     }
   ],

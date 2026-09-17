@@ -43,7 +43,7 @@
     {
       "language": "Tamil",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/english/tiruppirudipaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/tamil/tiruppirudipaasurangal.pdf",
       "sourceLabel": "Tamizh Pāsuram"
     },
     {
@@ -55,13 +55,13 @@
     {
       "language": "Sanskrit",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/english/tiruppirudipaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/sanskrit/tiruppirudipaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsuram"
     },
     {
       "language": "Kannada",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/english/tiruppirudipaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/kannada/tiruppirudipaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
     }
   ],

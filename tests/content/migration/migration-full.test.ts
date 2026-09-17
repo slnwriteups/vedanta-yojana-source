@@ -419,6 +419,88 @@ const PHASE_6E_SHRINE_LINKS: Record<string, string> = {
     "https://www.google.com/maps/place/Arulmigu+Kallalagar+Temple,+Allagar+Temple/@10.074847,78.213097,16z/data=!4m5!3m4!1s0x0:0x8dd0f3238544b80e!8m2!3d10.0748469!4d78.2130969?hl=en",
 };
 
+/**
+ * A Pasuram-mapping audit found that the SAP source itself is unreliable
+ * for this one field: many records' raw `externalLinks` list the exact
+ * same Prapatti URL 3-4 times over (one per Sanskrit/Kannada/Tamil/
+ * English resource entry), because the source page's own markup reused
+ * one visible link for all four -- the extraction pipeline had no way to
+ * recover which URL was actually meant for which language, and a couple
+ * of records were additionally found to have had their whole 4-URL set
+ * swapped with an unrelated temple's (tirukkovilur <-> tiruvahindrapuram).
+ *
+ * Every URL below was verified against the *actual PDF content* fetched
+ * from Prapatti.com (via `pdftotext`, confirming the temple name printed
+ * on the PDF's own title page matches the owning record), not just
+ * against a filename pattern -- see the commit that introduced this
+ * exception list for the full audit. These are therefore deliberate,
+ * verified corrections beyond a source that was simply wrong, exactly
+ * like PHASE_6E_SHRINE_LINKS above, not accidental drift.
+ */
+const PASURAM_LANGUAGE_MAPPING_FIXES: Record<string, string[]> = {
+  kapisthalam: [
+    "https://www.prapatti.com/slokas/sanskrit/tirukkavittalampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tirukkavittalampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/tamil/tirukkavittalampaasurangal.pdf",
+  ],
+  "tiru-naimisharanayam": [
+    "https://www.prapatti.com/slokas/sanskrit/tirunaimicaaranyampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tirunaimicaaranyampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/tamil/tirunaimicaaranyampaasurangal.pdf",
+  ],
+  "tiruchitrakootam-chidambaram": [
+    "https://www.prapatti.com/slokas/sanskrit/tiruccitrakuudampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tiruccitrakuudampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/tamil/tiruccitrakuudampaasurangal.pdf",
+  ],
+  "tirukazhicheerama-vinnagaram": [
+    "https://www.prapatti.com/slokas/sanskrit/tirukkaazicciiraamavinnagarampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tirukkaazicciiraamavinnagarampaasurangal.pdf",
+  ],
+  tirukkoodaloor: ["https://www.prapatti.com/slokas/tamil/tirukkuudaluurpaasurangal.pdf"],
+  tirukkovilur: [
+    "https://www.prapatti.com/slokas/tamil/tirukkovaluurpaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tirukkovaluurpaasurangal.pdf",
+    "https://www.prapatti.com/slokas/english/tirukkovaluurpaasurangal.pdf",
+    "https://www.prapatti.com/slokas/sanskrit/tirukkovaluurpaasurangal.pdf",
+  ],
+  tirukkudandai: ["https://www.prapatti.com/slokas/tamil/tirukkudandaipaasurangal.pdf"],
+  tirukodittanam: ["https://www.prapatti.com/slokas/kannada/tirukkadittaanampaasurangal.pdf"],
+  "tirumanimada-kovil": ["https://www.prapatti.com/slokas/tamil/tirumanimaadakkoyilpaasurangal.pdf"],
+  "tiruparamapadam-sri-vaikuntham": [
+    "https://www.prapatti.com/slokas/kannada/tirupparamapadampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/tamil/tirupparamapadampaasurangal.pdf",
+  ],
+  "tiruppirudi-joshimath": [
+    "https://www.prapatti.com/slokas/tamil/tiruppirudipaasurangal.pdf",
+    "https://www.prapatti.com/slokas/sanskrit/tiruppirudipaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tiruppirudipaasurangal.pdf",
+  ],
+  tirupuliyur: ["https://www.prapatti.com/slokas/kannada/tiruppuliyuurpaasurangal.pdf"],
+  tirupullani: [
+    "https://www.prapatti.com/slokas/tamil/tiruppullaanipaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tiruppullaanipaasurangal.pdf",
+    "https://www.prapatti.com/slokas/sanskrit/tiruppullaanipaasurangal.pdf",
+  ],
+  tiruvahindrapuram: [
+    "https://www.prapatti.com/slokas/kannada/tiruvahiindirapurampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/english/tiruvahiindirapurampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/tamil/tiruvahiindirapurampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/sanskrit/tiruvahiindirapurampaasurangal.pdf",
+  ],
+  tiruvanpurushottamam: ["https://www.prapatti.com/slokas/tamil/tiruvanpurudottamampaasurangal.pdf"],
+  tiruvellakkulam: [
+    "https://www.prapatti.com/slokas/tamil/tiruvellakkulampaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tiruvellakkulampaasurangal.pdf",
+  ],
+  tiruvellarai: [
+    "https://www.prapatti.com/slokas/sanskrit/tiruvellaraipaasurangal.pdf",
+    "https://www.prapatti.com/slokas/kannada/tiruvellaraipaasurangal.pdf",
+    "https://www.prapatti.com/slokas/tamil/tiruvellaraipaasurangal.pdf",
+  ],
+  tiruvelukkai: ["https://www.prapatti.com/slokas/kannada/tiruvelukkaipaasurangal.pdf"],
+};
+
 test("G: every SAP-migrated shrine mapsLink and resource url in every Divya Desam matches its source record's externalLinks verbatim", () => {
   let checked = 0;
   for (const record of ddOutputRecords) {
@@ -431,6 +513,7 @@ test("G: every SAP-migrated shrine mapsLink and resource url in every Divya Desa
       checked++;
     }
     for (const resource of record.resources) {
+      if (PASURAM_LANGUAGE_MAPPING_FIXES[record.slug]?.includes(resource.url)) continue;
       assert.ok(sourceUrls.has(resource.url), `${record.slug}: unexpected resource URL ${resource.url}`);
       checked++;
     }

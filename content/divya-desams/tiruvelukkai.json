@@ -33,15 +33,15 @@
   ],
   "resources": [
     {
-      "language": "Devanagari",
+      "language": "Sanskrit",
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/sanskrit/tiruvelukkaipaasurangal.pdf",
-      "sourceLabel": "Devanāgarī Pāsuram"
+      "sourceLabel": "Sanskrit Pāsuram"
     },
     {
       "language": "Kannada",
       "type": "pasuram-pdf",
-      "url": "https://www.prapatti.com/slokas/kannada/tiruttankaapaasurangal.pdf",
+      "url": "https://www.prapatti.com/slokas/kannada/tiruvelukkaipaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
     },
     {
