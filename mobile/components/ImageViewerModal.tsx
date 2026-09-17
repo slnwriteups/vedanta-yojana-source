@@ -58,7 +58,14 @@ export function ImageViewerModal({
   // delta against, or to decide whether a release was "still zoomed
   // in"), so these plain refs mirror the Animated values via listeners.
   const current = useRef({ scale: 1, x: 0, y: 0 });
-  const gestureStart = useRef({ scale: 1, x: 0, y: 0, pinchDistance: 0 });
+  const gestureStart = useRef({
+    scale: 1,
+    x: 0,
+    y: 0,
+    pinchDistance: 0,
+    panOrigin: null as ViewerTouch | null,
+    hadMultitouch: false,
+  });
   const lastTapAt = useRef(0);
 
   useEffect(() => {
@@ -96,30 +103,58 @@ export function ImageViewerModal({
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
+      onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (evt) => {
+        const touches = evt.nativeEvent.touches as ViewerTouch[];
         gestureStart.current.scale = current.current.scale;
         gestureStart.current.x = current.current.x;
         gestureStart.current.y = current.current.y;
-        gestureStart.current.pinchDistance =
-          evt.nativeEvent.touches.length === 2
-            ? pinchDistance(evt.nativeEvent.touches as ViewerTouch[])
-            : 0;
+        gestureStart.current.pinchDistance = touches.length === 2 ? pinchDistance(touches) : 0;
+        gestureStart.current.panOrigin = touches.length === 1 ? { pageX: touches[0].pageX, pageY: touches[0].pageY } : null;
+        gestureStart.current.hadMultitouch = touches.length >= 2;
       },
-      onPanResponderMove: (evt, gestureState) => {
-        const touches = evt.nativeEvent.touches;
-        if (touches.length === 2 && gestureStart.current.pinchDistance > 0) {
-          const ratio = pinchDistance(touches as ViewerTouch[]) / gestureStart.current.pinchDistance;
-          scale.setValue(clamp(gestureStart.current.scale * ratio, 1, MAX_SCALE));
-        } else if (touches.length === 1 && gestureStart.current.scale > 1) {
-          const maxX = maxPanOffset(boxWidth, gestureStart.current.scale);
-          const maxY = maxPanOffset(boxHeight, gestureStart.current.scale);
-          translateX.setValue(clamp(gestureStart.current.x + gestureState.dx, -maxX, maxX));
-          translateY.setValue(clamp(gestureStart.current.y + gestureState.dy, -maxY, maxY));
+      onPanResponderMove: (evt) => {
+        const touches = evt.nativeEvent.touches as ViewerTouch[];
+        if (touches.length >= 2) {
+          gestureStart.current.hadMultitouch = true;
+          gestureStart.current.panOrigin = null;
+          if (gestureStart.current.pinchDistance === 0) {
+            // The second finger just landed (or landed a beat after the
+            // first, which is the common case) -- there was no 2-touch
+            // baseline yet, so establish one right now instead of only
+            // at onPanResponderGrant, which may have fired with just the
+            // first finger down.
+            gestureStart.current.pinchDistance = pinchDistance(touches);
+            gestureStart.current.scale = current.current.scale;
+          } else {
+            const ratio = pinchDistance(touches) / gestureStart.current.pinchDistance;
+            scale.setValue(clamp(gestureStart.current.scale * ratio, 1, MAX_SCALE));
+          }
+        } else if (touches.length === 1) {
+          if (gestureStart.current.pinchDistance !== 0 || !gestureStart.current.panOrigin) {
+            // Either a finger was just lifted after a pinch, or this is
+            // a fresh single-finger drag -- (re)anchor the pan origin to
+            // right now so the image doesn't jump. gestureState.dx/dy
+            // isn't used here precisely because it can't be reset
+            // mid-gesture the way this raw touch position can.
+            gestureStart.current.pinchDistance = 0;
+            gestureStart.current.x = current.current.x;
+            gestureStart.current.y = current.current.y;
+            gestureStart.current.panOrigin = { pageX: touches[0].pageX, pageY: touches[0].pageY };
+          }
+          if (gestureStart.current.scale > 1 && gestureStart.current.panOrigin) {
+            const dx = touches[0].pageX - gestureStart.current.panOrigin.pageX;
+            const dy = touches[0].pageY - gestureStart.current.panOrigin.pageY;
+            const maxX = maxPanOffset(boxWidth, gestureStart.current.scale);
+            const maxY = maxPanOffset(boxHeight, gestureStart.current.scale);
+            translateX.setValue(clamp(gestureStart.current.x + dx, -maxX, maxX));
+            translateY.setValue(clamp(gestureStart.current.y + dy, -maxY, maxY));
+          }
         }
       },
       onPanResponderRelease: (evt, gestureState) => {
         const wasTap =
-          gestureStart.current.pinchDistance === 0 &&
+          !gestureStart.current.hadMultitouch &&
           Math.abs(gestureState.dx) < TAP_MOVE_THRESHOLD &&
           Math.abs(gestureState.dy) < TAP_MOVE_THRESHOLD;
 
