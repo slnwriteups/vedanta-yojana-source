@@ -60,6 +60,22 @@ export function localizeChapter<T extends Omit<Chapter, "migration" | "images">>
   return { ...record, title: t.title ?? record.title, body: t.body ?? record.body } as T;
 }
 
+/**
+ * localizeChapter's counterpart for the bundled catalog's lightweight
+ * chapter shape (mobile-content.ts's MobileChapterSummary) -- title
+ * only, since a summary never carries `body`. Used by the Library book
+ * screen's table of contents (shown before any download) and the
+ * chapter reading screen's previous/next pager labels.
+ */
+export function localizeChapterSummary<T extends { title: string; translations?: Partial<Record<LanguageCode, { title?: string }>> }>(
+  record: T,
+  language: LanguageCode | null
+): T {
+  const t = language ? record.translations?.[language] : undefined;
+  if (!t) return record;
+  return { ...record, title: t.title ?? record.title } as T;
+}
+
 export function localizeKnowledge<T extends Omit<Knowledge, "migration" | "images">>(
   record: T,
   language: LanguageCode | null

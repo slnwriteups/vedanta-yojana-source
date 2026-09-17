@@ -3,12 +3,37 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   toMobileBook,
-  toMobileChapter,
   toMobileDivyaDesam,
   toMobileKnowledge,
 } from "../../content-lib/mobile-content-transform.ts";
-import type { MobileBook, MobileChapter, MobileDivyaDesam, MobileKnowledge } from "../../content-lib/mobile-content.ts";
+import type { MobileBook, MobileChapterSummary, MobileDivyaDesam, MobileKnowledge } from "../../content-lib/mobile-content.ts";
 import { BookSchema, ChapterSchema, DivyaDesamSchema, KnowledgeSchema } from "../../content-lib/schemas/index.ts";
+import type { Chapter } from "../../content-lib/schemas/index.ts";
+
+/**
+ * A chapter's bundled-catalog projection: title/slug/order/status only,
+ * never `body`/`images`/`translations` -- see mobile-content.ts's
+ * MobileChapterSummarySchema doc comment for the full "why". Kept local
+ * to this script (like sourcePageNumber below) rather than added to
+ * content-lib/mobile-content-transform.ts, since nothing else needs it.
+ */
+function toChapterSummary(chapter: Chapter): MobileChapterSummary {
+  const translations = chapter.translations
+    ? Object.fromEntries(
+        Object.entries(chapter.translations)
+          .filter(([, t]) => t?.title)
+          .map(([lang, t]) => [lang, { title: t!.title }])
+      )
+    : undefined;
+  return {
+    title: chapter.title,
+    slug: chapter.slug,
+    order: chapter.order,
+    status: chapter.status,
+    migration: { needsReview: chapter.migration.needsReview },
+    ...(translations && Object.keys(translations).length > 0 ? { translations } : {}),
+  };
+}
 
 /**
  * Phase 6A, Step 3/4 -- the "build-time content export step" (Option C
@@ -39,10 +64,23 @@ import { BookSchema, ChapterSchema, DivyaDesamSchema, KnowledgeSchema } from "..
  *
  * Regenerate after any content change:
  *   node mobile/scripts/generate-content-manifest.ts
+ * (also regenerate scripts/build-book-payloads.ts's output after a book
+ * change -- see that script for the downloadable-book counterpart of
+ * this one.)
  *
  * The output (mobile/content-lib/manifest.generated.ts) is checked in
  * (Metro needs it to exist at bundle time) but should never be hand-
  * edited -- it is fully mechanical, like a lockfile.
+ *
+ * Book-bundle-removal update: a book's own record (rawBookGroups) still
+ * carries its full mobile-safe metadata, but each of its chapters is now
+ * projected down to MobileChapterSummarySchema (title/slug/order/status
+ * only, via toChapterSummary() above) rather than the full MobileChapter
+ * -- a chapter's body/images/translations are large and are only ever
+ * needed once a reader downloads that book, so they no longer enter the
+ * Hermes bundle at all. See content-lib/mobile-content.ts's
+ * MobileChapterSummarySchema doc comment and
+ * mobile/services/bookOfflineService.ts.
  */
 
 const MOBILE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -103,7 +141,7 @@ function sourcePageNumber(sourcePageId: string): number {
   return parseInt(match[1], 10);
 }
 
-function main(): void {
+function main(): Set<string> {
   const ddFiles = listJsonFiles(path.join(CONTENT_ROOT, "divya-desams"));
   const mobileDivyaDesams: MobileDivyaDesam[] = ddFiles.map((f) => {
     const raw = DivyaDesamSchema.parse(readJson(f));
@@ -114,6 +152,16 @@ function main(): void {
   const mobileKnowledge: MobileKnowledge[] = knowledgeFiles.map((f) =>
     toMobileKnowledge(KnowledgeSchema.parse(readJson(f)))
   );
+
+  // Every image any bundled (non-book) record references -- the set the
+  // static Metro image manifest must keep. A book-exclusive image (used
+  // by no Divya Desam/Knowledge record) is deliberately left OUT of that
+  // manifest: it only becomes reachable once its book is downloaded, via
+  // bookOfflineService's local-file resolution, not via a Metro asset id.
+  // See generateImageManifest() below.
+  const coreImageUuids = new Set<string>();
+  for (const record of mobileDivyaDesams) for (const image of record.images) coreImageUuids.add(image.sourceAssetUuid.toLowerCase());
+  for (const record of mobileKnowledge) for (const image of record.images) coreImageUuids.add(image.sourceAssetUuid.toLowerCase());
 
   const libraryRoot = path.join(CONTENT_ROOT, "library");
   const bookDirs = listSubdirectories(libraryRoot);
@@ -126,8 +174,14 @@ function main(): void {
     const mobileBook: MobileBook = toMobileBook(BookSchema.parse(readJson(bookJsonPath)));
 
     const chapterFiles = listJsonFiles(path.join(libraryRoot, bookDir, "chapters"));
-    const mobileChapters: MobileChapter[] = chapterFiles.map((f) =>
-      toMobileChapter(ChapterSchema.parse(readJson(f)))
+    // Only the lightweight catalog projection is bundled -- no body, no
+    // images, no translations. See MobileChapterSummarySchema's doc
+    // comment (content-lib/mobile-content.ts) for why: the full chapter
+    // is exactly the payload this task moves out of the initial APK,
+    // fetched only after a reader downloads this book
+    // (mobile/services/bookOfflineService.ts).
+    const chapterSummaries: MobileChapterSummary[] = chapterFiles.map((f) =>
+      toChapterSummary(ChapterSchema.parse(readJson(f)))
     );
 
     // "directory" is organizational only (matching the web loader's own
@@ -135,7 +189,7 @@ function main(): void {
     // the parsed book's validated `slug` field, never this string.
     bookGroupEntries.push(
       `  { directory: ${JSON.stringify(bookDir)}, book: ${JSON.stringify(mobileBook)}, chapters: ${JSON.stringify(
-        mobileChapters
+        chapterSummaries
       )} },`
     );
   }
@@ -167,7 +221,7 @@ export const rawDivyaDesams: unknown[] = ${JSON.stringify(mobileDivyaDesams)};
 /** One entry per file under content/knowledge/, mobile-safe. */
 export const rawKnowledge: unknown[] = ${JSON.stringify(mobileKnowledge)};
 
-/** One entry per book.json under content/library/, each paired with its own mobile-safe chapters. */
+/** One entry per book.json under content/library/, paired with its chapters' mobile-safe SUMMARIES only (no body/images/translations -- see MobileChapterSummarySchema). */
 export const rawBookGroups: { directory: string; book: unknown; chapters: unknown[] }[] = [
 ${bookGroupEntries.join("\n")}
 ];
@@ -179,6 +233,8 @@ ${bookGroupEntries.join("\n")}
   console.log(
     `Generated ${path.relative(REPO_ROOT, OUTPUT_FILE)}: ${ddFiles.length} Divya Desams, ${bookDirs.length} book(s), ${knowledgeFiles.length} Knowledge record(s).`
   );
+
+  return coreImageUuids;
 }
 
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -193,8 +249,19 @@ const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
  * or re-encoded. Metro's asset pipeline (not this script) does the actual
  * hashing/bundling of the referenced bytes; this script only emits the
  * `import`/lookup-table glue, mirroring generate content manifest above.
+ *
+ * `coreImageUuids` (computed by main() above, from the bundled Divya
+ * Desam/Knowledge records only) is the allowlist: a book-exclusive image
+ * -- referenced only by a book's cover/chapters, never by any always-
+ * bundled record -- is deliberately excluded from this static Metro
+ * manifest. Its bytes still live in public/images/ (the web app and a
+ * downloaded book's JSON payload both resolve it from there), but Metro
+ * never sees a `require()`/`import` for it, so it never enters the APK
+ * until a reader actually downloads that book, at which point
+ * bookOfflineService.ts fetches it into the app's private storage and
+ * resolves it as a local file:// URI instead of a Metro asset id.
  */
-function generateImageManifest(): void {
+function generateImageManifest(coreImageUuids: Set<string>): void {
   const entries = fs.existsSync(IMAGES_ROOT)
     ? fs
         .readdirSync(IMAGES_ROOT, { withFileTypes: true })
@@ -206,12 +273,17 @@ function generateImageManifest(): void {
   const imports: string[] = [];
   const mapEntries: string[] = [];
   let skipped = 0;
+  let bookExclusive = 0;
 
   for (const filename of entries) {
     const extension = path.extname(filename).toLowerCase();
     const uuid = path.basename(filename, path.extname(filename));
     if (!IMAGE_EXTENSIONS.has(extension) || !UUID_PATTERN.test(uuid)) {
       skipped += 1;
+      continue;
+    }
+    if (!coreImageUuids.has(uuid.toLowerCase())) {
+      bookExclusive += 1;
       continue;
     }
 
@@ -230,7 +302,9 @@ function generateImageManifest(): void {
  * that sourceAssetUuid (via mobile/metro.config.js's watchFolders) --
  * nothing here is a copy, a rename, or a re-encode. ${skipped} file(s)
  * under public/images/ did not match the expected UUID-named-image shape
- * and were skipped rather than guessed at.
+ * and were skipped rather than guessed at. ${bookExclusive} book-exclusive
+ * image(s) were deliberately excluded -- see this function's own doc
+ * comment.
  */
 ${imports.join("\n")}
 
@@ -244,9 +318,9 @@ ${mapEntries.join("\n")}
   fs.writeFileSync(IMAGE_OUTPUT_FILE, output, "utf8");
 
   console.log(
-    `Generated ${path.relative(REPO_ROOT, IMAGE_OUTPUT_FILE)}: ${mapEntries.length} image(s) (${skipped} skipped).`
+    `Generated ${path.relative(REPO_ROOT, IMAGE_OUTPUT_FILE)}: ${mapEntries.length} image(s) (${skipped} skipped, ${bookExclusive} book-exclusive/excluded).`
   );
 }
 
-main();
-generateImageManifest();
+const coreImageUuids = main();
+generateImageManifest(coreImageUuids);

@@ -1,7 +1,7 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   PanResponder,
@@ -13,8 +13,7 @@ import {
   type NativeSyntheticEvent,
   type NativeScrollEvent,
 } from "react-native";
-import type { Chapter } from "../../../../content-lib/loader.ts";
-import { loadBook, loadChapter, loadChapters } from "../../../../content-lib/loader.ts";
+import { loadBook } from "../../../../content-lib/loader.ts";
 import { findAdjacentChapters } from "../../../../content-lib/chapter-navigation.ts";
 import { DraftBadge } from "../../../../components/DraftBadge";
 import { ContentImage } from "../../../../components/ContentImage";
@@ -32,6 +31,8 @@ import { useLanguage } from "../../../../language-context.ts";
 import { useReadingPosition } from "../../../../reading-position-context.ts";
 import { useBookmarks } from "../../../../bookmarks-context.ts";
 import { chapterPositionLabel, minReadLabel, nowReadingAnnouncement, useT } from "../../../../ui-strings.ts";
+import { getOfflineBookImageUri, isBookAvailable, loadOfflineBook } from "../../../../services/bookOfflineService.ts";
+import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile-content.ts";
 
 /**
  * Phase 6C -- the reading-comfort pass the brief asks for: a capped
@@ -117,10 +118,20 @@ export default function LibraryChapterScreen() {
   const { recordChapterView } = useReadingPosition();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const [progress, setProgress] = useState(0);
-  const loadedChapter = loadChapter(bookSlug, chapterSlug);
-  const chapter = loadedChapter ? localizeChapter(loadedChapter, language) : null;
   const loadedBook = loadBook(bookSlug);
   const book = loadedBook ? localizeBook(loadedBook, language) : null;
+  // Memoized on bookSlug alone (not re-run on every scroll-driven
+  // re-render, which setProgress below causes constantly): reads and
+  // zod-validates the book's whole downloaded JSON file, which is wasted
+  // work to repeat every frame. isBookAvailable() itself is a cheap
+  // filesystem check and is not memoized -- see BookDownloadControl.tsx,
+  // this screen's own downloaded state can also change without a
+  // bookSlug change if the reader deletes the book while this exact
+  // chapter is open (an edge case handled by offlineBook simply becoming
+  // null on the next chapter switch, not by watching for it live here).
+  const offlineBook = useMemo(() => (isBookAvailable(bookSlug) ? loadOfflineBook(bookSlug) : null), [bookSlug]);
+  const loadedChapter = offlineBook?.chapters.find((c) => c.slug === chapterSlug) ?? null;
+  const chapter = loadedChapter ? localizeChapter(loadedChapter, language) : null;
   const tint = sectionTint(bookSlug, theme.scheme);
   const adjacentRef = useRef<{ previous: Chapter | null; next: Chapter | null }>({ previous: null, next: null });
   const scrollViewRef = useRef<ScrollView>(null);
@@ -193,6 +204,28 @@ export default function LibraryChapterScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookSlug, chapterSlug, loadedChapter]);
 
+  if (!offlineBook) {
+    // The book itself hasn't been downloaded (or was deleted since this
+    // link was saved/bookmarked) -- send the reader to the book screen's
+    // download control rather than showing a bare "not found", since
+    // there IS real content here, just not on this device yet.
+    return (
+      <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
+        <Stack.Screen options={{ title: book?.title ?? t("notFoundTitle") }} />
+        <View style={styles.notDownloaded}>
+          <Text style={[styles.empty, { color: theme.colors.muted }]}>{t("bookDownloadToRead")}</Text>
+          <Pressable
+            onPress={() => router.replace(`/library/${bookSlug}` as never)}
+            accessibilityRole="button"
+            style={[styles.downloadLinkButton, { backgroundColor: theme.colors.accent }]}
+          >
+            <Text style={styles.downloadLinkButtonText}>{t("bookDownloadButton")}</Text>
+          </Pressable>
+        </View>
+      </View>
+    );
+  }
+
   if (!chapter) {
     return (
       <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -202,7 +235,7 @@ export default function LibraryChapterScreen() {
     );
   }
 
-  const localizedChapters = loadChapters(bookSlug).map((c) => localizeChapter(c, language));
+  const localizedChapters = offlineBook.chapters.map((c) => localizeChapter(c, language));
   const { previous, next } = findAdjacentChapters(localizedChapters, chapterSlug);
   adjacentRef.current = { previous, next };
   const position = localizedChapters.findIndex((c) => c.slug === chapterSlug);
@@ -287,7 +320,7 @@ export default function LibraryChapterScreen() {
           </View>
         ) : null}
 
-        <ContentImage images={chapter.images} />
+        <ContentImage images={chapter.images} resolveLocalUri={(uuid) => getOfflineBookImageUri(bookSlug, uuid)} />
 
         {displayBody ? (
           <Section text={displayBody} paragraphRefs={paragraphRefs} />
@@ -390,6 +423,23 @@ const styles = StyleSheet.create({
   },
   empty: {
     fontSize: typography.body,
+  },
+  notDownloaded: {
+    padding: layout.screenPadding,
+    gap: spacing.md,
+    alignItems: "flex-start",
+  },
+  downloadLinkButton: {
+    minHeight: layout.minTouchTarget,
+    borderRadius: radius.md,
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: spacing.lg,
+  },
+  downloadLinkButtonText: {
+    color: "#fff",
+    fontSize: typography.body,
+    fontWeight: "700",
   },
   toc: {
     borderWidth: StyleSheet.hairlineWidth,

@@ -1,12 +1,15 @@
+import { useState } from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { FlatList, StyleSheet, Text, View } from "react-native";
-import { loadBook, loadChapters, type Chapter } from "../../../content-lib/loader.ts";
+import { loadBook, loadChapters, type ChapterSummary } from "../../../content-lib/loader.ts";
 import { ContentCard } from "../../../components/ContentCard";
 import { DraftBadge } from "../../../components/DraftBadge";
+import { BookDownloadControl } from "../../../components/BookDownloadControl";
 import { layout, spacing, typography, useTheme } from "../../../theme";
 import { sectionTint } from "../../../section-tints.ts";
-import { localizeBook, localizeChapter } from "../../../../content-lib/i18n.ts";
+import { localizeBook, localizeChapterSummary } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
+import { isBookAvailable } from "../../../services/bookOfflineService.ts";
 import { chapterOrdinalLabel, useT } from "../../../ui-strings.ts";
 
 /**
@@ -26,6 +29,10 @@ export default function LibraryBookScreen() {
   const theme = useTheme();
   const { language } = useLanguage();
   const t = useT();
+  // Hook call must stay unconditional (before the `if (!book)` early
+  // return below), even though bookSlug can't meaningfully change
+  // without this whole screen remounting via expo-router.
+  const [downloaded, setDownloaded] = useState(() => isBookAvailable(bookSlug));
   const loadedBook = loadBook(bookSlug);
   const book = loadedBook ? localizeBook(loadedBook, language) : null;
 
@@ -38,10 +45,10 @@ export default function LibraryBookScreen() {
     );
   }
 
-  const chapters = loadChapters(book.slug).map((c) => localizeChapter(c, language));
+  const chapters = loadChapters(book.slug).map((c) => localizeChapterSummary(c, language));
   const tint = sectionTint(book.slug, theme.scheme);
 
-  function renderItem({ item, index }: { item: Chapter; index: number }) {
+  function renderItem({ item, index }: { item: ChapterSummary; index: number }) {
     return (
       <ContentCard
         title={item.title}
@@ -49,7 +56,8 @@ export default function LibraryBookScreen() {
         status={item.status}
         needsReview={item.migration.needsReview}
         tintColor={tint}
-        onPress={() => router.push(`/library/${book!.slug}/${item.slug}` as never)}
+        disabled={!downloaded}
+        onPress={downloaded ? () => router.push(`/library/${book!.slug}/${item.slug}` as never) : undefined}
       />
     );
   }
@@ -63,6 +71,7 @@ export default function LibraryBookScreen() {
         {book.description ? (
           <Text style={[styles.description, { color: theme.colors.muted }]}>{book.description}</Text>
         ) : null}
+        <BookDownloadControl bookSlug={book.slug} onAvailabilityChange={setDownloaded} />
       </View>
       {chapters.length > 0 ? (
         <FlatList

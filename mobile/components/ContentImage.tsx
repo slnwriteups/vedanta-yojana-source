@@ -23,14 +23,25 @@ import { ImageViewerModal } from "./ImageViewerModal";
  * "Sthala Puranam"), implying equal informational content where there
  * was none; a gallery of real photos doesn't need a label saying
  * "Images" any more than body text needs one saying "Text".
+ *
+ * Book-bundle-removal update: `asset` now also accepts `{ uri: string }`
+ * -- a downloaded book chapter's images live in app-private storage as
+ * local files, not Metro-bundled requires, so they resolve to a
+ * `file://` URI (bookOfflineService.ts's getOfflineBookImageUri())
+ * rather than a numeric asset id. Divya Desam images are completely
+ * unaffected: they still resolve through the same imagesByUuid Metro
+ * lookup as before, and this widened type accepts both without any
+ * caller needing to change.
  */
+export type ImageAsset = number | { uri: string };
+
 export function FadeInImage({
   asset,
   label,
   size,
   onPress,
 }: {
-  asset: number;
+  asset: ImageAsset;
   label: string | null;
   size: number;
   onPress: () => void;
@@ -59,11 +70,23 @@ export function FadeInImage({
   );
 }
 
-export function ContentImage({ images }: { images: MobileImageEntry[] }) {
-  const [viewerAsset, setViewerAsset] = useState<{ asset: number; label: string | null } | null>(null);
+export function ContentImage({
+  images,
+  resolveLocalUri,
+}: {
+  images: MobileImageEntry[];
+  /** When set, resolves each image's local file:// URI (a downloaded book's chapter images) instead of the default Metro imagesByUuid lookup (Divya Desam images). Unset for every existing caller -- behavior there is completely unchanged. */
+  resolveLocalUri?: (sourceAssetUuid: string) => string | null;
+}) {
+  const [viewerAsset, setViewerAsset] = useState<{ asset: ImageAsset; label: string | null } | null>(null);
 
   const resolved = images.flatMap((image) => {
-    const asset = imagesByUuid[image.sourceAssetUuid.toLowerCase()];
+    const asset: ImageAsset | undefined = resolveLocalUri
+      ? (() => {
+          const uri = resolveLocalUri(image.sourceAssetUuid);
+          return uri ? { uri } : undefined;
+        })()
+      : imagesByUuid[image.sourceAssetUuid.toLowerCase()];
     return asset !== undefined ? [{ image, asset }] : [];
   });
 

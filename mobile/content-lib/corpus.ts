@@ -80,11 +80,21 @@ export function buildMobileSearchCorpus(): SearchDocument[] {
       fields: bookFields,
     });
 
+    // Book-bundle-removal: loadChapters() now returns each chapter's
+    // lightweight bundled SUMMARY (title/slug/order/status), never its
+    // body -- a chapter's full text only exists locally once its book
+    // has been downloaded, so it can no longer be indexed here. A
+    // chapter therefore stays findable by TITLE (unchanged from before),
+    // but full-text search over an undownloaded book's chapter bodies is
+    // deliberately not attempted, matching the offline-first content
+    // architecture: search only ever ranks over what's actually already
+    // on the device. See mobile/services/bookOfflineService.ts's own doc
+    // comment for the deferred next step (indexing a book's chapters
+    // into this same corpus once it has been downloaded).
     for (const chapter of loadChapters(book.slug)) {
       const chapterFields: SearchField[] = [
         ...field("title", "title", chapter.title),
         ...field("parentBookTitle", "strong", book.title),
-        ...field("body", "body", chapter.body),
       ];
       documents.push({
         type: "chapter",

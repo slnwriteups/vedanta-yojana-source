@@ -15,3 +15,18 @@ export const ChapterTranslationSchema = z.object({
 export type ChapterTranslation = z.infer<typeof ChapterTranslationSchema>;
 
 export const ChapterTranslationsSchema = translationsSchemaFor(ChapterTranslationSchema);
+
+/**
+ * The title-only subset of ChapterTranslationSchema, for
+ * mobile-content.ts's MobileChapterSummarySchema -- a book's table of
+ * contents (shown before any download) needs a chapter's translated
+ * title in every supported language, but never its translated body:
+ * that only exists once the book has actually been downloaded (see
+ * MobileChapterSummarySchema's own doc comment).
+ */
+export const ChapterSummaryTranslationSchema = z.object({
+  title: z.string().min(1).optional(),
+});
+export type ChapterSummaryTranslation = z.infer<typeof ChapterSummaryTranslationSchema>;
+
+export const ChapterSummaryTranslationsSchema = translationsSchemaFor(ChapterSummaryTranslationSchema);

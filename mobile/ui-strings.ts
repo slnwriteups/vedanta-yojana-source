@@ -367,6 +367,36 @@ const UI_STRINGS = {
     kn: "ಪಾಸುರಂಗಳು ಡೌನ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ…",
     hi: "पासुरम डाउनलोड हो रहे हैं…",
   },
+
+  bookAvailableForDownload: {
+    en: "Available for download",
+    ta: "பதிவிறக்கத்திற்குக் கிடைக்கிறது",
+    kn: "ಡೌನ್‌ಲೋಡ್‌ಗೆ ಲಭ್ಯವಿದೆ",
+    hi: "डाउनलोड के लिए उपलब्ध",
+  },
+  bookDownloadButton: { en: "Download", ta: "பதிவிறக்கு", kn: "ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ", hi: "डाउनलोड करें" },
+  bookDownloading: { en: "Downloading…", ta: "பதிவிறக்குகிறது…", kn: "ಡೌನ್‌ಲೋಡ್ ಆಗುತ್ತಿದೆ…", hi: "डाउनलोड हो रहा है…" },
+  bookAvailableOffline: {
+    en: "Available Offline",
+    ta: "ஆஃப்லைனில் கிடைக்கும்",
+    kn: "ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಲಭ್ಯವಿದೆ",
+    hi: "ऑफ़लाइन उपलब्ध",
+  },
+  bookOpenButton: { en: "Open", ta: "திற", kn: "ತೆರೆಯಿರಿ", hi: "खोलें" },
+  bookDownloadFailed: { en: "Download Failed", ta: "பதிவிறக்கம் தோல்வியடைந்தது", kn: "ಡೌನ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ", hi: "डाउनलोड विफल" },
+  bookTryAgain: { en: "Retry", ta: "மீண்டும் முயற்சிக்கவும்", kn: "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ", hi: "पुनः प्रयास करें" },
+  bookRemoveOffline: {
+    en: "Remove Offline Copy",
+    ta: "ஆஃப்லைன் நகலை அகற்று",
+    kn: "ಆಫ್‌ಲೈನ್ ಪ್ರತಿಯನ್ನು ತೆಗೆದುಹಾಕಿ",
+    hi: "ऑफ़लाइन प्रति हटाएं",
+  },
+  bookDownloadToRead: {
+    en: "Download this book to read it offline.",
+    ta: "ஆஃப்லைனில் படிக்க இந்த புத்தகத்தைப் பதிவிறக்கவும்.",
+    kn: "ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಓದಲು ಈ ಪುಸ್ತಕವನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ.",
+    hi: "इसे ऑफ़लाइन पढ़ने के लिए यह पुस्तक डाउनलोड करें।",
+  },
   tapAnywhereToClose: {
     en: "Tap anywhere to close",
     ta: "மூட எங்கு வேண்டுமானாலும் தட்டவும்",

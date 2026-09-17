@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { toMobileDivyaDesam, toMobileChapter } from "../../content-lib/mobile-content-transform.ts";
-import { MobileDivyaDesamSchema, MobileChapterSchema } from "../../content-lib/mobile-content.ts";
+import { MobileDivyaDesamSchema, MobileChapterSchema, MobileChapterSummarySchema } from "../../content-lib/mobile-content.ts";
 import type { DivyaDesam, Chapter } from "../../content-lib/schemas/index.ts";
 
 /**
@@ -95,4 +95,30 @@ test("toMobileChapter() strips all internal provenance fields, keeps legitimate 
   assert.equal(mobile.order, 1);
 
   assert.equal(MobileChapterSchema.safeParse(mobile).success, true);
+});
+
+test("MobileChapterSummarySchema: a chapter summary never carries body, images, or provenance fields, even if handed a raw private chapter", () => {
+  // Regression test for the book-bundle-removal work: the whole point of
+  // MobileChapterSummarySchema (bundled into every Hermes build via
+  // mobile/scripts/generate-content-manifest.ts's toChapterSummary()) is
+  // that a chapter's large/sensitive fields never reach it in the first
+  // place. Proven here the same way the tests above prove it for
+  // toMobileChapter(): .safeParse() a value that DOES carry every
+  // forbidden field, and confirm the schema rejects extra keys it
+  // doesn't declare rather than silently passing them through.
+  const rawWithExtraFields = {
+    title: FAKE_CHAPTER.title,
+    slug: FAKE_CHAPTER.slug,
+    order: FAKE_CHAPTER.order,
+    status: FAKE_CHAPTER.status,
+    migration: { needsReview: false },
+    body: FAKE_CHAPTER.body,
+    images: FAKE_CHAPTER.images,
+    sourcePageId: "upload:test-book#test-chapter",
+  };
+  const parsed = MobileChapterSummarySchema.parse(rawWithExtraFields);
+  const serialized = JSON.stringify(parsed);
+  for (const forbidden of ["body", "images", "sourcePageId", "Some chapter body text", "Original Scan.png"]) {
+    assert.ok(!serialized.includes(forbidden), `expected "${forbidden}" to be absent from a chapter summary, found in: ${serialized}`);
+  }
 });

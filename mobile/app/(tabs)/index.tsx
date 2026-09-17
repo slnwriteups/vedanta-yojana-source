@@ -17,6 +17,7 @@ import { useT } from "../../ui-strings.ts";
 import { useReadingPosition } from "../../reading-position-context.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../../services/panchangamService.ts";
 import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
+import { loadOfflineBook } from "../../services/bookOfflineService.ts";
 
 /**
  * UI/UX refactor: Home is now a proper dashboard rather than a plain
@@ -48,7 +49,7 @@ export default function HomeScreen() {
   const { language } = useLanguage();
   const t = useT();
   const { lastReadByBook } = useReadingPosition();
-  const resolvedList = resolveAllLastRead(lastReadByBook, language);
+  const resolvedList = resolveAllLastRead(lastReadByBook, language, loadOfflineBook);
 
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
   useEffect(() => {

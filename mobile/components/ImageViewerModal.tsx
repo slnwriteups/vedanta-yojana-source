@@ -39,7 +39,8 @@ export function ImageViewerModal({
   onClose,
 }: {
   visible: boolean;
-  asset: number | null;
+  /** A Metro-bundled asset id (Divya Desam images) or `{ uri }` (a downloaded book's local chapter images) -- see ContentImage.tsx's ImageAsset type. */
+  asset: number | { uri: string } | null;
   label?: string | null;
   onClose: () => void;
 }) {

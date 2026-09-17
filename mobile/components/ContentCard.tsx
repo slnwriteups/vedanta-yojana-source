@@ -64,6 +64,7 @@ export function ContentCard({
   tintColor,
   monogram,
   variant = "square",
+  disabled = false,
   onPress,
 }: {
   title: string;
@@ -74,7 +75,9 @@ export function ContentCard({
   tintColor?: string;
   monogram?: string;
   variant?: "square" | "temple" | "cover";
-  onPress: () => void;
+  /** True for a row that isn't openable yet (e.g. an undownloaded book's chapter) -- dims the row and disables the tap rather than hiding it, so the reader still sees what's there. */
+  disabled?: boolean;
+  onPress?: () => void;
 }) {
   const theme = useTheme();
   const isDraft = status === "draft";
@@ -84,14 +87,18 @@ export function ContentCard({
   return (
     <Pressable
       onPress={() => {
+        if (disabled || !onPress) return;
         void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
         onPress();
       }}
+      disabled={disabled}
       accessibilityRole="button"
+      accessibilityState={{ disabled }}
       accessibilityLabel={a11yLabel}
       style={({ pressed }) => [
         styles.card,
         shadows.card,
+        disabled ? styles.disabled : null,
         {
           backgroundColor: pressed ? theme.colors.surfaceAlt : theme.colors.surface,
           borderColor: theme.colors.border,
@@ -134,6 +141,9 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     minHeight: layout.minTouchTarget,
     overflow: "hidden",
+  },
+  disabled: {
+    opacity: 0.5,
   },
   accentBar: {
     position: "absolute",

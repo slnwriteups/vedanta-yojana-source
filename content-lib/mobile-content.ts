@@ -8,7 +8,7 @@ import {
 } from "./schemas/shared-safe.ts";
 import { DivyaDesamRegionSchema } from "./schemas/divya-desam-region.ts";
 import { DivyaDesamTranslationsSchema, ResourceEntrySchema, ShrineSchema, TempleInformationSchema } from "./schemas/divya-desam-parts.ts";
-import { ChapterTranslationsSchema } from "./schemas/chapter-parts.ts";
+import { ChapterSummaryTranslationsSchema, ChapterTranslationsSchema } from "./schemas/chapter-parts.ts";
 import { ContentTypeSchema, KnowledgeTranslationsSchema } from "./schemas/knowledge-parts.ts";
 import { BookPartSchema, BookTranslationsSchema } from "./schemas/book-parts.ts";
 
@@ -157,3 +157,50 @@ export const MobileBookSchema = z.object({
   translations: BookTranslationsSchema.optional(),
 });
 export type MobileBook = z.infer<typeof MobileBookSchema>;
+
+/**
+ * The bundled-catalog shape of a chapter -- deliberately NOT MobileChapterSchema.
+ * A book's full chapter bodies/images/translations are large (this is the
+ * exact payload the book-bundle-removal work moved out of the initial
+ * APK) and are only ever needed once a reader has actually downloaded
+ * that book. What the Library UI DOES need before any download --
+ * the chapter list screen's titles/ordinals, the index screen's chapter
+ * count -- is exactly this: title, slug, order, status, migration. This
+ * is what mobile/content-lib/manifest.generated.ts's rawBookGroups now
+ * carries per chapter; the full MobileChapter (with body/images) is only
+ * ever produced by mobile/services/bookOfflineService.ts, from a
+ * downloaded book's local JSON, never from the bundle.
+ */
+export const MobileChapterSummarySchema = z.object({
+  title: z.string().min(1),
+  slug: SlugSchema,
+  order: z.number().int(),
+  status: StatusSchema,
+  migration: MobileMigrationSchema,
+  translations: ChapterSummaryTranslationsSchema.optional(),
+});
+export type MobileChapterSummary = z.infer<typeof MobileChapterSummarySchema>;
+
+/**
+ * The downloadable payload's own top-level shape: a book's full mobile-
+ * safe metadata plus every chapter's full mobile-safe content (body,
+ * images, translations) -- everything MobileChapterSummary omits. This
+ * is what a book download service parses after fetching
+ * `books/<slug>.json` from the public deploy (scripts/build-book-payloads.ts
+ * generates that file, web-side, using the exact same toMobileBook/
+ * toMobileChapter projection this schema module's sibling
+ * mobile-content-transform.ts already applies to the bundled catalog --
+ * same sanitization, same excluded fields, just not embedded in Hermes).
+ * `contentSchemaVersion` guards against a future incompatible payload
+ * shape ever being silently accepted by an older, still-installed app.
+ */
+export const BOOK_PAYLOAD_SCHEMA_VERSION = 1;
+
+export const BookPayloadSchema = z.object({
+  contentSchemaVersion: z.literal(BOOK_PAYLOAD_SCHEMA_VERSION),
+  book: MobileBookSchema,
+  chapters: z.array(MobileChapterSchema),
+  /** sourceAssetUuid (lowercased) -> the exact filename (with real extension) to fetch alongside this book's JSON. Every uuid any chapter or the cover references appears here exactly once. */
+  imageFiles: z.record(z.string(), z.string().min(1)),
+});
+export type BookPayload = z.infer<typeof BookPayloadSchema>;

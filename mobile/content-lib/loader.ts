@@ -1,11 +1,11 @@
 import type { ZodSafeParseResult, ZodError } from "zod";
 import {
   MobileBookSchema,
-  MobileChapterSchema,
+  MobileChapterSummarySchema,
   MobileDivyaDesamSchema,
   MobileKnowledgeSchema,
   type MobileBook,
-  type MobileChapter,
+  type MobileChapterSummary,
   type MobileDivyaDesam,
   type MobileKnowledge,
 } from "../../content-lib/mobile-content.ts";
@@ -117,11 +117,25 @@ export function loadKnowledgeRecord(slug: string): MobileKnowledge | null {
 
 // ---------------------------------------------------------------------------
 // Books + Chapters
+//
+// Book-bundle-removal update: rawBookGroups now pairs a book with its
+// chapters' lightweight SUMMARIES only (title/slug/order/status -- see
+// MobileChapterSummarySchema's doc comment in content-lib/mobile-content.ts)
+// rather than full chapters with a body. loadChapters() below is exactly
+// what it always was -- everything needed to show a book's table of
+// contents (LibraryBookScreen) and chapter count (LibraryIndexScreen)
+// without a body ever entering the bundle. There is deliberately no
+// bundled `loadChapter(bookSlug, chapterSlug)` singular lookup any more:
+// a chapter's actual body/images only exist once that book has been
+// downloaded, and only mobile/services/bookOfflineService.ts's
+// loadOfflineBook() can produce them -- see that module, and
+// content-lib/bookmarks.ts/reading-position.ts, which used to call the
+// bundled loadChapter() and now go through the offline service instead.
 // ---------------------------------------------------------------------------
 
 interface ParsedBookGroup {
   book: MobileBook;
-  chapters: MobileChapter[];
+  chapters: MobileChapterSummary[];
 }
 
 let bookGroupsCache: ParsedBookGroup[] | null = null;
@@ -134,7 +148,7 @@ function allBookGroups(): ParsedBookGroup[] {
         throw new ContentValidationError(`manifest:rawBookGroups[${groupIndex}].book`, "Book", formatZodError(bookResult.error));
       }
       const chapters = parseAll(
-        MobileChapterSchema,
+        MobileChapterSummarySchema,
         group.chapters,
         "Chapter",
         (i) => `manifest:rawBookGroups[${groupIndex}].chapters[${i}]`
@@ -175,18 +189,14 @@ export function loadBook(slug: string): MobileBook | null {
   return allBookGroups().find((g) => g.book.slug === slug)?.book ?? null;
 }
 
-export function loadChapters(bookSlug: string): MobileChapter[] {
+export function loadChapters(bookSlug: string): MobileChapterSummary[] {
   return allBookGroups().find((g) => g.book.slug === bookSlug)?.chapters ?? [];
-}
-
-export function loadChapter(bookSlug: string, chapterSlug: string): MobileChapter | null {
-  return loadChapters(bookSlug).find((c) => c.slug === chapterSlug) ?? null;
 }
 
 export type { BookPart } from "../../content-lib/schemas/index.ts";
 export type {
   MobileBook as Book,
-  MobileChapter as Chapter,
+  MobileChapterSummary as ChapterSummary,
   MobileDivyaDesam as DivyaDesam,
   MobileKnowledge as Knowledge,
 } from "../../content-lib/mobile-content.ts";
