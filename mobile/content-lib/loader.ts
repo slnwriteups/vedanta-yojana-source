@@ -1,14 +1,14 @@
 import type { ZodSafeParseResult, ZodError } from "zod";
 import {
-  BookSchema,
-  ChapterSchema,
-  DivyaDesamSchema,
-  KnowledgeSchema,
-  type Book,
-  type Chapter,
-  type DivyaDesam,
-  type Knowledge,
-} from "../../content-lib/schemas/index.ts";
+  MobileBookSchema,
+  MobileChapterSchema,
+  MobileDivyaDesamSchema,
+  MobileKnowledgeSchema,
+  type MobileBook,
+  type MobileChapter,
+  type MobileDivyaDesam,
+  type MobileKnowledge,
+} from "../../content-lib/mobile-content.ts";
 import { ContentValidationError, DuplicateChapterOrderError, DuplicateSlugError } from "../../content-lib/loader/errors.ts";
 import { rawBookGroups, rawDivyaDesams, rawKnowledge } from "./manifest.generated.ts";
 
@@ -16,12 +16,18 @@ import { rawBookGroups, rawDivyaDesams, rawKnowledge } from "./manifest.generate
  * Phase 6A -- the mobile-compatible content access layer. Same public
  * API shape as the web loader (content-lib/loader/index.ts:
  * loadDivyaDesams/loadDivyaDesam/loadBooks/loadBook/loadChapters/
- * loadChapter/loadKnowledge/loadKnowledgeRecord), same validation
- * (every record parses through the identical Zod schemas -- reused
- * directly, not reimplemented), same not-found convention (null for a
- * single lookup, [] for an empty collection), same duplicate-slug /
- * duplicate-chapter-order detection (the exact error classes from
- * content-lib/loader/errors.ts, reused directly).
+ * loadChapter/loadKnowledge/loadKnowledgeRecord), same not-found
+ * convention (null for a single lookup, [] for an empty collection),
+ * same duplicate-slug/duplicate-chapter-order detection (the exact error
+ * classes from content-lib/loader/errors.ts, reused directly).
+ *
+ * Validates against content-lib/mobile-content.ts's Mobile*Schema
+ * variants, not the full private schemas the web loader uses: the data
+ * in ./manifest.generated.ts has already been projected to the
+ * mobile-safe shape at generation time (internal migration/provenance
+ * fields dropped, a derived `sourceOrder` added to Divya Desams -- see
+ * that module's doc comment for why), so this is what actually describes
+ * what ships inside the Hermes bundle.
  *
  * The one deliberate, disclosed behavioral difference: this module
  * CACHES its parsed/validated results after the first call, where the
@@ -31,10 +37,6 @@ import { rawBookGroups, rawDivyaDesams, rawKnowledge } from "./manifest.generate
  * bundled into the app binary at build time and cannot change at
  * runtime, so re-validating the same 160+ records through Zod on every
  * call would only cost battery/CPU for no benefit.
- *
- * No content transformation happens anywhere in this file -- every
- * value is exactly what the corresponding /content/*.json file
- * contains, only parsed and validated.
  */
 
 interface ZodLikeSchema<T> {
@@ -71,22 +73,22 @@ function assertNoDuplicateSlugs<T extends { slug: string }>(records: T[], conten
 // Divya Desams
 // ---------------------------------------------------------------------------
 
-let divyaDesamsCache: DivyaDesam[] | null = null;
+let divyaDesamsCache: MobileDivyaDesam[] | null = null;
 
-function allDivyaDesams(): DivyaDesam[] {
+function allDivyaDesams(): MobileDivyaDesam[] {
   if (!divyaDesamsCache) {
-    const parsed = parseAll(DivyaDesamSchema, rawDivyaDesams, "Divya Desam", (i) => `manifest:rawDivyaDesams[${i}]`);
+    const parsed = parseAll(MobileDivyaDesamSchema, rawDivyaDesams, "Divya Desam", (i) => `manifest:rawDivyaDesams[${i}]`);
     assertNoDuplicateSlugs(parsed, "Divya Desam", (i) => `manifest:rawDivyaDesams[${i}]`);
     divyaDesamsCache = [...parsed].sort((a, b) => a.slug.localeCompare(b.slug));
   }
   return divyaDesamsCache;
 }
 
-export function loadDivyaDesams(): DivyaDesam[] {
+export function loadDivyaDesams(): MobileDivyaDesam[] {
   return allDivyaDesams();
 }
 
-export function loadDivyaDesam(slug: string): DivyaDesam | null {
+export function loadDivyaDesam(slug: string): MobileDivyaDesam | null {
   return allDivyaDesams().find((d) => d.slug === slug) ?? null;
 }
 
@@ -94,22 +96,22 @@ export function loadDivyaDesam(slug: string): DivyaDesam | null {
 // Knowledge
 // ---------------------------------------------------------------------------
 
-let knowledgeCache: Knowledge[] | null = null;
+let knowledgeCache: MobileKnowledge[] | null = null;
 
-function allKnowledge(): Knowledge[] {
+function allKnowledge(): MobileKnowledge[] {
   if (!knowledgeCache) {
-    const parsed = parseAll(KnowledgeSchema, rawKnowledge, "Knowledge", (i) => `manifest:rawKnowledge[${i}]`);
+    const parsed = parseAll(MobileKnowledgeSchema, rawKnowledge, "Knowledge", (i) => `manifest:rawKnowledge[${i}]`);
     assertNoDuplicateSlugs(parsed, "Knowledge", (i) => `manifest:rawKnowledge[${i}]`);
     knowledgeCache = [...parsed].sort((a, b) => a.slug.localeCompare(b.slug));
   }
   return knowledgeCache;
 }
 
-export function loadKnowledge(): Knowledge[] {
+export function loadKnowledge(): MobileKnowledge[] {
   return allKnowledge();
 }
 
-export function loadKnowledgeRecord(slug: string): Knowledge | null {
+export function loadKnowledgeRecord(slug: string): MobileKnowledge | null {
   return allKnowledge().find((k) => k.slug === slug) ?? null;
 }
 
@@ -118,8 +120,8 @@ export function loadKnowledgeRecord(slug: string): Knowledge | null {
 // ---------------------------------------------------------------------------
 
 interface ParsedBookGroup {
-  book: Book;
-  chapters: Chapter[];
+  book: MobileBook;
+  chapters: MobileChapter[];
 }
 
 let bookGroupsCache: ParsedBookGroup[] | null = null;
@@ -127,12 +129,12 @@ let bookGroupsCache: ParsedBookGroup[] | null = null;
 function allBookGroups(): ParsedBookGroup[] {
   if (!bookGroupsCache) {
     const groups = rawBookGroups.map((group, groupIndex) => {
-      const bookResult = BookSchema.safeParse(group.book);
+      const bookResult = MobileBookSchema.safeParse(group.book);
       if (!bookResult.success) {
         throw new ContentValidationError(`manifest:rawBookGroups[${groupIndex}].book`, "Book", formatZodError(bookResult.error));
       }
       const chapters = parseAll(
-        ChapterSchema,
+        MobileChapterSchema,
         group.chapters,
         "Chapter",
         (i) => `manifest:rawBookGroups[${groupIndex}].chapters[${i}]`
@@ -165,20 +167,26 @@ function allBookGroups(): ParsedBookGroup[] {
   return bookGroupsCache;
 }
 
-export function loadBooks(): Book[] {
+export function loadBooks(): MobileBook[] {
   return allBookGroups().map((g) => g.book);
 }
 
-export function loadBook(slug: string): Book | null {
+export function loadBook(slug: string): MobileBook | null {
   return allBookGroups().find((g) => g.book.slug === slug)?.book ?? null;
 }
 
-export function loadChapters(bookSlug: string): Chapter[] {
+export function loadChapters(bookSlug: string): MobileChapter[] {
   return allBookGroups().find((g) => g.book.slug === bookSlug)?.chapters ?? [];
 }
 
-export function loadChapter(bookSlug: string, chapterSlug: string): Chapter | null {
+export function loadChapter(bookSlug: string, chapterSlug: string): MobileChapter | null {
   return loadChapters(bookSlug).find((c) => c.slug === chapterSlug) ?? null;
 }
 
-export type { Book, BookPart, Chapter, DivyaDesam, Knowledge } from "../../content-lib/schemas/index.ts";
+export type { BookPart } from "../../content-lib/schemas/index.ts";
+export type {
+  MobileBook as Book,
+  MobileChapter as Chapter,
+  MobileDivyaDesam as DivyaDesam,
+  MobileKnowledge as Knowledge,
+} from "../../content-lib/mobile-content.ts";

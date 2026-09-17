@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Animated, Pressable, StyleSheet, View } from "react-native";
-import type { ImageEntry } from "../../content-lib/schemas/index.ts";
+import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { useTheme } from "../theme";
 import { useLanguage } from "../language-context.ts";
@@ -59,7 +59,7 @@ export function FadeInImage({
   );
 }
 
-export function ContentImage({ images }: { images: ImageEntry[] }) {
+export function ContentImage({ images }: { images: MobileImageEntry[] }) {
   const [viewerAsset, setViewerAsset] = useState<{ asset: number; label: string | null } | null>(null);
 
   const resolved = images.flatMap((image) => {

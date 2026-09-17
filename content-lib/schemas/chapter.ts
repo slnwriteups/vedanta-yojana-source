@@ -1,20 +1,9 @@
 import { z } from "zod";
-import {
-  ImageEntrySchema,
-  MigrationMetadataSchema,
-  SlugSchema,
-  StatusSchema,
-  translationsSchemaFor,
-} from "./shared.ts";
+import { ImageEntrySchema, MigrationMetadataSchema } from "./shared.ts";
+import { SlugSchema, StatusSchema } from "./shared-safe.ts";
+import { ChapterTranslationsSchema } from "./chapter-parts.ts";
 
-/** See content-lib/schemas/divya-desam.ts's own translations block for the full "why". */
-export const ChapterTranslationSchema = z.object({
-  title: z.string().min(1).optional(),
-  body: z.string().min(1).optional(),
-});
-export type ChapterTranslation = z.infer<typeof ChapterTranslationSchema>;
-
-export const ChapterTranslationsSchema = translationsSchemaFor(ChapterTranslationSchema);
+export * from "./chapter-parts.ts";
 
 /**
  * Book Chapter schema — Phase 5C.
@@ -28,6 +17,10 @@ export const ChapterTranslationsSchema = translationsSchemaFor(ChapterTranslatio
  * Previous/next chapter navigation is derived from `order` at render
  * time by the (not-yet-built) application layer — never hand-authored
  * per chapter, and not something this schema is responsible for.
+ *
+ * ChapterTranslationSchema/ChapterTranslationsSchema now live in
+ * ./chapter-parts.ts (re-exported above) -- see divya-desam-parts.ts's
+ * doc comment for why.
  */
 export const ChapterSchema = z.object({
   title: z.string().min(1),

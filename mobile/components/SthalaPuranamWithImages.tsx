@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import type { ImageEntry } from "../../content-lib/schemas/index.ts";
+import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
@@ -24,7 +24,7 @@ import { splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
  */
 
 interface ResolvedImage {
-  image: ImageEntry;
+  image: MobileImageEntry;
   asset: number;
 }
 
@@ -67,7 +67,7 @@ function buildSegments(text: string, images: ResolvedImage[]): Segment[] {
   return segments;
 }
 
-export function SthalaPuranamWithImages({ text, images }: { text: string; images: ImageEntry[] }) {
+export function SthalaPuranamWithImages({ text, images }: { text: string; images: MobileImageEntry[] }) {
   const theme = useTheme();
   const { preferences } = useReadingPreferences();
   const { language } = useLanguage();

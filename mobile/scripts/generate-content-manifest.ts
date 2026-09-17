@@ -1,6 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  toMobileBook,
+  toMobileChapter,
+  toMobileDivyaDesam,
+  toMobileKnowledge,
+} from "../../content-lib/mobile-content-transform.ts";
+import type { MobileBook, MobileChapter, MobileDivyaDesam, MobileKnowledge } from "../../content-lib/mobile-content.ts";
+import { BookSchema, ChapterSchema, DivyaDesamSchema, KnowledgeSchema } from "../../content-lib/schemas/index.ts";
 
 /**
  * Phase 6A, Step 3/4 -- the "build-time content export step" (Option C
@@ -12,11 +20,22 @@ import { fileURLToPath } from "node:url";
  * (content-lib/loader/index.ts), it cannot fs.readdirSync() an arbitrary
  * directory at runtime and dynamically import whatever it finds. This
  * script enumerates the real, validated /content tree ONCE at build
- * time and emits a TypeScript file that statically imports every JSON
- * file directly from its real location -- the generated file contains
- * only import statements and re-exported arrays, never a copy of the
- * JSON content itself. /content remains the single source of truth;
- * this is glue code, not a second copy.
+ * time and emits a TypeScript file with the resulting records inlined
+ * as literals.
+ *
+ * Until this fix, that inlining was instead a live
+ * `import x from "*.json" with { type: "json" }` of each raw file
+ * verbatim -- which meant Metro embedded every field of every content
+ * record, including internal-only migration/provenance metadata
+ * (`migration.sourcePageId`, `migration.extractionConfidence`,
+ * `images[].sourceOriginalName`) that has no legitimate reason to ship
+ * inside a public APK. This script now reads each raw file itself and
+ * runs it through content-lib/mobile-content.ts's toMobileX() projection
+ * -- the mobile-safe shape -- before ever writing a literal into the
+ * generated file, so those fields never reach anything Metro bundles.
+ * /content remains the single source of truth; this script's output is
+ * a derived, sanitized snapshot of it, not a second copy of the private
+ * shape.
  *
  * Regenerate after any content change:
  *   node mobile/scripts/generate-content-manifest.ts
@@ -60,36 +79,41 @@ function identifierFor(filePath: string, prefix: string): string {
   return `${prefix}_${base}`;
 }
 
-/** Relative import specifier from the generated file's directory to a real /content file. */
-function importSpecifier(filePath: string): string {
-  const relative = path.relative(path.dirname(OUTPUT_FILE), filePath);
-  return relative.startsWith(".") ? relative : `./${relative}`;
+/** Reads and JSON-parses a real /content file. Not schema-validated yet -- see main(). */
+function readJson(filePath: string): unknown {
+  return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
 /**
- * `with { type: "json" }` is required by Node's native ESM loader for a
- * plain `import x from "*.json"` (verified empirically: without it,
- * `node --test` fails immediately with ERR_IMPORT_ATTRIBUTE_MISSING).
- * Metro/Babel (the actual React Native bundler) does not require this
- * attribute for its own JSON handling, but it does parse and ignore
- * import-attribute syntax without error, so the identical generated line
- * works under both -- verified by both `node --test` and
- * `expo export` succeeding against this exact file.
+ * The "page.PageN" -> integer parse. Deliberately lives here, in a
+ * Node-only script Metro never bundles, rather than in
+ * content-lib/mobile-content.ts -- see that module's doc comment: a
+ * version of this regex (and the raw sourcePageId string it parses)
+ * living in a module the app imports showed up in the compiled Hermes
+ * bundle's own error-message string literal, even though the record
+ * data itself was already clean. Keeping it here means neither the
+ * regex's error text nor a raw "page.PageN" value can ever reach
+ * anything Metro bundles.
  */
-function jsonImportLine(identifier: string, filePath: string): string {
-  return `import ${identifier} from "${importSpecifier(filePath)}" with { type: "json" };`;
+function sourcePageNumber(sourcePageId: string): number {
+  const match = sourcePageId.match(/^page\.Page(\d+)$/);
+  if (!match) {
+    throw new Error(`Cannot derive sourceOrder: sourcePageId "${sourcePageId}" does not match "page.PageN".`);
+  }
+  return parseInt(match[1], 10);
 }
 
 function main(): void {
-  const imports: string[] = [];
-
   const ddFiles = listJsonFiles(path.join(CONTENT_ROOT, "divya-desams"));
-  const ddIdentifiers = ddFiles.map((f) => identifierFor(f, "dd"));
-  ddFiles.forEach((f, i) => imports.push(jsonImportLine(ddIdentifiers[i], f)));
+  const mobileDivyaDesams: MobileDivyaDesam[] = ddFiles.map((f) => {
+    const raw = DivyaDesamSchema.parse(readJson(f));
+    return toMobileDivyaDesam(raw, sourcePageNumber(raw.migration.sourcePageId));
+  });
 
   const knowledgeFiles = listJsonFiles(path.join(CONTENT_ROOT, "knowledge"));
-  const knowledgeIdentifiers = knowledgeFiles.map((f) => identifierFor(f, "knowledge"));
-  knowledgeFiles.forEach((f, i) => imports.push(jsonImportLine(knowledgeIdentifiers[i], f)));
+  const mobileKnowledge: MobileKnowledge[] = knowledgeFiles.map((f) =>
+    toMobileKnowledge(KnowledgeSchema.parse(readJson(f)))
+  );
 
   const libraryRoot = path.join(CONTENT_ROOT, "library");
   const bookDirs = listSubdirectories(libraryRoot);
@@ -99,20 +123,20 @@ function main(): void {
   for (const bookDir of bookDirs) {
     const bookJsonPath = path.join(libraryRoot, bookDir, "book.json");
     if (!fs.existsSync(bookJsonPath)) continue;
-    const bookIdentifier = identifierFor(bookJsonPath, `book_${bookDir.replace(/[^a-zA-Z0-9]/g, "")}`);
-    imports.push(jsonImportLine(bookIdentifier, bookJsonPath));
+    const mobileBook: MobileBook = toMobileBook(BookSchema.parse(readJson(bookJsonPath)));
 
     const chapterFiles = listJsonFiles(path.join(libraryRoot, bookDir, "chapters"));
-    const chapterIdentifiers = chapterFiles.map((f) =>
-      identifierFor(f, `chapter_${bookDir.replace(/[^a-zA-Z0-9]/g, "")}`)
+    const mobileChapters: MobileChapter[] = chapterFiles.map((f) =>
+      toMobileChapter(ChapterSchema.parse(readJson(f)))
     );
-    chapterFiles.forEach((f, i) => imports.push(jsonImportLine(chapterIdentifiers[i], f)));
 
     // "directory" is organizational only (matching the web loader's own
     // note in content-lib/loader/index.ts) -- callers key lookups off
     // the parsed book's validated `slug` field, never this string.
     bookGroupEntries.push(
-      `  { directory: "${bookDir}", book: ${bookIdentifier}, chapters: [${chapterIdentifiers.join(", ")}] },`
+      `  { directory: ${JSON.stringify(bookDir)}, book: ${JSON.stringify(mobileBook)}, chapters: ${JSON.stringify(
+        mobileChapters
+      )} },`
     );
   }
 
@@ -122,18 +146,28 @@ function main(): void {
  * this file exists (Metro cannot dynamically enumerate /content the way
  * the Node-based web loader does).
  *
- * Every import below points DIRECTLY at the real /content tree (via
- * mobile/metro.config.js's watchFolders) -- nothing here is a copy.
+ * Every record below is read directly from the real /content tree at
+ * generation time, validated against its full private schema, then run
+ * through content-lib/mobile-content.ts's toMobileX() projection and
+ * inlined here as a plain literal -- deliberately NOT a live
+ * \`import x from "*.json"\` of the raw file the way this file used to
+ * work. A live import would embed every field of the raw file into the
+ * Hermes bundle regardless of what any downstream code did with it,
+ * including internal-only migration/provenance metadata
+ * (migration.sourcePageId, migration.extractionConfidence,
+ * images[].sourceOriginalName) that has no legitimate reason to ship
+ * inside a public APK. /content remains the single source of truth;
+ * what follows is a derived, sanitized snapshot of it, regenerated
+ * mechanically, never hand-edited.
  */
-${imports.join("\n")}
 
-/** One entry per file under content/divya-desams/. */
-export const rawDivyaDesams: unknown[] = [${ddIdentifiers.join(", ")}];
+/** One entry per file under content/divya-desams/, mobile-safe. */
+export const rawDivyaDesams: unknown[] = ${JSON.stringify(mobileDivyaDesams)};
 
-/** One entry per file under content/knowledge/. */
-export const rawKnowledge: unknown[] = [${knowledgeIdentifiers.join(", ")}];
+/** One entry per file under content/knowledge/, mobile-safe. */
+export const rawKnowledge: unknown[] = ${JSON.stringify(mobileKnowledge)};
 
-/** One entry per book.json under content/library/, each paired with its own raw chapter files. */
+/** One entry per book.json under content/library/, each paired with its own mobile-safe chapters. */
 export const rawBookGroups: { directory: string; book: unknown; chapters: unknown[] }[] = [
 ${bookGroupEntries.join("\n")}
 ];

@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { loadBook, loadChapter, loadChapters, loadDivyaDesam, loadDivyaDesams, loadKnowledgeRecord } from "../content-lib/loader.ts";
-import { sourcePageNumber } from "../content-lib/ordering.ts";
 import { buildMobileSearchCorpus } from "../content-lib/corpus.ts";
 import { searchCorpus } from "../../content-lib/search/run.ts";
 import { resolveLastRead } from "../content-lib/reading-position.ts";
@@ -63,14 +62,14 @@ test("Divya Desams: Phase 6E-C multi-shrine data (Tanjai Mamanikoyil) resolves t
   }
 });
 
-test("Divya Desams: every real record's sourcePageId sorts to a valid numeric order (Page93 included)", () => {
+test("Divya Desams: every real record's sourceOrder is a valid numeric order (93 included)", () => {
   const records = loadDivyaDesams();
-  const numbers = records.map((r) => sourcePageNumber(r.migration.sourcePageId));
+  const numbers = records.map((r) => r.sourceOrder);
   assert.equal(numbers.length, 107);
   assert.ok(numbers.every((n) => Number.isInteger(n) && n > 0));
 
   const tirukoodal = loadDivyaDesam("tirukoodal");
-  assert.equal(sourcePageNumber(tirukoodal!.migration.sourcePageId), 93);
+  assert.equal(tirukoodal!.sourceOrder, 93);
 });
 
 test("Library: the recovered Book resolves for the book screen", () => {

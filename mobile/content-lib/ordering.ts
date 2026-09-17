@@ -1,28 +1,12 @@
 /**
- * Phase 6B -- source-page ordering, mirroring the exact regex and
- * behavior of app/divya-desams/page.tsx (the web reference app) so the
- * mobile Divya Desam index presents temples in the same traditional
- * pilgrimage sequence, not alphabetically or by insertion order. Not
- * reused directly from the web app because it lives in a Next.js page
- * component (app/), which is web-only and out of Metro's watchFolders --
- * this is a straight, disclosed duplication of a five-line pure function,
- * not a schema or loader change.
- */
-export function sourcePageNumber(sourcePageId: string): number {
-  const match = sourcePageId.match(/^page\.Page(\d+)$/);
-  if (!match) {
-    throw new Error(
-      `Cannot derive a source-ordered position: sourcePageId "${sourcePageId}" does not match the expected "page.PageN" shape.`
-    );
-  }
-  return parseInt(match[1], 10);
-}
-
-/**
  * Traditional 1-108 Divya Desam numbering, derived positionally from a
- * slug list already sorted by sourcePageNumber() -- not a schema field
- * (see the "no explicit editorial order field" note on the web index
- * page this mirrors).
+ * slug list already sorted by each record's own `sourceOrder`
+ * (content-lib/mobile-content.ts -- derived once at manifest-generation
+ * time from the internal migration.sourcePageId this app must not ship,
+ * the same "page.PageN" parse this file used to do itself at render
+ * time via a now-removed sourcePageNumber()) -- not a schema field (see
+ * the "no explicit editorial order field" note on the web index page
+ * this mirrors).
  *
  * The corpus has exactly one exception: "Tiruttetriambalam
  * Tirumanikoodam" is a single content record combining what the source

@@ -1,5 +1,4 @@
 import { loadBooks, loadChapters, loadDivyaDesams, loadKnowledge } from "./loader.ts";
-import { sourcePageNumber } from "./ordering.ts";
 import type { SearchDocument, SearchField } from "../../content-lib/search/types.ts";
 
 /**
@@ -26,15 +25,6 @@ let corpusCache: SearchDocument[] | null = null;
 
 function field(name: string, tier: SearchField["tier"], text: string | undefined | null): SearchField[] {
   return text ? [{ name, tier, text }] : [];
-}
-
-/** Permissive tie-break variant: search must never crash over a sort key. */
-function safeSourcePageNumber(sourcePageId: string): number {
-  try {
-    return sourcePageNumber(sourcePageId);
-  } catch {
-    return Number.MAX_SAFE_INTEGER;
-  }
 }
 
 export function buildMobileSearchCorpus(): SearchDocument[] {
@@ -69,7 +59,7 @@ export function buildMobileSearchCorpus(): SearchDocument[] {
       href: `/divya-desams/${dd.slug}`,
       status: dd.status,
       needsReview: dd.migration.needsReview,
-      sourceOrder: safeSourcePageNumber(dd.migration.sourcePageId),
+      sourceOrder: dd.sourceOrder,
       fields,
     });
   }

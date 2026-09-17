@@ -1,8 +1,8 @@
 import type { ColorScheme } from "../theme.ts";
-import type { LanguageCode } from "../../content-lib/schemas/index.ts";
+import type { LanguageCode } from "../../content-lib/schemas/language.ts";
 
-export { SUPPORTED_LANGUAGES } from "../../content-lib/schemas/index.ts";
-export type { LanguageCode } from "../../content-lib/schemas/index.ts";
+export { SUPPORTED_LANGUAGES } from "../../content-lib/schemas/language.ts";
+export type { LanguageCode } from "../../content-lib/schemas/language.ts";
 
 /**
  * Phase 6D -- the pure, storage-agnostic half of the settings foundation:

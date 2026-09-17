@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useRouter } from "expo-router";
 import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
 import { loadDivyaDesams, type DivyaDesam } from "../content-lib/loader.ts";
-import { sourcePageNumber, divyaDesamNumberLabels } from "../content-lib/ordering.ts";
+import { divyaDesamNumberLabels } from "../content-lib/ordering.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { localizeDivyaDesam } from "../../content-lib/i18n.ts";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
@@ -68,11 +68,12 @@ function seededShuffle(length: number, seed: number): number[] {
  * Home's full-width Divya Desam spotlight -- one record from the real
  * 107-record corpus (content-lib/loader.ts's loadDivyaDesams(), the
  * same dataset and traditional pilgrimage ordering the Divya Desams tab
- * itself uses), rotated one-per-calendar-day through a fixed shuffled
- * order (seededShuffle() above) rather than walked in sequence or
- * picked independently at random each day, and pushing to the exact
- * detail route (/divya-desams/[slug]) the Divya Desams tab's own list
- * uses.
+ * itself uses -- each record's own `sourceOrder`, see
+ * content-lib/mobile-content.ts), rotated one-per-calendar-day through a
+ * fixed shuffled order (seededShuffle() above) rather than walked in
+ * sequence or picked independently at random each day, and pushing to
+ * the exact detail route (/divya-desams/[slug]) the Divya Desams tab's
+ * own list uses.
  */
 export function DivyaDesamSpotlight() {
   const router = useRouter();
@@ -80,13 +81,7 @@ export function DivyaDesamSpotlight() {
   const { language } = useLanguage();
   const t = useT();
 
-  const sortedRecords = useMemo(
-    () =>
-      [...loadDivyaDesams()].sort(
-        (a, b) => sourcePageNumber(a.migration.sourcePageId) - sourcePageNumber(b.migration.sourcePageId)
-      ),
-    []
-  );
+  const sortedRecords = useMemo(() => [...loadDivyaDesams()].sort((a, b) => a.sourceOrder - b.sourceOrder), []);
 
   if (sortedRecords.length === 0) return null;
 

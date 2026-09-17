@@ -2,13 +2,13 @@ import { useMemo, useState } from "react";
 import { Stack, useRouter } from "expo-router";
 import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { loadDivyaDesams, loadKnowledgeRecord, type DivyaDesam } from "../../../content-lib/loader.ts";
-import { sourcePageNumber, divyaDesamNumberLabels } from "../../../content-lib/ordering.ts";
+import { divyaDesamNumberLabels } from "../../../content-lib/ordering.ts";
 import { imagesByUuid } from "../../../content-lib/image-manifest.generated.ts";
 import { ContentCard } from "../../../components/ContentCard";
 import { layout, radius, spacing, typography, useTheme } from "../../../theme";
 import { sectionTint } from "../../../section-tints.ts";
 import { localizeDivyaDesam, localizeKnowledge } from "../../../../content-lib/i18n.ts";
-import { DIVYA_DESAM_REGION_ORDER, type DivyaDesamRegion } from "../../../../content-lib/schemas/index.ts";
+import { DIVYA_DESAM_REGION_ORDER, type DivyaDesamRegion } from "../../../../content-lib/schemas/divya-desam-region.ts";
 import { useLanguage } from "../../../language-context.ts";
 import { translateUi, useT } from "../../../ui-strings.ts";
 import { regionLabel } from "../../../divya-desam-region-labels.ts";
@@ -62,9 +62,12 @@ function traditionalCount(records: DivyaDesam[], numberLabels: Map<string, strin
 /**
  * Phase 6C -- Divya Desam index refined: each card now shows an image
  * preview when the record has at least one resolvable image (most do),
- * plus tighter list spacing. Ordering is unchanged from Phase 6B --
- * migration.sourcePageId numeric order, the traditional pilgrimage
- * sequence, never alphabetical.
+ * plus tighter list spacing. Ordering is unchanged from Phase 6B -- the
+ * traditional pilgrimage sequence, never alphabetical -- now via each
+ * record's own `sourceOrder` (content-lib/mobile-content.ts), a plain
+ * integer derived once at manifest-generation time from the internal
+ * migration.sourcePageId this app must not ship, rather than re-parsing
+ * that string at render time.
  *
  * UI/UX pass: every row carries the same "divya-desams" section tint
  * (section-tints.ts) as its card-edge stripe -- unlike Library's
@@ -102,9 +105,7 @@ export default function DivyaDesamsIndexScreen() {
   const theme = useTheme();
   const { language } = useLanguage();
   const t = useT();
-  const sortedRecords = [...loadDivyaDesams()].sort(
-    (a, b) => sourcePageNumber(a.migration.sourcePageId) - sourcePageNumber(b.migration.sourcePageId)
-  );
+  const sortedRecords = [...loadDivyaDesams()].sort((a, b) => a.sourceOrder - b.sourceOrder);
   const numberLabels = divyaDesamNumberLabels(sortedRecords.map((r) => r.slug));
   const records = sortedRecords.map((r) => localizeDivyaDesam(r, language));
   const loadedIntroduction = loadKnowledgeRecord("introduction");
