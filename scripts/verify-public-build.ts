@@ -34,6 +34,19 @@ const FORBIDDEN_INTERNAL_FIELDS = [
   "sourceOriginalName",
 ];
 
+// "sourceAssetUuid" is the one field above with a real, intentional public
+// exception: books/<slug>.json (scripts/build-book-payloads.ts's output)
+// is a downloadable, machine-readable payload the mobile app fetches
+// directly, and mobile/services/bookOfflineCore.ts's getOfflineBookImageUri
+// resolves a chapter image by looking up that same payload's own
+// images[].sourceAssetUuid in its imageFiles map -- there is no
+// pre-resolved URL to hand it instead, unlike every HTML page's own
+// images (see lib/image-file.ts's resolveImageHref), which is why this
+// field never needed an exception before that feature existed. Unlike
+// sourcePageId/extractionConfidence/sourceOriginalName, a bare UUID
+// carries no migration/provenance information on its own.
+const SOURCE_ASSET_UUID_EXCEPTION_TOP_DIR = "books";
+
 // Matched case-insensitively (see below) -- "firebase" alone already
 // covers both "firebase" and "Firebase" without listing them separately.
 const FORBIDDEN_FIREBASE_STRINGS = ["firebase", "aizasy", "vedanta-yojana-f7948"];
@@ -227,8 +240,10 @@ function main(): number {
     }
 
     const content = fs.readFileSync(abs);
+    const topDir = rel.split(path.sep)[0];
 
     for (const { label, buf } of forbiddenFieldBuffers) {
+      if (label === "sourceAssetUuid" && topDir === SOURCE_ASSET_UUID_EXCEPTION_TOP_DIR) continue;
       if (content.includes(buf)) {
         violations.push({ check: "internal-field", detail: `"${label}" found in ${rel}` });
       }
