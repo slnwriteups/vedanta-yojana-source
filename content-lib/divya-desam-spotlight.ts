@@ -1,5 +1,3 @@
-import type { DivyaDesam } from "./schemas/index.ts";
-
 /**
  * The pure day-rotation logic extracted from
  * mobile/components/DivyaDesamSpotlight.tsx (its non-RN, non-rendering
@@ -7,6 +5,15 @@ import type { DivyaDesam } from "./schemas/index.ts";
  * keeping its own copy of the shuffle math. Only the rendering shell
  * (mobile's ImageBackground/Pressable/expo-router push vs. web's
  * DivyaDesamSpotlight.tsx client component) stays platform-specific.
+ *
+ * pickSpotlightRecord is generic (not typed to DivyaDesam) because web's
+ * caller (components/divya-desams/DivyaDesamSpotlightSection.tsx) must
+ * run this entirely client-side, not at Next.js static-export build
+ * time -- a statically exported site has no per-request server, so a
+ * server-side `new Date()` bakes in the *build* day forever, until the
+ * next deploy, rather than rotating daily for each visitor. The web
+ * client component therefore calls this with an array of its own
+ * already-server-resolved display entries, not raw DivyaDesam records.
  */
 
 /** Whole calendar days since the Unix epoch, local device date -- a day counter that advances by exactly 1 each day. */
@@ -53,13 +60,16 @@ export function seededShuffle(length: number, seed: number): number[] {
 }
 
 /**
- * Picks the day's featured record from an already source-page-sorted
- * list (see content-lib/ordering.ts) -- one record per calendar day,
+ * Picks the day's featured entry from an already source-page-sorted
+ * list (see content-lib/ordering.ts) -- one entry per calendar day,
  * rotated through seededShuffle()'s fixed order rather than walked in
  * sequence or picked independently at random each day. Returns null
- * for an empty list rather than throwing.
+ * for an empty list rather than throwing. Generic over T (rather than
+ * fixed to DivyaDesam) purely so callers on both platforms can pass
+ * whatever shape they've already resolved their records into -- the
+ * function only ever indexes into the array, never reads a field.
  */
-export function pickSpotlightRecord(sortedRecords: DivyaDesam[], date: Date = new Date()): DivyaDesam | null {
+export function pickSpotlightRecord<T>(sortedRecords: readonly T[], date: Date = new Date()): T | null {
   if (sortedRecords.length === 0) return null;
   const shuffleOrder = seededShuffle(sortedRecords.length, SPOTLIGHT_SHUFFLE_SEED);
   const cycleIndex = daysSinceEpoch(date) % sortedRecords.length;
