@@ -1,5 +1,5 @@
 import type { PublicImageEntry } from "@/lib/public-content";
-import { splitIntoReadableParagraphs } from "@/content-lib/text-format";
+import { looksLikeSubheading, splitIntoReadableParagraphs } from "@/content-lib/text-format";
 import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
 
 /**
@@ -19,6 +19,12 @@ import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
  * whitespace-pre-line <p> per `\n{2,}`-separated chunk, further split at
  * sentence boundaries by splitIntoReadableParagraphs when a chunk is
  * still too long to read comfortably -- see content-lib/text-format.ts).
+ * A chunk that looksLikeSubheading() renders bold, same as
+ * LongFormSection -- this component was missing that check entirely
+ * until it was found that every record with an after-Sthala-Puranam
+ * image (17 records) silently lost subheading emphasis on genuine
+ * section labels ("Svāmi Nam Āzhwār", numbered temple-form lists, etc.)
+ * purely because it took this rendering path instead of LongFormSection.
  * Images with no
  * anchor (or whose anchor isn't present on this record) render as a
  * trailing group after the whole text -- identical to the pre-existing
@@ -113,7 +119,12 @@ export function SthalaPuranamWithImages({
         {segments.map((segment) =>
           segment.text !== undefined ? (
             splitIntoReadableParagraphs(segment.text).map((paragraph, i) => (
-              <p key={`${segment.key}-${i}`} className="prose-body whitespace-pre-line">
+              <p
+                key={`${segment.key}-${i}`}
+                className={
+                  "prose-body whitespace-pre-line" + (looksLikeSubheading(paragraph) ? " mt-2 font-bold" : "")
+                }
+              >
                 {paragraph}
               </p>
             ))

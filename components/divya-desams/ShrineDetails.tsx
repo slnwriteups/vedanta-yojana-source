@@ -1,5 +1,5 @@
 import type { Shrine } from "@/content-lib/schemas";
-import { paragraphsForReading } from "@/content-lib/text-format";
+import { looksLikeSubheading, paragraphsForReading } from "@/content-lib/text-format";
 import { shrineOrdinalLabel, translateUi, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
 
@@ -40,7 +40,9 @@ function ProseBlock({ text }: { text: string }) {
   return (
     <div className="prose-body space-y-3 whitespace-pre-line">
       {paragraphsForReading(text).map((paragraph, index) => (
-        <p key={index}>{paragraph}</p>
+        <p key={index} className={looksLikeSubheading(paragraph) ? "mt-2 font-bold" : undefined}>
+          {paragraph}
+        </p>
       ))}
     </div>
   );

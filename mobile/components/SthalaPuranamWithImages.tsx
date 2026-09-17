@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View } from "react-native";
 import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { spacing, typography, useTheme } from "../theme";
@@ -8,7 +8,7 @@ import { useLanguage } from "../language-context.ts";
 import { translateUi } from "../ui-strings.ts";
 import { FadeInImage, IMAGE_SIZE } from "./ContentImage";
 import { ImageViewerModal } from "./ImageViewerModal";
-import { splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
+import { looksLikeSubheading, splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
 
 /**
  * Mobile counterpart of components/divya-desams/SthalaPuranamWithImages.tsx
@@ -21,6 +21,13 @@ import { splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
  * an anchor not present on this record) render as a trailing group
  * after the whole text, identical to the pre-existing "after Sthala
  * Puranam" behavior.
+ *
+ * Paragraph styling now matches Section.tsx exactly: the serif reading
+ * font (readingFontFamily) and looksLikeSubheading()-driven bold were
+ * both missing here, so every record with an after-Sthala-Puranam image
+ * (17 records) silently rendered in the wrong typeface with no
+ * subheading emphasis at all, purely because it took this rendering
+ * path instead of Section.
  */
 
 interface ResolvedImage {
@@ -92,8 +99,10 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
                 key={`${segment.key}-${i}`}
                 style={[
                   styles.paragraph,
+                  looksLikeSubheading(paragraph) && styles.subheading,
                   {
                     color: theme.colors.foreground,
+                    fontFamily: Platform.select(typography.readingFontFamily),
                     fontSize: typography.body * preferences.fontScale,
                     lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                   },
@@ -139,6 +148,11 @@ const styles = StyleSheet.create({
   paragraph: {
     fontSize: typography.body,
     lineHeight: typography.body * typography.readingLineHeight,
+  },
+  /** See looksLikeSubheading() in content-lib/text-format.ts for what qualifies and why. */
+  subheading: {
+    fontWeight: "700",
+    marginTop: spacing.sm,
   },
   row: {
     flexDirection: "row",
