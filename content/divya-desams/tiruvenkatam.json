@@ -41,7 +41,8 @@
       "sourceOriginalName": "Swamy Pushkarani.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placement": "after-sthala-puranam"
+      "placement": "after-sthala-puranam",
+      "placementAnchor": "Svāmi Pushkariṇī"
     },
     {
       "assetId": "tiruvenkatam-3",
@@ -50,7 +51,7 @@
       "alt": null,
       "altStatus": "needs-review",
       "placement": "after-sthala-puranam",
-      "placementAnchor": "Swamy Pushkarani"
+      "placementAnchor": "Varāha Svāmi"
     },
     {
       "assetId": "tiruvenkatam-4",
@@ -59,7 +60,7 @@
       "alt": null,
       "altStatus": "needs-review",
       "placement": "after-sthala-puranam",
-      "placementAnchor": "Varaha Swamy"
+      "placementAnchor": "Ananada Nilaya Vimānam"
     },
     {
       "assetId": "tiruvenkatam-book-5",
