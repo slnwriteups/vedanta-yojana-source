@@ -79,7 +79,7 @@ test("Divya Desams: 107 records available for the index screen", () => {
 test("Divya Desams: Sri Rangam resolves for the detail screen", () => {
   const record = loadDivyaDesam("sri-rangam");
   assert.ok(record, "sri-rangam did not resolve");
-  assert.equal(record?.displayName, "Shri Raṅgam");
+  assert.equal(record?.displayName, "Sri Raṅgam");
 });
 
 test("Divya Desams: an unknown slug is handled as not-found, not a crash", () => {

@@ -94,8 +94,10 @@ test("D: displayName is a disclosed IAST transliteration of the source title", (
   // commit 69e9411 applied the custom Sanskrit/Tamil IAST convention across
   // all 108 Divya Desam records -- a disclosed editorial change layered on
   // top of the migration output, the same category as the status/
-  // translations exclusions in test S below, not migration drift.
-  assert.equal(output.displayName, "Shri Raṅgam");
+  // translations exclusions in test S below, not migration drift. A later
+  // disclosed editorial change standardized "Shri" back to "Sri" project-
+  // wide, while keeping the "Raṅgam" diacritic from that IAST pass.
+  assert.equal(output.displayName, "Sri Raṅgam");
 });
 
 test("E: status is published", () => {
@@ -135,14 +137,15 @@ test("H: templeInformation fields match the source's actual labeled values", () 
   // moolavar/thayaar/vimanam/theertham were deliberately transliterated to
   // the custom IAST convention in commit 69e9411 (a disclosed editorial
   // change, not migration drift -- see test D above), so they no longer
-  // match the raw, untransliterated source text byte-for-byte. travelNote
-  // contains no Sanskrit-derived terms and is unaffected, so it still
-  // carries the original dynamic source comparison.
+  // match the raw, untransliterated source text byte-for-byte. A later
+  // disclosed editorial change standardized "Shri" to "Sri" project-wide.
+  // travelNote contains no Sanskrit-derived terms and is unaffected, so
+  // it still carries the original dynamic source comparison.
   assert.equal(output.templeInformation.travelNote, extractBetween(kshethramBlock, "Travel:", "Azhwar Pasuram:"));
 
   // Spot-check the actual (now-transliterated, for the first four) values.
-  assert.equal(output.templeInformation.moolavar, "Shri Raṅganāthar Perumāl");
-  assert.equal(output.templeInformation.thayaar, "Shri Raṅganāyaki Thāyār");
+  assert.equal(output.templeInformation.moolavar, "Sri Raṅganāthar Perumāl");
+  assert.equal(output.templeInformation.thayaar, "Sri Raṅganāyaki Thāyār");
   assert.equal(output.templeInformation.vimanam, "Praṇavākāra Vimānam");
   assert.equal(output.templeInformation.theertham, "Chandra Pushkariṇī");
   assert.equal(output.templeInformation.travelNote, "This kshethram is located 8 km from Trichy.");

@@ -111,15 +111,15 @@ test("10: empty/whitespace-only query returns no matches", () => {
 });
 
 test("11: multi-word query requires every term to be present somewhere in the record", () => {
-  const matches = searchContent(corpus, "shri raṅganāthar");
+  const matches = searchContent(corpus, "sri raṅganāthar");
   assert.ok(matches.some((m) => m.document.href === "/divya-desams/sri-rangam"));
 
-  const noMatch = searchContent(corpus, "shri zzz-nonexistent-term-zzz");
+  const noMatch = searchContent(corpus, "sri zzz-nonexistent-term-zzz");
   assert.deepEqual(noMatch, []);
 });
 
 test("12: an exact title match is found", () => {
-  const matches = searchContent(corpus, "Shri Raṅgam");
+  const matches = searchContent(corpus, "Sri Raṅgam");
   const sriRangam = matches.find((m) => m.document.href === "/divya-desams/sri-rangam");
   assert.ok(sriRangam);
   assert.equal(sriRangam?.tier, 1);
@@ -195,7 +195,7 @@ test("18: punctuation and unusual input do not crash the matcher", () => {
 // ---------------------------------------------------------------------------
 
 test("19: an exact title match ranks above weaker matches for the same query", () => {
-  const ranked = rankSearchResults(searchContent(corpus, "Shri Raṅgam"));
+  const ranked = rankSearchResults(searchContent(corpus, "Sri Raṅgam"));
   assert.ok(ranked.length > 0);
   assert.equal(ranked[0].document.href, "/divya-desams/sri-rangam");
   assert.equal(ranked[0].tier, 1);
@@ -261,7 +261,7 @@ test("25: long content produces a bounded excerpt", () => {
 });
 
 test("26: a title-only match (tier 1-3) does not produce an excerpt via search()", () => {
-  const results = search("Shri Raṅgam");
+  const results = search("Sri Raṅgam");
   const sriRangam = results.find((r) => r.href === "/divya-desams/sri-rangam");
   assert.ok(sriRangam);
   assert.equal(sriRangam?.excerpt, undefined);

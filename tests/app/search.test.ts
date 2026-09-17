@@ -23,13 +23,13 @@ function read(relPath: string): string {
 // ---------------------------------------------------------------------------
 
 test("27: a Divya Desam result links to /divya-desams/[slug]", () => {
-  // "Shri Raṅgam" (not "Sri Rangam") since the corpus now uses the
-  // project's custom IAST-influenced transliteration convention -- see
-  // the "search has no diacritic normalization" finding this exposed:
-  // a plain-ASCII query no longer matches this title. Tracked as a
-  // known gap, not fixed here (out of scope for a content-formatting
-  // pass).
-  const results = search("Shri Raṅgam");
+  // "Sri Raṅgam" (not "Sri Rangam") since the corpus uses the project's
+  // custom IAST-influenced transliteration convention for "Raṅgam" --
+  // see the "search has no diacritic normalization" finding this
+  // exposed: a plain-ASCII query no longer matches this title. Tracked
+  // as a known gap, not fixed here (out of scope for a content-
+  // formatting pass).
+  const results = search("Sri Raṅgam");
   const result = results.find((r) => r.type === "divya-desam");
   assert.ok(result);
   assert.equal(result?.href, "/divya-desams/sri-rangam");

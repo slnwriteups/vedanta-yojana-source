@@ -27,7 +27,7 @@ test("Sri Rangam resolves with real content intact", () => {
   const record = loadDivyaDesam("sri-rangam");
   assert.ok(record, "sri-rangam did not resolve");
   assert.equal(record?.sourceOrder, 5);
-  assert.equal(record?.displayName, "Shri Raṅgam");
+  assert.equal(record?.displayName, "Sri Raṅgam");
   assert.ok(record?.sthalaPuranam);
 });
 
