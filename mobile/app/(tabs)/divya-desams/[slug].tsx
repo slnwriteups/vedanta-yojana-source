@@ -7,18 +7,12 @@ import { Section } from "../../../components/Section";
 import { ContentImage } from "../../../components/ContentImage";
 import { SthalaPuranamWithImages } from "../../../components/SthalaPuranamWithImages";
 import { ResourceLink } from "../../../components/ResourceLink";
+import { PasuramResource } from "../../../components/PasuramResource";
 import { layout, spacing, typography, useTheme } from "../../../theme";
 import { paragraphsForReading } from "../../../../content-lib/text-format.ts";
 import { localizeDivyaDesam } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
-import {
-  pasuramResourceLabel,
-  shrineLocationsHeading,
-  shrineOrdinalLabel,
-  translateUi,
-  useT,
-  type UiStringKey,
-} from "../../../ui-strings.ts";
+import { shrineLocationsHeading, shrineOrdinalLabel, translateUi, useT, type UiStringKey } from "../../../ui-strings.ts";
 
 /**
  * Phase 6C's original reading-layout order pulled the first resolvable
@@ -216,13 +210,12 @@ export default function DivyaDesamDetailScreen() {
         <Section heading={t("pasuramResourcesHeading")}>
           <View style={styles.linkList}>
             {record.resources.map((resource, index) => (
-              <ResourceLink
-                key={`${resource.url}-${index}`}
-                label={pasuramResourceLabel(language, resource.language)}
-                url={resource.url}
-              />
+              <PasuramResource key={`${resource.url}-${index}`} url={resource.url} language={resource.language} />
             ))}
           </View>
+          <Text style={[styles.pasuramAttribution, { color: theme.colors.muted }]}>
+            {t("pasuramSourceAttribution")}
+          </Text>
         </Section>
       ) : null}
     </ScrollView>
@@ -272,6 +265,10 @@ const styles = StyleSheet.create({
   },
   linkList: {
     gap: spacing.xs,
+  },
+  pasuramAttribution: {
+    fontSize: typography.small,
+    marginTop: spacing.xs,
   },
   notFound: {
     padding: layout.screenPadding,

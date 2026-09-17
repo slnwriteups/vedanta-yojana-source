@@ -326,6 +326,47 @@ const UI_STRINGS = {
   },
 
   closeImage: { en: "Close image", ta: "படத்தை மூடு", kn: "ಚಿತ್ರ ಮುಚ್ಚಿ", hi: "छवि बंद करें" },
+
+  pasuramDownloadForOffline: {
+    en: "Download for Offline",
+    ta: "ஆஃப்லைனுக்குப் பதிவிறக்கு",
+    kn: "ಆಫ್‌ಲೈನ್‌ಗಾಗಿ ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ",
+    hi: "ऑफ़लाइन के लिए डाउनलोड करें",
+  },
+  pasuramDownloading: { en: "Downloading…", ta: "பதிவிறக்குகிறது…", kn: "ಡೌನ್‌ಲೋಡ್ ಆಗುತ್ತಿದೆ…", hi: "डाउनलोड हो रहा है…" },
+  pasuramAvailableOffline: {
+    en: "Available Offline",
+    ta: "ஆஃப்லைனில் கிடைக்கும்",
+    kn: "ಆಫ್‌ಲೈನ್‌ನಲ್ಲಿ ಲಭ್ಯವಿದೆ",
+    hi: "ऑफ़लाइन उपलब्ध",
+  },
+  pasuramDownloadFailed: { en: "Download Failed", ta: "பதிவிறக்கம் தோல்வியடைந்தது", kn: "ಡೌನ್‌ಲೋಡ್ ವಿಫಲವಾಗಿದೆ", hi: "डाउनलोड विफल" },
+  pasuramTryAgain: { en: "Try Again", ta: "மீண்டும் முயற்சிக்கவும்", kn: "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ", hi: "पुनः प्रयास करें" },
+  pasuramRemoveOffline: {
+    en: "Remove Offline Copy",
+    ta: "ஆஃப்லைன் நகலை அகற்று",
+    kn: "ಆಫ್‌ಲೈನ್ ಪ್ರತಿಯನ್ನು ತೆಗೆದುಹಾಕಿ",
+    hi: "ऑफ़लाइन प्रति हटाएं",
+  },
+  pasuramSourceAttribution: {
+    en: "Source: Prapatti.org",
+    ta: "மூலம்: Prapatti.org",
+    kn: "ಮೂಲ: Prapatti.org",
+    hi: "स्रोत: Prapatti.org",
+  },
+  pasuramDownloadAllHeading: {
+    en: "Offline Pasurams",
+    ta: "ஆஃப்லைன் பாசுரங்கள்",
+    kn: "ಆಫ್‌ಲೈನ್ ಪಾಸುರಂಗಳು",
+    hi: "ऑफ़लाइन पासुरम",
+  },
+  pasuramDownloadAllButton: { en: "Download All Pasurams", ta: "அனைத்து பாசுரங்களையும் பதிவிறக்கு", kn: "ಎಲ್ಲಾ ಪಾಸುರಂಗಳನ್ನು ಡೌನ್‌ಲೋಡ್ ಮಾಡಿ", hi: "सभी पासुरम डाउनलोड करें" },
+  pasuramDownloadAllInProgress: {
+    en: "Downloading Pasurams…",
+    ta: "பாசுரங்கள் பதிவிறக்கப்படுகின்றன…",
+    kn: "ಪಾಸುರಂಗಳು ಡೌನ್‌ಲೋಡ್ ಆಗುತ್ತಿವೆ…",
+    hi: "पासुरम डाउनलोड हो रहे हैं…",
+  },
   tapAnywhereToClose: {
     en: "Tap anywhere to close",
     ta: "மூட எங்கு வேண்டுமானாலும் தட்டவும்",
@@ -430,6 +471,48 @@ export function shrineOrdinalLabel(language: LanguageCode | null, index: number)
 
 export function pasuramResourceLabel(language: LanguageCode | null, resourceLanguage: string): string {
   return `${resourceLanguage} ${translateUi("pasuramPdfSuffix", language)}`;
+}
+
+/** "402 Pasuram PDFs · Approximately 33 MB" -- the estimate is sample-based (see pasuramOfflineService.ts), so this is always phrased as approximate, never exact. */
+export function pasuramDownloadAllSummary(language: LanguageCode | null, count: number, approxMb: number): string {
+  return pick(
+    language,
+    `${count} Pasuram PDFs · Approximately ${approxMb} MB`,
+    `${count} பாசுரம் PDF-கள் · தோராயமாக ${approxMb} MB`,
+    `${count} ಪಾಸುರಂ PDF-ಗಳು · ಅಂದಾಜು ${approxMb} MB`,
+    `${count} पासुरम PDF · लगभग ${approxMb} MB`
+  );
+}
+
+/** "Already downloaded: 12 · Remaining: 390" */
+export function pasuramDownloadAllStatus(language: LanguageCode | null, alreadyDownloaded: number, remaining: number): string {
+  return pick(
+    language,
+    `Already downloaded: ${alreadyDownloaded} · Remaining: ${remaining}`,
+    `ஏற்கனவே பதிவிறக்கப்பட்டவை: ${alreadyDownloaded} · மீதமுள்ளவை: ${remaining}`,
+    `ಈಗಾಗಲೇ ಡೌನ್‌ಲೋಡ್ ಆಗಿದೆ: ${alreadyDownloaded} · ಬಾಕಿ: ${remaining}`,
+    `पहले से डाउनलोड: ${alreadyDownloaded} · शेष: ${remaining}`
+  );
+}
+
+/** "Downloaded 214 of 402 (3 failed)" -- the final bulk-download summary line. */
+export function pasuramDownloadAllResult(language: LanguageCode | null, downloaded: number, total: number, failed: number): string {
+  const base = pick(
+    language,
+    `Downloaded ${downloaded} of ${total}`,
+    `${total} இல் ${downloaded} பதிவிறக்கப்பட்டன`,
+    `${total} ರಲ್ಲಿ ${downloaded} ಡೌನ್‌ಲೋಡ್ ಆಗಿವೆ`,
+    `${total} में से ${downloaded} डाउनलोड हुए`
+  );
+  if (failed === 0) return base;
+  const failedNote = pick(
+    language,
+    `(${failed} failed)`,
+    `(${failed} தோல்வியடைந்தன)`,
+    `(${failed} ವಿಫಲವಾಗಿವೆ)`,
+    `(${failed} विफल)`
+  );
+  return `${base} ${failedNote}`;
 }
 
 export function filterAccessibilityLabel(language: LanguageCode | null, filterLabel: string): string {
