@@ -222,6 +222,54 @@ test("downloadAllPasurams: skips already-downloaded URLs, downloads the rest, an
   assert.equal(isPasuramAvailable(bad, fs), false);
 });
 
+test("downloadAllPasurams: paces request starts -- never fires them all in an instant burst", async () => {
+  const fs = makeFakeFileSystem();
+  const urls = Array.from({ length: 4 }, (_, i) => `https://www.prapatti.com/pace-${i}.pdf`);
+  for (const url of urls) fs.downloadResponses.set(url, VALID_PDF);
+
+  const startedAt = Date.now();
+  const summary = await downloadAllPasurams(urls, fs);
+  const elapsedMs = Date.now() - startedAt;
+
+  assert.equal(summary.downloaded, 4);
+  // 4 URLs at concurrency 4 means every worker starts its one request
+  // immediately, but the shared pacing floor still makes each of the
+  // 2nd/3rd/4th starts wait for the previous start's 250ms window --
+  // an unthrottled implementation would finish near-instantly (< 10ms).
+  assert.ok(elapsedMs >= 200, `expected pacing to add real delay, took only ${elapsedMs}ms`);
+});
+
+test("downloadAllPasurams: stops early after too many consecutive failures, and reports stoppedEarly", async () => {
+  const fs = makeFakeFileSystem();
+  // 10 URLs, all guaranteed to fail (no fake response configured for any
+  // of them -- the fake filesystem's downloadFile throws "no fake
+  // response configured" in that case).
+  const urls = Array.from({ length: 10 }, (_, i) => `https://www.prapatti.com/fail-${i}.pdf`);
+
+  const summary = await downloadAllPasurams(urls, fs);
+
+  assert.equal(summary.stoppedEarly, true);
+  assert.ok(summary.failed < urls.length, "expected the circuit breaker to stop before attempting every URL");
+  assert.ok(summary.failed >= 6, "expected at least PASURAM_CONSECUTIVE_FAILURE_LIMIT failures to have been attempted");
+});
+
+test("downloadAllPasurams: a success in between resets the consecutive-failure count, so the circuit breaker doesn't trip on scattered (non-consecutive) failures", async () => {
+  const fs = makeFakeFileSystem();
+  const urls: string[] = [];
+  for (let i = 0; i < 12; i++) {
+    const url = `https://www.prapatti.com/mixed-${i}.pdf`;
+    urls.push(url);
+    // Every 3rd URL succeeds; the rest have no configured response and fail.
+    if (i % 3 === 0) fs.downloadResponses.set(url, VALID_PDF);
+  }
+
+  const summary = await downloadAllPasurams(urls, fs);
+
+  assert.equal(summary.stoppedEarly, false);
+  assert.equal(summary.downloaded, 4);
+  assert.equal(summary.failed, 8);
+});
+
 test("getLocalPasuramPath: never contains the public Downloads/external-storage segments this project deliberately avoids", () => {
   const fs = makeFakeFileSystem();
   const path = getLocalPasuramPath("https://www.prapatti.com/x.pdf", fs);

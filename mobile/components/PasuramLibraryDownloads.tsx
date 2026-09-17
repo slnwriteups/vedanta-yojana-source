@@ -8,6 +8,8 @@ import {
   pasuramDownloadAllResult,
   pasuramDownloadAllStatus,
   pasuramDownloadAllSummary,
+  pasuramDownloadStoppedEarlyNote,
+  pasuramDownloadTryAgainButton,
   useT,
 } from "../ui-strings.ts";
 import {
@@ -27,9 +29,16 @@ type BulkState = "idle" | "downloading" | { summary: BulkDownloadSummary };
  * an explicit opt-in, but still real enough to deserve its own clear
  * "how much is this going to download" summary before the user commits.
  *
- * Never runs automatically. Downloads strictly one file at a time (see
- * downloadAllPasurams()), so this never bursts ~400 simultaneous
- * requests at Prapatti's server.
+ * Never runs automatically. Downloads a handful of files at once, paced
+ * to a modest request rate (see downloadAllPasurams()'s
+ * PASURAM_DOWNLOAD_CONCURRENCY / PASURAM_MIN_REQUEST_INTERVAL_MS), not a
+ * full ~400-wide burst -- confirmed necessary, not just a theoretical
+ * precaution, after a real unthrottled run got this device's own IP
+ * connection-reset-blocked by Prapatti's server partway through. If
+ * downloads still fail repeatedly in a row, the batch stops early
+ * (`stoppedEarly` on the summary) rather than grinding through the rest
+ * of the list against a server that's evidently already blocking this
+ * device, and a "Try Again" button lets the user retry once it clears.
  */
 export function PasuramLibraryDownloads() {
   const theme = useTheme();
@@ -88,9 +97,23 @@ export function PasuramLibraryDownloads() {
       ) : null}
 
       {typeof state === "object" && "summary" in state ? (
-        <Text style={[styles.status, { color: theme.colors.muted }]}>
-          {pasuramDownloadAllResult(language, state.summary.downloaded + state.summary.alreadyAvailable, state.summary.totalRequested, state.summary.failed)}
-        </Text>
+        <>
+          <Text style={[styles.status, { color: theme.colors.muted }]}>
+            {pasuramDownloadAllResult(language, state.summary.downloaded + state.summary.alreadyAvailable, state.summary.totalRequested, state.summary.failed)}
+          </Text>
+          {state.summary.stoppedEarly ? (
+            <Text style={[styles.status, { color: theme.colors.muted }]}>{pasuramDownloadStoppedEarlyNote(language)}</Text>
+          ) : null}
+          {state.summary.failed > 0 ? (
+            <Pressable
+              onPress={() => setState("idle")}
+              accessibilityRole="button"
+              style={[styles.button, { backgroundColor: theme.colors.accent }]}
+            >
+              <Text style={styles.buttonText}>{pasuramDownloadTryAgainButton(language)}</Text>
+            </Pressable>
+          ) : null}
+        </>
       ) : null}
     </View>
   );

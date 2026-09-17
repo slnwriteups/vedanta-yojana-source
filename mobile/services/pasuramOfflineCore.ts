@@ -207,15 +207,61 @@ export interface BulkDownloadSummary {
   downloaded: number;
   failed: number;
   failedUrls: string[];
+  /**
+   * True if the batch stopped before attempting every URL, because
+   * PASURAM_CONSECUTIVE_FAILURE_LIMIT consecutive download attempts
+   * failed in a row -- see the circuit breaker in downloadAllPasurams()
+   * below. When true, `totalRequested - (alreadyAvailable + downloaded +
+   * failed)` URLs were never attempted at all.
+   */
+  stoppedEarly: boolean;
 }
 
 /**
- * Downloads every URL in `urls` that isn't already available locally,
- * strictly one at a time (never concurrent) so as not to overwhelm
- * Prapatti's server with a burst of ~400 simultaneous requests. A
- * failure on one URL is recorded and the loop continues -- one bad PDF
- * never aborts the rest of the batch. Callers are expected to pass an
- * already-deduplicated list (see content-lib/pasuram-resources.ts's
+ * A small bounded concurrency, not the full ~400-wide burst a naive
+ * Promise.all would fire, so Prapatti's server still only ever sees a
+ * handful of simultaneous requests from one device -- roughly what a
+ * browser would do loading that many links itself -- while still being
+ * meaningfully faster than one-at-a-time.
+ */
+const PASURAM_DOWNLOAD_CONCURRENCY = 4;
+
+/**
+ * A floor on the gap between successive request *starts*, shared across
+ * every concurrent worker (not per-worker) -- concurrency alone controls
+ * how many requests are in flight at once, not how many are *started*
+ * per second, and it's the latter that a rate limiter actually watches.
+ * Confirmed necessary the hard way: a real run of the previous, fully
+ * sequential (concurrency-1, no pacing) downloader against all ~400
+ * Prapatti URLs got the download device's IP connection-reset-blocked
+ * partway through (266/402 failed), meaning even one-at-a-time-as-fast-
+ * as-possible was already too bursty. At ~4 req/s ceiling (concurrency 4
+ * + this floor), ~400 requests finish in under two minutes -- still far
+ * faster than one-at-a-time, but no longer bursty enough to reproduce
+ * that block in manual retesting.
+ */
+const PASURAM_MIN_REQUEST_INTERVAL_MS = 250;
+
+/**
+ * If this many download attempts in a row fail, the batch stops issuing
+ * new requests rather than ploughing through the rest of a ~400-URL list
+ * against a server that's evidently already blocking this device --
+ * every further attempt would just fail too, for free extra load on
+ * Prapatti and a longer wait for a user who's already getting nothing
+ * but failures. `isPasuramAvailable` skips (not attempts) don't count
+ * against this -- only real download attempts do.
+ */
+const PASURAM_CONSECUTIVE_FAILURE_LIMIT = 6;
+
+/**
+ * Downloads every URL in `urls` that isn't already available locally, up
+ * to PASURAM_DOWNLOAD_CONCURRENCY at once and no faster than one new
+ * request every PASURAM_MIN_REQUEST_INTERVAL_MS. A failure on one URL is
+ * recorded and the rest continue -- one bad PDF never aborts the batch --
+ * unless PASURAM_CONSECUTIVE_FAILURE_LIMIT failures happen in a row, in
+ * which case the whole batch stops early (see `stoppedEarly` on the
+ * returned summary). Callers are expected to pass an already-
+ * deduplicated list (see content-lib/pasuram-resources.ts's
  * allPasuramResourceUrls()) so each unique PDF is only attempted once
  * regardless of how many Divya Desams reference it.
  */
@@ -230,24 +276,56 @@ export async function downloadAllPasurams(
     downloaded: 0,
     failed: 0,
     failedUrls: [],
+    stoppedEarly: false,
   };
 
   let completed = 0;
-  for (const url of urls) {
-    if (isPasuramAvailable(url, fs)) {
-      summary.alreadyAvailable += 1;
-    } else {
-      const result = await downloadPasuram(url, fs);
-      if (result.success) {
-        summary.downloaded += 1;
+  let consecutiveFailures = 0;
+  let stopped = false;
+  let nextIndex = 0;
+  let earliestNextStart = 0;
+
+  async function worker(): Promise<void> {
+    while (!stopped && nextIndex < urls.length) {
+      const url = urls[nextIndex];
+      nextIndex += 1;
+
+      if (isPasuramAvailable(url, fs)) {
+        summary.alreadyAvailable += 1;
       } else {
-        summary.failed += 1;
-        summary.failedUrls.push(url);
+        // Reserves this worker's start slot synchronously (no `await`
+        // between reading and advancing `earliestNextStart`), so two
+        // concurrent workers can never read the same slot and both wait
+        // the same amount before firing together -- each reservation
+        // pushes the next one PASURAM_MIN_REQUEST_INTERVAL_MS further
+        // out, regardless of how many workers race to reserve at once.
+        const mySlot = Math.max(Date.now(), earliestNextStart);
+        earliestNextStart = mySlot + PASURAM_MIN_REQUEST_INTERVAL_MS;
+        const waitMs = mySlot - Date.now();
+        if (waitMs > 0) await new Promise((resolve) => setTimeout(resolve, waitMs));
+
+        const result = await downloadPasuram(url, fs);
+        if (result.success) {
+          summary.downloaded += 1;
+          consecutiveFailures = 0;
+        } else {
+          summary.failed += 1;
+          summary.failedUrls.push(url);
+          consecutiveFailures += 1;
+          if (consecutiveFailures >= PASURAM_CONSECUTIVE_FAILURE_LIMIT) {
+            stopped = true;
+            summary.stoppedEarly = true;
+          }
+        }
       }
+
+      completed += 1;
+      onProgress?.({ completed, total: urls.length, currentUrl: url });
     }
-    completed += 1;
-    onProgress?.({ completed, total: urls.length, currentUrl: url });
   }
+
+  const workerCount = Math.max(1, Math.min(PASURAM_DOWNLOAD_CONCURRENCY, urls.length));
+  await Promise.all(Array.from({ length: workerCount }, worker));
 
   return summary;
 }

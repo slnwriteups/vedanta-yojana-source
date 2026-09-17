@@ -545,6 +545,22 @@ export function pasuramDownloadAllResult(language: LanguageCode | null, download
   return `${base} ${failedNote}`;
 }
 
+/** Shown under the bulk-download result line only when downloadAllPasurams() stopped early after too many failures in a row -- see PASURAM_CONSECUTIVE_FAILURE_LIMIT in pasuramOfflineCore.ts. */
+export function pasuramDownloadStoppedEarlyNote(language: LanguageCode | null): string {
+  return pick(
+    language,
+    "Stopped early after repeated failures -- Prapatti's server may be temporarily unavailable. Try again later.",
+    "தொடர்ச்சியான தோல்விகளுக்குப் பிறகு நிறுத்தப்பட்டது -- Prapatti சேவையகம் தற்காலிகமாகக் கிடைக்காமல் இருக்கலாம். பின்னர் மீண்டும் முயற்சிக்கவும்.",
+    "ಸತತ ವೈಫಲ್ಯಗಳ ನಂತರ ನಿಲ್ಲಿಸಲಾಗಿದೆ -- Prapatti ಸರ್ವರ್ ತಾತ್ಕಾಲಿಕವಾಗಿ ಲಭ್ಯವಿಲ್ಲದಿರಬಹುದು. ನಂತರ ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+    "बार-बार विफलताओं के बाद रोका गया -- Prapatti सर्वर अस्थायी रूप से अनुपलब्ध हो सकता है। बाद में पुनः प्रयास करें।"
+  );
+}
+
+/** The retry button shown after a bulk-download summary, letting the user try again without leaving Settings. */
+export function pasuramDownloadTryAgainButton(language: LanguageCode | null): string {
+  return pick(language, "Try Again", "மீண்டும் முயற்சிக்கவும்", "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ", "पुनः प्रयास करें");
+}
+
 export function filterAccessibilityLabel(language: LanguageCode | null, filterLabel: string): string {
   return pick(language, `Filter: ${filterLabel}`, `வடிகட்டி: ${filterLabel}`, `ಫಿಲ್ಟರ್: ${filterLabel}`, `फ़िल्टर: ${filterLabel}`);
 }
