@@ -91,7 +91,26 @@ function main(): void {
 
     const book = toMobileBook(BookSchema.parse(readJson(bookJsonPath)));
     const chapterFiles = listJsonFiles(path.join(CONTENT_LIBRARY_ROOT, bookDir, "chapters"));
-    const chapters = chapterFiles.map((f) => toMobileChapter(ChapterSchema.parse(readJson(f))));
+    // listJsonFiles() returns filesystem order (alphabetical by filename),
+    // not reading order -- every consumer of this array (the chapter
+    // screen's "Chapter X of Y" position, findAdjacentChapters()'s
+    // previous/next lookup) assumes ascending `order`, the same
+    // assumption content-lib/loader.ts's bundled loadChapters() already
+    // upholds for the lightweight summary list. Without this sort,
+    // Previous/Next silently walked alphabetically-adjacent chapters
+    // instead of narratively-adjacent ones, and the position counter
+    // reported an alphabetical rank instead of the real chapter number.
+    const chapters = chapterFiles
+      .map((f) => toMobileChapter(ChapterSchema.parse(readJson(f))))
+      .sort((a, b) => a.order - b.order);
+
+    for (let i = 1; i < chapters.length; i++) {
+      if (chapters[i].order <= chapters[i - 1].order) {
+        throw new Error(
+          `${bookDir}: chapter order is not strictly increasing after sort (${chapters[i - 1].slug}=${chapters[i - 1].order} then ${chapters[i].slug}=${chapters[i].order}) -- duplicate or unsortable order value`
+        );
+      }
+    }
 
     const referencedUuids = new Set<string>();
     if (book.coverImage) referencedUuids.add(book.coverImage.sourceAssetUuid.toLowerCase());
