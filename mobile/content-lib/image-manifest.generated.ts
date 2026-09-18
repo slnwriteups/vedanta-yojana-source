@@ -6,7 +6,7 @@
  * that sourceAssetUuid (via mobile/metro.config.js's watchFolders) --
  * nothing here is a copy, a rename, or a re-encode. 0 file(s)
  * under public/images/ did not match the expected UUID-named-image shape
- * and were skipped rather than guessed at. 32 book-exclusive
+ * and were skipped rather than guessed at. 29 book-exclusive
  * image(s) were deliberately excluded -- see this function's own doc
  * comment.
  */

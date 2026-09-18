@@ -99,14 +99,17 @@ test("Images: Sri Rangam's sourceAssetUuid still matches a real file under publi
   assert.ok(withImage, "expected sri-rangam to have at least one image with a matching file on disk");
 });
 
-test("Images: public/images/ still has 230 real files for the manifest generator to enumerate", () => {
+test("Images: public/images/ still has 227 real files for the manifest generator to enumerate", () => {
   // 217 from the original migration + 174 added by Phase 6E from "108
   // Divyadesam 2nd Edition.pdf" (see content/_provenance/divya-desams/),
   // minus 149 removed as post-Phase-6E-C near-duplicates (same photo,
   // re-scanned between the original SAP export and the book -- see
   // source-material/reports/phase-6E-image-fixes-report.md), minus 12
   // more removed as misattributed to the wrong adjacent temple (see
-  // source-material/reports/phase-6E-cross-record-duplicates-report.md):
-  // 391 - 149 - 12 = 230.
-  assert.equal(fs.readdirSync(IMAGES_ROOT).length, 230);
+  // source-material/reports/phase-6E-cross-record-duplicates-report.md),
+  // minus 3 more removed once their charama-shlokam chapters had the
+  // real verse transcribed as text (extracted from these exact images)
+  // instead of only ever showing it as a photo of the shloka:
+  // 391 - 149 - 12 - 3 = 227.
+  assert.equal(fs.readdirSync(IMAGES_ROOT).length, 227);
 });
