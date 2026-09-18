@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { loadDivyaDesam } from "../../../content-lib/loader.ts";
@@ -15,6 +16,7 @@ import {
   isVerseLine,
   looksLikeSubheading,
   paragraphsForReading,
+  specialNoteListItemSpan,
 } from "../../../../content-lib/text-format.ts";
 import { localizeDivyaDesam } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
@@ -77,31 +79,44 @@ const TEMPLE_FIELD_ORDER: (keyof TempleInformationData)[] = [
 function TempleFieldValue({ value }: { value: string }) {
   const theme = useTheme();
   const { language } = useLanguage();
-  return (
-    <>
-      {paragraphsForReading(value).map((paragraph, index) => {
-        const specialNote = extractSpecialNote(paragraph);
-        if (specialNote !== null) {
-          return (
-            <View
-              key={index}
-              style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
-            >
-              <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
-                {translateUi("specialNoteLabel", language)}
-              </Text>
-              <Text style={[styles.templeValue, { color: theme.colors.foreground, marginTop: 0 }]}>{specialNote}</Text>
-            </View>
-          );
-        }
-        return (
-          <Text key={index} style={[styles.templeValue, { color: theme.colors.foreground }]}>
-            {paragraph}
+  const paragraphs = paragraphsForReading(value);
+  const nodes: ReactNode[] = [];
+  for (let index = 0; index < paragraphs.length; index++) {
+    const paragraph = paragraphs[index];
+    const specialNote = extractSpecialNote(paragraph);
+    if (specialNote !== null) {
+      // See specialNoteListItemSpan()'s doc comment -- any list items
+      // immediately following the note belong inside the same callout.
+      const span = specialNoteListItemSpan(paragraphs, index);
+      const items = paragraphs.slice(index + 1, index + 1 + span);
+      nodes.push(
+        <View
+          key={index}
+          style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+        >
+          <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+            {translateUi("specialNoteLabel", language)}
           </Text>
-        );
-      })}
-    </>
-  );
+          {[specialNote, ...items].map((line, lineIndex) => (
+            <Text
+              key={lineIndex}
+              style={[styles.templeValue, { color: theme.colors.foreground, marginTop: lineIndex === 0 ? 0 : undefined }]}
+            >
+              {line}
+            </Text>
+          ))}
+        </View>
+      );
+      index += span;
+      continue;
+    }
+    nodes.push(
+      <Text key={index} style={[styles.templeValue, { color: theme.colors.foreground }]}>
+        {paragraph}
+      </Text>
+    );
+  }
+  return <>{nodes}</>;
 }
 
 /** Same special-note-aware paragraph rendering as Section.tsx, for the two shrine-level free-text fields (sthalaPuranam/azhwarPasuram) that don't route through <Section> here. */
@@ -109,35 +124,45 @@ function ParagraphsWithNotes({ text, keyPrefix }: { text: string; keyPrefix: str
   const theme = useTheme();
   const { language } = useLanguage();
   const paragraphs = paragraphsForReading(text);
-  return (
-    <>
-      {paragraphs.map((paragraph, index) => {
-        const specialNote = extractSpecialNote(paragraph);
-        if (specialNote !== null) {
-          return (
-            <View
-              key={`${keyPrefix}-${index}`}
-              style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
-            >
-              <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
-                {translateUi("specialNoteLabel", language)}
-              </Text>
-              <Text style={[styles.templeValue, { color: theme.colors.foreground, marginTop: 0 }]}>{specialNote}</Text>
-            </View>
-          );
-        }
-        const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
-        return (
-          <Text
-            key={`${keyPrefix}-${index}`}
-            style={[styles.templeValue, bold && styles.templeValueSubheading, { color: theme.colors.foreground }]}
-          >
-            {paragraph}
+  const nodes: ReactNode[] = [];
+  for (let index = 0; index < paragraphs.length; index++) {
+    const paragraph = paragraphs[index];
+    const specialNote = extractSpecialNote(paragraph);
+    if (specialNote !== null) {
+      const span = specialNoteListItemSpan(paragraphs, index);
+      const items = paragraphs.slice(index + 1, index + 1 + span);
+      nodes.push(
+        <View
+          key={`${keyPrefix}-${index}`}
+          style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+        >
+          <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+            {translateUi("specialNoteLabel", language)}
           </Text>
-        );
-      })}
-    </>
-  );
+          {[specialNote, ...items].map((line, lineIndex) => (
+            <Text
+              key={lineIndex}
+              style={[styles.templeValue, { color: theme.colors.foreground, marginTop: lineIndex === 0 ? 0 : undefined }]}
+            >
+              {line}
+            </Text>
+          ))}
+        </View>
+      );
+      index += span;
+      continue;
+    }
+    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
+    nodes.push(
+      <Text
+        key={`${keyPrefix}-${index}`}
+        style={[styles.templeValue, bold && styles.templeValueSubheading, { color: theme.colors.foreground }]}
+      >
+        {paragraph}
+      </Text>
+    );
+  }
+  return <>{nodes}</>;
 }
 
 export default function DivyaDesamDetailScreen() {

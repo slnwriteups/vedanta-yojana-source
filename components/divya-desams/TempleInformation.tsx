@@ -1,7 +1,7 @@
 import type { TempleInformation as TempleInformationData } from "@/content-lib/schemas";
 import { translateUi, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
-import { extractSpecialNote, paragraphsForReading } from "@/content-lib/text-format";
+import { extractSpecialNote, paragraphsForReading, specialNoteListItemSpan } from "@/content-lib/text-format";
 import { SpecialNote } from "@/components/shared/SpecialNote";
 
 /**
@@ -36,6 +36,33 @@ const FIELD_ORDER: (keyof TempleInformationData)[] = [
   "travelNote",
 ];
 
+/** A single templeInformation field's value -- see FieldValue in ShrineDetails.tsx for why this needs its own paragraph split rather than one raw <dd>. */
+function FieldValue({ value, language }: { value: string; language: LanguageCode | null }) {
+  const paragraphs = paragraphsForReading(value);
+  const nodes: React.ReactNode[] = [];
+  for (let index = 0; index < paragraphs.length; index++) {
+    const paragraph = paragraphs[index];
+    const specialNote = extractSpecialNote(paragraph);
+    if (specialNote !== null) {
+      const span = specialNoteListItemSpan(paragraphs, index);
+      const items = paragraphs.slice(index + 1, index + 1 + span);
+      nodes.push(
+        <dd key={index}>
+          <SpecialNote text={specialNote} items={items} language={language} />
+        </dd>
+      );
+      index += span;
+      continue;
+    }
+    nodes.push(
+      <dd key={index} className="prose-body mt-1">
+        {paragraph}
+      </dd>
+    );
+  }
+  return <>{nodes}</>;
+}
+
 export function TempleInformation({
   info,
   language,
@@ -55,21 +82,7 @@ export function TempleInformation({
         {presentFields.map((key) => (
           <div key={key}>
             <dt className="eyebrow">{translateUi(FIELD_LABEL_KEYS[key], language)}</dt>
-            {paragraphsForReading(info[key] ?? "").map((paragraph, index) => {
-              const specialNote = extractSpecialNote(paragraph);
-              if (specialNote !== null) {
-                return (
-                  <dd key={index}>
-                    <SpecialNote text={specialNote} language={language} />
-                  </dd>
-                );
-              }
-              return (
-                <dd key={index} className="prose-body mt-1">
-                  {paragraph}
-                </dd>
-              );
-            })}
+            <FieldValue value={info[key] ?? ""} language={language} />
           </div>
         ))}
       </dl>

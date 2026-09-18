@@ -4,6 +4,7 @@ import {
   extractSpecialNote,
   isListItemLine,
   looksLikeSubheading,
+  specialNoteListItemSpan,
   splitIntoReadableParagraphs,
 } from "@/content-lib/text-format";
 import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
@@ -125,31 +126,43 @@ export function SthalaPuranamWithImages({
         {heading}
       </h2>
       <div className="space-y-5">
-        {segments.map((segment) =>
-          segment.text !== undefined ? (
-            splitIntoReadableParagraphs(segment.text).map((paragraph, i) => {
-              const specialNote = extractSpecialNote(paragraph);
-              if (specialNote !== null) {
-                return <SpecialNote key={`${segment.key}-${i}`} text={specialNote} language={language} />;
-              }
-              return (
-                <p
-                  key={`${segment.key}-${i}`}
-                  className={
-                    "prose-body whitespace-pre-line" +
-                    (looksLikeSubheading(paragraph) && !isListItemLine(paragraph) ? " mt-2 font-bold" : "")
-                  }
-                >
-                  {paragraph}
-                </p>
+        {segments.map((segment) => {
+          if (segment.text === undefined) {
+            return (
+              <div key={segment.key} className="max-w-none">
+                <ImageRow images={segment.images ?? []} />
+              </div>
+            );
+          }
+
+          const segmentParagraphs = splitIntoReadableParagraphs(segment.text);
+          const nodes: React.ReactNode[] = [];
+          for (let i = 0; i < segmentParagraphs.length; i++) {
+            const paragraph = segmentParagraphs[i];
+            const specialNote = extractSpecialNote(paragraph);
+            if (specialNote !== null) {
+              const span = specialNoteListItemSpan(segmentParagraphs, i);
+              const items = segmentParagraphs.slice(i + 1, i + 1 + span);
+              nodes.push(
+                <SpecialNote key={`${segment.key}-${i}`} text={specialNote} items={items} language={language} />
               );
-            })
-          ) : (
-            <div key={segment.key} className="max-w-none">
-              <ImageRow images={segment.images ?? []} />
-            </div>
-          )
-        )}
+              i += span;
+              continue;
+            }
+            nodes.push(
+              <p
+                key={`${segment.key}-${i}`}
+                className={
+                  "prose-body whitespace-pre-line" +
+                  (looksLikeSubheading(paragraph) && !isListItemLine(paragraph) ? " mt-2 font-bold" : "")
+                }
+              >
+                {paragraph}
+              </p>
+            );
+          }
+          return nodes;
+        })}
       </div>
     </section>
   );

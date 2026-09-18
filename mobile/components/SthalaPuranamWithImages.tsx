@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactElement } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
@@ -12,6 +12,7 @@ import {
   extractSpecialNote,
   isListItemLine,
   looksLikeSubheading,
+  specialNoteListItemSpan,
   splitIntoReadableParagraphs,
 } from "../../content-lib/text-format.ts";
 
@@ -97,67 +98,84 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
       <Text style={[styles.heading, { color: theme.colors.foreground }]} accessibilityRole="header">
         {translateUi("sthalaPuranamHeading", language)}
       </Text>
-      {segments.flatMap((segment) =>
-        segment.text !== undefined
-          ? splitIntoReadableParagraphs(segment.text).map((paragraph, i) => {
-              const specialNote = extractSpecialNote(paragraph);
-              if (specialNote !== null) {
-                return (
-                  <View
-                    key={`${segment.key}-${i}`}
-                    style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
-                  >
-                    <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
-                      {translateUi("specialNoteLabel", language)}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.paragraph,
-                        {
-                          color: theme.colors.foreground,
-                          fontFamily: Platform.select(typography.readingFontFamily),
-                          fontSize: typography.body * preferences.fontScale,
-                          lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
-                        },
-                      ]}
-                    >
-                      {specialNote}
-                    </Text>
-                  </View>
-                );
-              }
-              return (
-                <Text
-                  key={`${segment.key}-${i}`}
-                  style={[
-                    styles.paragraph,
-                    looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
-                    {
-                      color: theme.colors.foreground,
-                      fontFamily: Platform.select(typography.readingFontFamily),
-                      fontSize: typography.body * preferences.fontScale,
-                      lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
-                    },
-                  ]}
-                >
-                  {paragraph}
+      {segments.flatMap((segment) => {
+        if (segment.text === undefined) {
+          return [
+            <View key={segment.key} style={styles.row}>
+              {(segment.images ?? []).map(({ image, asset }) => (
+                <FadeInImage
+                  key={image.assetId}
+                  asset={asset}
+                  label={image.alt}
+                  size={IMAGE_SIZE}
+                  onPress={() => setViewerAsset({ asset, label: image.alt })}
+                />
+              ))}
+            </View>,
+          ];
+        }
+
+        const segmentParagraphs = splitIntoReadableParagraphs(segment.text);
+        const nodes: ReactElement[] = [];
+        for (let i = 0; i < segmentParagraphs.length; i++) {
+          const paragraph = segmentParagraphs[i];
+          const specialNote = extractSpecialNote(paragraph);
+          if (specialNote !== null) {
+            // See specialNoteListItemSpan()'s doc comment -- any list
+            // items immediately following the note belong inside the
+            // same callout, not as disconnected plain paragraphs after it.
+            const span = specialNoteListItemSpan(segmentParagraphs, i);
+            const items = segmentParagraphs.slice(i + 1, i + 1 + span);
+            nodes.push(
+              <View
+                key={`${segment.key}-${i}`}
+                style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+              >
+                <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+                  {translateUi("specialNoteLabel", language)}
                 </Text>
-              );
-            })
-          : [
-              <View key={segment.key} style={styles.row}>
-                {(segment.images ?? []).map(({ image, asset }) => (
-                  <FadeInImage
-                    key={image.assetId}
-                    asset={asset}
-                    label={image.alt}
-                    size={IMAGE_SIZE}
-                    onPress={() => setViewerAsset({ asset, label: image.alt })}
-                  />
+                {[specialNote, ...items].map((line, lineIndex) => (
+                  <Text
+                    key={lineIndex}
+                    style={[
+                      styles.paragraph,
+                      lineIndex > 0 && styles.specialNoteListItem,
+                      {
+                        color: theme.colors.foreground,
+                        fontFamily: Platform.select(typography.readingFontFamily),
+                        fontSize: typography.body * preferences.fontScale,
+                        lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                      },
+                    ]}
+                  >
+                    {line}
+                  </Text>
                 ))}
-              </View>,
-            ]
-      )}
+              </View>
+            );
+            i += span;
+            continue;
+          }
+          nodes.push(
+            <Text
+              key={`${segment.key}-${i}`}
+              style={[
+                styles.paragraph,
+                looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
+                {
+                  color: theme.colors.foreground,
+                  fontFamily: Platform.select(typography.readingFontFamily),
+                  fontSize: typography.body * preferences.fontScale,
+                  lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                },
+              ]}
+            >
+              {paragraph}
+            </Text>
+          );
+        }
+        return nodes;
+      })}
 
       <ImageViewerModal
         visible={viewerAsset !== null}
@@ -200,6 +218,9 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 0.5,
     marginBottom: spacing.xs,
+  },
+  specialNoteListItem: {
+    marginTop: spacing.xs,
   },
   row: {
     flexDirection: "row",

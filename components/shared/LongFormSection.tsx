@@ -4,6 +4,7 @@ import {
   isVerseLine,
   looksLikeSubheading,
   paragraphsForReading,
+  specialNoteListItemSpan,
 } from "@/content-lib/text-format";
 import { SpecialNote } from "@/components/shared/SpecialNote";
 import type { LanguageCode } from "@/lib/preferences";
@@ -74,29 +75,38 @@ export function LongFormSection({
         </h2>
       ) : null}
       <div className="prose-body space-y-5 whitespace-pre-line">
-        {paragraphs.map((paragraph, index) => {
-          const specialNote = extractSpecialNote(paragraph);
-          if (specialNote !== null) {
-            return <SpecialNote key={index} text={specialNote} language={language} />;
+        {(() => {
+          const nodes: React.ReactNode[] = [];
+          for (let index = 0; index < paragraphs.length; index++) {
+            const paragraph = paragraphs[index];
+            const specialNote = extractSpecialNote(paragraph);
+            if (specialNote !== null) {
+              const span = specialNoteListItemSpan(paragraphs, index);
+              const items = paragraphs.slice(index + 1, index + 1 + span);
+              nodes.push(<SpecialNote key={index} text={specialNote} items={items} language={language} />);
+              index += span;
+              continue;
+            }
+            const classNames = [
+              (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index)
+                ? "mt-2 font-bold"
+                : null,
+              paragraphIdPrefix ? "scroll-mt-6" : null,
+            ]
+              .filter(Boolean)
+              .join(" ");
+            nodes.push(
+              <p
+                key={index}
+                id={paragraphIdPrefix ? `${paragraphIdPrefix}-${index}` : undefined}
+                className={classNames || undefined}
+              >
+                {paragraph}
+              </p>
+            );
           }
-          const classNames = [
-            (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index)
-              ? "mt-2 font-bold"
-              : null,
-            paragraphIdPrefix ? "scroll-mt-6" : null,
-          ]
-            .filter(Boolean)
-            .join(" ");
-          return (
-            <p
-              key={index}
-              id={paragraphIdPrefix ? `${paragraphIdPrefix}-${index}` : undefined}
-              className={classNames || undefined}
-            >
-              {paragraph}
-            </p>
-          );
-        })}
+          return nodes;
+        })()}
       </div>
     </section>
   );

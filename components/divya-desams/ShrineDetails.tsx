@@ -5,6 +5,7 @@ import {
   isVerseLine,
   looksLikeSubheading,
   paragraphsForReading,
+  specialNoteListItemSpan,
 } from "@/content-lib/text-format";
 import { shrineOrdinalLabel, translateUi, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
@@ -45,46 +46,52 @@ const FIELD_ORDER: ("moolavar" | "thayaar" | "vimanam" | "theertham")[] = [
 
 function ProseBlock({ text, language }: { text: string; language: LanguageCode | null }) {
   const paragraphs = paragraphsForReading(text);
-  return (
-    <div className="prose-body space-y-3 whitespace-pre-line">
-      {paragraphs.map((paragraph, index) => {
-        const specialNote = extractSpecialNote(paragraph);
-        if (specialNote !== null) {
-          return <SpecialNote key={index} text={specialNote} language={language} />;
-        }
-        const bold =
-          (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
-        return (
-          <p key={index} className={bold ? "mt-2 font-bold" : undefined}>
-            {paragraph}
-          </p>
-        );
-      })}
-    </div>
-  );
+  const nodes: React.ReactNode[] = [];
+  for (let index = 0; index < paragraphs.length; index++) {
+    const paragraph = paragraphs[index];
+    const specialNote = extractSpecialNote(paragraph);
+    if (specialNote !== null) {
+      const span = specialNoteListItemSpan(paragraphs, index);
+      const items = paragraphs.slice(index + 1, index + 1 + span);
+      nodes.push(<SpecialNote key={index} text={specialNote} items={items} language={language} />);
+      index += span;
+      continue;
+    }
+    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
+    nodes.push(
+      <p key={index} className={bold ? "mt-2 font-bold" : undefined}>
+        {paragraph}
+      </p>
+    );
+  }
+  return <div className="prose-body space-y-3 whitespace-pre-line">{nodes}</div>;
 }
 
 /** A single templeInformation field's value -- see TempleFieldValue in mobile's [slug].tsx for why this needs its own paragraph split rather than one raw <dd>. A <dl> may hold several <dd> per <dt>, so each paragraph gets its own instead of being merged into one. */
 function FieldValue({ value, language }: { value: string; language: LanguageCode | null }) {
-  return (
-    <>
-      {paragraphsForReading(value).map((paragraph, index) => {
-        const specialNote = extractSpecialNote(paragraph);
-        if (specialNote !== null) {
-          return (
-            <dd key={index}>
-              <SpecialNote text={specialNote} language={language} />
-            </dd>
-          );
-        }
-        return (
-          <dd key={index} className="prose-body mt-1">
-            {paragraph}
-          </dd>
-        );
-      })}
-    </>
-  );
+  const paragraphs = paragraphsForReading(value);
+  const nodes: React.ReactNode[] = [];
+  for (let index = 0; index < paragraphs.length; index++) {
+    const paragraph = paragraphs[index];
+    const specialNote = extractSpecialNote(paragraph);
+    if (specialNote !== null) {
+      const span = specialNoteListItemSpan(paragraphs, index);
+      const items = paragraphs.slice(index + 1, index + 1 + span);
+      nodes.push(
+        <dd key={index}>
+          <SpecialNote text={specialNote} items={items} language={language} />
+        </dd>
+      );
+      index += span;
+      continue;
+    }
+    nodes.push(
+      <dd key={index} className="prose-body mt-1">
+        {paragraph}
+      </dd>
+    );
+  }
+  return <>{nodes}</>;
 }
 
 export function ShrineDetails({ shrines, language }: { shrines: Shrine[]; language: LanguageCode | null }) {

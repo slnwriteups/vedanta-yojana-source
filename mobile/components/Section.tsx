@@ -10,6 +10,7 @@ import {
   isVerseLine,
   looksLikeSubheading,
   paragraphsForReading,
+  specialNoteListItemSpan,
 } from "../../content-lib/text-format.ts";
 
 /**
@@ -88,14 +89,23 @@ export function Section({
       {text
         ? (() => {
             const paragraphs = paragraphsForReading(text);
-            return paragraphs.map((paragraph, index) => {
+            const nodes: ReactNode[] = [];
+            for (let index = 0; index < paragraphs.length; index++) {
+              const paragraph = paragraphs[index];
               const specialNote = extractSpecialNote(paragraph);
               if (specialNote !== null) {
+                // Any list items immediately following the note (e.g.
+                // sri-rangam's "...list of these kshethrams is as
+                // follows:" then "1) Vanamamalai" .. "8) Muktinath",
+                // each its own paragraph) belong inside the SAME callout
+                // -- see specialNoteListItemSpan()'s doc comment.
+                const span = specialNoteListItemSpan(paragraphs, index);
+                const items = paragraphs.slice(index + 1, index + 1 + span);
                 // No paragraphRefs entry here (unlike the plain-paragraph
                 // branch below) -- a special note is always excluded from
                 // getTableOfContents() (content-lib/text-format.ts), so
                 // it's never a jump-scroll target that needs one.
-                return (
+                nodes.push(
                   <View
                     key={index}
                     style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
@@ -103,26 +113,32 @@ export function Section({
                     <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
                       {translateUi("specialNoteLabel", language)}
                     </Text>
-                    <Text
-                      style={[
-                        styles.paragraph,
-                        {
-                          color: theme.colors.foreground,
-                          fontFamily: Platform.select(typography.readingFontFamily),
-                          fontSize: typography.body * preferences.fontScale,
-                          lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
-                        },
-                      ]}
-                    >
-                      {specialNote}
-                    </Text>
+                    {[specialNote, ...items].map((line, lineIndex) => (
+                      <Text
+                        key={lineIndex}
+                        style={[
+                          styles.paragraph,
+                          lineIndex > 0 && styles.specialNoteListItem,
+                          {
+                            color: theme.colors.foreground,
+                            fontFamily: Platform.select(typography.readingFontFamily),
+                            fontSize: typography.body * preferences.fontScale,
+                            lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                          },
+                        ]}
+                      >
+                        {line}
+                      </Text>
+                    ))}
                   </View>
                 );
+                index += span;
+                continue;
               }
               const subheading =
                 (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
                 isVerseLine(paragraphs, index);
-              return (
+              nodes.push(
                 <Text
                   key={index}
                   ref={paragraphRefs ? (node) => { paragraphRefs.current[index] = node; } : undefined}
@@ -140,7 +156,8 @@ export function Section({
                   {paragraph}
                 </Text>
               );
-            });
+            }
+            return nodes;
           })()
         : children}
     </View>
@@ -181,5 +198,9 @@ const styles = StyleSheet.create({
     textTransform: "uppercase",
     letterSpacing: 0.5,
     marginBottom: spacing.xs,
+  },
+  /** Any list items grouped into a special note (see specialNoteListItemSpan()) get a touch less top space than a full paragraph break would. */
+  specialNoteListItem: {
+    marginTop: spacing.xs,
   },
 });

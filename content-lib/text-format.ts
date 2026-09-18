@@ -267,6 +267,26 @@ export function extractSpecialNote(paragraph: string): string | null {
   return paragraph.startsWith("*") ? paragraph.slice(1) : null;
 }
 
+/**
+ * How many of the paragraphs immediately following a special note (at
+ * `noteIndex`) are list items that belong INSIDE that same note, not as
+ * disconnected plain paragraphs after it. Real, reported case:
+ * sri-rangam's Swayamvyaktha note ends "...the list of these kshethrams
+ * is as follows:" and is directly followed by 8 separate "1) Vanamamalai"
+ * .. "8) Muktinath" paragraphs (each its own paragraph, single-\n
+ * separated) -- without this, a renderer's special-note box would wrap
+ * only the introductory sentence and the list itself would render
+ * outside it as ordinary paragraphs, visually severed from the note that
+ * introduces it even though isListItemLine() already keeps them from
+ * being mistaken for bold subheadings. A renderer consumes this many
+ * extra paragraphs into the same callout and advances its loop past them.
+ */
+export function specialNoteListItemSpan(paragraphs: string[], noteIndex: number): number {
+  let span = 0;
+  while (isListItemLine(paragraphs[noteIndex + 1 + span] ?? "")) span++;
+  return span;
+}
+
 export function getTableOfContents(text: string, title: string): TableOfContentsEntry[] {
   const paragraphs = paragraphsForReading(text);
   const normalizedTitle = title.trim().toLowerCase();

@@ -12,6 +12,7 @@ import {
   isVerseTransliterationLine,
   looksLikeSubheading,
   paragraphsForReading,
+  specialNoteListItemSpan,
   splitIntoReadableParagraphs,
   stripLeadingDuplicateTitle,
 } from "../../content-lib/text-format.ts";
@@ -347,4 +348,31 @@ test("P: matches the real corpus -- every extracted special note is non-empty an
     }
   }
   assert.ok(noteCount > 0, "expected at least one real special note in the corpus");
+});
+
+// ---------------------------------------------------------------------------
+// specialNoteListItemSpan
+// ---------------------------------------------------------------------------
+
+test("Q: list items immediately following a special note are counted, so a renderer can group them into the same callout", () => {
+  // Real, reported case: sri-rangam's Swayamvyaktha note ends "...the
+  // list of these kshethrams is as follows:" directly followed by 8
+  // separate "1) Vanamamalai" .. "8) Muktinath" paragraphs (each its own
+  // paragraph -- single-\n separated). Without this, a renderer's
+  // special-note box wrapped only the introductory sentence and the list
+  // rendered as ordinary paragraphs right after it, visually severed
+  // from the note that introduces it.
+  const paragraphs = paragraphsForReading(
+    "*The list of these kshethrams is as follows:\n1) Vanamamalai\n2) Sri Raṅgam\n3) Sri Mushnam\n\nAzhwar Pasuram text starts here."
+  );
+  const noteIndex = paragraphs.findIndex((p) => extractSpecialNote(p) !== null);
+  assert.ok(noteIndex >= 0);
+  assert.equal(specialNoteListItemSpan(paragraphs, noteIndex), 3);
+  // The paragraph after the list (a real, unrelated paragraph) is not swept up.
+  assert.equal(isListItemLine(paragraphs[noteIndex + 4]), false);
+});
+
+test("Q: a special note with no following list items has a span of zero", () => {
+  const paragraphs = paragraphsForReading("*A standalone note with nothing after it that looks like a list.");
+  assert.equal(specialNoteListItemSpan(paragraphs, 0), 0);
 });
