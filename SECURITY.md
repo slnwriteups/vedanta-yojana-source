@@ -2,6 +2,11 @@
 
 Vedanta Yojana takes the security of its users and its source repository seriously.
 
+For the detailed technical security architecture (threat model, dependency
+security, build/Android/network security, signing, and known limitations),
+see [docs/SECURITY.md](docs/SECURITY.md). For how to verify a downloaded
+Android release, see [docs/APK-VERIFICATION.md](docs/APK-VERIFICATION.md).
+
 ## Reporting a Vulnerability
 
 If you discover a security vulnerability in this repository, its build/release
@@ -24,8 +29,12 @@ This policy covers:
 
 - The source code and configuration in this repository
 - The GitHub Actions build and deployment pipeline
-- The published GitHub Pages website and any GitHub-distributed release
-  artifacts
+- The published GitHub Pages website and the Android release artifacts
+  distributed through this repository's GitHub Releases
+
+The official distribution channel for the Android application is this
+repository's GitHub Releases page. Google Play is not currently used for
+distribution and is out of scope for this policy.
 
 ## What to Expect
 

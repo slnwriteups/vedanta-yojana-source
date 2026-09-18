@@ -1,0 +1,375 @@
+# Security Architecture
+
+This is the detailed technical security document for Vedanta Yojana. It
+covers the threat model, dependency security, build security, Android
+security, network security, content integrity, signing, and known
+limitations. For the short vulnerability-reporting policy, see the
+root [SECURITY.md](../SECURITY.md). For how to verify a specific
+downloaded Android release, see
+[APK-VERIFICATION.md](APK-VERIFICATION.md).
+
+Every control described here is drawn from the current repository
+configuration or from a specific verification step, cited by file path
+or command. Where something is not yet verified, it is stated as such
+rather than assumed.
+
+## Contents
+
+- [Threat model](#threat-model)
+- [Source & repository security](#source--repository-security)
+- [Dependency security](#dependency-security)
+- [The image-size vulnerability](#the-image-size-vulnerability)
+- [Security testing](#security-testing)
+- [Build security](#build-security)
+- [Android security](#android-security)
+- [Network security](#network-security)
+- [Content integrity](#content-integrity)
+- [Signing & release provenance](#signing--release-provenance)
+- [Secrets management](#secrets-management)
+- [Security limitations](#security-limitations)
+
+## Threat model
+
+| Threat | Mitigation | Residual risk |
+|---|---|---|
+| Fake or repackaged APK distributed under the project's name | Official distribution limited to GitHub Releases on this repository; APK signing certificate and SHA-256 published per release | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
+| Modified/tampered APK | Android's own signature verification rejects any APK whose contents were altered after signing, at install time, if the certificate doesn't match a prior install | Only protects users who compare the certificate against a trusted reference; does not itself alert an unsuspecting user |
+| Compromised GitHub account | Secret scanning and push protection enabled on the repository; Dependabot security updates enabled | No hardware-key/2FA enforcement is independently verifiable from repository configuration alone |
+| Compromised GitHub Actions workflow | All third-party Actions pinned to a full commit SHA (not a floating tag) in `.github/workflows/*.yml`; workflows use least-privilege `permissions: contents: read` unless a step specifically needs more | A compromised upstream Action release that predates the pinned SHA is not something a SHA pin can catch by itself |
+| Compromised EAS build | EAS is Expo's managed build infrastructure — the project depends on Expo's own account security and build isolation | Outside this project's direct control; see [Security Limitations](#security-limitations) |
+| Signing-credential compromise | Android production signing credentials are held remotely by EAS ("Using remote Android credentials (Expo server)"), not stored in this repository or on any local developer machine | Credential custody ultimately depends on Expo account security |
+| Malicious or vulnerable dependency | `package-lock.json` committed for both web and mobile; Dependabot configured (`.github/dependabot.yml`) for npm (root, `mobile/`) and GitHub Actions; `npm audit` reviewed; two dependencies patched via `patch-package` (see [Dependency security](#dependency-security)) | New vulnerabilities can be disclosed after release; Dependabot/audit tooling only knows about publicly disclosed advisories |
+| Malicious content payload (Library remote update) | Content is schema-validated at build time (`content-lib/schemas/`) before publication; the app enforces a schema-version literal check and fails closed on any shape it doesn't recognize | The remote content manifest is served over HTTPS from GitHub Pages with no additional content-signing beyond TLS + schema validation — see [Content integrity](#content-integrity) |
+| Stale or incorrect content build | `contentHash` per book in `content-manifest.json`, generated from the same build pipeline that produces the payload; hash mismatch triggers re-download | Does not detect a build that is internally consistent but was generated from wrong/incorrect source content |
+| Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://slnwriteups.github.io/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
+| Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to GitHub Releases only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
+| Accidental release of a debug-signed or debug-configured build | Release builds are produced via the EAS `production` profile, which is distinct from `development`/`preview`; a debug-keystore-signed local build was explicitly identified during release engineering and was **not** published — see [Signing & release provenance](#signing--release-provenance) | Requires continued process discipline; nothing in the build system automatically prevents a debug artifact from being manually uploaded to a release by mistake |
+| Compromised developer machine | Signing credentials are not stored locally (EAS-managed); `.env`/secret files are not committed (see [Secrets management](#secrets-management)) | A compromised machine with valid EAS/GitHub session credentials could still initiate actions under the developer's identity |
+
+No entry in this table should be read as "risk eliminated." Each is a
+specific, verifiable control with a specific, stated limit.
+
+## Source & repository security
+
+- **Repository:** [`slnwriteups/vedanta-yojana-source`](https://github.com/slnwriteups/vedanta-yojana-source) is public. Source, tests, and CI configuration are all visible.
+- **Secret scanning:** enabled, with push protection enabled (verified via the repository's security-and-analysis configuration). This blocks/flags commits containing recognizable credential patterns before or immediately after they reach the repository.
+- **Dependabot security updates:** enabled for npm (root and `mobile/`) and GitHub Actions, on a weekly schedule (`.github/dependabot.yml`).
+- **Private vulnerability reporting:** enabled on this repository, giving the mechanism described in the root [SECURITY.md](../SECURITY.md) an actual, checked-on GitHub setting to back it, rather than only a documented intention.
+- **Branch protection:** not currently configured on `main`. This is stated plainly as a residual gap rather than omitted — see [Security Limitations](#security-limitations).
+- **CI (`ci.yml`):** runs content tests, app tests, TypeScript, and a production web build on every push and pull request, with `permissions: contents: read` (the job never writes back to the repository).
+- **CodeQL (`codeql.yml`):** static analysis for JavaScript/TypeScript, on every push/PR to `main` and weekly on a schedule, so vulnerability patterns disclosed after a commit was written are still checked against it.
+- **Source maps:** the web production build (`next build`, static export) is not configured to publish source maps as part of the deploy step in `deploy-pages.yml`; the deployed site therefore does not intentionally ship a client-side source map. This has not been independently re-verified against the literal bytes of the deployed `out/` directory as part of this documentation pass.
+
+## Dependency security
+
+Both the web root and `mobile/` commit a `package-lock.json`, and CI
+installs with `npm ci` (exact, reproducible installs from the lockfile,
+not `npm install`).
+
+**Overrides (`mobile/package.json`):** `react-dom`, `postcss`, and
+`uuid` are pinned via `overrides` to versions that close specific
+Dependabot alerts, applied 2026-09-18 (`a2b82cf`).
+
+**patch-package patches (`mobile/patches/`):**
+
+| Patch | Target | Fixes |
+|---|---|---|
+| `decode-uri-component+0.2.2.patch` | `decode-uri-component@0.2.2` (transitive, via `query-string`/`@react-navigation/core`/`expo-router`) | Denial-of-service via exponential decoding of malformed percent-encoded input |
+| `metro++image-size+1.2.1.patch` | `metro`'s nested `image-size@1.2.1` | Infinite-loop denial-of-service in the ICNS and JPEG XL parsers — see below |
+
+`npm audit --omit=dev` in `mobile/` currently reports 12 advisories (4
+moderate, 8 high) against the `metro`/`@expo/metro-config`/`@expo/cli`
+dependency chain and `image-size` itself. This is expected and does
+not indicate an unpatched runtime vulnerability: `npm audit` matches
+against published package *versions*, and has no way to know that a
+locally applied `patch-package` patch already fixes the specific
+vulnerable code path inside an installed version it still considers
+vulnerable by version number. The `image-size` entry specifically
+covers the exact ICNS/JXL infinite-loop issue described below, which
+is patched — see [Security testing](#security-testing) for how that
+patch is verified to actually be in effect, rather than trusted on
+the strength of the patch file existing.
+
+Separately: `metro` and its dependency chain are **build-time tooling**
+— they run on the developer/CI machine while bundling the app, and are
+not themselves shipped inside the built Android artifact. A
+denial-of-service in a build-time bundler is a real risk (a malicious
+crafted asset reaching the bundler could hang a build or a
+developer's machine), but it is not a runtime risk to an end user's
+installed app.
+
+## The image-size vulnerability
+
+**Package:** `image-size@1.2.1`, resolved as a nested dependency of
+`metro` at `mobile/node_modules/metro/node_modules/image-size` (not a
+direct dependency of this project).
+
+**Vulnerability class:** synchronous infinite loop (denial of
+service), triggerable by a crafted image file with a malformed,
+zero-length internal box/entry.
+
+**Affected parsers and root cause:**
+
+- `ICNS.calculate()` (`dist/types/icns.js`) advances a read cursor by
+  each icon entry's own declared length field. A crafted entry
+  declaring length `0` left the cursor unchanged, so the function's
+  `while` loop re-read the same bytes forever.
+- `JXL.extractPartialStreams()` (`dist/types/jxl.js`) has the same
+  pattern for JPEG XL container "boxes": a crafted `jxlp` box
+  declaring size `0` caused the same unchanged-cursor infinite loop.
+
+Both functions had their own separate cursor-advancement logic,
+distinct from `image-size`'s own internal `findBox()` helper (used
+elsewhere in the package), which already had an equivalent guard —
+these two call sites did not go through it and lacked one.
+
+**Why upgrading was not used:** a newer `image-size` release was
+evaluated and found incompatible with the pinned Metro/toolchain
+version this project currently depends on. Upgrading Metro itself to
+reach a compatible `image-size` was out of scope for this fix — it
+would be a build-tooling upgrade with its own separate risk surface,
+not a targeted security fix.
+
+**The applied fix (`mobile/patches/metro++image-size+1.2.1.patch`):**
+adds a minimum-advance guard to both loops — when the declared
+entry/box length is `0`, the cursor advances by a fixed minimum size
+instead of by `0`, so the loop can never stall on a crafted zero-length
+field. Both changes are two-line diffs, changing only the cursor
+arithmetic, not the parsers' logic otherwise.
+
+**What this patch protects against:** a build-time hang triggered by a
+crafted `.icns` or `.jxl` file with a zero-length internal field
+reaching Metro's asset bundler.
+
+**What this patch does not protect against:** it is a fix for this
+one specific bug class in these two specific parsers. It is not a
+general security review of `image-size`, and does not claim to cover
+other potential parsing issues in that package or in Metro's broader
+asset-handling pipeline.
+
+## Security testing
+
+**Regression test:**
+[`mobile/tests/image-size-zero-size-box.test.ts`](../mobile/tests/image-size-zero-size-box.test.ts),
+driving a fixture at
+[`mobile/tests/fixtures/image-size-zero-box-check.cjs`](../mobile/tests/fixtures/image-size-zero-box-check.cjs).
+
+The fixture imports the *actual installed* nested package
+(`mobile/node_modules/metro/node_modules/image-size`) — the same copy
+Metro resolves at build time and the same copy the patch targets — not
+a separately installed or newer copy. It constructs a minimal crafted
+ICNS file (zero-length entry) and a minimal crafted JPEG XL container
+(zero-size `jxlp` box) and calls the package's `imageSize()` on each.
+
+**Why a child process with a hard timeout is used:** the vulnerability
+is a fully synchronous infinite loop. Nothing that runs *in the same
+process* — a `Promise` timeout, `node:test`'s own per-test timeout —
+can preempt a synchronous busy loop running on the same thread the
+test itself occupies. The only reliable way to bound it is to run the
+check in a separate process and kill that process from the outside if
+it overruns. The test does this via `child_process.spawnSync(...,
+{ timeout: 5000 })`: if the fixture hangs, the OS kills it after 5
+seconds (surfaced as `result.signal === 'SIGTERM'`), and the test fails
+with a diagnostic message rather than hanging the suite indefinitely.
+
+**Verified to actually detect a regression, not just to exist:** while
+writing this test, the patch was temporarily reverted in the installed
+package, the test was re-run, and it failed exactly as expected — the
+fixture process was killed by `SIGTERM` after timing out
+(`error.code === 'ETIMEDOUT'`). The patch was then restored and
+confirmed byte-identical to the shipped version via `diff` before the
+test was committed. This step is not something the test re-performs on
+every run (that would require shipping a deliberately vulnerable copy
+of a real dependency); it was a one-time manual verification during
+development, recorded in the test's own doc comment.
+
+This test runs as part of the mobile test suite (`node --test
+mobile/tests/*.test.ts`), which is part of the project's regular test
+run — see [DEVELOPMENT.md](DEVELOPMENT.md#testing-architecture) for
+the full suite breakdown and current counts.
+
+## Build security
+
+- **Hermes bytecode:** the release JavaScript bundle is compiled to
+  Hermes bytecode (`mobile/android/app/build.gradle`, `hermesEnabled`),
+  not shipped as readable source.
+- **R8 minification and resource shrinking:** enabled for release
+  builds (`enableProguardInReleaseBuilds`, `enableShrinkResourcesInReleaseBuilds`
+  in `mobile/app.json`'s `expo-build-properties` config; applied via
+  `minifyEnabled`, `shrinkResources`, and `proguardFiles` in
+  `build.gradle`).
+- **Native architecture scope:** builds target `arm64-v8a` only
+  (`buildArchs` in `expo-build-properties`).
+- **Reproducible installs:** `npm ci` from a committed lockfile, both
+  in CI and for the production build.
+- **Production build isolation:** the production Android build runs on
+  EAS's own build infrastructure via the `production` profile in
+  `mobile/eas.json`, not on a local developer machine — see
+  [Signing & release provenance](#signing--release-provenance).
+
+## Android security
+
+Verified against the app's source manifest
+(`mobile/android/app/src/main/AndroidManifest.xml`) and
+`mobile/app.json`:
+
+| Property | Value | Evidence |
+|---|---|---|
+| Package name | `com.slnwriteups.vedantayojana` | `mobile/app.json` |
+| Declared permissions | `INTERNET`, `ACCESS_COARSE_LOCATION`, `ACCESS_FINE_LOCATION`, `MODIFY_AUDIO_SETTINGS`, `SYSTEM_ALERT_WINDOW`, `VIBRATE` | `AndroidManifest.xml` (`src/main`) |
+| Explicitly blocked permissions | `READ_EXTERNAL_STORAGE`, `WRITE_EXTERNAL_STORAGE`, `RECORD_AUDIO` (`tools:node="remove"`, and listed in `app.json`'s `blockedPermissions`) | `AndroidManifest.xml`, `app.json` |
+| `usesCleartextTraffic` | Not set in the `main` (release-applying) manifest — Android's secure default (`false` for `targetSdkVersion >= 28`) therefore applies to release builds | `src/main/AndroidManifest.xml` has no `usesCleartextTraffic` attribute. It **is** explicitly set `true` in `src/debug/AndroidManifest.xml` and `src/debugOptimized/AndroidManifest.xml` — the standard React Native debug-build convention, which does not affect release builds. |
+| Exported activity | `MainActivity`, `android:exported="true"` (required for the launcher/deep-link intent filters it declares) | `AndroidManifest.xml` |
+| Deep link scheme | `vedantayojana://` (custom scheme, plus a `BROWSABLE` intent filter for `https` `VIEW` intents declared under `<queries>`) | `AndroidManifest.xml`, `app.json` (`"scheme": "vedantayojana"`) |
+| Debuggable | Not set in the release-applying manifest (no `android:debuggable="true"` outside the `debug`/`debugOptimized` source sets) | Confirmed on the local debug-signed build during earlier release engineering by inspecting the merged release manifest directly (Gradle's `processReleaseManifestForPackage` output); not yet re-confirmed against the EAS-produced production artifact, which has not yet been built — see [Signing & release provenance](#signing--release-provenance) |
+| In-app auto-update mechanism | None — `expo.modules.updates.ENABLED` is explicitly `false` in the manifest. Update checks (`mobile/services/updateCheckService.ts`) only compare against `app-version.json` and prompt the user; nothing installs automatically. | `AndroidManifest.xml` meta-data, `updateCheckService.ts` |
+
+## Network security
+
+All remote endpoints referenced in the mobile app's source are HTTPS,
+served from GitHub Pages:
+
+| Endpoint | Purpose | Source |
+|---|---|---|
+| `https://slnwriteups.github.io/vedanta-yojana/content-manifest.json` | Library content catalog/version check | `mobile/services/libraryCatalogService.ts` |
+| `https://slnwriteups.github.io/vedanta-yojana/app-version.json` | App version/update check | `mobile/services/updateCheckService.ts` |
+| `https://slnwriteups.github.io/vedanta-yojana/...` (book payloads) | Library book content download | `mobile/services/bookOfflineService.ts` |
+
+No `localhost` or development-server URL is referenced outside Expo's
+own development-client tooling (which is not part of a release build).
+No certificate pinning is implemented; the app relies on the
+platform's standard TLS trust chain. There is no in-app authentication
+system and no user account, so there is no credential to intercept in
+the first place — see [Privacy & Data Access](../README.md#privacy--data-access)
+in the README for what the app does and does not send over the
+network.
+
+**What the app does offline:** bundled Pasurams remain fully available
+with network fully disabled — verified on a physical device during
+release-engineering QA (Wi-Fi and mobile data both disabled via `adb
+shell svc wifi disable` / `svc data disable`, confirmed unreachable via
+a failed `ping`, then a bundled Pasuram opened successfully). Library
+content that has never been downloaded, and version-check data, are
+unavailable offline by nature — the app fails closed (treats an
+unreachable manifest the same as "no update", per
+[Library remote-update architecture](DEVELOPMENT.md#library-remote-update-architecture)),
+not by falling back to a cached or default value that might be wrong.
+
+## Content integrity
+
+Three categories of data reach the app by three different paths, with
+three different integrity properties:
+
+| Category | Examples | Delivery | Integrity mechanism |
+|---|---|---|---|
+| Bundled content | Pasurams (compressed archive), the JS/Hermes bundle itself | Compiled into the installed APK/AAB | Covered by the APK's own signature — see [Signing & release provenance](#signing--release-provenance) |
+| Remote Library content | Book chapters, Library catalog | Fetched over HTTPS from GitHub Pages at runtime | Per-book `contentHash` compared against the installed copy; schema-version literal check fails closed on an unrecognized shape (see [Library remote-update architecture](DEVELOPMENT.md#library-remote-update-architecture)) |
+| Application metadata | `app-version.json` | Fetched over HTTPS from GitHub Pages at runtime | Used only to prompt a manual update; never drives a silent code change |
+
+This is a meaningful distinction for users to understand: "the
+application fetches remote data" (true, for Library content and
+version metadata) is a different statement from "the application
+uploads personal data" (not observed anywhere in the audited source —
+see the Privacy section of the README).
+
+**Content-accuracy audit (2026-09-18):** the same day's commits
+(`3db9724` through `0df4000`, and content-adjacent fixes `4d6c7e8`,
+`40d8940`) corrected chapter ordering, special-note rendering,
+formatting/punctuation, and transcribed the three Charama Shlokams from
+source images. These are *internal consistency* corrections — content
+now renders the way its own source data says it should — not a
+historical or doctrinal accuracy review of the underlying religious
+texts. See [Security Limitations](#security-limitations).
+
+## Signing & release provenance
+
+**What is explicitly true today:**
+
+- The repository's local Gradle release-signing configuration
+  (`mobile/android/app/build.gradle`) has historically pointed the
+  `release` signing config at `debug.keystore` — the standard React
+  Native template default. A build produced with this local
+  configuration is a **debug-signed artifact** and has correctly
+  **not** been published anywhere as an official release.
+- EAS holds a separate, existing production Android signing credential
+  for this project, managed remotely by Expo — not stored in this
+  repository, not stored on any local developer machine. This was
+  confirmed by inspecting EAS build history (`eas build:list`), which
+  shows prior successful Android builds using the `production` profile
+  with `distribution: store`, and directly by EAS build logs reporting
+  `Using remote Android credentials (Expo server)` and `Using Keystore
+  from configuration: Build Credentials DlSst9jBhk (default)` when a
+  production build is initiated.
+- The project's official Android release artifact is built and signed
+  through this EAS-managed credential via `eas build --profile
+  production --platform android`, using `mobile/eas.json`'s existing,
+  unmodified `production` profile — not through the repository's local
+  Gradle debug-keystore path.
+
+**What is not yet true, stated plainly:** as of this document, a
+production EAS build for the current release has not yet completed.
+The specific signing-certificate SHA-256 fingerprint, the exact APK
+SHA-256, and the EAS build ID for this release are therefore **not yet
+available** and are not stated anywhere in this documentation set or
+in [APK-VERIFICATION.md](APK-VERIFICATION.md) until they can be
+recorded from an actual completed, inspected build. See the project's
+release notes / GitHub Release page for the current status.
+
+**Why this matters to a user:** a valid signature establishes that a
+given APK file was signed with the private key corresponding to a
+specific, consistent identity — the same identity across every release
+signed with that key, letting a user's device (and a user, manually)
+confirm an update genuinely comes from the same publisher as a
+previous install. It does not, by itself, prove the signed software is
+free of bugs or vulnerabilities.
+
+## Secrets management
+
+- No `.env` file, API key, keystore file, or credential is committed
+  to the repository (verified by inspecting the working tree and
+  `.gitignore`; secret scanning is additionally enabled — see
+  [Source & repository security](#source--repository-security)).
+- The one GitHub Actions secret referenced in this repository's
+  workflows is `secrets.DEPLOY_REPO_TOKEN`
+  (`.github/workflows/deploy-preview-repo.yml`), a scoped token used
+  only to publish a static export to a separate, non-production
+  preview repository — it is not a signing credential and has no
+  bearing on the Android release.
+- Android production signing credentials are held by EAS, not by this
+  repository or any file in it — see
+  [Signing & release provenance](#signing--release-provenance).
+
+## Security limitations
+
+Stated explicitly, because transparency about limitations is more
+useful to a user than reassurance:
+
+- **Source availability is not proof of build provenance.** Anyone can
+  read this repository's source. That alone does not prove any
+  specific binary was built from it — it establishes what *should*
+  have been built. Confidence that a specific published APK matches
+  this source comes from the combination of a documented source
+  commit, a documented EAS build, and independent signature/checksum
+  verification against that specific artifact — not from source
+  visibility alone.
+- **EAS, GitHub, and the Android platform are third-party
+  infrastructure dependencies.** This project's build, distribution,
+  and installation security ultimately rests in part on Expo's,
+  GitHub's, and Google's own platform security — none of which this
+  project controls or can independently audit.
+- **No branch protection is currently configured on `main`.** Any
+  collaborator with write access can push directly to the branch that
+  CI and deployment both build from.
+- **New vulnerabilities can be disclosed after release.** Dependency
+  scanning (Dependabot, `npm audit`, CodeQL) only knows about publicly
+  disclosed issues at the time it runs.
+- **Content validation is not content accuracy.** Schema validation and
+  the 2026-09-18 formatting/ordering audit establish that stored
+  content is internally consistent with its own declared structure.
+  Neither establishes that every religious or historical statement in
+  that content is factually correct — that is a domain/editorial
+  question outside what engineering verification can answer.
+- **No security control here is absolute.** Each mitigation in the
+  [threat model](#threat-model) has a stated residual risk. Treat this
+  document as a description of what is actually in place, not as a
+  guarantee.

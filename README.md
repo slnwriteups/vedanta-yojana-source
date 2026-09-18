@@ -1,9 +1,90 @@
 # Vedanta Yojana
 
-A collection of Divya Desam temple records, Vedantic philosophy texts,
-and full-length books (Ramayana, Bhagavatam, Mahabharata), recovered from
-a legacy app and rebuilt as clean, validated, versioned content — served
-today through both a website and a native mobile app.
+An original collection of Divya Desam temple records, Vedantic
+philosophy texts, and full-length books (Ramayana, Bhagavatam,
+Mahabharata), maintained as clean, validated, versioned content —
+served today through both a website and a native mobile app.
+
+**Website:** https://slnwriteups.github.io/vedanta-yojana/
+**Android:** see [Download](#download) below.
+
+## Key features
+
+- **107** Divya Desam temple records, each in English, Tamil, Kannada,
+  and Hindi
+- **4** full-length books (162 chapters) plus a Knowledge section,
+  readable online and downloadable for offline reading
+- All Pasurams bundled into the app for fully offline access — no
+  network required
+- Reading preferences: font scale, light/dark theme, reading-position
+  memory, bookmarks
+- Library content can update independently of the app itself — see
+  [Content Architecture](docs/DEVELOPMENT.md#content-architecture)
+
+## Supported platforms
+
+| Platform | Status |
+|---|---|
+| Web (any modern browser) | Live at the link above |
+| Android | Distributed via GitHub Releases — see [Download](#download) |
+| iOS | Not currently distributed |
+
+## Download
+
+The official Android release is distributed **only** through this
+repository's GitHub Releases:
+
+> **[GitHub Releases](https://github.com/slnwriteups/vedanta-yojana-source/releases)**
+
+> For security and provenance, download Android releases only from the
+> official Vedanta Yojana GitHub Release page. Do not use third-party
+> APK mirrors — see [APK Verification Guide](docs/APK-VERIFICATION.md)
+> for how to confirm a file you downloaded is genuine, and why filename
+> or appearance alone is not evidence of that.
+
+*A production Android release has not been published yet. This section
+will be updated with a direct link once one is.*
+
+## Security & verification summary
+
+- The Android release is signed using this project's EAS-managed
+  production signing credentials, not a local development key.
+- Each release publishes a SHA-256 checksum and signing-certificate
+  fingerprint so a downloaded file can be independently verified.
+- Dependency vulnerabilities are tracked via Dependabot and `npm audit`;
+  known issues are patched or remediated and covered by automated
+  regression tests.
+- Full detail: [Security Architecture](docs/SECURITY.md) ·
+  [How to verify an APK](docs/APK-VERIFICATION.md) ·
+  [Vulnerability reporting](SECURITY.md)
+
+## Privacy & data summary
+
+- No analytics, advertising, crash-reporting, or tracking SDK is
+  present in the mobile app's dependencies.
+- No account or sign-in is required or offered.
+- Network requests fetch public content (Library book updates, version
+  checks) from this project's own GitHub Pages site over HTTPS; nothing
+  in the audited source uploads user data anywhere.
+- Location access (coarse/fine) is used only to show the day's
+  Panchangam for the user's approximate location.
+- Full detail, including a permission-by-permission table: [docs/SECURITY.md](docs/SECURITY.md#android-security).
+
+## Offline functionality
+
+All Pasurams are bundled inside the app itself and work with no network
+connection at all — verified on a physical device with Wi-Fi and mobile
+data both disabled. Library books you've downloaded remain available
+offline; checking for new or updated Library content and checking for
+app updates both require connectivity. See
+[Pasuram offline architecture](docs/DEVELOPMENT.md#pasuram-offline-architecture).
+
+## Documentation
+
+- [Development & Architecture](docs/DEVELOPMENT.md) — project history, system architecture, content pipeline, build/test/deploy architecture
+- [Security Architecture](docs/SECURITY.md) — threat model, dependency security, build/Android/network security, signing
+- [APK Verification Guide](docs/APK-VERIFICATION.md) — how to confirm a downloaded Android release is genuine
+- [Vulnerability Reporting](SECURITY.md) — how to report a security issue
 
 ## The two runtimes
 
@@ -11,7 +92,7 @@ today through both a website and a native mobile app.
 |---|---|---|
 | Framework | Next.js (`output: "export"`, fully static) | Expo (React Native) |
 | Status | **co-equal target — full feature parity** | **co-equal target — full feature parity** |
-| Deploy | GitHub Pages, auto-deploys from `main` | not yet submitted to app stores |
+| Deploy | GitHub Pages, auto-deploys from `main` | GitHub Releases (see [Download](#download)); not submitted to Google Play |
 | Detail | — | see `mobile/README.md` |
 
 Both runtimes now carry the same feature set: content translation
@@ -40,15 +121,15 @@ content/  →  content-lib/ (schemas + loader + search + i18n)  →  app/ (web) 
 `content-lib/schemas/`). It currently holds:
 
 - **107** Divya Desam temple records
-- **4** Books, **162** chapters total: the original recovered book (55
-  chapters), *Sri Rama Charithram* (7), *Srimad Bhagavata Kathasagaram*
-  (31), *JAYA: A Journey of the Mahabharata* (69)
+- **4** Books, **162** chapters total: *A Brief Insight to
+  Visishtadvaita Philosophy* (55 chapters), *Sri Rama Charithram* (7),
+  *Srimad Bhagavata Kathasagaram* (31), *JAYA: A Journey of the
+  Mahabharata* (69)
 - **1** Knowledge record
 
 Neither runtime reads `content/` directly — both go through
 `content-lib/`, and never hardcode content. See `content-lib/README.md`
-for the schema/loader contract, and `content-extraction/README.md` for
-where the original 108-temple, 217-image dataset was recovered from.
+for the schema/loader contract.
 
 ## Getting started
 
@@ -86,8 +167,8 @@ in the mobile app.
 | `mobile/` | Mobile app (Expo) — see its own README |
 | `content/` | The validated content itself (JSON) |
 | `content-lib/` | Schemas, loader, search, i18n — shared by both runtimes |
-| `content-extraction/` | Historical, read-only recovery pipeline from the original legacy export |
-| `scripts/` | Migration/import tooling that built `content/` |
+| `content-extraction/` | Historical, read-only import pipeline used to bring source material into `content/` |
+| `scripts/` | Import/build tooling that produces `content/` and its published artifacts |
 | `source-material/` | Source PDFs/books and their import reports |
 | `tests/` | `tests/content/` (content-lib), `tests/app/` (website), `tests/e2e/` (reserved, not yet built) |
 
