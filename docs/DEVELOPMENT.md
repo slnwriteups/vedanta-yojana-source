@@ -97,7 +97,8 @@ content/  →  content-lib/ (schemas + loader + search + i18n)  →  app/ (web) 
 
 `content/` holds the validated source data:
 
-- 107 Divya Desam temple records
+- 107 Divya Desam records covering 108 temples (one record covers a
+  combined two-shrine site)
 - 4 books, 162 chapters total
 - 1 Knowledge record
 
