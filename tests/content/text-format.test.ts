@@ -3,7 +3,13 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { estimateReadingMinutes, paragraphsForReading, splitIntoReadableParagraphs, stripLeadingDuplicateTitle } from "../../content-lib/text-format.ts";
+import {
+  estimateReadingMinutes,
+  getTableOfContents,
+  paragraphsForReading,
+  splitIntoReadableParagraphs,
+  stripLeadingDuplicateTitle,
+} from "../../content-lib/text-format.ts";
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 
@@ -115,6 +121,16 @@ test("K: a body with no title repetition at all is returned byte-for-byte unchan
   assert.equal(stripLeadingDuplicateTitle(text, "Bala Kanda: The Divine Beginnings"), text);
 });
 
+test("K: a first line matching the title except for diacritics (a macron the title itself omits) is still recognized and removed", () => {
+  // Real, reported case: rama-charama-shlokam's body opens with "Rāma
+  // Charama Shlokam" while its own title is "Rama Charama Shlokam" --
+  // the same heading, transliterated with vs. without a macron, not two
+  // different lines.
+  const text = "Rāma Charama Shlokam\n\nThe verse is as follows.";
+  const result = stripLeadingDuplicateTitle(text, "Rama Charama Shlokam");
+  assert.equal(result, "The verse is as follows.");
+});
+
 // ---------------------------------------------------------------------------
 // estimateReadingMinutes
 // ---------------------------------------------------------------------------
@@ -137,4 +153,58 @@ test("L: matches the real corpus -- a full Sri Rangam chapter body estimates a p
   const record = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, "content/divya-desams/sri-rangam.json"), "utf8"));
   const minutes = estimateReadingMinutes(record.sthalaPuranam);
   assert.ok(minutes >= 1 && minutes < 60, `expected a plausible reading-time estimate, got ${minutes}`);
+});
+
+// ---------------------------------------------------------------------------
+// getTableOfContents
+// ---------------------------------------------------------------------------
+
+test("M: flowing narrative with no named sections gets no table of contents", () => {
+  const sentence = "Every devotee who visits this kshethram is said to receive the Lord's blessing and grace.";
+  const text = Array(6).fill(sentence).join(" ");
+  assert.deepEqual(getTableOfContents(text, "A Narrative Chapter"), []);
+});
+
+test("M: a chapter with two or more genuine named sections gets a table of contents entry for each", () => {
+  const longParagraph = Array(6).fill("This section explains the doctrine in careful, extended detail for the reader.").join(" ");
+  const text = `Introduction\n\n${longParagraph}\n\nThe Moksha Virodhi\n\n${longParagraph}\n\nPhala Stuti\n\n${longParagraph}`;
+  const toc = getTableOfContents(text, "Artha Panchakam");
+  assert.deepEqual(
+    toc.map((e) => e.label),
+    ["Introduction", "The Moksha Virodhi", "Phala Stuti"]
+  );
+});
+
+test("M: a single would-be entry that is a near-duplicate of the chapter's own title (different diacritics) is suppressed entirely, not shown as a useless one-item table of contents", () => {
+  // Real, reported case: "rama-charama-shlokam"'s body opens with "Rāma
+  // Charama Shlokam" (macron), but the chapter's own title is "Rama
+  // Charama Shlokam" (no macron) -- stripLeadingDuplicateTitle's exact
+  // match misses it, so it would otherwise become the ONLY table-of-
+  // contents entry: a "contents" box pointing at nothing but the
+  // chapter's own opening line.
+  const longParagraph = Array(6).fill("The shloka's meaning is explained here in careful, extended detail for the reader.").join(" ");
+  const text = `Rāma Charama Shlokam\n\n${longParagraph}`;
+  assert.deepEqual(getTableOfContents(text, "Rama Charama Shlokam"), []);
+});
+
+test("M: an exact-match title repeated as the first line is still excluded, while the real sections after it still form a table of contents", () => {
+  const longParagraph = Array(6).fill("This section explains the doctrine in careful, extended detail for the reader.").join(" ");
+  const text = `Artha Panchakam\n\n${longParagraph}\n\nThe Moksha Virodhi\n\n${longParagraph}\n\nPhala Stuti\n\n${longParagraph}`;
+  const toc = getTableOfContents(text, "Artha Panchakam");
+  assert.deepEqual(
+    toc.map((e) => e.label),
+    ["The Moksha Virodhi", "Phala Stuti"]
+  );
+});
+
+test("M: matches the real corpus -- no chapter across the Library ever produces a single-entry table of contents", async () => {
+  const { loadBooks, loadChapters } = await import("../../content-lib/loader/index.ts");
+  const singleEntryChapters: string[] = [];
+  for (const book of loadBooks()) {
+    for (const chapter of loadChapters(book.slug)) {
+      const toc = getTableOfContents(chapter.body, chapter.title);
+      if (toc.length === 1) singleEntryChapters.push(`${book.slug}/${chapter.slug}`);
+    }
+  }
+  assert.deepEqual(singleEntryChapters, []);
 });

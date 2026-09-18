@@ -162,17 +162,23 @@ export interface TableOfContentsEntry {
  *   chapter (again, "Meaning:") is excluded entirely rather than listed
  *   as several indistinguishable entries.
  *
- * Validated directly against the full 158-chapter Library corpus before
- * shipping: 33 chapters (~21%) end up with a table of contents, 78
- * entries total (~2.4 per chapter that has one) -- e.g. Artha Panchakam's
- * 8 real named sections ("Swarupam of Parabramham," "The Moksha
- * Virodhi," ... "Phala Stuti"), a JAYA chapter's embedded "PART IV: ..."
- * marker, a Sri Rama Charithram chapter's "The Golden Stag and the
- * Abduction of Sita." A chapter that is genuinely just flowing narrative
+ * Validated directly against the full 227-chapter Library corpus:
+ * 5 chapters (~2%) end up with a table of contents, 16 entries total
+ * (~3.2 per chapter that has one) -- e.g. Artha Panchakam's real named
+ * sections ("Swarupam of Parabramham," "The Moksha Virodhi," ...
+ * "Phala Stuti"). A chapter that is genuinely just flowing narrative
  * (most of JAYA, most Divya Desam Sthala Puranam text) correctly gets
- * zero entries and no table of contents renders at all. Like every other
- * function in this file, this never changes, reorders, or removes a
- * single character of the source text -- it only decides which existing
+ * zero entries and no table of contents renders at all -- and so does a
+ * chapter whose only would-be entry is a single near-duplicate of its
+ * own title (different diacritics or wording slipping past
+ * stripLeadingDuplicateTitle's exact match above): a one-item "contents"
+ * list pointing at nothing but the chapter's own opening line is worse
+ * than showing none, so any result with fewer than two entries is
+ * discarded (see the length check at the end of this function). 29 of
+ * the originally-measured 33 chapters were exactly this false positive,
+ * reported directly from device testing. Like every other function in
+ * this file, this never changes, reorders, or removes a single
+ * character of the source text -- it only decides which existing
  * paragraphs are worth a shortcut.
  */
 const LIST_MARKER = /^\(?(\d+|[ivxlcdm]+)\)/i;
@@ -218,7 +224,18 @@ export function getTableOfContents(text: string, title: string): TableOfContents
     entries.push({ label: paragraph, paragraphIndex: index });
   });
 
-  return entries;
+  // A table of contents with exactly one entry has nothing to navigate
+  // to -- the single "section" is already the whole chapter. Reported
+  // directly from device testing: chapters whose body's first line is a
+  // near-duplicate of the chapter's own title (different diacritics or
+  // wording -- "Rāma Charama Shlokam" vs. the title's "Rama Charama
+  // Shlokam", "Charama Shlokas" vs. "Charama Shlokams") slip past the
+  // exact-match check above and end up as a single, useless entry
+  // pointing at nothing but the chapter's own opening line. Rather than
+  // chase every possible near-duplicate spelling, any result with fewer
+  // than two entries is treated the same as genuinely flowing narrative
+  // with no structure at all: no table of contents renders.
+  return entries.length >= 2 ? entries : [];
 }
 
 /**
@@ -228,14 +245,27 @@ export function getTableOfContents(text: string, title: string): TableOfContents
  * already shows that same title in its nav header and its own H1) --
  * a leftover of the source material's own formatting, not something
  * worth editing 100+ content files to remove. This strips only an
- * EXACT match (trimmed, whitespace-collapsed, case-insensitive) of the
- * title as the text's first line, plus the blank line after it, and
- * returns the text completely untouched otherwise -- never a fuzzy or
- * partial match, so a body that happens to start with a *similar* but
- * not identical line is left exactly as-is.
+ * EXACT match (trimmed, whitespace-collapsed, case-insensitive,
+ * diacritic-insensitive) of the title as the text's first line, plus
+ * the blank line after it, and returns the text completely untouched
+ * otherwise -- never a fuzzy or partial match, so a body that happens
+ * to start with a *similar* but not identical line is left exactly
+ * as-is. Diacritic-insensitivity (NFD-decompose, drop combining marks)
+ * is the one deliberate generalization: reported directly from device
+ * testing, "rama-charama-shlokam"'s body opens with "Rāma Charama
+ * Shlokam" while its own title is "Rama Charama Shlokam" -- the same
+ * word, just transliterated with or without a macron, which a reader
+ * sees as the identical heading rendered twice, not two different
+ * lines that happen to differ.
  */
 export function stripLeadingDuplicateTitle(text: string, title: string): string {
-  const normalize = (s: string) => s.trim().replace(/\s+/g, " ").toLowerCase();
+  const normalize = (s: string) =>
+    s
+      .trim()
+      .replace(/\s+/g, " ")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "");
   const newlineIndex = text.indexOf("\n");
   const firstLine = newlineIndex === -1 ? text : text.slice(0, newlineIndex);
   if (normalize(firstLine) !== normalize(title)) return text;
