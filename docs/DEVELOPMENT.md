@@ -49,8 +49,8 @@ Major milestones, in order:
 | 2026-08-13 | `6280801` | Mobile UX refinement (design system, tabs, dark mode) |
 | 2026-08-13 | `e4e7632` | Source material integration, mobile content finalized |
 | 2026-08-13 | `cb1aad7` | Multi-shrine Divya Desam structure |
-| 2026-08-13 – 2026-08-18 | multiple | Full-corpus text-correction audit; Tamil/Kannada/Hindi translation of all 107 Divya Desam records |
-| 2026-08-16 | `db976f0` | All 107 Divya Desam records published |
+| 2026-08-13 – 2026-08-18 | multiple | Full-corpus text-correction audit; Tamil/Kannada/Hindi translation of all 108 Divya Desams |
+| 2026-08-16 | `db976f0` | All 108 Divya Desams published |
 | 2026-08-17 | `b851f26` | Reading-comfort pass, settings restructure, translation-ready language system |
 | 2026-09-15 | `700e417` | Android update notification added |
 | 2026-09-17 | `796dcd4`, `9b152a4` | Offline Pasuram downloads, then bundled into the app |
@@ -97,8 +97,7 @@ content/  →  content-lib/ (schemas + loader + search + i18n)  →  app/ (web) 
 
 `content/` holds the validated source data:
 
-- 107 Divya Desam records covering 108 temples (one record covers a
-  combined two-shrine site)
+- 108 Divya Desams
 - 4 books, 162 chapters total
 - 1 Knowledge record
 
@@ -161,7 +160,7 @@ this differs from Library content's update model.
 
 ## Multilingual system
 
-All 107 Divya Desam records exist in Tamil, Kannada, and Hindi in
+All 108 Divya Desams exist in Tamil, Kannada, and Hindi in
 addition to English (translated in a series of commits from
 2026-08-17 to 2026-08-18, culminating in `b851f26`, which also added
 the translation-ready language-selection system both runtimes share).
