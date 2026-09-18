@@ -3,11 +3,13 @@ import assert from "node:assert/strict";
 import {
   deleteBook,
   downloadBook,
+  getLocalBookContentHash,
   getOfflineBookImageUri,
   isBookAvailable,
   loadOfflineBook,
   type BookFileSystem,
 } from "../services/bookOfflineCore.ts";
+import { sha256Hex } from "../services/sha256.ts";
 import { BOOK_PAYLOAD_SCHEMA_VERSION, type BookPayload } from "../../content-lib/mobile-content.ts";
 
 /**
@@ -69,6 +71,9 @@ function makeFakeFileSystem(): BookFileSystem & { remoteResponses: Map<string, s
       const content = files.get(path);
       if (content === undefined) throw new Error(`no such file: ${path}`);
       return content;
+    },
+    writeTextFile(path, content) {
+      files.set(path, content);
     },
     deleteFile(path) {
       files.delete(path);
@@ -220,6 +225,37 @@ test("downloadBook: a failed REPLACEMENT download preserves the existing valid o
 
   assert.equal(isBookAvailable("test-book", fs), true, "the original valid copy must still be there");
   assert.equal(loadOfflineBook("test-book", fs)!.chapters[0].body, bodyAfterFirst);
+});
+
+test("getLocalBookContentHash: matches sha256Hex of the exact downloaded body, and is null before any download", async () => {
+  const fs = makeFakeFileSystem();
+  assert.equal(getLocalBookContentHash("test-book", fs), null);
+
+  const json = JSON.stringify(validPayload());
+  fs.remoteResponses.set(BOOK_JSON_URL, json);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+
+  assert.equal(getLocalBookContentHash("test-book", fs), sha256Hex(json));
+});
+
+test("getLocalBookContentHash: changes after a genuine content re-sync, and deleteBook clears it", async () => {
+  const fs = makeFakeFileSystem();
+  const firstJson = JSON.stringify(validPayload());
+  fs.remoteResponses.set(BOOK_JSON_URL, firstJson);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const firstHash = getLocalBookContentHash("test-book", fs);
+
+  const secondJson = JSON.stringify(
+    validPayload({ chapters: [{ ...validPayload().chapters[0], body: "A genuinely different body." }] })
+  );
+  fs.remoteResponses.set(BOOK_JSON_URL, secondJson);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+
+  assert.notEqual(getLocalBookContentHash("test-book", fs), firstHash);
+  assert.equal(getLocalBookContentHash("test-book", fs), sha256Hex(secondJson));
+
+  deleteBook("test-book", fs);
+  assert.equal(getLocalBookContentHash("test-book", fs), null);
 });
 
 test("deleteBook: removes the local copy and availability becomes false", async () => {

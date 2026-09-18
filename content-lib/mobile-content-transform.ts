@@ -2,6 +2,7 @@ import type { Book, Chapter, DivyaDesam, ImageEntry, Knowledge } from "./schemas
 import type {
   MobileBook,
   MobileChapter,
+  MobileChapterSummary,
   MobileDivyaDesam,
   MobileImageEntry,
   MobileKnowledge,
@@ -53,6 +54,33 @@ export function toMobileChapter(record: Chapter): MobileChapter {
     ...record,
     migration: toMobileMigration(record.migration),
     images: record.images.map(toMobileImage),
+  };
+}
+
+/**
+ * A chapter's lightweight catalog projection: title/slug/order/status
+ * only, never `body`/`images` -- see MobileChapterSummarySchema's doc
+ * comment in ./mobile-content.ts for why. Shared by mobile/scripts/
+ * generate-content-manifest.ts (the bundled catalog) and
+ * scripts/build-content-manifest.ts (the remote content-sync manifest,
+ * see that script's doc comment) so both describe an undownloaded
+ * chapter identically.
+ */
+export function toMobileChapterSummary(record: Chapter): MobileChapterSummary {
+  const translations = record.translations
+    ? Object.fromEntries(
+        Object.entries(record.translations)
+          .filter(([, t]) => t?.title)
+          .map(([lang, t]) => [lang, { title: t!.title }])
+      )
+    : undefined;
+  return {
+    title: record.title,
+    slug: record.slug,
+    order: record.order,
+    status: record.status,
+    migration: toMobileMigration(record.migration),
+    ...(translations && Object.keys(translations).length > 0 ? { translations } : {}),
   };
 }
 

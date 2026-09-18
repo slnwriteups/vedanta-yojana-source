@@ -1,5 +1,6 @@
 import { BookPayloadSchema, BOOK_PAYLOAD_SCHEMA_VERSION, type BookPayload } from "../../content-lib/mobile-content.ts";
 import { mapWithConcurrency } from "./concurrencyPool.ts";
+import { sha256Hex } from "./sha256.ts";
 
 /**
  * The actual download/validate/promote/delete orchestration for offline
@@ -22,6 +23,7 @@ export interface BookFileSystem {
   fileExists(path: string): boolean;
   fileSize(path: string): number;
   readTextFile(path: string): string;
+  writeTextFile(path: string, content: string): void;
   deleteFile(path: string): void;
   /** Recursive. A no-op (not an error) if the directory doesn't exist. */
   deleteDirectory(path: string): void;
@@ -47,6 +49,33 @@ function localBookDir(bookSlug: string, fs: BookFileSystem): string {
 
 function localBookJsonPath(bookSlug: string, fs: BookFileSystem): string {
   return `${localBookDir(bookSlug, fs)}/book.json`;
+}
+
+/**
+ * SHA-256 of the exact book.json bytes this local copy was downloaded
+ * from -- lives inside the book's own directory (not a separate
+ * sidecar location), so deleteBook()'s existing whole-directory delete
+ * already removes it with no extra code. Compared against
+ * contentManifest.json's own contentHash for that slug by
+ * libraryCatalogCore.ts's booksNeedingResync() to decide whether an
+ * already-downloaded book has changed upstream and needs a re-sync --
+ * see that module's own doc comment for the full content-update design.
+ */
+function localBookHashPath(bookSlug: string, fs: BookFileSystem): string {
+  return `${localBookDir(bookSlug, fs)}/content-hash.txt`;
+}
+
+/**
+ * The locally-recorded content hash for a downloaded book, or null if
+ * the book isn't downloaded (or predates this field -- an older local
+ * copy with no hash file is treated as "unknown, assume stale" by
+ * booksNeedingResync() rather than crashing).
+ */
+export function getLocalBookContentHash(bookSlug: string, fs: BookFileSystem): string | null {
+  const path = localBookHashPath(bookSlug, fs);
+  if (!fs.fileExists(path)) return null;
+  const hash = fs.readTextFile(path).trim();
+  return hash.length > 0 ? hash : null;
 }
 
 function localBookImageDir(bookSlug: string, fs: BookFileSystem): string {
@@ -164,6 +193,11 @@ export async function downloadBook(
     fs.deleteDirectory(tempDir);
     return { success: false, error: "The downloaded book content was not valid." };
   }
+  // Hashed from the downloaded bytes themselves (not trusted from a
+  // caller-supplied "expected" value) -- this is always the true hash of
+  // what actually ended up on disk, so a later staleness comparison
+  // against contentManifest.json can never disagree with reality.
+  const contentHash = sha256Hex(fs.readTextFile(tempJsonPath));
 
   const imageResults = await mapWithConcurrency(
     Object.entries(payload.imageFiles),
@@ -192,6 +226,7 @@ export async function downloadBook(
     for (const filename of Object.values(payload.imageFiles)) {
       fs.moveFile(`${tempDir}/images/${filename}`, `${localBookImageDir(bookSlug, fs)}/${filename}`);
     }
+    fs.writeTextFile(localBookHashPath(bookSlug, fs), contentHash);
   } catch (error) {
     // The final directory may now be in a half-moved state -- but since
     // every file about to be moved was already validated above, the only

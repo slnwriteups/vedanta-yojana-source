@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/build-search-index.ts && node scripts/build-book-payloads.ts",
+    "prebuild": "node scripts/build-search-index.ts && node scripts/build-book-payloads.ts && node scripts/build-content-manifest.ts",
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",

@@ -1,6 +1,6 @@
 import { Directory, File, Paths } from "expo-file-system";
 import * as core from "./bookOfflineCore.ts";
-import type { BookFileSystem } from "./bookOfflineCore.ts";
+import type { BookDownloadResult, BookFileSystem } from "./bookOfflineCore.ts";
 
 /**
  * Makes Library books available offline: download once into app-private
@@ -58,6 +58,9 @@ const realFileSystem: BookFileSystem = {
   readTextFile(path) {
     return new File(path).textSync();
   },
+  writeTextFile(path, content) {
+    new File(path).write(content);
+  },
   deleteFile(path) {
     const file = new File(path);
     if (file.exists) file.delete();
@@ -96,10 +99,38 @@ export function getOfflineBookImageUri(bookSlug: string, imageUuid: string): str
   return core.getOfflineBookImageUri(bookSlug, imageUuid, realFileSystem);
 }
 
-export function downloadBook(bookSlug: string) {
-  return core.downloadBook(bookSlug, bookJsonUrl(bookSlug), IMAGE_BASE_URL, realFileSystem);
+/**
+ * De-duplicates concurrent downloads of the SAME book -- bookOfflineCore's
+ * downloadBook() deletes and recreates a shared per-slug temp directory
+ * (tempBookDir()) with no locking of its own, so two independent callers
+ * racing on it (e.g. LibraryBookScreen's read-online-then-download tap
+ * on a chapter, and BookDownloadControl's explicit Download button,
+ * firing around the same time now that chapters are never gated behind
+ * downloading first) can corrupt each other's in-flight temp files --
+ * confirmed on a real device: one call's `deleteDirectory(tempDir)` ran
+ * between the other's `ensureDirectoryExists("<tempDir>/images")` and
+ * its image download, producing a real ENOENT. Every caller for a given
+ * slug now shares the one in-flight promise instead of each starting
+ * its own full delete-then-redownload sequence.
+ */
+const inFlightDownloads = new Map<string, Promise<BookDownloadResult>>();
+
+export function downloadBook(bookSlug: string): Promise<BookDownloadResult> {
+  const existing = inFlightDownloads.get(bookSlug);
+  if (existing) return existing;
+
+  const promise = core.downloadBook(bookSlug, bookJsonUrl(bookSlug), IMAGE_BASE_URL, realFileSystem).finally(() => {
+    inFlightDownloads.delete(bookSlug);
+  });
+  inFlightDownloads.set(bookSlug, promise);
+  return promise;
 }
 
 export function deleteBook(bookSlug: string): void {
   core.deleteBook(bookSlug, realFileSystem);
+}
+
+/** The locally-recorded content hash for a downloaded book, or null if it isn't downloaded. Used by libraryCatalogService.ts to detect a stale copy against contentManifest.json. */
+export function getLocalBookContentHash(bookSlug: string): string | null {
+  return core.getLocalBookContentHash(bookSlug, realFileSystem);
 }

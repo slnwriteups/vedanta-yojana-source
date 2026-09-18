@@ -3,37 +3,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   toMobileBook,
+  toMobileChapterSummary,
   toMobileDivyaDesam,
   toMobileKnowledge,
 } from "../../content-lib/mobile-content-transform.ts";
 import type { MobileBook, MobileChapterSummary, MobileDivyaDesam, MobileKnowledge } from "../../content-lib/mobile-content.ts";
 import { BookSchema, ChapterSchema, DivyaDesamSchema, KnowledgeSchema } from "../../content-lib/schemas/index.ts";
-import type { Chapter } from "../../content-lib/schemas/index.ts";
-
-/**
- * A chapter's bundled-catalog projection: title/slug/order/status only,
- * never `body`/`images`/`translations` -- see mobile-content.ts's
- * MobileChapterSummarySchema doc comment for the full "why". Kept local
- * to this script (like sourcePageNumber below) rather than added to
- * content-lib/mobile-content-transform.ts, since nothing else needs it.
- */
-function toChapterSummary(chapter: Chapter): MobileChapterSummary {
-  const translations = chapter.translations
-    ? Object.fromEntries(
-        Object.entries(chapter.translations)
-          .filter(([, t]) => t?.title)
-          .map(([lang, t]) => [lang, { title: t!.title }])
-      )
-    : undefined;
-  return {
-    title: chapter.title,
-    slug: chapter.slug,
-    order: chapter.order,
-    status: chapter.status,
-    migration: { needsReview: chapter.migration.needsReview },
-    ...(translations && Object.keys(translations).length > 0 ? { translations } : {}),
-  };
-}
 
 /**
  * Phase 6A, Step 3/4 -- the "build-time content export step" (Option C
@@ -75,7 +50,7 @@ function toChapterSummary(chapter: Chapter): MobileChapterSummary {
  * Book-bundle-removal update: a book's own record (rawBookGroups) still
  * carries its full mobile-safe metadata, but each of its chapters is now
  * projected down to MobileChapterSummarySchema (title/slug/order/status
- * only, via toChapterSummary() above) rather than the full MobileChapter
+ * only, via content-lib/mobile-content-transform.ts's toMobileChapterSummary()) rather than the full MobileChapter
  * -- a chapter's body/images/translations are large and are only ever
  * needed once a reader downloads that book, so they no longer enter the
  * Hermes bundle at all. See content-lib/mobile-content.ts's
@@ -181,7 +156,7 @@ function main(): Set<string> {
     // fetched only after a reader downloads this book
     // (mobile/services/bookOfflineService.ts).
     const chapterSummaries: MobileChapterSummary[] = chapterFiles.map((f) =>
-      toChapterSummary(ChapterSchema.parse(readJson(f)))
+      toMobileChapterSummary(ChapterSchema.parse(readJson(f)))
     );
 
     // "directory" is organizational only (matching the web loader's own

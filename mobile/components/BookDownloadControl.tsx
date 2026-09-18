@@ -12,17 +12,23 @@ type BookDownloadStatus = "not-downloaded" | "downloading" | "available" | "erro
  * Library book screen (LibraryBookScreen, [book].tsx) above its chapter
  * list. Mirrors PasuramResource.tsx's status-machine shape (not-
  * downloaded/downloading/available/error, each with its own local
- * useState) applied to a whole book instead of one PDF -- see that
- * component's own doc comment for the offline-first opening principle
- * this follows: a downloaded book's chapters open from local storage
- * with zero network contact, and downloading only ever happens from an
- * explicit tap here, never automatically just because this screen opened
- * (Phase 10's "Do not automatically download books" requirement).
+ * useState) applied to a whole book instead of one PDF.
+ *
+ * This button is never the ONLY way to obtain a book -- [book].tsx also
+ * triggers the identical downloadBook() the moment a person taps any
+ * chapter of a book that isn't downloaded yet (read-online-then-
+ * download), so reading doesn't require finding and pressing this
+ * button first when online. What this component still owns exclusively
+ * is explicit OFFLINE-availability status and control: pressing
+ * Download here (or the same fetch firing from a chapter tap) is the
+ * one thing that ever contacts the network for this feature, and
+ * Remove Offline Copy is the one way to delete a local copy -- nothing
+ * on this screen ever downloads merely because it was opened.
  *
  * `onAvailabilityChange` reports every status transition up to the
- * screen, which uses it to gate whether chapter rows are tappable --
- * this component owns the download machinery, the screen owns what
- * "available" unlocks.
+ * screen, which uses it to know whether a chapter tap can skip straight
+ * to opening or must fetch first -- this component owns the download
+ * machinery, the screen owns what "available" unlocks.
  */
 export function BookDownloadControl({
   bookSlug,
