@@ -2,7 +2,12 @@ import type { ReactNode, RefObject } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
-import { isVerseTransliterationLine, looksLikeSubheading, paragraphsForReading } from "../../content-lib/text-format.ts";
+import {
+  isListItemLine,
+  isVerseLine,
+  looksLikeSubheading,
+  paragraphsForReading,
+} from "../../content-lib/text-format.ts";
 
 /**
  * Generic content section: an optional heading over either long-form
@@ -81,7 +86,8 @@ export function Section({
             const paragraphs = paragraphsForReading(text);
             return paragraphs.map((paragraph, index) => {
               const subheading =
-                looksLikeSubheading(paragraph) && !isVerseTransliterationLine(paragraphs, index);
+                (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
+                isVerseLine(paragraphs, index);
               return (
                 <Text
                   key={index}

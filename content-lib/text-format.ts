@@ -133,26 +133,42 @@ export interface TableOfContentsEntry {
   paragraphIndex: number;
 }
 
+const DEVANAGARI_SCRIPT = /[ऀ-ॿ]/;
+
 /**
  * True when `paragraphs[index]` is a line of a quoted verse's IAST
  * transliteration half -- a Devanagari couplet, blank line, then its
  * IAST-transliteration couplet (e.g. JAYA's Bhagavad Gita shlokas, the
- * three charama shlokas) -- rather than a genuine heading. Both lines of
- * the transliteration pass looksLikeSubheading() by accident: short, no
- * terminal punctuation (the transliteration convention drops the daṇḍa).
- * Detected structurally, the same way getTableOfContents() below already
- * protects its own entries: if the paragraph TWO positions back contains
- * Devanagari script, this one is part of that same verse block --
- * Devanagari appears nowhere else in the corpus today. Exported so every
- * per-paragraph renderer that calls looksLikeSubheading() (not just
- * getTableOfContents(), which only decides what's worth a table-of-
- * contents entry) can avoid the same false positive when deciding what
- * to bold -- reported directly from device testing, rendering a shloka's
- * IAST couplet in bold while its own Devanagari couplet directly above
- * it rendered plain, reading as inconsistent, unintentional formatting.
+ * three charama shlokas). Both lines of the transliteration pass
+ * looksLikeSubheading() by accident: short, no terminal punctuation (the
+ * transliteration convention drops the daṇḍa) -- this is NOT what makes
+ * them worth calling out here, since getTableOfContents() below still
+ * needs to know they're not a genuine heading regardless. Detected
+ * structurally: if the paragraph TWO positions back contains Devanagari
+ * script, this one is part of that same verse block -- Devanagari
+ * appears nowhere else in the corpus today. Exported so isVerseLine()
+ * below (and getTableOfContents()) can both build on the same detection.
  */
 export function isVerseTransliterationLine(paragraphs: string[], index: number): boolean {
-  return index >= 2 && /[ऀ-ॿ]/.test(paragraphs[index - 2]);
+  return index >= 2 && DEVANAGARI_SCRIPT.test(paragraphs[index - 2]);
+}
+
+/**
+ * True when `paragraphs[index]` is any line of a quoted verse -- its
+ * Devanagari couplet OR its IAST-transliteration couplet directly below
+ * it (see isVerseTransliterationLine() above for that shape). A
+ * per-paragraph renderer uses this to render every line of a shlokam
+ * bold and consistent, verse and transliteration alike -- reported
+ * directly from device testing: with only looksLikeSubheading() deciding
+ * boldness, a shloka's Devanagari couplet (ending in daṇḍa, so it has
+ * "terminal punctuation" and looksLikeSubheading() call it false) stayed
+ * plain while its own IAST transliteration directly below it (no daṇḍa
+ * in that convention) came out bold by accident -- the same verse,
+ * inconsistently styled. This makes bolding intentional and uniform
+ * across every shlokam in the app instead of an accident of punctuation.
+ */
+export function isVerseLine(paragraphs: string[], index: number): boolean {
+  return DEVANAGARI_SCRIPT.test(paragraphs[index]) || isVerseTransliterationLine(paragraphs, index);
 }
 
 /**
@@ -203,9 +219,34 @@ export function isVerseTransliterationLine(paragraphs: string[], index: number):
  * character of the source text -- it only decides which existing
  * paragraphs are worth a shortcut.
  */
-const LIST_MARKER = /^\(?(\d+|[ivxlcdm]+)\)/i;
+const LIST_MARKER = /^\(?(\d+|[ivxlcdm]+)[.)]/i;
 const MIN_LABEL_LENGTH = 10;
 const MIN_FOLLOWING_LENGTH = 150;
+
+/**
+ * True when `paragraph` opens with a numbered or roman-numeral list
+ * marker -- either the "1)"/"(i)" style or the "1."/"i." style (both
+ * appear in the corpus; e.g. artha-panchakam's own doctrine list inside
+ * swami-desikan-s-return-to-kanchipuram uses "1. ... 2. ... 3. ...").
+ * Exported for the same reason as isVerseTransliterationLine() above:
+ * getTableOfContents() below already excludes these from becoming a
+ * table-of-contents entry (a numbered list item is never a section
+ * heading on its own), but a per-paragraph renderer calling
+ * looksLikeSubheading() directly has no way to know that -- reported
+ * directly from device testing, a numbered list like Artha Panchakam's
+ * "1) Hayagrīva Stotram" ... "10) Kamasikashatakam" (8 of its 10 items
+ * short enough, with no terminal punctuation, to pass
+ * looksLikeSubheading() by accident) rendering every item in bold as if
+ * each were its own subsection. The "1." variant is a distinct instance
+ * of the identical bug: within one 5-item list, items ending in "."
+ * (which IS terminal punctuation) rendered plain while items with no
+ * trailing punctuation rendered bold -- the same list, inconsistently
+ * styled, purely because some item labels happened to end in a period
+ * and others didn't.
+ */
+export function isListItemLine(paragraph: string): boolean {
+  return LIST_MARKER.test(paragraph);
+}
 
 export function getTableOfContents(text: string, title: string): TableOfContentsEntry[] {
   const paragraphs = paragraphsForReading(text);
@@ -215,7 +256,7 @@ export function getTableOfContents(text: string, title: string): TableOfContents
 
   paragraphs.forEach((paragraph, index) => {
     if (index === 0 && paragraph.trim().toLowerCase() === normalizedTitle) return;
-    if (LIST_MARKER.test(paragraph)) return;
+    if (isListItemLine(paragraph)) return;
     if (paragraph.length < MIN_LABEL_LENGTH || !looksLikeSubheading(paragraph)) return;
 
     // A quoted verse printed as a 4-line block -- a Devanagari couplet,
@@ -236,7 +277,7 @@ export function getTableOfContents(text: string, title: string): TableOfContents
     if (isVerseTransliterationLine(paragraphs, index)) return;
 
     const next = paragraphs[index + 1] ?? "";
-    if (LIST_MARKER.test(next) || looksLikeSubheading(next)) return;
+    if (isListItemLine(next) || looksLikeSubheading(next)) return;
     if (next.length < MIN_FOLLOWING_LENGTH) return;
 
     const key = paragraph.trim().toLowerCase();

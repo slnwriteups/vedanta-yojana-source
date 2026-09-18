@@ -8,7 +8,7 @@ import { useLanguage } from "../language-context.ts";
 import { translateUi } from "../ui-strings.ts";
 import { FadeInImage, IMAGE_SIZE } from "./ContentImage";
 import { ImageViewerModal } from "./ImageViewerModal";
-import { looksLikeSubheading, splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
+import { isListItemLine, looksLikeSubheading, splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
 
 /**
  * Mobile counterpart of components/divya-desams/SthalaPuranamWithImages.tsx
@@ -99,7 +99,7 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
                 key={`${segment.key}-${i}`}
                 style={[
                   styles.paragraph,
-                  looksLikeSubheading(paragraph) && styles.subheading,
+                  looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
                   {
                     color: theme.colors.foreground,
                     fontFamily: Platform.select(typography.readingFontFamily),

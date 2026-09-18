@@ -1,4 +1,9 @@
-import { isVerseTransliterationLine, looksLikeSubheading, paragraphsForReading } from "@/content-lib/text-format";
+import {
+  isListItemLine,
+  isVerseLine,
+  looksLikeSubheading,
+  paragraphsForReading,
+} from "@/content-lib/text-format";
 
 /**
  * Renders a long-form migrated text field as readable paragraphs, WITHOUT
@@ -65,7 +70,7 @@ export function LongFormSection({
       <div className="prose-body space-y-5 whitespace-pre-line">
         {paragraphs.map((paragraph, index) => {
           const classNames = [
-            looksLikeSubheading(paragraph) && !isVerseTransliterationLine(paragraphs, index)
+            (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index)
               ? "mt-2 font-bold"
               : null,
             paragraphIdPrefix ? "scroll-mt-6" : null,

@@ -1,5 +1,5 @@
 import type { PublicImageEntry } from "@/lib/public-content";
-import { looksLikeSubheading, splitIntoReadableParagraphs } from "@/content-lib/text-format";
+import { isListItemLine, looksLikeSubheading, splitIntoReadableParagraphs } from "@/content-lib/text-format";
 import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
 
 /**
@@ -122,7 +122,8 @@ export function SthalaPuranamWithImages({
               <p
                 key={`${segment.key}-${i}`}
                 className={
-                  "prose-body whitespace-pre-line" + (looksLikeSubheading(paragraph) ? " mt-2 font-bold" : "")
+                  "prose-body whitespace-pre-line" +
+                  (looksLikeSubheading(paragraph) && !isListItemLine(paragraph) ? " mt-2 font-bold" : "")
                 }
               >
                 {paragraph}

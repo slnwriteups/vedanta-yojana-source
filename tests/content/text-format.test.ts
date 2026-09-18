@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import {
   estimateReadingMinutes,
   getTableOfContents,
+  isListItemLine,
+  isVerseLine,
   isVerseTransliterationLine,
   looksLikeSubheading,
   paragraphsForReading,
@@ -244,4 +246,54 @@ test("N: a genuine short heading with no Devanagari two paragraphs back is never
   const headingIndex = paragraphs.indexOf("The Moksha Virodhi");
   assert.ok(headingIndex >= 0);
   assert.equal(isVerseTransliterationLine(paragraphs, headingIndex), false);
+});
+
+// ---------------------------------------------------------------------------
+// isVerseLine / isListItemLine
+// ---------------------------------------------------------------------------
+
+test("O: every line of a quoted shlokam -- its Devanagari couplet AND its IAST transliteration -- is recognized as a verse line, for uniform bolding", () => {
+  // Every shlokam in the app should render bold and consistent, not just
+  // whichever half happens to lack terminal punctuation. The Devanagari
+  // couplet ends in daṇḍa (।/॥), so looksLikeSubheading() alone calls it
+  // false; isVerseLine() must still say true for it, and for its IAST
+  // transliteration directly below.
+  const paragraphs = paragraphsForReading(
+    "The shlokam is as follows,\n\nसकृदेव प्रपन्नाय तवास्मीति च याचते ।\nअभयं सर्वभूतेभ्यो ददाम्येतत् व्रतं मम ॥\n\nsakṛd eva prapannāya tavāsmīti ca yācate\nabhayaṁ sarva-bhūtebhyo dadāmy etat vrataṁ mama\n\nThe meaning is as follows,"
+  );
+  const devanagariFirstLine = paragraphs.findIndex((p) => p.startsWith("सकृदेव"));
+  const devanagariSecondLine = paragraphs.findIndex((p) => p.startsWith("अभयं"));
+  const iastFirstLine = paragraphs.indexOf("sakṛd eva prapannāya tavāsmīti ca yācate");
+  const iastSecondLine = paragraphs.indexOf("abhayaṁ sarva-bhūtebhyo dadāmy etat vrataṁ mama");
+  for (const index of [devanagariFirstLine, devanagariSecondLine, iastFirstLine, iastSecondLine]) {
+    assert.ok(index >= 0);
+    assert.equal(isVerseLine(paragraphs, index), true);
+  }
+  // The surrounding narrative prose is not swept up by the same check.
+  assert.equal(isVerseLine(paragraphs, 0), false);
+  assert.equal(isVerseLine(paragraphs, paragraphs.length - 1), false);
+});
+
+test("O: a numbered list item is recognized so a renderer can keep it plain, matching getTableOfContents' own exclusion", () => {
+  // Real, reported case: Artha Panchakam's "1) Hayagrīva Stotram" ...
+  // "10) Kamasikashatakam" -- 8 of 10 items short enough, with no
+  // terminal punctuation, to pass looksLikeSubheading() and render
+  // every item in bold as if each were its own subsection.
+  assert.equal(isListItemLine("1) Hayagrīva Stotram"), true);
+  assert.equal(isListItemLine("(iii) Parama bhakti"), true);
+  assert.equal(isListItemLine("7) Nityam"), true);
+  assert.equal(isListItemLine("The word charama in Sanskrit translates to ultimate."), false);
+});
+
+test("O: a '1.'-style (period, not closing paren) numbered list item is recognized too", () => {
+  // Real, reported case: swami-desikan-s-return-to-kanchipuram's 5-item
+  // doctrine list uses "1. ... 2. ... 3. ... 4. ... 5. ...". Items 1-2
+  // happened to end their own line in "." (terminal punctuation, so
+  // looksLikeSubheading() already called them false) while items 3-5
+  // had no trailing punctuation and rendered BOLD -- the same list,
+  // inconsistently styled, because isListItemLine() only recognized the
+  // "1)" marker style and not "1.".
+  assert.equal(isListItemLine("3. The obstacles that prevent us from reaching Paramapadam"), true);
+  assert.equal(isListItemLine("i. Being free from any sin"), true);
+  assert.equal(isListItemLine("1. The Svarūpam of Parabrahman."), true);
 });

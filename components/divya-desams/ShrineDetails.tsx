@@ -1,5 +1,5 @@
 import type { Shrine } from "@/content-lib/schemas";
-import { looksLikeSubheading, paragraphsForReading } from "@/content-lib/text-format";
+import { isListItemLine, isVerseLine, looksLikeSubheading, paragraphsForReading } from "@/content-lib/text-format";
 import { shrineOrdinalLabel, translateUi, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
 
@@ -37,13 +37,18 @@ const FIELD_ORDER: ("moolavar" | "thayaar" | "vimanam" | "theertham")[] = [
 ];
 
 function ProseBlock({ text }: { text: string }) {
+  const paragraphs = paragraphsForReading(text);
   return (
     <div className="prose-body space-y-3 whitespace-pre-line">
-      {paragraphsForReading(text).map((paragraph, index) => (
-        <p key={index} className={looksLikeSubheading(paragraph) ? "mt-2 font-bold" : undefined}>
-          {paragraph}
-        </p>
-      ))}
+      {paragraphs.map((paragraph, index) => {
+        const bold =
+          (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
+        return (
+          <p key={index} className={bold ? "mt-2 font-bold" : undefined}>
+            {paragraph}
+          </p>
+        );
+      })}
     </div>
   );
 }

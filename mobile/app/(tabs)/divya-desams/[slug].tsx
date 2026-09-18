@@ -9,7 +9,7 @@ import { SthalaPuranamWithImages } from "../../../components/SthalaPuranamWithIm
 import { ResourceLink } from "../../../components/ResourceLink";
 import { PasuramResource } from "../../../components/PasuramResource";
 import { layout, spacing, typography, useTheme } from "../../../theme";
-import { paragraphsForReading } from "../../../../content-lib/text-format.ts";
+import { isListItemLine, isVerseLine, looksLikeSubheading, paragraphsForReading } from "../../../../content-lib/text-format.ts";
 import { localizeDivyaDesam } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
 import { shrineLocationsHeading, shrineOrdinalLabel, translateUi, useT, type UiStringKey } from "../../../ui-strings.ts";
@@ -178,26 +178,48 @@ export default function DivyaDesamDetailScreen() {
                     </View>
                   ) : null}
                   {shrine.sthalaPuranam
-                    ? paragraphsForReading(shrine.sthalaPuranam)
-                        .map((paragraph, pIndex) => (
-                          <Text
-                            key={`sp-${pIndex}`}
-                            style={[styles.templeValue, { color: theme.colors.foreground }]}
-                          >
-                            {paragraph}
-                          </Text>
-                        ))
+                    ? (() => {
+                        const paragraphs = paragraphsForReading(shrine.sthalaPuranam);
+                        return paragraphs.map((paragraph, pIndex) => {
+                          const bold =
+                            (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
+                            isVerseLine(paragraphs, pIndex);
+                          return (
+                            <Text
+                              key={`sp-${pIndex}`}
+                              style={[
+                                styles.templeValue,
+                                bold && styles.templeValueSubheading,
+                                { color: theme.colors.foreground },
+                              ]}
+                            >
+                              {paragraph}
+                            </Text>
+                          );
+                        });
+                      })()
                     : null}
                   {shrine.azhwarPasuram
-                    ? paragraphsForReading(shrine.azhwarPasuram)
-                        .map((paragraph, pIndex) => (
-                          <Text
-                            key={`ap-${pIndex}`}
-                            style={[styles.templeValue, { color: theme.colors.foreground }]}
-                          >
-                            {paragraph}
-                          </Text>
-                        ))
+                    ? (() => {
+                        const paragraphs = paragraphsForReading(shrine.azhwarPasuram);
+                        return paragraphs.map((paragraph, pIndex) => {
+                          const bold =
+                            (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
+                            isVerseLine(paragraphs, pIndex);
+                          return (
+                            <Text
+                              key={`ap-${pIndex}`}
+                              style={[
+                                styles.templeValue,
+                                bold && styles.templeValueSubheading,
+                                { color: theme.colors.foreground },
+                              ]}
+                            >
+                              {paragraph}
+                            </Text>
+                          );
+                        });
+                      })()
                     : null}
                 </View>
               );
@@ -262,6 +284,11 @@ const styles = StyleSheet.create({
   templeValue: {
     fontSize: typography.body,
     marginTop: spacing.xs,
+  },
+  /** See looksLikeSubheading()/isVerseLine() in content-lib/text-format.ts for what qualifies and why. */
+  templeValueSubheading: {
+    fontWeight: "700",
+    marginTop: spacing.sm,
   },
   linkList: {
     gap: spacing.xs,
