@@ -1,6 +1,13 @@
 import type { PublicImageEntry } from "@/lib/public-content";
-import { isListItemLine, looksLikeSubheading, splitIntoReadableParagraphs } from "@/content-lib/text-format";
+import type { LanguageCode } from "@/lib/preferences";
+import {
+  extractSpecialNote,
+  isListItemLine,
+  looksLikeSubheading,
+  splitIntoReadableParagraphs,
+} from "@/content-lib/text-format";
 import { ImageLightboxGrid } from "@/components/shared/ImageLightboxGrid";
+import { SpecialNote } from "@/components/shared/SpecialNote";
 
 /**
  * Renders Sthala Puranam interleaved with the images the source itself
@@ -103,10 +110,12 @@ export function SthalaPuranamWithImages({
   text,
   images,
   heading,
+  language,
 }: {
   text: string;
   images: ResolvedImage[];
   heading: string;
+  language: LanguageCode | null;
 }) {
   const segments = buildSegments(text, images);
 
@@ -118,17 +127,23 @@ export function SthalaPuranamWithImages({
       <div className="space-y-5">
         {segments.map((segment) =>
           segment.text !== undefined ? (
-            splitIntoReadableParagraphs(segment.text).map((paragraph, i) => (
-              <p
-                key={`${segment.key}-${i}`}
-                className={
-                  "prose-body whitespace-pre-line" +
-                  (looksLikeSubheading(paragraph) && !isListItemLine(paragraph) ? " mt-2 font-bold" : "")
-                }
-              >
-                {paragraph}
-              </p>
-            ))
+            splitIntoReadableParagraphs(segment.text).map((paragraph, i) => {
+              const specialNote = extractSpecialNote(paragraph);
+              if (specialNote !== null) {
+                return <SpecialNote key={`${segment.key}-${i}`} text={specialNote} language={language} />;
+              }
+              return (
+                <p
+                  key={`${segment.key}-${i}`}
+                  className={
+                    "prose-body whitespace-pre-line" +
+                    (looksLikeSubheading(paragraph) && !isListItemLine(paragraph) ? " mt-2 font-bold" : "")
+                  }
+                >
+                  {paragraph}
+                </p>
+              );
+            })
           ) : (
             <div key={segment.key} className="max-w-none">
               <ImageRow images={segment.images ?? []} />

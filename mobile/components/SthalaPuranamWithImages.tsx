@@ -2,13 +2,18 @@ import { useState } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
-import { spacing, typography, useTheme } from "../theme";
+import { radius, spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
 import { useLanguage } from "../language-context.ts";
 import { translateUi } from "../ui-strings.ts";
 import { FadeInImage, IMAGE_SIZE } from "./ContentImage";
 import { ImageViewerModal } from "./ImageViewerModal";
-import { isListItemLine, looksLikeSubheading, splitIntoReadableParagraphs } from "../../content-lib/text-format.ts";
+import {
+  extractSpecialNote,
+  isListItemLine,
+  looksLikeSubheading,
+  splitIntoReadableParagraphs,
+} from "../../content-lib/text-format.ts";
 
 /**
  * Mobile counterpart of components/divya-desams/SthalaPuranamWithImages.tsx
@@ -94,23 +99,51 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
       </Text>
       {segments.flatMap((segment) =>
         segment.text !== undefined
-          ? splitIntoReadableParagraphs(segment.text).map((paragraph, i) => (
-              <Text
-                key={`${segment.key}-${i}`}
-                style={[
-                  styles.paragraph,
-                  looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
-                  {
-                    color: theme.colors.foreground,
-                    fontFamily: Platform.select(typography.readingFontFamily),
-                    fontSize: typography.body * preferences.fontScale,
-                    lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
-                  },
-                ]}
-              >
-                {paragraph}
-              </Text>
-            ))
+          ? splitIntoReadableParagraphs(segment.text).map((paragraph, i) => {
+              const specialNote = extractSpecialNote(paragraph);
+              if (specialNote !== null) {
+                return (
+                  <View
+                    key={`${segment.key}-${i}`}
+                    style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+                  >
+                    <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+                      {translateUi("specialNoteLabel", language)}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.paragraph,
+                        {
+                          color: theme.colors.foreground,
+                          fontFamily: Platform.select(typography.readingFontFamily),
+                          fontSize: typography.body * preferences.fontScale,
+                          lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                        },
+                      ]}
+                    >
+                      {specialNote}
+                    </Text>
+                  </View>
+                );
+              }
+              return (
+                <Text
+                  key={`${segment.key}-${i}`}
+                  style={[
+                    styles.paragraph,
+                    looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
+                    {
+                      color: theme.colors.foreground,
+                      fontFamily: Platform.select(typography.readingFontFamily),
+                      fontSize: typography.body * preferences.fontScale,
+                      lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                    },
+                  ]}
+                >
+                  {paragraph}
+                </Text>
+              );
+            })
           : [
               <View key={segment.key} style={styles.row}>
                 {(segment.images ?? []).map(({ image, asset }) => (
@@ -153,6 +186,20 @@ const styles = StyleSheet.create({
   subheading: {
     fontWeight: "700",
     marginTop: spacing.sm,
+  },
+  /** See extractSpecialNote() in content-lib/text-format.ts for what qualifies and why. */
+  specialNote: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginTop: spacing.xs,
+  },
+  specialNoteLabel: {
+    fontSize: typography.eyebrow,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: spacing.xs,
   },
   row: {
     flexDirection: "row",

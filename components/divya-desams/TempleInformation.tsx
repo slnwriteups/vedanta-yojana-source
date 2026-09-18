@@ -1,6 +1,8 @@
 import type { TempleInformation as TempleInformationData } from "@/content-lib/schemas";
 import { translateUi, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
+import { extractSpecialNote, paragraphsForReading } from "@/content-lib/text-format";
+import { SpecialNote } from "@/components/shared/SpecialNote";
 
 /**
  * Renders only the templeInformation fields actually present. A handful
@@ -53,7 +55,21 @@ export function TempleInformation({
         {presentFields.map((key) => (
           <div key={key}>
             <dt className="eyebrow">{translateUi(FIELD_LABEL_KEYS[key], language)}</dt>
-            <dd className="prose-body mt-1">{info[key]}</dd>
+            {paragraphsForReading(info[key] ?? "").map((paragraph, index) => {
+              const specialNote = extractSpecialNote(paragraph);
+              if (specialNote !== null) {
+                return (
+                  <dd key={index}>
+                    <SpecialNote text={specialNote} language={language} />
+                  </dd>
+                );
+              }
+              return (
+                <dd key={index} className="prose-body mt-1">
+                  {paragraph}
+                </dd>
+              );
+            })}
           </div>
         ))}
       </dl>

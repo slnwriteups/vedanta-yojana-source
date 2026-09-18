@@ -67,12 +67,14 @@ export function LocalizedDivyaDesamContent({
             text={localized.sthalaPuranam}
             images={resolvedAfterSthalaPuranamImages}
             heading={translateUi("sthalaPuranamHeading", language)}
+            language={language}
           />
         ) : (
           <LongFormSection
             heading={translateUi("sthalaPuranamHeading", language)}
             headingId="sthala-puranam-heading"
             text={localized.sthalaPuranam}
+            language={language}
           />
         )
       ) : null}
@@ -81,6 +83,7 @@ export function LocalizedDivyaDesamContent({
           heading={translateUi("azhwarPasuramHeading", language)}
           headingId="azhwar-pasuram-heading"
           text={localized.azhwarPasuram}
+          language={language}
         />
       ) : null}
       <ShrineDetails shrines={localized.shrines} language={language} />

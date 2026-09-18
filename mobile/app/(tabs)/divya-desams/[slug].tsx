@@ -8,8 +8,14 @@ import { ContentImage } from "../../../components/ContentImage";
 import { SthalaPuranamWithImages } from "../../../components/SthalaPuranamWithImages";
 import { ResourceLink } from "../../../components/ResourceLink";
 import { PasuramResource } from "../../../components/PasuramResource";
-import { layout, spacing, typography, useTheme } from "../../../theme";
-import { isListItemLine, isVerseLine, looksLikeSubheading, paragraphsForReading } from "../../../../content-lib/text-format.ts";
+import { layout, radius, spacing, typography, useTheme } from "../../../theme";
+import {
+  extractSpecialNote,
+  isListItemLine,
+  isVerseLine,
+  looksLikeSubheading,
+  paragraphsForReading,
+} from "../../../../content-lib/text-format.ts";
 import { localizeDivyaDesam } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
 import { shrineLocationsHeading, shrineOrdinalLabel, translateUi, useT, type UiStringKey } from "../../../ui-strings.ts";
@@ -60,6 +66,80 @@ const TEMPLE_FIELD_ORDER: (keyof TempleInformationData)[] = [
   "travelNote",
 ];
 
+/**
+ * A single templeInformation field's value (moolavar/thayaar/vimanam/
+ * theertham/travelNote) -- usually one short line, but some records embed
+ * a source-flagged "special note" paragraph after it (e.g. tirukalvanoor's
+ * theertham: "Nitya Pushkariṇī" then a separate aside about which temple
+ * complex it sits within). Paragraph-split so that note is detected and
+ * given its own callout regardless of where in the field it falls.
+ */
+function TempleFieldValue({ value }: { value: string }) {
+  const theme = useTheme();
+  const { language } = useLanguage();
+  return (
+    <>
+      {paragraphsForReading(value).map((paragraph, index) => {
+        const specialNote = extractSpecialNote(paragraph);
+        if (specialNote !== null) {
+          return (
+            <View
+              key={index}
+              style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+            >
+              <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+                {translateUi("specialNoteLabel", language)}
+              </Text>
+              <Text style={[styles.templeValue, { color: theme.colors.foreground, marginTop: 0 }]}>{specialNote}</Text>
+            </View>
+          );
+        }
+        return (
+          <Text key={index} style={[styles.templeValue, { color: theme.colors.foreground }]}>
+            {paragraph}
+          </Text>
+        );
+      })}
+    </>
+  );
+}
+
+/** Same special-note-aware paragraph rendering as Section.tsx, for the two shrine-level free-text fields (sthalaPuranam/azhwarPasuram) that don't route through <Section> here. */
+function ParagraphsWithNotes({ text, keyPrefix }: { text: string; keyPrefix: string }) {
+  const theme = useTheme();
+  const { language } = useLanguage();
+  const paragraphs = paragraphsForReading(text);
+  return (
+    <>
+      {paragraphs.map((paragraph, index) => {
+        const specialNote = extractSpecialNote(paragraph);
+        if (specialNote !== null) {
+          return (
+            <View
+              key={`${keyPrefix}-${index}`}
+              style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+            >
+              <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+                {translateUi("specialNoteLabel", language)}
+              </Text>
+              <Text style={[styles.templeValue, { color: theme.colors.foreground, marginTop: 0 }]}>{specialNote}</Text>
+            </View>
+          );
+        }
+        const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
+        return (
+          <Text
+            key={`${keyPrefix}-${index}`}
+            style={[styles.templeValue, bold && styles.templeValueSubheading, { color: theme.colors.foreground }]}
+          >
+            {paragraph}
+          </Text>
+        );
+      })}
+    </>
+  );
+}
+
 export default function DivyaDesamDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const theme = useTheme();
@@ -107,16 +187,16 @@ export default function DivyaDesamDetailScreen() {
       {presentTempleFields.length > 0 ? (
         <Section heading={t("templeInformationHeading")}>
           <View style={styles.templeInfo}>
-            {presentTempleFields.map((key) => (
-              <View key={key}>
-                <Text style={[styles.templeLabel, { color: theme.colors.muted }]}>
-                  {translateUi(TEMPLE_FIELD_LABEL_KEYS[key], language)}
-                </Text>
-                <Text style={[styles.templeValue, { color: theme.colors.foreground }]}>
-                  {record.templeInformation[key]}
-                </Text>
-              </View>
-            ))}
+            {presentTempleFields.map((key) => {
+              return (
+                <View key={key}>
+                  <Text style={[styles.templeLabel, { color: theme.colors.muted }]}>
+                    {translateUi(TEMPLE_FIELD_LABEL_KEYS[key], language)}
+                  </Text>
+                  <TempleFieldValue value={record.templeInformation[key] ?? ""} />
+                </View>
+              );
+            })}
           </View>
         </Section>
       ) : null}
@@ -170,57 +250,13 @@ export default function DivyaDesamDetailScreen() {
                           <Text style={[styles.templeLabel, { color: theme.colors.muted }]}>
                             {translateUi(TEMPLE_FIELD_LABEL_KEYS[key], language)}
                           </Text>
-                          <Text style={[styles.templeValue, { color: theme.colors.foreground }]}>
-                            {shrine.templeInformation?.[key]}
-                          </Text>
+                          <TempleFieldValue value={shrine.templeInformation?.[key] ?? ""} />
                         </View>
                       ))}
                     </View>
                   ) : null}
-                  {shrine.sthalaPuranam
-                    ? (() => {
-                        const paragraphs = paragraphsForReading(shrine.sthalaPuranam);
-                        return paragraphs.map((paragraph, pIndex) => {
-                          const bold =
-                            (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
-                            isVerseLine(paragraphs, pIndex);
-                          return (
-                            <Text
-                              key={`sp-${pIndex}`}
-                              style={[
-                                styles.templeValue,
-                                bold && styles.templeValueSubheading,
-                                { color: theme.colors.foreground },
-                              ]}
-                            >
-                              {paragraph}
-                            </Text>
-                          );
-                        });
-                      })()
-                    : null}
-                  {shrine.azhwarPasuram
-                    ? (() => {
-                        const paragraphs = paragraphsForReading(shrine.azhwarPasuram);
-                        return paragraphs.map((paragraph, pIndex) => {
-                          const bold =
-                            (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
-                            isVerseLine(paragraphs, pIndex);
-                          return (
-                            <Text
-                              key={`ap-${pIndex}`}
-                              style={[
-                                styles.templeValue,
-                                bold && styles.templeValueSubheading,
-                                { color: theme.colors.foreground },
-                              ]}
-                            >
-                              {paragraph}
-                            </Text>
-                          );
-                        });
-                      })()
-                    : null}
+                  {shrine.sthalaPuranam ? <ParagraphsWithNotes text={shrine.sthalaPuranam} keyPrefix="sp" /> : null}
+                  {shrine.azhwarPasuram ? <ParagraphsWithNotes text={shrine.azhwarPasuram} keyPrefix="ap" /> : null}
                 </View>
               );
             })}
@@ -289,6 +325,20 @@ const styles = StyleSheet.create({
   templeValueSubheading: {
     fontWeight: "700",
     marginTop: spacing.sm,
+  },
+  /** See extractSpecialNote() in content-lib/text-format.ts for what qualifies and why. */
+  specialNote: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginTop: spacing.xs,
+  },
+  specialNoteLabel: {
+    fontSize: typography.eyebrow,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: spacing.xs,
   },
   linkList: {
     gap: spacing.xs,

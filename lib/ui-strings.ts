@@ -244,6 +244,7 @@ const UI_STRINGS = {
   sthalaPuranamHeading: { en: "Sthala Puranam", ta: "ஸ்தல புராணம்", kn: "ಸ್ಥಳ ಪುರಾಣ", hi: "स्थल पुराण" },
   azhwarPasuramHeading: { en: "Azhwar Pasuram", ta: "ஆழ்வார் பாசுரம்", kn: "ಆಳ್ವಾರ್ ಪಾಸುರಂ", hi: "आळ्वार पासुरम" },
   shrinesHeading: { en: "Shrines", ta: "சன்னதிகள்", kn: "ಗುಡಿಗಳು", hi: "उप-मंदिर" },
+  specialNoteLabel: { en: "Special Note", ta: "சிறப்பு குறிப்பு", kn: "ವಿಶೇಷ ಸೂಚನೆ", hi: "विशेष टिप्पणी" },
   pasuramResourcesHeading: {
     en: "Pasuram Resources",
     ta: "பாசுர வளங்கள்",

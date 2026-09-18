@@ -248,6 +248,25 @@ export function isListItemLine(paragraph: string): boolean {
   return LIST_MARKER.test(paragraph);
 }
 
+/**
+ * Some source material flags a paragraph as a noteworthy aside about the
+ * kshethram -- not part of the main narrative flow, but a "did you know"
+ * fact worth calling out distinctly (e.g. "this is the only temple where
+ * one can see the Trinity with their wives under the same roof"). The
+ * source consistently marked these with a leading asterisk, though with
+ * inconsistent spacing/repetition (1 to 3 asterisks, sometimes with a
+ * trailing decorative close) -- content/divya-desams/*.json now
+ * normalizes every instance to exactly one, unspaced, leading "*" on its
+ * own paragraph. An earlier pass mistook this marker for meaningless
+ * leftover punctuation and stripped it into a plain paragraph, silently
+ * discarding the "this is special" signal the source material intended.
+ * Returns the note's text with the marker removed, or null if `paragraph`
+ * isn't a special note.
+ */
+export function extractSpecialNote(paragraph: string): string | null {
+  return paragraph.startsWith("*") ? paragraph.slice(1) : null;
+}
+
 export function getTableOfContents(text: string, title: string): TableOfContentsEntry[] {
   const paragraphs = paragraphsForReading(text);
   const normalizedTitle = title.trim().toLowerCase();
@@ -257,6 +276,7 @@ export function getTableOfContents(text: string, title: string): TableOfContents
   paragraphs.forEach((paragraph, index) => {
     if (index === 0 && paragraph.trim().toLowerCase() === normalizedTitle) return;
     if (isListItemLine(paragraph)) return;
+    if (extractSpecialNote(paragraph) !== null) return;
     if (paragraph.length < MIN_LABEL_LENGTH || !looksLikeSubheading(paragraph)) return;
 
     // A quoted verse printed as a 4-line block -- a Devanagari couplet,

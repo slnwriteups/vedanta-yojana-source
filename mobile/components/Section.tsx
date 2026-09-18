@@ -1,8 +1,11 @@
 import type { ReactNode, RefObject } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
-import { spacing, typography, useTheme } from "../theme";
+import { radius, spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
+import { useLanguage } from "../language-context.ts";
+import { translateUi } from "../ui-strings.ts";
 import {
+  extractSpecialNote,
   isListItemLine,
   isVerseLine,
   looksLikeSubheading,
@@ -69,6 +72,7 @@ export function Section({
 }) {
   const theme = useTheme();
   const { preferences } = useReadingPreferences();
+  const { language } = useLanguage();
   if (!text && !children) return null;
 
   return (
@@ -85,6 +89,36 @@ export function Section({
         ? (() => {
             const paragraphs = paragraphsForReading(text);
             return paragraphs.map((paragraph, index) => {
+              const specialNote = extractSpecialNote(paragraph);
+              if (specialNote !== null) {
+                // No paragraphRefs entry here (unlike the plain-paragraph
+                // branch below) -- a special note is always excluded from
+                // getTableOfContents() (content-lib/text-format.ts), so
+                // it's never a jump-scroll target that needs one.
+                return (
+                  <View
+                    key={index}
+                    style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
+                  >
+                    <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+                      {translateUi("specialNoteLabel", language)}
+                    </Text>
+                    <Text
+                      style={[
+                        styles.paragraph,
+                        {
+                          color: theme.colors.foreground,
+                          fontFamily: Platform.select(typography.readingFontFamily),
+                          fontSize: typography.body * preferences.fontScale,
+                          lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                        },
+                      ]}
+                    >
+                      {specialNote}
+                    </Text>
+                  </View>
+                );
+              }
               const subheading =
                 (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
                 isVerseLine(paragraphs, index);
@@ -133,5 +167,19 @@ const styles = StyleSheet.create({
   subheading: {
     fontWeight: "700",
     marginTop: spacing.sm,
+  },
+  /** See extractSpecialNote() in content-lib/text-format.ts for what qualifies and why. */
+  specialNote: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: radius.md,
+    padding: spacing.md,
+    marginTop: spacing.xs,
+  },
+  specialNoteLabel: {
+    fontSize: typography.eyebrow,
+    fontWeight: "600",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    marginBottom: spacing.xs,
   },
 });

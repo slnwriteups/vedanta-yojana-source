@@ -5,6 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   estimateReadingMinutes,
+  extractSpecialNote,
   getTableOfContents,
   isListItemLine,
   isVerseLine,
@@ -296,4 +297,54 @@ test("O: a '1.'-style (period, not closing paren) numbered list item is recogniz
   assert.equal(isListItemLine("3. The obstacles that prevent us from reaching Paramapadam"), true);
   assert.equal(isListItemLine("i. Being free from any sin"), true);
   assert.equal(isListItemLine("1. The Svarūpam of Parabrahman."), true);
+});
+
+// ---------------------------------------------------------------------------
+// extractSpecialNote
+// ---------------------------------------------------------------------------
+
+test("P: a paragraph starting with the special-note marker has it stripped, and the rest of the text is returned untouched", () => {
+  // Real, reported case: tiruooragam's sthalaPuranam originally read
+  // "...to Bali.\n\n***\nThe Lord can also be seen here..." -- content
+  // normalized every such marker (1-3 asterisks, inconsistent spacing)
+  // to a single leading "*" per content/divya-desams/*.json. An earlier
+  // pass mistook the marker for meaningless punctuation and silently
+  // discarded it into a plain paragraph, losing the "this is a
+  // noteworthy aside" signal the source material intended -- this
+  // function is what lets a renderer recover that signal.
+  assert.equal(
+    extractSpecialNote("*The Lord can also be seen here in a sarpam form."),
+    "The Lord can also be seen here in a sarpam form."
+  );
+});
+
+test("P: a paragraph with no marker returns null, never mistaken for a special note", () => {
+  assert.equal(extractSpecialNote("This is an ordinary sentence about the kshethram."), null);
+});
+
+test("P: matches the real corpus -- every extracted special note is non-empty and none leak a literal marker into its own text", async () => {
+  const fs = await import("node:fs");
+  const path = await import("node:path");
+  const dir = path.join(process.cwd(), "content/divya-desams");
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".json"));
+  let noteCount = 0;
+  for (const f of files) {
+    const record = JSON.parse(fs.readFileSync(path.join(dir, f), "utf8"));
+    const texts: string[] = [];
+    (function collect(v: unknown) {
+      if (typeof v === "string") texts.push(v);
+      else if (Array.isArray(v)) v.forEach(collect);
+      else if (v && typeof v === "object") Object.values(v).forEach(collect);
+    })(record);
+    for (const text of texts) {
+      for (const paragraph of paragraphsForReading(text)) {
+        const note = extractSpecialNote(paragraph);
+        if (note === null) continue;
+        noteCount++;
+        assert.ok(note.trim().length > 0, `empty special note in ${f}`);
+        assert.ok(!note.includes("*"), `special note in ${f} still contains a literal marker: ${JSON.stringify(note)}`);
+      }
+    }
+  }
+  assert.ok(noteCount > 0, "expected at least one real special note in the corpus");
 });

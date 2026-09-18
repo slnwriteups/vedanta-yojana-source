@@ -1,9 +1,12 @@
 import {
+  extractSpecialNote,
   isListItemLine,
   isVerseLine,
   looksLikeSubheading,
   paragraphsForReading,
 } from "@/content-lib/text-format";
+import { SpecialNote } from "@/components/shared/SpecialNote";
+import type { LanguageCode } from "@/lib/preferences";
 
 /**
  * Renders a long-form migrated text field as readable paragraphs, WITHOUT
@@ -33,6 +36,7 @@ export function LongFormSection({
   headingId: explicitHeadingId,
   text,
   paragraphIdPrefix,
+  language = null,
 }: {
   heading?: string;
   /**
@@ -55,6 +59,8 @@ export function LongFormSection({
    * rather than needing any imperative scroll code.
    */
   paragraphIdPrefix?: string;
+  /** Only needed for the "Special Note" callout's own label -- omitted callers (none currently have one) fall back to English. */
+  language?: LanguageCode | null;
 }) {
   const paragraphs = paragraphsForReading(text);
   const headingId =
@@ -69,6 +75,10 @@ export function LongFormSection({
       ) : null}
       <div className="prose-body space-y-5 whitespace-pre-line">
         {paragraphs.map((paragraph, index) => {
+          const specialNote = extractSpecialNote(paragraph);
+          if (specialNote !== null) {
+            return <SpecialNote key={index} text={specialNote} language={language} />;
+          }
           const classNames = [
             (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index)
               ? "mt-2 font-bold"

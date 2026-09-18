@@ -1,7 +1,14 @@
 import type { Shrine } from "@/content-lib/schemas";
-import { isListItemLine, isVerseLine, looksLikeSubheading, paragraphsForReading } from "@/content-lib/text-format";
+import {
+  extractSpecialNote,
+  isListItemLine,
+  isVerseLine,
+  looksLikeSubheading,
+  paragraphsForReading,
+} from "@/content-lib/text-format";
 import { shrineOrdinalLabel, translateUi, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
+import { SpecialNote } from "@/components/shared/SpecialNote";
 
 /**
  * Renders each shrine's OWN temple information/prose, distinct from the
@@ -36,11 +43,15 @@ const FIELD_ORDER: ("moolavar" | "thayaar" | "vimanam" | "theertham")[] = [
   "theertham",
 ];
 
-function ProseBlock({ text }: { text: string }) {
+function ProseBlock({ text, language }: { text: string; language: LanguageCode | null }) {
   const paragraphs = paragraphsForReading(text);
   return (
     <div className="prose-body space-y-3 whitespace-pre-line">
       {paragraphs.map((paragraph, index) => {
+        const specialNote = extractSpecialNote(paragraph);
+        if (specialNote !== null) {
+          return <SpecialNote key={index} text={specialNote} language={language} />;
+        }
         const bold =
           (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
         return (
@@ -50,6 +61,29 @@ function ProseBlock({ text }: { text: string }) {
         );
       })}
     </div>
+  );
+}
+
+/** A single templeInformation field's value -- see TempleFieldValue in mobile's [slug].tsx for why this needs its own paragraph split rather than one raw <dd>. A <dl> may hold several <dd> per <dt>, so each paragraph gets its own instead of being merged into one. */
+function FieldValue({ value, language }: { value: string; language: LanguageCode | null }) {
+  return (
+    <>
+      {paragraphsForReading(value).map((paragraph, index) => {
+        const specialNote = extractSpecialNote(paragraph);
+        if (specialNote !== null) {
+          return (
+            <dd key={index}>
+              <SpecialNote text={specialNote} language={language} />
+            </dd>
+          );
+        }
+        return (
+          <dd key={index} className="prose-body mt-1">
+            {paragraph}
+          </dd>
+        );
+      })}
+    </>
   );
 }
 
@@ -84,13 +118,13 @@ export function ShrineDetails({ shrines, language }: { shrines: Shrine[]; langua
                 {presentFields.map((key) => (
                   <div key={key}>
                     <dt className="eyebrow">{translateUi(FIELD_LABEL_KEYS[key], language)}</dt>
-                    <dd className="prose-body mt-1">{shrine.templeInformation?.[key]}</dd>
+                    <FieldValue value={shrine.templeInformation?.[key] ?? ""} language={language} />
                   </div>
                 ))}
               </dl>
             ) : null}
-            {shrine.sthalaPuranam ? <ProseBlock text={shrine.sthalaPuranam} /> : null}
-            {shrine.azhwarPasuram ? <ProseBlock text={shrine.azhwarPasuram} /> : null}
+            {shrine.sthalaPuranam ? <ProseBlock text={shrine.sthalaPuranam} language={language} /> : null}
+            {shrine.azhwarPasuram ? <ProseBlock text={shrine.azhwarPasuram} language={language} /> : null}
           </div>
         );
       })}
