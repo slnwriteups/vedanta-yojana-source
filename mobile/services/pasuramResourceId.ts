@@ -32,7 +32,17 @@ function rightRotate(value: number, amount: number): number {
 
 /** A pure, dependency-free SHA-256 implementation, returning a lowercase hex digest. */
 export function sha256Hex(message: string): string {
-  const bytes = new TextEncoder().encode(message);
+  return sha256HexBytes(new TextEncoder().encode(message));
+}
+
+/**
+ * Same algorithm as sha256Hex, over raw bytes instead of a UTF-8 string --
+ * used by pasuramArchive.ts to verify each unpacked Pasuram PDF's bytes
+ * against the digest scripts/generate-pasuram-archive.ts recorded for it
+ * at build time, catching a tar/zstd decode bug rather than silently
+ * writing corrupted file content to app-private storage.
+ */
+export function sha256HexBytes(bytes: Uint8Array): string {
   const bitLength = bytes.length * 8;
 
   // Pad: the message, then 0x80, then zeros, then the 64-bit big-endian

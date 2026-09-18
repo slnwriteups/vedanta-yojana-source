@@ -1,37 +1,32 @@
-import { Asset } from "expo-asset";
-import { File } from "expo-file-system";
 import * as IntentLauncher from "expo-intent-launcher";
+import { File } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { Platform } from "react-native";
-import { pasuramAssetByUrl } from "../content-lib/pasuram-manifest.generated.ts";
+import { ensurePasuramsUnpacked, isPasuramAvailable, localPasuramPath } from "./pasuramArchive.ts";
 
 /**
  * Every Pasuram PDF Prapatti.org resource referenced by the content
- * corpus is bundled directly into the app (see
- * mobile/scripts/generate-pasuram-manifest.ts and
- * mobile/content-lib/pasuram-manifest.generated.ts) -- there is no
- * download step, online or offline, and never has been for a reader:
- * a Pasuram is available the instant the app is installed, exactly
- * like a Divya Desam image. This file is the one place mobile/ is
- * allowed to touch expo-asset/expo-intent-launcher/expo-sharing for
- * this feature -- see mobile/tests/offline.test.ts, which fails the
- * build if app/, components/, or content-lib/ reference fetch/
- * XMLHttpRequest/axios.
+ * corpus is bundled directly into the app as a single compressed
+ * archive (see mobile/scripts/generate-pasuram-archive.ts and
+ * mobile/services/pasuramArchive.ts) -- there is no download step,
+ * online or offline, and never has been for a reader: a Pasuram is
+ * available the instant the app is installed, exactly like a Divya
+ * Desam image. This file is the one place mobile/ is allowed to touch
+ * expo-intent-launcher/expo-sharing for this feature -- see
+ * mobile/tests/offline.test.ts, which fails the build if app/,
+ * components/, or content-lib/ reference fetch/XMLHttpRequest/axios.
  *
  * `isPasuramAvailable` is trivially pure (a manifest lookup) and has no
  * native dependency, so it's safe to call from any render. Opening a
- * PDF still needs real native calls (Asset.downloadAsync() -- a local
- * copy out of the APK's packaged assets into a real file, not a
- * network fetch, despite the name -- and either an Android VIEW intent
+ * PDF still needs real native calls (unpacking the bundled archive into
+ * app-private storage on first need, then either an Android VIEW intent
  * or iOS's own file preview), so, like every other native-only adapter
  * in this codebase, this file is not unit-tested under plain
  * `node --test`; it's exercised via `expo export` and real-device
  * testing instead.
  */
 
-export function isPasuramAvailable(url: string): boolean {
-  return url in pasuramAssetByUrl;
-}
+export { isPasuramAvailable };
 
 export interface PasuramOpenResult {
   success: boolean;
@@ -59,19 +54,19 @@ const FLAG_GRANT_READ_URI_PERMISSION = 0x00000001;
  * mobile/assets/pasurams/.
  */
 export async function openOfflinePasuram(url: string): Promise<PasuramOpenResult> {
-  const assetModule = pasuramAssetByUrl[url];
-  if (assetModule === undefined) {
+  if (!isPasuramAvailable(url)) {
     return { success: false, error: "This Pasuram is not available." };
   }
 
   try {
-    const asset = await Asset.fromModule(assetModule).downloadAsync();
-    if (!asset.localUri) {
+    await ensurePasuramsUnpacked();
+    const localUri = localPasuramPath(url);
+    if (!localUri) {
       return { success: false, error: "Could not resolve the bundled Pasuram file." };
     }
 
     if (Platform.OS === "android") {
-      const contentUri = new File(asset.localUri).contentUri;
+      const contentUri = new File(localUri).contentUri;
       await IntentLauncher.startActivityAsync(ACTION_VIEW, {
         data: contentUri,
         type: "application/pdf",
@@ -82,7 +77,7 @@ export async function openOfflinePasuram(url: string): Promise<PasuramOpenResult
       // specifically -- its own document preview sheet (reached via
       // expo-sharing here) is the closest platform equivalent, and,
       // unlike Android's, is not dominated by messaging/send targets.
-      await Sharing.shareAsync(asset.localUri, { mimeType: "application/pdf", UTI: "com.adobe.pdf" });
+      await Sharing.shareAsync(localUri, { mimeType: "application/pdf", UTI: "com.adobe.pdf" });
     }
     return { success: true };
   } catch (error) {

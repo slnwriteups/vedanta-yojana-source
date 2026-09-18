@@ -13,6 +13,16 @@ const REPO_ROOT = path.resolve(__dirname, "..");
 
 const config = getDefaultConfig(__dirname);
 
+/**
+ * `.zst` isn't one of Metro's default asset extensions (unlike `.pdf`,
+ * which already was -- see the Pasuram-bundling work this supersedes).
+ * Needed so `import pasuramArchiveAsset from
+ * "../assets/pasurams-archive.generated.zst"` (content-lib/
+ * pasuram-archive-asset.generated.ts) resolves as a bundled binary asset
+ * instead of Metro trying (and failing) to parse it as source.
+ */
+config.resolver.assetExts.push("zst");
+
 config.watchFolders = [
   path.join(REPO_ROOT, "content"),
   path.join(REPO_ROOT, "content-lib"),

@@ -375,6 +375,12 @@ const UI_STRINGS = {
     kn: ", ಬ್ರೌಸರ್‌ನಲ್ಲಿ ತೆರೆಯುತ್ತದೆ",
     hi: ", ब्राउज़र में खुलता है",
   },
+  opensPdfViewerSuffix: {
+    en: ", opens PDF viewer",
+    ta: ", PDF காட்சியகத்தில் திறக்கும்",
+    kn: ", PDF ವೀಕ್ಷಕದಲ್ಲಿ ತೆರೆಯುತ್ತದೆ",
+    hi: ", PDF व्यूअर में खुलता है",
+  },
 } satisfies Record<string, UiStringEntry>;
 
 export type UiStringKey = keyof typeof UI_STRINGS;

@@ -14,6 +14,7 @@ import { WelcomeScreen } from "../components/WelcomeScreen";
 import { OnboardingScreen } from "../components/OnboardingScreen";
 import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/preferences.ts";
 import { readJSON, writeJSON } from "../storage.ts";
+import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
 
 /**
  * Phase 6C -- the root layout hosts the ThemeProvider and a single Stack
@@ -66,6 +67,19 @@ function RootStack() {
     return () => {
       cancelled = true;
     };
+  }, []);
+
+  // Fire-and-forget, once per cold launch: unpacks the bundled Pasuram
+  // archive into app-private storage if it isn't already current (see
+  // services/pasuramArchive.ts). By the time a user has navigated to a
+  // Divya Desam and tapped a Pasuram, this has almost always already
+  // finished; openOfflinePasuram() also awaits it directly as a safety
+  // net for a tap landing before that happens. Errors are deliberately
+  // swallowed here -- a failure just means the next tap's own await
+  // surfaces it as a real "not available" result instead of an unhandled
+  // rejection with nothing listening.
+  useEffect(() => {
+    ensurePasuramsUnpacked().catch(() => {});
   }, []);
 
   if (!seenWelcome) {

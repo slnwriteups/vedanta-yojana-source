@@ -9,7 +9,7 @@ import { getPasuramFileName } from "../services/pasuramResourceId.ts";
 
 /**
  * Every Pasuram PDF is bundled directly into the app (see
- * pasuramOfflineService.ts and scripts/generate-pasuram-manifest.ts) --
+ * pasuramOfflineService.ts and scripts/generate-pasuram-archive.ts) --
  * there is no download fallback anymore, so a URL with no matching
  * bundled file is a real, user-facing gap: a Divya Desam record that
  * silently has an unopenable resource. This is the automated guard for

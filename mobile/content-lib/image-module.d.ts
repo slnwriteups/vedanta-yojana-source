@@ -1,8 +1,8 @@
 /**
  * Ambient declarations for every binary asset extension this project
  * actually bundles via a static `import` -- .jpg/.png/.webp under
- * public/images/, .mp3 under public/audio/, and .pdf under
- * mobile/assets/pasurams/ (no .jpeg or .gif exist). Metro's default
+ * public/images/, .mp3 under public/audio/, and .zst for the single
+ * bundled Pasuram archive (no .jpeg or .gif exist). Metro's default
  * asset transformer resolves such an import to a numeric asset id at
  * bundle time; tsc has no way to know that without this declaration,
  * mirroring json-module.d.ts's role for JSON.
@@ -29,11 +29,12 @@ declare module "*.mp3" {
   export default value;
 }
 /**
- * The bundled Pasuram PDFs under mobile/assets/pasurams/ (see
- * pasuramOfflineService.ts and scripts/generate-pasuram-manifest.ts) --
- * same Metro numeric-asset-id resolution as the extensions above.
+ * The single bundled Pasuram archive, mobile/assets/
+ * pasurams-archive.generated.zst (see services/pasuramArchive.ts and
+ * scripts/generate-pasuram-archive.ts) -- same Metro numeric-asset-id
+ * resolution as the extensions above.
  */
-declare module "*.pdf" {
+declare module "*.zst" {
   const value: number;
   export default value;
 }
