@@ -1,109 +1,122 @@
 # Vedanta Yojana Android APK Verification Guide
 
-This guide explains how to confirm that an Android APK claiming to be
-Vedanta Yojana is the official release published by this project, and
-how to distinguish it from a renamed, repackaged, or otherwise
-unofficial file.
+This guide explains how to confirm that an Android installation
+claiming to be Vedanta Yojana is the official release, and how to
+distinguish it from a renamed, repackaged, or otherwise unofficial
+file.
 
 ## Official source
 
-The only official distribution channel for the Android application is
-this repository's **GitHub Releases** page:
+The official Android distribution channel is **Google Play**. Once
+published, the listing will be linked from the project
+[README](../README.md#download).
 
-> https://github.com/slnwriteups/vedanta-yojana-source/releases
-
-Google Play is not used for distribution. Any APK obtained from
-anywhere else — a mirror site, a forwarded file, a search-engine result
-that isn't this GitHub Releases page — is **not an official source**,
+This source repository (`vedanta-yojana-source`) is the project's
+source code, documentation, and release-provenance record — it is
+**not** itself an Android distribution channel. Any APK obtained
+outside of the official Google Play listing — a mirror site, a
+forwarded file, a search-engine result — is **not an official source**,
 regardless of what its filename or app icon says.
 
 ## Release identity
 
-> **Status:** No Android release has been published yet. The values
-> below (package name, scheme) are already fixed by the app's current
-> configuration and verifiable in this repository today; the
-> release-specific values (versionCode, APK filename, SHA-256,
-> signing-certificate fingerprint, EAS build ID) will be filled in
-> here, with real values, once a production build is completed and
-> published — never with placeholder or invented numbers.
+> **Status:** The app has not yet been published on Google Play. The
+> values below that are already fixed by the app's current
+> configuration are verifiable in this repository today; the
+> release-specific values (versionCode, AAB/APK SHA-256, signing
+> certificate fingerprints) will be filled in here, with real values,
+> once a production build is completed, uploaded, and live on Google
+> Play — never with placeholder or invented numbers.
 
 | Property | Value |
 |---|---|
 | Package name (`applicationId`) | `com.slnwriteups.vedantayojana` |
 | versionName | `1.0.0` |
 | versionCode | *not yet published* |
-| APK filename | *not yet published* |
-| APK SHA-256 | *not yet published* |
-| Signing certificate SHA-256 | *not yet published* |
-| EAS build ID | *not yet published* |
+| AAB/APK SHA-256 | *not yet published* |
+| Upload certificate SHA-256 | *not yet published* |
+| Google Play app-signing certificate SHA-256 | *not yet published* |
 
-Once published, this table — and the corresponding GitHub Release page
-— will carry the actual values for that specific build. Verify against
-whichever release you downloaded, not against an older one.
+Once published, this table will carry the actual values for that
+specific release. Verify against whichever version you have installed,
+not against an older one.
 
-## Level 1 — Use the official GitHub Release
+## Understanding Google Play App Signing (read this first)
 
-The simplest and strongest protection is also the easiest: download
-only from the GitHub Releases page linked above. A file obtained this
-way came from the repository's own release infrastructure, which is a
-fundamentally different guarantee than a file obtained from a mirror,
-forum post, or search result — no verification step below can fully
-substitute for this.
+Because this will be this application's first Google Play submission,
+it goes through **Google Play App Signing**, which Google requires for
+apps published as an Android App Bundle. This introduces two distinct
+certificates, not one:
 
-## Level 2 — Verify the SHA-256 checksum
+- **Upload certificate** — the key the project uses to sign the AAB
+  before handing it to Google Play. This authenticates the upload to
+  Google; it is not the certificate that ends up on a user's device.
+- **App signing certificate** — a separate key that Google generates
+  and holds, which actually re-signs the app for distribution to
+  users. This is the certificate an installed app on a device carries.
 
-A SHA-256 checksum is a short fingerprint of a file's exact contents.
-If even one byte of the file changes, the checksum changes completely.
-Comparing the checksum of the file you downloaded against the value
-published on the release page tells you whether you have the *exact*
-file the project published — not a corrupted download, and not a
-substituted one.
+**What this means for verification:** the certificate you see on an
+*installed* app (via `apksigner` or `pm` on a device) is Google's app
+signing certificate, not the project's upload certificate. Both will
+be published here once known — the app signing certificate is the one
+that matters for confirming what's actually on your device.
 
-Once a release is published, its SHA-256 will be given on the release
-page (and optionally as a `.sha256` file attached to the release).
-Compute it yourself and compare:
+## Level 1 — Install only from Google Play
+
+The simplest and strongest protection is also the easiest: install and
+update only through the official Google Play listing. Play verifies
+the app's signature against its own records on every install and
+update — a guarantee no manual verification step below can fully
+substitute for.
+
+## Level 2 — Verify the SHA-256 checksum (for a downloaded file)
+
+If you have a specific APK/AAB file — for example, one extracted from
+your device, or shared for offline verification — its SHA-256 is a
+short fingerprint of its exact contents. If even one byte changes, the
+checksum changes completely.
 
 **macOS**
 ```
-shasum -a 256 Vedanta-Yojana-1.0.0.apk
+shasum -a 256 <filename>
 ```
 
 **Linux**
 ```
-sha256sum Vedanta-Yojana-1.0.0.apk
+sha256sum <filename>
 ```
 
 **Windows (PowerShell)**
 ```
-Get-FileHash .\Vedanta-Yojana-1.0.0.apk -Algorithm SHA256
+Get-FileHash .\<filename> -Algorithm SHA256
 ```
 
-Replace the filename with whatever the release actually names the
-file. The output must match the published value exactly.
+Compare the result against the value published for the corresponding
+release in this repository's release notes.
 
 ## Level 3 — Verify the signing certificate
 
 Every Android APK is cryptographically signed. The signature does not
 just prove the file is intact (the checksum already tells you that) —
 it proves the file was signed by whoever holds a specific private key,
-and lets you confirm that a future update was signed by the *same*
-key as a previous install.
+and lets you confirm that a future update was signed by the *same* key
+as a previous install.
 
-Using the Android SDK's `apksigner` tool (part of Android
-build-tools; verified here against build-tools 36.0.0):
+Using the Android SDK's `apksigner` tool (part of Android build-tools;
+verified here against build-tools 36.0.0):
 
 ```
-apksigner verify --print-certs Vedanta-Yojana-1.0.0.apk
+apksigner verify --print-certs <filename>
 ```
 
 This prints the signing scheme(s) used and, for each signer, a
-certificate fingerprint (including SHA-256). Compare:
-
-- The printed certificate SHA-256 against the value published on the
-  release page for that specific version.
-- The package name and version shown against what you expected
-  (`com.slnwriteups.vedantayojana`, the version you intended to
-  download).
+certificate fingerprint (including SHA-256). Compare the printed
+certificate SHA-256 against the **Google Play app-signing certificate**
+value published for the release (see
+[Understanding Google Play App Signing](#understanding-google-play-app-signing-read-this-first)
+above — not the upload certificate), and confirm the package name and
+version match what you expected
+(`com.slnwriteups.vedantayojana`, the version you intended).
 
 **What a valid signature establishes:** the APK was signed using the
 private key corresponding to the published release identity, and its
@@ -121,30 +134,28 @@ release:
 
 - The release's documented **source commit** (given in the release
   notes) against this repository's own Git history.
-- The documented **EAS build ID** (given in the release notes) against
-  the build that produced the artifact.
+- The documented **EAS build** used to produce the artifact.
 - The **published checksum and certificate fingerprint** against what
   you compute locally, per Levels 2 and 3 above.
 
 Important limitation: **source availability alone does not prove a
 specific binary was built from that source.** Anyone can read this
 repository. What increases confidence is the *combination* — a
-documented commit, a documented build (EAS), and an independently
-verifiable checksum/signature on the specific artifact — not any one
-of these alone. This project does not currently offer bit-for-bit
-reproducible builds; the combination above is the strongest evidence
-currently available, and is weaker than cryptographic reproducibility
-would be.
+documented commit, a documented build, and an independently verifiable
+checksum/signature on the specific artifact — not any one of these
+alone. This project does not currently offer bit-for-bit reproducible
+builds; the combination above is the strongest evidence currently
+available, and is weaker than cryptographic reproducibility would be.
 
 ## Strong evidence vs. weak evidence
 
 | Strong evidence | Weak evidence |
 |---|---|
-| Official GitHub Release page | The APK's filename |
+| Installed via the official Google Play listing | The APK's filename |
 | Matching SHA-256 checksum | The application's icon |
-| Matching signing-certificate fingerprint | Screenshots |
+| Matching Google Play app-signing certificate fingerprint | Screenshots |
 | Matching package name and version | A website's appearance |
-| A documented source commit + EAS build | Claims made by a third-party mirror |
+| A documented source commit + build | Claims made by a third-party mirror |
 
 Anyone can rename a file, copy an icon, or claim a file is "official."
 None of that is evidence. A cryptographic signature and a published
@@ -154,15 +165,15 @@ key is computationally infeasible.
 ## If you downloaded an APK from somewhere else
 
 If you already have an APK claiming to be Vedanta Yojana from a source
-other than this repository's GitHub Releases page:
+other than the official Google Play listing:
 
 1. Do not install it.
 2. Compare its SHA-256 and signing certificate against the values
-   published for the corresponding version on the official release
-   page, using the commands above.
-3. If either does not match — or if no official release with that
-   version exists yet — do not install it, and consider reporting where
-   you found it (see [SECURITY.md](../SECURITY.md)).
+   published for the corresponding version in this repository, using
+   the commands above.
+3. If either does not match — or no official release with that version
+   exists yet — do not install it, and consider reporting where you
+   found it (see [SECURITY.md](../SECURITY.md)).
 
 ## Summary
 
@@ -173,5 +184,5 @@ other than this repository's GitHub Releases page:
 - Neither establishes that the software is free of security
   vulnerabilities — see [docs/SECURITY.md](SECURITY.md) for what
   security testing has and has not been done.
-- The only way to start from a trustworthy baseline is to download from
-  the official GitHub Releases page in the first place.
+- The only way to start from a trustworthy baseline is to install from
+  the official Google Play listing in the first place.

@@ -71,7 +71,7 @@ flowchart LR
     Lib --> Mobile["Mobile app\n(Expo / React Native)"]
     Web --> Pages["GitHub Pages\nslnwriteups.github.io/vedanta-yojana"]
     Mobile --> Build["EAS production build\n(Android App Bundle)"]
-    Build --> Release["GitHub Releases"]
+    Build --> Release["Google Play"]
 ```
 
 Neither front end reads `content/` directly. Both go through
@@ -228,8 +228,9 @@ security regression test added 2026-09-18.
   starts.
 - **Mobile:** Android builds are produced on demand via EAS Build using
   the `production` profile in `mobile/eas.json`; there is no automatic
-  build-on-push pipeline for mobile. Distribution is through GitHub
-  Releases — see the root README's Download section.
+  build-on-push pipeline for mobile. Distribution is through Google
+  Play — see the root README's Download section. This repository
+  remains the source, documentation, and release-provenance record.
 
 ## September 18 engineering record
 

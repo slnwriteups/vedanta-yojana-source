@@ -29,12 +29,12 @@ This policy covers:
 
 - The source code and configuration in this repository
 - The GitHub Actions build and deployment pipeline
-- The published GitHub Pages website and the Android release artifacts
-  distributed through this repository's GitHub Releases
+- The published GitHub Pages website
+- The Android application as distributed through Google Play
 
-The official distribution channel for the Android application is this
-repository's GitHub Releases page. Google Play is not currently used for
-distribution and is out of scope for this policy.
+The official distribution channel for the Android application is Google
+Play. This repository is the application's source, documentation, and
+release-provenance record, not itself an Android distribution channel.
 
 ## What to Expect
 

@@ -25,31 +25,35 @@ served today through both a website and a native mobile app.
 | Platform | Status |
 |---|---|
 | Web (any modern browser) | Live at the link above |
-| Android | Distributed via GitHub Releases — see [Download](#download) |
+| Android | Distributed via Google Play — see [Download](#download) |
 | iOS | Not currently distributed |
 
 ## Download
 
-The official Android release is distributed **only** through this
-repository's GitHub Releases:
+The official Android distribution channel is **Google Play**:
 
-> **[GitHub Releases](https://github.com/slnwriteups/vedanta-yojana-source/releases)**
+> **Google Play** — listing link will be added here once the app is
+> published.
 
-> For security and provenance, download Android releases only from the
-> official Vedanta Yojana GitHub Release page. Do not use third-party
-> APK mirrors — see [APK Verification Guide](docs/APK-VERIFICATION.md)
-> for how to confirm a file you downloaded is genuine, and why filename
-> or appearance alone is not evidence of that.
+This source repository remains the project's technical provenance and
+documentation home — source code, release notes, and the commit each
+release was built from — but it is not itself an Android distribution
+channel. See [APK Verification Guide](docs/APK-VERIFICATION.md) for
+how to confirm an installed app is genuine, and why an APK obtained
+from anywhere other than Google Play (a mirror, a forwarded file)
+should not be trusted on filename or appearance alone.
 
-*A production Android release has not been published yet. This section
-will be updated with a direct link once one is.*
+*The app has not yet been published on Google Play. This section will
+be updated with the actual Play Store listing link once it is.*
 
 ## Security & verification summary
 
-- The Android release is signed using this project's EAS-managed
-  production signing credentials, not a local development key.
-- Each release publishes a SHA-256 checksum and signing-certificate
-  fingerprint so a downloaded file can be independently verified.
+- The Android release is signed using this project's production
+  signing credentials, managed remotely by EAS (Expo Application
+  Services) — not a local development key.
+- Google Play's own install-time signature verification, plus the
+  published signing-certificate fingerprint, let a release be
+  independently confirmed.
 - Dependency vulnerabilities are tracked via Dependabot and `npm audit`;
   known issues are patched or remediated and covered by automated
   regression tests.
@@ -64,7 +68,9 @@ will be updated with a direct link once one is.*
 - No account or sign-in is required or offered.
 - Network requests fetch public content (Library book updates, version
   checks) from this project's own GitHub Pages site over HTTPS; nothing
-  in the audited source uploads user data anywhere.
+  in the audited source uploads user data anywhere. See Google Play's
+  Data Safety section on the app's listing for the platform-verified
+  summary of this once published.
 - Location access (coarse/fine) is used only to show the day's
   Panchangam for the user's approximate location.
 - Full detail, including a permission-by-permission table: [docs/SECURITY.md](docs/SECURITY.md#android-security).
@@ -91,7 +97,7 @@ app updates both require connectivity. See
 |---|---|---|
 | Framework | Next.js (`output: "export"`, fully static) | Expo (React Native) |
 | Status | **co-equal target — full feature parity** | **co-equal target — full feature parity** |
-| Deploy | GitHub Pages, auto-deploys from `main` | GitHub Releases (see [Download](#download)); not submitted to Google Play |
+| Deploy | GitHub Pages, auto-deploys from `main` | Google Play (see [Download](#download)); not yet published |
 | Detail | — | see `mobile/README.md` |
 
 Both runtimes now carry the same feature set: content translation

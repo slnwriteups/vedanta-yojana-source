@@ -32,7 +32,7 @@ rather than assumed.
 
 | Threat | Mitigation | Residual risk |
 |---|---|---|
-| Fake or repackaged APK distributed under the project's name | Official distribution limited to GitHub Releases on this repository; APK signing certificate and SHA-256 published per release | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
+| Fake or repackaged APK distributed under the project's name | Official distribution limited to Google Play; Play's own listing/signing verification plus a published certificate fingerprint let a specific install be confirmed | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
 | Modified/tampered APK | Android's own signature verification rejects any APK whose contents were altered after signing, at install time, if the certificate doesn't match a prior install | Only protects users who compare the certificate against a trusted reference; does not itself alert an unsuspecting user |
 | Compromised GitHub account | Secret scanning and push protection enabled on the repository; Dependabot security updates enabled | No hardware-key/2FA enforcement is independently verifiable from repository configuration alone |
 | Compromised GitHub Actions workflow | All third-party Actions pinned to a full commit SHA (not a floating tag) in `.github/workflows/*.yml`; workflows use least-privilege `permissions: contents: read` unless a step specifically needs more | A compromised upstream Action release that predates the pinned SHA is not something a SHA pin can catch by itself |
@@ -42,7 +42,7 @@ rather than assumed.
 | Malicious content payload (Library remote update) | Content is schema-validated at build time (`content-lib/schemas/`) before publication; the app enforces a schema-version literal check and fails closed on any shape it doesn't recognize | The remote content manifest is served over HTTPS from GitHub Pages with no additional content-signing beyond TLS + schema validation — see [Content integrity](#content-integrity) |
 | Stale or incorrect content build | `contentHash` per book in `content-manifest.json`, generated from the same build pipeline that produces the payload; hash mismatch triggers re-download | Does not detect a build that is internally consistent but was generated from wrong/incorrect source content |
 | Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://slnwriteups.github.io/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
-| Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to GitHub Releases only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
+| Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to Google Play only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters for anyone who sideloads instead — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
 | Accidental release of a debug-signed or debug-configured build | Release builds are produced via the EAS `production` profile, which is distinct from `development`/`preview`; a debug-keystore-signed local build was explicitly identified during release engineering and was **not** published — see [Signing & release provenance](#signing--release-provenance) | Requires continued process discipline; nothing in the build system automatically prevents a debug artifact from being manually uploaded to a release by mistake |
 | Compromised developer machine | Signing credentials are not stored locally (EAS-managed); `.env`/secret files are not committed (see [Secrets management](#secrets-management)) | A compromised machine with valid EAS/GitHub session credentials could still initiate actions under the developer's identity |
 
@@ -283,6 +283,13 @@ texts. See [Security Limitations](#security-limitations).
 
 ## Signing & release provenance
 
+**Distribution model.** The official Android distribution channel is
+Google Play. This is the first planned Play release for this
+application: no prior submission exists (`eas submit:list --platform
+android` returns no submissions for this project, and `mobile/eas.json`'s
+`submit.production` profile has never carried a configured service
+account or track).
+
 **What is explicitly true today:**
 
 - The repository's local Gradle release-signing configuration
@@ -290,7 +297,8 @@ texts. See [Security Limitations](#security-limitations).
   `release` signing config at `debug.keystore` — the standard React
   Native template default. A build produced with this local
   configuration is a **debug-signed artifact** and has correctly
-  **not** been published anywhere as an official release.
+  **not** been published anywhere as an official release. The
+  repository defines no `signingConfigs.release` block of its own.
 - EAS holds a separate, existing production Android signing credential
   for this project, managed remotely by Expo — not stored in this
   repository, not stored on any local developer machine. This was
@@ -305,15 +313,22 @@ texts. See [Security Limitations](#security-limitations).
   production --platform android`, using `mobile/eas.json`'s existing,
   unmodified `production` profile — not through the repository's local
   Gradle debug-keystore path.
+- Because this is the first Google Play submission, Google Play App
+  Signing applies at enrollment: the key used to sign the AAB handed to
+  Play becomes the **upload key**, and Google generates and holds a
+  separate **app signing key** that actually signs what reaches user
+  devices. These are not the same certificate — see
+  [How Users Can Verify](APK-VERIFICATION.md) for what that means for
+  verification.
 
-**What is not yet true, stated plainly:** as of this document, a
-production EAS build for the current release has not yet completed.
-The specific signing-certificate SHA-256 fingerprint, the exact APK
-SHA-256, and the EAS build ID for this release are therefore **not yet
+**What is not yet true, stated plainly:** a production AAB for this
+release has not yet been built and uploaded. The specific
+signing-certificate SHA-256 fingerprint(s), the exact AAB/APK SHA-256,
+and the EAS build ID for this release are therefore **not yet
 available** and are not stated anywhere in this documentation set or
 in [APK-VERIFICATION.md](APK-VERIFICATION.md) until they can be
-recorded from an actual completed, inspected build. See the project's
-release notes / GitHub Release page for the current status.
+recorded from an actual completed, inspected, uploaded build. See the
+project's release notes for the current status.
 
 **Why this matters to a user:** a valid signature establishes that a
 given APK file was signed with the private key corresponding to a
