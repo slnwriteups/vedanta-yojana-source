@@ -2,7 +2,7 @@ import type { ReactNode, RefObject } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
-import { looksLikeSubheading, paragraphsForReading } from "../../content-lib/text-format.ts";
+import { isVerseTransliterationLine, looksLikeSubheading, paragraphsForReading } from "../../content-lib/text-format.ts";
 
 /**
  * Generic content section: an optional heading over either long-form
@@ -77,27 +77,31 @@ export function Section({
         </Text>
       ) : null}
       {text
-        ? paragraphsForReading(text).map((paragraph, index) => {
-            const subheading = looksLikeSubheading(paragraph);
-            return (
-              <Text
-                key={index}
-                ref={paragraphRefs ? (node) => { paragraphRefs.current[index] = node; } : undefined}
-                style={[
-                  styles.paragraph,
-                  subheading && styles.subheading,
-                  {
-                    color: theme.colors.foreground,
-                    fontFamily: Platform.select(typography.readingFontFamily),
-                    fontSize: typography.body * preferences.fontScale,
-                    lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
-                  },
-                ]}
-              >
-                {paragraph}
-              </Text>
-            );
-          })
+        ? (() => {
+            const paragraphs = paragraphsForReading(text);
+            return paragraphs.map((paragraph, index) => {
+              const subheading =
+                looksLikeSubheading(paragraph) && !isVerseTransliterationLine(paragraphs, index);
+              return (
+                <Text
+                  key={index}
+                  ref={paragraphRefs ? (node) => { paragraphRefs.current[index] = node; } : undefined}
+                  style={[
+                    styles.paragraph,
+                    subheading && styles.subheading,
+                    {
+                      color: theme.colors.foreground,
+                      fontFamily: Platform.select(typography.readingFontFamily),
+                      fontSize: typography.body * preferences.fontScale,
+                      lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
+                    },
+                  ]}
+                >
+                  {paragraph}
+                </Text>
+              );
+            });
+          })()
         : children}
     </View>
   );

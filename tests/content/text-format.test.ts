@@ -6,6 +6,8 @@ import { fileURLToPath } from "node:url";
 import {
   estimateReadingMinutes,
   getTableOfContents,
+  isVerseTransliterationLine,
+  looksLikeSubheading,
   paragraphsForReading,
   splitIntoReadableParagraphs,
   stripLeadingDuplicateTitle,
@@ -207,4 +209,39 @@ test("M: matches the real corpus -- no chapter across the Library ever produces 
     }
   }
   assert.deepEqual(singleEntryChapters, []);
+});
+
+// ---------------------------------------------------------------------------
+// isVerseTransliterationLine
+// ---------------------------------------------------------------------------
+
+test("N: both lines of a quoted verse's IAST transliteration are recognized as verse continuation, not headings", () => {
+  // Real, reported case: rama-charama-shlokam renders its Devanagari
+  // couplet plain (correctly excluded from looksLikeSubheading by its
+  // trailing daṇḍa) but its IAST transliteration couplet directly below
+  // it -- the same verse, just transliterated -- rendered BOLD, since
+  // looksLikeSubheading() alone has no way to know it isn't a genuine
+  // heading. Reported directly from device testing as inconsistent,
+  // unintentional-looking formatting.
+  const paragraphs = paragraphsForReading(
+    "The shlokam is as follows,\n\nसकृदेव प्रपन्नाय तवास्मीति च याचते ।\nअभयं सर्वभूतेभ्यो ददाम्येतत् व्रतं मम ॥\n\nsakṛd eva prapannāya tavāsmīti ca yācate\nabhayaṁ sarva-bhūtebhyo dadāmy etat vrataṁ mama\n\nThe meaning is as follows,"
+  );
+  const iastFirstLine = paragraphs.indexOf("sakṛd eva prapannāya tavāsmīti ca yācate");
+  const iastSecondLine = paragraphs.indexOf("abhayaṁ sarva-bhūtebhyo dadāmy etat vrataṁ mama");
+  assert.ok(iastFirstLine >= 0 && iastSecondLine >= 0, "expected both IAST lines to be present as their own paragraphs");
+  // Both lines still pass looksLikeSubheading() on their own -- the bug
+  // this guards is exactly that a bolding renderer must NOT stop there.
+  assert.equal(looksLikeSubheading(paragraphs[iastFirstLine]), true);
+  assert.equal(looksLikeSubheading(paragraphs[iastSecondLine]), true);
+  assert.equal(isVerseTransliterationLine(paragraphs, iastFirstLine), true);
+  assert.equal(isVerseTransliterationLine(paragraphs, iastSecondLine), true);
+});
+
+test("N: a genuine short heading with no Devanagari two paragraphs back is never mistaken for verse continuation", () => {
+  const paragraphs = paragraphsForReading(
+    `Some introductory sentence that reads normally here.\n\nAnother plain sentence right here.\n\nThe Moksha Virodhi\n\n${"This section explains the doctrine in extended detail. ".repeat(6)}`
+  );
+  const headingIndex = paragraphs.indexOf("The Moksha Virodhi");
+  assert.ok(headingIndex >= 0);
+  assert.equal(isVerseTransliterationLine(paragraphs, headingIndex), false);
 });

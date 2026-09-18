@@ -134,6 +134,28 @@ export interface TableOfContentsEntry {
 }
 
 /**
+ * True when `paragraphs[index]` is a line of a quoted verse's IAST
+ * transliteration half -- a Devanagari couplet, blank line, then its
+ * IAST-transliteration couplet (e.g. JAYA's Bhagavad Gita shlokas, the
+ * three charama shlokas) -- rather than a genuine heading. Both lines of
+ * the transliteration pass looksLikeSubheading() by accident: short, no
+ * terminal punctuation (the transliteration convention drops the daṇḍa).
+ * Detected structurally, the same way getTableOfContents() below already
+ * protects its own entries: if the paragraph TWO positions back contains
+ * Devanagari script, this one is part of that same verse block --
+ * Devanagari appears nowhere else in the corpus today. Exported so every
+ * per-paragraph renderer that calls looksLikeSubheading() (not just
+ * getTableOfContents(), which only decides what's worth a table-of-
+ * contents entry) can avoid the same false positive when deciding what
+ * to bold -- reported directly from device testing, rendering a shloka's
+ * IAST couplet in bold while its own Devanagari couplet directly above
+ * it rendered plain, reading as inconsistent, unintentional formatting.
+ */
+export function isVerseTransliterationLine(paragraphs: string[], index: number): boolean {
+  return index >= 2 && /[ऀ-ॿ]/.test(paragraphs[index - 2]);
+}
+
+/**
  * A stricter sibling of looksLikeSubheading(), for a genuinely different
  * job: looksLikeSubheading() decides what to draw in bold (cheap to get
  * occasionally wrong -- a bolded verse line is still readable), but a
@@ -211,7 +233,7 @@ export function getTableOfContents(text: string, title: string): TableOfContents
     // Devanagari script, this one is the tail end of that same verse
     // block, not a standalone heading -- Devanagari appears nowhere
     // else in the corpus today.
-    if (index >= 2 && /[ऀ-ॿ]/.test(paragraphs[index - 2])) return;
+    if (isVerseTransliterationLine(paragraphs, index)) return;
 
     const next = paragraphs[index + 1] ?? "";
     if (LIST_MARKER.test(next) || looksLikeSubheading(next)) return;
