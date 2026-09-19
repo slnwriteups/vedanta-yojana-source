@@ -93,6 +93,26 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
 
   const segments = buildSegments(text, resolved);
 
+  // Whether the special note being rendered runs past the end of the
+  // CURRENT segment's own paragraphs, into whatever text segment comes
+  // after the next image segment -- real, reported case: tirukkurugur's
+  // Nam Āzhwār note has the Divine Tamarind Tree photo's placementAnchor
+  // landing mid-note, so buildSegments() (which inserts an image the
+  // moment it finds a matching anchor LINE) splits one continuous note
+  // into "...up to the anchor line" and "everything after it" as two
+  // separate segments. specialNoteListItemSpan() already always
+  // consumes a note to the end of whatever paragraph array it's given
+  // (see its own doc comment) -- the one thing it cannot do is see past
+  // its own segment's boundary. This flag is that: true whenever the
+  // note just rendered consumed its segment's last paragraph, so the
+  // very next TEXT segment (after any intervening image segment) should
+  // keep rendering as the same callout instead of starting fresh at
+  // isListItemLine()/extractSpecialNote() from scratch, which would
+  // otherwise see a paragraph with no leading "*" and treat it -- and
+  // the rest of that whole segment, since a note is never followed by
+  // unrelated content in a shared block -- as ordinary plain paragraphs.
+  let carryingNote = false;
+
   return (
     <View style={styles.section} accessible={false}>
       <Text style={[styles.heading, { color: theme.colors.foreground }]} accessibilityRole="header">
@@ -120,7 +140,8 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
         for (let i = 0; i < segmentParagraphs.length; i++) {
           const paragraph = segmentParagraphs[i];
           const specialNote = extractSpecialNote(paragraph);
-          if (specialNote !== null) {
+          const isContinuation = specialNote === null && i === 0 && carryingNote;
+          if (specialNote !== null || isContinuation) {
             // See specialNoteListItemSpan()'s doc comment -- any list
             // items immediately following the note belong inside the
             // same callout, not as disconnected plain paragraphs after it.
@@ -131,10 +152,12 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
                 key={`${segment.key}-${i}`}
                 style={[styles.specialNote, { borderColor: theme.colors.border, backgroundColor: theme.colors.surfaceAlt }]}
               >
-                <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
-                  {translateUi("specialNoteLabel", language)}
-                </Text>
-                {[specialNote, ...items].map((line, lineIndex) => (
+                {!isContinuation && (
+                  <Text style={[styles.specialNoteLabel, { color: theme.colors.accent }]}>
+                    {translateUi("specialNoteLabel", language)}
+                  </Text>
+                )}
+                {[specialNote ?? paragraph, ...items].map((line, lineIndex) => (
                   <Text
                     key={lineIndex}
                     style={[
@@ -154,8 +177,10 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
               </View>
             );
             i += span;
+            carryingNote = true;
             continue;
           }
+          carryingNote = false;
           nodes.push(
             <Text
               key={`${segment.key}-${i}`}

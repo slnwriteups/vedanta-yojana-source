@@ -120,6 +120,17 @@ export function SthalaPuranamWithImages({
 }) {
   const segments = buildSegments(text, images);
 
+  // See mobile/components/SthalaPuranamWithImages.tsx's identical
+  // `carryingNote` for the full "why": an image's placementAnchor can
+  // land mid-note, splitting one continuous special note into two
+  // segments around the image. specialNoteListItemSpan() always
+  // consumes to the end of whatever paragraph array it's given, so a
+  // note found here that runs to this segment's last paragraph should
+  // keep rendering as the same callout in the very next TEXT segment,
+  // rather than that segment's first paragraph (now with no leading
+  // "*") falling back to an unstyled plain paragraph.
+  let carryingNote = false;
+
   return (
     <section aria-labelledby="sthala-puranam-heading" className="max-w-2xl space-y-4">
       <h2 id="sthala-puranam-heading" className="section-heading">
@@ -140,15 +151,24 @@ export function SthalaPuranamWithImages({
           for (let i = 0; i < segmentParagraphs.length; i++) {
             const paragraph = segmentParagraphs[i];
             const specialNote = extractSpecialNote(paragraph);
-            if (specialNote !== null) {
+            const isContinuation = specialNote === null && i === 0 && carryingNote;
+            if (specialNote !== null || isContinuation) {
               const span = specialNoteListItemSpan(segmentParagraphs, i);
               const items = segmentParagraphs.slice(i + 1, i + 1 + span);
               nodes.push(
-                <SpecialNote key={`${segment.key}-${i}`} text={specialNote} items={items} language={language} />
+                <SpecialNote
+                  key={`${segment.key}-${i}`}
+                  text={specialNote ?? paragraph}
+                  items={items}
+                  language={language}
+                  showLabel={!isContinuation}
+                />
               );
               i += span;
+              carryingNote = true;
               continue;
             }
+            carryingNote = false;
             nodes.push(
               <p
                 key={`${segment.key}-${i}`}

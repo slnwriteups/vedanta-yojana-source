@@ -23,16 +23,23 @@ export function SpecialNote({
   text,
   items = [],
   language,
+  showLabel = true,
 }: {
   text: string;
   items?: string[];
   language: LanguageCode | null;
+  /** False for a note continuing after an image split its own block into
+   * two segments (see SthalaPuranamWithImages.tsx's `carryingNote`) --
+   * it's still the same note, so it shouldn't repeat the label. */
+  showLabel?: boolean;
 }) {
   return (
     <div className="max-w-2xl space-y-1 rounded-md border border-[var(--border)] bg-[var(--surface-alt)] p-4">
-      <p className="text-xs font-semibold tracking-wide text-[var(--accent)] uppercase">
-        {translateUi("specialNoteLabel", language)}
-      </p>
+      {showLabel && (
+        <p className="text-xs font-semibold tracking-wide text-[var(--accent)] uppercase">
+          {translateUi("specialNoteLabel", language)}
+        </p>
+      )}
       <p className="prose-body">{text}</p>
       {items.map((item, index) => (
         <p key={index} className="prose-body">
