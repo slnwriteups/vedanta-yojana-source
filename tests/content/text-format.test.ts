@@ -363,16 +363,49 @@ test("Q: list items immediately following a special note are counted, so a rende
   // rendered as ordinary paragraphs right after it, visually severed
   // from the note that introduces it.
   const paragraphs = paragraphsForReading(
-    "*The list of these kshethrams is as follows:\n1) Vanamamalai\n2) Sri Raṅgam\n3) Sri Mushnam\n\nAzhwar Pasuram text starts here."
+    "*The list of these kshethrams is as follows:\n1) Vanamamalai\n2) Sri Raṅgam\n3) Sri Mushnam"
   );
   const noteIndex = paragraphs.findIndex((p) => extractSpecialNote(p) !== null);
   assert.ok(noteIndex >= 0);
   assert.equal(specialNoteListItemSpan(paragraphs, noteIndex), 3);
-  // The paragraph after the list (a real, unrelated paragraph) is not swept up.
-  assert.equal(isListItemLine(paragraphs[noteIndex + 4]), false);
 });
 
-test("Q: a special note with no following list items has a span of zero", () => {
-  const paragraphs = paragraphsForReading("*A standalone note with nothing after it that looks like a list.");
+test("Q: a special note absorbs the rest of its own block, not just list items", () => {
+  // Real, reported case: tiruttankaa-tooppul's Svāmi Vedānta Deshikan
+  // note is followed by two plain-prose biography paragraphs (not list
+  // items) and only then a "Some of his greatest works include:" list --
+  // a strictly list-only span left the two prose paragraphs stranded
+  // outside the box. Every special note in the actual corpus is either
+  // the sole content of its `\n{2,}`-delimited block or the last content
+  // in its field (verified directly against every divya-desams record),
+  // so absorbing everything remaining in the same block is safe: there
+  // is no real content where an unrelated paragraph follows a note.
+  const paragraphs = paragraphsForReading(
+    "*Svāmi Vedānta Deshikan:\nHe is considered an incarnation of the divine bell.\nSome of his greatest works include:\n1) Hayagrīva Stotram\n2) Sudarshana Ashtakam"
+  );
+  const noteIndex = paragraphs.findIndex((p) => extractSpecialNote(p) !== null);
+  assert.ok(noteIndex >= 0);
+  assert.equal(specialNoteListItemSpan(paragraphs, noteIndex), 4);
+});
+
+test("Q: a long special note split across multiple readable paragraphs stays entirely within the span", () => {
+  // Real, reported cases: tirukkudandai and nachiyarkoil each carry a
+  // special note long enough that splitIntoReadableParagraphs() (see its
+  // own doc comment) breaks it into several DISPLAY paragraphs for
+  // readability. The "*" marker only survives on the first of those, so
+  // a span restricted to literal list items left every later readability
+  // chunk rendering as a disconnected plain paragraph, even though it is
+  // still the same note's own continuation.
+  const sentence = "This is one sentence of the note that keeps going. ";
+  const longNote = "*" + sentence.repeat(20); // well over the 550-char readability threshold
+  const paragraphs = paragraphsForReading(longNote);
+  assert.ok(paragraphs.length > 1, "expected the long note to be split into multiple readable paragraphs");
+  const noteIndex = paragraphs.findIndex((p) => extractSpecialNote(p) !== null);
+  assert.equal(noteIndex, 0);
+  assert.equal(specialNoteListItemSpan(paragraphs, noteIndex), paragraphs.length - 1);
+});
+
+test("Q: a special note with no following content has a span of zero", () => {
+  const paragraphs = paragraphsForReading("*A standalone note with nothing after it.");
   assert.equal(specialNoteListItemSpan(paragraphs, 0), 0);
 });

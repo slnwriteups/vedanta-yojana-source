@@ -269,22 +269,37 @@ export function extractSpecialNote(paragraph: string): string | null {
 
 /**
  * How many of the paragraphs immediately following a special note (at
- * `noteIndex`) are list items that belong INSIDE that same note, not as
- * disconnected plain paragraphs after it. Real, reported case:
- * sri-rangam's Swayamvyaktha note ends "...the list of these kshethrams
- * is as follows:" and is directly followed by 8 separate "1) Vanamamalai"
- * .. "8) Muktinath" paragraphs (each its own paragraph, single-\n
- * separated) -- without this, a renderer's special-note box would wrap
- * only the introductory sentence and the list itself would render
- * outside it as ordinary paragraphs, visually severed from the note that
- * introduces it even though isListItemLine() already keeps them from
- * being mistaken for bold subheadings. A renderer consumes this many
- * extra paragraphs into the same callout and advances its loop past them.
+ * `noteIndex`) belong INSIDE that same note, not as disconnected plain
+ * paragraphs after it -- i.e. everything else in the same `\n{2,}`-
+ * delimited block the note appears in. Across the full divya-desams
+ * corpus, a special note's leading "*" is always the FIRST paragraph of
+ * its block (verified directly: every instance has the marker at
+ * paragraph index 0 of its block), so anything else sharing that block
+ * is part of the same note, not a new, unrelated one that happens to
+ * follow it.
+ *
+ * Two real, reported cases this covers:
+ * - sri-rangam's Swayamvyaktha note ends "...the list of these
+ *   kshethrams is as follows:" and is directly followed by 8 separate
+ *   "1) Vanamamalai" .. "8) Muktinath" paragraphs (each its own
+ *   paragraph, single-\n separated) -- list items, per isListItemLine().
+ * - tiruttankaa-tooppul's Svāmi Vedānta Deshikan note is followed by two
+ *   more plain-prose paragraphs of biography (not list items) and only
+ *   THEN a "Some of his greatest works include:" list -- a strictly
+ *   list-only span left the two prose paragraphs stranded outside the
+ *   box. Likewise tirukkudandai, nachiyarkoil, tiruvahindrapuram, and
+ *   others carry a note long enough that splitIntoReadableParagraphs()
+ *   (see its own doc comment) breaks it into several DISPLAY paragraphs
+ *   for readability -- the "*" marker only survives on the first of
+ *   those, so every later paragraph is really still the same note's own
+ *   continuation, not new content, even though it no longer starts with
+ *   "*" itself.
+ *
+ * A renderer consumes this many extra paragraphs into the same callout
+ * and advances its loop past them.
  */
 export function specialNoteListItemSpan(paragraphs: string[], noteIndex: number): number {
-  let span = 0;
-  while (isListItemLine(paragraphs[noteIndex + 1 + span] ?? "")) span++;
-  return span;
+  return paragraphs.length - noteIndex - 1;
 }
 
 export function getTableOfContents(text: string, title: string): TableOfContentsEntry[] {
