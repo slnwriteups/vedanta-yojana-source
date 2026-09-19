@@ -22,6 +22,7 @@ given.
 - [Testing architecture](#testing-architecture)
 - [Deployment architecture](#deployment-architecture)
 - [September 18 engineering record](#september-18-engineering-record)
+- [September 19 engineering record](#september-19-engineering-record)
 
 ## Project history
 
@@ -56,6 +57,7 @@ Major milestones, in order:
 | 2026-09-17 | `796dcd4`, `9b152a4` | Offline Pasuram downloads, then bundled into the app |
 | 2026-09-17 | `24c7e00` | Image zoom viewer |
 | 2026-09-18 | `a2b82cf` – `ff4d227` | Security/dependency remediation, content-update architecture, content-accuracy audit, release-engineering hardening — see [September 18 engineering record](#september-18-engineering-record) |
+| 2026-09-19 | `7109536` – `c069d11` | Google Play distribution decision, vedantayojana.org custom domain, special-note rendering bug fix, content-accuracy corrections across 10 Divya Desam records — see [September 19 engineering record](#september-19-engineering-record) |
 
 ## System architecture
 
@@ -285,3 +287,71 @@ punctuation is consistent. This is a different property from
 which this engineering process does not and cannot independently
 verify. See [Security Limitations](SECURITY.md#security-limitations)
 for the explicit distinction.
+
+## September 19 engineering record
+
+**Distribution and infrastructure.** The official Android distribution
+channel moved from a direct GitHub Release to Google Play (see
+[Signing & release provenance](SECURITY.md#signing--release-provenance)),
+and the website moved from GitHub Pages' default project-page URL to
+the `vedantayojana.org` custom domain (`public/CNAME`, DNS on
+Cloudflare, HTTPS enforced) — the site continues to auto-deploy on
+every push to `main`, unchanged. The website favicon now reuses the
+mobile app's own icon. Four debug-signed, wrong-package-identity
+releases left over from earlier ad-hoc testing were found and removed
+from GitHub (both this repository and the separate distribution repo,
+`vedanta-yojana-releases`) after their signing certificates were
+checked directly and confirmed not to match the project's real
+production credential.
+
+**Special-note rendering bug.** `specialNoteListItemSpan()`
+(content-lib/text-format.ts) only absorbed list items immediately
+following a special note into its callout box — any other kind of
+continuation (plain prose paragraphs, or a note long enough that
+`splitIntoReadableParagraphs()` breaks it into several display
+paragraphs, both of which lose the note's leading "*" marker after the
+first piece) rendered as ordinary, unstyled text right after the box
+instead of inside it. Verified against every special note in the
+corpus that this is safe to fix by simply absorbing everything
+remaining in the note's own paragraph block, since every note is
+authored as the sole content of its block. Fixed in the one shared
+function used by both platforms' Sthala Puranam, temple-information,
+and shrine-detail renderers.
+
+A second, related bug affected notes interrupted by an image whose
+`placementAnchor` lands *inside* the note rather than after it: the
+image split the note into two segments, and the second one lost its
+box entirely (the shared span-fix only sees as far as its own
+segment). Fixed by tracking, across both web and mobile's
+`SthalaPuranamWithImages.tsx`, whether the note just rendered ran to
+its segment's end — if so, the next text segment continues the same
+callout without needing its own marker, and without repeating the
+"SPECIAL NOTE" label.
+
+**Content corrections** made possible by (and verified against) the
+above fix: tirukkudandai, nachiyarkoil, and tirumanimada-kovil's notes
+now render in full instead of cutting off mid-sentence;
+tirukannangudi's and tiruvaali-tirunagari's existing multi-paragraph
+legends are now properly recognized as single notes instead of only
+boxing their own title line; tiruvahindrapuram's floating idol caption
+is now part of its note, with the idol photo anchored directly to it;
+tirukkurugur-azhwar-tirunagari's Nam Āzhwār account (previously split
+across four blank-line-separated blocks) is now one continuous note
+spanning the Divine Tamarind Tree photo. tiruvelliyangudi's `moolavar`
+field had a stray leading `*` — leftover source punctuation, not an
+intended note — that wrongly rendered the deity's name itself as a
+callout; removed. tirukurungudi's Mahendragiri photo was anchored to
+the wrong subheading ("Vaishṇava Nambi Temple" instead of its own);
+corrected. Three stray images unconnected to any section were removed
+from singavelkundram-ahobilam (a duplicate Nava Narasimha collage and
+two unrelated close-ups swept in during the original book-scan
+extraction). tiruppavalvannam gained a new second special note (the
+Sage Bhṛgu/Nāga Dīpam legend), authored in English and translated into
+Tamil, Kannada, and Hindi, IAST-formatted to match the corpus's
+existing spelling conventions.
+
+None of this day's fixes changed the underlying religious/historical
+content beyond what's described above — see the same content-accuracy
+distinction noted for September 18: these are internal-consistency and
+rendering corrections, not claims about the corrected text's own
+historical accuracy.
