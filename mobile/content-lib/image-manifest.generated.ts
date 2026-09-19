@@ -6,7 +6,7 @@
  * that sourceAssetUuid (via mobile/metro.config.js's watchFolders) --
  * nothing here is a copy, a rename, or a re-encode. 0 file(s)
  * under public/images/ did not match the expected UUID-named-image shape
- * and were skipped rather than guessed at. 29 book-exclusive
+ * and were skipped rather than guessed at. 32 book-exclusive
  * image(s) were deliberately excluded -- see this function's own doc
  * comment.
  */
@@ -52,7 +52,6 @@ import img_377419b972f24f03A8f5719820df0822Webp from "../../public/images/377419
 import img_37f98544Fa5c46429f5a32c9fe8bcca9Webp from "../../public/images/37f98544-fa5c-4642-9f5a-32c9fe8bcca9.webp";
 import img_39108525Fd8a43f0B9f700db6997d3a8Webp from "../../public/images/39108525-fd8a-43f0-b9f7-00db6997d3a8.webp";
 import img_39904cc26f82428c8a4c8cf160d38911Webp from "../../public/images/39904cc2-6f82-428c-8a4c-8cf160d38911.webp";
-import img_3c9b704c7162439a82e17be3f2b5a8b1Webp from "../../public/images/3c9b704c-7162-439a-82e1-7be3f2b5a8b1.webp";
 import img_3f84c8db1702481488a98e9cceedcd59Jpg from "../../public/images/3f84c8db-1702-4814-88a9-8e9cceedcd59.jpg";
 import img_3f9e5c1046e3449f9c4300a05fdaf607Jpg from "../../public/images/3f9e5c10-46e3-449f-9c43-00a05fdaf607.jpg";
 import img_40eeb0a807fa4f7b8cde8be24770b2beWebp from "../../public/images/40eeb0a8-07fa-4f7b-8cde-8be24770b2be.webp";
@@ -165,7 +164,6 @@ import img_cdf1f59a5d9140aeB496941142fa9884Webp from "../../public/images/cdf1f5
 import img_ce331fd5242147928ba4213a242659a2Webp from "../../public/images/ce331fd5-2421-4792-8ba4-213a242659a2.webp";
 import img_cee321c27ccc44bb8ab2Def3e9f54039Webp from "../../public/images/cee321c2-7ccc-44bb-8ab2-def3e9f54039.webp";
 import img_cf07b7b6F4ae49cdB855Fe7aaac6e589Webp from "../../public/images/cf07b7b6-f4ae-49cd-b855-fe7aaac6e589.webp";
-import img_d198d097969c41028acc26e65f6bc212Webp from "../../public/images/d198d097-969c-4102-8acc-26e65f6bc212.webp";
 import img_d34eb2e5A51c445d91abE703a52f43daPng from "../../public/images/d34eb2e5-a51c-445d-91ab-e703a52f43da.png";
 import img_d4320f07F33e41b58e04E6497d49d226Webp from "../../public/images/d4320f07-f33e-41b5-8e04-e6497d49d226.webp";
 import img_d4bc17b202cb42a2A39596b1f6956732Webp from "../../public/images/d4bc17b2-02cb-42a2-a395-96b1f6956732.webp";
@@ -189,7 +187,6 @@ import img_e9bea576F3bf4fc2A07d8b8e1a5a8661Webp from "../../public/images/e9bea5
 import img_eadac6047ed7447a831b55e3a1e7318dWebp from "../../public/images/eadac604-7ed7-447a-831b-55e3a1e7318d.webp";
 import img_ebf5a1ff1bfb4f61889c72b1167cad0cJpg from "../../public/images/ebf5a1ff-1bfb-4f61-889c-72b1167cad0c.jpg";
 import img_ed019e476c3947128895Ce6e152e94a4Webp from "../../public/images/ed019e47-6c39-4712-8895-ce6e152e94a4.webp";
-import img_ed61bcf341e4445f9d4068a7b1633f2aWebp from "../../public/images/ed61bcf3-41e4-445f-9d40-68a7b1633f2a.webp";
 import img_eda2ca7fB2834576Bb7a7be6fdb0ecfdWebp from "../../public/images/eda2ca7f-b283-4576-bb7a-7be6fdb0ecfd.webp";
 import img_ef3d30b91ba34c878fa1Ae48b6bde702Webp from "../../public/images/ef3d30b9-1ba3-4c87-8fa1-ae48b6bde702.webp";
 import img_ef68270a90e6461aA8df3c7df8fb8722Webp from "../../public/images/ef68270a-90e6-461a-a8df-3c7df8fb8722.webp";
@@ -253,7 +250,6 @@ export const imagesByUuid: Record<string, number> = {
   "37f98544-fa5c-4642-9f5a-32c9fe8bcca9": img_37f98544Fa5c46429f5a32c9fe8bcca9Webp,
   "39108525-fd8a-43f0-b9f7-00db6997d3a8": img_39108525Fd8a43f0B9f700db6997d3a8Webp,
   "39904cc2-6f82-428c-8a4c-8cf160d38911": img_39904cc26f82428c8a4c8cf160d38911Webp,
-  "3c9b704c-7162-439a-82e1-7be3f2b5a8b1": img_3c9b704c7162439a82e17be3f2b5a8b1Webp,
   "3f84c8db-1702-4814-88a9-8e9cceedcd59": img_3f84c8db1702481488a98e9cceedcd59Jpg,
   "3f9e5c10-46e3-449f-9c43-00a05fdaf607": img_3f9e5c1046e3449f9c4300a05fdaf607Jpg,
   "40eeb0a8-07fa-4f7b-8cde-8be24770b2be": img_40eeb0a807fa4f7b8cde8be24770b2beWebp,
@@ -366,7 +362,6 @@ export const imagesByUuid: Record<string, number> = {
   "ce331fd5-2421-4792-8ba4-213a242659a2": img_ce331fd5242147928ba4213a242659a2Webp,
   "cee321c2-7ccc-44bb-8ab2-def3e9f54039": img_cee321c27ccc44bb8ab2Def3e9f54039Webp,
   "cf07b7b6-f4ae-49cd-b855-fe7aaac6e589": img_cf07b7b6F4ae49cdB855Fe7aaac6e589Webp,
-  "d198d097-969c-4102-8acc-26e65f6bc212": img_d198d097969c41028acc26e65f6bc212Webp,
   "d34eb2e5-a51c-445d-91ab-e703a52f43da": img_d34eb2e5A51c445d91abE703a52f43daPng,
   "d4320f07-f33e-41b5-8e04-e6497d49d226": img_d4320f07F33e41b58e04E6497d49d226Webp,
   "d4bc17b2-02cb-42a2-a395-96b1f6956732": img_d4bc17b202cb42a2A39596b1f6956732Webp,
@@ -390,7 +385,6 @@ export const imagesByUuid: Record<string, number> = {
   "eadac604-7ed7-447a-831b-55e3a1e7318d": img_eadac6047ed7447a831b55e3a1e7318dWebp,
   "ebf5a1ff-1bfb-4f61-889c-72b1167cad0c": img_ebf5a1ff1bfb4f61889c72b1167cad0cJpg,
   "ed019e47-6c39-4712-8895-ce6e152e94a4": img_ed019e476c3947128895Ce6e152e94a4Webp,
-  "ed61bcf3-41e4-445f-9d40-68a7b1633f2a": img_ed61bcf341e4445f9d4068a7b1633f2aWebp,
   "eda2ca7f-b283-4576-bb7a-7be6fdb0ecfd": img_eda2ca7fB2834576Bb7a7be6fdb0ecfdWebp,
   "ef3d30b9-1ba3-4c87-8fa1-ae48b6bde702": img_ef3d30b91ba34c878fa1Ae48b6bde702Webp,
   "ef68270a-90e6-461a-a8df-3c7df8fb8722": img_ef68270a90e6461aA8df3c7df8fb8722Webp,

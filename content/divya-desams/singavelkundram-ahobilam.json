@@ -146,34 +146,11 @@
       "placementAnchor": "Ugra Sthambham"
     },
     {
-      "assetId": "singavelkundram-ahobilam-book-15",
-      "sourceAssetUuid": "3c9b704c-7162-439a-82e1-7be3f2b5a8b1",
-      "sourceOriginalName": "108-divyadesam-book-page327-img270.png (synthetic name -- the source PDF has no embedded per-image filename)",
-      "alt": null,
-      "altStatus": "needs-review"
-    },
-    {
       "assetId": "singavelkundram-ahobilam-book-16",
       "sourceAssetUuid": "8b4a495c-8a51-409f-b8e4-280278ab828d",
       "sourceOriginalName": "108-divyadesam-book-page327-img271.png (synthetic name -- the source PDF has no embedded per-image filename)",
       "alt": null,
       "altStatus": "needs-review"
-    },
-    {
-      "assetId": "singavelkundram-ahobilam-book-23",
-      "sourceAssetUuid": "ed61bcf3-41e4-445f-9d40-68a7b1633f2a",
-      "sourceOriginalName": "108-divyadesam-book-page335-img279.png (synthetic name -- the source PDF has no embedded per-image filename)",
-      "alt": null,
-      "altStatus": "needs-review",
-      "placement": "after-sthala-puranam"
-    },
-    {
-      "assetId": "singavelkundram-ahobilam-book-24",
-      "sourceAssetUuid": "d198d097-969c-4102-8acc-26e65f6bc212",
-      "sourceOriginalName": "108-divyadesam-book-page335-img280.png (synthetic name -- the source PDF has no embedded per-image filename)",
-      "alt": null,
-      "altStatus": "needs-review",
-      "placement": "after-sthala-puranam"
     }
   ],
   "resources": [
