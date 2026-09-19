@@ -322,15 +322,17 @@ account or track).
   verification.
 
 **Current status:** a production AAB for this release has been built
-via EAS (build `6cb099a8-cf63-4c8e-8c08-8d7d362309ce`, versionCode 11,
-source commit `ff4d227`) and independently verified: signed with the
+via EAS (build `8140578b-0f56-48b7-b31d-1ab680b291b3`, versionCode 13,
+source commit `73b0fff`) and independently verified: signed with the
 existing production credential (not `debug.keystore`), package
 identity, version, non-debuggable state, Hermes bytecode, and R8
-obfuscation all confirmed directly from the built artifact — see
-[APK-VERIFICATION.md](APK-VERIFICATION.md) for the exact values. It has
-not yet been uploaded to Google Play, so the Google Play app-signing
-certificate does not exist yet — Google assigns it on first upload,
-under Google Play App Signing.
+obfuscation all confirmed directly from the built artifact, and the
+exact artifact re-tested on a physical device (fresh install, upgrade
+install, navigation, all September 19 content fixes, zero crashes) —
+see [APK-VERIFICATION.md](APK-VERIFICATION.md) for the exact values. It
+has not yet been uploaded to Google Play, so the Google Play
+app-signing certificate does not exist yet — Google assigns it on
+first upload, under Google Play App Signing.
 
 **Why this matters to a user:** a valid signature establishes that a
 given APK file was signed with the private key corresponding to a

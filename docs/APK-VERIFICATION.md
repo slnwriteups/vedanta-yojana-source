@@ -32,13 +32,13 @@ regardless of what its filename or app icon says.
 |---|---|
 | Package name (`applicationId`) | `com.slnwriteups.vedantayojana` |
 | versionName | `1.0.0` |
-| versionCode | `11` |
-| AAB SHA-256 | `c09cd4de1040e97789756acb39652e50ac57151555f845f9885f28ad215c5579` |
+| versionCode | `13` |
+| AAB SHA-256 | `8fa98326593d4e77dd686c88358526510af1308cfb4671fdf374d68e05ba682d` |
 | Upload certificate SHA-256 | `6F:1A:65:65:D8:C6:C3:AB:3E:2F:D7:69:90:CA:13:74:D5:6D:2F:A3:53:0E:50:61:38:69:FE:34:CB:AB:85:97` |
 | Upload certificate SHA-1 | `1D:99:66:22:1F:6A:15:9B:B6:50:E5:CC:B4:01:78:A0:2D:88:FC:ED` |
 | Google Play app-signing certificate SHA-256 | *not yet available — assigned on first Google Play upload* |
-| Source commit | `ff4d227de15356d5309dd0399afc59c0b0511be3` |
-| EAS build ID | `6cb099a8-cf63-4c8e-8c08-8d7d362309ce` |
+| Source commit | `73b0fff00bfa8cd35e69bc3780e3b43b274db5fd` |
+| EAS build ID | `8140578b-0f56-48b7-b31d-1ab680b291b3` |
 
 Once uploaded to Google Play, this table will be updated with the
 Google Play app-signing certificate fingerprint. Verify against
