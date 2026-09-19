@@ -98,7 +98,7 @@ content/  →  content-lib/ (schemas + loader + search + i18n)  →  app/ (web) 
 `content/` holds the validated source data:
 
 - 108 Divya Desams
-- 4 books, 162 chapters total
+- 4 books, 227 chapters total
 - 1 Knowledge record
 
 Every record passes through `content-lib/schemas/` before either

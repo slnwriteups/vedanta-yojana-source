@@ -11,7 +11,7 @@ served today through both a website and a native mobile app.
 ## Key features
 
 - **108** Divya Desams, each in English, Tamil, Kannada, and Hindi
-- **4** full-length books (162 chapters) plus a Knowledge section,
+- **4** full-length books (227 chapters) plus a Knowledge section,
   readable online and downloadable for offline reading
 - All Pasurams bundled into the app for fully offline access — no
   network required
@@ -126,10 +126,10 @@ content/  →  content-lib/ (schemas + loader + search + i18n)  →  app/ (web) 
 `content-lib/schemas/`). It currently holds:
 
 - **108** Divya Desams
-- **4** Books, **162** chapters total: *A Brief Insight to
-  Visishtadvaita Philosophy* (55 chapters), *Sri Rama Charithram* (7),
+- **4** Books, **227** chapters total: *A Brief Insight to
+  Visishtadvaita Philosophy* (51 chapters), *Sri Rama Charithram* (75),
   *Srimad Bhagavata Kathasagaram* (31), *JAYA: A Journey of the
-  Mahabharata* (69)
+  Mahabharata* (70)
 - **1** Knowledge record
 
 Neither runtime reads `content/` directly — both go through
