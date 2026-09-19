@@ -197,8 +197,8 @@ as a `prebuild` step, then `next build` produces the static export.
 The Android production build itself runs on **EAS Build** (Expo
 Application Services), not on a local machine — see
 [Android Build & Release Process](../docs/SECURITY.md#build-security)
-and the root [README's Download section](../README.md#download) for
-the produced artifact.
+and the root [README's Latest Release section](../README.md#latest-release)
+for the produced artifact.
 
 ## Testing architecture
 
@@ -298,11 +298,22 @@ the `vedantayojana.org` custom domain (`public/CNAME`, DNS on
 Cloudflare, HTTPS enforced) — the site continues to auto-deploy on
 every push to `main`, unchanged. The website favicon now reuses the
 mobile app's own icon. Four debug-signed, wrong-package-identity
-releases left over from earlier ad-hoc testing were found and removed
-from GitHub (both this repository and the separate distribution repo,
-`vedanta-yojana-releases`) after their signing certificates were
-checked directly and confirmed not to match the project's real
-production credential.
+releases left over from earlier ad-hoc testing (`mobile-v1.0.0` through
+`mobile-v1.0.3`, each a `com.anonymous.vedantayojana`-package APK
+signed with the Android debug key) were identified in the separate
+distribution repo, `vedanta-yojana-releases`, after their signing
+certificates were checked directly and confirmed not to match the
+project's real production credential.
+
+**Correction (2026-09-19, later same day):** this record previously
+stated these four releases had been removed. A subsequent
+pre-publication audit found they are still present and still
+publicly published (not draft) in `vedanta-yojana-releases`, each with
+a nonzero download count — see
+[Security limitations](SECURITY.md#security-limitations) and the
+Blocking Issues in that audit. They have not been deleted as of this
+writing; doing so is a manual GitHub action outside this repository's
+own history.
 
 **Special-note rendering bug.** `specialNoteListItemSpan()`
 (content-lib/text-format.ts) only absorbed list items immediately

@@ -30,11 +30,16 @@ This policy covers:
 - The source code and configuration in this repository
 - The GitHub Actions build and deployment pipeline
 - The published GitHub Pages website
-- The Android application as distributed through Google Play
+- The Android application, as distributed through Google Play or the
+  project's GitHub Releases repository
+  ([`vedanta-yojana-releases`](https://github.com/slnwriteups/vedanta-yojana-releases))
 
-The official distribution channel for the Android application is Google
-Play. This repository is the application's source, documentation, and
-release-provenance record, not itself an Android distribution channel.
+Google Play is the official app-store distribution channel; GitHub
+Releases provides direct APK distribution ahead of a Google Play
+listing — see [docs/APK-VERIFICATION.md](docs/APK-VERIFICATION.md) for
+how the two relate. This repository (`vedanta-yojana-source`) is the
+application's source, documentation, and release-provenance record,
+not itself an Android distribution channel.
 
 ## What to Expect
 

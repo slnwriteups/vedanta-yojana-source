@@ -5,18 +5,42 @@ claiming to be Vedanta Yojana is the official release, and how to
 distinguish it from a renamed, repackaged, or otherwise unofficial
 file.
 
-## Official source
+## Official sources
 
-The official Android distribution channel is **Google Play**. Once
-published, the listing will be linked from the project
-[README](../README.md#download).
+There are two legitimate distribution channels for this application,
+serving different purposes:
+
+- **Google Play** — the official app-store channel. This is where the
+  app will eventually receive Google Play's own install-time signature
+  verification and update management. Not yet published; the listing
+  will be linked from the project [README](../README.md#latest-release)
+  once it is.
+- **GitHub Releases** — direct APK distribution, at
+  [`slnwriteups/vedanta-yojana-releases`](https://github.com/slnwriteups/vedanta-yojana-releases/releases).
+  This is a separate, binary-only repository (no source code) dedicated
+  to hosting signed release artifacts, and is the project's intended
+  public location for manually downloading the Android APK today, ahead
+  of a Google Play listing. Publishing an APK there does not bypass the
+  normal release process described in this guide — every release is
+  built by the same EAS pipeline, signed with the same production
+  credential, and published with a checksum for exactly this kind of
+  independent verification.
 
 This source repository (`vedanta-yojana-source`) is the project's
 source code, documentation, and release-provenance record — it is
-**not** itself an Android distribution channel. Any APK obtained
-outside of the official Google Play listing — a mirror site, a
-forwarded file, a search-engine result — is **not an official source**,
-regardless of what its filename or app icon says.
+**not** itself an Android distribution channel, and does not host APK
+files.
+
+**A release only counts as genuine if its SHA-256 checksum and signing
+certificate match the values published for that version** (see Levels
+2 and 3 below) — not merely because it came from a URL under
+`github.com/slnwriteups/vedanta-yojana-releases`. A release tag whose
+checksum or certificate doesn't match what's documented for that
+version should be treated the same as an APK from any other
+unverified source: do not install it. Any APK obtained from a mirror
+site, a forwarded file, or a search-engine result outside of these two
+channels is **not an official source**, regardless of what its
+filename or app icon says.
 
 ## Release identity
 
@@ -64,13 +88,18 @@ signing certificate, not the project's upload certificate. Both will
 be published here once known — the app signing certificate is the one
 that matters for confirming what's actually on your device.
 
-## Level 1 — Install only from Google Play
+## Level 1 — Prefer Google Play once it's available
 
-The simplest and strongest protection is also the easiest: install and
-update only through the official Google Play listing. Play verifies
-the app's signature against its own records on every install and
-update — a guarantee no manual verification step below can fully
-substitute for.
+The simplest and strongest protection is also the easiest: once the
+app is on Google Play, install and update only through that listing.
+Play verifies the app's signature against its own records on every
+install and update — a guarantee no manual verification step below
+can fully substitute for.
+
+Until then, download the APK only from the official GitHub Releases
+page linked above, and verify it using Levels 2 and 3 below before
+installing — this substitutes for Play's automatic check, but only if
+you actually do it.
 
 ## Level 2 — Verify the SHA-256 checksum (for a downloaded file)
 
@@ -168,7 +197,8 @@ key is computationally infeasible.
 ## If you downloaded an APK from somewhere else
 
 If you already have an APK claiming to be Vedanta Yojana from a source
-other than the official Google Play listing:
+other than the official Google Play listing or the official GitHub
+Releases page:
 
 1. Do not install it.
 2. Compare its SHA-256 and signing certificate against the values
@@ -177,6 +207,11 @@ other than the official Google Play listing:
 3. If either does not match — or no official release with that version
    exists yet — do not install it, and consider reporting where you
    found it (see [SECURITY.md](../SECURITY.md)).
+
+This check applies even to a file downloaded from the GitHub Releases
+repository itself: match the specific release tag's checksum and
+certificate before trusting it, not just the fact that it came from
+that repository.
 
 ## Summary
 
@@ -187,5 +222,7 @@ other than the official Google Play listing:
 - Neither establishes that the software is free of security
   vulnerabilities — see [docs/SECURITY.md](SECURITY.md) for what
   security testing has and has not been done.
-- The only way to start from a trustworthy baseline is to install from
-  the official Google Play listing in the first place.
+- The most trustworthy baseline, once available, is installing from
+  the official Google Play listing. Until then, the official GitHub
+  Releases page is the intended source — verify its checksum and
+  certificate before installing either way.

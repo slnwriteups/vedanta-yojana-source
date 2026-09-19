@@ -32,7 +32,7 @@ rather than assumed.
 
 | Threat | Mitigation | Residual risk |
 |---|---|---|
-| Fake or repackaged APK distributed under the project's name | Official distribution limited to Google Play; Play's own listing/signing verification plus a published certificate fingerprint let a specific install be confirmed | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
+| Fake or repackaged APK distributed under the project's name | Distribution limited to two channels — Google Play (once published) and the project's own GitHub Releases repository; a published checksum and certificate fingerprint let a specific install be confirmed against either — see [APK Verification Guide](APK-VERIFICATION.md) | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
 | Modified/tampered APK | Android's own signature verification rejects any APK whose contents were altered after signing, at install time, if the certificate doesn't match a prior install | Only protects users who compare the certificate against a trusted reference; does not itself alert an unsuspecting user |
 | Compromised GitHub account | Secret scanning and push protection enabled on the repository; Dependabot security updates enabled | No hardware-key/2FA enforcement is independently verifiable from repository configuration alone |
 | Compromised GitHub Actions workflow | All third-party Actions pinned to a full commit SHA (not a floating tag) in `.github/workflows/*.yml`; workflows use least-privilege `permissions: contents: read` unless a step specifically needs more | A compromised upstream Action release that predates the pinned SHA is not something a SHA pin can catch by itself |
@@ -344,10 +344,28 @@ free of bugs or vulnerabilities.
 
 ## Secrets management
 
-- No `.env` file, API key, keystore file, or credential is committed
-  to the repository (verified by inspecting the working tree and
-  `.gitignore`; secret scanning is additionally enabled — see
+- No `.env` file, keystore file, or credential belonging to the
+  *current* application is committed to the repository (verified by
+  inspecting the working tree and `.gitignore`; secret scanning is
+  additionally enabled — see
   [Source & repository security](#source--repository-security)).
+- **Correction (2026-09-19 pre-publication audit):** a Google/Firebase
+  Web API key (the `AIzaSy...` pattern) belonging to the *legacy*,
+  pre-rewrite version of this application is committed twice in this
+  repository: once inside the raw legacy bundle
+  (`_next/static/chunks/pages/_app-*.js`) and once in its decoded form
+  (`content-extraction/_generated/app-definition.json`). GitHub's
+  secret scanning has not flagged it (confirmed via the repository's
+  own alerts API, which currently returns none). This key is not used
+  by, and has no bearing on, the current application — a full grep of
+  `app/`, `components/`, `lib/`, `mobile/`, and `content-lib/` confirms
+  no Firebase dependency exists in the current codebase. It belongs to
+  a retired project. It should still be rotated or the underlying
+  Firebase project deleted/disabled by whoever holds access to it,
+  since a syntactically valid, publicly visible API key is a legitimate
+  finding regardless of whether the project it authenticates against is
+  still in active use — see Blocking Issues in the 2026-09-19
+  pre-publication audit.
 - The one GitHub Actions secret referenced in this repository's
   workflows is `secrets.DEPLOY_REPO_TOKEN`
   (`.github/workflows/deploy-preview-repo.yml`), a scoped token used
@@ -388,6 +406,24 @@ useful to a user than reassurance:
   Neither establishes that every religious or historical statement in
   that content is factually correct — that is a domain/editorial
   question outside what engineering verification can answer.
+- **Four stale, non-production releases remain publicly published in
+  `vedanta-yojana-releases`** as of the 2026-09-19 pre-publication
+  audit: `mobile-v1.0.0` through `mobile-v1.0.3`. Each is a debug-signed
+  (`CN=Android Debug`), wrong-package-identity
+  (`com.anonymous.vedantayojana` rather than
+  `com.slnwriteups.vedantayojana`) APK from earlier ad-hoc testing —
+  confirmed directly against each artifact's own signing certificate
+  and package manifest, not inferred. They are not draft — an
+  unauthenticated user can currently download them, and several already
+  have. They do not affect the currently published `android-v10`
+  release (independently re-verified in the same audit: correct
+  package, correct production certificate, checksum matches its
+  published digest) but should be deleted before public announcement
+  to avoid a user mistaking one for a real release. See
+  [APK Verification Guide](APK-VERIFICATION.md) for how a user can tell
+  the difference in the meantime: checksum and certificate must match
+  the specific version's published values, not merely come from this
+  repository.
 - **No security control here is absolute.** Each mitigation in the
   [threat model](#threat-model) has a stated residual risk. Treat this
   document as a description of what is actually in place, not as a
