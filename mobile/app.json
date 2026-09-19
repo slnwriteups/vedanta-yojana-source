@@ -42,7 +42,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.slnwriteups.vedantayojana",
-      "versionCode": 10
+      "versionCode": 11
     },
     "plugins": [
       "expo-router",
