@@ -271,6 +271,13 @@ const UI_STRINGS = {
   filterKnowledge: { en: "Knowledge", ta: "அறிவு", kn: "ಜ್ಞಾನ", hi: "ज्ञान" },
 
   settingsConnectLabel: { en: "Connect", ta: "இணைப்பு", kn: "ಸಂಪರ್ಕಿಸಿ", hi: "जुड़ें" },
+  settingsReleasesLabel: { en: "Releases", ta: "வெளியீடுகள்", kn: "ಬಿಡುಗಡೆಗಳು", hi: "रिलीज़" },
+  settingsReleasesLinkLabel: {
+    en: "View Releases",
+    ta: "வெளியீடுகளைப் பார்க்க",
+    kn: "ಬಿಡುಗಡೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ",
+    hi: "रिलीज़ देखें",
+  },
   settingsLanguageLabel: { en: "Language", ta: "மொழி", kn: "ಭಾಷೆ", hi: "भाषा" },
   settingsAppearanceLabel: { en: "Appearance", ta: "தோற்றம்", kn: "ನೋಟ", hi: "रूप" },
   settingsTextSizeLabel: { en: "Text size", ta: "எழுத்து அளவு", kn: "ಅಕ್ಷರ ಗಾತ್ರ", hi: "अक्षर आकार" },
