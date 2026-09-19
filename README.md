@@ -5,7 +5,7 @@ philosophy texts, and full-length books (Ramayana, Bhagavatam,
 Mahabharata), maintained as clean, validated, versioned content —
 served today through both a website and a native mobile app.
 
-**Website:** https://slnwriteups.github.io/vedanta-yojana/
+**Website:** https://vedantayojana.org
 **Android:** see [Download](#download) below.
 
 ## Key features

@@ -19,7 +19,7 @@ import { downloadBook, getLocalBookContentHash, isBookAvailable } from "./bookOf
  * scripts/build-content-manifest.ts, wired into `prebuild`).
  */
 
-const CONTENT_MANIFEST_URL = "https://slnwriteups.github.io/vedanta-yojana/content-manifest.json";
+const CONTENT_MANIFEST_URL = "https://vedantayojana.org/content-manifest.json";
 const FETCH_TIMEOUT_MS = 8000;
 
 function cachedManifestFile(): File {

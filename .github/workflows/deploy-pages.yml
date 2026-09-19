@@ -42,15 +42,12 @@ jobs:
         #
         # NEXT_PUBLIC_SITE_URL is what turns canonical URLs, the sitemap's
         # <loc> values and robots.txt's Sitemap: line absolute. Only the
-        # origin is read from it (see lib/site.ts); the /vedanta-yojana
-        # sub-path comes from next.config.ts's basePath, so the two cannot
-        # disagree.
+        # origin is read from it (see lib/site.ts). Served from the
+        # vedantayojana.org custom domain (public/CNAME) at the root, so
+        # no basePath is set -- see next.config.ts.
         run: npm run build
         env:
-          NEXT_PUBLIC_SITE_URL: https://slnwriteups.github.io
-          # Set only here. Vercel and local builds leave it unset and are
-          # served from a domain root -- see next.config.ts.
-          NEXT_PUBLIC_BASE_PATH: /vedanta-yojana
+          NEXT_PUBLIC_SITE_URL: https://vedantayojana.org
 
       - name: Disable Jekyll processing
         # Next.js emits _next/, and Jekyll strips underscore-prefixed

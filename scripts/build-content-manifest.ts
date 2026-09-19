@@ -48,7 +48,7 @@ const OUTPUT_FILE = path.join(REPO_ROOT, "public", "content-manifest.json");
  * or standalone locally -- same reasoning, and the same literal string,
  * as mobile/services/bookOfflineService.ts's own PAGES_BASE_URL.
  */
-const PAGES_BASE_URL = "https://slnwriteups.github.io/vedanta-yojana";
+const PAGES_BASE_URL = "https://vedantayojana.org";
 
 function listSubdirectories(dir: string): string[] {
   if (!fs.existsSync(dir)) return [];

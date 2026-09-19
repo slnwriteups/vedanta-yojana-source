@@ -69,7 +69,7 @@ flowchart LR
     Source --> Lib["content-lib/\nschemas · loader · search · i18n"]
     Lib --> Web["Website\n(Next.js, static export)"]
     Lib --> Mobile["Mobile app\n(Expo / React Native)"]
-    Web --> Pages["GitHub Pages\nslnwriteups.github.io/vedanta-yojana"]
+    Web --> Pages["GitHub Pages\nvedantayojana.org (custom domain)"]
     Mobile --> Build["EAS production build\n(Android App Bundle)"]
     Build --> Release["Google Play"]
 ```

@@ -22,7 +22,7 @@ import Constants from "expo-constants";
  * no scenario where they could diverge.
  */
 
-const VERSION_MANIFEST_URL = "https://slnwriteups.github.io/vedanta-yojana/app-version.json";
+const VERSION_MANIFEST_URL = "https://vedantayojana.org/app-version.json";
 const FETCH_TIMEOUT_MS = 8000;
 
 export interface UpdateInfo {

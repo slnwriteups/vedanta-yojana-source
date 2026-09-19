@@ -34,7 +34,7 @@ import type { BookDownloadResult, BookFileSystem } from "./bookOfflineCore.ts";
  * filesystem, instead of this file.
  */
 
-const PAGES_BASE_URL = "https://slnwriteups.github.io/vedanta-yojana";
+const PAGES_BASE_URL = "https://vedantayojana.org";
 
 function bookJsonUrl(bookSlug: string): string {
   return `${PAGES_BASE_URL}/books/${bookSlug}.json`;

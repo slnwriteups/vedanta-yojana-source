@@ -41,7 +41,7 @@ rather than assumed.
 | Malicious or vulnerable dependency | `package-lock.json` committed for both web and mobile; Dependabot configured (`.github/dependabot.yml`) for npm (root, `mobile/`) and GitHub Actions; `npm audit` reviewed; two dependencies patched via `patch-package` (see [Dependency security](#dependency-security)) | New vulnerabilities can be disclosed after release; Dependabot/audit tooling only knows about publicly disclosed advisories |
 | Malicious content payload (Library remote update) | Content is schema-validated at build time (`content-lib/schemas/`) before publication; the app enforces a schema-version literal check and fails closed on any shape it doesn't recognize | The remote content manifest is served over HTTPS from GitHub Pages with no additional content-signing beyond TLS + schema validation — see [Content integrity](#content-integrity) |
 | Stale or incorrect content build | `contentHash` per book in `content-manifest.json`, generated from the same build pipeline that produces the payload; hash mismatch triggers re-download | Does not detect a build that is internally consistent but was generated from wrong/incorrect source content |
-| Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://slnwriteups.github.io/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
+| Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://vedantayojana.org/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
 | Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to Google Play only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters for anyone who sideloads instead — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
 | Accidental release of a debug-signed or debug-configured build | Release builds are produced via the EAS `production` profile, which is distinct from `development`/`preview`; a debug-keystore-signed local build was explicitly identified during release engineering and was **not** published — see [Signing & release provenance](#signing--release-provenance) | Requires continued process discipline; nothing in the build system automatically prevents a debug artifact from being manually uploaded to a release by mistake |
 | Compromised developer machine | Signing credentials are not stored locally (EAS-managed); `.env`/secret files are not committed (see [Secrets management](#secrets-management)) | A compromised machine with valid EAS/GitHub session credentials could still initiate actions under the developer's identity |
@@ -231,9 +231,9 @@ served from GitHub Pages:
 
 | Endpoint | Purpose | Source |
 |---|---|---|
-| `https://slnwriteups.github.io/vedanta-yojana/content-manifest.json` | Library content catalog/version check | `mobile/services/libraryCatalogService.ts` |
-| `https://slnwriteups.github.io/vedanta-yojana/app-version.json` | App version/update check | `mobile/services/updateCheckService.ts` |
-| `https://slnwriteups.github.io/vedanta-yojana/...` (book payloads) | Library book content download | `mobile/services/bookOfflineService.ts` |
+| `https://vedantayojana.org/content-manifest.json` | Library content catalog/version check | `mobile/services/libraryCatalogService.ts` |
+| `https://vedantayojana.org/app-version.json` | App version/update check | `mobile/services/updateCheckService.ts` |
+| `https://vedantayojana.org/...` (book payloads) | Library book content download | `mobile/services/bookOfflineService.ts` |
 
 No `localhost` or development-server URL is referenced outside Expo's
 own development-client tooling (which is not part of a release build).

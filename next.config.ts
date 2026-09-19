@@ -2,17 +2,17 @@ import type { NextConfig } from "next";
 
 /**
  * The sub-path the site is served under, supplied by the deployment
- * rather than hardcoded -- the two live targets disagree about it:
+ * rather than hardcoded. Empty ("") on every current target -- GitHub
+ * Pages serves from the vedantayojana.org custom domain root
+ * (public/CNAME, set in .github/workflows/deploy-pages.yml), and so do
+ * Vercel (kept as a fallback) and local `next dev`.
  *
- *   - GitHub Pages project site -> "/vedanta-yojana", set by
- *     .github/workflows/deploy-pages.yml, because the site lives at
- *     https://slnwriteups.github.io/vedanta-yojana/
- *   - Vercel (kept as a fallback) and local `next dev` -> "", because
- *     both serve from a domain root
- *
- * Defaulting to "" is the safe direction: a stray basePath on a
- * root-served deployment 404s the entire site, whereas a missing one is
- * only wrong on Pages, which always sets it explicitly.
+ * Kept as an env-driven variable rather than deleted outright: a stray
+ * basePath on a root-served deployment 404s the entire site, so this
+ * stays available as an escape hatch for a future project-page-style
+ * deployment without code changes -- see the prior custom-domain
+ * migration, which only touched the workflow's env vars and added a
+ * CNAME file.
  *
  * `next/link` and `next/router` apply this prefix automatically; raw
  * `<img src>` and `fetch()` URLs do NOT, which is why it is read again
@@ -20,9 +20,6 @@ import type { NextConfig } from "next";
  * lib/image-file.ts), components/search/SearchClient.tsx and
  * lib/site.ts. NEXT_PUBLIC_ vars are inlined into the bundle at build
  * time, so those reads see the same value this one does.
- *
- * Moving to a custom domain means dropping the workflow's env var and
- * adding a CNAME file -- no code changes.
  */
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
