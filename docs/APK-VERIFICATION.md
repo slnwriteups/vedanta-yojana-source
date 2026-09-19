@@ -20,26 +20,29 @@ regardless of what its filename or app icon says.
 
 ## Release identity
 
-> **Status:** The app has not yet been published on Google Play. The
-> values below that are already fixed by the app's current
-> configuration are verifiable in this repository today; the
-> release-specific values (versionCode, AAB/APK SHA-256, signing
-> certificate fingerprints) will be filled in here, with real values,
-> once a production build is completed, uploaded, and live on Google
-> Play — never with placeholder or invented numbers.
+> **Status:** A production AAB has been built via EAS using the
+> project's existing production signing credential and independently
+> verified (see below), but has not yet been uploaded to Google Play.
+> The Google Play app-signing certificate does not exist yet — it is
+> assigned by Google Play App Signing on first upload — and will be
+> added here once known. Nothing below is a placeholder or invented
+> value; everything listed was read directly from the built artifact.
 
 | Property | Value |
 |---|---|
 | Package name (`applicationId`) | `com.slnwriteups.vedantayojana` |
 | versionName | `1.0.0` |
-| versionCode | *not yet published* |
-| AAB/APK SHA-256 | *not yet published* |
-| Upload certificate SHA-256 | *not yet published* |
-| Google Play app-signing certificate SHA-256 | *not yet published* |
+| versionCode | `11` |
+| AAB SHA-256 | `c09cd4de1040e97789756acb39652e50ac57151555f845f9885f28ad215c5579` |
+| Upload certificate SHA-256 | `6F:1A:65:65:D8:C6:C3:AB:3E:2F:D7:69:90:CA:13:74:D5:6D:2F:A3:53:0E:50:61:38:69:FE:34:CB:AB:85:97` |
+| Upload certificate SHA-1 | `1D:99:66:22:1F:6A:15:9B:B6:50:E5:CC:B4:01:78:A0:2D:88:FC:ED` |
+| Google Play app-signing certificate SHA-256 | *not yet available — assigned on first Google Play upload* |
+| Source commit | `ff4d227de15356d5309dd0399afc59c0b0511be3` |
+| EAS build ID | `6cb099a8-cf63-4c8e-8c08-8d7d362309ce` |
 
-Once published, this table will carry the actual values for that
-specific release. Verify against whichever version you have installed,
-not against an older one.
+Once uploaded to Google Play, this table will be updated with the
+Google Play app-signing certificate fingerprint. Verify against
+whichever version you have installed, not against an older one.
 
 ## Understanding Google Play App Signing (read this first)
 

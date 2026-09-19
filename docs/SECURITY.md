@@ -321,14 +321,16 @@ account or track).
   [How Users Can Verify](APK-VERIFICATION.md) for what that means for
   verification.
 
-**What is not yet true, stated plainly:** a production AAB for this
-release has not yet been built and uploaded. The specific
-signing-certificate SHA-256 fingerprint(s), the exact AAB/APK SHA-256,
-and the EAS build ID for this release are therefore **not yet
-available** and are not stated anywhere in this documentation set or
-in [APK-VERIFICATION.md](APK-VERIFICATION.md) until they can be
-recorded from an actual completed, inspected, uploaded build. See the
-project's release notes for the current status.
+**Current status:** a production AAB for this release has been built
+via EAS (build `6cb099a8-cf63-4c8e-8c08-8d7d362309ce`, versionCode 11,
+source commit `ff4d227`) and independently verified: signed with the
+existing production credential (not `debug.keystore`), package
+identity, version, non-debuggable state, Hermes bytecode, and R8
+obfuscation all confirmed directly from the built artifact — see
+[APK-VERIFICATION.md](APK-VERIFICATION.md) for the exact values. It has
+not yet been uploaded to Google Play, so the Google Play app-signing
+certificate does not exist yet — Google assigns it on first upload,
+under Google Play App Signing.
 
 **Why this matters to a user:** a valid signature establishes that a
 given APK file was signed with the private key corresponding to a
