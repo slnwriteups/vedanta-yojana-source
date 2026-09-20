@@ -1,0 +1,28 @@
+name = "request-analytics"
+main = "worker.js"
+compatibility_date = "2026-09-20"
+
+# Routes, not a workers.dev URL: this Worker has to sit in the real
+# request path for vedantayojana.org, in front of the GitHub Pages
+# origin, or it observes nothing. That requires the zone's DNS records
+# to be PROXIED (orange cloud) -- with DNS-only records the request never
+# reaches Cloudflare at all and the Worker is simply never invoked. See
+# docs/ANALYTICS.md.
+#
+# Scoped to exactly the two manifests the mobile app fetches. Not a
+# `/*` catch-all: the Worker is deliberately not in the path of ordinary
+# human page views (those are measured by the aggregate Web Analytics
+# beacon instead), so a bug or a misconfiguration here cannot degrade
+# the website itself, and the data set cannot quietly accumulate
+# per-visitor browsing paths.
+routes = [
+  { pattern = "vedantayojana.org/app-version.json", zone_name = "vedantayojana.org" },
+  { pattern = "vedantayojana.org/content-manifest.json", zone_name = "vedantayojana.org" },
+]
+
+# The dataset name is what the SQL API queries as its table -- changing
+# it starts a new, empty series rather than renaming the existing one,
+# so it is fixed here rather than derived from the Worker name.
+[[analytics_engine_datasets]]
+binding = "REQUEST_STATS"
+dataset = "vedanta_yojana_requests"

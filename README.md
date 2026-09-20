@@ -520,6 +520,7 @@ to confirm a downloaded file is genuine.
 - [Development & Architecture](docs/DEVELOPMENT.md) — project history, system architecture, content pipeline, build/test/deploy architecture
 - [Security Architecture](docs/SECURITY.md) — threat model, dependency security, build/Android/network security, signing
 - [APK Verification Guide](docs/APK-VERIFICATION.md) — how to confirm a downloaded Android release is genuine
+- [Traffic & Install Measurement](docs/ANALYTICS.md) — what is measured, where, and why none of it is in the app
 - [Vulnerability Reporting](SECURITY.md) — how to report a security issue
 
 ## Security & verification summary
@@ -540,7 +541,16 @@ to confirm a downloaded file is genuine.
 ## Privacy & data summary
 
 - No analytics, advertising, crash-reporting, or tracking SDK is
-  present in the mobile app's dependencies.
+  present in the mobile app's dependencies. This is a statement about
+  the **app**, and it remains unconditionally true.
+- The **website** (vedantayojana.org) carries cookieless, aggregate
+  page-view measurement — no cookies, no client-side storage, no
+  cross-site identifier, no individual profiles. Separately, the
+  version-check and Library-catalog requests the app already makes to
+  that site are counted by country at the network edge; that counting
+  observes traffic that already exists and adds nothing whatsoever to
+  the app. Full detail, including exactly what is and is not recorded:
+  [docs/ANALYTICS.md](docs/ANALYTICS.md).
 - No account or sign-in is required or offered.
 - Network requests fetch public content (Library book updates, version
   checks) from this project's own GitHub Pages site over HTTPS; nothing
