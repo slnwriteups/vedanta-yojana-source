@@ -1,0 +1,78 @@
+name: Deploy request-analytics Worker
+
+# The request-analytics Worker (cloudflare/request-analytics/) counts the
+# mobile app's manifest fetches by country at the edge. It was first
+# deployed by hand, which left a gap worth naming: an edit to worker.js
+# would sit merged on main, looking deployed, while the edge kept running
+# the previous version indefinitely. Nothing about a stale Worker is
+# visible from the repository -- exactly the failure mode that let
+# public/app-version.json advertise versionCode 10 for four days.
+#
+# Scoped by path: this runs only when the Worker's own directory changes,
+# so ordinary content and site commits do not redeploy it.
+#
+# Deliberately NOT a Cloudflare Workers Build (the Git integration used
+# for cloudflare/panchangam-proxy): that integration's production and
+# non-production commands drifted apart -- the deploy command carries
+# --config, the version command does not -- and every pull request build
+# has failed since it was connected. Keeping this deploy in Actions puts
+# it beside the checks that already gate this repository, where a failure
+# is visible in the same place as every other one.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cloudflare/request-analytics/**"
+      - ".github/workflows/deploy-request-analytics.yml"
+  workflow_dispatch:
+
+# Never let two deploys of the same Worker race.
+concurrency:
+  group: deploy-request-analytics
+  cancel-in-progress: false
+
+# Least privilege: reads the repository, deploys outward to Cloudflare,
+# writes nothing back here.
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: wrangler deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Validate the Worker without credentials
+        # --dry-run needs no authentication, so a malformed wrangler.toml
+        # or a broken bundle fails here with a clear error rather than
+        # inside an authenticated deploy -- and it still runs on forks and
+        # before the deploy credential exists.
+        working-directory: cloudflare/request-analytics
+        run: npx --yes wrangler@4 deploy --dry-run --outdir /tmp/request-analytics-dryrun
+
+      - name: Deploy
+        working-directory: cloudflare/request-analytics
+        env:
+          # Requires a Cloudflare API token with Workers Scripts: Edit and,
+          # because wrangler.toml declares routes, Workers Routes: Edit on
+          # the vedantayojana.org zone.
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          # Skips rather than fails when the credential is absent. The
+          # alternative -- a red X on every Worker change until someone
+          # mints a token -- trains people to ignore a failing deploy,
+          # which is worse than an honest, visible skip. The warning is
+          # surfaced in the run summary, not buried in the log.
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN is not set -- validated the Worker but did not deploy it. The edge is still running the previously deployed version."
+            exit 0
+          fi
+          npx --yes wrangler@4 deploy
