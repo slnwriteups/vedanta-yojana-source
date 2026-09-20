@@ -48,6 +48,15 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_SITE_URL: https://vedantayojana.org
+          # Cloudflare Web Analytics site token (app/layout.tsx). A
+          # repository VARIABLE, not a secret: it is public by design --
+          # it appears in the HTML of every deployed page and grants
+          # nothing but the ability to report page views into this
+          # site's own bucket. Unset is a supported state: the beacon is
+          # then simply not rendered, and the build is otherwise
+          # identical, so a fork building this repository never reports
+          # into this project's account.
+          NEXT_PUBLIC_CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
 
       - name: Disable Jekyll processing
         # Next.js emits _next/, and Jekyll strips underscore-prefixed

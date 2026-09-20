@@ -1,0 +1,74 @@
+name: APK download stats
+
+# Records a daily snapshot of the public APK download counts into
+# stats/apk-downloads.json. See scripts/record-apk-downloads.ts for why a
+# stored series is necessary at all: GitHub's releases API reports only a
+# running total, with no history, so a number not written down each day
+# is a number that can never be recovered later.
+#
+# Deliberately separate from ci.yml (which validates pushes) and
+# deploy-pages.yml (which publishes the site): this workflow neither
+# validates nor deploys anything -- it only records data.
+on:
+  schedule:
+    # 03:17 UTC daily. An off-the-hour minute on purpose: GitHub delays
+    # or drops scheduled runs queued on the hour, when every cron on the
+    # platform fires at once.
+    - cron: "17 3 * * *"
+  workflow_dispatch:
+
+# Only one snapshot writer at a time. Two concurrent runs would race on
+# the same file and the loser's push would be rejected.
+concurrency:
+  group: apk-download-stats
+  cancel-in-progress: false
+
+# contents: write is required -- unlike every other workflow in this
+# repository, this one commits its result back. It writes nothing except
+# stats/apk-downloads.json.
+permissions:
+  contents: write
+
+jobs:
+  record:
+    name: Record download counts
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          # Matches .nvmrc, as every other workflow here does. No `npm
+          # ci` step: the script uses only Node builtins and the global
+          # fetch, so installing the application's dependencies would be
+          # pure cost.
+          node-version-file: ".nvmrc"
+
+      - name: Record snapshot
+        # The releases repository is public, so this call needs no
+        # credentials at all. GITHUB_TOKEN is passed only for the higher
+        # authenticated rate limit; the script works without it.
+        run: node scripts/record-apk-downloads.ts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Commit if changed
+        # `[skip ci]` is load-bearing: without it this daily commit would
+        # trigger ci.yml AND a full GitHub Pages redeploy every single
+        # day, for a data file that is not part of the published site.
+        #
+        # The `git diff --quiet` guard means no empty commits on days
+        # when nothing changed -- which is most days early on, since a
+        # snapshot is only rewritten when a count actually moves.
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats/apk-downloads.json
+          if git diff --cached --quiet; then
+            echo "No change in download counts; nothing to commit."
+            exit 0
+          fi
+          git commit -m "chore(stats): record APK download counts [skip ci]"
+          git push

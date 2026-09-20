@@ -12,6 +12,34 @@ const WELCOME_IMAGE_UUID = "a0635841-903d-4856-90a8-eca5becb3c5e";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 /**
+ * Cloudflare Web Analytics site token. Supplied by the deployment
+ * (deploy-pages.yml reads it from a repository *variable*, not a
+ * secret) and empty everywhere it is not configured -- `next dev`, the
+ * test suite, and any fork's build, none of which should be reporting
+ * page views into this project's account.
+ *
+ * Empty means the beacon is not rendered at all, rather than rendered
+ * with a placeholder token: a tag that loads a third-party script and
+ * then fails is strictly worse than no tag. This is why it is read as a
+ * plain value here and guarded at the render site below.
+ *
+ * The token is not a credential -- it is public by design, visible in
+ * the HTML of every page, and grants nothing except the ability to
+ * report page views into this site's own bucket. It is a repository
+ * variable rather than a secret for exactly that reason; treating it as
+ * a secret would imply a confidentiality it does not have.
+ *
+ * What this measures and why it is compatible with this project's
+ * privacy commitments: Cloudflare Web Analytics is cookieless, sets no
+ * client-side state, uses no cross-site identifier, and reports only
+ * aggregate page views with a country-level breakdown. It covers the
+ * WEBSITE only. The mobile app contains no analytics of any kind and
+ * this token is not present in it -- see docs/privacy-policy.html and
+ * docs/ANALYTICS.md, both of which state that split explicitly.
+ */
+const CF_WEB_ANALYTICS_TOKEN = process.env.NEXT_PUBLIC_CF_BEACON_TOKEN ?? "";
+
+/**
  * A real Devanagari-shaping-capable font (correct conjuncts, matra
  * reordering, reph, etc.), self-hosted at build time -- no runtime
  * request to Google's CDN, and no layout-shift-prone external
@@ -98,6 +126,20 @@ export default function RootLayout({
             </OnboardingGate>
           </WelcomeGate>
         </AppProviders>
+        {/*
+          Rendered last, deferred, and omitted entirely when
+          unconfigured -- the beacon must never be able to delay or
+          break the page it is measuring. `data-cf-beacon` is built with
+          JSON.stringify rather than a hand-written string so the token
+          cannot produce malformed JSON in the attribute.
+        */}
+        {CF_WEB_ANALYTICS_TOKEN ? (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })}
+          />
+        ) : null}
       </body>
     </html>
   );

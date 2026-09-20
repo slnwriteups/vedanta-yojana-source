@@ -31,7 +31,22 @@ test("root layout defines a title template and a sitewide indexable robots defau
 });
 
 test("root layout does not hard-code a fabricated production domain", () => {
-  const source = read("app/layout.tsx");
+  // The rule this enforces is about THIS SITE's own origin: canonical
+  // URLs, metadataBase and the sitemap must derive from
+  // getSiteOrigin()/NEXT_PUBLIC_SITE_URL, never from a domain written
+  // into the layout by hand. A third-party asset host is a different
+  // thing entirely -- it is not a claim about where this site is
+  // deployed -- so the small, explicit set of them is removed before
+  // the check rather than the check being weakened.
+  const THIRD_PARTY_ASSET_HOSTS = [
+    // Cloudflare Web Analytics beacon -- see app/layout.tsx and
+    // docs/ANALYTICS.md.
+    "https://static.cloudflareinsights.com/beacon.min.js",
+  ];
+  const source = THIRD_PARTY_ASSET_HOSTS.reduce(
+    (text, url) => text.split(url).join(""),
+    read("app/layout.tsx"),
+  );
   assert.ok(!/https?:\/\/[a-z0-9.-]+\.(com|org|net|io|app)/i.test(source));
 });
 

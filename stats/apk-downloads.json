@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "source": "https://api.github.com/repos/slnwriteups/vedanta-yojana-releases/releases?per_page=100",
+  "snapshots": [
+    {
+      "date": "2026-09-20",
+      "totalApkDownloads": 8,
+      "releases": [
+        {
+          "tag": "android-v13",
+          "publishedAt": "2026-09-19T10:10:16Z",
+          "assets": [
+            {
+              "name": "vedanta-yojana.apk",
+              "downloads": 5
+            },
+            {
+              "name": "vedanta-yojana.apk.sha256",
+              "downloads": 1
+            }
+          ]
+        },
+        {
+          "tag": "android-v10",
+          "publishedAt": "2026-09-15T09:29:24Z",
+          "assets": [
+            {
+              "name": "vedanta-yojana.apk",
+              "downloads": 3
+            },
+            {
+              "name": "vedanta-yojana.apk.sha256",
+              "downloads": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
