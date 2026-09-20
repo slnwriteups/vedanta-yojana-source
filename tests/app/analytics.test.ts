@@ -130,7 +130,14 @@ test("the web analytics beacon is omitted entirely when no token is configured",
   // Conditional render, not an always-present tag with a possibly-empty
   // token: a beacon that loads and then fails is worse than no beacon.
   assert.ok(source.includes("CF_WEB_ANALYTICS_TOKEN ? ("));
-  assert.ok(source.includes("static.cloudflareinsights.com"));
+  // Matched as a complete, quoted src attribute rather than as a bare
+  // hostname substring. A bare `includes("<host>")` is indistinguishable
+  // from a URL allowlist check that an attacker-controlled host could
+  // slip past -- CodeQL flags that shape (js/incomplete-url-substring-
+  // sanitization), and it is right to: the weaker assertion would also
+  // pass on a beacon loaded from an entirely different origin that
+  // merely mentions this one.
+  assert.match(source, /src="https:\/\/static\.cloudflareinsights\.com\/beacon\.min\.js"/);
 });
 
 test("the analytics Worker records no identifier and cannot break the request it observes", () => {
