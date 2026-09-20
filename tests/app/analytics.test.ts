@@ -170,3 +170,41 @@ test("the analytics Worker is scoped to the app's two manifests, not the whole s
   assert.ok(worker.includes("/content-manifest.json"));
   assert.ok(!config.includes("vedantayojana.org/*"), "no catch-all route over human page views");
 });
+
+test("the Worker deploy workflow is scoped to the Worker's own directory", () => {
+  const source = read(".github/workflows/deploy-request-analytics.yml");
+
+  // A deploy that fires on every push to main would redeploy the Worker
+  // for unrelated content commits -- churn, and a wider blast radius
+  // than the change warrants.
+  assert.ok(source.includes("cloudflare/request-analytics/**"));
+  assert.ok(source.includes("branches: [main]"));
+  assert.ok(source.includes("workflow_dispatch"));
+});
+
+test("the Worker deploy validates before it authenticates, and skips rather than fails without a credential", () => {
+  const source = read(".github/workflows/deploy-request-analytics.yml");
+
+  // --dry-run needs no credential, so config and bundle errors surface
+  // with a clear message instead of inside an authenticated deploy.
+  assert.ok(source.includes("--dry-run"));
+  const dryRunIdx = source.indexOf("--dry-run");
+  const deployIdx = source.lastIndexOf("wrangler@4 deploy\n");
+  assert.ok(dryRunIdx < deployIdx, "validation must run before the deploy");
+
+  // An absent credential is an honest skip with a warning, not a red X
+  // on every Worker change -- a permanently failing deploy is one people
+  // learn to ignore.
+  assert.ok(source.includes('if [ -z "$CLOUDFLARE_API_TOKEN" ]'));
+  assert.ok(source.includes("::warning::"));
+});
+
+test("the Worker deploy workflow writes nothing back to the repository", () => {
+  const source = read(".github/workflows/deploy-request-analytics.yml");
+
+  assert.ok(source.includes("contents: read"));
+  assert.ok(!source.includes("contents: write"));
+  // The token is referenced only as a secret, never inlined.
+  assert.ok(source.includes("${{ secrets.CLOUDFLARE_API_TOKEN }}"));
+  assert.ok(!/CLOUDFLARE_API_TOKEN:\s*[A-Za-z0-9_-]{20,}/.test(source), "no literal token");
+});
