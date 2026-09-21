@@ -35,6 +35,40 @@
           ]
         }
       ]
+    },
+    {
+      "date": "2026-09-21",
+      "totalApkDownloads": 10,
+      "releases": [
+        {
+          "tag": "android-v13",
+          "publishedAt": "2026-09-19T10:10:16Z",
+          "assets": [
+            {
+              "name": "vedanta-yojana.apk",
+              "downloads": 7
+            },
+            {
+              "name": "vedanta-yojana.apk.sha256",
+              "downloads": 1
+            }
+          ]
+        },
+        {
+          "tag": "android-v10",
+          "publishedAt": "2026-09-15T09:29:24Z",
+          "assets": [
+            {
+              "name": "vedanta-yojana.apk",
+              "downloads": 3
+            },
+            {
+              "name": "vedanta-yojana.apk.sha256",
+              "downloads": 0
+            }
+          ]
+        }
+      ]
     }
   ]
 }
