@@ -97,6 +97,8 @@ const UI_STRINGS = {
     kn: "ಇಂದಿನ ಪಂಚಾಂಗ",
     hi: "आज का पंचांग",
   },
+  /** Labels the Panchangam card's row naming the place the day's figures were computed for -- a Panchangam is location-specific, so "Tithi" alone is an incomplete statement without it. */
+  homeCalendarLocationLabel: { en: "Location", ta: "இருப்பிடம்", kn: "ಸ್ಥಳ", hi: "स्थान" },
   homeCalendarTithiLabel: { en: "Tithi", ta: "திதி", kn: "ತಿಥಿ", hi: "तिथि" },
   homeCalendarNakshatramLabel: { en: "Nakshatram", ta: "நட்சத்திரம்", kn: "ನಕ್ಷತ್ರ", hi: "नक्षत्र" },
   homeCalendarFestivalLabel: { en: "Festival", ta: "விழா", kn: "ಹಬ್ಬ", hi: "पर्व" },

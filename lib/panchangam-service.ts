@@ -1,4 +1,4 @@
-import { readJSON, writeJSON } from "./storage";
+import { readJSON, writeJSON } from "./storage.ts";
 
 /**
  * Web port of mobile/services/panchangamService.ts. Fetches today's
@@ -20,21 +20,29 @@ import { readJSON, writeJSON } from "./storage";
  *     resolves to `null`, exactly like the mobile version, never a
  *     guessed coordinate.
  *
- *  2. No reverse geocoding: `city` is always the literal string "Your
- *     Location" (mobile's own resolveLocation() already falls back to
- *     this exact string when reverse geocoding fails) rather than a
- *     real city name -- avoiding a second, geocoding-specific
- *     third-party API/key for a value that is purely cosmetic for the
- *     daily-cal/Ekadashi fields (both are stripped of any city text
- *     before display) and appears in the Sankalpam sentence only as
- *     "Sankalpam for Your Location on {date}..." rather than a named
- *     city. The Panchangam calculation itself is entirely lat/lng/
- *     timezone-driven either way, so this never affects the tithi/
- *     nakshatram/festival/Ekadashi values themselves.
+ *  2. Reverse geocoding uses a plain HTTPS lookup instead of
+ *     expo-location's `reverseGeocodeAsync` (which has no browser
+ *     equivalent): BigDataCloud's key-less client-side
+ *     reverse-geocode endpoint, confirmed directly to answer with
+ *     `Access-Control-Allow-Origin: *` and to need no API key or
+ *     account. Same role as on mobile -- the resolved place name is
+ *     sent as `cityfld`, which the Sankalpam endpoint echoes back
+ *     verbatim inside its own declaration sentence ("Sankalpam for
+ *     Chennai on 22nd Sep 2026..."), and is shown to the reader as the
+ *     place the day's Panchangam is computed for. A failed or
+ *     unavailable lookup falls back to UNNAMED_LOCATION -- the exact
+ *     placeholder mobile's own resolveLocation() falls back to -- and
+ *     never a guessed city. The Panchangam calculation itself is
+ *     entirely lat/lng/timezone-driven either way, so a failed lookup
+ *     never affects the tithi/nakshatram/festival/Ekadashi values
+ *     themselves.
  *
  * Caching is identical: same cache-key shape (day + coarse lat/lng),
  * same lib/storage.ts (localStorage instead of AsyncStorage, same
  * never-throws contract), same offline/location-unavailable fallbacks.
+ * Resolved place names get their own separate, longer-lived cache entry
+ * (keyed by coarse coordinates only, not by day) so a returning reader
+ * at the same place never re-hits the geocoder at all.
  */
 
 const DAILY_CAL_ENDPOINT = "https://samdailycal-324121.uc.r.appspot.com/rpc";
@@ -58,8 +66,32 @@ function proxied(url: string): string {
   return `${PANCHANGAM_PROXY_BASE_URL}/?url=${encodeURIComponent(url)}`;
 }
 
+/**
+ * BigDataCloud's `reverse-geocode-client` endpoint: free, key-less and
+ * account-less, and explicitly meant to be called straight from a
+ * browser -- it answers with `Access-Control-Allow-Origin: *`
+ * (confirmed directly, like every other endpoint in this module), so
+ * unlike the two Ahobila Mutt RPC hosts it needs no CORS proxy, and the
+ * panchangam-proxy Worker stays narrowly allowlisted to those two hosts
+ * alone. It is sent only the coordinates being named, and its answer is
+ * used only for the place label; see docs/privacy-policy.html.
+ */
+const REVERSE_GEOCODE_ENDPOINT = "https://api.bigdatacloud.net/data/reverse-geocode-client";
+
 const FETCH_TIMEOUT_MS = 8000;
 const LOCATION_TIMEOUT_MS = 8000;
+const REVERSE_GEOCODE_TIMEOUT_MS = 5000;
+
+/**
+ * The stand-in used as `cityfld` when no place name could be resolved
+ * (geocoder unreachable, or coordinates with no named place at all,
+ * e.g. mid-ocean). Byte-for-byte what mobile's own resolveLocation()
+ * falls back to, and never shown as a place label: PanchangamData
+ * carries `location: ""` in that case, so the Panchangam card omits its
+ * location row entirely rather than labelling the reader's city with a
+ * placeholder.
+ */
+const UNNAMED_LOCATION = "Your Location";
 
 interface ResolvedLocation {
   city: string;
@@ -76,6 +108,15 @@ export interface PanchangamData {
   upcomingEkadashiText: string;
   /** The full SAM Sankalpam declaration sentence for the current moment, or "" if unavailable. */
   sankalpamText: string;
+  /**
+   * The resolved name of the place this Panchangam/Sankalpam was
+   * computed for ("Chennai"), or "" when no name could be resolved --
+   * the whole point being that a reader can see WHERE the day's figures
+   * are valid, since tithi/nakshatra transition times and sunrise/sunset
+   * all shift with location. "" is rendered as no location row at all,
+   * never as a placeholder standing in for a real city.
+   */
+  location: string;
 }
 
 /**
@@ -91,6 +132,7 @@ const OFFLINE_FALLBACK: PanchangamData = {
   festival: "",
   upcomingEkadashiText: "Panchangam unavailable offline",
   sankalpamText: "",
+  location: "",
 };
 
 /** Distinct from OFFLINE_FALLBACK: the network is fine, but location permission was denied or no fix could be obtained -- never silently substitutes a guessed city. */
@@ -101,9 +143,17 @@ const LOCATION_UNAVAILABLE_FALLBACK: PanchangamData = {
   festival: "",
   upcomingEkadashiText: "Enable location access for today's Panchangam",
   sankalpamText: "",
+  location: "",
 };
 
 const CACHE_KEY_PREFIX = "vy.calendar.panchangam.";
+/**
+ * Deliberately NOT day-scoped, unlike CACHE_KEY_PREFIX: a place's name
+ * doesn't change overnight the way its tithi does, so the geocoder is
+ * asked once per coarse location and never again for a reader who keeps
+ * opening Home from the same city.
+ */
+const PLACE_CACHE_KEY_PREFIX = "vy.calendar.place.";
 
 function isValidPanchangamData(value: unknown): value is PanchangamData {
   if (typeof value !== "object" || value === null) return false;
@@ -114,12 +164,17 @@ function isValidPanchangamData(value: unknown): value is PanchangamData {
     typeof candidate.nakshatram === "string" &&
     typeof candidate.festival === "string" &&
     typeof candidate.upcomingEkadashiText === "string" &&
-    typeof candidate.sankalpamText === "string"
+    typeof candidate.sankalpamText === "string" &&
+    typeof candidate.location === "string"
   );
 }
 
 function pad2(n: number): string {
   return String(n).padStart(2, "0");
+}
+
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && value.length > 0;
 }
 
 /**
@@ -139,18 +194,15 @@ function cacheKeyFor(date: Date, location: ResolvedLocation): string {
 }
 
 /**
- * Resolves the browser's own real location for the Panchangam request via
- * `navigator.geolocation.getCurrentPosition` -- a no-op (instant resolve
- * with the last decision) if the visitor already granted/denied
- * permission earlier in this browsing session, otherwise prompting.
- * Timezone is the browser's own configured zone (Intl), matching the
- * Ahobila Mutt widget's own fallback (`browser_tz =
- * Intl.DateTimeFormat().resolvedOptions().timeZone`) and mobile's
- * identical choice. Returns null (never a guessed location) if
+ * The browser's own real coordinates via
+ * `navigator.geolocation.getCurrentPosition` -- a no-op (instant
+ * resolve with the last decision) if the visitor already
+ * granted/denied permission earlier in this browsing session,
+ * otherwise prompting. Resolves null (never a guessed position) if
  * geolocation is unsupported, permission is denied, or no fix can be
  * obtained within the timeout.
  */
-function resolveLocation(): Promise<ResolvedLocation | null> {
+function currentCoordinates(): Promise<{ latitude: number; longitude: number } | null> {
   return new Promise((resolve) => {
     if (typeof navigator === "undefined" || !navigator.geolocation) {
       resolve(null);
@@ -161,14 +213,7 @@ function resolveLocation(): Promise<ResolvedLocation | null> {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         clearTimeout(timer);
-        resolve({
-          // Cosmetic only (see this module's own doc comment) -- the
-          // Panchangam calculation itself only ever uses lat/lng/timezone.
-          city: "Your Location",
-          lat: String(position.coords.latitude),
-          lng: String(position.coords.longitude),
-          timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        });
+        resolve({ latitude: position.coords.latitude, longitude: position.coords.longitude });
       },
       () => {
         clearTimeout(timer);
@@ -177,6 +222,77 @@ function resolveLocation(): Promise<ResolvedLocation | null> {
       { timeout: LOCATION_TIMEOUT_MS, maximumAge: 5 * 60 * 1000 }
     );
   });
+}
+
+/**
+ * Turns coordinates into the name of the place they fall in, so the
+ * reader sees "Chennai" rather than a placeholder for where the day's
+ * Panchangam and Sankalpam are valid. Answered from the coarse-location
+ * cache when possible, otherwise by REVERSE_GEOCODE_ENDPOINT.
+ *
+ * `city` first, then `locality`, then `principalSubdivision` -- the
+ * same widest-recognizable-name-first order as mobile's own `place.city
+ * || place.subregion || place.region` chain, so the two platforms
+ * label the same spot the same way. Every failure mode (offline,
+ * timeout, an unexpected response shape, or genuinely unnamed
+ * coordinates such as mid-ocean) returns UNNAMED_LOCATION and caches
+ * nothing, so the next call retries rather than pinning a placeholder
+ * to this location forever.
+ */
+async function resolvePlaceName(latitude: number, longitude: number): Promise<string> {
+  const cacheKey = `${PLACE_CACHE_KEY_PREFIX}${latitude.toFixed(2)},${longitude.toFixed(2)}`;
+  const cached = await readJSON(cacheKey, isNonEmptyString);
+  if (cached) return cached;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REVERSE_GEOCODE_TIMEOUT_MS);
+  try {
+    const params = new URLSearchParams({
+      latitude: String(latitude),
+      longitude: String(longitude),
+      localityLanguage: "en",
+    });
+    const response = await fetch(`${REVERSE_GEOCODE_ENDPOINT}?${params.toString()}`, {
+      signal: controller.signal,
+    });
+    if (!response.ok) return UNNAMED_LOCATION;
+
+    const payload: unknown = await response.json();
+    if (typeof payload !== "object" || payload === null) return UNNAMED_LOCATION;
+    const place = payload as Record<string, unknown>;
+    const name = [place.city, place.locality, place.principalSubdivision].find(isNonEmptyString);
+    if (!name) return UNNAMED_LOCATION;
+
+    void writeJSON(cacheKey, name);
+    return name;
+  } catch {
+    return UNNAMED_LOCATION;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+/**
+ * Resolves the browser's own real location for the Panchangam request:
+ * its coordinates, the place name they resolve to, and the browser's
+ * own configured timezone (Intl), matching the Ahobila Mutt widget's
+ * own fallback (`browser_tz =
+ * Intl.DateTimeFormat().resolvedOptions().timeZone`) and mobile's
+ * identical choice. Returns null (never a guessed location) when no fix
+ * is available -- a place name that can't be resolved is NOT such a
+ * case: the Panchangam is still exactly computable from the
+ * coordinates, so it falls back to UNNAMED_LOCATION and carries on.
+ */
+async function resolveLocation(): Promise<ResolvedLocation | null> {
+  const coordinates = await currentCoordinates();
+  if (!coordinates) return null;
+
+  return {
+    city: await resolvePlaceName(coordinates.latitude, coordinates.longitude),
+    lat: String(coordinates.latitude),
+    lng: String(coordinates.longitude),
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  };
 }
 
 /** mm/dd/yyyy -- the exact format both RPC endpoints expect (verified against their own client-side `getDailyCalDate()`/date-field format). */
@@ -305,11 +421,12 @@ function parseUpcomingEkadashi(html: string): string {
   const firstSentence = text.split(/\.\s/)[0]?.trim();
   if (!firstSentence) return "";
   const withPeriod = firstSentence.endsWith(".") ? firstSentence : `${firstSentence}.`;
-  // Non-greedy `.+?`, not `\S+` -- a real city name is one word ("Chennai"),
-  // but this app's own "Your Location" placeholder (no reverse geocoding on
-  // web) is two, and `\S+` silently fails to match those, leaving the raw
-  // English sentence completely unprocessed (confirmed live: real API output
-  // with cityfld="Your Location" never got replaced at all).
+  // Non-greedy `.+?`, not `\S+` -- plenty of real city names are more
+  // than one word ("San Jose"), as is the UNNAMED_LOCATION placeholder
+  // used when no name resolves, and `\S+` silently fails to match those,
+  // leaving the raw English sentence completely unprocessed (confirmed
+  // live: real API output with a two-word cityfld never got replaced at
+  // all).
   return withPeriod.replace(/^Next Ekadasi for .+? is on\s*/i, "Next Ekadasi: ");
 }
 
@@ -410,6 +527,9 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
       ...parsedDaily,
       upcomingEkadashiText: parseUpcomingEkadashi(ekadashiHtml),
       sankalpamText: parseSankalpam(sankalpamHtml),
+      // "" rather than the placeholder itself: an unresolved name is
+      // shown as no location row at all, never as a fake city.
+      location: location.city === UNNAMED_LOCATION ? "" : location.city,
     };
 
     void writeJSON(cacheKey, data);

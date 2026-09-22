@@ -10,10 +10,17 @@ import type { PanchangamData } from "../services/panchangamService.ts";
  * Home's full daily-calendar card -- the expanded counterpart to
  * HomeHeader's compact one-line pill. The pill exists for a
  * glanceable summary; this card is where every field
- * services/panchangamService.ts extracts (festival, tithi/paksha,
- * nakshatram, upcoming Ekadashi) actually gets its own labeled row, the
- * same way SankalpamCard is the expanded counterpart for the Sankalpam
- * text. Renders nothing while `panchangam` is still loading (null).
+ * services/panchangamService.ts extracts (festival, the place it was
+ * computed for, tithi/paksha, nakshatram, upcoming Ekadashi) actually
+ * gets its own labeled row, the same way SankalpamCard is the expanded
+ * counterpart for the Sankalpam text. Renders nothing while
+ * `panchangam` is still loading (null).
+ *
+ * The location row comes first: every other row is only true FOR that
+ * place (tithi/nakshatra transition times shift with longitude), so it
+ * frames the rows beneath it rather than trailing them as a footnote.
+ * It is omitted entirely when no place name resolved, never filled with
+ * a placeholder.
  */
 export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | null }) {
   const theme = useTheme();
@@ -38,6 +45,14 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
           <>
             {panchangam.festival ? (
               <Text style={[styles.festival, { color: theme.colors.accent }]}>{panchangam.festival}</Text>
+            ) : null}
+            {panchangam.location ? (
+              <Row
+                label={t("homeCalendarLocationLabel")}
+                value={panchangam.location}
+                muted={theme.colors.muted}
+                fg={theme.colors.foreground}
+              />
             ) : null}
             {pakshaTithi ? (
               <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />

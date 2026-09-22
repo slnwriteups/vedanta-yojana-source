@@ -455,7 +455,8 @@ Everything below reflects what is actually implemented, not planned:
 - **Offline Pasurams** — all Pasurams are bundled directly into the app;
   no network connection required
 - **Search** — across Divya Desams, the Library, and Knowledge records
-- **Daily Panchangam** — location-based daily Panchangam and Sankalpam
+- **Daily Panchangam** — daily Panchangam and Sankalpam for the place
+  you are in, named on screen ("Chennai"), not an assumed fixed city
 - **Divya Desam Spotlight** — a daily-rotating featured temple on the
   home screen
 - **Reading preferences** — font scale, light/dark theme, reading-position
@@ -558,7 +559,13 @@ to confirm a downloaded file is genuine.
   Data Safety section on the app's listing for the platform-verified
   summary of this once published.
 - Location access (coarse/fine) is used only to show the day's
-  Panchangam for the user's approximate location.
+  Panchangam for the user's approximate location, and to name that place
+  on screen so the reader can see which place the Panchangam and
+  Sankalpam are valid for. On Android the name comes from the device's
+  own OS geocoder; on the website, from BigDataCloud's public,
+  key-less reverse-geocoding endpoint, which receives the coordinates
+  being named and nothing else. See
+  [docs/privacy-policy.html](docs/privacy-policy.html).
 - Full detail, including a permission-by-permission table: [docs/SECURITY.md](docs/SECURITY.md#android-security).
 
 ## Offline functionality

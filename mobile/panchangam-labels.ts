@@ -154,8 +154,15 @@ export function localizeUpcomingEkadashi(text: string, language: LanguageCode | 
 // ("03:19:12 PM"), so a generic `(.+?):` stops at the first one, inside the
 // time, rather than the one that actually ends the sentence.
 const TIME_OF_DAY = /\d{1,2}:\d{2}(?::\d{2})?\s*[AP]M/.source;
+// Matches "22nd Sep 2026" -- the endpoint's own date format. Anchored to
+// that shape for the same reason TIME_OF_DAY is: now that a real
+// reverse-geocoded place name reaches `cityfld`, the location capture
+// can itself contain the word "on" ("Stratford on Avon", "Newcastle upon
+// Tyne"), and a generic `(.+?) on (.+?)` pair splits such a name down
+// the middle -- location "Stratford", date "Avon on 22nd Sep 2026".
+const DATE_OF_MONTH = /\d{1,2}(?:st|nd|rd|th)\s+[A-Za-z]+\s+\d{4}/.source;
 const SANKALPAM_PATTERN = new RegExp(
-  `^Sankalpam for (.+?) on (.+?) At (${TIME_OF_DAY}) IST and valid through (${TIME_OF_DAY})( of following day)?:\\s*(.*)$`,
+  `^Sankalpam for (.+?) on (${DATE_OF_MONTH}) At (${TIME_OF_DAY}) IST and valid through (${TIME_OF_DAY})( of following day)?:\\s*(.*)$`,
   "i"
 );
 
