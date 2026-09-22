@@ -85,6 +85,15 @@ test("the manifest satisfies the validator the app actually applies to it", () =
   assert.equal(typeof m.url, "string");
 });
 
+test("the update banner actually shows the notes, not just a generic prompt", () => {
+  // The notes field is the only place a release gets to say what it
+  // contains: the banner is the whole of what someone on an older build
+  // sees. It used to be fetched, typed and then never rendered, so every
+  // release announced itself identically.
+  const banner = fs.readFileSync(path.join(REPO_ROOT, "mobile/components/UpdateBanner.tsx"), "utf8");
+  assert.match(banner, /\{update\.notes \?/, "UpdateBanner drops the manifest's notes instead of showing them");
+});
+
 test("release notes are present and are a short user-facing summary", () => {
   const notes = publishedManifest().notes;
   assert.equal(typeof notes, "string");
