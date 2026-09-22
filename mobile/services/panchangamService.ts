@@ -57,6 +57,16 @@ const EKADASHI_ENDPOINT = "https://samekadasi-324123.uc.r.appspot.com/rpc";
 // the live /sankalpam widget, not assumed from the Ekadasi one.
 const SANKALPAM_ENDPOINT = "https://samekadasi-324123.uc.r.appspot.com/rpc";
 
+/**
+ * The stand-in used as `cityfld` when reverse geocoding resolves no
+ * name at all. Never shown as a place label: PanchangamData carries
+ * `location: ""` in that case, so the Panchangam card omits its
+ * location row entirely rather than labelling the reader's city with a
+ * placeholder. lib/panchangam-service.ts (web) falls back to this same
+ * literal string.
+ */
+const UNNAMED_LOCATION = "Your Location";
+
 const FETCH_TIMEOUT_MS = 8000;
 const LOCATION_TIMEOUT_MS = 8000;
 
@@ -75,6 +85,16 @@ export interface PanchangamData {
   upcomingEkadashiText: string;
   /** The full SAM Sankalpam declaration sentence for the current moment, or "" if unavailable. */
   sankalpamText: string;
+  /**
+   * The resolved name of the place this Panchangam/Sankalpam was
+   * computed for ("Chennai"), or "" when reverse geocoding produced no
+   * name -- the whole point being that a reader can see WHERE the day's
+   * figures are valid, since tithi/nakshatra transition times and
+   * sunrise/sunset all shift with location. "" is rendered as no
+   * location row at all, never as a placeholder standing in for a real
+   * city.
+   */
+  location: string;
 }
 
 /**
@@ -90,6 +110,7 @@ const OFFLINE_FALLBACK: PanchangamData = {
   festival: "",
   upcomingEkadashiText: "Panchangam unavailable offline",
   sankalpamText: "",
+  location: "",
 };
 
 /** Distinct from OFFLINE_FALLBACK: the network is fine, but location permission was denied or no fix could be obtained -- never silently substitutes a guessed city. */
@@ -100,6 +121,7 @@ const LOCATION_UNAVAILABLE_FALLBACK: PanchangamData = {
   festival: "",
   upcomingEkadashiText: "Enable location access for today's Panchangam",
   sankalpamText: "",
+  location: "",
 };
 
 const CACHE_KEY_PREFIX = "vy.calendar.panchangam.";
@@ -113,7 +135,8 @@ function isValidPanchangamData(value: unknown): value is PanchangamData {
     typeof candidate.nakshatram === "string" &&
     typeof candidate.festival === "string" &&
     typeof candidate.upcomingEkadashiText === "string" &&
-    typeof candidate.sankalpamText === "string"
+    typeof candidate.sankalpamText === "string" &&
+    typeof candidate.location === "string"
   );
 }
 
@@ -142,9 +165,11 @@ function cacheKeyFor(date: Date, location: ResolvedLocation): string {
  * requests foreground permission (a no-op prompt if already
  * granted/denied from a prior call), reads the last known fix if one is
  * cached by the OS (fast, no GPS wait) or otherwise requests a fresh
- * one, and reverse-geocodes it to a city name purely for the "For
- * {city}" cosmetic label the daily-cal response echoes back (the
- * Panchangam calculation itself only ever uses lat/lng/timezone).
+ * one, and reverse-geocodes it to a place name -- shown to the reader
+ * as the place the day's figures are valid for, and echoed back inside
+ * the "Sankalpam for {city}" declaration sentence (the Panchangam
+ * calculation itself only ever uses lat/lng/timezone, so a name that
+ * can't be resolved changes the label alone).
  * Timezone is the DEVICE's own configured zone (Intl, not derived from
  * the coordinates) -- exactly what the Ahobila Mutt widget itself falls
  * back to when it can't otherwise determine one (its own
@@ -167,13 +192,15 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
     if (!position) return null;
 
     const { latitude, longitude } = position.coords;
-    let city = "Your Location";
+    let city: string = UNNAMED_LOCATION;
     try {
       const [place] = await Location.reverseGeocodeAsync({ latitude, longitude });
       city = place?.city || place?.subregion || place?.region || city;
     } catch {
-      // Reverse geocoding is cosmetic only (the "For {city}" label) -- a
-      // failure here still lets the Panchangam itself resolve via coords.
+      // A failed lookup still lets the Panchangam itself resolve via
+      // coords -- the name only decides how the place is LABELLED (the
+      // Panchangam card's location row and the "Sankalpam for {city}"
+      // sentence the endpoint echoes back), never what is computed.
     }
 
     return {
@@ -416,6 +443,9 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
       ...parsedDaily,
       upcomingEkadashiText: parseUpcomingEkadashi(ekadashiHtml),
       sankalpamText: parseSankalpam(sankalpamHtml),
+      // "" rather than the placeholder itself: an unresolved name is
+      // shown as no location row at all, never as a fake city.
+      location: location.city === UNNAMED_LOCATION ? "" : location.city,
     };
 
     void writeJSON(cacheKey, data);

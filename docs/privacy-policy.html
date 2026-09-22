@@ -88,7 +88,7 @@
 <body>
 <div class="wrap">
   <h1>Privacy Policy</h1>
-  <p class="updated">Vedanta Yojana · Last updated September 20, 2026</p>
+  <p class="updated">Vedanta Yojana · Last updated September 22, 2026</p>
 
   <p>Vedanta Yojana ("the app") is a reference app for Sri Vaishnava scripture, Divya Desam temple information, and daily Panchangam (Hindu calendar) details. This page explains what data the app uses, why, and how it is handled.</p>
 
@@ -98,9 +98,10 @@
     <p style="margin:0 0 12px"><strong>How it's used:</strong></p>
     <ul>
       <li>Your device's coordinates and configured timezone are sent to Sri Ahobila Mutt's public calendar services (hosted at <em>ahobilamutt.org</em> and its backing calendar API) solely to compute the correct Panchangam for your location.</li>
+      <li>Your coordinates are also turned into the name of the place they fall in (&ldquo;Chennai&rdquo;), so the app can show <em>which place</em> the day's Panchangam and Sankalpam are calculated for instead of an unnamed &ldquo;your location&rdquo;. In the Android app this lookup is done by your device's own operating-system geocoder; on the website it is done by BigDataCloud's public reverse-geocoding service (<em>api.bigdatacloud.net</em>), which receives the coordinates being named and nothing else &mdash; no account, no API key, and no identifier of any kind. The resolved name is cached on your device, so the lookup is not repeated for a place you have already been shown.</li>
       <li>We do not use this data for advertising, analytics, or tracking, and it is never linked to your identity.</li>
       <li>The result is cached on your device for the current day only, so the app does not request your location repeatedly.</li>
-      <li>If you decline the location permission, the app simply shows that Panchangam data is unavailable — every other feature works normally.</li>
+      <li>If you decline the location permission, the app simply shows that Panchangam data is unavailable — every other feature works normally. If the place name alone cannot be resolved, the Panchangam is still calculated from your coordinates and is simply shown without a place name — never under a guessed one.</li>
     </ul>
   </div>
 

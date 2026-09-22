@@ -9,10 +9,16 @@ import type { PanchangamData } from "@/lib/panchangam-service";
  * Web port of mobile/components/PanchangamCard.tsx -- Home's full
  * daily-calendar card, the expanded counterpart to HomeHeader's compact
  * one-line pill. Every field lib/panchangam-service.ts extracts
- * (festival, tithi/paksha, nakshatram, upcoming Ekadashi) gets its own
- * labeled row, the same way SankalpamCard is the expanded counterpart
- * for the Sankalpam text. Renders nothing while `panchangam` is still
- * loading (null).
+ * (festival, the place it was computed for, tithi/paksha, nakshatram,
+ * upcoming Ekadashi) gets its own labeled row, the same way
+ * SankalpamCard is the expanded counterpart for the Sankalpam text.
+ * Renders nothing while `panchangam` is still loading (null).
+ *
+ * The location row comes first: every other row is only true FOR that
+ * place (tithi/nakshatra transition times shift with longitude), so it
+ * frames the rows beneath it rather than trailing them as a footnote.
+ * It is omitted entirely when no place name resolved, never filled with
+ * a placeholder.
  */
 export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | null }) {
   const t = useT();
@@ -34,6 +40,9 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
           <>
             {panchangam.festival ? (
               <p className="mb-1 text-base font-bold text-[var(--accent)]">{panchangam.festival}</p>
+            ) : null}
+            {panchangam.location ? (
+              <Row label={t("homeCalendarLocationLabel")} value={panchangam.location} />
             ) : null}
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
