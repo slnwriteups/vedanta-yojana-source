@@ -228,9 +228,52 @@ security regression test added 2026-09-18.
   manual dispatch. Concurrency is serialized (`cancel-in-progress:
   false`) so an in-flight deploy always finishes before the next one
   starts.
-- **Mobile:** Android builds are produced on demand via EAS Build using
-  the `production` profile in `mobile/eas.json`; there is no automatic
-  build-on-push pipeline for mobile. Distribution is through Google
+- **Mobile, JavaScript changes:**
+  `.github/workflows/eas-update.yml` publishes an EAS Update on every
+  push to `main` that touches `mobile/**`, after the mobile test suite
+  passes in that same run. Installed apps download the new bundle in the
+  background and run it from their next launch — no store release and no
+  manual install. This is the path for anything that is JavaScript: a
+  screen, a service, a UI string. Publishing is skipped with a visible
+  warning if `EXPO_TOKEN` is absent, rather than failing the run.
+### Cutting a native release
+
+`mobile/app.json` is the source of truth for what the app is, and
+`public/app-version.json` must agree with it (enforced by
+`tests/app/app-version-manifest.test.ts`) -- so the artifact has to
+exist before the repository describes it. The order matters:
+
+1. **Set `version` in `mobile/app.json` before building.** The banner an
+   older build shows (`components/UpdateBanner.tsx`) displays this
+   string, so leaving it unchanged announces "Update available: v1.0.0"
+   to someone already running 1.0.0. Leave `versionCode` alone --
+   `autoIncrement` in the `production` profile bumps it during the
+   build, and pre-setting it makes EAS skip a number.
+2. **Build:** `eas build --platform android --profile production`.
+3. **Publish** the artifact to `slnwriteups/vedanta-yojana-releases` as
+   `android-v<versionCode>`.
+4. **Then one commit**, describing what now exists: `mobile/app.json`
+   (the versionCode EAS produced) plus `public/app-version.json`
+   (versionCode, version, the release URL, and notes -- the notes are
+   what the banner shows, so they are the release's only chance to say
+   what it contains).
+
+Between steps 1 and 4 the manifest check is red on purpose: the
+repository is describing a release that has not been published yet.
+That window is the reason the check exists -- `public/app-version.json`
+once advertised versionCode 10 for four days after 13 shipped, and no
+user on 10 was ever offered it.
+
+- **Mobile, native changes:** still an EAS Build, on demand, using the
+  `production` profile in `mobile/eas.json` — a new native module, a
+  changed permission, an Expo SDK upgrade, or anything else that alters
+  the native project. `mobile/app.json`'s `fingerprint` runtime policy
+  enforces the boundary rather than trusting it: a bundle built after a
+  native change carries a different runtime fingerprint and is never
+  offered to the older binary. `services/updateCheckService.ts` is what
+  covers this case for people already on an older build — it compares
+  the *installed binary's* versionCode against
+  `public/app-version.json` and prompts. Distribution is through Google
   Play — see the root README's Download section. This repository
   remains the source, documentation, and release-provenance record.
 

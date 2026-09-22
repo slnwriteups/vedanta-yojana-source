@@ -554,8 +554,9 @@ to confirm a downloaded file is genuine.
   [docs/ANALYTICS.md](docs/ANALYTICS.md).
 - No account or sign-in is required or offered.
 - Network requests fetch public content (Library book updates, version
-  checks) from this project's own GitHub Pages site over HTTPS; nothing
-  in the audited source uploads user data anywhere. See Google Play's
+  checks) from this project's own GitHub Pages site over HTTPS, and
+  check Expo's update service (`u.expo.dev`) for a newer app bundle;
+  nothing in the audited source uploads user data anywhere. See Google Play's
   Data Safety section on the app's listing for the platform-verified
   summary of this once published.
 - Location access (coarse/fine) is used only to show the day's
