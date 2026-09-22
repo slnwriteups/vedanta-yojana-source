@@ -114,6 +114,13 @@
   </ul>
   <p>Uninstalling the app removes all of this data. We have no server that stores or can access it.</p>
 
+  <h2>App updates</h2>
+  <p>The Android app checks for two different kinds of update, both over HTTPS:</p>
+  <ul>
+    <li><strong>Improvements to the app itself.</strong> On launch, the app asks Expo's update service (<em>u.expo.dev</em>) whether a newer version of its code has been published, and if so downloads it in the background so it runs the next time you open the app. The request identifies the app and which version of it your device is running — it carries no account, no advertising identifier, and nothing that identifies you. This is how fixes and improvements reach you without you having to install anything.</li>
+    <li><strong>New app releases and Library content.</strong> The app asks our own website whether a newer installable version or new Library content is available, as it always has.</li>
+  </ul>
+
   <h2>Aggregate counts, with no identifiers</h2>
   <p>Two things are counted in aggregate. Neither involves a cookie, an advertising identifier, a device identifier, or anything that could single you out or be linked to you.</p>
   <ul>

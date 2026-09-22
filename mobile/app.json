@@ -5,6 +5,13 @@
     "owner": "slnwriteupss-team",
     "scheme": "vedantayojana",
     "version": "1.0.0",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/fd9baa2d-92be-4e6f-88d4-9c9830516db1",
+      "fallbackToCacheTimeout": 0
+    },
     "platforms": [
       "ios",
       "android"

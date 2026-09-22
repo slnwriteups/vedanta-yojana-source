@@ -1,0 +1,82 @@
+name: Publish EAS Update
+
+# Ships JS and asset changes to apps already installed on people's
+# phones. Before this existed, mobile/ changes sat merged on main
+# reaching nobody: the app's only update path was
+# services/updateCheckService.ts noticing a newer versionCode and asking
+# the person to download and install an APK by hand. Everything that is
+# JavaScript -- a screen, a service, a UI string -- can instead be
+# delivered directly, the way the website already is on every push.
+#
+# What this can NOT deliver is a native change: a new native module, a
+# changed permission, an Expo SDK upgrade. mobile/app.json's
+# "fingerprint" runtimeVersion policy enforces that rather than trusting
+# it -- an update built after a native change carries a different
+# fingerprint and is simply never offered to the older binary. Those
+# still require an EAS build, which is what the in-app prompt remains
+# for.
+#
+# Path-scoped to mobile/**: ordinary website and content commits do not
+# publish an update.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "mobile/**"
+      - ".github/workflows/eas-update.yml"
+  workflow_dispatch:
+
+# Never let two publishes to the same branch race.
+concurrency:
+  group: eas-update
+  cancel-in-progress: false
+
+# Least privilege: reads the repository, publishes outward to EAS,
+# writes nothing back here.
+permissions:
+  contents: read
+
+jobs:
+  update:
+    name: eas update
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install mobile dependencies (reproducible)
+        working-directory: mobile
+        run: npm ci
+
+      - name: Mobile tests
+        # An over-the-air update reaches every installed app within a
+        # launch or two, with no review step and no staged rollout in
+        # front of it. ci.yml does not run this suite (it validates the
+        # website), so it runs here: a broken bundle must fail before it
+        # is published, not after.
+        run: node --experimental-strip-types --test mobile/tests/*.test.ts
+
+      - name: Publish
+        working-directory: mobile
+        env:
+          # A personal access token from expo.dev with permission to
+          # publish updates for this project.
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          # Skips rather than fails when the credential is absent --
+          # same reasoning as deploy-request-analytics.yml: a red X on
+          # every mobile change until someone mints a token trains
+          # people to ignore a failing publish.
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::warning::EXPO_TOKEN is not set -- mobile tests passed but no update was published. Installed apps are still running the bundle from their last build or update."
+            exit 0
+          fi
+          npx --yes eas-cli@24 update \
+            --branch production \
+            --message "${{ github.event.head_commit.message || github.sha }}" \
+            --non-interactive

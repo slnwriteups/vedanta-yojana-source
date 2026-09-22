@@ -31,6 +31,21 @@ source code, documentation, and release-provenance record — it is
 **not** itself an Android distribution channel, and does not host APK
 files.
 
+> **What checksum verification does and does not cover.** Since the
+> build that introduced EAS Update, the app can receive JavaScript and
+> asset updates over the air after it is installed (see
+> [DEVELOPMENT.md](DEVELOPMENT.md#deployment-architecture)). Verifying
+> an APK proves that the *binary* you installed is the one this project
+> published — its native code, its permissions, and the JavaScript it
+> shipped with. It does not cover a JavaScript bundle delivered later.
+> Those updates are published only from `main` by
+> `.github/workflows/eas-update.yml`, and a native change cannot be
+> delivered this way at all: `mobile/app.json` uses a `fingerprint`
+> runtime policy, so a bundle built after any native change is never
+> offered to an older binary. Stating this plainly is the point of this
+> guide — an unqualified "verify the checksum and you have verified the
+> app" would no longer be true.
+
 **A release only counts as genuine if its SHA-256 checksum and signing
 certificate match the values published for that version** (see Levels
 2 and 3 below) — not merely because it came from a URL under

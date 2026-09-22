@@ -1,4 +1,4 @@
-import Constants from "expo-constants";
+import * as Application from "expo-application";
 
 /**
  * Vedanta Yojana is distributed as a direct-download APK, not through
@@ -14,12 +14,27 @@ import Constants from "expo-constants";
  * has that -- so "check and prompt" is the real ceiling here, not a
  * missing feature.
  *
- * `Constants.expoConfig.android.versionCode` (not the deprecated
- * `Constants.nativeBuildVersion`, and not `expo-application`, which
- * isn't a dependency) is reliable for this: this app has no
- * expo-updates/OTA mechanism, so the JS bundle's own config always
- * matches the native build it was compiled and shipped with -- there's
- * no scenario where they could diverge.
+ * The comparison reads `Application.nativeBuildVersion` -- the
+ * versionCode of the INSTALLED BINARY, straight from the Android
+ * package manager -- and deliberately not
+ * `Constants.expoConfig.android.versionCode`. That distinction only
+ * became load-bearing when this app gained EAS Update: an
+ * over-the-air bundle carries its own copy of app.json, so once a
+ * device is running an update published after a versionCode bump,
+ * `expoConfig` reports the NEW versionCode while the installed APK is
+ * still the old one. Comparing against that would have this function
+ * conclude the device is already current and silently stop offering
+ * the real binary -- the exact "no user is ever offered the newer
+ * build" failure that public/app-version.json's versionCode drift
+ * caused before, arriving by a different route. The native value
+ * cannot be changed by an update, which is precisely why it is the
+ * right one.
+ *
+ * The two mechanisms answer different questions and both are needed:
+ * EAS Update ships JS and asset changes to installed apps by itself,
+ * while this prompt covers what an update can never deliver -- a new
+ * native build (a new native module, a changed permission, an Expo SDK
+ * upgrade).
  */
 
 const VERSION_MANIFEST_URL = "https://vedantayojana.org/app-version.json";
@@ -57,8 +72,15 @@ function isValidManifest(value: unknown): value is VersionManifest {
  * startup or be treated as an error when it resolves to null.
  */
 export async function checkForUpdate(): Promise<UpdateInfo | null> {
-  const currentVersionCode = Constants.expoConfig?.android?.versionCode;
-  if (typeof currentVersionCode !== "number") return null;
+  // Android reports versionCode as a string here. Anything else --
+  // null (the value on platforms that have no such concept) or a
+  // non-integer -- returns null rather than being coerced: `Number(null)`
+  // is 0, which would pass an integer check and make every manifest
+  // version look newer, prompting an update without end.
+  const nativeBuildVersion = Application.nativeBuildVersion;
+  if (!nativeBuildVersion) return null;
+  const currentVersionCode = Number(nativeBuildVersion);
+  if (!Number.isInteger(currentVersionCode)) return null;
 
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
