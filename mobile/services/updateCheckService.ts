@@ -56,8 +56,13 @@ function isValidManifest(value: unknown): value is VersionManifest {
  * fires this fire-and-forget on mount; it must never block app
  * startup or be treated as an error when it resolves to null.
  */
+export const BUILD_VERSION_CODE = 15;
+
 export async function checkForUpdate(): Promise<UpdateInfo | null> {
-  const currentVersionCode = Constants.expoConfig?.android?.versionCode;
+  const currentVersionCode =
+    typeof Constants.expoConfig?.android?.versionCode === "number"
+      ? Constants.expoConfig.android.versionCode
+      : BUILD_VERSION_CODE;
   if (typeof currentVersionCode !== "number") return null;
 
   const controller = new AbortController();

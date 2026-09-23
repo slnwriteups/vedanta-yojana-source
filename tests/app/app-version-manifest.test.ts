@@ -58,6 +58,17 @@ test("the published manifest advertises the versionCode the app actually ships",
   );
 });
 
+test("updateCheckService BUILD_VERSION_CODE matches mobile/app.json versionCode", () => {
+  const fileContent = fs.readFileSync(path.join(REPO_ROOT, "mobile/services/updateCheckService.ts"), "utf8");
+  const match = fileContent.match(/export const BUILD_VERSION_CODE = (\d+);/);
+  assert.ok(match, "BUILD_VERSION_CODE constant must exist in updateCheckService.ts");
+  assert.equal(
+    Number(match[1]),
+    expoConfig().android.versionCode,
+    "BUILD_VERSION_CODE in mobile/services/updateCheckService.ts must match mobile/app.json",
+  );
+});
+
 test("the published manifest's version string matches the app's", () => {
   assert.ok(
     publishedManifest().version.startsWith(expoConfig().version),

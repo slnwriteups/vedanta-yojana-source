@@ -127,9 +127,9 @@ export default function HomeScreen() {
         </View>
       )}
 
-      <PanchangamCalendar initialPanchangam={panchangam} />
-
       <DivyaDesamSpotlight />
+
+      <PanchangamCalendar initialPanchangam={panchangam} />
     </ScrollView>
   );
 }

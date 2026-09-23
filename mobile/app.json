@@ -4,7 +4,7 @@
     "slug": "vedanta-yojana",
     "owner": "slnwriteupss-team",
     "scheme": "vedantayojana",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "platforms": [
       "ios",
       "android"
@@ -43,7 +43,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.slnwriteups.vedantayojana",
-      "versionCode": 14
+      "versionCode": 15
     },
     "plugins": [
       "expo-router",

@@ -1,8 +1,8 @@
 {
   "android": {
-    "versionCode": 14,
-    "version": "1.0.1 — Please uninstall v13 first",
-    "url": "https://github.com/slnwriteups/vedanta-yojana-source/releases/download/android-v14/vedanta-yojana.apk",
-    "notes": "Important Notice: Please uninstall previous v13 build and install v1.0.1 for the unified Panchangam calendar, Ekadashi fix, Telugu language support, and OTA updates."
+    "versionCode": 15,
+    "version": "1.0.2",
+    "url": "https://github.com/slnwriteups/vedanta-yojana-source/releases/download/android-v15/vedanta-yojana.apk",
+    "notes": "Home layout update: Divya Desam Spotlight moved above Panchangam Calendar."
   }
 }
