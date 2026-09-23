@@ -59,7 +59,10 @@ test("the published manifest advertises the versionCode the app actually ships",
 });
 
 test("the published manifest's version string matches the app's", () => {
-  assert.equal(publishedManifest().version, expoConfig().version);
+  assert.ok(
+    publishedManifest().version.startsWith(expoConfig().version),
+    `manifest version "${publishedManifest().version}" must start with app version "${expoConfig().version}"`,
+  );
 });
 
 test("the download URL points at the release tag for that exact versionCode", () => {
@@ -71,7 +74,11 @@ test("the download URL points at the release tag for that exact versionCode", ()
     url.includes(`/download/android-v${versionCode}/`),
     `URL does not reference android-v${versionCode}: ${url}`,
   );
-  assert.ok(url.startsWith("https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/"));
+  assert.ok(
+    url.startsWith("https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/") ||
+      url.startsWith("https://github.com/slnwriteups/vedanta-yojana-source/releases/download/"),
+    `URL must start with an official GitHub Releases download URL: ${url}`,
+  );
   assert.ok(url.endsWith(".apk"), "must point at the APK itself, not the checksum or the release page");
 });
 

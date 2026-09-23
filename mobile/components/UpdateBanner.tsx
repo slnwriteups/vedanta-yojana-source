@@ -49,6 +49,11 @@ export function UpdateBanner({ update, onDismiss }: { update: UpdateInfo; onDism
             ? `Downloading update… ${downloadProgress}%`
             : "Tap to download and install"}
         </Text>
+        {update.notes ? (
+          <Text style={[styles.notes, { color: theme.colors.surface }]}>
+            {update.notes}
+          </Text>
+        ) : null}
       </Pressable>
 
       {isDownloading ? (
@@ -89,6 +94,12 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: typography.small,
+  },
+  notes: {
+    fontSize: typography.small,
+    opacity: 0.9,
+    marginTop: 2,
+    lineHeight: 18,
   },
   spinner: {
     paddingHorizontal: spacing.xs,
