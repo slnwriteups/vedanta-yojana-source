@@ -43,7 +43,7 @@ export function HomeHeader({ panchangam }: { panchangam: PanchangamData | null }
   const theme = useTheme();
   const t = useT();
   const { language } = useLanguage();
-  const greeting = `${t(greetingKeyForHour(new Date().getHours()))}, ${t("homeReaderNoun")}`;
+  const greeting = t(greetingKeyForHour(new Date().getHours()));
 
   const pakshaTithi = panchangam
     ? [pakshaLabel(panchangam.paksha, language), tithiLabel(panchangam.tithi, language)].filter(Boolean).join(" ")

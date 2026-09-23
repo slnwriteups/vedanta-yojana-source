@@ -53,30 +53,38 @@ const UI_STRINGS = {
   homeGetStartedLabel: { en: "Get Started", ta: "தொடங்குங்கள்", kn: "ಪ್ರಾರಂಭಿಸಿ", hi: "शुरू करें", te: "ప్రారంభించండి" },
   homeBookmarksLabel: { en: "Bookmarks", ta: "புக்மார்க்குகள்", kn: "ಬುಕ್‌ಮಾರ್ಕ್‌ಗಳು", hi: "बुकमार्क", te: "బుక్‌మార్క్‌లు" },
   /**
-   * The traditional three sandhya (twilight/junction) prayer times --
-   * Prātaḥ (dawn), Mādhyāhnika (midday), Sāyaṃ (dusk) -- give three of
-   * these four greetings their own real Sanskrit terms rather than a
-   * plain "Good Afternoon"/"Good Evening" translation, matching
-   * Suprabhatham's own register (the Venkateswara Suprabhatham morning
-   * hymn this app's tone already leans on). Night has no equivalent
-   * liturgical term, so it keeps the plain traditional "Shubha Ratri".
+   * Warm, welcoming time-of-day greetings blending everyday greetings
+   * with traditional Sanskrit-rooted salutations (Suprabhatham, Shubha Madhyahnam,
+   * Shubha Sandhya, Shubha Ratri) for morning, afternoon, evening, and night.
    */
-  homeGreetingMorning: { en: "Suprabhatham", ta: "சுப்ரபாதம்", kn: "ಸುಪ್ರಭಾತಂ", hi: "सुप्रभातम्", te: "సుప్రభాతం" },
+  homeGreetingMorning: {
+    en: "Good morning • Suprabhatham",
+    ta: "காலை வணக்கம் • சுப்ரபாதம்",
+    kn: "ಶುಭೋದಯ • ಸುಪ್ರಭಾತ",
+    hi: "शुभ प्रभात • सुप्रभात",
+    te: "శుభోదయం • సుప్రభాతం",
+  },
   homeGreetingAfternoon: {
-    en: "Madhyahna Vandanam",
-    ta: "மத்யாஹ்ன வந்தனம்",
-    kn: "ಮಧ್ಯಾಹ್ನ ವಂದನಂ",
-    hi: "मध्याह्न वंदनम्",
-    te: "మధ్యాహ్న వందనం",
+    en: "Good afternoon • Shubha Madhyahnam",
+    ta: "மதிய வணக்கம் • சுப மத்யான்னம்",
+    kn: "ಶುಭ ಮಧ್ಯಾಹ್ನ",
+    hi: "शुभ दोपहर • शुभ मध्याह्न",
+    te: "శుభ మధ్యాహ్నం",
   },
   homeGreetingEvening: {
-    en: "Sandhya Vandanam",
-    ta: "சந்த்யா வந்தனம்",
-    kn: "ಸಂಧ್ಯಾ ವಂದನಂ",
-    hi: "संध्या वंदनम्",
-    te: "సంధ్యా వందనం",
+    en: "Good evening • Shubha Sandhya",
+    ta: "மாலை வணக்கம் • சுப சந்தியா",
+    kn: "ಶುಭ ಸಂಜೆ • ಶುಭ ಸಂಧ್ಯಾ",
+    hi: "शुभ संध्या",
+    te: "శుభ సాయంత్రం • శుభ సంధ్య",
   },
-  homeGreetingNight: { en: "Shubha Ratri", ta: "இனிய இரவு", kn: "ಶುಭ ರಾತ್ರಿ", hi: "शुभ रात्रि", te: "శుభ రాత్రి" },
+  homeGreetingNight: {
+    en: "Good night • Shubha Ratri",
+    ta: "இனிய இரவு • சுப ராத்திரி",
+    kn: "ಶುಭ ರಾತ್ರಿ",
+    hi: "शुभ रात्रि",
+    te: "శుభ రాత్రి",
+  },
   homeReaderNoun: { en: "Reader", ta: "வாசகரே", kn: "ಓದುಗರೇ", hi: "पाठक", te: "పాఠకులారా" },
   homeGreetingSubtitle: {
     en: "Your daily companion for scripture and pilgrimage.",
