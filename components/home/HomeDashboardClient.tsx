@@ -111,9 +111,9 @@ export function HomeDashboardClient({
         </div>
       )}
 
-      <PanchangamCalendar initialPanchangam={panchangam} />
-
       {spotlight}
+
+      <PanchangamCalendar initialPanchangam={panchangam} />
     </div>
   );
 }

@@ -30,7 +30,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
  */
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const RELEASES_URL = "https://github.com/slnwriteups/vedanta-yojana-releases/releases";
+const RELEASES_URL = "https://github.com/slnwriteups/vedanta-yojana-source/releases";
 
 const NAV_LINKS = [
   { href: "/", key: "tabHome" as const, icon: "navigation-icons_home.png" },
@@ -52,6 +52,17 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-[var(--border)] bg-[var(--background)]">
+      <aside aria-label="Announcement" className="bg-[var(--accent)] text-[#fffaf5] px-4 py-2 text-center text-xs sm:text-sm font-medium">
+        <span>📢 Mobile App Update: v1.0.2 is live with Telugu support, reordered Spotlight, &amp; automatic OTA updates. </span>
+        <a
+          href={RELEASES_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline font-semibold ml-1 hover:opacity-90 inline-flex items-center gap-0.5"
+        >
+          Download / Update APK &rarr;
+        </a>
+      </aside>
       <div className="site-container flex items-center justify-between gap-4 py-4">
         <span className="flex items-center gap-2">
           <img
