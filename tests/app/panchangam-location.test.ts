@@ -196,13 +196,16 @@ test("a place name containing the word 'on' does not swallow the Sankalpam's dat
   const localized = localizeSankalpamText(sentence, "hi");
 
   assert.match(localized, /^Stratford on Avon के लिए संकल्प — 22nd Sep 2026, /);
+
+  const localizedTe = localizeSankalpamText(sentence, "te");
+  assert.match(localizedTe, /^Stratford on Avon కొరకు సంకల్పం — 22nd Sep 2026, /);
 });
 
-test("both platforms label the location row, in all four languages", () => {
+test("both platforms label the location row, in all five languages", () => {
   for (const file of ["lib/ui-strings.ts", "mobile/ui-strings.ts"]) {
     const entry = read(file).match(/homeCalendarLocationLabel: \{[^}]*\}/);
     assert.ok(entry, `${file} defines no homeCalendarLocationLabel`);
-    for (const language of ["en", "ta", "kn", "hi"]) {
+    for (const language of ["en", "ta", "kn", "hi", "te"]) {
       assert.match(entry[0], new RegExp(`\\b${language}: "`), `${file} has no ${language} location label`);
     }
   }

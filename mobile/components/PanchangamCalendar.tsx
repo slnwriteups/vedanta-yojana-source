@@ -1,10 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { shadows } from "../shadows";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
-import { localizeUpcomingEkadashi, nakshatramLabel, pakshaLabel, tithiLabel } from "../panchangam-labels.ts";
+import {
+  localizeSankalpamText,
+  localizeUpcomingEkadashi,
+  nakshatramLabel,
+  pakshaLabel,
+  tithiLabel,
+} from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 
 function isSameDay(d1: Date, d2: Date): boolean {
@@ -15,18 +21,24 @@ function isSameDay(d1: Date, d2: Date): boolean {
   );
 }
 
-export function PanchangamCalendar() {
+export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: PanchangamData | null } = {}) {
   const theme = useTheme();
   const t = useT();
   const { language } = useLanguage();
 
   const today = useMemo(() => new Date(), []);
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
-  const [data, setData] = useState<PanchangamData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [showSankalpam, setShowSankalpam] = useState<boolean>(false);
+  const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
+  const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
+  const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
 
   useEffect(() => {
+    if (initialPanchangam && isSameDay(selectedDate, today)) {
+      setData(initialPanchangam);
+      setIsLoading(false);
+      return;
+    }
+
     let cancelled = false;
     setIsLoading(true);
     fetchAhobilaPanchangam(selectedDate)
@@ -45,7 +57,7 @@ export function PanchangamCalendar() {
     return () => {
       cancelled = true;
     };
-  }, [selectedDate]);
+  }, [selectedDate, initialPanchangam, today]);
 
   const goToOffset = (days: number) => {
     const next = new Date(selectedDate.getTime() + days * 24 * 60 * 60 * 1000);
@@ -263,18 +275,42 @@ export function PanchangamCalendar() {
             ) : null}
 
             {data.sankalpamText ? (
-              <View style={[styles.sankalpamToggleArea, { borderTopColor: theme.colors.border }]}>
+              <View style={[styles.sankalpamSection, { borderTopColor: theme.colors.border }]}>
                 <Pressable
                   onPress={() => setShowSankalpam((prev) => !prev)}
                   style={styles.sankalpamToggleBtn}
                   accessibilityRole="button"
+                  accessibilityLabel={t("homeSankalpamLabel")}
                 >
-                  <Text style={[styles.sankalpamToggleText, { color: theme.colors.muted }]}>
-                    {t("homeSankalpamLabel")} {showSankalpam ? "▲" : "▼"}
+                  <Text style={[styles.sankalpamSectionLabel, { color: theme.colors.muted }]}>
+                    {t("homeSankalpamLabel")}
+                  </Text>
+                  <Text style={[styles.toggleArrow, { color: theme.colors.muted }]}>
+                    {showSankalpam ? "▲" : "▼"}
                   </Text>
                 </Pressable>
                 {showSankalpam ? (
-                  <Text style={[styles.sankalpamBody, { color: theme.colors.foreground }]}>{data.sankalpamText}</Text>
+                  <View
+                    style={[
+                      styles.sankalpamBox,
+                      {
+                        backgroundColor: theme.colors.background,
+                        borderColor: theme.colors.border,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={[
+                        styles.sankalpamBody,
+                        {
+                          color: theme.colors.foreground,
+                          fontFamily: Platform.select(typography.readingFontFamily),
+                        },
+                      ]}
+                    >
+                      {localizeSankalpamText(data.sankalpamText, language)}
+                    </Text>
+                  </View>
                 ) : null}
               </View>
             ) : null}
@@ -413,23 +449,35 @@ const styles = StyleSheet.create({
     flexShrink: 1,
     textAlign: "right",
   },
-  sankalpamToggleArea: {
+  sankalpamSection: {
     marginTop: spacing.xs,
     paddingTop: spacing.xs,
     borderTopWidth: StyleSheet.hairlineWidth,
+    gap: spacing.xs,
   },
   sankalpamToggleBtn: {
-    paddingVertical: spacing.xs,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: spacing.xxs,
   },
-  sankalpamToggleText: {
-    fontSize: typography.small,
-    fontWeight: "500",
+  sankalpamSectionLabel: {
+    fontSize: typography.eyebrow,
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
+    fontWeight: "600",
+  },
+  toggleArrow: {
+    fontSize: 12,
+  },
+  sankalpamBox: {
+    padding: spacing.sm,
+    borderRadius: radius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   sankalpamBody: {
-    fontSize: typography.small,
-    lineHeight: 18,
-    fontStyle: "italic",
-    marginTop: spacing.xs,
+    fontSize: typography.body,
+    lineHeight: 24,
   },
   unavailable: {
     fontSize: typography.small,

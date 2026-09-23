@@ -6,9 +6,7 @@ import { ContentCard } from "../../components/ContentCard";
 import { HomeHeader } from "../../components/HomeHeader";
 import { ContinueReadingCard } from "../../components/ContinueReadingCard";
 import { DivyaDesamSpotlight } from "../../components/DivyaDesamSpotlight";
-import { PanchangamCard } from "../../components/PanchangamCard";
 import { PanchangamCalendar } from "../../components/PanchangamCalendar";
-import { SankalpamCard } from "../../components/SankalpamCard";
 import { UpdateBanner } from "../../components/UpdateBanner";
 import { layout, spacing, typography, useTheme } from "../../theme";
 import { sectionTint } from "../../section-tints.ts";
@@ -129,11 +127,9 @@ export default function HomeScreen() {
         </View>
       )}
 
-      <PanchangamCalendar />
+      <PanchangamCalendar initialPanchangam={panchangam} />
 
       <DivyaDesamSpotlight />
-      <PanchangamCard panchangam={panchangam} />
-      <SankalpamCard panchangam={panchangam} />
     </ScrollView>
   );
 }

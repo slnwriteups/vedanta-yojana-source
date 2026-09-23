@@ -12,9 +12,7 @@ import { resolveAllLastRead, type HomeCatalogEntry } from "@/lib/resolve-last-re
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
-import { PanchangamCard } from "@/components/home/PanchangamCard";
 import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
-import { SankalpamCard } from "@/components/home/SankalpamCard";
 
 /**
  * Web port of mobile/app/(tabs)/index.tsx's HomeScreen -- the full Home
@@ -113,12 +111,9 @@ export function HomeDashboardClient({
         </div>
       )}
 
-      <PanchangamCalendar />
+      <PanchangamCalendar initialPanchangam={panchangam} />
 
       {spotlight}
-
-      <PanchangamCard panchangam={panchangam} />
-      <SankalpamCard panchangam={panchangam} />
     </div>
   );
 }

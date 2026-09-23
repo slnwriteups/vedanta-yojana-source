@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { localizeBook, localizeChapter, localizeDivyaDesam, localizeKnowledge } from "../../content-lib/i18n.ts";
+import { loadDivyaDesam, loadBook, loadChapter, loadKnowledgeRecord } from "../../content-lib/loader/index.ts";
 import type { Book, Chapter, DivyaDesam, Knowledge } from "../../content-lib/schemas/index.ts";
 
 function makeDivyaDesam(overrides: Partial<DivyaDesam> = {}): DivyaDesam {
@@ -133,3 +134,68 @@ test("I: localizeBook applies title/description, never touches author", () => {
   assert.equal(localized.title, "ಕನ್ನಡ ಪುಸ್ತಕ");
   assert.equal(localized.author, "Some Author");
 });
+
+test("J: localizeDivyaDesam and localizeChapter support Telugu (te)", () => {
+  const record = makeDivyaDesam({
+    translations: {
+      te: {
+        displayName: "తెలుగు దేవాలయం",
+        templeInformation: { moolavar: "శ్రీ రంగనాథుడు" },
+        sthalaPuranam: "స్థల పురాణం వివరాలు.",
+      },
+    },
+  });
+  const localized = localizeDivyaDesam(record, "te");
+  assert.equal(localized.displayName, "తెలుగు దేవాలయం");
+  assert.equal(localized.templeInformation.moolavar, "శ్రీ రంగనాథుడు");
+  assert.equal(localized.sthalaPuranam, "స్థల పురాణం వివరాలు.");
+  assert.equal(localized.templeInformation.travelNote, "Example travel note.");
+});
+
+test("K: real content records in Cohort 1 localize correctly in Telugu (te)", () => {
+  const sriRangam = loadDivyaDesam("sri-rangam");
+  assert.ok(sriRangam);
+  const localizedSriRangam = localizeDivyaDesam(sriRangam, "te");
+  assert.equal(localizedSriRangam.displayName, "శ్రీరంగం");
+  assert.equal(localizedSriRangam.templeInformation.moolavar, "శ్రీ రంగనాథస్వామి");
+
+  const tiruvenkatam = loadDivyaDesam("tiruvenkatam");
+  assert.ok(tiruvenkatam);
+  const localizedTiruvenkatam = localizeDivyaDesam(tiruvenkatam, "te");
+  assert.equal(localizedTiruvenkatam.displayName, "తిరువేంకటం");
+  assert.equal(localizedTiruvenkatam.templeInformation.moolavar, "శ్రీ వేంకటేశ్వర పెరుమాళ్");
+
+  const ahobilam = loadDivyaDesam("singavelkundram-ahobilam");
+  assert.ok(ahobilam);
+  const localizedAhobilam = localizeDivyaDesam(ahobilam, "te");
+  assert.equal(localizedAhobilam.displayName, "సింగవేళ్కుండ్రం (అహోబిలం)");
+  assert.equal(localizedAhobilam.templeInformation.moolavar, "ప్రహ్లాదవరదన్");
+
+  const tiruvallikkeni = loadDivyaDesam("tiruvallikkeni");
+  assert.ok(tiruvallikkeni);
+  const localizedTriplicane = localizeDivyaDesam(tiruvallikkeni, "te");
+  assert.equal(localizedTriplicane.displayName, "తిరువల్లిక్కేణి");
+  assert.equal(localizedTriplicane.templeInformation.moolavar, "వేంకటకృష్ణ పెరుమాళ్");
+
+  const tiruvallur = loadDivyaDesam("tiru-evvellur-tiruvallur");
+  assert.ok(tiruvallur);
+  const localizedTiruvallur = localizeDivyaDesam(tiruvallur, "te");
+  assert.equal(localizedTiruvallur.displayName, "తిరు ఎవ్వుళ్ (తిరువళ్లూరు)");
+  assert.equal(localizedTiruvallur.templeInformation.moolavar, "శ్రీ వీరరాఘవ పెరుమాళ్");
+
+  const intro = loadKnowledgeRecord("introduction");
+  assert.ok(intro);
+  const localizedIntro = localizeKnowledge(intro, "te");
+  assert.equal(localizedIntro.title, "పరిచయం");
+
+  const jaya = loadBook("jaya");
+  assert.ok(jaya);
+  const localizedJaya = localizeBook(jaya, "te");
+  assert.equal(localizedJaya.title, "జయ: మహాభారత యాత్ర");
+
+  const invocation = loadChapter("jaya", "invocation");
+  assert.ok(invocation);
+  const localizedInvocation = localizeChapter(invocation, "te");
+  assert.equal(localizedInvocation.title, "మంగళాచరణం");
+});
+

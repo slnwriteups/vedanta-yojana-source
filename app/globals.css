@@ -94,7 +94,7 @@ body {
    * happens to pick on its own.
    */
   font-family:
-    ui-sans-serif, system-ui, sans-serif, var(--font-devanagari), "Apple Color Emoji", "Segoe UI Emoji",
+    ui-sans-serif, system-ui, sans-serif, var(--font-devanagari), "Noto Sans Telugu", "Gautami", "Vani", "Apple Color Emoji", "Segoe UI Emoji",
     "Segoe UI Symbol", "Noto Color Emoji";
 }
 

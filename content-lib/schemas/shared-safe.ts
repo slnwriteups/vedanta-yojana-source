@@ -135,9 +135,9 @@ export type RelatedContentRef = z.infer<typeof RelatedContentRefSchema>;
 
 /**
  * A per-language translations object shape shared by every content type:
- * `{ ta?: T, kn?: T, hi?: T }`, each entry independently optional so a
+ * `{ ta?: T, kn?: T, hi?: T, te?: T }`, each entry independently optional so a
  * record can carry a translation for one language without needing all
- * three. Explicit object (not `z.record`) so an absent language is
+ * four. Explicit object (not `z.record`) so an absent language is
  * simply an absent key, never a key that must be present-but-undefined.
  */
 export function translationsSchemaFor<T extends z.ZodType>(languageShape: T) {
@@ -145,5 +145,6 @@ export function translationsSchemaFor<T extends z.ZodType>(languageShape: T) {
     ta: languageShape.optional(),
     kn: languageShape.optional(),
     hi: languageShape.optional(),
+    te: languageShape.optional(),
   });
 }

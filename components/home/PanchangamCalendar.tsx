@@ -3,7 +3,13 @@
 import { useEffect, useState, useMemo } from "react";
 import { useLanguage } from "@/lib/language-context";
 import { useT } from "@/lib/ui-strings";
-import { localizeUpcomingEkadashi, nakshatramLabel, pakshaLabel, tithiLabel } from "@/lib/panchangam-labels";
+import {
+  localizeSankalpamText,
+  localizeUpcomingEkadashi,
+  nakshatramLabel,
+  pakshaLabel,
+  tithiLabel,
+} from "@/lib/panchangam-labels";
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 
 function formatDateKey(d: Date): string {
@@ -26,17 +32,23 @@ function isSameDay(d1: Date, d2: Date): boolean {
   );
 }
 
-export function PanchangamCalendar() {
+export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: PanchangamData | null }) {
   const t = useT();
   const { language } = useLanguage();
 
   const today = useMemo(() => new Date(), []);
   const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
-  const [data, setData] = useState<PanchangamData | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [showSankalpam, setShowSankalpam] = useState<boolean>(false);
+  const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
+  const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
+  const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
 
   useEffect(() => {
+    if (initialPanchangam && isSameDay(selectedDate, today)) {
+      setData(initialPanchangam);
+      setIsLoading(false);
+      return;
+    }
+
     let cancelled = false;
     setIsLoading(true);
     fetchAhobilaPanchangam(selectedDate)
@@ -55,7 +67,7 @@ export function PanchangamCalendar() {
     return () => {
       cancelled = true;
     };
-  }, [selectedDate]);
+  }, [selectedDate, initialPanchangam, today]);
 
   const goToOffset = (days: number) => {
     const next = new Date(selectedDate.getTime() + days * 24 * 60 * 60 * 1000);
@@ -222,21 +234,28 @@ export function PanchangamCalendar() {
             ) : null}
             {data.location ? <Row label={t("homeCalendarLocationLabel")} value={data.location} /> : null}
 
-            {/* Optional Sankalpam View for Selected Day */}
+            {/* Sankalpam Section for Selected Day */}
             {data.sankalpamText ? (
-              <div className="mt-3 border-t border-[var(--border)] pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowSankalpam((prev) => !prev)}
-                  className="flex w-full items-center justify-between text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)]"
-                >
-                  <span>{t("homeSankalpamLabel")}</span>
-                  <span>{showSankalpam ? "▲" : "▼"}</span>
-                </button>
+              <div className="mt-4 border-t border-[var(--border)] pt-3">
+                <div className="flex items-center justify-between pb-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+                    {t("homeSankalpamLabel")}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowSankalpam((prev) => !prev)}
+                    className="text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+                    aria-label={t("homeSankalpamLabel")}
+                  >
+                    {showSankalpam ? "▲" : "▼"}
+                  </button>
+                </div>
                 {showSankalpam ? (
-                  <p className="mt-2 text-xs italic leading-relaxed text-[var(--foreground)] opacity-90">
-                    {data.sankalpamText}
-                  </p>
+                  <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
+                    <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
+                      {localizeSankalpamText(data.sankalpamText, language)}
+                    </p>
+                  </div>
                 ) : null}
               </div>
             ) : null}
@@ -252,8 +271,8 @@ export function PanchangamCalendar() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4">
-      <span className="text-xs text-[var(--muted)]">{label}</span>
-      <span className="text-right text-xs font-semibold text-[var(--foreground)]">{value}</span>
+      <span className="text-xs sm:text-sm text-[var(--muted)]">{label}</span>
+      <span className="text-right text-xs sm:text-sm font-semibold text-[var(--foreground)]">{value}</span>
     </div>
   );
 }

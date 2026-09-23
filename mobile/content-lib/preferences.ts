@@ -38,7 +38,7 @@ export function isValidThemeOverride(value: unknown): value is ColorScheme | nul
 }
 
 export function isValidLanguageCode(value: unknown): value is LanguageCode | null {
-  return value === null || value === "ta" || value === "kn" || value === "hi";
+  return value === null || value === "ta" || value === "kn" || value === "hi" || value === "te";
 }
 
 export function isValidCompletedFlag(value: unknown): value is true {

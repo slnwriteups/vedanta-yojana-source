@@ -16,7 +16,7 @@ import { z } from "zod";
  * directly in the language picker), so this standalone module carries no
  * such exposure.
  */
-export const LanguageCodeSchema = z.enum(["ta", "kn", "hi"]);
+export const LanguageCodeSchema = z.enum(["ta", "kn", "hi", "te"]);
 export type LanguageCode = z.infer<typeof LanguageCodeSchema>;
 
 export interface LanguageOption {
@@ -31,4 +31,5 @@ export const SUPPORTED_LANGUAGES: LanguageOption[] = [
   { code: "ta", label: "Tamil", nativeLabel: "தமிழ்" },
   { code: "kn", label: "Kannada", nativeLabel: "ಕನ್ನಡ" },
   { code: "hi", label: "Hindi", nativeLabel: "हिन्दी" },
+  { code: "te", label: "Telugu", nativeLabel: "తెలుగు" },
 ];
