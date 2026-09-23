@@ -6,10 +6,6 @@ on:
     tags:
       - "android-v*"
       - "v*"
-    paths:
-      - "mobile/**"
-      - "public/app-version.json"
-      - ".github/workflows/build-apk.yml"
 
 concurrency:
   group: build-apk-${{ github.ref }}
