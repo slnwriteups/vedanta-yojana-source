@@ -44,6 +44,10 @@ jobs:
         working-directory: mobile
         run: npm ci
 
+      - name: Generate Android native project
+        working-directory: mobile
+        run: npx expo prebuild --platform android --no-install
+
       - name: Build Android Release APK
         working-directory: mobile/android
         env:
@@ -55,7 +59,8 @@ jobs:
 
       - name: Rename APK for release and generate checksum
         run: |
-          cp mobile/android/app/build/outputs/apk/release/app-release.apk vedanta-yojana.apk
+          APK_PATH=$(find mobile/android/app/build/outputs/apk/release -name "*.apk" | head -n 1)
+          cp "$APK_PATH" vedanta-yojana.apk
           sha256sum vedanta-yojana.apk > vedanta-yojana.apk.sha256
 
       - name: Upload APK artifact
