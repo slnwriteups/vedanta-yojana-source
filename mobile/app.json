@@ -70,7 +70,8 @@
             "enableShrinkResourcesInReleaseBuilds": true,
             "buildArchs": [
               "arm64-v8a"
-            ]
+            ],
+            "enableMinifyInReleaseBuilds": true
           }
         }
       ]
@@ -79,6 +80,15 @@
       "router": {},
       "eas": {
         "projectId": "fd9baa2d-92be-4e6f-88d4-9c9830516db1"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/fd9baa2d-92be-4e6f-88d4-9c9830516db1",
+      "requestHeaders": {
+        "expo-channel-name": "production"
       }
     }
   }
