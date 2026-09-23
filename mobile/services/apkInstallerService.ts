@@ -82,3 +82,4 @@ export async function downloadAndInstallApk(
     return false;
   }
 }
+

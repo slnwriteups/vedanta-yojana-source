@@ -108,7 +108,6 @@ const UI_STRINGS = {
     kn: "ಮುಂಬರುವ ಏಕಾದಶಿ",
     hi: "आगामी एकादशी",
   },
-  homeCalendarLocationLabel: { en: "Location", ta: "இருப்பிடம்", kn: "ಸ್ಥಳ", hi: "स्थान" },
   homeCalendarBrowseTitle: {
     en: "Panchangam Calendar",
     ta: "பஞ்சாங்க காலண்டர்",
