@@ -53,7 +53,7 @@ export function SiteHeader() {
   return (
     <header className="border-b border-[var(--border)] bg-[var(--background)]">
       <aside aria-label="Announcement" className="bg-[var(--accent)] text-[#fffaf5] px-4 py-2 text-center text-xs sm:text-sm font-medium">
-        <span>📢 Mobile App Update: v1.0.2 is live with Telugu support, reordered Spotlight, &amp; automatic OTA updates. </span>
+        <span>📢 Attention v13 &amp; v14 App Users: Please update to v1.0.2 for full Telugu support, reordered Spotlight, and permanent automatic OTA updates. </span>
         <a
           href={RELEASES_URL}
           target="_blank"

@@ -1,8 +1,8 @@
 {
   "android": {
     "versionCode": 15,
-    "version": "1.0.2",
+    "version": "1.0.2 (Notice for v13 & v14 Users)",
     "url": "https://github.com/slnwriteups/vedanta-yojana-source/releases/download/android-v15/vedanta-yojana.apk",
-    "notes": "Home layout update: Divya Desam Spotlight moved above Panchangam Calendar."
+    "notes": "Action Required: Attention v13 and v14 users! Please update to v1.0.2 to enable automatic OTA updates, complete Telugu language support, and the updated Divya Desam Spotlight layout."
   }
 }
