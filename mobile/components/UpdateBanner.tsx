@@ -1,41 +1,69 @@
-import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { useState } from "react";
+import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { radius, spacing, typography, useTheme } from "../theme";
 import type { UpdateInfo } from "../services/updateCheckService.ts";
+import { downloadAndInstallApk } from "../services/apkInstallerService.ts";
 
 /**
  * Shown only when checkForUpdate() (services/updateCheckService.ts)
  * finds a newer build published than the one currently running --
  * renders nothing otherwise, and never appears more than once per
- * session once dismissed. Tapping the banner opens the download page
- * in the device's own browser; this app has no OS permission to
- * install an update over itself (only the Play Store's own installer
- * has that), so a manual re-download-and-reinstall, guided by this
- * banner, is the real mechanism -- the same one every other directly-
- * distributed Android app uses.
+ * session once dismissed.
+ *
+ * Tapping triggers in-app download and launches the native Android
+ * package installer prompt ("Do you want to update this app?"),
+ * upgrading the app with one tap while preserving all reading data.
  */
 export function UpdateBanner({ update, onDismiss }: { update: UpdateInfo; onDismiss: () => void }) {
   const theme = useTheme();
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadProgress, setDownloadProgress] = useState(0);
+
+  const handlePress = async () => {
+    if (isDownloading) return;
+    setIsDownloading(true);
+    setDownloadProgress(0);
+    try {
+      await downloadAndInstallApk(update.downloadUrl, (percent) => {
+        setDownloadProgress(percent);
+      });
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.accent }]}>
       <Pressable
-        onPress={() => Linking.openURL(update.downloadUrl)}
+        onPress={handlePress}
+        disabled={isDownloading}
         style={styles.textArea}
         accessibilityRole="button"
-        accessibilityLabel={`Update available: version ${update.latestVersion}. Tap to download.`}
+        accessibilityLabel={`Update available: version ${update.latestVersion}. Tap to install.`}
       >
-        <Text style={[styles.title, { color: theme.colors.surface }]}>Update available: v{update.latestVersion}</Text>
-        <Text style={[styles.subtitle, { color: theme.colors.surface }]}>Tap to download the latest version</Text>
+        <Text style={[styles.title, { color: theme.colors.surface }]}>
+          Update available: v{update.latestVersion}
+        </Text>
+        <Text style={[styles.subtitle, { color: theme.colors.surface }]}>
+          {isDownloading
+            ? `Downloading update… ${downloadProgress}%`
+            : "Tap to download and install"}
+        </Text>
       </Pressable>
-      <Pressable
-        onPress={onDismiss}
-        hitSlop={spacing.sm}
-        accessibilityRole="button"
-        accessibilityLabel="Dismiss update notice"
-        style={styles.dismiss}
-      >
-        <Text style={[styles.dismissText, { color: theme.colors.surface }]}>✕</Text>
-      </Pressable>
+
+      {isDownloading ? (
+        <ActivityIndicator color={theme.colors.surface} size="small" style={styles.spinner} />
+      ) : (
+        <Pressable
+          onPress={onDismiss}
+          hitSlop={spacing.sm}
+          accessibilityRole="button"
+          accessibilityLabel="Dismiss update notice"
+          style={styles.dismiss}
+        >
+          <Text style={[styles.dismissText, { color: theme.colors.surface }]}>✕</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
@@ -61,6 +89,9 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: typography.small,
+  },
+  spinner: {
+    paddingHorizontal: spacing.xs,
   },
   dismiss: {
     paddingHorizontal: spacing.xs,
