@@ -7,6 +7,7 @@ import { HomeHeader } from "../../components/HomeHeader";
 import { ContinueReadingCard } from "../../components/ContinueReadingCard";
 import { DivyaDesamSpotlight } from "../../components/DivyaDesamSpotlight";
 import { PanchangamCard } from "../../components/PanchangamCard";
+import { PanchangamCalendar } from "../../components/PanchangamCalendar";
 import { SankalpamCard } from "../../components/SankalpamCard";
 import { UpdateBanner } from "../../components/UpdateBanner";
 import { layout, spacing, typography, useTheme } from "../../theme";
@@ -127,6 +128,8 @@ export default function HomeScreen() {
           />
         </View>
       )}
+
+      <PanchangamCalendar />
 
       <DivyaDesamSpotlight />
       <PanchangamCard panchangam={panchangam} />

@@ -14,18 +14,23 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
  * Search/Settings), same localized labels (lib/ui-strings.ts's tabX
  * keys) -- laid out as a top nav bar rather than mobile's fixed bottom
  * bar, which is a native-app convention with no direct web equivalent;
- * "About" is web-only chrome mobile has no tab for, so it keeps a
- * plain English label.
+ * "Install App" is web-only chrome mobile has no tab for (mobile can't
+ * usefully link to its own APK download from inside itself), so it
+ * keeps a plain English label and points straight at the GitHub
+ * Releases page -- the discovery path for someone who found the app on
+ * the web and wants the Android APK.
  *
  * A client component (not the Phase 5B server-rendered stub) so the
  * current route can be indicated (`usePathname`) and a mobile menu can be
  * toggled. Basic navigation itself needs no JavaScript: every link below
- * is a real `next/link` anchor and works identically with JS disabled --
- * only the active-route highlight and the mobile disclosure are
- * client-side enhancements, isolated to this one component.
+ * is a real `next/link` anchor (or, for Install App, a plain external
+ * anchor) and works identically with JS disabled -- only the
+ * active-route highlight and the mobile disclosure are client-side
+ * enhancements, isolated to this one component.
  */
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const RELEASES_URL = "https://github.com/slnwriteups/vedanta-yojana-releases/releases";
 
 const NAV_LINKS = [
   { href: "/", key: "tabHome" as const, icon: "navigation-icons_home.png" },
@@ -96,9 +101,9 @@ export function SiteHeader() {
                 );
               })}
               <li>
-                <Link href="/about" aria-current={isActiveRoute(pathname, "/about") ? "page" : undefined} className={isActiveRoute(pathname, "/about") ? "font-semibold text-[var(--accent)]" : "hover:underline"}>
-                  About
-                </Link>
+                <a href={RELEASES_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  Install App
+                </a>
               </li>
             </ul>
           </nav>
@@ -112,7 +117,7 @@ export function SiteHeader() {
         className={`site-container border-t border-[var(--border)] pt-4 pb-4 sm:hidden ${menuOpen ? "block" : "hidden"}`}
       >
         <ul role="list" className="flex flex-col gap-1 text-sm">
-          {[...NAV_LINKS, { href: "/about", key: null, icon: null }].map((link) => {
+          {NAV_LINKS.map((link) => {
             const active = isActiveRoute(pathname, link.href);
             return (
               <li key={link.href}>
@@ -124,20 +129,29 @@ export function SiteHeader() {
                     active ? "font-semibold text-[var(--accent)]" : "hover:underline"
                   }`}
                 >
-                  {link.icon ? (
-                    <img
-                      src={`${BASE_PATH}/nav-icons/${link.icon}`}
-                      alt=""
-                      aria-hidden="true"
-                      className="h-5 w-5 object-contain"
-                      style={{ opacity: active ? 1 : 0.6 }}
-                    />
-                  ) : null}
-                  {link.key ? t(link.key) : "About"}
+                  <img
+                    src={`${BASE_PATH}/nav-icons/${link.icon}`}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-5 w-5 object-contain"
+                    style={{ opacity: active ? 1 : 0.6 }}
+                  />
+                  {t(link.key)}
                 </Link>
               </li>
             );
           })}
+          <li>
+            <a
+              href={RELEASES_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 rounded-md px-2 py-2 hover:underline"
+            >
+              Install App
+            </a>
+          </li>
         </ul>
         <div className="mt-4 border-t border-[var(--border)] pt-4">
           <LanguageSwitcher />

@@ -52,6 +52,9 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
                 value={localizeUpcomingEkadashi(panchangam.upcomingEkadashiText, language)}
               />
             ) : null}
+            {panchangam.location ? (
+              <Row label={t("homeCalendarLocationLabel")} value={panchangam.location} />
+            ) : null}
           </>
         ) : (
           <p className="text-sm text-[var(--muted)]">{t("homeLocationUnavailable")}</p>

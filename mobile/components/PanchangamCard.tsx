@@ -73,6 +73,14 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
                 fg={theme.colors.foreground}
               />
             ) : null}
+            {panchangam.location ? (
+              <Row
+                label={t("homeCalendarLocationLabel")}
+                value={panchangam.location}
+                muted={theme.colors.muted}
+                fg={theme.colors.foreground}
+              />
+            ) : null}
           </>
         ) : (
           <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>

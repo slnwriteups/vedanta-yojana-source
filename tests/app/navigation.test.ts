@@ -41,9 +41,15 @@ test("every required route file exists", () => {
 
 test("SiteHeader links to every required top-level route", () => {
   const source = read("components/SiteHeader.tsx");
-  for (const href of ["/", "/divya-desams", "/library", "/search", "/about"]) {
+  for (const href of ["/", "/divya-desams", "/library", "/search"]) {
     assert.ok(source.includes(`href: "${href}"`), `SiteHeader missing link to ${href}`);
   }
+});
+
+test("SiteHeader links to the GitHub Releases page for app installs", () => {
+  const source = read("components/SiteHeader.tsx");
+  assert.ok(/RELEASES_URL\s*=\s*"https:\/\/github\.com\/[^"]+\/releases"/.test(source), "SiteHeader missing a RELEASES_URL constant pointing at GitHub Releases");
+  assert.ok(source.includes("Install App"), "SiteHeader missing an Install App link");
 });
 
 test("dynamic Divya Desam/Book/Chapter routes plus the introduction route use the content loader and call notFound() rather than reading /content JSON directly", () => {

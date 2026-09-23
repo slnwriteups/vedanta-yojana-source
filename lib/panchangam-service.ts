@@ -116,7 +116,7 @@ export interface PanchangamData {
    * all shift with location. "" is rendered as no location row at all,
    * never as a placeholder standing in for a real city.
    */
-  location: string;
+  location?: string;
 }
 
 /**
@@ -165,7 +165,7 @@ function isValidPanchangamData(value: unknown): value is PanchangamData {
     typeof candidate.festival === "string" &&
     typeof candidate.upcomingEkadashiText === "string" &&
     typeof candidate.sankalpamText === "string" &&
-    typeof candidate.location === "string"
+    (candidate.location === undefined || typeof candidate.location === "string")
   );
 }
 
@@ -191,6 +191,24 @@ function cacheKeyFor(date: Date, location: ResolvedLocation): string {
   const roundedLat = Number(location.lat).toFixed(2);
   const roundedLng = Number(location.lng).toFixed(2);
   return `${CACHE_KEY_PREFIX}${day}.${roundedLat},${roundedLng}`;
+}
+
+async function reverseGeocodeWeb(lat: number, lng: number): Promise<string> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 4000);
+  try {
+    const res = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`,
+      { signal: controller.signal }
+    );
+    if (!res.ok) return "Your Location";
+    const data = (await res.json()) as { city?: string; locality?: string; principalSubdivision?: string };
+    return data.city || data.locality || data.principalSubdivision || "Your Location";
+  } catch {
+    return "Your Location";
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 /**
@@ -293,6 +311,39 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
     lng: String(coordinates.longitude),
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   };
+}
+
+/**
+ * Parses the validity expiration time from a Sankalpam text
+ * (e.g. "valid through 09:38:42 AM" or "valid through 10:28:18 PM of following day").
+ * Returns a Date in the baseDate's local day representing when this declaration expires.
+ */
+export function parseSankalpamExpiry(sankalpamText: string, baseDate: Date = new Date()): Date | null {
+  if (!sankalpamText) return null;
+  const match = sankalpamText.match(
+    /valid through\s+(\d{1,2}):(\d{2})(?::(\d{2}))?\s*([AP]M)(\s+of\s+following\s+day)?/i
+  );
+  if (!match) return null;
+  const [, hoursStr, minsStr, secsStr = "0", period, followingDay] = match;
+  let hours = parseInt(hoursStr, 10);
+  const minutes = parseInt(minsStr, 10);
+  const seconds = parseInt(secsStr, 10);
+  if (period.toUpperCase() === "PM" && hours < 12) hours += 12;
+  if (period.toUpperCase() === "AM" && hours === 12) hours = 0;
+
+  const expiry = new Date(baseDate);
+  expiry.setHours(hours, minutes, seconds, 0);
+  if (followingDay) {
+    expiry.setDate(expiry.getDate() + 1);
+  }
+  return expiry;
+}
+
+/** Returns true if the given Sankalpam's validity window has elapsed relative to now. */
+export function isSankalpamExpired(sankalpamText: string, now: Date = new Date()): boolean {
+  const expiry = parseSankalpamExpiry(sankalpamText, now);
+  if (!expiry) return false;
+  return now.getTime() >= expiry.getTime();
 }
 
 /** mm/dd/yyyy -- the exact format both RPC endpoints expect (verified against their own client-side `getDailyCalDate()`/date-field format). */
@@ -509,11 +560,62 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
 
   const cacheKey = cacheKeyFor(date, location);
   const cached = await readJSON(cacheKey, isValidPanchangamData);
-  if (cached) return cached;
+  const isToday = date.toDateString() === new Date().toDateString();
+
+  if (cached) {
+    let needsUpdate = false;
+    const data: PanchangamData = { ...cached };
+
+    // If cached Ekadashi contains "a date, past" (e.g. from an earlier Dvadasi query), look ahead to the next cycle
+    if (data.upcomingEkadashiText.includes("a date, past")) {
+      try {
+        const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+        const tomorrowEkadashiHtml = await fetchRpcHtml(
+          proxied(buildEkadashiUrl(location, formatDateParam(tomorrow)))
+        );
+        const parsedTomorrow = parseUpcomingEkadashi(tomorrowEkadashiHtml);
+        if (parsedTomorrow && !parsedTomorrow.includes("a date, past")) {
+          data.upcomingEkadashiText = parsedTomorrow;
+          needsUpdate = true;
+        }
+      } catch {
+        // Retain cached on transient network error
+      }
+    }
+
+    // For today: if the cached Sankalpam has expired, re-fetch just the Sankalpam for the current time
+    if (isToday && isSankalpamExpired(data.sankalpamText)) {
+      try {
+        const now = new Date();
+        const timeParam = formatTimeParam(now);
+        const dateParam = formatDateParam(now);
+        const sankalpamHtml = await fetchRpcHtml(
+          proxied(buildSankalpamUrl(location, dateParam, timeParam))
+        );
+        const freshSankalpam = parseSankalpam(sankalpamHtml);
+        if (freshSankalpam) {
+          data.sankalpamText = freshSankalpam;
+          needsUpdate = true;
+        }
+      } catch {
+        // Retain cached on transient network error
+      }
+    }
+
+    if (location.city && location.city !== "Your Location" && !data.location) {
+      data.location = location.city;
+      needsUpdate = true;
+    }
+
+    if (needsUpdate) {
+      void writeJSON(cacheKey, data);
+    }
+    return data;
+  }
 
   try {
     const dateParam = formatDateParam(date);
-    const timeParam = formatTimeParam(date);
+    const timeParam = formatTimeParam(isToday ? new Date() : date);
     const [dailyHtml, ekadashiHtml, sankalpamHtml] = await Promise.all([
       fetchRpcHtml(proxied(buildDailyCalUrl(location, dateParam))),
       fetchRpcHtml(proxied(buildEkadashiUrl(location, dateParam))),
@@ -523,9 +625,27 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
     const parsedDaily = parseDailyCalendar(dailyHtml);
     if (!parsedDaily) throw new Error("Unrecognized daily calendar response format");
 
+    let upcomingEkadashiText = parseUpcomingEkadashi(ekadashiHtml);
+    // On Dvadasi, the API returns "Next Ekadasi for <city> is on a date, past. Perform Dvadasi Paranai..."
+    // In that case, look ahead to tomorrow to fetch the actual upcoming Ekadasi of the next cycle.
+    if (upcomingEkadashiText.includes("a date, past") || ekadashiHtml.includes("a date, past")) {
+      try {
+        const tomorrow = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+        const tomorrowEkadashiHtml = await fetchRpcHtml(
+          proxied(buildEkadashiUrl(location, formatDateParam(tomorrow)))
+        );
+        const parsedTomorrow = parseUpcomingEkadashi(tomorrowEkadashiHtml);
+        if (parsedTomorrow && !parsedTomorrow.includes("a date, past")) {
+          upcomingEkadashiText = parsedTomorrow;
+        }
+      } catch {
+        // Retain parsed if tomorrow fetch fails
+      }
+    }
+
     const data: PanchangamData = {
       ...parsedDaily,
-      upcomingEkadashiText: parseUpcomingEkadashi(ekadashiHtml),
+      upcomingEkadashiText,
       sankalpamText: parseSankalpam(sankalpamHtml),
       // "" rather than the placeholder itself: an unresolved name is
       // shown as no location row at all, never as a fake city.

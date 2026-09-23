@@ -13,6 +13,7 @@ import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-se
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
 import { PanchangamCard } from "@/components/home/PanchangamCard";
+import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
 import { SankalpamCard } from "@/components/home/SankalpamCard";
 
 /**
@@ -111,6 +112,8 @@ export function HomeDashboardClient({
           </div>
         </div>
       )}
+
+      <PanchangamCalendar />
 
       {spotlight}
 
