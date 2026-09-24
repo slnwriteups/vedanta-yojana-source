@@ -169,7 +169,7 @@ test("K: real content records in Cohort 1 localize correctly in Telugu (te)", ()
   assert.ok(ahobilam);
   const localizedAhobilam = localizeDivyaDesam(ahobilam, "te");
   assert.equal(localizedAhobilam.displayName, "సింగవేళ్కుండ్రం (అహోబిలం)");
-  assert.equal(localizedAhobilam.templeInformation.moolavar, "ప్రహ్లాదవరదన్");
+  assert.equal(localizedAhobilam.templeInformation.moolavar, "ప్రహ్లాదవర్ధన్");
 
   const tiruvallikkeni = loadDivyaDesam("tiruvallikkeni");
   assert.ok(tiruvallikkeni);
