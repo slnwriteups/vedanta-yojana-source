@@ -157,7 +157,7 @@ test("K: real content records in Cohort 1 localize correctly in Telugu (te)", ()
   assert.ok(sriRangam);
   const localizedSriRangam = localizeDivyaDesam(sriRangam, "te");
   assert.equal(localizedSriRangam.displayName, "శ్రీరంగం");
-  assert.equal(localizedSriRangam.templeInformation.moolavar, "శ్రీ రంగనాథస్వామి");
+  assert.equal(localizedSriRangam.templeInformation.moolavar, "శ్రీ రంగనాథర్ పెరుమాళ్");
 
   const tiruvenkatam = loadDivyaDesam("tiruvenkatam");
   assert.ok(tiruvenkatam);
