@@ -527,7 +527,7 @@ to confirm a downloaded file is genuine.
 |---|---|
 | v13 (1.0.0) | The app shows an "Update available" notice that opens the v16 download; v16 installs over it and keeps your data. |
 | v14 (1.0.1) or v15 (1.0.2) | These were debug-signed test builds. The app shows an update notice, but Android will refuse to install v16 over them. Uninstall first (this removes local app data such as bookmarks and downloaded books), then install v16. |
-| v10 (1.0.0) or earlier | No update notice appears (v10 checks an address that no longer exists). Download v16 from the releases page; it installs over v10 and keeps your data. |
+| v10 (1.0.0) | No update notice appears (v10 checks an address that no longer exists). Download v16 from the releases page; it installs over v10 and keeps your data. |
 | v16 | Nothing to do — content and app fixes arrive automatically as over-the-air updates. |
 
 ## Documentation
