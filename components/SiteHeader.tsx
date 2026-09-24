@@ -17,8 +17,10 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
  * "Install App" is web-only chrome mobile has no tab for (mobile can't
  * usefully link to its own APK download from inside itself), so it
  * keeps a plain English label and points straight at the GitHub
- * Releases page -- the discovery path for someone who found the app on
- * the web and wants the Android APK.
+ * Releases page of the dedicated releases repository (the app's only
+ * official download location -- not this source repository, whose
+ * tag-triggered builds are debug-signed) -- the discovery path for
+ * someone who found the app on the web and wants the Android APK.
  *
  * A client component (not the Phase 5B server-rendered stub) so the
  * current route can be indicated (`usePathname`) and a mobile menu can be
@@ -30,7 +32,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
  */
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
-const RELEASES_URL = "https://github.com/slnwriteups/vedanta-yojana-source/releases";
+const RELEASES_URL = "https://github.com/slnwriteups/vedanta-yojana-releases/releases";
 
 const NAV_LINKS = [
   { href: "/", key: "tabHome" as const, icon: "navigation-icons_home.png" },

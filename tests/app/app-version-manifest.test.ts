@@ -86,9 +86,8 @@ test("the download URL points at the release tag for that exact versionCode", ()
     `URL does not reference android-v${versionCode}: ${url}`,
   );
   assert.ok(
-    url.startsWith("https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/") ||
-      url.startsWith("https://github.com/slnwriteups/vedanta-yojana-source/releases/download/"),
-    `URL must start with an official GitHub Releases download URL: ${url}`,
+    url.startsWith("https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/"),
+    `URL must point at the dedicated releases repository (source-repository releases are debug-signed): ${url}`,
   );
   assert.ok(url.endsWith(".apk"), "must point at the APK itself, not the checksum or the release page");
 });

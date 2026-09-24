@@ -48,7 +48,7 @@ test("SiteHeader links to every required top-level route", () => {
 
 test("SiteHeader links to the GitHub Releases page for app installs", () => {
   const source = read("components/SiteHeader.tsx");
-  assert.ok(/RELEASES_URL\s*=\s*"https:\/\/github\.com\/[^"]+\/releases"/.test(source), "SiteHeader missing a RELEASES_URL constant pointing at GitHub Releases");
+  assert.ok(/RELEASES_URL\s*=\s*"https:\/\/github\.com\/slnwriteups\/vedanta-yojana-releases\/releases"/.test(source), "SiteHeader RELEASES_URL must point at the dedicated releases repository (source-repository releases are debug-signed)");
   assert.ok(source.includes("Install App"), "SiteHeader missing an Install App link");
 });
 
