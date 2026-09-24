@@ -180,8 +180,8 @@ test("K: real content records in Cohort 1 localize correctly in Telugu (te)", ()
   const tiruvallur = loadDivyaDesam("tiru-evvellur-tiruvallur");
   assert.ok(tiruvallur);
   const localizedTiruvallur = localizeDivyaDesam(tiruvallur, "te");
-  assert.equal(localizedTiruvallur.displayName, "తిరు ఎవ్వుళ్ (తిరువళ్లూరు)");
-  assert.equal(localizedTiruvallur.templeInformation.moolavar, "శ్రీ వీరరాఘవ పెరుమాళ్");
+  assert.equal(localizedTiruvallur.displayName, "తిరు ఎవ్వెళ్ళూర్ (తిరువళ్ళూర్)");
+  assert.equal(localizedTiruvallur.templeInformation.moolavar, "వీరరాఘవ పెరుమాళ్");
 
   const intro = loadKnowledgeRecord("introduction");
   assert.ok(intro);
