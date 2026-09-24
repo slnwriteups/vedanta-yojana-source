@@ -34,7 +34,7 @@ Supporting providers: `LanguageProvider.tsx`, `ThemeProvider.tsx`,
 screens, driven by `LanguageProvider`/`language-context.ts` — the
 website's `app/` never calls these functions at all.
 
-`mobile/tests/*.test.ts` (44 tests as of this writing, run via
+`mobile/tests/*.test.ts` (118 tests as of 2026-09-24, run via
 `node --test tests/*.test.ts`, no Jest): `loader.test.ts` (content
 resolution against the real manifest), `screens.test.ts` (screen-level
 data wiring), `ux.test.ts` (navigation/theme/regression checks), and
@@ -190,7 +190,7 @@ npx expo start                          # Expo dev server (Metro) — scan the Q
 npx expo start --android                # (requires Android tooling)
 npx expo start --ios                    # (requires Xcode/iOS tooling)
 npx expo start --tunnel                 # share a live QR code with a remote reviewer, no repo access needed
-node --test tests/*.test.ts             # test suite (Node-native, no Jest) — 44 tests
+node --test tests/*.test.ts             # test suite (Node-native, no Jest) — 118 tests
 ./node_modules/.bin/tsc --noEmit        # TypeScript check
 node scripts/generate-content-manifest.ts   # regenerate the content + image manifest after any /content or public/images change
 ```

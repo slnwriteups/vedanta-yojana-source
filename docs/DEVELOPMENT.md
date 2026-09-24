@@ -235,9 +235,10 @@ as a `prebuild` step, then `next build` produces the static export.
 
 **Mobile (Android release):**
 
-- Hermes bytecode compilation (`mobile/android/app/build.gradle`,
-  `hermesEnabled`) — the JavaScript bundle ships as precompiled Hermes
-  bytecode, not readable source.
+- Hermes bytecode compilation (`hermesEnabled` in the
+  `expo prebuild`-generated `mobile/android/`, which is gitignored and
+  regenerated for each build) — the JavaScript bundle ships as
+  precompiled Hermes bytecode, not readable source.
 - R8 minification and resource shrinking are enabled for release builds
   via `expo-build-properties` in `mobile/app.json`
   (`enableProguardInReleaseBuilds`, `enableShrinkResourcesInReleaseBuilds`)

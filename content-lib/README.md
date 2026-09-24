@@ -162,14 +162,15 @@ so an accidental client-side import fails the build on its own.
 Migration is no longer a future phase — it has run. `/content` holds:
 
 - **107** Divya Desam records (`content/divya-desams/`)
-- **4** Books (`content/library/`): the original recovered book (55
-  chapters), *Sri Rama Charithram* (7), *Srimad Bhagavata Kathasagaram*
-  (31), and *JAYA: A Journey of the Mahabharata* (69) — **162 chapters
-  total**
+- **4** Books (`content/library/`): *A Brief Insight to Visishtadvaita
+  Philosophy* (the original recovered book, slug
+  `untitled-recovered-book-pending-editorial-title`, 51 chapters), *Sri
+  Rama Charithram* (75), *Srimad Bhagavata Kathasagaram* (31), and
+  *JAYA: A Journey of the Mahabharata* (70) — **227 chapters total**
 - **1** Knowledge record (`content/knowledge/`)
 
 `tests/content/migration/migration-full.test.ts` pins the exact file count
-under `/content` (293 as of this writing) as a regression guard — update
+under `/content` (358 as of 2026-09-24) as a regression guard — update
 that test's assertion (and its explanatory comment) whenever content is
 added or removed.
 

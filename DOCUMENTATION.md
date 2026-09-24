@@ -557,7 +557,9 @@ Android device
 ```
 
 The native Android project under `mobile/android/` is Expo-generated
-(`expo prebuild`), not hand-authored: `mobile/android/build.gradle`
+(`expo prebuild`), not hand-authored, and is not committed to the
+repository (`mobile/.gitignore`); the `mobile/android/...` paths in this
+document refer to that locally generated project: `mobile/android/build.gradle`
 applies the `expo-root-project` plugin and contains no explicit
 `compileSdkVersion`/`buildToolsVersion` — those are supplied by the
 plugin rather than pinned in this repository.
