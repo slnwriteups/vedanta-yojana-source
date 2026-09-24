@@ -406,11 +406,11 @@ const UI_STRINGS = {
   closeImage: { en: "Close image", ta: "படத்தை மூடு", kn: "ಚಿತ್ರ ಮುಚ್ಚಿ", hi: "छवि बंद करें", te: "చిత్రాన్ని మూసివేయి" },
 
   pasuramSourceAttribution: {
-    en: "Source: Prapatti.org",
-    ta: "மூலம்: Prapatti.org",
-    kn: "ಮೂಲ: Prapatti.org",
-    hi: "स्रोत: Prapatti.org",
-    te: "మూలం: Prapatti.org",
+    en: "Source: Prapatti.com",
+    ta: "மூலம்: Prapatti.com",
+    kn: "ಮೂಲ: Prapatti.com",
+    hi: "स्रोत: Prapatti.com",
+    te: "మూలం: Prapatti.com",
   },
 
   bookAvailableForDownload: {

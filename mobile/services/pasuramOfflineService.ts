@@ -5,7 +5,7 @@ import { Platform } from "react-native";
 import { ensurePasuramsUnpacked, isPasuramAvailable, localPasuramPath } from "./pasuramArchive.ts";
 
 /**
- * Every Pasuram PDF Prapatti.org resource referenced by the content
+ * Every Pasuram PDF Prapatti.com resource referenced by the content
  * corpus is bundled directly into the app as a single compressed
  * archive (see mobile/scripts/generate-pasuram-archive.ts and
  * mobile/services/pasuramArchive.ts) -- there is no download step,
