@@ -51,8 +51,11 @@ filename or app icon says.
 > baseline for over-the-air (OTA) updates. It is an APK built via EAS
 > with the project's existing production signing credential — the same
 > certificate as v13 — and was verified directly from the built
-> artifact. Its publication on the GitHub Releases page is pending;
-> verify any copy against the values below. The v13 production AAB has
+> artifact. It is published, marked Latest, as
+> [`android-v16`](https://github.com/slnwriteups/vedanta-yojana-releases/releases/tag/android-v16)
+> on the releases repository, together with its `.sha256` checksum
+> file; the published asset's SHA-256 was re-checked against the value
+> below after publication. The v13 production AAB has
 > not yet been uploaded to Google Play, so the Google Play app-signing
 > certificate does not exist yet — it is assigned by Google Play App
 > Signing on first upload — and will be added here once known. Nothing
@@ -92,7 +95,10 @@ signed with the public Android debug key (certificate SHA-256
 not the production certificate above. Neither has OTA updates enabled.
 Because Android only accepts an update signed with the same key as the
 installed app, a device with v14 or v15 installed must uninstall it
-before installing v16.
+before installing v16. Since 2026-09-24 both releases are marked as
+pre-releases on the source repository, with a notice at the top of
+their release notes saying they are not official production releases
+and pointing to v16.
 
 ## Understanding Google Play App Signing (read this first)
 

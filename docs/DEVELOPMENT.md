@@ -59,9 +59,11 @@ Major milestones, in order:
 | 2026-09-17 | `24c7e00` | Image zoom viewer |
 | 2026-09-18 | `a2b82cf` – `ff4d227` | Security/dependency remediation, content-update architecture, content-accuracy audit, release-engineering hardening — see [September 18 engineering record](#september-18-engineering-record) |
 | 2026-09-19 | `7109536` – `c069d11` | Google Play distribution decision, vedantayojana.org custom domain, special-note rendering bug fix, content-accuracy corrections across 10 Divya Desam records — see [September 19 engineering record](#september-19-engineering-record) |
-| 2026-09-23 – 2026-09-24 | `2c52bef`, `c0e1fd9` onward | Telugu added as a fifth language (interface, all Divya Desams, all Library chapters), followed by a batch-by-batch fidelity revision (`a455138` – `93c45a0`) |
+| 2026-09-23 – 2026-09-24 | `2c52bef`, `c0e1fd9` onward | Telugu added as a fifth language (interface, all Divya Desams, all Library chapters), followed by a batch-by-batch fidelity revision (`a455138` – `741d9b9`), completed 2026-09-24 for every Divya Desam, Library chapter, book and Knowledge record |
 | 2026-09-23 – 2026-09-24 | `cdcc142`, `2860fda` | EAS Update (OTA) integrated; v16 (1.0.3) built as the production-signed OTA baseline — see [Over-the-air (OTA) updates](#over-the-air-ota-updates) |
 | 2026-09-24 | `a6786b1`, `1d52a22` | Telugu Pasurams for all 108 Divya Desams (540 Pasuram PDFs in total); source attribution set to Prapatti.com — both delivered by OTA |
+| 2026-09-24 | `8abf90f` | v16 published on the releases repository; `public/app-version.json` pointed at it |
+| 2026-09-24 | `74b51cc`, `741d9b9` | Tiruttetriambalam Tirumanikoodam Pasuram order corrected; last Telugu fidelity batch (Sri Rama Charithram 58–75) — delivered by OTA |
 
 ## System architecture
 
@@ -179,6 +181,15 @@ JavaScript and bundled-content changes through EAS Update
   `https://u.expo.dev/fd9baa2d-92be-4e6f-88d4-9c9830516db1`; channel
   `production` (`mobile/eas.json`); the app checks for an update on
   every launch and applies a downloaded update on the next restart.
+- **What OTA carries:** the JavaScript bundle and everything compiled
+  into it — the interface strings, all Divya Desam records (including
+  their Pasuram resource lists), and each Library book's catalog
+  (titles and chapter titles). Library chapter *bodies* are not in the
+  bundle: they reach devices through the
+  [Library remote-update architecture](#library-remote-update-architecture),
+  which republishes on every website deploy. A translation batch for
+  Library chapters therefore reaches devices by both routes — titles by
+  OTA, text by the Library content update.
 - **Publishing:** `npm run update` in `mobile/` publishes the current
   commit to the `production` branch. An update reaches only installs
   whose runtime matches, so it must not change native code, and
@@ -189,12 +200,19 @@ JavaScript and bundled-content changes through EAS Update
   earlier have OTA disabled and must be upgraded to v16 by installing
   the APK — see [APK-VERIFICATION.md](APK-VERIFICATION.md).
 - **Verified:** on a physical device with v16 installed, and without
-  reinstalling or clearing data, two production updates were
-  downloaded and applied — update group
-  `8ec8b1ab-8434-48c3-aa61-b8d838487708` (Telugu Pasurams) and update
-  group `82b485ac-741b-4f75-a59f-4efe7bb743d0` (Prapatti.com
-  attribution) — and the changed content appeared while the app stayed
-  on versionCode 16 / 1.0.3.
+  reinstalling or clearing data, three production updates were
+  downloaded and applied, and the changed content appeared while the
+  app stayed on versionCode 16 / 1.0.3:
+
+  | Update group | Android update ID | Content | Commit |
+  |---|---|---|---|
+  | `8ec8b1ab-8434-48c3-aa61-b8d838487708` | `01a0d363-165f-7a93-8d8e-c524086b9f93` | Telugu Pasurams | `a6786b1` |
+  | `82b485ac-741b-4f75-a59f-4efe7bb743d0` | `01a0d3a1-ba09-7670-a2ee-59b46ed33026` | Prapatti.com attribution | `1d52a22` |
+  | `f1d701e5-bb91-4b37-9cda-0215fb0a5a38` | `01a0d3f6-9fcb-7712-bed8-78f1ea8cd314` | Pasuram order fix and Sri Rama Charithram 58–75 Telugu | `741d9b9` |
+
+  For the third update, the device's install time was unchanged and
+  the installed APK was byte-identical to the published v16; the new
+  chapter titles and Pasuram order were checked on screen.
 
 ## Multilingual system
 

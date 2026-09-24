@@ -345,16 +345,21 @@ identity, version, and the OTA configuration (`expo.modules.updates`
 enabled, runtime `1.0.3`, channel `production`, check on every launch).
 OTA delivery has been verified end to end on a physical device: with
 v16 installed, and without reinstalling or clearing data, the device
-downloaded and applied two production-channel updates — update group
-`8ec8b1ab-8434-48c3-aa61-b8d838487708` (Telugu Pasurams) and update
-group `82b485ac-741b-4f75-a59f-4efe7bb743d0` (Pasuram source
-attribution) — and displayed the changed content while remaining on
-versionCode 16 / 1.0.3.
+downloaded and applied three production-channel updates — update
+groups `8ec8b1ab-8434-48c3-aa61-b8d838487708` (Telugu Pasurams),
+`82b485ac-741b-4f75-a59f-4efe7bb743d0` (Pasuram source attribution) and
+`f1d701e5-bb91-4b37-9cda-0215fb0a5a38` (Pasuram order fix and Telugu
+chapter revisions) — and displayed the changed content while remaining
+on versionCode 16 / 1.0.3, with its install time unchanged and the
+installed APK byte-identical to the published v16. v16 is published on
+the releases repository as `android-v16`, marked Latest.
 
 **v14 and v15 are not production releases.** Both were built by the
 `build-apk.yml` GitHub Actions workflow, which signs with the Android
 debug key (certificate SHA-256 `fac61745…91033b9c`), and neither has
-OTA updates enabled. v15 in particular is not an OTA baseline. See
+OTA updates enabled. v15 in particular is not an OTA baseline. Since
+2026-09-24 both are marked as pre-releases with a warning in their
+release notes. See
 [APK-VERIFICATION.md](APK-VERIFICATION.md#builds-that-are-not-official-releases).
 
 **Why this matters to a user:** a valid signature establishes that a
