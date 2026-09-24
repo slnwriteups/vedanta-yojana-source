@@ -1,8 +1,8 @@
 {
   "android": {
-    "versionCode": 15,
-    "version": "1.0.2 (Notice for v13 & v14 Users)",
-    "url": "https://github.com/slnwriteups/vedanta-yojana-source/releases/download/android-v15/vedanta-yojana.apk",
-    "notes": "Action Required: Attention v13 and v14 users! Please update to v1.0.2 to enable automatic OTA updates, complete Telugu language support, and the updated Divya Desam Spotlight layout."
+    "versionCode": 16,
+    "version": "1.0.3",
+    "url": "https://github.com/slnwriteups/vedanta-yojana-source/releases/download/android-v16/vedanta-yojana.apk",
+    "notes": "Production-signed release with OTA update runtime configuration enabled and Telugu language support."
   }
 }

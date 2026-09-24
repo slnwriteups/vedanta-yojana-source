@@ -413,7 +413,7 @@ const styles = StyleSheet.create({
   badge: {
     paddingHorizontal: spacing.sm,
     paddingVertical: 2,
-    borderRadius: radius.full,
+    borderRadius: radius.lg,
   },
   badgeText: {
     fontSize: typography.eyebrow,
@@ -459,7 +459,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingVertical: spacing.xxs,
+    paddingVertical: spacing.xs,
   },
   sankalpamSectionLabel: {
     fontSize: typography.eyebrow,

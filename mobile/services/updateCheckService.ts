@@ -16,10 +16,10 @@ import Constants from "expo-constants";
  *
  * `Constants.expoConfig.android.versionCode` (not the deprecated
  * `Constants.nativeBuildVersion`, and not `expo-application`, which
- * isn't a dependency) is reliable for this: this app has no
- * expo-updates/OTA mechanism, so the JS bundle's own config always
- * matches the native build it was compiled and shipped with -- there's
- * no scenario where they could diverge.
+ * isn't a dependency) is reliable for this: expo-updates OTA updates
+ * only replace the JS bundle for the same runtimeVersion (= app version),
+ * and versionCode is native-only, so this value always matches the
+ * installed native build.
  */
 
 const VERSION_MANIFEST_URL = "https://vedantayojana.org/app-version.json";
@@ -56,7 +56,7 @@ function isValidManifest(value: unknown): value is VersionManifest {
  * fires this fire-and-forget on mount; it must never block app
  * startup or be treated as an error when it resolves to null.
  */
-export const BUILD_VERSION_CODE = 15;
+export const BUILD_VERSION_CODE = 16;
 
 export async function checkForUpdate(): Promise<UpdateInfo | null> {
   const currentVersionCode =
