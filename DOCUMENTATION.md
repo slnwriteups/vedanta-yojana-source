@@ -801,6 +801,13 @@ otherwise-correct Kannada word in `content/divya-desams/tirupperai.json`,
 corrected to the equivalent Kannada vowel sign (U+0CC8) in commit
 `7f681e5`. No other instance was found anywhere in the corpus.
 
+**Update (2026-09-23):** this rule no longer holds. Telugu was added as
+a fifth translation language in `2c52bef` (interface, all Divya Desams,
+and all Library chapters), and Telugu Pasurams followed in `a6786b1`.
+The script-purity concern above still applies, now in both directions:
+Telugu text must not leak into Kannada, and Kannada must not leak into
+Telugu.
+
 ### 9.2 Shloka and pasuram handling — CONFIRMED (project rule, applied throughout)
 
 Sanskrit shlokas, Upanishad mahavakyas, and Tamil pasurams/riddle-verses

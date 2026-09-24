@@ -43,7 +43,8 @@ rather than assumed.
 | Stale or incorrect content build | `contentHash` per book in `content-manifest.json`, generated from the same build pipeline that produces the payload; hash mismatch triggers re-download | Does not detect a build that is internally consistent but was generated from wrong/incorrect source content |
 | Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://vedantayojana.org/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
 | Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to Google Play only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters for anyone who sideloads instead — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
-| Accidental release of a debug-signed or debug-configured build | Release builds are produced via the EAS `production` profile, which is distinct from `development`/`preview`; a debug-keystore-signed local build was explicitly identified during release engineering and was **not** published — see [Signing & release provenance](#signing--release-provenance) | Requires continued process discipline; nothing in the build system automatically prevents a debug artifact from being manually uploaded to a release by mistake |
+| Accidental release of a debug-signed or debug-configured build | Release builds are produced via EAS with the production signing credential (`production` / `production-apk` profiles), which is distinct from `development`/`preview` | **This risk has materialized once:** `android-v14` and `android-v15` were built by the `build-apk.yml` GitHub Actions workflow, which signs with the Android debug key, and published on the source repository's releases page — see [Signing & release provenance](#signing--release-provenance). Pushing an `android-v*` or `v*` tag still triggers that workflow; nothing in the build system prevents it |
+| Malicious over-the-air (OTA) update | OTA updates are fetched over HTTPS only from this project's EAS Update endpoint, on the `production` channel, and only an update built for the installed runtime version (`1.0.3`) is accepted | EAS Update code signing is not configured, so an update's authenticity rests on TLS and the security of the Expo account that publishes it, not on a signature the app verifies |
 | Compromised developer machine | Signing credentials are not stored locally (EAS-managed); `.env`/secret files are not committed (see [Secrets management](#secrets-management)) | A compromised machine with valid EAS/GitHub session credentials could still initiate actions under the developer's identity |
 
 No entry in this table should be read as "risk eliminated." Each is a
@@ -222,7 +223,7 @@ Verified against the app's source manifest
 | Exported activity | `MainActivity`, `android:exported="true"` (required for the launcher/deep-link intent filters it declares) | `AndroidManifest.xml` |
 | Deep link scheme | `vedantayojana://` (custom scheme, plus a `BROWSABLE` intent filter for `https` `VIEW` intents declared under `<queries>`) | `AndroidManifest.xml`, `app.json` (`"scheme": "vedantayojana"`) |
 | Debuggable | Not set in the release-applying manifest (no `android:debuggable="true"` outside the `debug`/`debugOptimized` source sets) | Confirmed on the local debug-signed build during earlier release engineering by inspecting the merged release manifest directly (Gradle's `processReleaseManifestForPackage` output); not yet re-confirmed against the EAS-produced production artifact, which has not yet been built — see [Signing & release provenance](#signing--release-provenance) |
-| In-app auto-update mechanism | None — `expo.modules.updates.ENABLED` is explicitly `false` in the manifest. Update checks (`mobile/services/updateCheckService.ts`) only compare against `app-version.json` and prompt the user; nothing installs automatically. | `AndroidManifest.xml` meta-data, `updateCheckService.ts` |
+| In-app auto-update mechanism | From v16 (1.0.3): EAS Update (`expo-updates`) is enabled — `expo.modules.updates.ENABLED` is `true`, runtime version `1.0.3`, channel `production`, checked on every launch. It replaces the JavaScript bundle and bundled content only; native code and the APK itself can only change through a manual install. Separately, `mobile/services/updateCheckService.ts` compares against `app-version.json` and only prompts the user to install a newer APK. v15 and earlier have updates disabled (`false`). | `AndroidManifest.xml` meta-data of the v16 APK, `mobile/app.json`, `updateCheckService.ts` |
 
 ## Network security
 
@@ -263,6 +264,7 @@ three different integrity properties:
 | Category | Examples | Delivery | Integrity mechanism |
 |---|---|---|---|
 | Bundled content | Pasurams (compressed archive), the JS/Hermes bundle itself | Compiled into the installed APK/AAB | Covered by the APK's own signature — see [Signing & release provenance](#signing--release-provenance) |
+| OTA updates (v16 and later) | A replacement JS/Hermes bundle and its assets | Downloaded over HTTPS from EAS Update at launch, applied on the next restart | Not covered by the APK signature; HTTPS plus runtime-version matching only (EAS Update code signing is not configured) |
 | Remote Library content | Book chapters, Library catalog | Fetched over HTTPS from GitHub Pages at runtime | Per-book `contentHash` compared against the installed copy; schema-version literal check fails closed on an unrecognized shape (see [Library remote-update architecture](DEVELOPMENT.md#library-remote-update-architecture)) |
 | Application metadata | `app-version.json` | Fetched over HTTPS from GitHub Pages at runtime | Used only to prompt a manual update; never drives a silent code change |
 
@@ -321,7 +323,7 @@ account or track).
   [How Users Can Verify](APK-VERIFICATION.md) for what that means for
   verification.
 
-**Current status:** a production AAB for this release has been built
+**Google Play build (v13):** a production AAB for this release has been built
 via EAS (build `8140578b-0f56-48b7-b31d-1ab680b291b3`, versionCode 13,
 source commit `73b0fff`) and independently verified: signed with the
 existing production credential (not `debug.keystore`), package
@@ -333,6 +335,27 @@ see [APK-VERIFICATION.md](APK-VERIFICATION.md) for the exact values. It
 has not yet been uploaded to Google Play, so the Google Play
 app-signing certificate does not exist yet — Google assigns it on
 first upload, under Google Play App Signing.
+
+**v16 (1.0.3) — current Android release and OTA baseline:** an APK
+built via EAS (build `1f5e3c13-39f7-4766-82ba-57712d373153`,
+`production-apk` profile, versionCode 16, source commit `2860fda`),
+signed with the same production credential as v13 (certificate SHA-256
+`6f1a6565…cbab8597`) and verified directly from the artifact: package
+identity, version, and the OTA configuration (`expo.modules.updates`
+enabled, runtime `1.0.3`, channel `production`, check on every launch).
+OTA delivery has been verified end to end on a physical device: with
+v16 installed, and without reinstalling or clearing data, the device
+downloaded and applied two production-channel updates — update group
+`8ec8b1ab-8434-48c3-aa61-b8d838487708` (Telugu Pasurams) and update
+group `82b485ac-741b-4f75-a59f-4efe7bb743d0` (Pasuram source
+attribution) — and displayed the changed content while remaining on
+versionCode 16 / 1.0.3.
+
+**v14 and v15 are not production releases.** Both were built by the
+`build-apk.yml` GitHub Actions workflow, which signs with the Android
+debug key (certificate SHA-256 `fac61745…91033b9c`), and neither has
+OTA updates enabled. v15 in particular is not an OTA baseline. See
+[APK-VERIFICATION.md](APK-VERIFICATION.md#builds-that-are-not-official-releases).
 
 **Why this matters to a user:** a valid signature establishes that a
 given APK file was signed with the private key corresponding to a

@@ -28,8 +28,11 @@ serving different purposes:
 
 This source repository (`vedanta-yojana-source`) is the project's
 source code, documentation, and release-provenance record — it is
-**not** itself an Android distribution channel, and does not host APK
-files.
+**not** the intended Android distribution channel. Its `android-v14`
+and `android-v15` releases do carry APK files, but those were produced
+by an older CI workflow and signed with the public Android debug key;
+they are not official releases (see
+[Builds that are not official releases](#builds-that-are-not-official-releases)).
 
 **A release only counts as genuine if its SHA-256 checksum and signing
 certificate match the values published for that version** (see Levels
@@ -44,29 +47,52 @@ filename or app icon says.
 
 ## Release identity
 
-> **Status:** A production AAB has been built via EAS using the
-> project's existing production signing credential and independently
-> verified (see below), but has not yet been uploaded to Google Play.
-> The Google Play app-signing certificate does not exist yet — it is
-> assigned by Google Play App Signing on first upload — and will be
-> added here once known. Nothing below is a placeholder or invented
-> value; everything listed was read directly from the built artifact.
+> **Status:** v16 (1.0.3) is the current Android release and the
+> baseline for over-the-air (OTA) updates. It is an APK built via EAS
+> with the project's existing production signing credential — the same
+> certificate as v13 — and was verified directly from the built
+> artifact. Its publication on the GitHub Releases page is pending;
+> verify any copy against the values below. The v13 production AAB has
+> not yet been uploaded to Google Play, so the Google Play app-signing
+> certificate does not exist yet — it is assigned by Google Play App
+> Signing on first upload — and will be added here once known. Nothing
+> below is a placeholder or invented value; everything listed was read
+> directly from the built artifact.
 
-| Property | Value |
-|---|---|
-| Package name (`applicationId`) | `com.slnwriteups.vedantayojana` |
-| versionName | `1.0.0` |
-| versionCode | `13` |
-| AAB SHA-256 | `8fa98326593d4e77dd686c88358526510af1308cfb4671fdf374d68e05ba682d` |
-| Upload certificate SHA-256 | `6F:1A:65:65:D8:C6:C3:AB:3E:2F:D7:69:90:CA:13:74:D5:6D:2F:A3:53:0E:50:61:38:69:FE:34:CB:AB:85:97` |
-| Upload certificate SHA-1 | `1D:99:66:22:1F:6A:15:9B:B6:50:E5:CC:B4:01:78:A0:2D:88:FC:ED` |
-| Google Play app-signing certificate SHA-256 | *not yet available — assigned on first Google Play upload* |
-| Source commit | `73b0fff00bfa8cd35e69bc3780e3b43b274db5fd` |
-| EAS build ID | `8140578b-0f56-48b7-b31d-1ab680b291b3` |
+| Property | v16 (current) | v13 |
+|---|---|---|
+| Package name (`applicationId`) | `com.slnwriteups.vedantayojana` | `com.slnwriteups.vedantayojana` |
+| versionName | `1.0.3` | `1.0.0` |
+| versionCode | `16` | `13` |
+| Artifact | APK (EAS `production-apk` profile) | AAB (EAS `production` profile) |
+| Artifact SHA-256 | `e4193fcec40d01c28ca047ea01920a62295ce5c345a23999ff7bbdfceaac4584` | `8fa98326593d4e77dd686c88358526510af1308cfb4671fdf374d68e05ba682d` |
+| Signing certificate SHA-256 | `6F:1A:65:65:D8:C6:C3:AB:3E:2F:D7:69:90:CA:13:74:D5:6D:2F:A3:53:0E:50:61:38:69:FE:34:CB:AB:85:97` | same (upload certificate) |
+| Signing certificate SHA-1 | `1D:99:66:22:1F:6A:15:9B:B6:50:E5:CC:B4:01:78:A0:2D:88:FC:ED` | same |
+| OTA updates | Enabled — runtime `1.0.3`, channel `production`, checked on every launch | Not enabled |
+| Google Play app-signing certificate SHA-256 | — | *not yet available — assigned on first Google Play upload* |
+| Source commit | `2860fda683a5d88cf141264d3c870fd8a4701d6c` | `73b0fff00bfa8cd35e69bc3780e3b43b274db5fd` |
+| EAS build ID | `1f5e3c13-39f7-4766-82ba-57712d373153` | `8140578b-0f56-48b7-b31d-1ab680b291b3` |
 
 Once uploaded to Google Play, this table will be updated with the
 Google Play app-signing certificate fingerprint. Verify against
 whichever version you have installed, not against an older one.
+
+OTA updates change the app's bundled JavaScript and content, not the
+APK: an installed v16 keeps versionCode `16` and the signing
+certificate above after applying an update, so these values remain the
+correct ones to verify against.
+
+### Builds that are not official releases
+
+`android-v14` (1.0.1, versionCode 14) and `android-v15` (1.0.2,
+versionCode 15), published on this source repository's releases page,
+were built by the repository's older GitHub Actions workflow and are
+signed with the public Android debug key (certificate SHA-256
+`FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C`),
+not the production certificate above. Neither has OTA updates enabled.
+Because Android only accepts an update signed with the same key as the
+installed app, a device with v14 or v15 installed must uninstall it
+before installing v16.
 
 ## Understanding Google Play App Signing (read this first)
 

@@ -446,14 +446,16 @@ a larger whole, as described in [The Journey](#the-journey) above.
 Everything below reflects what is actually implemented, not planned:
 
 - **108 Divya Desams** — complete temple records, each available in
-  English, Tamil, Kannada, and Hindi, with regional classification
+  English, Tamil, Kannada, Hindi, and Telugu, with regional classification
 - **Digital library** — 4 full-length books (227 chapters): *A Brief
   Insight to Visishtadvaita Philosophy*, *Sri Rama Charithram*, *Srimad
   Bhagavata Kathasagaram*, and *JAYA: A Journey of the Mahabharata*, plus
   a Knowledge section — readable online and downloadable for offline
   reading
-- **Offline Pasurams** — all Pasurams are bundled directly into the app;
-  no network connection required
+- **Offline Pasurams** — Pasuram PDFs for all 108 Divya Desams in
+  Sanskrit, English, Tamil, Kannada, and Telugu (540 in total, sourced
+  from Prapatti.com), bundled directly into the app; no network
+  connection required
 - **Search** — across Divya Desams, the Library, and Knowledge records
 - **Daily Panchangam** — daily Panchangam and Sankalpam for the place
   you are in, named on screen ("Chennai"), not an assumed fixed city
@@ -461,8 +463,11 @@ Everything below reflects what is actually implemented, not planned:
   home screen
 - **Reading preferences** — font scale, light/dark theme, reading-position
   memory, and bookmarks
-- **Multilingual interface** — English, Tamil, Kannada, and Hindi,
-  consistent across both web and mobile
+- **Multilingual interface** — English, Tamil, Kannada, Hindi, and
+  Telugu, consistent across both web and mobile
+- **Over-the-air updates (Android)** — from v16 (1.0.3) on, content and
+  JavaScript fixes reach installed apps through EAS Update, with no
+  reinstall; verified end to end on a physical device
 
 ## Platforms
 
@@ -587,7 +592,7 @@ app updates both require connectivity. See
 | Detail | — | see `mobile/README.md` |
 
 Both runtimes now carry the same feature set: content translation
-(Tamil/Kannada/Hindi), a manual light/dark theme override, reading
+(Tamil/Kannada/Hindi/Telugu), a manual light/dark theme override, reading
 preferences (font scale), reading-position memory, bookmarks, a
 settings/onboarding flow, book cover art, and a daily-rotating "Divya
 Desam Spotlight" card — ported from mobile's implementation onto the

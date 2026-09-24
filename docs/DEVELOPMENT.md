@@ -17,6 +17,7 @@ given.
 - [Content architecture](#content-architecture)
 - [Library remote-update architecture](#library-remote-update-architecture)
 - [Pasuram offline architecture](#pasuram-offline-architecture)
+- [Over-the-air (OTA) updates](#over-the-air-ota-updates)
 - [Multilingual system](#multilingual-system)
 - [Build architecture](#build-architecture)
 - [Testing architecture](#testing-architecture)
@@ -58,6 +59,9 @@ Major milestones, in order:
 | 2026-09-17 | `24c7e00` | Image zoom viewer |
 | 2026-09-18 | `a2b82cf` – `ff4d227` | Security/dependency remediation, content-update architecture, content-accuracy audit, release-engineering hardening — see [September 18 engineering record](#september-18-engineering-record) |
 | 2026-09-19 | `7109536` – `c069d11` | Google Play distribution decision, vedantayojana.org custom domain, special-note rendering bug fix, content-accuracy corrections across 10 Divya Desam records — see [September 19 engineering record](#september-19-engineering-record) |
+| 2026-09-23 – 2026-09-24 | `2c52bef`, `c0e1fd9` onward | Telugu added as a fifth language (interface, all Divya Desams, all Library chapters), followed by a batch-by-batch fidelity revision (`a455138` – `93c45a0`) |
+| 2026-09-23 – 2026-09-24 | `cdcc142`, `2860fda` | EAS Update (OTA) integrated; v16 (1.0.3) built as the production-signed OTA baseline — see [Over-the-air (OTA) updates](#over-the-air-ota-updates) |
+| 2026-09-24 | `a6786b1`, `1d52a22` | Telugu Pasurams for all 108 Divya Desams (540 Pasuram PDFs in total); source attribution set to Prapatti.com — both delivered by OTA |
 
 ## System architecture
 
@@ -154,11 +158,43 @@ loose PDFs would have cost to roughly 52MB total. On first launch, the
 app unpacks the archive once into app-private document storage
 (`mobile/services/pasuramArchive.ts`); every subsequent open is a plain
 local file read with no network dependency and no decompression cost.
+Since `a6786b1` (2026-09-24) the archive holds 540 PDFs — Sanskrit,
+English, Tamil, Kannada, and Telugu for each of the 108 Divya Desams,
+all sourced from Prapatti.com and credited in-app as "Source:
+Prapatti.com".
 
 This is why Pasurams work fully offline: they are part of the
 installed binary, not remote content. See
 [Content Security & Integrity](SECURITY.md#content-integrity) for how
 this differs from Library content's update model.
+
+## Over-the-air (OTA) updates
+
+From v16 (versionName 1.0.3, versionCode 16), the Android app receives
+JavaScript and bundled-content changes through EAS Update
+(`expo-updates`), with no APK reinstall:
+
+- **Configuration** (`mobile/app.json`): runtime version policy
+  `appVersion`, so the runtime is `1.0.3`; update URL
+  `https://u.expo.dev/fd9baa2d-92be-4e6f-88d4-9c9830516db1`; channel
+  `production` (`mobile/eas.json`); the app checks for an update on
+  every launch and applies a downloaded update on the next restart.
+- **Publishing:** `npm run update` in `mobile/` publishes the current
+  commit to the `production` branch. An update reaches only installs
+  whose runtime matches, so it must not change native code, and
+  `version` in `mobile/app.json` must stay `1.0.3` for v16 installs to
+  receive it.
+- **Baseline:** v16 is the first OTA-enabled build (EAS build
+  `1f5e3c13-39f7-4766-82ba-57712d373153`, production-signed). v15 and
+  earlier have OTA disabled and must be upgraded to v16 by installing
+  the APK — see [APK-VERIFICATION.md](APK-VERIFICATION.md).
+- **Verified:** on a physical device with v16 installed, and without
+  reinstalling or clearing data, two production updates were
+  downloaded and applied — update group
+  `8ec8b1ab-8434-48c3-aa61-b8d838487708` (Telugu Pasurams) and update
+  group `82b485ac-741b-4f75-a59f-4efe7bb743d0` (Prapatti.com
+  attribution) — and the changed content appeared while the app stayed
+  on versionCode 16 / 1.0.3.
 
 ## Multilingual system
 
@@ -166,6 +202,8 @@ All 108 Divya Desams exist in Tamil, Kannada, and Hindi in
 addition to English (translated in a series of commits from
 2026-08-17 to 2026-08-18, culminating in `b851f26`, which also added
 the translation-ready language-selection system both runtimes share).
+Telugu was added as a fifth language on 2026-09-23 (`2c52bef`), covering
+the interface, all Divya Desams, and all Library chapters.
 Shared i18n logic lives in `content-lib/i18n.ts`, used by both the
 website and the mobile app so language behavior cannot silently
 diverge between them.
@@ -228,11 +266,19 @@ security regression test added 2026-09-18.
   manual dispatch. Concurrency is serialized (`cancel-in-progress:
   false`) so an in-flight deploy always finishes before the next one
   starts.
-- **Mobile:** Android builds are produced on demand via EAS Build using
-  the `production` profile in `mobile/eas.json`; there is no automatic
-  build-on-push pipeline for mobile. Distribution is through Google
-  Play — see the root README's Download section. This repository
-  remains the source, documentation, and release-provenance record.
+- **Mobile:** production Android builds are produced on demand via
+  EAS Build with the production signing credential — the `production`
+  profile (AAB) or `production-apk` profile (APK) in `mobile/eas.json`.
+  `.github/workflows/build-apk.yml` (`451c600`) also builds an APK when
+  an `android-v*` or `v*` tag is pushed, but it signs with the Android
+  debug key, so it is not a production release path (it produced the
+  debug-signed `android-v14` and `android-v15`). Google Play is the
+  planned distribution channel; until then APKs are distributed through
+  GitHub Releases — see the root README's
+  [Latest Release](../README.md#latest-release) section. JavaScript and
+  content changes reach v16 and later installs through
+  [OTA updates](#over-the-air-ota-updates). This repository remains the
+  source, documentation, and release-provenance record.
 
 ## September 18 engineering record
 
