@@ -55,6 +55,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/english/tirupparameccuravinnagarampaasurangal.pdf",
       "sourceLabel": "English Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirupparameccuravinnagarampaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

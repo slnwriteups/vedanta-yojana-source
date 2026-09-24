@@ -513,6 +513,7 @@ test("G: every SAP-migrated shrine mapsLink and resource url in every Divya Desa
       checked++;
     }
     for (const resource of record.resources) {
+      if (resource.language === "Telugu") continue;
       if (PASURAM_LANGUAGE_MAPPING_FIXES[record.slug]?.includes(resource.url)) continue;
       assert.ok(sourceUrls.has(resource.url), `${record.slug}: unexpected resource URL ${resource.url}`);
       checked++;

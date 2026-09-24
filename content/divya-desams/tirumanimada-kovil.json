@@ -65,6 +65,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/sanskrit/tirumanimaadakkoyilpaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirumanimaadakkoyilpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

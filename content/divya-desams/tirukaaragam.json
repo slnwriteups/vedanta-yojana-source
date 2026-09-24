@@ -55,6 +55,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/tamil/tirukkaaragampaasurangal.pdf",
       "sourceLabel": "Tamizh Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirukkaaragampaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

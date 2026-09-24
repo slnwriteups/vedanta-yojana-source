@@ -59,9 +59,9 @@ test("allPasuramResourceUrls: a non-pasuram-pdf resource type is ignored", () =>
   assert.deepEqual(allPasuramResourceUrls(records), []);
 });
 
-test("allPasuramResourceUrls: real content -- 432 unique Prapatti PDFs across all 107 Divya Desams (count as of the language/temple mapping audit fixing 30 mis-mapped resource entries -- see git history)", () => {
+test("allPasuramResourceUrls: real content -- 540 unique Prapatti PDFs across all 107 Divya Desams (including Telugu Pasurams)", () => {
   const urls = allPasuramResourceUrls(loadDivyaDesams());
-  assert.equal(urls.length, 432);
-  assert.equal(new Set(urls).size, 432, "every entry must be unique");
+  assert.equal(urls.length, 540);
+  assert.equal(new Set(urls).size, 540, "every entry must be unique");
   assert.ok(urls.every((u) => u.startsWith("https://www.prapatti.com/") && u.endsWith(".pdf")));
 });

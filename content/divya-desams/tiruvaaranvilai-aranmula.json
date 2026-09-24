@@ -55,6 +55,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/sanskrit/tiruvaaranvilaipaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruvaaranvilaipaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

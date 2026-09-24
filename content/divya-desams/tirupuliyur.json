@@ -64,6 +64,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/sanskrit/tiruppuliyuurpaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruppuliyuurpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

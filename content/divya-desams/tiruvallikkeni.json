@@ -56,6 +56,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/kannada/tiruvallikkenipaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruvallikkenipaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

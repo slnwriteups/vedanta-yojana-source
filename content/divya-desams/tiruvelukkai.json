@@ -55,6 +55,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/english/tiruvelukkaipaasurangal.pdf",
       "sourceLabel": "English Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruvelukkaipaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

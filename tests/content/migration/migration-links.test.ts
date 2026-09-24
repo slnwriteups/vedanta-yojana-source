@@ -108,6 +108,8 @@ test("AB: every documented language label normalizes correctly via the explicit 
     ["Sanskrit Pasuram", "Sanskrit"],
     ["Sanskrit Pasurams", "Sanskrit"],
     ["Devanagarii Pasuram", "Devanagari"],
+    ["Telugu Pasuram", "Telugu"],
+    ["Telugu Pasurams", "Telugu"],
   ];
   for (const [label, expected] of table) {
     assert.equal(normalizeResourceLanguage(label), expected, `expected "${label}" -> "${expected}"`);

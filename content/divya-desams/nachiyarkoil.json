@@ -64,6 +64,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/tamil/tirunaraiyuurpaasurangal.pdf",
       "sourceLabel": "Tamizh Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirunaraiyuurpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

@@ -56,6 +56,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/kannada/tiruttevanaartogaipaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruttevanaartogaipaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

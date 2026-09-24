@@ -56,6 +56,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/english/tiruyevvulpaasurangal.pdf",
       "sourceLabel": "English Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruyevvulpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

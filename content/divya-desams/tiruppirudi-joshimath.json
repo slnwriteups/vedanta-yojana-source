@@ -63,6 +63,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/kannada/tiruppirudipaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruppirudipaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

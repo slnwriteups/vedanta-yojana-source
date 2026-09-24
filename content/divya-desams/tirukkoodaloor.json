@@ -56,6 +56,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/sanskrit/tirukkuudaluurpaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirukkuudaluurpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

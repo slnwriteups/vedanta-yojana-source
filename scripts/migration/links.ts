@@ -17,6 +17,8 @@ const LANGUAGE_LABEL_TABLE: Record<string, ResourceLanguage> = {
   "Sanskrit Pasuram": "Sanskrit",
   "Sanskrit Pasurams": "Sanskrit",
   "Devanagarii Pasuram": "Devanagari",
+  "Telugu Pasuram": "Telugu",
+  "Telugu Pasurams": "Telugu",
 };
 
 export function normalizeResourceLanguage(sourceLabel: string): ResourceLanguage {

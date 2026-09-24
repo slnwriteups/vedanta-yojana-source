@@ -81,6 +81,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/tamil/tiruvilliputtuurpaasurangal.pdf",
       "sourceLabel": "Tamizh Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruvilliputtuurpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

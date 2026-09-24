@@ -64,6 +64,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/kannada/tirukkuudalpaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirukkuudalpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

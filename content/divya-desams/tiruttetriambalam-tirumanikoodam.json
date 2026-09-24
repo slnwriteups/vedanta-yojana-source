@@ -99,6 +99,18 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/kannada/tiruttetriyambalampaasurangal.pdf",
       "sourceLabel": "Kannada Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirumanikkuudampaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruttetriyambalampaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

@@ -50,6 +50,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/tamil/tiruppaarkadalpaasurangal.pdf",
       "sourceLabel": "Tamizh Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruppaarkadalpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

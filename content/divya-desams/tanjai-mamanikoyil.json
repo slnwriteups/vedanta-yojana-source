@@ -93,6 +93,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/english/tiruttanjaimaamanikkoyilpaasurangal.pdf",
       "sourceLabel": "English Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruttanjaimaamanikkoyilpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

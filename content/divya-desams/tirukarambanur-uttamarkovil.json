@@ -62,6 +62,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/english/tirukkarambanuurpaasurangal.pdf",
       "sourceLabel": "English Pāsuram"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tirukkarambanuurpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsuram"
     }
   ],
   "relatedContent": [],

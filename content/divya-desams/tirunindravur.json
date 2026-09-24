@@ -56,6 +56,12 @@
       "type": "pasuram-pdf",
       "url": "https://www.prapatti.com/slokas/sanskrit/tiruninravuurpaasurangal.pdf",
       "sourceLabel": "Sanskrit Pāsurams"
+    },
+    {
+      "language": "Telugu",
+      "type": "pasuram-pdf",
+      "url": "https://www.prapatti.com/slokas/telugu/tiruninravuurpaasurangal.pdf",
+      "sourceLabel": "Telugu Pāsurams"
     }
   ],
   "relatedContent": [],

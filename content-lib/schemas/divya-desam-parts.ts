@@ -82,6 +82,7 @@ export const ResourceLanguageSchema = z.enum([
   "Kannada",
   "Sanskrit",
   "Devanagari",
+  "Telugu",
 ]);
 export type ResourceLanguage = z.infer<typeof ResourceLanguageSchema>;
 

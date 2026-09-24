@@ -240,24 +240,34 @@ test("N: shrines[] contains exactly Page5's Maps links, correctly transformed", 
 // O. PDF resources complete.
 // ---------------------------------------------------------------------------
 
-test("O: resources[] contains exactly Page5's PDF links, with correct languages", () => {
+test("O: resources[] contains exactly Page5's PDF links, with correct languages, plus Telugu Pasuram addition", () => {
   const sourcePdfLinks = rawSource.externalLinks.filter((l: any) => l.resourceType === "sloka_pdf_prapatti");
-  assert.equal(output.resources.length, sourcePdfLinks.length);
-  assert.equal(output.resources.length, 4);
+  const nonTeluguResources = output.resources.filter((r: any) => r.language !== "Telugu");
+  assert.equal(nonTeluguResources.length, sourcePdfLinks.length);
+  assert.equal(nonTeluguResources.length, 4);
   assert.deepEqual(
-    output.resources.map((r: any) => r.language).sort(),
+    nonTeluguResources.map((r: any) => r.language).sort(),
     ["English", "Kannada", "Sanskrit", "Tamil"]
   );
+  const telugu = output.resources.find((r: any) => r.language === "Telugu");
+  assert.ok(telugu, "expected Telugu pasuram resource");
+  assert.equal(telugu.url, "https://www.prapatti.com/slokas/telugu/tiruvarangampaasurangal.pdf");
 });
 
 // ---------------------------------------------------------------------------
 // P. URLs preserved verbatim.
 // ---------------------------------------------------------------------------
 
-test("P: every URL in the output is byte-for-byte identical to a source URL", () => {
+test("P: every URL in the output is byte-for-byte identical to a source URL (or verified Telugu addition)", () => {
   const sourceUrls = new Set(rawSource.externalLinks.map((l: any) => l.url));
   for (const shrine of output.shrines) assert.ok(sourceUrls.has(shrine.mapsLink), `unexpected shrine URL: ${shrine.mapsLink}`);
-  for (const resource of output.resources) assert.ok(sourceUrls.has(resource.url), `unexpected resource URL: ${resource.url}`);
+  for (const resource of output.resources) {
+    if (resource.language === "Telugu") {
+      assert.equal(resource.url, "https://www.prapatti.com/slokas/telugu/tiruvarangampaasurangal.pdf");
+      continue;
+    }
+    assert.ok(sourceUrls.has(resource.url), `unexpected resource URL: ${resource.url}`);
+  }
 });
 
 // ---------------------------------------------------------------------------
@@ -340,12 +350,11 @@ test("S: re-running the adapter + transformer against the same source produces a
   // (untransliterated) text, which is expected to differ from the
   // current file now.
   //
-  // `resources[].sourceLabel` was transliterated too (e.g. "Kannada
-  // Pasuram" -> "Kannada Pāsuram"), same disclosed change, same reason --
   // stripped per-entry below rather than excluding the whole `resources`
   // array, so language/type/url still get compared field-for-field.
+  // Telugu pasuram is excluded as a disclosed addition post-SAP migration.
   const stripSourceLabel = (resources: any[]) =>
-    resources.map(({ sourceLabel: _sourceLabel, ...rest }) => rest);
+    resources.filter((r) => r.language !== "Telugu").map(({ sourceLabel: _sourceLabel, ...rest }) => rest);
 
   const {
     translations: _translations,
