@@ -2,7 +2,7 @@
   "android": {
     "versionCode": 16,
     "version": "1.0.3",
-    "url": "https://github.com/slnwriteups/vedanta-yojana-source/releases/download/android-v16/vedanta-yojana.apk",
-    "notes": "Production-signed release with OTA update runtime configuration enabled and Telugu language support."
+    "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v16/vedanta-yojana.apk",
+    "notes": "Production-signed release with over-the-air updates enabled and Telugu language support. If you installed v14 or v15, uninstall it first (this removes the app's local data), then install this version."
   }
 }
