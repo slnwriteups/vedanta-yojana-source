@@ -58,7 +58,7 @@ Major milestones, in order:
 | 2026-09-17 | `796dcd4`, `9b152a4` | Offline Pasuram downloads, then bundled into the app |
 | 2026-09-17 | `24c7e00` | Image zoom viewer |
 | 2026-09-18 | `a2b82cf` – `ff4d227` | Security/dependency remediation, content-update architecture, content-accuracy audit, release-engineering hardening — see [September 18 engineering record](#september-18-engineering-record) |
-| 2026-09-19 | `7109536` – `c069d11` | Google Play distribution decision, vedantayojana.org custom domain, special-note rendering bug fix, content-accuracy corrections across 10 Divya Desam records — see [September 19 engineering record](#september-19-engineering-record) |
+| 2026-09-19 | `7109536` – `c069d11` | Google Play distribution decision (reversed 2026-09-24: GitHub-only), vedantayojana.org custom domain, special-note rendering bug fix, content-accuracy corrections across 10 Divya Desam records — see [September 19 engineering record](#september-19-engineering-record) |
 | 2026-09-23 – 2026-09-24 | `2c52bef`, `c0e1fd9` onward | Telugu added as a fifth language (interface, all Divya Desams, all Library chapters), followed by a batch-by-batch fidelity revision (`a455138` – `741d9b9`), completed 2026-09-24 for every Divya Desam, Library chapter, book and Knowledge record |
 | 2026-09-23 – 2026-09-24 | `cdcc142`, `2860fda` | EAS Update (OTA) integrated; v16 (1.0.3) built as the production-signed OTA baseline — see [Over-the-air (OTA) updates](#over-the-air-ota-updates) |
 | 2026-09-24 | `a6786b1`, `1d52a22` | Telugu Pasurams for all 108 Divya Desams (540 Pasuram PDFs in total); source attribution set to Prapatti.com — both delivered by OTA |
@@ -78,8 +78,9 @@ flowchart LR
     Lib --> Web["Website\n(Next.js, static export)"]
     Lib --> Mobile["Mobile app\n(Expo / React Native)"]
     Web --> Pages["GitHub Pages\nvedantayojana.org (custom domain)"]
-    Mobile --> Build["EAS production build\n(Android App Bundle)"]
-    Build --> Release["Google Play"]
+    Mobile --> Build["EAS production build\n(signed APK)"]
+    Build --> Release["GitHub Releases\n(vedanta-yojana-releases)"]
+    Mobile --> OTA["EAS Update\n(OTA, production channel)"]
 ```
 
 Neither front end reads `content/` directly. Both go through
@@ -290,10 +291,10 @@ security regression test added 2026-09-18.
   `.github/workflows/build-apk.yml` (`451c600`) also builds an APK when
   an `android-v*` or `v*` tag is pushed, but it signs with the Android
   debug key, so it is not a production release path (it produced the
-  debug-signed `android-v14` and `android-v15`). Google Play is the
-  planned distribution channel; until then APKs are distributed through
-  GitHub Releases — see the root README's
-  [Latest Release](../README.md#latest-release) section. JavaScript and
+  debug-signed `android-v14` and `android-v15`). APKs are distributed
+  only through GitHub Releases (`vedanta-yojana-releases`); the app is
+  not published on Google Play or any other app store — see the root
+  README's [Latest Release](../README.md#latest-release) section. JavaScript and
   content changes reach v16 and later installs through
   [OTA updates](#over-the-air-ota-updates). This repository remains the
   source, documentation, and release-provenance record.
@@ -360,7 +361,9 @@ channel moved from a direct GitHub Release to Google Play (see
 and the website moved from GitHub Pages' default project-page URL to
 the `vedantayojana.org` custom domain (`public/CNAME`, DNS on
 Cloudflare, HTTPS enforced) — the site continues to auto-deploy on
-every push to `main`, unchanged. The website favicon now reuses the
+every push to `main`, unchanged. *(Update 2026-09-24: the move to Google Play was
+later reversed. The app is distributed only through GitHub Releases
+and is not going on any app store.)* The website favicon now reuses the
 mobile app's own icon. Four debug-signed, wrong-package-identity
 releases left over from earlier ad-hoc testing (`mobile-v1.0.0` through
 `mobile-v1.0.3`, each a `com.anonymous.vedantayojana`-package APK

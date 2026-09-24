@@ -12,7 +12,7 @@ which can identify a person or a device.
 | Website page views | Cloudflare Web Analytics beacon (`app/layout.tsx`) | Country | [§2](#2-website-page-views) |
 | Active app usage by country | Cloudflare Worker + Analytics Engine (`cloudflare/request-analytics/`) | Country | [§3](#3-app-usage-by-country) |
 | APK downloads over time | Scheduled snapshot (`stats/apk-downloads.json`) | No | [§4](#4-apk-downloads-over-time) |
-| Installs, uninstalls, active devices | Google Play Console | Country, per version | Nothing to build — see [§5](#5-google-play-once-published) |
+| Installs, uninstalls, active devices | Not available | — | See [§5](#5-no-app-store-statistics) |
 
 ## The constraint everything here is built around
 
@@ -187,14 +187,10 @@ number down each day.
 
 No geography is available from this source; GitHub does not expose it.
 
-## 5. Google Play, once published
+## 5. No app-store statistics
 
-`README.md` lists Play as planned. Once the app is listed, **Play Console
-→ Statistics** is the authoritative source and requires nothing to be
-built or instrumented: installs, uninstalls, and active devices, broken
-down by country and by app version. App Store Connect provides the
-equivalent for iOS.
-
-Everything in §3 and §4 is the best available approximation *until* then,
-and stays useful afterwards for the direct-download APK audience, which
-Play never sees.
+The Android app is distributed only through GitHub and is not listed on
+Google Play or any other app store (decision recorded 2026-09-24), so
+there is no store console reporting installs, uninstalls, or active
+devices. §3 (app usage by country) and §4 (APK downloads over time) are
+the project's sources for Android usage.

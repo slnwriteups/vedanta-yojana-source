@@ -214,8 +214,15 @@ content/code separation rule (see `content-lib/README.md`).
 
 ## Shipping
 
-Not yet submitted to either app store. Needs an Apple developer account
-($99/yr) and a Google Play developer account ($25 once) before an EAS
-build can be submitted. Until then, distribution is via Expo Go
-(`npx expo start`) or an EAS internal-distribution build shared directly
-with testers/collaborators.
+Android is distributed only through GitHub — it is not published on
+Google Play or any other app store. Production APKs are built by EAS
+with the project's production signing credential (`production-apk`
+profile in `eas.json`) and published on
+[`vedanta-yojana-releases`](https://github.com/slnwriteups/vedanta-yojana-releases/releases);
+content and JavaScript changes reach installed apps through EAS Update
+(`npm run update`, production channel, runtime `1.0.3`). Never publish
+an APK from the `build-apk.yml` GitHub Actions workflow: it signs with
+the debug key. See `docs/DEVELOPMENT.md` (Over-the-air updates,
+Deployment architecture) and `docs/APK-VERIFICATION.md`. iOS is not
+yet available (Apple Developer Program enrollment in progress). For
+development, use Expo Go (`npx expo start`).

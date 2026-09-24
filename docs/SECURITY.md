@@ -32,7 +32,7 @@ rather than assumed.
 
 | Threat | Mitigation | Residual risk |
 |---|---|---|
-| Fake or repackaged APK distributed under the project's name | Distribution limited to two channels — Google Play (once published) and the project's own GitHub Releases repository; a published checksum and certificate fingerprint let a specific install be confirmed against either — see [APK Verification Guide](APK-VERIFICATION.md) | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
+| Fake or repackaged APK distributed under the project's name | Distribution limited to one channel — the project's own GitHub Releases repository (`vedanta-yojana-releases`); the app is not on any app store. A published checksum and certificate fingerprint let a specific download or install be confirmed — see [APK Verification Guide](APK-VERIFICATION.md) | A user who ignores verification guidance and installs from an unofficial mirror cannot be protected by anything the project publishes |
 | Modified/tampered APK | Android's own signature verification rejects any APK whose contents were altered after signing, at install time, if the certificate doesn't match a prior install | Only protects users who compare the certificate against a trusted reference; does not itself alert an unsuspecting user |
 | Compromised GitHub account | Secret scanning and push protection enabled on the repository; Dependabot security updates enabled | No hardware-key/2FA enforcement is independently verifiable from repository configuration alone |
 | Compromised GitHub Actions workflow | All third-party Actions pinned to a full commit SHA (not a floating tag) in `.github/workflows/*.yml`; workflows use least-privilege `permissions: contents: read` unless a step specifically needs more | A compromised upstream Action release that predates the pinned SHA is not something a SHA pin can catch by itself |
@@ -42,7 +42,7 @@ rather than assumed.
 | Malicious content payload (Library remote update) | Content is schema-validated at build time (`content-lib/schemas/`) before publication; the app enforces a schema-version literal check and fails closed on any shape it doesn't recognize | The remote content manifest is served over HTTPS from GitHub Pages with no additional content-signing beyond TLS + schema validation — see [Content integrity](#content-integrity) |
 | Stale or incorrect content build | `contentHash` per book in `content-manifest.json`, generated from the same build pipeline that produces the payload; hash mismatch triggers re-download | Does not detect a build that is internally consistent but was generated from wrong/incorrect source content |
 | Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://vedantayojana.org/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
-| Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to Google Play only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters for anyone who sideloads instead — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
+| Malicious third-party APK mirror | Not part of the project's distribution; users are explicitly directed to the project's GitHub Releases page only | The project cannot prevent third parties from mirroring or renaming the APK; this is why signature/checksum verification matters for anyone who sideloads instead — see [APK-VERIFICATION.md](APK-VERIFICATION.md) |
 | Accidental release of a debug-signed or debug-configured build | Release builds are produced via EAS with the production signing credential (`production` / `production-apk` profiles), which is distinct from `development`/`preview` | **This risk has materialized once:** `android-v14` and `android-v15` were built by the `build-apk.yml` GitHub Actions workflow, which signs with the Android debug key, and published on the source repository's releases page — see [Signing & release provenance](#signing--release-provenance). Pushing an `android-v*` or `v*` tag still triggers that workflow; nothing in the build system prevents it |
 | Malicious over-the-air (OTA) update | OTA updates are fetched over HTTPS only from this project's EAS Update endpoint, on the `production` channel, and only an update built for the installed runtime version (`1.0.3`) is accepted | EAS Update code signing is not configured, so an update's authenticity rests on TLS and the security of the Expo account that publishes it, not on a signature the app verifies |
 | Compromised developer machine | Signing credentials are not stored locally (EAS-managed); `.env`/secret files are not committed (see [Secrets management](#secrets-management)) | A compromised machine with valid EAS/GitHub session credentials could still initiate actions under the developer's identity |
@@ -285,12 +285,21 @@ texts. See [Security Limitations](#security-limitations).
 
 ## Signing & release provenance
 
-**Distribution model.** The official Android distribution channel is
-Google Play. This is the first planned Play release for this
-application: no prior submission exists (`eas submit:list --platform
-android` returns no submissions for this project, and `mobile/eas.json`'s
-`submit.production` profile has never carried a configured service
-account or track).
+**Distribution model.** The Android app is open source and distributed
+only through GitHub: signed APKs are published on
+[`vedanta-yojana-releases`](https://github.com/slnwriteups/vedanta-yojana-releases/releases),
+and content and JavaScript fixes reach installed apps through EAS
+over-the-air updates. It is not published on Google Play or any other
+app store, and there are no plans to publish it there (decision
+recorded 2026-09-24). Because APKs are distributed directly, the
+certificate on a user's device is the project's own production
+certificate — there is no store re-signing key.
+
+*Historical note:* until 2026-09-24 the plan was to publish on Google
+Play. No Play submission was ever made (`eas submit:list --platform
+android` returned no submissions, and `mobile/eas.json`'s
+`submit.production` profile never carried a configured service account
+or track).
 
 **What is explicitly true today:**
 
@@ -310,20 +319,13 @@ account or track).
   `Using remote Android credentials (Expo server)` and `Using Keystore
   from configuration: Build Credentials DlSst9jBhk (default)` when a
   production build is initiated.
-- The project's official Android release artifact is built and signed
-  through this EAS-managed credential via `eas build --profile
-  production --platform android`, using `mobile/eas.json`'s existing,
-  unmodified `production` profile — not through the repository's local
-  Gradle debug-keystore path.
-- Because this is the first Google Play submission, Google Play App
-  Signing applies at enrollment: the key used to sign the AAB handed to
-  Play becomes the **upload key**, and Google generates and holds a
-  separate **app signing key** that actually signs what reaches user
-  devices. These are not the same certificate — see
-  [How Users Can Verify](APK-VERIFICATION.md) for what that means for
-  verification.
+- The project's official Android release artifact is an APK built and
+  signed through this EAS-managed credential via `eas build --profile
+  production-apk --platform android` — not through the repository's
+  local Gradle debug-keystore path, and not through the `build-apk.yml`
+  GitHub Actions workflow, which signs with the debug key.
 
-**Google Play build (v13):** a production AAB for this release has been built
+**v13 AAB (historical, never uploaded):** a production AAB had been built
 via EAS (build `8140578b-0f56-48b7-b31d-1ab680b291b3`, versionCode 13,
 source commit `73b0fff`) and independently verified: signed with the
 existing production credential (not `debug.keystore`), package
@@ -332,9 +334,10 @@ obfuscation all confirmed directly from the built artifact, and the
 exact artifact re-tested on a physical device (fresh install, upgrade
 install, navigation, all September 19 content fixes, zero crashes) —
 see [APK-VERIFICATION.md](APK-VERIFICATION.md) for the exact values. It
-has not yet been uploaded to Google Play, so the Google Play
-app-signing certificate does not exist yet — Google assigns it on
-first upload, under Google Play App Signing.
+was prepared for Google Play and was never uploaded; with the move to
+GitHub-only distribution it will not be. The v13 release published on
+GitHub is an APK (EAS build `f39d545b-0f21-40c8-8449-9f0d4cfd387e`,
+SHA-256 `400db3b6…cd4d4`) signed with the same production certificate.
 
 **v16 (1.0.3) — current Android release and OTA baseline:** an APK
 built via EAS (build `1f5e3c13-39f7-4766-82ba-57712d373153`,

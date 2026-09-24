@@ -744,6 +744,14 @@ GitHub's 100 MB per-file limit for a normal git blob, and because build
 artifacts are not meant to live in version-controlled history in the
 first place.
 
+**Update (2026-09-24):** distribution has since settled on GitHub only.
+The app is not going on Google Play or any other app store. Official
+APKs are published on
+[`vedanta-yojana-releases`](https://github.com/slnwriteups/vedanta-yojana-releases/releases)
+(current: v16, 1.0.3), and content and JavaScript fixes reach installed
+apps through EAS over-the-air updates. See
+[docs/APK-VERIFICATION.md](docs/APK-VERIFICATION.md).
+
 ---
 
 ## 8. Engineering decisions

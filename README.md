@@ -534,9 +534,11 @@ to confirm a downloaded file is genuine.
 - The Android release is signed using this project's production
   signing credentials, managed remotely by EAS (Expo Application
   Services) — not a local development key.
-- Google Play's own install-time signature verification, plus the
-  published signing-certificate fingerprint, let a release be
-  independently confirmed.
+- Each release on GitHub is published with its SHA-256 checksum and
+  signing-certificate fingerprint, so any downloaded APK can be
+  independently confirmed — see the
+  [APK Verification Guide](docs/APK-VERIFICATION.md). The app is
+  distributed only through GitHub, not through any app store.
 - Dependency vulnerabilities are tracked via Dependabot and `npm audit`;
   known issues are patched or remediated and covered by automated
   regression tests.
@@ -560,9 +562,8 @@ to confirm a downloaded file is genuine.
 - No account or sign-in is required or offered.
 - Network requests fetch public content (Library book updates, version
   checks) from this project's own GitHub Pages site over HTTPS; nothing
-  in the audited source uploads user data anywhere. See Google Play's
-  Data Safety section on the app's listing for the platform-verified
-  summary of this once published.
+  in the audited source uploads user data anywhere. The source is
+  public, so this can be checked directly.
 - Location access (coarse/fine) is used only to show the day's
   Panchangam for the user's approximate location, and to name that place
   on screen so the reader can see which place the Panchangam and
@@ -588,7 +589,7 @@ app updates both require connectivity. See
 |---|---|---|
 | Framework | Next.js (`output: "export"`, fully static) | Expo (React Native) |
 | Status | **co-equal target — full feature parity** | **co-equal target — full feature parity** |
-| Deploy | GitHub Pages, auto-deploys from `main` | [GitHub Releases](#latest-release) today; Google Play planned |
+| Deploy | GitHub Pages, auto-deploys from `main` | [GitHub Releases](#latest-release) (APK) plus over-the-air updates; GitHub only, no app store |
 | Detail | — | see `mobile/README.md` |
 
 Both runtimes now carry the same feature set: content translation
