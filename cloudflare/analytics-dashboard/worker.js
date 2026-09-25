@@ -96,7 +96,7 @@ async function loadData(env, days) {
   // `days` is one of RANGES, never raw input, so interpolating it is safe.
   const since = `timestamp > NOW() - INTERVAL '${days}' DAY`;
   try {
-    const [daily, places, downloads] = await Promise.all([
+    const [daily, places, sources, downloads] = await Promise.all([
       query(
         env,
         `SELECT toStartOfInterval(timestamp, INTERVAL '1' DAY) AS day, blob2 AS kind,
@@ -111,9 +111,17 @@ async function loadData(env, days) {
          FROM ${DATASET} WHERE ${since}
          GROUP BY country, city, region, kind ORDER BY hits DESC LIMIT 5000`,
       ),
+      // Visits by the site they came from. Blank blob6 is a visit recorded
+      // before sources were, and is left out rather than shown as direct.
+      query(
+        env,
+        `SELECT blob6 AS source, SUM(_sample_interval * double2) AS visits
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND double2 = 1 AND blob6 != ''
+         GROUP BY source ORDER BY visits DESC LIMIT 500`,
+      ),
       loadDownloads(),
     ]);
-    return { days, daily, places, downloads };
+    return { days, daily, places, sources, downloads };
   } catch (error) {
     return { error: `Cloudflare returned an error: ${error.message}` };
   }
@@ -262,6 +270,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <p class="sub">APK downloads from GitHub, recorded once a day. People updating the app download it again, so this runs ahead of the number of people using it.</p>
       <div class="chart" id="c-downloads"></div>
     </div>
+    <div class="card">
+      <h2>Where visitors come from</h2>
+      <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
+      <div id="sources"></div>
+    </div>
     <div class="grid2">
       <div class="card">
         <h2>Countries</h2>
@@ -296,6 +309,66 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     if (text != null) node.textContent = text;
     return node;
   }
+  // Friendly names for the sources most sites see. Anything else is shown
+  // as its host name.
+  var SOURCE_NAMES = [
+    [/^\\(direct\\)$/, "Direct / WhatsApp / bookmarks"],
+    [/(^|\\.)google\\.[a-z.]+$|^com\\.google\\.android\\.googlequicksearchbox$/, "Google"],
+    [/(^|\\.)bing\\.com$/, "Bing"],
+    [/(^|\\.)duckduckgo\\.com$/, "DuckDuckGo"],
+    [/(^|\\.)yahoo\\.com$/, "Yahoo"],
+    [/(^|\\.)facebook\\.com$|^fb\\.me$/, "Facebook"],
+    [/(^|\\.)instagram\\.com$/, "Instagram"],
+    [/(^|\\.)whatsapp\\.(com|net)$/, "WhatsApp"],
+    [/(^|\\.)youtube\\.com$|^youtu\\.be$/, "YouTube"],
+    [/^t\\.co$|(^|\\.)twitter\\.com$|(^|\\.)x\\.com$/, "X (Twitter)"],
+    [/(^|\\.)linkedin\\.com$|^lnkd\\.in$/, "LinkedIn"],
+    [/(^|\\.)reddit\\.com$/, "Reddit"],
+    [/(^|\\.)t\\.me$|(^|\\.)telegram\\.org$/, "Telegram"],
+    [/(^|\\.)github\\.com$/, "GitHub"],
+    [/(^|\\.)chatgpt\\.com$|(^|\\.)openai\\.com$/, "ChatGPT"],
+    [/(^|\\.)claude\\.ai$/, "Claude"],
+    [/(^|\\.)perplexity\\.ai$/, "Perplexity"],
+  ];
+  function sourceName(host) {
+    for (var i = 0; i < SOURCE_NAMES.length; i++) if (SOURCE_NAMES[i][0].test(host)) return SOURCE_NAMES[i][1];
+    return host.replace(/^(m|l|lm)\\./, "");
+  }
+
+  function sourceTable(rows) {
+    var merged = {};
+    rows.forEach(function (r) {
+      var name = sourceName(String(r.source));
+      merged[name] = (merged[name] || 0) + Number(r.visits);
+    });
+    var list = Object.keys(merged).map(function (k) { return { name: k, visits: merged[k] }; })
+      .filter(function (r) { return r.visits > 0; })
+      .sort(function (a, b) { return b.visits - a.visits; }).slice(0, 20);
+    var box = document.getElementById("sources");
+    box.textContent = "";
+    if (!list.length) { box.appendChild(el("div", { class: "empty" }, "No sources recorded in this range yet.")); return; }
+    var total = list.reduce(function (a, r) { return a + r.visits; }, 0);
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "Source"));
+    head.appendChild(el("th", { class: "n" }, "Visits"));
+    head.appendChild(el("th", { class: "n" }, "Share"));
+    table.appendChild(head);
+    list.forEach(function (r) {
+      var tr = el("tr");
+      var cell = el("td", { class: "place barcell" });
+      var bar = el("span");
+      bar.style.width = Math.max(2, (r.visits / list[0].visits) * 100) + "%";
+      cell.appendChild(bar);
+      cell.appendChild(el("div", {}, r.name));
+      tr.appendChild(cell);
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.visits))));
+      tr.appendChild(el("td", { class: "n" }, Math.round((r.visits / total) * 100) + "%"));
+      table.appendChild(tr);
+    });
+    box.appendChild(table);
+  }
+
   function metricOf(kind) {
     if (kind === "web") return "web";
     if (kind === "/app-version.json") return "launches";
@@ -407,6 +480,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       dlHost.textContent = "";
       dlHost.appendChild(el("div", { class: "empty" }, "No daily download figures in this range yet."));
     }
+    sourceTable(d.sources || []);
     placeTable("countries", Object.values(countries));
     placeTable("cities", Object.values(cities));
   }

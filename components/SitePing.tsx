@@ -34,10 +34,24 @@ function startsVisit(): boolean {
 }
 
 /**
+ * The referring site's host name for a visit -- "google.com", never the
+ * full address it linked from -- or "" when there is none (a typed
+ * address, a bookmark, or an app such as WhatsApp that withholds it).
+ */
+function sourceHost(): string {
+  try {
+    return new URL(document.referrer).hostname;
+  } catch {
+    return "";
+  }
+}
+
+/**
  * Counts one page view per route, including client-side navigations the
  * static export performs without a full page load. It sends nothing but
- * `v=1` (this view began a visit) or `v=0`: no path, no title, no
- * identifier, and it reads and stores nothing on the device. Country and
+ * `v=0`, or for a view that began a visit `v=1` plus `s=`, the referring
+ * site's host name: no path, no title, no identifier, and it reads and
+ * stores nothing on the device. Country and
  * approximate city are resolved by Cloudflare at the edge, not here.
  */
 export function SitePing() {
@@ -49,7 +63,8 @@ export function SitePing() {
     const visit = first.current && startsVisit();
     first.current = false;
     try {
-      navigator.sendBeacon?.(`${PING_PATH}?v=${visit ? 1 : 0}`);
+      const query = visit ? `v=1&s=${encodeURIComponent(sourceHost())}` : "v=0";
+      navigator.sendBeacon?.(`${PING_PATH}?${query}`);
     } catch {
       // Measurement must never be able to break the page it measures.
     }
