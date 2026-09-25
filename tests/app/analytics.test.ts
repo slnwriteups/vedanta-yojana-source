@@ -255,3 +255,15 @@ test("the analytics dashboard is password-protected and keeps its credentials ou
   assert.ok(!config.includes("analytics_engine_datasets"));
   assert.ok(!worker.includes("writeDataPoint"));
 });
+
+test("the dashboard reads download history from the committed snapshot file, without a credential", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // The same file the daily snapshot workflow writes; GitHub itself keeps
+  // no download history to read instead.
+  assert.ok(worker.includes("/main/stats/apk-downloads.json"));
+  const fn = worker.slice(worker.indexOf("async function loadDownloads()"), worker.indexOf("async function query("));
+  assert.ok(!fn.includes("Authorization"), "the public file is fetched without any token");
+  // A download-history failure blanks one chart, never the whole dashboard.
+  assert.ok(fn.includes("return null;"));
+});
