@@ -561,12 +561,14 @@ to confirm a downloaded file is genuine.
   present in the mobile app's dependencies. This is a statement about
   the **app**, and it remains unconditionally true.
 - The **website** (vedantayojana.org) carries cookieless, aggregate
-  page-view measurement — no cookies, no client-side storage, no
-  cross-site identifier, no individual profiles. Separately, the
-  version-check and Library-catalog requests the app already makes to
-  that site are counted by country at the network edge; that counting
-  observes traffic that already exists and adds nothing whatsoever to
-  the app. Full detail, including exactly what is and is not recorded:
+  page-view measurement by country and approximate city — no cookies,
+  no client-side storage, no cross-site identifier, no record of which
+  pages are read, no individual profiles. Separately, the version-check
+  and Library-catalog requests the app already makes to that site are
+  counted by country and approximate city at the network edge; that
+  counting observes traffic that already exists and adds nothing
+  whatsoever to the app. Full detail, including exactly what is and is
+  not recorded:
   [docs/ANALYTICS.md](docs/ANALYTICS.md).
 - No account or sign-in is required or offered.
 - Network requests fetch public content (Library book updates, version

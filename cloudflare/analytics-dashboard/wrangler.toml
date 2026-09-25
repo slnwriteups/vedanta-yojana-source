@@ -1,0 +1,22 @@
+name = "analytics-dashboard"
+main = "worker.js"
+compatibility_date = "2026-09-20"
+
+# A private dashboard over the counts cloudflare/request-analytics/
+# records. It only READS, through the Analytics Engine SQL API, so it
+# needs no dataset binding and no route on the site: it is served from
+# its own workers.dev address, separate from vedantayojana.org, and
+# every response sits behind a password (see worker.js).
+workers_dev = true
+
+# Three secrets, set once in the Cloudflare dashboard (Workers & Pages ->
+# analytics-dashboard -> Settings -> Variables and Secrets) or with
+# `npx wrangler secret put <NAME>`. Secrets survive every deploy, which
+# is why none of them is declared here:
+#
+#   DASHBOARD_PASSWORD  the password the browser asks for
+#   CF_ACCOUNT_ID       the Cloudflare account the dataset lives in
+#   CF_API_TOKEN        an API token with Account Analytics: Read only
+#
+# Until DASHBOARD_PASSWORD is set the Worker refuses every request, so a
+# deploy that runs ahead of the setup never exposes anything.
