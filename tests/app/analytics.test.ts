@@ -231,7 +231,9 @@ test("the ping is answered by the Worker itself and never forwarded to the origi
   const config = read("cloudflare/request-analytics/wrangler.toml");
 
   assert.ok(worker.includes('const PING_PATH = "/_ping";'));
-  assert.ok(config.includes('pattern = "vedantayojana.org/_ping"'));
+  // The ping carries ?v=, so the route must be a prefix match -- an exact
+  // `/_ping` pattern lets every real ping fall through to the origin.
+  assert.ok(config.includes('pattern = "vedantayojana.org/_ping*"'));
   assert.ok(worker.includes("return new Response(null, { status: 204 });"));
 });
 
@@ -252,4 +254,16 @@ test("the analytics dashboard is password-protected and keeps its credentials ou
   // Read-only: it queries the dataset and cannot write to it.
   assert.ok(!config.includes("analytics_engine_datasets"));
   assert.ok(!worker.includes("writeDataPoint"));
+});
+
+test("the dashboard reads download history from the committed snapshot file, without a credential", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // The same file the daily snapshot workflow writes; GitHub itself keeps
+  // no download history to read instead.
+  assert.ok(worker.includes("/main/stats/apk-downloads.json"));
+  const fn = worker.slice(worker.indexOf("async function loadDownloads()"), worker.indexOf("async function query("));
+  assert.ok(!fn.includes("Authorization"), "the public file is fetched without any token");
+  // A download-history failure blanks one chart, never the whole dashboard.
+  assert.ok(fn.includes("return null;"));
 });

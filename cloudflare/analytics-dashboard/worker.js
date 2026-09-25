@@ -23,6 +23,16 @@
  */
 
 const DATASET = "vedanta_yojana_requests";
+
+/**
+ * The daily APK download snapshots scripts/record-apk-downloads.ts
+ * commits (GitHub only reports a running total, so this file is the only
+ * download history there is). The repository is public, so this needs
+ * no credential; a failure here blanks the downloads chart and nothing
+ * else.
+ */
+const DOWNLOADS_URL =
+  "https://raw.githubusercontent.com/slnwriteups/vedanta-yojana-source/main/stats/apk-downloads.json";
 const RANGES = new Set([7, 30, 90]);
 
 export default {
@@ -86,7 +96,7 @@ async function loadData(env, days) {
   // `days` is one of RANGES, never raw input, so interpolating it is safe.
   const since = `timestamp > NOW() - INTERVAL '${days}' DAY`;
   try {
-    const [daily, places] = await Promise.all([
+    const [daily, places, downloads] = await Promise.all([
       query(
         env,
         `SELECT toStartOfInterval(timestamp, INTERVAL '1' DAY) AS day, blob2 AS kind,
@@ -101,10 +111,25 @@ async function loadData(env, days) {
          FROM ${DATASET} WHERE ${since}
          GROUP BY country, city, region, kind ORDER BY hits DESC LIMIT 5000`,
       ),
+      loadDownloads(),
     ]);
-    return { days, daily, places };
+    return { days, daily, places, downloads };
   } catch (error) {
     return { error: `Cloudflare returned an error: ${error.message}` };
+  }
+}
+
+/** [{ date: "YYYY-MM-DD", total }] ascending, or null if unavailable. */
+async function loadDownloads() {
+  try {
+    const response = await fetch(DOWNLOADS_URL, { cf: { cacheTtl: 900, cacheEverything: true } });
+    if (!response.ok) return null;
+    const history = await response.json();
+    return (history.snapshots ?? [])
+      .map((snapshot) => ({ date: String(snapshot.date), total: Number(snapshot.totalApkDownloads) || 0 }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  } catch {
+    return null;
   }
 }
 
@@ -217,7 +242,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     <div class="tiles">
       <div class="tile"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
       <div class="tile"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
-      <div class="tile"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint">Android app opens</div></div>
+      <div class="tile"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
+      <div class="tile"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
       <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint">with any site or app activity</div></div>
     </div>
     <div class="card">
@@ -230,6 +256,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <h2>App launches, per day</h2>
       <p class="sub">Each time the Android app is opened it checks for updates; that check is what is counted. Launches, not people.</p>
       <div class="chart" id="c-app"></div>
+    </div>
+    <div class="card">
+      <h2>App downloads, per day</h2>
+      <p class="sub">APK downloads from GitHub, recorded once a day. People updating the app download it again, so this runs ahead of the number of people using it.</p>
+      <div class="chart" id="c-downloads"></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -297,7 +328,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     start.setUTCHours(0, 0, 0, 0);
     for (var i = d.days - 1; i >= 0; i--) {
       var key = new Date(start.getTime() - i * 86400000).toISOString().slice(0, 10);
-      byDay[key] = { day: key, views: 0, visits: 0, launches: 0 };
+      byDay[key] = { day: key, views: 0, visits: 0, launches: 0, downloads: 0 };
     }
     d.daily.forEach(function (row) {
       var key = String(row.day).slice(0, 10);
@@ -308,6 +339,15 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       else slot.launches += Number(row.hits);
     });
     var days = Object.keys(byDay).sort().map(function (k) { return byDay[k]; });
+
+    // Downloads per day are the difference between consecutive daily
+    // snapshots of GitHub's running total. A missed day folds into the
+    // next recorded one; the first snapshot has nothing to compare with.
+    var snaps = d.downloads || [];
+    snaps.forEach(function (snap, i) {
+      if (i === 0 || !byDay[snap.date]) return;
+      byDay[snap.date].downloads = Math.max(0, snap.total - snaps[i - 1].total);
+    });
 
     var countries = {}, cities = {};
     d.places.forEach(function (row) {
@@ -330,6 +370,16 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     document.getElementById("t-visits").textContent = fmt.format(Math.round(sum("visits")));
     document.getElementById("t-views").textContent = fmt.format(Math.round(sum("views")));
     document.getElementById("t-launches").textContent = fmt.format(Math.round(sum("launches")));
+    document.getElementById("t-launches-hint").textContent =
+      "Android app opens · about " + fmt.format(Math.round(sum("launches") / d.days)) + " a day";
+    if (snaps.length) {
+      document.getElementById("t-downloads").textContent = fmt.format(snaps[snaps.length - 1].total);
+      document.getElementById("t-downloads-hint").textContent =
+        "+" + fmt.format(sum("downloads")) + " in this range · as of " + shortDate(snaps[snaps.length - 1].date);
+    } else {
+      document.getElementById("t-downloads").textContent = "—";
+      document.getElementById("t-downloads-hint").textContent = "download history unavailable";
+    }
     document.getElementById("t-countries").textContent = fmt.format(Object.keys(countries).filter(function (k) { return k !== "XX"; }).length);
 
     // Shown before drawing: a hidden container measures zero wide.
@@ -343,6 +393,20 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     lineChart(document.getElementById("c-app"), days, [
       { key: "launches", label: "App launches", color: "var(--s1)" },
     ]);
+    // Only days with a recorded figure: before the first snapshot, and
+    // today until the daily snapshot runs, "no data" must not read as 0.
+    var recorded = snaps.length > 1 ? days.filter(function (x) {
+      return x.day > snaps[0].date && x.day <= snaps[snaps.length - 1].date;
+    }) : [];
+    var dlHost = document.getElementById("c-downloads");
+    if (recorded.length) {
+      lineChart(dlHost, recorded, [
+        { key: "downloads", label: "APK downloads", color: "var(--s1)" },
+      ]);
+    } else {
+      dlHost.textContent = "";
+      dlHost.appendChild(el("div", { class: "empty" }, "No daily download figures in this range yet."));
+    }
     placeTable("countries", Object.values(countries));
     placeTable("cities", Object.values(cities));
   }
