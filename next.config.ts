@@ -24,7 +24,7 @@ import type { NextConfig } from "next";
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 const nextConfig: NextConfig = {
-  // Next.js 16 auto-writes AGENTS.md/CLAUDE.md into the repo root on every
+  // Next.js 16 auto-writes AI-agent rule files into the repo root on every
   // `next dev`/`next build`. Disabled: an unrequested, repeatedly
   // self-regenerating file outside this phase's (or any phase's) scope.
   agentRules: false,

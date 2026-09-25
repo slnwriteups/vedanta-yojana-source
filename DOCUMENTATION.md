@@ -38,7 +38,7 @@ the gap with plausible-sounding detail.
 ## 1. Development model
 
 **Vedanta Yojana was designed and built by a first-time application
-developer, working with an AI system (Claude, via Claude Code) as the
+developer, working with an AI coding assistant as the
 primary development and engineering assistant.** This is stated
 explicitly and is not a detail to be softened into generic language like
 "AI-assisted development." It is a defining characteristic of how this
