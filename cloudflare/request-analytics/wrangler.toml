@@ -9,7 +9,9 @@ compatibility_date = "2026-09-20"
 # reaches Cloudflare at all and the Worker is simply never invoked. See
 # docs/ANALYTICS.md.
 #
-# Scoped to exactly the two manifests the mobile app fetches. Not a
+# Scoped to exactly the two manifests the mobile app fetches, plus the
+# website's own page-view ping (/_ping, answered by the Worker itself
+# and never forwarded -- nothing exists at that path on Pages). Not a
 # `/*` catch-all: the Worker is deliberately not in the path of ordinary
 # human page views (those are measured by the aggregate Web Analytics
 # beacon instead), so a bug or a misconfiguration here cannot degrade
@@ -18,6 +20,7 @@ compatibility_date = "2026-09-20"
 routes = [
   { pattern = "vedantayojana.org/app-version.json", zone_name = "vedantayojana.org" },
   { pattern = "vedantayojana.org/content-manifest.json", zone_name = "vedantayojana.org" },
+  { pattern = "vedantayojana.org/_ping", zone_name = "vedantayojana.org" },
 ]
 
 # The dataset name is what the SQL API queries as its table -- changing

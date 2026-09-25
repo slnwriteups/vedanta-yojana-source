@@ -13,8 +13,8 @@ import {
 /**
  * Covers the three measurement mechanisms added for traffic/install
  * visibility (docs/ANALYTICS.md): the APK download snapshot series, the
- * Cloudflare Web Analytics beacon in the site layout, and the
- * country-counting Worker.
+ * Cloudflare Web Analytics beacon in the site layout, the counting
+ * Worker and the website's page-view ping, and the private dashboard.
  *
  * The download-stats assertions exercise the real merge/aggregation
  * logic. The other two are structural source checks in the style of
@@ -147,8 +147,9 @@ test("the analytics Worker records no identifier and cannot break the request it
   // the whole file would match that prose rather than any real code.
   const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
 
-  // Country and colo only. If any of these ever appear, the privacy
-  // claims in docs/privacy-policy.html and README.md stop being true.
+  // Geography (country, approximate city and region) and colo only. If
+  // any of these ever appear, the privacy claims in
+  // docs/privacy-policy.html and README.md stop being true.
   for (const term of ["cf-connecting-ip", "CF-Connecting-IP", "user-agent", "User-Agent", "cookie", "Cookie"]) {
     assert.ok(!code.includes(term), `Worker must not read ${term}`);
   }
@@ -207,4 +208,48 @@ test("the Worker deploy workflow writes nothing back to the repository", () => {
   // The token is referenced only as a secret, never inlined.
   assert.ok(source.includes("${{ secrets.CLOUDFLARE_API_TOKEN }}"));
   assert.ok(!/CLOUDFLARE_API_TOKEN:\s*[A-Za-z0-9_-]{20,}/.test(source), "no literal token");
+});
+
+test("the website ping sends no page, title or identifier, and only from the production host", () => {
+  const source = read("components/SitePing.tsx");
+  const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
+
+  // The ping's whole payload is the visit flag in its URL. The pathname
+  // is read only to re-run the effect on navigation, never sent.
+  assert.match(code, /sendBeacon\?\.\(`\$\{PING_PATH\}\?v=\$\{visit \? 1 : 0\}`\)/);
+  assert.ok(!/sendBeacon[^;]*pathname/.test(code), "the page path must not be sent");
+  for (const term of ["document.title", "localStorage", "sessionStorage", "document.cookie", "indexedDB"]) {
+    assert.ok(!code.includes(term), `the ping must not use ${term}`);
+  }
+  // Dev servers, previews and forks never report into this site's numbers.
+  assert.ok(code.includes('location.hostname !== PRODUCTION_HOST'));
+  assert.ok(read("app/layout.tsx").includes("<SitePing />"));
+});
+
+test("the ping is answered by the Worker itself and never forwarded to the origin", () => {
+  const worker = read("cloudflare/request-analytics/worker.js");
+  const config = read("cloudflare/request-analytics/wrangler.toml");
+
+  assert.ok(worker.includes('const PING_PATH = "/_ping";'));
+  assert.ok(config.includes('pattern = "vedantayojana.org/_ping"'));
+  assert.ok(worker.includes("return new Response(null, { status: 204 });"));
+});
+
+test("the analytics dashboard is password-protected and keeps its credentials out of the repository", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+  const config = read("cloudflare/analytics-dashboard/wrangler.toml");
+
+  // Every request is checked before routing, and an unset password
+  // refuses everything rather than serving an open dashboard.
+  const authIdx = worker.indexOf("if (!(await authorized(request, env)))");
+  assert.ok(authIdx > 0 && authIdx < worker.indexOf('url.pathname === "/data"'));
+  assert.ok(worker.includes("if (!expected) return false;"));
+  assert.ok(worker.includes("timingSafeEqual"));
+
+  // Secrets live in Cloudflare, never in wrangler.toml.
+  assert.ok(!/^\s*\[vars\]/m.test(config), "no plain-text vars block");
+  assert.ok(!/^\s*(DASHBOARD_PASSWORD|CF_API_TOKEN|CF_ACCOUNT_ID)\s*=/m.test(config));
+  // Read-only: it queries the dataset and cannot write to it.
+  assert.ok(!config.includes("analytics_engine_datasets"));
+  assert.ok(!worker.includes("writeDataPoint"));
 });

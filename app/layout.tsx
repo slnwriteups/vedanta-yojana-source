@@ -4,6 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { WelcomeGate } from "@/components/WelcomeGate";
 import { OnboardingGate } from "@/components/OnboardingGate";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { SitePing } from "@/components/SitePing";
 import { getSiteOrigin, siteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 import { resolveImageHref } from "@/lib/image-file";
 import "./globals.css";
@@ -140,6 +141,12 @@ export default function RootLayout({
             data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })}
           />
         ) : null}
+        {/*
+          Page views and visits by country and approximate city, for the
+          private dashboard (cloudflare/analytics-dashboard/). Reports
+          only from the production host; see components/SitePing.tsx.
+        */}
+        <SitePing />
       </body>
     </html>
   );

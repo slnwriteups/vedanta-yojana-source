@@ -1,0 +1,58 @@
+name: Deploy analytics-dashboard Worker
+
+# The private analytics dashboard (cloudflare/analytics-dashboard/) reads
+# the counts request-analytics records and shows them per day, per
+# country and per city. Deployed from Actions for the same reason as
+# deploy-request-analytics.yml: an edit merged to main should never sit
+# undeployed while the edge keeps serving the previous version.
+#
+# Scoped by path, so only changes to the dashboard itself redeploy it.
+# Its three secrets (DASHBOARD_PASSWORD, CF_ACCOUNT_ID, CF_API_TOKEN) are
+# set once in Cloudflare, not here -- Worker secrets survive deploys, and
+# keeping them out of GitHub means this workflow never handles them.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "cloudflare/analytics-dashboard/**"
+      - ".github/workflows/deploy-analytics-dashboard.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-analytics-dashboard
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: wrangler deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Validate the Worker without credentials
+        working-directory: cloudflare/analytics-dashboard
+        run: npx --yes wrangler@4 deploy --dry-run --outdir /tmp/analytics-dashboard-dryrun
+
+      - name: Deploy
+        working-directory: cloudflare/analytics-dashboard
+        env:
+          # The same deploy token as request-analytics (Workers Scripts:
+          # Edit). The dashboard has no zone route, so it needs nothing
+          # beyond that.
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "::warning::CLOUDFLARE_API_TOKEN is not set -- validated the dashboard Worker but did not deploy it."
+            exit 0
+          fi
+          npx --yes wrangler@4 deploy
