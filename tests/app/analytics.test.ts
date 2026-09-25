@@ -231,7 +231,9 @@ test("the ping is answered by the Worker itself and never forwarded to the origi
   const config = read("cloudflare/request-analytics/wrangler.toml");
 
   assert.ok(worker.includes('const PING_PATH = "/_ping";'));
-  assert.ok(config.includes('pattern = "vedantayojana.org/_ping"'));
+  // The ping carries ?v=, so the route must be a prefix match -- an exact
+  // `/_ping` pattern lets every real ping fall through to the origin.
+  assert.ok(config.includes('pattern = "vedantayojana.org/_ping*"'));
   assert.ok(worker.includes("return new Response(null, { status: 204 });"));
 });
 

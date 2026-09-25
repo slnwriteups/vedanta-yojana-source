@@ -20,7 +20,9 @@ compatibility_date = "2026-09-20"
 routes = [
   { pattern = "vedantayojana.org/app-version.json", zone_name = "vedantayojana.org" },
   { pattern = "vedantayojana.org/content-manifest.json", zone_name = "vedantayojana.org" },
-  { pattern = "vedantayojana.org/_ping", zone_name = "vedantayojana.org" },
+  # Trailing `*` because route patterns match the query string too: the
+  # ping arrives as /_ping?v=1, which an exact `/_ping` never matches.
+  { pattern = "vedantayojana.org/_ping*", zone_name = "vedantayojana.org" },
 ]
 
 # The dataset name is what the SQL API queries as its table -- changing
