@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
  */
 const PRODUCTION_HOST = "vedantayojana.org";
 
-/** Answered by cloudflare/request-analytics/worker.js; see docs/ANALYTICS.md. */
+/** Answered by cloudflare/request-analytics/worker.js itself, never forwarded to the origin. */
 const PING_PATH = "/_ping";
 
 /**

@@ -81,7 +81,7 @@ async function digest(text) {
 
 async function loadData(env, days) {
   if (!env.CF_ACCOUNT_ID || !env.CF_API_TOKEN) {
-    return { error: "The dashboard is not connected yet: set the CF_ACCOUNT_ID and CF_API_TOKEN secrets (see docs/ANALYTICS.md)." };
+    return { error: "The dashboard is not connected yet: set the CF_ACCOUNT_ID and CF_API_TOKEN secrets on this Worker in Cloudflare (Settings -> Variables and Secrets)." };
   }
   // `days` is one of RANGES, never raw input, so interpolating it is safe.
   const since = `timestamp > NOW() - INTERVAL '${days}' DAY`;
