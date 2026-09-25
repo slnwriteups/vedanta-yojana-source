@@ -88,6 +88,18 @@ function geography(request) {
   };
 }
 
+/**
+ * Where a visit came from, as sent by the page: the referring site's host
+ * name only ("google.com"), "(direct)" when there was none, and "" for a
+ * page view that did not begin a visit. Anything that is not a plain host
+ * name is recorded as "(direct)" rather than stored as sent.
+ */
+function visitSource(url) {
+  if (url.searchParams.get("v") !== "1") return "";
+  const host = (url.searchParams.get("s") ?? "").toLowerCase().replace(/^www\./, "");
+  return /^[a-z0-9.-]{1,100}$/.test(host) ? host : "(direct)";
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -99,7 +111,8 @@ export default {
           env.REQUEST_STATS.writeDataPoint({
             // Same blob layout as the manifest counts, with "web" in the
             // path slot so every existing per-path query is unaffected.
-            blobs: [geo.country, "web", geo.colo, geo.city, geo.region],
+            // blob6: the visit's source (see visitSource).
+            blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url)],
             // double1: one page view. double2: 1 when that view began a
             // visit, so SUM(double2 * _sample_interval) counts visits.
             doubles: [1, url.searchParams.get("v") === "1" ? 1 : 0],

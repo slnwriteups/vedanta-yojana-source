@@ -214,9 +214,12 @@ test("the website ping sends no page, title or identifier, and only from the pro
   const source = read("components/SitePing.tsx");
   const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
 
-  // The ping's whole payload is the visit flag in its URL. The pathname
-  // is read only to re-run the effect on navigation, never sent.
-  assert.match(code, /sendBeacon\?\.\(`\$\{PING_PATH\}\?v=\$\{visit \? 1 : 0\}`\)/);
+  // The ping's whole payload is the visit flag and, for a visit, the
+  // referring site's host name -- never the full referring address. The
+  // pathname is read only to re-run the effect on navigation, never sent.
+  assert.ok(code.includes('const query = visit ? `v=1&s=${encodeURIComponent(sourceHost())}` : "v=0";'));
+  assert.ok(code.includes("return new URL(document.referrer).hostname;"));
+  assert.ok(!/sendBeacon[^;]*document\.referrer/.test(code), "the full referrer must not be sent");
   assert.ok(!/sendBeacon[^;]*pathname/.test(code), "the page path must not be sent");
   for (const term of ["document.title", "localStorage", "sessionStorage", "document.cookie", "indexedDB"]) {
     assert.ok(!code.includes(term), `the ping must not use ${term}`);
@@ -235,6 +238,8 @@ test("the ping is answered by the Worker itself and never forwarded to the origi
   // `/_ping` pattern lets every real ping fall through to the origin.
   assert.ok(config.includes('pattern = "vedantayojana.org/_ping*"'));
   assert.ok(worker.includes("return new Response(null, { status: 204 });"));
+  // The source is stored only if it is a plain host name.
+  assert.ok(worker.includes("/^[a-z0-9.-]{1,100}$/.test(host)"));
 });
 
 test("the analytics dashboard is password-protected and keeps its credentials out of the repository", () => {
