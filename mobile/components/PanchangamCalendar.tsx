@@ -12,11 +12,7 @@ import {
   tithiLabel,
 } from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
-import {
-  PADUKA_PANCHANGAM_SOURCE,
-  padukaPanchangamFor,
-  type PadukaPanchangamEntry,
-} from "../../content-lib/paduka-panchangam.ts";
+import { padukaPanchangamFor, type PadukaPanchangamEntry } from "../../content-lib/paduka-panchangam.ts";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -341,47 +337,68 @@ function Row({ label, value, muted, fg }: { label: string; value: string; muted:
 }
 
 /**
- * The Sri Ranganatha Paduka journal's own printed Panchangam entry for
- * the selected day -- bundled data, so it shows regardless of the live
- * Ahobila fetch's loading/location state above it.
+ * The Sri Ranganatha Paduka Panchangam for the selected day, laid out
+ * exactly like the Ahobila rows above it (festival line, Tithi and
+ * Nakshatram rows, a collapsible sankalpam) and localized through the
+ * same panchangam-labels maps. Bundled data, so it shows regardless of
+ * the live Ahobila fetch's loading/location state.
  */
 function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
   const theme = useTheme();
   const t = useT();
+  const { language } = useLanguage();
+  const [showTarpanam, setShowTarpanam] = useState<boolean>(true);
+  const { day, tarpanam } = entry;
+  const pakshaTithi = day
+    ? [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ")
+    : "";
+  const nakshatram = day ? nakshatramLabel(day.nakshatram, language) : "";
+
   return (
-    <View style={[styles.padukaSection, { borderTopColor: theme.colors.border }]}>
-      <Text style={[styles.sankalpamSectionLabel, { color: theme.colors.muted }]}>{t("padukaPanchangamLabel")}</Text>
-      {entry.day ? (
-        <>
-          <Row
-            label={t("padukaTamilDateLabel")}
-            value={`${entry.samvatsara} ${entry.day.tamilMonth} ${entry.day.tamilDay}`}
-            muted={theme.colors.muted}
-            fg={theme.colors.foreground}
-          />
-          <Text style={[styles.padukaDetails, { color: theme.colors.foreground }]}>{entry.day.details}</Text>
-        </>
+    <View style={[styles.sankalpamSection, styles.contentRows, { borderTopColor: theme.colors.border }]}>
+      <Text style={[styles.sankalpamSectionLabel, styles.padukaHeading, { color: theme.colors.muted }]}>
+        {t("padukaPanchangamLabel")}
+      </Text>
+      {day?.festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{day.festival}</Text> : null}
+      {pakshaTithi ? (
+        <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />
       ) : null}
-      {entry.tarpanam ? (
-        <View
-          style={[styles.sankalpamBox, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}
-        >
-          <Text style={[styles.padukaTarpanamLabel, { color: theme.colors.accent }]}>{t("padukaTarpanamLabel")}</Text>
-          <Text style={[styles.padukaTarpanamTitle, { color: theme.colors.foreground }]}>{entry.tarpanam.title}</Text>
-          <Text
-            style={[
-              styles.sankalpamBody,
-              { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
-            ]}
+      {nakshatram ? (
+        <Row
+          label={t("homeCalendarNakshatramLabel")}
+          value={nakshatram}
+          muted={theme.colors.muted}
+          fg={theme.colors.foreground}
+        />
+      ) : null}
+
+      {tarpanam ? (
+        <View style={[styles.sankalpamSection, { borderTopColor: theme.colors.border }]}>
+          <Pressable
+            onPress={() => setShowTarpanam((prev) => !prev)}
+            style={styles.sankalpamToggleBtn}
+            accessibilityRole="button"
+            accessibilityLabel={t("padukaTarpanamLabel")}
           >
-            {entry.tarpanam.sankalpam}
-          </Text>
+            <Text style={[styles.sankalpamSectionLabel, { color: theme.colors.muted }]}>{t("padukaTarpanamLabel")}</Text>
+            <Text style={[styles.toggleArrow, { color: theme.colors.muted }]}>{showTarpanam ? "▲" : "▼"}</Text>
+          </Pressable>
+          {showTarpanam ? (
+            <View
+              style={[styles.sankalpamBox, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}
+            >
+              <Text
+                style={[
+                  styles.sankalpamBody,
+                  { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
+                ]}
+              >
+                {`${tarpanam.title}: ${tarpanam.sankalpam}`}
+              </Text>
+            </View>
+          ) : null}
         </View>
       ) : null}
-      <Text style={[styles.padukaSource, { color: theme.colors.muted }]}>
-        {entry.day ? `${t("padukaTimesNote")} ` : ""}
-        {t("padukaSourceLabel")}: {PADUKA_PANCHANGAM_SOURCE}, {entry.issue}.
-      </Text>
     </View>
   );
 }
@@ -533,27 +550,8 @@ const styles = StyleSheet.create({
     fontSize: typography.body,
     lineHeight: 24,
   },
-  padukaSection: {
-    marginTop: spacing.xs,
-    paddingTop: spacing.sm,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    gap: spacing.xs,
-  },
-  padukaDetails: {
-    fontSize: typography.small,
-    lineHeight: 20,
-  },
-  padukaTarpanamLabel: {
-    fontSize: typography.small,
-    fontWeight: "700",
-  },
-  padukaTarpanamTitle: {
-    fontSize: typography.small,
-    fontWeight: "600",
-    marginVertical: 2,
-  },
-  padukaSource: {
-    fontSize: 11,
+  padukaHeading: {
+    paddingVertical: spacing.xs,
   },
   unavailable: {
     fontSize: typography.small,

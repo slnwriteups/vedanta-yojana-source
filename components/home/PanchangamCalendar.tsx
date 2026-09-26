@@ -11,11 +11,7 @@ import {
   tithiLabel,
 } from "@/lib/panchangam-labels";
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
-import {
-  PADUKA_PANCHANGAM_SOURCE,
-  padukaPanchangamFor,
-  type PadukaPanchangamEntry,
-} from "@/content-lib/paduka-panchangam.ts";
+import { padukaPanchangamFor, type PadukaPanchangamEntry } from "@/content-lib/paduka-panchangam.ts";
 
 function formatDateKey(d: Date): string {
   const y = d.getFullYear();
@@ -287,37 +283,55 @@ function Row({ label, value }: { label: string; value: string }) {
 
 
 /**
- * The Sri Ranganatha Paduka journal's own printed Panchangam entry for
- * the selected day -- bundled data, so it shows regardless of the live
- * Ahobila fetch's loading/location state above it.
+ * The Sri Ranganatha Paduka Panchangam for the selected day, laid out
+ * exactly like the Ahobila rows above it (festival line, Tithi and
+ * Nakshatram rows, a collapsible sankalpam) and localized through the
+ * same panchangam-labels maps. Bundled data, so it shows regardless of
+ * the live Ahobila fetch's loading/location state.
  */
 function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
   const t = useT();
+  const { language } = useLanguage();
+  const [showTarpanam, setShowTarpanam] = useState<boolean>(true);
+  const { day, tarpanam } = entry;
+  const pakshaTithi = day
+    ? [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ")
+    : "";
+  const nakshatram = day ? nakshatramLabel(day.nakshatram, language) : "";
+
   return (
-    <div className="mt-2 space-y-2 border-t border-[var(--border)] pt-3">
-      <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">{t("padukaPanchangamLabel")}</p>
-      {entry.day ? (
-        <>
-          <Row
-            label={t("padukaTamilDateLabel")}
-            value={`${entry.samvatsara} ${entry.day.tamilMonth} ${entry.day.tamilDay}`}
-          />
-          <p className="text-xs sm:text-sm leading-relaxed text-[var(--foreground)]">{entry.day.details}</p>
-        </>
-      ) : null}
-      {entry.tarpanam ? (
-        <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
-          <p className="text-xs font-semibold text-[var(--accent)]">{t("padukaTarpanamLabel")}</p>
-          <p className="mt-1 text-xs font-semibold text-[var(--foreground)]">{entry.tarpanam.title}</p>
-          <p className="prose-body mt-1 text-xs sm:text-sm leading-relaxed text-[var(--foreground)]">
-            {entry.tarpanam.sankalpam}
-          </p>
+    <div className="mt-4 space-y-2 border-t border-[var(--border)] pt-3">
+      <p className="pb-1 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+        {t("padukaPanchangamLabel")}
+      </p>
+      {day?.festival ? <p className="text-sm font-bold text-[var(--accent)]">{day.festival}</p> : null}
+      {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
+      {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
+
+      {tarpanam ? (
+        <div className="mt-4 border-t border-[var(--border)] pt-3">
+          <div className="flex items-center justify-between pb-2">
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+              {t("padukaTarpanamLabel")}
+            </span>
+            <button
+              type="button"
+              onClick={() => setShowTarpanam((prev) => !prev)}
+              className="text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+              aria-label={t("padukaTarpanamLabel")}
+            >
+              {showTarpanam ? "▲" : "▼"}
+            </button>
+          </div>
+          {showTarpanam ? (
+            <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
+              <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
+                {`${tarpanam.title}: ${tarpanam.sankalpam}`}
+              </p>
+            </div>
+          ) : null}
         </div>
       ) : null}
-      <p className="text-[11px] text-[var(--muted)]">
-        {entry.day ? `${t("padukaTimesNote")} ` : ""}
-        {t("padukaSourceLabel")}: {PADUKA_PANCHANGAM_SOURCE}, {entry.issue}.
-      </p>
     </div>
   );
 }

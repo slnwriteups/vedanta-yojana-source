@@ -5,20 +5,22 @@ import {
   padukaDateKey,
   padukaPanchangamFor,
 } from "../../content-lib/paduka-panchangam.ts";
+import { nakshatramLabel, pakshaLabel, tithiLabel } from "../../lib/panchangam-labels.ts";
 
-test("padukaPanchangamFor returns the journal's day entry for a covered date", () => {
+test("padukaPanchangamFor returns the day's tithi, nakshatram and observances for a covered date", () => {
   const entry = padukaPanchangamFor(new Date(2026, 8, 22));
   assert.ok(entry?.day);
-  assert.equal(entry.samvatsara, "Parābhava");
-  assert.equal(entry.day.tamilMonth, "Puraṭṭāsi");
-  assert.equal(entry.day.tamilDay, 5);
-  assert.match(entry.day.details, /Svāmī Deśikan Tirunakṣatram/);
+  assert.equal(entry.day.paksha, "Shukla Paksha");
+  assert.equal(entry.day.tithi, "Ekadasi");
+  assert.equal(entry.day.nakshatram, "Uttara Ashadha");
+  assert.match(entry.day.festival, /Svami Desikan Tirunakshatram/);
   assert.equal(entry.tarpanam, null);
 });
 
 test("padukaPanchangamFor returns both the day and its tarpanam when a date has both", () => {
   const entry = padukaPanchangamFor(new Date(2026, 9, 10));
   assert.ok(entry?.day && entry.tarpanam);
+  assert.equal(entry.day.tithi, "Amavasya");
   assert.match(entry.tarpanam.sankalpam, /amāvāsyāyām/);
 });
 
@@ -34,18 +36,25 @@ test("padukaPanchangamFor returns null for dates no transcribed issue covers", (
   assert.equal(padukaPanchangamFor(new Date(2026, 9, 25)), null);
 });
 
-test("every issue lists consecutive dates with consecutive Tamil days, and no mangled PDF glyphs", () => {
+test("every day uses the Ahobila calendar's own paksha/tithi/nakshatram vocabulary, so it localizes identically", () => {
+  for (const issue of PADUKA_PANCHANGAM_ISSUES) {
+    for (const day of issue.days) {
+      assert.notEqual(pakshaLabel(day.paksha, "ta"), day.paksha, `${day.date} paksha ${day.paksha}`);
+      assert.notEqual(tithiLabel(day.tithi, "ta"), day.tithi, `${day.date} tithi ${day.tithi}`);
+      assert.notEqual(nakshatramLabel(day.nakshatram, "ta"), day.nakshatram, `${day.date} nakshatram ${day.nakshatram}`);
+    }
+  }
+});
+
+test("every issue lists consecutive dates, with paksha turning only after Pournami/Amavasya", () => {
   for (const issue of PADUKA_PANCHANGAM_ISSUES) {
     for (let i = 1; i < issue.days.length; i++) {
       const prev = issue.days[i - 1];
       const cur = issue.days[i];
       const [y, m, d] = prev.date.split("-").map(Number);
       assert.equal(cur.date, padukaDateKey(new Date(y, m - 1, d + 1)), `gap after ${prev.date}`);
-      if (cur.tamilMonth === prev.tamilMonth) assert.equal(cur.tamilDay, prev.tamilDay + 1, cur.date);
-      else assert.equal(cur.tamilDay, 1, cur.date);
-    }
-    for (const text of [...issue.days.map((d) => d.details), ...issue.tarpanams.map((t) => t.sankalpam)]) {
-      assert.ok(!/ġ|Tiruvṇam/.test(text), text);
+      const turns = prev.tithi === "Pournami" || prev.tithi === "Amavasya";
+      assert.equal(cur.paksha !== prev.paksha, turns, cur.date);
     }
   }
 });
