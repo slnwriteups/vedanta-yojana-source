@@ -154,6 +154,8 @@ const UI_STRINGS = {
     hi: "श्री रंगनाथ पादुका पंचांग",
     te: "శ్రీ రంగనాథ పాదుకా పంచాంగం",
   },
+  /** Labels Ahobila's daily sankalpam inside the Sankalpam box on the days a Tarpana Sankalpam is shown beneath it. */
+  sankalpamDailyLabel: { en: "Daily", ta: "தினசரி", kn: "ದೈನಂದಿನ", hi: "दैनिक", te: "రోజువారీ" },
   padukaTarpanamLabel: {
     en: "Tarpana Sankalpam",
     ta: "தர்ப்பண சங்கல்பம்",

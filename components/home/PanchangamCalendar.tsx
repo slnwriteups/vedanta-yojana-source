@@ -16,6 +16,7 @@ import {
   localizePadukaTarpanam,
   padukaPanchangamFor,
   type PadukaPanchangamEntry,
+  type PadukaTarpanam,
 } from "@/content-lib/paduka-panchangam.ts";
 
 function formatDateKey(d: Date): string {
@@ -242,32 +243,16 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             ) : null}
             {data.location ? <Row label={t("homeCalendarLocationLabel")} value={data.location} /> : null}
 
-            {paduka ? <PadukaPanchangamSection entry={paduka} /> : null}
+            {paduka?.day ? <PadukaPanchangamSection entry={paduka} /> : null}
 
             {/* Sankalpam Section for Selected Day */}
-            {data.sankalpamText ? (
-              <div className="mt-4 border-t border-[var(--border)] pt-3">
-                <div className="flex items-center justify-between pb-2">
-                  <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-                    {t("homeSankalpamLabel")}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={() => setShowSankalpam((prev) => !prev)}
-                    className="text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
-                    aria-label={t("homeSankalpamLabel")}
-                  >
-                    {showSankalpam ? "▲" : "▼"}
-                  </button>
-                </div>
-                {showSankalpam ? (
-                  <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
-                    <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
-                      {localizeSankalpamText(data.sankalpamText, language)}
-                    </p>
-                  </div>
-                ) : null}
-              </div>
+            {data.sankalpamText || paduka?.tarpanam ? (
+              <SankalpamSection
+                ahobilaText={data.sankalpamText || null}
+                tarpanam={paduka?.tarpanam ?? null}
+                show={showSankalpam}
+                onToggle={() => setShowSankalpam((prev) => !prev)}
+              />
             ) : null}
           </div>
         ) : (
@@ -275,7 +260,15 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
         )}
 
         {/* Bundled data: still shown while the Ahobila fetch is loading or unavailable (above the Sankalpam otherwise). */}
-        {paduka && !showAhobila ? <PadukaPanchangamSection entry={paduka} /> : null}
+        {paduka?.day && !showAhobila ? <PadukaPanchangamSection entry={paduka} /> : null}
+        {paduka?.tarpanam && !showAhobila ? (
+          <SankalpamSection
+            ahobilaText={null}
+            tarpanam={paduka.tarpanam}
+            show={showSankalpam}
+            onToggle={() => setShowSankalpam((prev) => !prev)}
+          />
+        ) : null}
       </div>
     </div>
   );
@@ -294,15 +287,15 @@ function Row({ label, value }: { label: string; value: string }) {
 /**
  * The Sri Ranganatha Paduka Panchangam for the selected day, laid out
  * exactly like the Ahobila rows above it (festival line, Tithi and
- * Nakshatram rows, a collapsible sankalpam) and localized through the
- * same panchangam-labels maps. Bundled data, so it shows regardless of
+ * Nakshatram rows) and localized through the same panchangam-labels
+ * maps. Its Tarpana Sankalpam, when the day has one, is shown in the
+ * shared SankalpamSection instead. Bundled data, so it shows regardless of
  * the live Ahobila fetch's loading/location state.
  */
 function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
   const t = useT();
   const { language } = useLanguage();
-  const [showTarpanam, setShowTarpanam] = useState<boolean>(true);
-  const { day, tarpanam } = entry;
+  const { day } = entry;
   const pakshaTithi = day
     ? [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ")
     : "";
@@ -316,24 +309,63 @@ function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
       {day?.festival ? <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p> : null}
       {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
       {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
+    </div>
+  );
+}
 
-      {tarpanam ? (
-        <div className="mt-4 border-t border-[var(--border)] pt-3">
-          <div className="flex items-center justify-between pb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-              {t("padukaTarpanamLabel")}
-            </span>
-            <button
-              type="button"
-              onClick={() => setShowTarpanam((prev) => !prev)}
-              className="text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
-              aria-label={t("padukaTarpanamLabel")}
-            >
-              {showTarpanam ? "▲" : "▼"}
-            </button>
-          </div>
-          {showTarpanam ? (
-            <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
+/**
+ * The single Sankalpam box: Ahobila's live daily sankalpam and, on the
+ * days the Paduka Panchangam prints one, its Tarpana Sankalpam beneath
+ * it. Both are shown exactly as their sources give them; the small
+ * labels only appear when there are two to tell apart.
+ */
+function SankalpamSection({
+  ahobilaText,
+  tarpanam,
+  show,
+  onToggle,
+}: {
+  ahobilaText: string | null;
+  tarpanam: PadukaTarpanam | null;
+  show: boolean;
+  onToggle: () => void;
+}) {
+  const t = useT();
+  const { language } = useLanguage();
+  const both = Boolean(ahobilaText && tarpanam);
+
+  return (
+    <div className="mt-4 border-t border-[var(--border)] pt-3">
+      <div className="flex items-center justify-between pb-2">
+        <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+          {t("homeSankalpamLabel")}
+        </span>
+        <button
+          type="button"
+          onClick={onToggle}
+          className="text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+          aria-label={t("homeSankalpamLabel")}
+        >
+          {show ? "▲" : "▼"}
+        </button>
+      </div>
+      {show ? (
+        <div className="space-y-3 rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
+          {ahobilaText ? (
+            <div>
+              {both ? (
+                <p className="pb-1 text-xs font-semibold text-[var(--accent)]">{t("sankalpamDailyLabel")}</p>
+              ) : null}
+              <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
+                {localizeSankalpamText(ahobilaText, language)}
+              </p>
+            </div>
+          ) : null}
+          {tarpanam ? (
+            <div className={both ? "border-t border-[var(--border)] pt-3" : undefined}>
+              {both ? (
+                <p className="pb-1 text-xs font-semibold text-[var(--accent)]">{t("padukaTarpanamLabel")}</p>
+              ) : null}
               <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
                 {localizePadukaTarpanam(tarpanam, language)}
               </p>
