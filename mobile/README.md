@@ -220,7 +220,9 @@ with the project's production signing credential (`production-apk`
 profile in `eas.json`) and published on
 [`vedanta-yojana-releases`](https://github.com/slnwriteups/vedanta-yojana-releases/releases);
 content and JavaScript changes reach installed apps through EAS Update
-(`npm run update`, production channel, runtime `1.0.3`). Never publish
+(published automatically on every merge to `main` by
+`.github/workflows/publish-ota-update.yml`, production channel, runtime
+`1.0.3`). Never publish
 an APK from the `build-apk.yml` GitHub Actions workflow: it signs with
 the debug key. See `docs/DEVELOPMENT.md` (Over-the-air updates,
 Deployment architecture) and `docs/APK-VERIFICATION.md`. iOS is not
