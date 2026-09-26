@@ -2,6 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   PADUKA_PANCHANGAM_ISSUES,
+  isKnownPadukaObservance,
+  localizePadukaFestival,
+  localizePadukaTarpanam,
   padukaDateKey,
   padukaPanchangamFor,
 } from "../../content-lib/paduka-panchangam.ts";
@@ -55,6 +58,47 @@ test("every issue lists consecutive dates, with paksha turning only after Pourna
       assert.equal(cur.date, padukaDateKey(new Date(y, m - 1, d + 1)), `gap after ${prev.date}`);
       const turns = prev.tithi === "Pournami" || prev.tithi === "Amavasya";
       assert.equal(cur.paksha !== prev.paksha, turns, cur.date);
+    }
+  }
+});
+
+const LANGUAGES = ["ta", "kn", "hi", "te"] as const;
+/** Each language's own Unicode block, so "translated" means actually written in that script. */
+const SCRIPT: Record<(typeof LANGUAGES)[number], RegExp> = {
+  ta: /[\u0B80-\u0BFF]/,
+  kn: /[\u0C80-\u0CFF]/,
+  hi: /[\u0900-\u097F]/,
+  te: /[\u0C00-\u0C7F]/,
+};
+
+test("every observance name has a translation in all four languages", () => {
+  for (const issue of PADUKA_PANCHANGAM_ISSUES) {
+    for (const day of issue.days) {
+      if (!day.festival) continue;
+      for (const name of day.festival.split(", ")) {
+        assert.ok(isKnownPadukaObservance(name), `${day.date}: no translations for "${name}"`);
+      }
+      for (const lang of LANGUAGES) {
+        const localized = localizePadukaFestival(day.festival, lang);
+        assert.ok(!/[A-Za-z]/.test(localized) && SCRIPT[lang].test(localized), `${day.date} ${lang}: ${localized}`);
+      }
+    }
+  }
+});
+
+test("localizePadukaFestival leaves English untouched", () => {
+  assert.equal(localizePadukaFestival("Vijaya Dasami, Bhudattazhvar Tirunakshatram", null), "Vijaya Dasami, Bhudattazhvar Tirunakshatram");
+  assert.equal(localizePadukaFestival("Vijaya Dasami, Bhudattazhvar Tirunakshatram", "ta"), "விஜய தசமி, பூதத்தாழ்வார் திருநக்ஷத்திரம்");
+});
+
+test("every tarpana sankalpam is written in each language's own script", () => {
+  for (const issue of PADUKA_PANCHANGAM_ISSUES) {
+    for (const tarpanam of issue.tarpanams) {
+      assert.equal(localizePadukaTarpanam(tarpanam, null), `${tarpanam.title}: ${tarpanam.sankalpam}`);
+      for (const lang of LANGUAGES) {
+        const text = localizePadukaTarpanam(tarpanam, lang);
+        assert.ok(!/[A-Za-z]/.test(text) && SCRIPT[lang].test(text), `${tarpanam.date} ${lang}: ${text}`);
+      }
     }
   }
 });

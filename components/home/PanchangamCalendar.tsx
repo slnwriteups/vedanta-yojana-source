@@ -11,7 +11,12 @@ import {
   tithiLabel,
 } from "@/lib/panchangam-labels";
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
-import { padukaPanchangamFor, type PadukaPanchangamEntry } from "@/content-lib/paduka-panchangam.ts";
+import {
+  localizePadukaFestival,
+  localizePadukaTarpanam,
+  padukaPanchangamFor,
+  type PadukaPanchangamEntry,
+} from "@/content-lib/paduka-panchangam.ts";
 
 function formatDateKey(d: Date): string {
   const y = d.getFullYear();
@@ -304,7 +309,7 @@ function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
       <p className="pb-1 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
         {t("padukaPanchangamLabel")}
       </p>
-      {day?.festival ? <p className="text-sm font-bold text-[var(--accent)]">{day.festival}</p> : null}
+      {day?.festival ? <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p> : null}
       {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
       {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
 
@@ -326,7 +331,7 @@ function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
           {showTarpanam ? (
             <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
               <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
-                {`${tarpanam.title}: ${tarpanam.sankalpam}`}
+                {localizePadukaTarpanam(tarpanam, language)}
               </p>
             </div>
           ) : null}

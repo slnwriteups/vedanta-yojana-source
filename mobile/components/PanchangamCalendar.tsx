@@ -12,7 +12,12 @@ import {
   tithiLabel,
 } from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
-import { padukaPanchangamFor, type PadukaPanchangamEntry } from "../../content-lib/paduka-panchangam.ts";
+import {
+  localizePadukaFestival,
+  localizePadukaTarpanam,
+  padukaPanchangamFor,
+  type PadukaPanchangamEntry,
+} from "../../content-lib/paduka-panchangam.ts";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -359,7 +364,7 @@ function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
       <Text style={[styles.sankalpamSectionLabel, styles.padukaHeading, { color: theme.colors.muted }]}>
         {t("padukaPanchangamLabel")}
       </Text>
-      {day?.festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{day.festival}</Text> : null}
+      {day?.festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text> : null}
       {pakshaTithi ? (
         <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />
       ) : null}
@@ -393,7 +398,7 @@ function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
                   { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
                 ]}
               >
-                {`${tarpanam.title}: ${tarpanam.sankalpam}`}
+                {localizePadukaTarpanam(tarpanam, language)}
               </Text>
             </View>
           ) : null}
