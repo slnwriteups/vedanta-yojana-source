@@ -114,6 +114,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
+  const showAhobila = !isLoading && hasData;
 
   return (
     <div className="space-y-3">
@@ -241,6 +242,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             ) : null}
             {data.location ? <Row label={t("homeCalendarLocationLabel")} value={data.location} /> : null}
 
+            {paduka ? <PadukaPanchangamSection entry={paduka} /> : null}
+
             {/* Sankalpam Section for Selected Day */}
             {data.sankalpamText ? (
               <div className="mt-4 border-t border-[var(--border)] pt-3">
@@ -271,7 +274,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           <p className="py-2 text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
         )}
 
-        {paduka ? <PadukaPanchangamSection entry={paduka} /> : null}
+        {/* Bundled data: still shown while the Ahobila fetch is loading or unavailable (above the Sankalpam otherwise). */}
+        {paduka && !showAhobila ? <PadukaPanchangamSection entry={paduka} /> : null}
       </div>
     </div>
   );
