@@ -12,6 +12,11 @@ import {
   tithiLabel,
 } from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
+import {
+  PADUKA_PANCHANGAM_SOURCE,
+  padukaPanchangamFor,
+  type PadukaPanchangamEntry,
+} from "../../content-lib/paduka-panchangam.ts";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -95,6 +100,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     : "";
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
+  const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
 
   return (
     <View style={styles.section}>
@@ -318,6 +324,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
         ) : (
           <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
         )}
+
+        {paduka ? <PadukaPanchangamSection entry={paduka} /> : null}
       </View>
     </View>
   );
@@ -328,6 +336,52 @@ function Row({ label, value, muted, fg }: { label: string; value: string; muted:
     <View style={styles.row}>
       <Text style={[styles.rowLabel, { color: muted }]}>{label}</Text>
       <Text style={[styles.rowValue, { color: fg }]}>{value}</Text>
+    </View>
+  );
+}
+
+/**
+ * The Sri Ranganatha Paduka journal's own printed Panchangam entry for
+ * the selected day -- bundled data, so it shows regardless of the live
+ * Ahobila fetch's loading/location state above it.
+ */
+function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
+  const theme = useTheme();
+  const t = useT();
+  return (
+    <View style={[styles.padukaSection, { borderTopColor: theme.colors.border }]}>
+      <Text style={[styles.sankalpamSectionLabel, { color: theme.colors.muted }]}>{t("padukaPanchangamLabel")}</Text>
+      {entry.day ? (
+        <>
+          <Row
+            label={t("padukaTamilDateLabel")}
+            value={`${entry.samvatsara} ${entry.day.tamilMonth} ${entry.day.tamilDay}`}
+            muted={theme.colors.muted}
+            fg={theme.colors.foreground}
+          />
+          <Text style={[styles.padukaDetails, { color: theme.colors.foreground }]}>{entry.day.details}</Text>
+        </>
+      ) : null}
+      {entry.tarpanam ? (
+        <View
+          style={[styles.sankalpamBox, { backgroundColor: theme.colors.background, borderColor: theme.colors.border }]}
+        >
+          <Text style={[styles.padukaTarpanamLabel, { color: theme.colors.accent }]}>{t("padukaTarpanamLabel")}</Text>
+          <Text style={[styles.padukaTarpanamTitle, { color: theme.colors.foreground }]}>{entry.tarpanam.title}</Text>
+          <Text
+            style={[
+              styles.sankalpamBody,
+              { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
+            ]}
+          >
+            {entry.tarpanam.sankalpam}
+          </Text>
+        </View>
+      ) : null}
+      <Text style={[styles.padukaSource, { color: theme.colors.muted }]}>
+        {entry.day ? `${t("padukaTimesNote")} ` : ""}
+        {t("padukaSourceLabel")}: {PADUKA_PANCHANGAM_SOURCE}, {entry.issue}.
+      </Text>
     </View>
   );
 }
@@ -478,6 +532,28 @@ const styles = StyleSheet.create({
   sankalpamBody: {
     fontSize: typography.body,
     lineHeight: 24,
+  },
+  padukaSection: {
+    marginTop: spacing.xs,
+    paddingTop: spacing.sm,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    gap: spacing.xs,
+  },
+  padukaDetails: {
+    fontSize: typography.small,
+    lineHeight: 20,
+  },
+  padukaTarpanamLabel: {
+    fontSize: typography.small,
+    fontWeight: "700",
+  },
+  padukaTarpanamTitle: {
+    fontSize: typography.small,
+    fontWeight: "600",
+    marginVertical: 2,
+  },
+  padukaSource: {
+    fontSize: 11,
   },
   unavailable: {
     fontSize: typography.small,

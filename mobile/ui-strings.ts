@@ -146,6 +146,30 @@ const UI_STRINGS = {
   calendarTodayButton: { en: "Today", ta: "இன்று", kn: "ಇಂದು", hi: "आज", te: "నేడు" },
   calendarPastPassed: { en: "Past", ta: "முடிந்தது", kn: "ಕಳೆದ", hi: "व्यतीत", te: "గడచిన" },
   calendarUpcoming: { en: "Upcoming", ta: "வரவிருக்கும்", kn: "ಮುಂಬರುವ", hi: "आगामी", te: "రాబోయే" },
+  /** Heading for the Sri Ranganatha Paduka journal's own Panchangam entry shown under the selected day (content-lib/paduka-panchangam.ts). */
+  padukaPanchangamLabel: {
+    en: "Sri Ranganatha Paduka Panchangam",
+    ta: "ஸ்ரீ ரங்கநாத பாதுகா பஞ்சாங்கம்",
+    kn: "ಶ್ರೀ ರಂಗನಾಥ ಪಾದುಕಾ ಪಂಚಾಂಗ",
+    hi: "श्री रंगनाथ पादुका पंचांग",
+    te: "శ్రీ రంగనాథ పాదుకా పంచాంగం",
+  },
+  padukaTamilDateLabel: { en: "Tamil date", ta: "தமிழ் தேதி", kn: "ತಮಿಳು ದಿನಾಂಕ", hi: "तमिल तिथि", te: "తమిళ తేదీ" },
+  padukaTarpanamLabel: {
+    en: "Tarpana Sankalpam",
+    ta: "தர்ப்பண சங்கல்பம்",
+    kn: "ತರ್ಪಣ ಸಂಕಲ್ಪ",
+    hi: "तर्पण संकल्प",
+    te: "తర్పణ సంకల్పం",
+  },
+  padukaTimesNote: {
+    en: "Times are nazhigai after sunrise, as printed.",
+    ta: "நேரங்கள் சூரிய உதயத்திலிருந்து நாழிகையில், அச்சிட்டபடி.",
+    kn: "ಸಮಯಗಳು ಸೂರ್ಯೋದಯದಿಂದ ಘಟಿಕೆಗಳಲ್ಲಿ, ಮುದ್ರಿಸಿದಂತೆ.",
+    hi: "समय सूर्योदय से घटी में, जैसा मुद्रित है।",
+    te: "సమయాలు సూర్యోదయం నుండి ఘడియలలో, ముద్రించినట్లు.",
+  },
+  padukaSourceLabel: { en: "Source", ta: "மூலம்", kn: "ಮೂಲ", hi: "स्रोत", te: "మూలం" },
   calendarLoading: {
     en: "Loading Panchangam...",
     ta: "பஞ்சாங்கம் ஏற்றப்படுகிறது...",

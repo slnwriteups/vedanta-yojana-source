@@ -11,6 +11,11 @@ import {
   tithiLabel,
 } from "@/lib/panchangam-labels";
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
+import {
+  PADUKA_PANCHANGAM_SOURCE,
+  padukaPanchangamFor,
+  type PadukaPanchangamEntry,
+} from "@/content-lib/paduka-panchangam.ts";
 
 function formatDateKey(d: Date): string {
   const y = d.getFullYear();
@@ -107,6 +112,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     : "";
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
+  const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
 
   return (
     <div className="space-y-3">
@@ -263,6 +269,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
         ) : (
           <p className="py-2 text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
         )}
+
+        {paduka ? <PadukaPanchangamSection entry={paduka} /> : null}
       </div>
     </div>
   );
@@ -277,3 +285,39 @@ function Row({ label, value }: { label: string; value: string }) {
   );
 }
 
+
+/**
+ * The Sri Ranganatha Paduka journal's own printed Panchangam entry for
+ * the selected day -- bundled data, so it shows regardless of the live
+ * Ahobila fetch's loading/location state above it.
+ */
+function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
+  const t = useT();
+  return (
+    <div className="mt-2 space-y-2 border-t border-[var(--border)] pt-3">
+      <p className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">{t("padukaPanchangamLabel")}</p>
+      {entry.day ? (
+        <>
+          <Row
+            label={t("padukaTamilDateLabel")}
+            value={`${entry.samvatsara} ${entry.day.tamilMonth} ${entry.day.tamilDay}`}
+          />
+          <p className="text-xs sm:text-sm leading-relaxed text-[var(--foreground)]">{entry.day.details}</p>
+        </>
+      ) : null}
+      {entry.tarpanam ? (
+        <div className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
+          <p className="text-xs font-semibold text-[var(--accent)]">{t("padukaTarpanamLabel")}</p>
+          <p className="mt-1 text-xs font-semibold text-[var(--foreground)]">{entry.tarpanam.title}</p>
+          <p className="prose-body mt-1 text-xs sm:text-sm leading-relaxed text-[var(--foreground)]">
+            {entry.tarpanam.sankalpam}
+          </p>
+        </div>
+      ) : null}
+      <p className="text-[11px] text-[var(--muted)]">
+        {entry.day ? `${t("padukaTimesNote")} ` : ""}
+        {t("padukaSourceLabel")}: {PADUKA_PANCHANGAM_SOURCE}, {entry.issue}.
+      </p>
+    </div>
+  );
+}
