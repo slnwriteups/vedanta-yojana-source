@@ -221,7 +221,10 @@ test("the website ping sends no title, query string or identifier, and only from
   assert.ok(code.includes('const query = visit ? `v=1&s=${encodeURIComponent(sourceHost())}` : "v=0";'));
   assert.ok(code.includes("return new URL(document.referrer).hostname;"));
   assert.ok(!/sendBeacon[^;]*document\.referrer/.test(code), "the full referrer must not be sent");
-  assert.ok(code.includes("const page = `&p=${encodeURIComponent(pathname)}`;"));
+  assert.ok(code.includes("const page = `&p=${encodeURIComponent(pathname)}&l=${language ?? \"en\"}`;"));
+  // The saved language loads after first paint; reporting before it has
+  // would record every visit's first page as English.
+  assert.ok(code.includes("if (!ready || reported.current === pathname) return;"));
   for (const term of ["location.search", "location.href", "searchParams"]) {
     assert.ok(!code.includes(term), `the ping must not send ${term}`);
   }
@@ -230,7 +233,10 @@ test("the website ping sends no title, query string or identifier, and only from
   }
   // Dev servers, previews and forks never report into this site's numbers.
   assert.ok(code.includes('location.hostname !== PRODUCTION_HOST'));
-  assert.ok(read("app/layout.tsx").includes("<SitePing />"));
+  // Inside AppProviders, so the language context is available to it.
+  const layout = read("app/layout.tsx");
+  assert.ok(layout.indexOf("<SitePing />") > layout.indexOf("<AppProviders>"));
+  assert.ok(layout.indexOf("<SitePing />") < layout.indexOf("</AppProviders>"));
 });
 
 test("the ping is answered by the Worker itself and never forwarded to the origin", () => {
@@ -294,4 +300,13 @@ test("the dashboard lists top pages from the stored path, excluding views record
   assert.ok(worker.includes("SELECT blob7 AS page"));
   assert.ok(worker.includes("AND blob7 != ''"));
   assert.ok(worker.includes('<div id="pages"></div>'));
+});
+
+test("the dashboard lists languages from the stored code, and the Worker keeps only plain codes", () => {
+  const dashboard = read("cloudflare/analytics-dashboard/worker.js");
+  const worker = read("cloudflare/request-analytics/worker.js");
+
+  assert.ok(dashboard.includes("SELECT blob8 AS language"));
+  assert.ok(dashboard.includes("AND blob8 != ''"));
+  assert.ok(worker.includes("/^[a-z]{2,3}$/.test(code)"));
 });

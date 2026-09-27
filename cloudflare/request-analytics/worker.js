@@ -114,6 +114,12 @@ function pagePath(url) {
   return /^\/[\p{L}\p{M}\p{N}\/_.~%-]{0,200}$/u.test(path) ? path : "(other)";
 }
 
+/** The site language a view was in ("en", "ta", …), or "" if not a plain code. */
+function pageLanguage(url) {
+  const code = url.searchParams.get("l") ?? "";
+  return /^[a-z]{2,3}$/.test(code) ? code : "";
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -126,8 +132,8 @@ export default {
             // Same blob layout as the manifest counts, with "web" in the
             // path slot so every existing per-path query is unaffected.
             // blob6: the visit's source (see visitSource). blob7: the page
-            // viewed (see pagePath).
-            blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url), pagePath(url)],
+            // viewed (see pagePath). blob8: its language (see pageLanguage).
+            blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url), pagePath(url), pageLanguage(url)],
             // double1: one page view. double2: 1 when that view began a
             // visit, so SUM(double2 * _sample_interval) counts visits.
             doubles: [1, url.searchParams.get("v") === "1" ? 1 : 0],
