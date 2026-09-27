@@ -100,7 +100,7 @@ async function loadData(env, days) {
   const since = hourly ? "timestamp > NOW() - INTERVAL '24' HOUR" : `timestamp > NOW() - INTERVAL '${days}' DAY`;
   const bucket = hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY";
   try {
-    const [daily, places, sources, downloads] = await Promise.all([
+    const [daily, places, sources, pages, downloads] = await Promise.all([
       query(
         env,
         `SELECT toStartOfInterval(timestamp, ${bucket}) AS day, blob2 AS kind,
@@ -123,9 +123,17 @@ async function loadData(env, days) {
          FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND double2 = 1 AND blob6 != ''
          GROUP BY source ORDER BY visits DESC LIMIT 500`,
       ),
+      // Views per page, and how many visits began on each. Blank blob7 is
+      // a view recorded before pages were, and is left out.
+      query(
+        env,
+        `SELECT blob7 AS page, SUM(_sample_interval) AS views, SUM(_sample_interval * double2) AS entries
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob7 != ''
+         GROUP BY page ORDER BY views DESC LIMIT 100`,
+      ),
       loadDownloads(),
     ]);
-    return { days, hourly, daily, places, sources, downloads };
+    return { days, hourly, daily, places, sources, pages, downloads };
   } catch (error) {
     return { error: `Cloudflare returned an error: ${error.message}` };
   }
@@ -236,6 +244,9 @@ td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; width: 1%; w
 .barcell { position: relative; }
 .barcell span { position: absolute; left: 0; top: 4px; bottom: 4px; background: var(--bar); border-radius: 0 4px 4px 0; opacity: .45; }
 .barcell div { position: relative; }
+.pagecell div { overflow-wrap: anywhere; }
+.pagecell a { color: var(--text); text-decoration: none; }
+.pagecell a:hover { text-decoration: underline; }
 .empty, .error { color: var(--text-2); padding: 18px 4px; }
 .error { color: var(--text); }
 footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
@@ -278,6 +289,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <h2>Where visitors come from</h2>
       <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
       <div id="sources"></div>
+    </div>
+    <div class="card">
+      <h2>Top pages</h2>
+      <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
+      <div id="pages"></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -368,6 +384,42 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       tr.appendChild(cell);
       tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.visits))));
       tr.appendChild(el("td", { class: "n" }, Math.round((r.visits / total) * 100) + "%"));
+      table.appendChild(tr);
+    });
+    box.appendChild(table);
+  }
+
+  function pageTable(rows) {
+    var list = rows.map(function (r) { return { page: String(r.page), views: Number(r.views), entries: Number(r.entries) }; })
+      .filter(function (r) { return r.views > 0; })
+      .sort(function (a, b) { return b.views - a.views; }).slice(0, 25);
+    var box = document.getElementById("pages");
+    box.textContent = "";
+    if (!list.length) { box.appendChild(el("div", { class: "empty" }, "No page views recorded in this range yet.")); return; }
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "Page"));
+    head.appendChild(el("th", { class: "n" }, "Views"));
+    head.appendChild(el("th", { class: "n" }, "Visits began here"));
+    table.appendChild(head);
+    list.forEach(function (r) {
+      var tr = el("tr");
+      var cell = el("td", { class: "place barcell pagecell" });
+      var bar = el("span");
+      bar.style.width = Math.max(2, (r.views / list[0].views) * 100) + "%";
+      cell.appendChild(bar);
+      var label = el("div");
+      if (r.page.charAt(0) === "/") {
+        var link = el("a", { href: "https://vedantayojana.org" + r.page, target: "_blank", rel: "noopener noreferrer" },
+          r.page === "/" ? "Home" : r.page);
+        label.appendChild(link);
+      } else {
+        label.textContent = "Other (unusual address)";
+      }
+      cell.appendChild(label);
+      tr.appendChild(cell);
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.views))));
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.entries))));
       table.appendChild(tr);
     });
     box.appendChild(table);
@@ -498,6 +550,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         : "No daily download figures in this range yet."));
     }
     sourceTable(d.sources || []);
+    pageTable(d.pages || []);
     placeTable("countries", Object.values(countries));
     placeTable("cities", Object.values(cities));
   }

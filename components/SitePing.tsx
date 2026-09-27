@@ -48,11 +48,13 @@ function sourceHost(): string {
 
 /**
  * Counts one page view per route, including client-side navigations the
- * static export performs without a full page load. It sends nothing but
- * `v=0`, or for a view that began a visit `v=1` plus `s=`, the referring
- * site's host name: no path, no title, no identifier, and it reads and
- * stores nothing on the device. Country and
- * approximate city are resolved by Cloudflare at the edge, not here.
+ * static export performs without a full page load. It sends the page's
+ * path (`p=`, never its query string, so nothing typed into search is
+ * sent) and `v=0`, or for a view that began a visit `v=1` plus `s=`, the
+ * referring site's host name. No title, no identifier, and it reads and
+ * stores nothing on the device, so page counts are totals per page, never
+ * one reader's path through the site. Country and approximate city are
+ * resolved by Cloudflare at the edge, not here.
  */
 export function SitePing() {
   const pathname = usePathname();
@@ -64,7 +66,8 @@ export function SitePing() {
     first.current = false;
     try {
       const query = visit ? `v=1&s=${encodeURIComponent(sourceHost())}` : "v=0";
-      navigator.sendBeacon?.(`${PING_PATH}?${query}`);
+      const page = `&p=${encodeURIComponent(pathname)}`;
+      navigator.sendBeacon?.(`${PING_PATH}?${query}${page}`);
     } catch {
       // Measurement must never be able to break the page it measures.
     }

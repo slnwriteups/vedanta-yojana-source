@@ -210,17 +210,21 @@ test("the Worker deploy workflow writes nothing back to the repository", () => {
   assert.ok(!/CLOUDFLARE_API_TOKEN:\s*[A-Za-z0-9_-]{20,}/.test(source), "no literal token");
 });
 
-test("the website ping sends no page, title or identifier, and only from the production host", () => {
+test("the website ping sends no title, query string or identifier, and only from the production host", () => {
   const source = read("components/SitePing.tsx");
   const code = source.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/.*$/gm, "");
 
-  // The ping's whole payload is the visit flag and, for a visit, the
-  // referring site's host name -- never the full referring address. The
-  // pathname is read only to re-run the effect on navigation, never sent.
+  // The ping's whole payload is the page's path, the visit flag and, for
+  // a visit, the referring site's host name -- never the full referring
+  // address. The path comes from usePathname, which has no query string,
+  // so nothing typed into site search is ever sent.
   assert.ok(code.includes('const query = visit ? `v=1&s=${encodeURIComponent(sourceHost())}` : "v=0";'));
   assert.ok(code.includes("return new URL(document.referrer).hostname;"));
   assert.ok(!/sendBeacon[^;]*document\.referrer/.test(code), "the full referrer must not be sent");
-  assert.ok(!/sendBeacon[^;]*pathname/.test(code), "the page path must not be sent");
+  assert.ok(code.includes("const page = `&p=${encodeURIComponent(pathname)}`;"));
+  for (const term of ["location.search", "location.href", "searchParams"]) {
+    assert.ok(!code.includes(term), `the ping must not send ${term}`);
+  }
   for (const term of ["document.title", "localStorage", "sessionStorage", "document.cookie", "indexedDB"]) {
     assert.ok(!code.includes(term), `the ping must not use ${term}`);
   }
@@ -238,6 +242,8 @@ test("the ping is answered by the Worker itself and never forwarded to the origi
   // `/_ping` pattern lets every real ping fall through to the origin.
   assert.ok(config.includes('pattern = "vedantayojana.org/_ping*"'));
   assert.ok(worker.includes("return new Response(null, { status: 204 });"));
+  // The page is stored only if it is a plain path.
+  assert.ok(worker.includes("function pagePath(url)"));
   // The source is stored only if it is a plain host name.
   assert.ok(worker.includes("/^[a-z0-9.-]{1,100}$/.test(host)"));
 });
@@ -280,4 +286,12 @@ test("the dashboard offers a 24-hour view bucketed by hour", () => {
   assert.ok(worker.includes(`"timestamp > NOW() - INTERVAL '24' HOUR"`));
   assert.ok(worker.includes(`hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY"`));
   assert.ok(worker.includes('<button data-days="1">24 hours</button>'));
+});
+
+test("the dashboard lists top pages from the stored path, excluding views recorded before paths were", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  assert.ok(worker.includes("SELECT blob7 AS page"));
+  assert.ok(worker.includes("AND blob7 != ''"));
+  assert.ok(worker.includes('<div id="pages"></div>'));
 });
