@@ -272,3 +272,12 @@ test("the dashboard reads download history from the committed snapshot file, wit
   // A download-history failure blanks one chart, never the whole dashboard.
   assert.ok(fn.includes("return null;"));
 });
+
+test("the dashboard offers a 24-hour view bucketed by hour", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  assert.ok(worker.includes("const RANGES = new Set([1, 7, 30, 90]);"));
+  assert.ok(worker.includes(`"timestamp > NOW() - INTERVAL '24' HOUR"`));
+  assert.ok(worker.includes(`hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY"`));
+  assert.ok(worker.includes('<button data-days="1">24 hours</button>'));
+});
