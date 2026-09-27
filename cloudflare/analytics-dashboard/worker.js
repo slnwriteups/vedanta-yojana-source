@@ -100,7 +100,7 @@ async function loadData(env, days) {
   const since = hourly ? "timestamp > NOW() - INTERVAL '24' HOUR" : `timestamp > NOW() - INTERVAL '${days}' DAY`;
   const bucket = hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY";
   try {
-    const [daily, places, sources, pages, downloads] = await Promise.all([
+    const [daily, places, sources, pages, languages, downloads] = await Promise.all([
       query(
         env,
         `SELECT toStartOfInterval(timestamp, ${bucket}) AS day, blob2 AS kind,
@@ -131,9 +131,17 @@ async function loadData(env, days) {
          FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob7 != ''
          GROUP BY page ORDER BY views DESC LIMIT 100`,
       ),
+      // Views by the language the site was read in. Blank blob8 is a view
+      // recorded before languages were, and is left out.
+      query(
+        env,
+        `SELECT blob8 AS language, SUM(_sample_interval) AS views
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob8 != ''
+         GROUP BY language ORDER BY views DESC LIMIT 50`,
+      ),
       loadDownloads(),
     ]);
-    return { days, hourly, daily, places, sources, pages, downloads };
+    return { days, hourly, daily, places, sources, pages, languages, downloads };
   } catch (error) {
     return { error: `Cloudflare returned an error: ${error.message}` };
   }
@@ -291,6 +299,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <div id="sources"></div>
     </div>
     <div class="card">
+      <h2>Languages</h2>
+      <p class="sub">The language readers had the website set to for each page they opened.</p>
+      <div id="languages"></div>
+    </div>
+    <div class="card">
       <h2>Top pages</h2>
       <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
       <div id="pages"></div>
@@ -384,6 +397,41 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       tr.appendChild(cell);
       tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.visits))));
       tr.appendChild(el("td", { class: "n" }, Math.round((r.visits / total) * 100) + "%"));
+      table.appendChild(tr);
+    });
+    box.appendChild(table);
+  }
+
+  var langNames;
+  try { langNames = new Intl.DisplayNames(["en"], { type: "language" }); } catch (e) { langNames = null; }
+  function languageName(code) {
+    try { return (langNames && langNames.of(code)) || code; } catch (e) { return code; }
+  }
+
+  function languageTable(rows) {
+    var list = rows.map(function (r) { return { name: languageName(String(r.language)), views: Number(r.views) }; })
+      .filter(function (r) { return r.views > 0; })
+      .sort(function (a, b) { return b.views - a.views; });
+    var box = document.getElementById("languages");
+    box.textContent = "";
+    if (!list.length) { box.appendChild(el("div", { class: "empty" }, "No languages recorded in this range yet.")); return; }
+    var total = list.reduce(function (a, r) { return a + r.views; }, 0);
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "Language"));
+    head.appendChild(el("th", { class: "n" }, "Page views"));
+    head.appendChild(el("th", { class: "n" }, "Share"));
+    table.appendChild(head);
+    list.forEach(function (r) {
+      var tr = el("tr");
+      var cell = el("td", { class: "place barcell" });
+      var bar = el("span");
+      bar.style.width = Math.max(2, (r.views / list[0].views) * 100) + "%";
+      cell.appendChild(bar);
+      cell.appendChild(el("div", {}, r.name));
+      tr.appendChild(cell);
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.views))));
+      tr.appendChild(el("td", { class: "n" }, Math.round((r.views / total) * 100) + "%"));
       table.appendChild(tr);
     });
     box.appendChild(table);
@@ -550,6 +598,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         : "No daily download figures in this range yet."));
     }
     sourceTable(d.sources || []);
+    languageTable(d.languages || []);
     pageTable(d.pages || []);
     placeTable("countries", Object.values(countries));
     placeTable("cities", Object.values(cities));

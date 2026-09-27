@@ -115,6 +115,14 @@ export default function RootLayout({
     <html lang="en" className={notoSansDevanagari.variable}>
       <body className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)] antialiased">
         <AppProviders>
+          {/*
+            Page views and visits by country and approximate city, source,
+            page and language, for the private dashboard
+            (cloudflare/analytics-dashboard/). Inside AppProviders so it can
+            read the reader's language; reports only from the production
+            host -- see components/SitePing.tsx.
+          */}
+          <SitePing />
           <WelcomeGate imageHref={resolveImageHref(WELCOME_IMAGE_UUID)} audioHref={`${BASE_PATH}/audio/vy-welcome.mp3`}>
             <OnboardingGate>
               <a href="#main-content" className="skip-link">
@@ -141,12 +149,6 @@ export default function RootLayout({
             data-cf-beacon={JSON.stringify({ token: CF_WEB_ANALYTICS_TOKEN })}
           />
         ) : null}
-        {/*
-          Page views and visits by country and approximate city, for the
-          private dashboard (cloudflare/analytics-dashboard/). Reports
-          only from the production host; see components/SitePing.tsx.
-        */}
-        <SitePing />
       </body>
     </html>
   );
