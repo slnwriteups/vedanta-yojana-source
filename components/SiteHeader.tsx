@@ -54,17 +54,6 @@ export function SiteHeader() {
 
   return (
     <header className="border-b border-[var(--border)] bg-[var(--background)]">
-      <aside aria-label="Announcement" className="bg-[var(--accent)] text-[#fffaf5] px-4 py-2 text-center text-xs sm:text-sm font-medium">
-        <span>📢 Attention v13 &amp; v14 App Users: Please update to v1.0.2 for full Telugu support, reordered Spotlight, and permanent automatic OTA updates. </span>
-        <a
-          href={RELEASES_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="underline font-semibold ml-1 hover:opacity-90 inline-flex items-center gap-0.5"
-        >
-          Download / Update APK &rarr;
-        </a>
-      </aside>
       <div className="site-container flex items-center justify-between gap-4 py-4">
         <span className="flex items-center gap-2">
           <img
