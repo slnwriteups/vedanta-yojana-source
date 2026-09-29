@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAudioPlayer } from "expo-audio";
+import { setAudioModeAsync, useAudioPlayer } from "expo-audio";
 import * as Haptics from "expo-haptics";
 import { spacing, typography, useTheme } from "../theme";
 import welcomeImage from "../../public/images/a0635841-903d-4856-90a8-eca5becb3c5e.png";
@@ -25,7 +25,30 @@ export function WelcomeScreen({ onDone }: { onDone: () => void }) {
   const player = useAudioPlayer(welcomeAudio);
 
   useEffect(() => {
-    player.play();
+    // iOS mutes the default audio session with the Ring/Silent switch;
+    // the welcome audio should play regardless (mixing with, not stopping,
+    // any other audio). Android already plays in silent mode by default,
+    // so it's left exactly as it was.
+    if (Platform.OS !== "ios") {
+      player.play();
+      return;
+    }
+    let cancelled = false;
+    setAudioModeAsync({ playsInSilentMode: true })
+      .catch(() => {
+        // Best-effort: if the mode can't be set, still try to play.
+      })
+      .then(() => {
+        if (cancelled) return;
+        try {
+          player.play();
+        } catch {
+          // The player may already be released if the screen was dismissed.
+        }
+      });
+    return () => {
+      cancelled = true;
+    };
   }, [player]);
 
   function begin() {
