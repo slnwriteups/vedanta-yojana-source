@@ -12,10 +12,11 @@ import {
 } from "@/lib/panchangam-labels";
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import {
+  calendarFestivalLine,
   localizePadukaFestival,
   localizePadukaTarpanam,
   padukaPanchangamFor,
-  type PadukaPanchangamEntry,
+  type PadukaPanchangamDay,
   type PadukaTarpanam,
 } from "@/content-lib/paduka-panchangam.ts";
 
@@ -116,6 +117,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showAhobila = !isLoading && hasData;
+  const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
 
   return (
     <div className="space-y-3">
@@ -229,9 +231,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </div>
         ) : hasData && data ? (
           <div className="space-y-2 pt-1">
-            {data.festival ? (
-              <p className="text-sm font-bold text-[var(--accent)]">{data.festival}</p>
-            ) : null}
+            {festival ? <p className="text-sm font-bold text-[var(--accent)]">{festival}</p> : null}
 
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
@@ -242,8 +242,6 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               />
             ) : null}
             {data.location ? <Row label={t("homeCalendarLocationLabel")} value={data.location} /> : null}
-
-            {paduka?.day ? <PadukaPanchangamSection entry={paduka} /> : null}
 
             {/* Sankalpam Section for Selected Day */}
             {data.sankalpamText || paduka?.tarpanam ? (
@@ -259,8 +257,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           <p className="py-2 text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
         )}
 
-        {/* Bundled data: still shown while the Ahobila fetch is loading or unavailable (above the Sankalpam otherwise). */}
-        {paduka?.day && !showAhobila ? <PadukaPanchangamSection entry={paduka} /> : null}
+        {/* Bundled data: stands in for the Ahobila rows while that fetch is loading or unavailable. */}
+        {paduka?.day && !showAhobila ? <PadukaFallbackRows day={paduka.day} /> : null}
         {paduka?.tarpanam && !showAhobila ? (
           <SankalpamSection
             ahobilaText={null}
@@ -285,28 +283,20 @@ function Row({ label, value }: { label: string; value: string }) {
 
 
 /**
- * The Sri Ranganatha Paduka Panchangam for the selected day, laid out
- * exactly like the Ahobila rows above it (festival line, Tithi and
- * Nakshatram rows) and localized through the same panchangam-labels
- * maps. Its Tarpana Sankalpam, when the day has one, is shown in the
- * shared SankalpamSection instead. Bundled data, so it shows regardless of
- * the live Ahobila fetch's loading/location state.
+ * The journal's tithi, nakshatram and observances for the selected day,
+ * in the same rows as the Ahobila figures and with no heading of its own,
+ * shown only while those live figures are loading or unavailable. Bundled
+ * data, so it needs no network or location access.
  */
-function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
+function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
   const t = useT();
   const { language } = useLanguage();
-  const { day } = entry;
-  const pakshaTithi = day
-    ? [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ")
-    : "";
-  const nakshatram = day ? nakshatramLabel(day.nakshatram, language) : "";
+  const pakshaTithi = [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ");
+  const nakshatram = nakshatramLabel(day.nakshatram, language);
 
   return (
-    <div className="mt-4 space-y-2 border-t border-[var(--border)] pt-3">
-      <p className="pb-1 text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
-        {t("padukaPanchangamLabel")}
-      </p>
-      {day?.festival ? <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p> : null}
+    <div className="space-y-2 pt-1">
+      {day.festival ? <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p> : null}
       {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
       {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
     </div>
