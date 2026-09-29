@@ -86,7 +86,7 @@ function makeFakeFileSystem(): BookFileSystem & { remoteResponses: Map<string, s
     ensureDirectoryExists() {
       // the fake has no real directory concept -- files are addressed by full path
     },
-    moveFile(fromPath, toPath) {
+    async moveFile(fromPath, toPath) {
       const content = files.get(fromPath);
       if (content === undefined) throw new Error(`no such file: ${fromPath}`);
       files.set(toPath, content);
@@ -146,6 +146,36 @@ test("downloadBook: also downloads every referenced image and makes it resolvabl
   const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
   assert.equal(result.success, true);
   assert.equal(getOfflineBookImageUri("test-book", "ABCD1234", fs), "file:///document/books/test-book/images/abcd1234.jpg");
+});
+
+// expo-file-system's File.move() became async in Expo SDK 56. Each move
+// must finish before downloadBook's `finally` deletes the scratch
+// directory, and a failed move must surface as a failed download.
+test("downloadBook: waits for slow async moves before cleaning up the scratch directory", async () => {
+  const fs = makeFakeFileSystem();
+  const moveNow = fs.moveFile.bind(fs);
+  fs.moveFile = async (fromPath, toPath) => {
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    await moveNow(fromPath, toPath);
+  };
+  fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
+
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  assert.equal(result.success, true);
+  assert.equal(loadOfflineBook("test-book", fs)!.chapters[0].body, "Once upon a time.");
+});
+
+test("downloadBook: an async move failure is reported, not swallowed", async () => {
+  const fs = makeFakeFileSystem();
+  fs.moveFile = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 5));
+    throw new Error("disk full");
+  };
+  fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
+
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  assert.equal(result.success, false);
+  assert.match(result.error ?? "", /disk full/);
 });
 
 test("downloadBook: a malformed JSON response is rejected and never becomes available", async () => {

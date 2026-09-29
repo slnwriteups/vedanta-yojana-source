@@ -73,8 +73,8 @@ const realFileSystem: BookFileSystem = {
     const dir = new Directory(path);
     if (!dir.exists) dir.create({ intermediates: true, idempotent: true });
   },
-  moveFile(fromPath, toPath) {
-    new File(fromPath).move(new File(toPath));
+  async moveFile(fromPath, toPath) {
+    await new File(fromPath).move(new File(toPath));
   },
   async downloadTextFile(url, destinationPath) {
     await File.downloadFileAsync(url, new File(destinationPath));

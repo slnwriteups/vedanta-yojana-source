@@ -28,7 +28,7 @@ export interface BookFileSystem {
   /** Recursive. A no-op (not an error) if the directory doesn't exist. */
   deleteDirectory(path: string): void;
   ensureDirectoryExists(path: string): void;
-  moveFile(fromPath: string, toPath: string): void;
+  moveFile(fromPath: string, toPath: string): Promise<void>;
   downloadTextFile(url: string, destinationPath: string): Promise<void>;
   downloadBinaryFile(url: string, destinationPath: string): Promise<void>;
 }
@@ -221,10 +221,10 @@ export async function downloadBook(
   try {
     fs.deleteDirectory(finalDir);
     fs.ensureDirectoryExists(finalDir);
-    fs.moveFile(tempJsonPath, localBookJsonPath(bookSlug, fs));
+    await fs.moveFile(tempJsonPath, localBookJsonPath(bookSlug, fs));
     fs.ensureDirectoryExists(localBookImageDir(bookSlug, fs));
     for (const filename of Object.values(payload.imageFiles)) {
-      fs.moveFile(`${tempDir}/images/${filename}`, `${localBookImageDir(bookSlug, fs)}/${filename}`);
+      await fs.moveFile(`${tempDir}/images/${filename}`, `${localBookImageDir(bookSlug, fs)}/${filename}`);
     }
     fs.writeTextFile(localBookHashPath(bookSlug, fs), contentHash);
   } catch (error) {

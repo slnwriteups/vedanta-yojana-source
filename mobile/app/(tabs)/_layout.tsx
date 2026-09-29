@@ -1,6 +1,6 @@
 import { Tabs, router } from "expo-router";
 import { Image, Text, View } from "react-native";
-import type { ImageSourcePropType } from "react-native";
+import type { ColorValue, ImageSourcePropType } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "../../theme";
 import { useT } from "../../ui-strings.ts";
@@ -48,7 +48,7 @@ function TabIcon({ source, focused }: { source: ImageSourcePropType; focused: bo
   );
 }
 
-const labelTextStyle = (color: string) =>
+const labelTextStyle = (color: ColorValue) =>
   ({ color, fontSize: 11, fontWeight: "500", lineHeight: LABEL_LINE_HEIGHT, textAlign: "center" }) as const;
 
 /**
@@ -59,7 +59,7 @@ const labelTextStyle = (color: string) =>
  * two-line-tall box (`LABEL_BOX_HEIGHT`), single-line labels centered
  * within it, so the bar's icon row stays level across all five tabs.
  */
-function TabLabel({ color, children }: { color: string; children: string }) {
+function TabLabel({ color, children }: { color: ColorValue; children: string }) {
   return (
     <View style={{ height: LABEL_BOX_HEIGHT, alignItems: "center", justifyContent: "center" }}>
       <Text numberOfLines={1} adjustsFontSizeToFit minimumFontScale={0.75} style={labelTextStyle(color)}>
@@ -77,7 +77,7 @@ function TabLabel({ color, children }: { color: string; children: string }) {
  * The underlying string handed to accessibility/navigation (the route's
  * `title`) is untouched -- this only changes how the label renders.
  */
-function TwoLineTabLabel({ color, children }: { color: string; children: string }) {
+function TwoLineTabLabel({ color, children }: { color: ColorValue; children: string }) {
   const spaceIndex = children.indexOf(" ");
   if (spaceIndex === -1) return <TabLabel color={color}>{children}</TabLabel>;
   const first = children.slice(0, spaceIndex);
