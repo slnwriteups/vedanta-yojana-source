@@ -65,6 +65,12 @@ jobs:
         # publishing rather than a live fix.
         run: touch out/.nojekyll
 
+      - name: Publish privacy policy
+        # docs/privacy-policy.html stays the single source (tests and
+        # docs point at it); serving it at /privacy-policy.html gives the
+        # App Store listing the public privacy-policy URL it requires.
+        run: cp docs/privacy-policy.html out/privacy-policy.html
+
       - name: Configure Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
 

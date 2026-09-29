@@ -1,4 +1,5 @@
 import Constants from "expo-constants";
+import { Platform } from "react-native";
 
 /**
  * Vedanta Yojana is distributed as a direct-download APK, not through
@@ -51,7 +52,7 @@ function isValidManifest(value: unknown): value is VersionManifest {
 
 /**
  * Returns update details if a newer build is published, or null if
- * already current, unreachable, or the manifest is malformed -- never
+ * not on Android, already current, unreachable, or the manifest is malformed -- never
  * throws, and never fabricates an update that isn't real. The caller
  * fires this fire-and-forget on mount; it must never block app
  * startup or be treated as an error when it resolves to null.
@@ -59,6 +60,10 @@ function isValidManifest(value: unknown): value is VersionManifest {
 export const BUILD_VERSION_CODE = 16;
 
 export async function checkForUpdate(): Promise<UpdateInfo | null> {
+  // iOS installs come from the App Store, which delivers native updates
+  // itself; pointing an iPhone at an APK download would be meaningless
+  // (and is grounds for App Store rejection under guideline 2.5.2).
+  if (Platform.OS !== "android") return null;
   const currentVersionCode =
     typeof Constants.expoConfig?.android?.versionCode === "number"
       ? Constants.expoConfig.android.versionCode

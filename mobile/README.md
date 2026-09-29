@@ -225,6 +225,9 @@ content and JavaScript changes reach installed apps through EAS Update
 `1.0.3`). Never publish
 an APK from the `build-apk.yml` GitHub Actions workflow: it signs with
 the debug key. See `docs/DEVELOPMENT.md` (Over-the-air updates,
-Deployment architecture) and `docs/APK-VERIFICATION.md`. iOS is not
-yet available (Apple Developer Program enrollment in progress). For
+Deployment architecture) and `docs/APK-VERIFICATION.md`. iOS will be
+distributed through the App Store (in preparation): builds use the
+`production` EAS profile (`eas build -p ios --profile production`) and
+are uploaded with `eas submit -p ios`. The Android-only APK update
+banner (`services/updateCheckService.ts`) is disabled on iOS. For
 development, use Expo Go (`npx expo start`).
