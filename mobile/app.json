@@ -76,7 +76,8 @@
         }
       ],
       "./plugins/with-gradle-jvm-args.js",
-      "expo-sharing"
+      "expo-sharing",
+      "expo-status-bar"
     ],
     "extra": {
       "router": {},
