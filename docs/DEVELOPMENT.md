@@ -94,9 +94,10 @@ read time on a user's device.
 `output: "export"`, producing a fully static site with no server
 runtime. Deployed to GitHub Pages by `.github/workflows/deploy-pages.yml`.
 
-**Mobile app** (`mobile/`): Expo (React Native), built for Android via
-EAS Build. iOS is listed in `mobile/app.json`'s `platforms` but is not
-part of this release's distribution.
+**Mobile app** (`mobile/`): Expo (React Native), built for Android and iOS via
+EAS Build. Android ships as APKs on GitHub; iOS is being prepared for
+the App Store (`eas build -p ios --profile production`, then
+`eas submit -p ios`).
 
 ## Content architecture
 
