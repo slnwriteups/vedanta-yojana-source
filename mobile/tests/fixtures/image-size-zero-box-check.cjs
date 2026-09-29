@@ -2,38 +2,32 @@
 /**
  * Run in a child process (spawned by
  * tests/image-size-zero-size-box.test.ts) with a hard OS-level timeout,
- * because the vulnerability this guards is a genuinely synchronous
- * infinite loop -- nothing in-process (a Promise timeout, node:test's own
- * per-test timeout) can preempt a synchronous busy loop on the same
- * thread, so only killing the process from outside can bound it.
+ * because the failure this guards is a genuinely synchronous infinite
+ * loop -- nothing in-process (a Promise timeout, node:test's own per-test
+ * timeout) can preempt a synchronous busy loop on the same thread, so
+ * only killing the process from outside can bound it.
  *
- * Imports the ACTUAL package Metro resolves at build time --
- * node_modules/metro/node_modules/image-size, the exact nested copy
- * mobile/patches/metro++image-size+1.2.1.patch is applied to -- not a
- * separately installed or newer copy, so this proves the patch that
- * ships is the patch that's tested.
+ * History: through Expo SDK 54 Metro resolved image dimensions with its
+ * own nested copy of the `image-size` package, whose ICNS and JXL parsers
+ * looped forever on a zero-length entry/box; that was fixed locally by
+ * mobile/patches/metro++image-size+1.2.1.patch. From Metro 0.83 (Expo
+ * SDK 55+) Metro no longer depends on `image-size` at all -- it ships its
+ * own parser at metro/src/lib/imageSize.js, which has no ICNS/JXL support
+ * and guards every chunk-walking loop. The patch was retired with that
+ * change; this check now imports the ACTUAL parser Metro calls at build
+ * time (the one Assets.js requires) and feeds it the same class of
+ * crafted zero-length inputs, so a future Metro regression that
+ * reintroduces the hang fails the suite instead of hanging the bundler.
  */
 const path = require("node:path");
-const imageSize = require(
-  path.join(__dirname, "..", "..", "node_modules", "metro", "node_modules", "image-size")
+const { getImageDimensions } = require(
+  path.join(__dirname, "..", "..", "node_modules", "metro", "src", "lib", "imageSize.js")
 );
 
 /**
- * A minimal, well-formed ICNS container whose single image entry has a
- * declared length of 0. ICNS.calculate() (dist/types/icns.js) advances a
- * read cursor by that declared length on each entry; pre-patch, a
- * zero-length entry left the cursor unchanged, so the `while (imageOffset
- * < fileLength ...)` loop below it read the identical bytes forever --
- * an attacker-controlled hang triggerable by nothing more than a crafted
- * icon file reaching Metro's bundler.
- *
- * Layout (big-endian, per the ICNS spec):
- *   bytes 0-3   "icns" magic
- *   bytes 4-7   file length = 16 (equals the offset after one
- *               guarded advance, so the patched code returns
- *               immediately instead of ever entering the while loop)
- *   bytes 8-11  entry type "ICON"
- *   bytes 12-15 entry length = 0  <- the malicious zero-size box
+ * The original ICNS payload: one image entry with a declared length of 0.
+ * Metro's parser has no ICNS support, so this must be rejected (thrown as
+ * an invalid image) rather than parsed -- and, above all, not hang.
  */
 function buildMaliciousIcns() {
   const buf = Buffer.alloc(16);
@@ -45,20 +39,8 @@ function buildMaliciousIcns() {
 }
 
 /**
- * A minimal JPEG XL container (signature box + ftyp box, so JXL.validate()
- * accepts it) with no `jxlc` box, forcing extractCodestream() to fall
- * through to extractPartialStreams() (dist/types/jxl.js), whose own
- * `offset +=` advance is what this patch guards -- distinct from (and
- * downstream of) findBox()'s own already-patched internal loop. The lone
- * `jxlp` box here declares size 0; pre-patch, extractPartialStreams()
- * never advanced past it and looped forever re-finding the same box.
- *
- * Layout (big-endian box sizes, per the JPEG XL container spec):
- *   bytes 0-11   "JXL " signature box (size 12, name "JXL ")
- *   bytes 12-23  "ftyp" box (size 12, name "ftyp", brand "jxl ")
- *   bytes 24-31  "jxlp" box header with declared size 0 <- malicious
- *   bytes 32-39  trailing padding so the loop has room to terminate
- *                cleanly once it advances past the zero-size box
+ * The original JPEG XL payload (signature box + ftyp box + a `jxlp` box
+ * declaring size 0). Like ICNS, JXL is unsupported and must be rejected.
  */
 function buildMaliciousJxl() {
   const buf = Buffer.alloc(40);
@@ -72,35 +54,53 @@ function buildMaliciousJxl() {
   return buf;
 }
 
-// The crafted file length (16) equals the offset ICNS.calculate() reaches
-// after exactly one guarded advance past the zero-length entry, so a
-// correctly-patched parser returns this single entry's own icon size
-// immediately -- it never reaches the `while` loop at all. Reaching this
-// line without hanging is itself the proof the guard fired.
-const icnsResult = imageSize(buildMaliciousIcns());
-if (!icnsResult || icnsResult.type !== "ICON") {
-  throw new Error("ICNS.calculate() did not return the expected result: " + JSON.stringify(icnsResult));
+/**
+ * JPEG: SOI, then an APP0 segment whose declared length is 0. parseJpeg()
+ * advances by the declared segment length, so a missing `< 2` guard would
+ * leave the cursor in place and re-read the same marker forever.
+ */
+function buildZeroLengthJpeg() {
+  return Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0x00, 0x00, 0x00, 0x00]);
 }
 
-// extractPartialStreams() finding the zero-size `jxlp` box, advancing
-// past it via the patched guard, then finding no further boxes hands an
-// empty codestream on to JXLStream.calculate() -- which throws this
-// specific, deeper parsing error ("Reached end of input" -- there's no
-// actual pixel data). Asserting on that exact message (rather than "it
-// threw *something*") is what proves extractPartialStreams() itself ran
-// to completion, rather than the input merely failing JXL detection
-// before ever reaching the vulnerable code at all.
-let jxlErrorMessage = null;
-try {
-  imageSize(buildMaliciousJxl());
-} catch (err) {
-  jxlErrorMessage = err.message;
+/**
+ * WebP: RIFF/WEBP header followed by an unknown chunk declaring length 0.
+ * parseWebp() walks chunks by `dataOffset + chunkLength`; the header alone
+ * always advances it by 8, and it bails if the offset ever fails to grow.
+ */
+function buildZeroLengthWebp() {
+  const buf = Buffer.alloc(28);
+  buf.write("RIFF", 0, "ascii");
+  buf.writeUInt32LE(20, 4);
+  buf.write("WEBP", 8, "ascii");
+  buf.write("JUNK", 12, "ascii");
+  buf.writeUInt32LE(0, 16);
+  buf.write("JUNK", 20, "ascii");
+  buf.writeUInt32LE(0, 24);
+  return buf;
 }
-if (jxlErrorMessage !== "Reached end of input") {
-  throw new Error(
-    "JXL path did not reach JXLStream.calculate() as expected (extractPartialStreams() may not have run): " +
-      JSON.stringify(jxlErrorMessage)
-  );
+
+const cases = [
+  ["icns", buildMaliciousIcns()],
+  ["jxl", buildMaliciousJxl()],
+  ["jpg", buildZeroLengthJpeg()],
+  ["webp", buildZeroLengthWebp()],
+];
+
+// Every crafted file carries no usable dimensions, so each call must
+// return by throwing Metro's invalid-image error. Reaching the end of
+// this loop without the parent's timeout firing is the proof that no
+// parser (including the fallback sweep across all formats) stalled.
+for (const [type, content] of cases) {
+  let message = null;
+  try {
+    getImageDimensions(type, content, `crafted.${type}`);
+  } catch (err) {
+    message = err.message;
+  }
+  if (message === null) {
+    throw new Error(`${type}: crafted file was unexpectedly accepted as a valid image`);
+  }
 }
 
 process.stdout.write("OK\n");

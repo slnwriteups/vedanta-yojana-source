@@ -150,7 +150,7 @@ export default function LibraryChapterScreen() {
     // device. Passing the ScrollView ref itself (not a node-handle
     // number) is what actually works.
     node.measureLayout(
-      scrollView as unknown as import("react-native").NativeMethods,
+      scrollView as unknown as Parameters<Text["measureLayout"]>[0],
       (_x, y) => scrollView.scrollTo({ y: Math.max(0, y - spacing.lg), animated: true }),
       () => {
         // Best-effort: if the native measurement fails (e.g. the target
