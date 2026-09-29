@@ -146,14 +146,6 @@ const UI_STRINGS = {
   calendarTodayButton: { en: "Today", ta: "இன்று", kn: "ಇಂದು", hi: "आज", te: "నేడు" },
   calendarPastPassed: { en: "Past", ta: "முடிந்தது", kn: "ಕಳೆದ", hi: "व्यतीत", te: "గడచిన" },
   calendarUpcoming: { en: "Upcoming", ta: "வரவிருக்கும்", kn: "ಮುಂಬರುವ", hi: "आगामी", te: "రాబోయే" },
-  /** Heading for the Sri Ranganatha Paduka journal's own Panchangam entry shown under the selected day (content-lib/paduka-panchangam.ts). */
-  padukaPanchangamLabel: {
-    en: "Sri Ranganatha Paduka Panchangam",
-    ta: "ஸ்ரீ ரங்கநாத பாதுகா பஞ்சாங்கம்",
-    kn: "ಶ್ರೀ ರಂಗನಾಥ ಪಾದುಕಾ ಪಂಚಾಂಗ",
-    hi: "श्री रंगनाथ पादुका पंचांग",
-    te: "శ్రీ రంగనాథ పాదుకా పంచాంగం",
-  },
   /** Labels Ahobila's daily sankalpam inside the Sankalpam box on the days a Tarpana Sankalpam is shown beneath it. */
   sankalpamDailyLabel: { en: "Daily", ta: "தினசரி", kn: "ದೈನಂದಿನ", hi: "दैनिक", te: "రోజువారీ" },
   padukaTarpanamLabel: {

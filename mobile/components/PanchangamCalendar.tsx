@@ -13,10 +13,11 @@ import {
 } from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 import {
+  calendarFestivalLine,
   localizePadukaFestival,
   localizePadukaTarpanam,
   padukaPanchangamFor,
-  type PadukaPanchangamEntry,
+  type PadukaPanchangamDay,
   type PadukaTarpanam,
 } from "../../content-lib/paduka-panchangam.ts";
 
@@ -104,6 +105,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showAhobila = !isLoading && hasData;
+  const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
 
   return (
     <View style={styles.section}>
@@ -247,9 +249,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </View>
         ) : hasData && data ? (
           <View style={styles.contentRows}>
-            {data.festival ? (
-              <Text style={[styles.festival, { color: theme.colors.accent }]}>{data.festival}</Text>
-            ) : null}
+            {festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{festival}</Text> : null}
             {pakshaTithi ? (
               <Row
                 label={t("homeCalendarTithiLabel")}
@@ -283,8 +283,6 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               />
             ) : null}
 
-            {paduka?.day ? <PadukaPanchangamSection entry={paduka} /> : null}
-
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
                 ahobilaText={data.sankalpamText || null}
@@ -298,8 +296,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
         )}
 
-        {/* Bundled data: still shown while the Ahobila fetch is loading or unavailable (above the Sankalpam otherwise). */}
-        {paduka?.day && !showAhobila ? <PadukaPanchangamSection entry={paduka} /> : null}
+        {/* Bundled data: stands in for the Ahobila rows while that fetch is loading or unavailable. */}
+        {paduka?.day && !showAhobila ? <PadukaFallbackRows day={paduka.day} /> : null}
         {paduka?.tarpanam && !showAhobila ? (
           <SankalpamSection
             ahobilaText={null}
@@ -323,39 +321,28 @@ function Row({ label, value, muted, fg }: { label: string; value: string; muted:
 }
 
 /**
- * The Sri Ranganatha Paduka Panchangam for the selected day, laid out
- * exactly like the Ahobila rows above it (festival line, Tithi and
- * Nakshatram rows) and localized through the same panchangam-labels
- * maps. Its Tarpana Sankalpam, when the day has one, is shown in the
- * shared SankalpamSection instead. Bundled data, so it shows regardless of
- * the live Ahobila fetch's loading/location state.
+ * The journal's tithi, nakshatram and observances for the selected day,
+ * in the same rows as the Ahobila figures and with no heading of its own,
+ * shown only while those live figures are loading or unavailable. Bundled
+ * data, so it needs no network or location access.
  */
-function PadukaPanchangamSection({ entry }: { entry: PadukaPanchangamEntry }) {
+function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
   const theme = useTheme();
   const t = useT();
   const { language } = useLanguage();
-  const { day } = entry;
-  const pakshaTithi = day
-    ? [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ")
-    : "";
-  const nakshatram = day ? nakshatramLabel(day.nakshatram, language) : "";
+  const pakshaTithi = [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ");
+  const nakshatram = nakshatramLabel(day.nakshatram, language);
 
   return (
-    <View style={[styles.sankalpamSection, styles.contentRows, { borderTopColor: theme.colors.border }]}>
-      <Text style={[styles.sankalpamSectionLabel, styles.padukaHeading, { color: theme.colors.muted }]}>
-        {t("padukaPanchangamLabel")}
-      </Text>
-      {day?.festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text> : null}
+    <View style={styles.contentRows}>
+      {day.festival ? (
+        <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text>
+      ) : null}
       {pakshaTithi ? (
         <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />
       ) : null}
       {nakshatram ? (
-        <Row
-          label={t("homeCalendarNakshatramLabel")}
-          value={nakshatram}
-          muted={theme.colors.muted}
-          fg={theme.colors.foreground}
-        />
+        <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} muted={theme.colors.muted} fg={theme.colors.foreground} />
       ) : null}
     </View>
   );
@@ -586,9 +573,6 @@ const styles = StyleSheet.create({
   sankalpamBody: {
     fontSize: typography.body,
     lineHeight: 24,
-  },
-  padukaHeading: {
-    paddingVertical: spacing.xs,
   },
   unavailable: {
     fontSize: typography.small,

@@ -2,10 +2,12 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   PADUKA_PANCHANGAM_ISSUES,
+  calendarFestivalLine,
   isKnownPadukaObservance,
   localizePadukaFestival,
   localizePadukaTarpanam,
   padukaDateKey,
+  padukaFeaturedObservances,
   padukaPanchangamFor,
 } from "../../content-lib/paduka-panchangam.ts";
 import { nakshatramLabel, pakshaLabel, tithiLabel } from "../../lib/panchangam-labels.ts";
@@ -101,4 +103,44 @@ test("every tarpana sankalpam is written in each language's own script", () => {
       }
     }
   }
+});
+
+test("padukaFeaturedObservances keeps only the Ashramam's own tirunakshatrams", () => {
+  assert.deepEqual(
+    padukaFeaturedObservances(
+      "Commencement of Mahalaya Paksham, Srimad Akkur Andavan Sri Srinivasa Mahadesikan Tirunakshatram"
+    ),
+    ["Srimad Akkur Andavan Sri Srinivasa Mahadesikan Tirunakshatram"]
+  );
+  assert.deepEqual(
+    padukaFeaturedObservances("Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram"),
+    ["Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram"]
+  );
+  // General observances Ahobila already lists under its own names are not repeated.
+  assert.deepEqual(padukaFeaturedObservances("Svami Desikan Tirunakshatram, Sarva Ekadasi, Sravana Vratam"), []);
+  assert.deepEqual(padukaFeaturedObservances("Mahapradosham"), []);
+  assert.deepEqual(padukaFeaturedObservances(""), []);
+});
+
+test("calendarFestivalLine appends featured observances to Ahobila's own festival text", () => {
+  const day = padukaPanchangamFor(new Date(2026, 8, 27))?.day ?? null;
+  assert.equal(
+    calendarFestivalLine("Mahalaya Paksham Begins", day, null),
+    "Mahalaya Paksham Begins, Srimad Akkur Andavan Sri Srinivasa Mahadesikan Tirunakshatram"
+  );
+  // A day with nothing to feature leaves Ahobila's text untouched, and an empty one stays empty.
+  const pradosham = padukaPanchangamFor(new Date(2026, 8, 24))?.day ?? null;
+  assert.equal(calendarFestivalLine("Pradosham", pradosham, null), "Pradosham");
+  assert.equal(calendarFestivalLine("", pradosham, null), "");
+  // Featured on its own when Ahobila has no festival that day.
+  const oct17 = padukaPanchangamFor(new Date(2026, 9, 17))?.day ?? null;
+  assert.equal(calendarFestivalLine("", oct17, null), "Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram");
+  assert.equal(calendarFestivalLine("HH 18", null, null), "HH 18");
+});
+
+test("calendarFestivalLine localizes the featured observances", () => {
+  const day = padukaPanchangamFor(new Date(2026, 8, 27))?.day ?? null;
+  const line = calendarFestivalLine("Mahalaya Paksham Begins", day, "ta");
+  assert.ok(line.startsWith("Mahalaya Paksham Begins, "));
+  assert.doesNotMatch(line, /Akkur Andavan/);
 });
