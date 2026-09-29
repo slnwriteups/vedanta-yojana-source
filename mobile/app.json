@@ -4,7 +4,7 @@
     "slug": "vedanta-yojana",
     "owner": "slnwriteupss-team",
     "scheme": "vedantayojana",
-    "version": "1.0.3",
+    "version": "1.1.0",
     "platforms": [
       "ios",
       "android"
@@ -15,7 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.slnwriteups.vedantayojana",
-      "buildNumber": "1",
+      "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocalNetworkUsageDescription": "This app connects to your computer's development server on the local network while building the app.",
@@ -43,7 +43,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.slnwriteups.vedantayojana",
-      "versionCode": 16
+      "versionCode": 17
     },
     "plugins": [
       "expo-router",
@@ -65,6 +65,9 @@
       [
         "expo-build-properties",
         {
+          "ios": {
+            "enableSceneSupport": true
+          },
           "android": {
             "enableProguardInReleaseBuilds": true,
             "enableShrinkResourcesInReleaseBuilds": true,
