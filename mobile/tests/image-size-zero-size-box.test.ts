@@ -5,8 +5,15 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 /**
- * Regression test for mobile/patches/metro++image-size+1.2.1.patch.
+ * Regression test for Metro's image-dimension parser hanging on crafted
+ * zero-length entries. Originally guarded by
+ * mobile/patches/metro++image-size+1.2.1.patch (history below); since
+ * Metro 0.83 / Expo SDK 55 Metro uses its own parser
+ * (metro/src/lib/imageSize.js) with no ICNS/JXL support and guarded
+ * loops, so the patch was retired and the fixture now exercises that
+ * parser directly -- see tests/fixtures/image-size-zero-box-check.cjs.
  *
+ * Original vulnerability (Expo SDK 54 and earlier):
  * Vulnerability: Metro's bundler resolves image dimensions via the
  * `image-size` package for every image asset it processes. Two of that
  * package's parsers -- ICNS.calculate() and JXL.extractPartialStreams()
@@ -32,19 +39,18 @@ import { fileURLToPath } from "node:url";
  *   a *separate process* and kill it from outside if it overruns --
  *   tests/fixtures/image-size-zero-box-check.cjs is that separate
  *   script, and this test drives it via `spawnSync(..., { timeout })`.
- * - That fixture requires the exact installed nested package --
- *   node_modules/metro/node_modules/image-size, the same copy the patch
- *   targets and Metro actually resolves at build time -- not a
- *   separately installed or newer copy, so this proves the patch that
- *   ships is the patch that's tested. See the fixture's own doc comment
- *   for the exact malicious ICNS/JXL byte layouts and why each one
- *   would have hung the pre-patch parser.
+ * - That fixture requires the exact parser Metro calls at build time --
+ *   node_modules/metro/src/lib/imageSize.js, the module Metro's Assets.js
+ *   requires -- not a separately installed copy, so the parser that
+ *   ships is the parser that's tested. See the fixture's own doc comment
+ *   for the crafted byte layouts.
  * - No network access, no filesystem input beyond the fixture script
  *   itself, and a bounded 5-second timeout well under any CI test-suite
  *   budget: a real regression fails this test in ~5s rather than hanging
  *   the whole suite indefinitely.
  *
- * Manually verified while writing this test (not something the test
+ * Manually verified when this test was first written against the SDK 54
+ * patched package (not something the test
  * itself re-checks on every run, since that would require shipping a
  * deliberately-broken copy of a real dependency): temporarily reverting
  * the patch in the installed package reproduces the exact hang this test
@@ -58,7 +64,7 @@ const MOBILE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "
 const FIXTURE = path.join(MOBILE_ROOT, "tests", "fixtures", "image-size-zero-box-check.cjs");
 const TIMEOUT_MS = 5000;
 
-test("image-size zero-size-box guard: a crafted zero-length ICNS entry and zero-size JXL box no longer hang the parser", () => {
+test("image-size zero-size-box guard: crafted zero-length ICNS/JXL/JPEG/WebP inputs do not hang Metro's image parser", () => {
   const result = spawnSync(process.execPath, [FIXTURE], {
     timeout: TIMEOUT_MS,
     encoding: "utf8",
