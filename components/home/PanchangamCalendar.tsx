@@ -11,6 +11,7 @@ import {
   tithiLabel,
 } from "@/lib/panchangam-labels";
 import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
+import { formatPanchangamTime } from "@/lib/panchangam-timings";
 
 function formatDateKey(d: Date): string {
   const y = d.getFullYear();
@@ -107,6 +108,21 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     : "";
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
+  const locale = language || "en-US";
+  // Only the timings the endpoint actually returned for this day are shown.
+  const timingRows = data
+    ? (
+        [
+          ["homeCalendarSunriseLabel", data.sunrise],
+          ["homeCalendarSunsetLabel", data.sunset],
+          ["homeCalendarRahuKaalamLabel", data.rahuKaalam],
+          ["homeCalendarYamagandamLabel", data.yamagandam],
+          ["homeCalendarGulikaKaalamLabel", data.gulikaKaalam],
+        ] as const
+      )
+        .filter(([, value]) => Boolean(value))
+        .map(([key, value]) => ({ label: t(key), value: formatPanchangamTime(value as string, locale) }))
+    : [];
 
   return (
     <div className="space-y-3">
@@ -232,6 +248,9 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 value={localizeUpcomingEkadashi(data.upcomingEkadashiText, language)}
               />
             ) : null}
+            {timingRows.map(({ label, value }) => (
+              <Row key={label} label={label} value={value} />
+            ))}
             {data.location ? <Row label={t("homeCalendarLocationLabel")} value={data.location} /> : null}
 
             {/* Sankalpam Section for Selected Day */}

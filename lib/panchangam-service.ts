@@ -1,4 +1,5 @@
 import { readJSON, writeJSON } from "./storage.ts";
+import { parsePanchangamTimings } from "./panchangam-timings.ts";
 
 /**
  * Web port of mobile/services/panchangamService.ts. Fetches today's
@@ -117,6 +118,12 @@ export interface PanchangamData {
    * never as a placeholder standing in for a real city.
    */
   location?: string;
+  /** Sunrise/sunset and the day's kaalams (see panchangam-timings.ts); absent on entries cached before they were added. */
+  sunrise?: string;
+  sunset?: string;
+  rahuKaalam?: string;
+  yamagandam?: string;
+  gulikaKaalam?: string;
 }
 
 /**
@@ -165,7 +172,10 @@ function isValidPanchangamData(value: unknown): value is PanchangamData {
     typeof candidate.festival === "string" &&
     typeof candidate.upcomingEkadashiText === "string" &&
     typeof candidate.sankalpamText === "string" &&
-    (candidate.location === undefined || typeof candidate.location === "string")
+    (candidate.location === undefined || typeof candidate.location === "string") &&
+    ["sunrise", "sunset", "rahuKaalam", "yamagandam", "gulikaKaalam"].every(
+      (key) => candidate[key] === undefined || typeof candidate[key] === "string"
+    )
   );
 }
 
@@ -562,7 +572,9 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
   const cached = await readJSON(cacheKey, isValidPanchangamData);
   const isToday = date.toDateString() === new Date().toDateString();
 
-  if (cached) {
+  // An entry cached before the timings were added is refetched once, so
+  // they appear without waiting for the next day's cache key.
+  if (cached && cached.rahuKaalam !== undefined) {
     let needsUpdate = false;
     const data: PanchangamData = { ...cached };
 
@@ -645,6 +657,7 @@ export async function fetchAhobilaPanchangam(date: Date = new Date()): Promise<P
 
     const data: PanchangamData = {
       ...parsedDaily,
+      ...parsePanchangamTimings(dailyHtml),
       upcomingEkadashiText,
       sankalpamText: parseSankalpam(sankalpamHtml),
       // "" rather than the placeholder itself: an unresolved name is
