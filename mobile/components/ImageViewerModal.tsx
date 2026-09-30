@@ -9,12 +9,10 @@ import { clamp, maxPanOffset, pinchDistance, type ViewerTouch } from "./image-vi
  * double-tap-to-zoom, built entirely on react-native core's Animated +
  * PanResponder -- neither is a new dependency (Animated is already used
  * by ContentImage.tsx's FadeInImage). react-native-gesture-handler and
- * react-native-reanimated, which would make this multi-touch math more
- * ergonomic, are NOT installed anywhere in this project (confirmed
- * absent from node_modules; expo-router lists them only as optional
- * peer dependencies for its own Drawer navigator, which this app
- * doesn't use) -- PanResponder is less convenient but sufficient for
- * this one feature, so no new dependency was added.
+ * react-native-reanimated are installed since Expo SDK 56 (required
+ * peers of expo-router's drawer dependency, not used by this app's own
+ * code) -- this viewer deliberately still uses PanResponder, which is
+ * sufficient for this one feature.
  *
  * Accessibility: TalkBack/VoiceOver's own touch-exploration layer
  * intercepts raw touches before a bare View's PanResponder would see
