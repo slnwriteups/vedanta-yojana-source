@@ -9,6 +9,7 @@ import {
   getTableOfContents,
   isListItemLine,
   isVerseLine,
+  iastVerseParagraphIndexes,
   isVerseTransliterationLine,
   looksLikeSubheading,
   paragraphsForReading,
@@ -274,6 +275,50 @@ test("O: every line of a quoted shlokam -- its Devanagari couplet AND its IAST t
   // The surrounding narrative prose is not swept up by the same check.
   assert.equal(isVerseLine(paragraphs, 0), false);
   assert.equal(isVerseLine(paragraphs, paragraphs.length - 1), false);
+});
+
+test("O: every line of an IAST-only verse is a verse line, not just the ones without terminal punctuation", () => {
+  // Real, reported case: narasimha-avataram's Sudarshana Ashtakam is
+  // given only in IAST. Lines 1 and 3 (no terminal punctuation) came out
+  // bold via looksLikeSubheading(); lines 2 (";") and 4 (".") stayed
+  // plain -- one verse, half-bold. A preceding "Verse 1" label and the
+  // surrounding prose must not be swept into the verse.
+  const text =
+    "He became Sudarshana.\n\nVerse 1\n\npratibhaṭashreṇibhīshaṇa varaguṇastomabhūshaṇa\njanibhayasthānatāraṇa jagadavasthānakāraṇa;\nnikhiladushkarmakarshana nigamasaddharmadarshana\njaya jaya shrīsudarshana jaya jaya shrīsudarshana.\n\nOh Sri Sudarshana! The enemies of Your Lord's devotees tremble before You.";
+  const paragraphs = paragraphsForReading(text);
+  const first = paragraphs.indexOf("pratibhaṭashreṇibhīshaṇa varaguṇastomabhūshaṇa");
+  assert.ok(first >= 0);
+  for (const index of [first, first + 1, first + 2, first + 3]) {
+    assert.equal(isVerseLine(paragraphs, index, text), true, paragraphs[index]);
+  }
+  assert.equal(isVerseLine(paragraphs, paragraphs.indexOf("Verse 1"), text), false);
+  assert.equal(isVerseLine(paragraphs, 0, text), false);
+  assert.equal(isVerseLine(paragraphs, paragraphs.length - 1, text), false);
+});
+
+test("O: a two-line IAST half-verse couplet (a taniyan) is recognized as one verse", () => {
+  const text =
+    "In Swami Deshikan's own words:\n\nshrīmān veṅkaṭanāthāryaḥ kavitārkikakesarī;\nvedāntācāryavaryo me sannidhattāṁ sadā hṛdi.\n\nThe hymn follows.";
+  const paragraphs = paragraphsForReading(text);
+  assert.equal(isVerseLine(paragraphs, 1, text), true);
+  assert.equal(isVerseLine(paragraphs, 2, text), true);
+});
+
+test("O: ordinary prose and short headings are never IAST verse lines", () => {
+  // A long prose line, a block of short lines with no half-verse ";",
+  // and a single short line ending in ";" -- none has the verse shape.
+  const text = `${"A long flowing sentence of narrative prose continues here. ".repeat(3)}\n\nThe Moksha Virodhi\nBhakti and Prapatti Upayam\n\nA lone line ending in a semicolon;`;
+  const paragraphs = paragraphsForReading(text);
+  assert.equal(iastVerseParagraphIndexes(text).size, 0);
+  paragraphs.forEach((_, index) => assert.equal(isVerseLine(paragraphs, index, text), false));
+});
+
+test("O: IAST verse indexes stay aligned with paragraphsForReading when a long prose paragraph is split", () => {
+  const longProse = "This sentence is here to make the paragraph long. ".repeat(20);
+  const text = `${longProse}\n\nugraṁ vīraṁ mahāvishṇuṁ jvalantaṁ sarvatomukham;\nnṛsiṁhaṁ bhīshaṇaṁ bhadraṁ mṛtyor mṛtyuṁ namāmyaham.`;
+  const paragraphs = paragraphsForReading(text);
+  assert.ok(paragraphs.length > 3, "expected the long prose to be split into several paragraphs");
+  assert.deepEqual([...iastVerseParagraphIndexes(text)], [paragraphs.length - 2, paragraphs.length - 1]);
 });
 
 test("O: a numbered list item is recognized so a renderer can keep it plain, matching getTableOfContents' own exclusion", () => {

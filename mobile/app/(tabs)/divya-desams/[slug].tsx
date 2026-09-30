@@ -152,7 +152,7 @@ function ParagraphsWithNotes({ text, keyPrefix }: { text: string; keyPrefix: str
       index += span;
       continue;
     }
-    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
+    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index, text);
     nodes.push(
       <Text
         key={`${keyPrefix}-${index}`}

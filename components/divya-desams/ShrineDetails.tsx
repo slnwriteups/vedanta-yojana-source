@@ -57,7 +57,7 @@ function ProseBlock({ text, language }: { text: string; language: LanguageCode |
       index += span;
       continue;
     }
-    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index);
+    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index, text);
     nodes.push(
       <p key={index} className={bold ? "mt-2 font-bold" : undefined}>
         {paragraph}

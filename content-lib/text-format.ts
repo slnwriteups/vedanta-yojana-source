@@ -167,8 +167,68 @@ export function isVerseTransliterationLine(paragraphs: string[], index: number):
  * inconsistently styled. This makes bolding intentional and uniform
  * across every shlokam in the app instead of an accident of punctuation.
  */
-export function isVerseLine(paragraphs: string[], index: number): boolean {
-  return DEVANAGARI_SCRIPT.test(paragraphs[index]) || isVerseTransliterationLine(paragraphs, index);
+export function isVerseLine(paragraphs: string[], index: number, text?: string): boolean {
+  return (
+    DEVANAGARI_SCRIPT.test(paragraphs[index]) ||
+    isVerseTransliterationLine(paragraphs, index) ||
+    (text !== undefined && iastVerseParagraphIndexes(text).has(index))
+  );
+}
+
+/** A verse line is a single pada or half-verse -- well under a prose paragraph. */
+const MAX_VERSE_LINE_LENGTH = 90;
+/** ";" is this corpus's IAST rendering of the half-verse daṇḍa (see looksLikeSubheading above). */
+const HALF_VERSE_END = /;['")]?$/;
+const VERSE_END = /[.;]['")]?$/;
+
+let cachedVerseText: string | null = null;
+let cachedVerseTargetLength = 0;
+let cachedVerseIndexes: Set<number> = new Set();
+
+/**
+ * Indexes (into paragraphsForReading(text)) of every line of a quoted
+ * verse given ONLY in IAST -- no Devanagari anywhere near it, so
+ * isVerseTransliterationLine()'s structural check can't see it.
+ * Reported directly from device testing: the Sudarshana Ashtakam in
+ * narasimha-avataram is IAST-only, so each of its lines fell through to
+ * looksLikeSubheading() alone -- the two lines without terminal
+ * punctuation came out bold, the two ending in ";"/"." stayed plain, the
+ * same verse half-bold by accident of punctuation.
+ *
+ * paragraphsForReading() flattens single and blank-line breaks alike, so
+ * this reads the grouping from the raw text instead: a blank-line
+ * separated block is a verse when it has 2+ lines, every line is short,
+ * a non-final line closes a half-verse with ";", and the block ends in
+ * "." or ";". Flowing prose never has that shape -- a prose paragraph is
+ * one long line -- and a genuine heading is its own block, never a line
+ * inside one of these. Memoized on the last text seen, since renderers
+ * call this once per paragraph.
+ */
+export function iastVerseParagraphIndexes(text: string, targetLength: number = DEFAULT_TARGET_LENGTH): Set<number> {
+  if (text === cachedVerseText && targetLength === cachedVerseTargetLength) return cachedVerseIndexes;
+  const indexes = new Set<number>();
+  let index = 0;
+  for (const block of text.split(/\n\s*\n/)) {
+    const lines = block
+      .split(/\n/)
+      .map((line) => line.trim())
+      .filter((line) => line.length > 0);
+    const isVerse =
+      lines.length >= 2 &&
+      lines.every((line) => line.length <= MAX_VERSE_LINE_LENGTH && !DEVANAGARI_SCRIPT.test(line)) &&
+      lines.slice(0, -1).some((line) => HALF_VERSE_END.test(line)) &&
+      VERSE_END.test(lines[lines.length - 1]);
+    for (const line of lines) {
+      // Must advance exactly as paragraphsForReading() does for this line.
+      const count = splitIntoReadableParagraphs(line, targetLength).length;
+      if (isVerse) for (let i = 0; i < count; i++) indexes.add(index + i);
+      index += count;
+    }
+  }
+  cachedVerseText = text;
+  cachedVerseTargetLength = targetLength;
+  cachedVerseIndexes = indexes;
+  return indexes;
 }
 
 /**
