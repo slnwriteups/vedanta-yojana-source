@@ -25,16 +25,15 @@ export function WelcomeScreen({ onDone }: { onDone: () => void }) {
   const player = useAudioPlayer(welcomeAudio);
 
   useEffect(() => {
-    // iOS mutes the default audio session with the Ring/Silent switch;
-    // the welcome audio should play regardless (mixing with, not stopping,
-    // any other audio). Android already plays in silent mode by default,
-    // so it's left exactly as it was.
+    // On iOS the welcome audio respects the Ring/Silent switch (the
+    // "ambient" session category) and mixes with, not stops, any other
+    // audio. Android's behaviour is left exactly as it was.
     if (Platform.OS !== "ios") {
       player.play();
       return;
     }
     let cancelled = false;
-    setAudioModeAsync({ playsInSilentMode: true })
+    setAudioModeAsync({ playsInSilentMode: false, interruptionMode: "mixWithOthers" })
       .catch(() => {
         // Best-effort: if the mode can't be set, still try to play.
       })
