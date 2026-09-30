@@ -18,6 +18,9 @@
     },
     "production": {
       "autoIncrement": true,
+      "ios": {
+        "image": "macos-tahoe-26.6-xcode-27.0"
+      },
       "android": {
         "buildType": "app-bundle"
       },
