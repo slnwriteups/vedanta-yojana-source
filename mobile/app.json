@@ -4,7 +4,7 @@
     "slug": "vedanta-yojana",
     "owner": "slnwriteupss-team",
     "scheme": "vedantayojana",
-    "version": "1.1.0",
+    "version": "1.0.3",
     "platforms": [
       "ios",
       "android"
@@ -15,6 +15,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.slnwriteups.vedantayojana",
+      "version": "1.1.0",
       "buildNumber": "2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -43,7 +44,8 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.slnwriteups.vedantayojana",
-      "versionCode": 17
+      "versionCode": 16,
+      "runtimeVersion": "1.1.0"
     },
     "plugins": [
       "expo-router",
