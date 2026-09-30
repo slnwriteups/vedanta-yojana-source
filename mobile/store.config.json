@@ -1,0 +1,86 @@
+{
+  "configVersion": 0,
+  "apple": {
+    "copyright": "2026 Vishnu Sreenivas",
+    "categories": [
+      "BOOKS",
+      "REFERENCE"
+    ],
+    "release": {
+      "automaticRelease": false
+    },
+    "advisory": {
+      "alcoholTobaccoOrDrugUseOrReferences": "NONE",
+      "contests": "NONE",
+      "gamblingSimulated": "NONE",
+      "gunsOrOtherWeapons": "NONE",
+      "horrorOrFearThemes": "NONE",
+      "matureOrSuggestiveThemes": "NONE",
+      "medicalOrTreatmentInformation": "NONE",
+      "profanityOrCrudeHumor": "NONE",
+      "sexualContentGraphicAndNudity": "NONE",
+      "sexualContentOrNudity": "NONE",
+      "violenceCartoonOrFantasy": "NONE",
+      "violenceRealistic": "NONE",
+      "violenceRealisticProlongedGraphicOrSadistic": "NONE",
+      "advertising": false,
+      "ageAssurance": false,
+      "gambling": false,
+      "healthOrWellnessTopics": false,
+      "lootBox": false,
+      "messagingAndChat": false,
+      "parentalControls": false,
+      "unrestrictedWebAccess": false,
+      "userGeneratedContent": false,
+      "seventeenPlus": false,
+      "kidsAgeBand": null,
+      "ageRatingOverride": "NONE",
+      "koreaAgeRatingOverride": "NONE"
+    },
+    "info": {
+      "en-US": {
+        "title": "Vedanta Yojana",
+        "subtitle": "108 Divya Desams & Panchangam",
+        "promoText": "Today's Panchangam for where you are, now with sunrise, sunset and the day's kaalams, and a calendar to look up any date.",
+        "description": "Vedanta Yojana — Yatra Jñānam Pravāhati. Where the journey of knowledge continues.\n\nA home for Sanātana Dharma literature, the 108 Divya Desams, and the daily Panchangam — built to help preserve the stories, places and traditions handed down through generations.\n\nTHE 108 DIVYA DESAMS\n• Explore all 108 sacred Sri Vaishnava temples, region by region\n• Read each temple's details and its Pasurams from the Divya Prabandham\n• Open Pasuram texts right inside the app\n\nDAILY PANCHANGAM\n• Today's tithi, nakshatram and upcoming Ekadashi, calculated for where you are\n• Sunrise, sunset and the day's kaalams\n• The Sankalpam for the day\n• Pick any date on the calendar to look it up\n\nA GROWING LIBRARY\n• Original books, including Jaya: A Journey of the Mahābhārata, Sri Rama Charithram, Srimad Bhagavata Kathasagaram and A Brief Insight to Visishtadvaita Philosophy\n• Pick up where you left off, and bookmark chapters\n• Adjust the text size and theme for comfortable reading\n• Read in English, Tamil, Kannada, Hindi or Telugu\n\nPRIVATE BY DESIGN\n• No account, no sign-in\n• No ads, no analytics, no tracking\n• Your reading progress, bookmarks and preferences stay on your device\n• Location is used only to calculate the Panchangam, and is optional — every other feature works without it",
+        "keywords": [
+          "srivaishnava",
+          "vaishnava",
+          "temple",
+          "ramayana",
+          "mahabharata",
+          "bhagavatam",
+          "ekadashi",
+          "tithi",
+          "pasuram",
+          "prabandham"
+        ],
+        "marketingUrl": "https://vedantayojana.org",
+        "supportUrl": "https://vedantayojana.org/support.html",
+        "privacyPolicyUrl": "https://vedantayojana.org/privacy-policy.html",
+        "screenshots": {
+          "APP_IPHONE_67": [
+            "store/apple/screenshot/en-US/APP_IPHONE_67/01-panchangam.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/02-home.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/03-divya-desams.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/04-sri-rangam.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/05-library.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/06-reading.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/07-settings.jpg",
+            "store/apple/screenshot/en-US/APP_IPHONE_67/08-welcome.jpg"
+          ],
+          "APP_IPAD_PRO_3GEN_129": [
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/01-home.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/02-continue-reading.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/03-divya-desams.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/04-sri-rangam.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/05-library.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/06-reading.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/07-make-it-yours.jpg",
+            "store/apple/screenshot/en-US/APP_IPAD_PRO_3GEN_129/08-welcome.jpg"
+          ]
+        }
+      }
+    }
+  }
+}
