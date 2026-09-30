@@ -63,7 +63,9 @@
         "expo-location",
         {
           "locationWhenInUsePermission": "Vedanta Yojana uses your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are.",
-          "motionUsagePermission": false
+          "locationAlwaysAndWhenInUsePermission": "Vedanta Yojana only uses your approximate location while the app is open, to show today's Panchangam for where you are. It never tracks your location in the background.",
+          "locationAlwaysPermission": "Vedanta Yojana only uses your approximate location while the app is open, to show today's Panchangam for where you are. It never tracks your location in the background.",
+          "motionUsagePermission": "Vedanta Yojana does not use motion or fitness data. This description is required because the location library the app includes can access motion activity, but the app never requests it."
         }
       ],
       [
