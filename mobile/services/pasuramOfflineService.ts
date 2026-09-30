@@ -1,6 +1,6 @@
 import * as IntentLauncher from "expo-intent-launcher";
 import { File } from "expo-file-system";
-import * as Sharing from "expo-sharing";
+import { previewDocumentAsync } from "../modules/quick-look";
 import { Platform } from "react-native";
 import { ensurePasuramsUnpacked, isPasuramAvailable, localPasuramPath } from "./pasuramArchive.ts";
 
@@ -73,11 +73,12 @@ export async function openOfflinePasuram(url: string): Promise<PasuramOpenResult
         flags: FLAG_GRANT_READ_URI_PERMISSION,
       });
     } else {
-      // iOS has no Intent/ACTION_VIEW system to target a PDF viewer
-      // specifically -- its own document preview sheet (reached via
-      // expo-sharing here) is the closest platform equivalent, and,
-      // unlike Android's, is not dominated by messaging/send targets.
-      await Sharing.shareAsync(localUri, { mimeType: "application/pdf", UTI: "com.adobe.pdf" });
+      // iOS has no Intent/ACTION_VIEW to target a PDF viewer, and
+      // expo-sharing's share sheet read as "send this" rather than "read
+      // this" (reported on device). Quick Look is iOS's own document
+      // viewer; its share button still offers Adobe Acrobat when
+      // installed. See modules/quick-look.
+      await previewDocumentAsync(localUri);
     }
     return { success: true };
   } catch (error) {
