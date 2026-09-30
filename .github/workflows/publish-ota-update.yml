@@ -57,6 +57,25 @@ jobs:
         working-directory: mobile
         run: npm ci
 
+      # An update is plain JavaScript, so it must be built by the same Expo
+      # SDK as the binaries it reaches. The Android installs on runtime
+      # 1.0.3 were built with SDK 54; since iOS moved to SDK 57, a merge
+      # that leaves app.json "version" at 1.0.3 would otherwise push SDK 57
+      # JavaScript to those SDK 54 apps. Fail loudly instead. When Android
+      # ships an APK with a new "version", this check no longer applies.
+      - name: Refuse to publish to a runtime built with a different Expo SDK
+        working-directory: mobile
+        env:
+          ANDROID_LIVE_RUNTIME: "1.0.3"
+          ANDROID_LIVE_EXPO_SDK: "54"
+        run: |
+          RUNTIME=$(node -p "require('./app.json').expo.version")
+          SDK=$(node -p "require('expo/package.json').version.split('.')[0]")
+          if [ "$RUNTIME" = "$ANDROID_LIVE_RUNTIME" ] && [ "$SDK" != "$ANDROID_LIVE_EXPO_SDK" ]; then
+            echo "::error::Not publishing: Android runtime $RUNTIME installs were built with Expo SDK $ANDROID_LIVE_EXPO_SDK, but this commit uses SDK $SDK. Ship a new APK with a new app.json \"version\" first."
+            exit 1
+          fi
+
       - name: Publish update
         working-directory: mobile
         env:
