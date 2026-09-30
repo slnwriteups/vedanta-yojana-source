@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { shadows } from "../shadows";
+import { DatePickerModal } from "./DatePickerModal";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import {
@@ -40,6 +42,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
   const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
+  const [pickerVisible, setPickerVisible] = useState(false);
 
   useEffect(() => {
     if (initialPanchangam && isSameDay(selectedDate, today)) {
@@ -234,7 +237,15 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
         {/* Selected Date Header with Status Badge */}
         <View style={[styles.dateHeadingRow, { borderTopColor: theme.colors.border }]}>
-          <Text style={[styles.dateHeadingText, { color: theme.colors.foreground }]}>{formattedDateHeading}</Text>
+          <Pressable
+            onPress={() => setPickerVisible(true)}
+            style={({ pressed }) => [styles.dateHeadingButton, { opacity: pressed ? 0.7 : 1 }]}
+            accessibilityRole="button"
+            accessibilityLabel={`${t("calendarPickDate")}: ${formattedDateHeading}`}
+          >
+            <Ionicons name="calendar-outline" size={18} color={theme.colors.accent} />
+            <Text style={[styles.dateHeadingText, { color: theme.colors.foreground }]}>{formattedDateHeading}</Text>
+          </Pressable>
           <View
             style={[
               styles.badge,
@@ -326,6 +337,13 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           />
         ) : null}
       </View>
+
+      <DatePickerModal
+        visible={pickerVisible}
+        selectedDate={selectedDate}
+        onSelect={setSelectedDate}
+        onClose={() => setPickerVisible(false)}
+      />
     </View>
   );
 }
@@ -507,6 +525,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: spacing.xs,
     borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  dateHeadingButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    flexShrink: 1,
   },
   dateHeadingText: {
     fontSize: typography.body,
