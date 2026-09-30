@@ -65,10 +65,11 @@ import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile
  * the new chapter, rather than carrying over the previous chapter's
  * scroll depth.
  *
- * Gesture pass: swipe left/right anywhere on the page turns to the
- * next/previous chapter (Kindle/Apple Books convention -- swipe left
- * advances, matching left-to-right reading order), on top of the
- * existing tap-based Previous/Next pager. Built with PanResponder
+ * Gesture pass: swipe right-to-left anywhere on the page turns to the
+ * next chapter (Kindle/Apple Books convention); swipe left-to-right
+ * returns to the book's own page -- requested directly, matching the
+ * platform's own swipe-back meaning rather than paging to the previous
+ * chapter. The tap-based Previous/Next pager still pages both ways. Built with PanResponder
  * (React Native core) rather than react-native-gesture-handler, which
  * is installed since Expo SDK 56 only as a peer of expo-router's
  * drawer dependency. `onMoveShouldSetPanResponder` only claims the gesture once
@@ -134,6 +135,8 @@ export default function LibraryChapterScreen() {
   const chapter = loadedChapter ? localizeChapter(loadedChapter, language) : null;
   const tint = sectionTint(bookSlug, theme.scheme);
   const adjacentRef = useRef<{ previous: Chapter | null; next: Chapter | null }>({ previous: null, next: null });
+  const bookSlugRef = useRef(bookSlug);
+  bookSlugRef.current = bookSlug;
   const scrollViewRef = useRef<ScrollView>(null);
   const paragraphRefs = useRef<Record<number, Text | null>>({});
 
@@ -172,17 +175,26 @@ export default function LibraryChapterScreen() {
     AccessibilityInfo.announceForAccessibility(nowReadingAnnouncement(language, title));
   }
 
+  function goBackToBook() {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    // dismissTo pops back to the book page when it's underneath (the usual
+    // Library -> book -> chapter path; chapter paging uses replace, so it
+    // never stacks) and otherwise replaces this screen with it -- e.g. a
+    // chapter opened straight from Home's "Continue reading".
+    router.dismissTo(`/library/${bookSlugRef.current}` as never);
+  }
+
   const panResponder = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_evt, gesture) => {
         return Math.abs(gesture.dx) > SWIPE_DISTANCE_THRESHOLD && Math.abs(gesture.dx) > Math.abs(gesture.dy) * 2;
       },
       onPanResponderRelease: (_evt, gesture) => {
-        const { previous, next } = adjacentRef.current;
+        const { next } = adjacentRef.current;
         if (gesture.dx < 0 && next) {
           goTo(next.slug, next.title);
-        } else if (gesture.dx > 0 && previous) {
-          goTo(previous.slug, previous.title);
+        } else if (gesture.dx > 0) {
+          goBackToBook();
         }
       },
     })
