@@ -117,6 +117,11 @@ const UI_STRINGS = {
   },
   /** Labels the Panchangam card's row naming the place the day's figures were computed for -- a Panchangam is location-specific, so "Tithi" alone is an incomplete statement without it. */
   homeCalendarLocationLabel: { en: "Location", ta: "இருப்பிடம்", kn: "ಸ್ಥಳ", hi: "स्थान", te: "స్థలం" },
+  homeCalendarSunriseLabel: { en: "Sunrise", ta: "சூரிய உதயம்", kn: "ಸೂರ್ಯೋದಯ", hi: "सूर्योदय", te: "సూర్యోదయం" },
+  homeCalendarSunsetLabel: { en: "Sunset", ta: "சூரிய அஸ்தமனம்", kn: "ಸೂರ್ಯಾಸ್ತ", hi: "सूर्यास्त", te: "సూర్యాస్తమయం" },
+  homeCalendarRahuKaalamLabel: { en: "Rahu Kaalam", ta: "ராகு காலம்", kn: "ರಾಹು ಕಾಲ", hi: "राहु काल", te: "రాహు కాలం" },
+  homeCalendarYamagandamLabel: { en: "Yamagandam", ta: "எமகண்டம்", kn: "ಯಮಗಂಡ ಕಾಲ", hi: "यमगंड काल", te: "యమగండం" },
+  homeCalendarGulikaKaalamLabel: { en: "Gulika Kaalam", ta: "குளிகை காலம்", kn: "ಗುಳಿಕ ಕಾಲ", hi: "गुलिक काल", te: "గుళిక కాలం" },
   homeCalendarTithiLabel: { en: "Tithi", ta: "திதி", kn: "ತಿಥಿ", hi: "तिथि", te: "తిథి" },
   homeCalendarNakshatramLabel: { en: "Nakshatram", ta: "நட்சத்திரம்", kn: "ನಕ್ಷತ್ರ", hi: "नक्षत्र", te: "నక్షత్రం" },
   homeCalendarFestivalLabel: { en: "Festival", ta: "விழா", kn: "ಹಬ್ಬ", hi: "पर्व", te: "పండుగ / ఉత్సవం" },

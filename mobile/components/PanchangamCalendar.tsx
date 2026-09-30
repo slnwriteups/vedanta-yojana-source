@@ -14,6 +14,7 @@ import {
   tithiLabel,
 } from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
+import { formatPanchangamTime } from "../services/panchangamTimings.ts";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -98,6 +99,21 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     : "";
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
+  const locale = language || "en-US";
+  // Only the timings the endpoint actually returned for this day are shown.
+  const timingRows = data
+    ? (
+        [
+          ["homeCalendarSunriseLabel", data.sunrise],
+          ["homeCalendarSunsetLabel", data.sunset],
+          ["homeCalendarRahuKaalamLabel", data.rahuKaalam],
+          ["homeCalendarYamagandamLabel", data.yamagandam],
+          ["homeCalendarGulikaKaalamLabel", data.gulikaKaalam],
+        ] as const
+      )
+        .filter(([, value]) => Boolean(value))
+        .map(([key, value]) => ({ label: t(key), value: formatPanchangamTime(value as string, locale) }))
+    : [];
 
   return (
     <View style={styles.section}>
@@ -276,6 +292,9 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 fg={theme.colors.foreground}
               />
             ) : null}
+            {timingRows.map(({ label, value }) => (
+              <Row key={label} label={label} value={value} muted={theme.colors.muted} fg={theme.colors.foreground} />
+            ))}
             {data.location ? (
               <Row
                 label={t("homeCalendarLocationLabel")}
