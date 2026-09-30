@@ -155,6 +155,15 @@ const UI_STRINGS = {
   calendarTodayButton: { en: "Today", ta: "இன்று", kn: "ಇಂದು", hi: "आज", te: "నేడు" },
   calendarPastPassed: { en: "Past", ta: "முடிந்தது", kn: "ಕಳೆದ", hi: "व्यतीत", te: "గడచిన" },
   calendarUpcoming: { en: "Upcoming", ta: "வரவிருக்கும்", kn: "ಮುಂಬರುವ", hi: "आगामी", te: "రాబోయే" },
+  /** Labels Ahobila's daily sankalpam inside the Sankalpam box on the days a Tarpana Sankalpam is shown beneath it. */
+  sankalpamDailyLabel: { en: "Daily", ta: "தினசரி", kn: "ದೈನಂದಿನ", hi: "दैनिक", te: "రోజువారీ" },
+  padukaTarpanamLabel: {
+    en: "Tarpana Sankalpam",
+    ta: "தர்ப்பண சங்கல்பம்",
+    kn: "ತರ್ಪಣ ಸಂಕಲ್ಪ",
+    hi: "तर्पण संकल्प",
+    te: "తర్పణ సంకల్పం",
+  },
   calendarLoading: {
     en: "Loading Panchangam...",
     ta: "பஞ்சாங்கம் ஏற்றப்படுகிறது...",

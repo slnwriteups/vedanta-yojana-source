@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { View } from "react-native";
+import { AppState, View } from "react-native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
+import * as Updates from "expo-updates";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useTheme } from "../theme";
 import { ThemeProvider } from "../ThemeProvider";
@@ -130,8 +131,62 @@ function useUnlockedOrientation() {
   }, []);
 }
 
+/**
+ * expo-updates on its own only checks for an OTA update during a cold
+ * start, and applies what it downloaded on the NEXT cold start. Android
+ * keeps the app alive in the background, so a reader who reopens it from
+ * recents never cold-starts it and can sit on an old update for days
+ * (seen on a device two updates behind the published one). This checks
+ * again whenever the app comes back to the foreground (at most once per
+ * UPDATE_CHECK_INTERVAL_MS), downloads anything new, and reloads onto a
+ * downloaded update the next time the app is foregrounded -- the moment
+ * the reader is arriving rather than mid-read, and ReadingPositionProvider
+ * has already persisted where they were. Never runs in development, and
+ * never throws: a failed check just waits for the next one.
+ */
+const UPDATE_CHECK_INTERVAL_MS = 15 * 60 * 1000;
+
+function useForegroundUpdates() {
+  useEffect(() => {
+    if (__DEV__ || !Updates.isEnabled) return;
+
+    let lastCheckedAt = 0;
+    let checking = false;
+    let downloaded = false;
+
+    async function checkAndFetch() {
+      if (checking || downloaded || Date.now() - lastCheckedAt < UPDATE_CHECK_INTERVAL_MS) return;
+      checking = true;
+      lastCheckedAt = Date.now();
+      try {
+        const check = await Updates.checkForUpdateAsync();
+        if (check.isAvailable) {
+          const result = await Updates.fetchUpdateAsync();
+          downloaded = result.isNew;
+        }
+      } catch {
+        // Offline or the update server is unreachable -- retry on a later foreground.
+      } finally {
+        checking = false;
+      }
+    }
+
+    void checkAndFetch();
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state !== "active") return;
+      if (downloaded) {
+        void Updates.reloadAsync().catch(() => {});
+        return;
+      }
+      void checkAndFetch();
+    });
+    return () => subscription.remove();
+  }, []);
+}
+
 export default function RootLayout() {
   useUnlockedOrientation();
+  useForegroundUpdates();
 
   return (
     <ThemeProvider>

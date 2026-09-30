@@ -13,11 +13,14 @@ import { readJSON, writeJSON } from "@/lib/storage";
  */
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
     readJSON(LANGUAGE_STORAGE_KEY, isValidLanguageCode).then((stored) => {
-      if (!cancelled && stored !== null) setLanguageState(stored);
+      if (cancelled) return;
+      if (stored !== null) setLanguageState(stored);
+      setReady(true);
     });
     return () => {
       cancelled = true;
@@ -31,8 +34,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         setLanguageState(next);
         void writeJSON(LANGUAGE_STORAGE_KEY, next);
       },
+      ready,
     }),
-    [language]
+    [language, ready]
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

@@ -14,6 +14,14 @@ import {
   tithiLabel,
 } from "../panchangam-labels.ts";
 import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
+import {
+  calendarFestivalLine,
+  localizePadukaFestival,
+  localizePadukaTarpanam,
+  padukaPanchangamFor,
+  type PadukaPanchangamDay,
+  type PadukaTarpanam,
+} from "../../content-lib/paduka-panchangam.ts";
 import { formatPanchangamTime } from "../services/panchangamTimings.ts";
 
 function isSameDay(d1: Date, d2: Date): boolean {
@@ -99,6 +107,9 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     : "";
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
+  const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
+  const showAhobila = !isLoading && hasData;
+  const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
   const timingRows = data
@@ -265,9 +276,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </View>
         ) : hasData && data ? (
           <View style={styles.contentRows}>
-            {data.festival ? (
-              <Text style={[styles.festival, { color: theme.colors.accent }]}>{data.festival}</Text>
-            ) : null}
+            {festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{festival}</Text> : null}
             {pakshaTithi ? (
               <Row
                 label={t("homeCalendarTithiLabel")}
@@ -304,50 +313,29 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               />
             ) : null}
 
-            {data.sankalpamText ? (
-              <View style={[styles.sankalpamSection, { borderTopColor: theme.colors.border }]}>
-                <Pressable
-                  onPress={() => setShowSankalpam((prev) => !prev)}
-                  style={styles.sankalpamToggleBtn}
-                  accessibilityRole="button"
-                  accessibilityLabel={t("homeSankalpamLabel")}
-                >
-                  <Text style={[styles.sankalpamSectionLabel, { color: theme.colors.muted }]}>
-                    {t("homeSankalpamLabel")}
-                  </Text>
-                  <Text style={[styles.toggleArrow, { color: theme.colors.muted }]}>
-                    {showSankalpam ? "▲" : "▼"}
-                  </Text>
-                </Pressable>
-                {showSankalpam ? (
-                  <View
-                    style={[
-                      styles.sankalpamBox,
-                      {
-                        backgroundColor: theme.colors.background,
-                        borderColor: theme.colors.border,
-                      },
-                    ]}
-                  >
-                    <Text
-                      style={[
-                        styles.sankalpamBody,
-                        {
-                          color: theme.colors.foreground,
-                          fontFamily: Platform.select(typography.readingFontFamily),
-                        },
-                      ]}
-                    >
-                      {localizeSankalpamText(data.sankalpamText, language)}
-                    </Text>
-                  </View>
-                ) : null}
-              </View>
+            {data.sankalpamText || paduka?.tarpanam ? (
+              <SankalpamSection
+                ahobilaText={data.sankalpamText || null}
+                tarpanam={paduka?.tarpanam ?? null}
+                show={showSankalpam}
+                onToggle={() => setShowSankalpam((prev) => !prev)}
+              />
             ) : null}
           </View>
         ) : (
           <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
         )}
+
+        {/* Bundled data: stands in for the Ahobila rows while that fetch is loading or unavailable. */}
+        {paduka?.day && !showAhobila ? <PadukaFallbackRows day={paduka.day} /> : null}
+        {paduka?.tarpanam && !showAhobila ? (
+          <SankalpamSection
+            ahobilaText={null}
+            tarpanam={paduka.tarpanam}
+            show={showSankalpam}
+            onToggle={() => setShowSankalpam((prev) => !prev)}
+          />
+        ) : null}
       </View>
 
       <DatePickerModal
@@ -365,6 +353,101 @@ function Row({ label, value, muted, fg }: { label: string; value: string; muted:
     <View style={styles.row}>
       <Text style={[styles.rowLabel, { color: muted }]}>{label}</Text>
       <Text style={[styles.rowValue, { color: fg }]}>{value}</Text>
+    </View>
+  );
+}
+
+/**
+ * The journal's tithi, nakshatram and observances for the selected day,
+ * in the same rows as the Ahobila figures and with no heading of its own,
+ * shown only while those live figures are loading or unavailable. Bundled
+ * data, so it needs no network or location access.
+ */
+function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
+  const theme = useTheme();
+  const t = useT();
+  const { language } = useLanguage();
+  const pakshaTithi = [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ");
+  const nakshatram = nakshatramLabel(day.nakshatram, language);
+
+  return (
+    <View style={styles.contentRows}>
+      {day.festival ? (
+        <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text>
+      ) : null}
+      {pakshaTithi ? (
+        <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />
+      ) : null}
+      {nakshatram ? (
+        <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} muted={theme.colors.muted} fg={theme.colors.foreground} />
+      ) : null}
+    </View>
+  );
+}
+
+/**
+ * The single Sankalpam box: Ahobila's live daily sankalpam and, on the
+ * days the Paduka Panchangam prints one, its Tarpana Sankalpam beneath
+ * it. Both are shown exactly as their sources give them; the small
+ * labels only appear when there are two to tell apart.
+ */
+function SankalpamSection({
+  ahobilaText,
+  tarpanam,
+  show,
+  onToggle,
+}: {
+  ahobilaText: string | null;
+  tarpanam: PadukaTarpanam | null;
+  show: boolean;
+  onToggle: () => void;
+}) {
+  const theme = useTheme();
+  const t = useT();
+  const { language } = useLanguage();
+  const both = Boolean(ahobilaText && tarpanam);
+  const bodyStyle = [
+    styles.sankalpamBody,
+    { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
+  ];
+
+  return (
+    <View style={[styles.sankalpamSection, { borderTopColor: theme.colors.border }]}>
+      <Pressable
+        onPress={onToggle}
+        style={styles.sankalpamToggleBtn}
+        accessibilityRole="button"
+        accessibilityLabel={t("homeSankalpamLabel")}
+      >
+        <Text style={[styles.sankalpamSectionLabel, { color: theme.colors.muted }]}>{t("homeSankalpamLabel")}</Text>
+        <Text style={[styles.toggleArrow, { color: theme.colors.muted }]}>{show ? "▲" : "▼"}</Text>
+      </Pressable>
+      {show ? (
+        <View
+          style={[
+            styles.sankalpamBox,
+            styles.sankalpamParts,
+            { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
+          ]}
+        >
+          {ahobilaText ? (
+            <View>
+              {both ? (
+                <Text style={[styles.sankalpamPartLabel, { color: theme.colors.accent }]}>{t("sankalpamDailyLabel")}</Text>
+              ) : null}
+              <Text style={bodyStyle}>{localizeSankalpamText(ahobilaText, language)}</Text>
+            </View>
+          ) : null}
+          {tarpanam ? (
+            <View style={both ? [styles.sankalpamPartDivider, { borderTopColor: theme.colors.border }] : undefined}>
+              {both ? (
+                <Text style={[styles.sankalpamPartLabel, { color: theme.colors.accent }]}>{t("padukaTarpanamLabel")}</Text>
+              ) : null}
+              <Text style={bodyStyle}>{localizePadukaTarpanam(tarpanam, language)}</Text>
+            </View>
+          ) : null}
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -517,6 +600,18 @@ const styles = StyleSheet.create({
     padding: spacing.sm,
     borderRadius: radius.sm,
     borderWidth: StyleSheet.hairlineWidth,
+  },
+  sankalpamParts: {
+    gap: spacing.sm,
+  },
+  sankalpamPartLabel: {
+    fontSize: typography.small,
+    fontWeight: "600",
+    paddingBottom: 2,
+  },
+  sankalpamPartDivider: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingTop: spacing.sm,
   },
   sankalpamBody: {
     fontSize: typography.body,

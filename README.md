@@ -13,7 +13,7 @@ on web and Android today.
 |---|---|
 | **Android** | [Download the latest release →](https://github.com/slnwriteups/vedanta-yojana-releases/releases) |
 | **Web** | Live at [vedantayojana.org](https://vedantayojana.org) |
-| **iOS** | Coming soon — Apple Developer Program enrollment in progress |
+| **iOS** | Coming soon — being prepared for the App Store |
 
 Before installing an Android release, see the
 [APK Verification Guide](docs/APK-VERIFICATION.md) to confirm a
@@ -324,7 +324,7 @@ The application is currently available as:
 * Android
 * Web
 
-I am also working through the process of joining the Apple Developer Program, with the intention of bringing Vedanta Yojana to Apple devices as well.
+I have now joined the Apple Developer Program, and am preparing Vedanta Yojana for the App Store so that it can reach Apple devices as well.
 
 This release is therefore not an ending.
 
@@ -475,7 +475,7 @@ Everything below reflects what is actually implemented, not planned:
 |---|---|
 | Web (any modern browser) | Live — [vedantayojana.org](https://vedantayojana.org) |
 | Android | Available — see [Latest Release](#latest-release) |
-| iOS | Not yet available — Apple Developer Program enrollment in progress |
+| iOS | Not yet available — being prepared for the App Store |
 
 ## Screenshots
 
@@ -490,7 +490,7 @@ latest Android release.
   Panchangam, multilingual support — all live today on web and Android
 
 **In Development**
-- iOS distribution, via the Apple Developer Program
+- iOS release on the App Store
 
 **Future**
 - Additional books added to the digital library
@@ -546,7 +546,7 @@ to confirm a downloaded file is genuine.
 - Each release on GitHub is published with its SHA-256 checksum and
   signing-certificate fingerprint, so any downloaded APK can be
   independently confirmed — see the
-  [APK Verification Guide](docs/APK-VERIFICATION.md). The app is
+  [APK Verification Guide](docs/APK-VERIFICATION.md). The Android app is
   distributed only through GitHub, not through any app store.
 - Dependency vulnerabilities are tracked via Dependabot and `npm audit`;
   known issues are patched or remediated and covered by automated
@@ -598,7 +598,7 @@ app updates both require connectivity. See
 |---|---|---|
 | Framework | Next.js (`output: "export"`, fully static) | Expo (React Native) |
 | Status | **co-equal target — full feature parity** | **co-equal target — full feature parity** |
-| Deploy | GitHub Pages, auto-deploys from `main` | [GitHub Releases](#latest-release) (APK) plus over-the-air updates; GitHub only, no app store |
+| Deploy | GitHub Pages, auto-deploys from `main` | Android: [GitHub Releases](#latest-release) (APK) plus over-the-air updates, GitHub only; iOS: App Store (in preparation) |
 | Detail | — | see `mobile/README.md` |
 
 Both runtimes now carry the same feature set: content translation

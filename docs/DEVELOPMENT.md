@@ -94,9 +94,10 @@ read time on a user's device.
 `output: "export"`, producing a fully static site with no server
 runtime. Deployed to GitHub Pages by `.github/workflows/deploy-pages.yml`.
 
-**Mobile app** (`mobile/`): Expo (React Native), built for Android via
-EAS Build. iOS is listed in `mobile/app.json`'s `platforms` but is not
-part of this release's distribution.
+**Mobile app** (`mobile/`): Expo (React Native), built for Android and iOS via
+EAS Build. Android ships as APKs on GitHub; iOS is being prepared for
+the App Store (`eas build -p ios --profile production`, then
+`eas submit -p ios`).
 
 ## Content architecture
 
@@ -191,8 +192,13 @@ JavaScript and bundled-content changes through EAS Update
   which republishes on every website deploy. A translation batch for
   Library chapters therefore reaches devices by both routes — titles by
   OTA, text by the Library content update.
-- **Publishing:** `npm run update` in `mobile/` publishes the current
-  commit to the `production` branch. An update reaches only installs
+- **Publishing:** automatic. Every push to `main` that touches
+  `mobile/`, `content/` or `content-lib/` runs
+  `.github/workflows/publish-ota-update.yml`, which publishes that commit
+  to the `production` branch (it needs the `EXPO_TOKEN` repository
+  secret, and skips with a warning without it). It can also be run by
+  hand from the Actions tab; `npm run update` in `mobile/` still works
+  from a local checkout. An update reaches only installs
   whose runtime matches, so it must not change native code, and
   `version` in `mobile/app.json` must stay `1.0.3` for v16 installs to
   receive it.

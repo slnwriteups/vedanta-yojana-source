@@ -1,0 +1,82 @@
+name: Publish OTA update (Android app)
+
+# Publishes the mobile app's JavaScript bundle to EAS Update on every push
+# to main that can change it, so installed apps (v16 / runtime 1.0.3 and
+# later, production channel) pick up new features and content on their
+# next launch -- no APK reinstall, and no one having to remember to run
+# `npm run update` by hand after a merge. See docs/DEVELOPMENT.md
+# ("Over-the-air (OTA) updates") for what an update can and cannot carry.
+#
+# Scoped by path to what the bundle is built from: mobile/ itself, plus
+# the repo-root content/ and content-lib/ that mobile imports directly
+# (see mobile/metro.config.js watchFolders).
+#
+# An update only reaches installs whose runtime version matches
+# mobile/app.json "version" (runtimeVersion policy "appVersion"). A
+# change to native code or to that version needs a new APK first; this
+# workflow does not guard against that, exactly as `npm run update` does
+# not.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "mobile/**"
+      - "content/**"
+      - "content-lib/**"
+      - ".github/workflows/publish-ota-update.yml"
+  workflow_dispatch:
+
+# Two merges in quick succession publish in order, never concurrently.
+concurrency:
+  group: publish-ota-update
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: eas update (production)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      # Root node_modules is on Metro's resolver path for the shared
+      # content-lib/ code (mobile/metro.config.js nodeModulesPaths).
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Publish update
+        working-directory: mobile
+        env:
+          # An Expo access token (expo.dev -> Account settings -> Access
+          # tokens) for the account that owns the EAS project.
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          COMMIT_SUBJECT: ${{ github.event.head_commit.message || 'Manual OTA publish' }}
+        run: |
+          RUNTIME=$(node -p "require('./app.json').expo.version")
+          # Skips rather than fails when the credential is absent, the same
+          # convention as deploy-request-analytics.yml: a visible warning,
+          # not a red X on every merge until the secret exists.
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::warning::EXPO_TOKEN is not set -- no OTA update was published. Installed apps (runtime $RUNTIME) are still on the previous update."
+            exit 0
+          fi
+          MESSAGE=$(printf '%s' "$COMMIT_SUBJECT" | head -n 1)
+          npx --yes eas-cli@latest update \
+            --branch production \
+            --platform android \
+            --message "$MESSAGE (${GITHUB_SHA::7})" \
+            --non-interactive
+          echo "Published OTA update for runtime $RUNTIME from ${GITHUB_SHA::7}: $MESSAGE" >> "$GITHUB_STEP_SUMMARY"

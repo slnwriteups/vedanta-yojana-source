@@ -33,7 +33,9 @@ const DATASET = "vedanta_yojana_requests";
  */
 const DOWNLOADS_URL =
   "https://raw.githubusercontent.com/slnwriteups/vedanta-yojana-source/main/stats/apk-downloads.json";
-const RANGES = new Set([7, 30, 90]);
+// In days. 1 is the "24 hours" view, which is bucketed by hour rather
+// than by day.
+const RANGES = new Set([1, 7, 30, 90]);
 
 export default {
   async fetch(request, env) {
@@ -94,12 +96,14 @@ async function loadData(env, days) {
     return { error: "The dashboard is not connected yet: set the CF_ACCOUNT_ID and CF_API_TOKEN secrets on this Worker in Cloudflare (Settings -> Variables and Secrets)." };
   }
   // `days` is one of RANGES, never raw input, so interpolating it is safe.
-  const since = `timestamp > NOW() - INTERVAL '${days}' DAY`;
+  const hourly = days === 1;
+  const since = hourly ? "timestamp > NOW() - INTERVAL '24' HOUR" : `timestamp > NOW() - INTERVAL '${days}' DAY`;
+  const bucket = hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY";
   try {
-    const [daily, places, sources, downloads] = await Promise.all([
+    const [daily, places, sources, pages, languages, downloads] = await Promise.all([
       query(
         env,
-        `SELECT toStartOfInterval(timestamp, INTERVAL '1' DAY) AS day, blob2 AS kind,
+        `SELECT toStartOfInterval(timestamp, ${bucket}) AS day, blob2 AS kind,
                 SUM(_sample_interval) AS hits, SUM(_sample_interval * double2) AS visits
          FROM ${DATASET} WHERE ${since}
          GROUP BY day, kind ORDER BY day`,
@@ -119,9 +123,25 @@ async function loadData(env, days) {
          FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND double2 = 1 AND blob6 != ''
          GROUP BY source ORDER BY visits DESC LIMIT 500`,
       ),
+      // Views per page, and how many visits began on each. Blank blob7 is
+      // a view recorded before pages were, and is left out.
+      query(
+        env,
+        `SELECT blob7 AS page, SUM(_sample_interval) AS views, SUM(_sample_interval * double2) AS entries
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob7 != ''
+         GROUP BY page ORDER BY views DESC LIMIT 100`,
+      ),
+      // Views by the language the site was read in. Blank blob8 is a view
+      // recorded before languages were, and is left out.
+      query(
+        env,
+        `SELECT blob8 AS language, SUM(_sample_interval) AS views
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob8 != ''
+         GROUP BY language ORDER BY views DESC LIMIT 50`,
+      ),
       loadDownloads(),
     ]);
-    return { days, daily, places, sources, downloads };
+    return { days, hourly, daily, places, sources, pages, languages, downloads };
   } catch (error) {
     return { error: `Cloudflare returned an error: ${error.message}` };
   }
@@ -232,6 +252,9 @@ td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; width: 1%; w
 .barcell { position: relative; }
 .barcell span { position: absolute; left: 0; top: 4px; bottom: 4px; background: var(--bar); border-radius: 0 4px 4px 0; opacity: .45; }
 .barcell div { position: relative; }
+.pagecell div { overflow-wrap: anywhere; }
+.pagecell a { color: var(--text); text-decoration: none; }
+.pagecell a:hover { text-decoration: underline; }
 .empty, .error { color: var(--text-2); padding: 18px 4px; }
 .error { color: var(--text); }
 footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
@@ -242,7 +265,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
   <header>
     <h1>Vedanta Yojana analytics</h1>
     <div class="range" role="group" aria-label="Time range">
-      <button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
+      <button data-days="1">24 hours</button><button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
     </div>
   </header>
   <div id="status" class="empty">Loading…</div>
@@ -255,13 +278,13 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint">with any site or app activity</div></div>
     </div>
     <div class="card">
-      <h2>Website, per day</h2>
+      <h2>Website, <span class="per">per day</span></h2>
       <p class="sub">A visit is someone arriving from a search, a link or a typed address; views count every page they then open.</p>
       <div class="legend"><span><i style="background:var(--s1)"></i>Page views</span><span><i style="background:var(--s2)"></i>Visits</span></div>
       <div class="chart" id="c-web"></div>
     </div>
     <div class="card">
-      <h2>App launches, per day</h2>
+      <h2>App launches, <span class="per">per day</span></h2>
       <p class="sub">Each time the Android app is opened it checks for updates; that check is what is counted. Launches, not people.</p>
       <div class="chart" id="c-app"></div>
     </div>
@@ -275,6 +298,16 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
       <div id="sources"></div>
     </div>
+    <div class="card">
+      <h2>Languages</h2>
+      <p class="sub">The language readers had the website set to for each page they opened.</p>
+      <div id="languages"></div>
+    </div>
+    <div class="card">
+      <h2>Top pages</h2>
+      <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
+      <div id="pages"></div>
+    </div>
     <div class="grid2">
       <div class="card">
         <h2>Countries</h2>
@@ -287,7 +320,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         <div id="cities"></div>
       </div>
     </div>
-    <footer>Days are UTC. Cities are approximate — usually the nearest large city of the reader's internet provider. No cookies, IP addresses or identifiers are stored; figures are Cloudflare's, adjusted for its sampling.</footer>
+    <footer>Days are UTC; hours in the 24-hour view are your local time. Cities are approximate — usually the nearest large city of the reader's internet provider. No cookies, IP addresses or identifiers are stored; figures are Cloudflare's, adjusted for its sampling.</footer>
   </div>
 </div>
 <script>
@@ -369,6 +402,77 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     box.appendChild(table);
   }
 
+  var langNames;
+  try { langNames = new Intl.DisplayNames(["en"], { type: "language" }); } catch (e) { langNames = null; }
+  function languageName(code) {
+    try { return (langNames && langNames.of(code)) || code; } catch (e) { return code; }
+  }
+
+  function languageTable(rows) {
+    var list = rows.map(function (r) { return { name: languageName(String(r.language)), views: Number(r.views) }; })
+      .filter(function (r) { return r.views > 0; })
+      .sort(function (a, b) { return b.views - a.views; });
+    var box = document.getElementById("languages");
+    box.textContent = "";
+    if (!list.length) { box.appendChild(el("div", { class: "empty" }, "No languages recorded in this range yet.")); return; }
+    var total = list.reduce(function (a, r) { return a + r.views; }, 0);
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "Language"));
+    head.appendChild(el("th", { class: "n" }, "Page views"));
+    head.appendChild(el("th", { class: "n" }, "Share"));
+    table.appendChild(head);
+    list.forEach(function (r) {
+      var tr = el("tr");
+      var cell = el("td", { class: "place barcell" });
+      var bar = el("span");
+      bar.style.width = Math.max(2, (r.views / list[0].views) * 100) + "%";
+      cell.appendChild(bar);
+      cell.appendChild(el("div", {}, r.name));
+      tr.appendChild(cell);
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.views))));
+      tr.appendChild(el("td", { class: "n" }, Math.round((r.views / total) * 100) + "%"));
+      table.appendChild(tr);
+    });
+    box.appendChild(table);
+  }
+
+  function pageTable(rows) {
+    var list = rows.map(function (r) { return { page: String(r.page), views: Number(r.views), entries: Number(r.entries) }; })
+      .filter(function (r) { return r.views > 0; })
+      .sort(function (a, b) { return b.views - a.views; }).slice(0, 25);
+    var box = document.getElementById("pages");
+    box.textContent = "";
+    if (!list.length) { box.appendChild(el("div", { class: "empty" }, "No page views recorded in this range yet.")); return; }
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "Page"));
+    head.appendChild(el("th", { class: "n" }, "Views"));
+    head.appendChild(el("th", { class: "n" }, "Visits began here"));
+    table.appendChild(head);
+    list.forEach(function (r) {
+      var tr = el("tr");
+      var cell = el("td", { class: "place barcell pagecell" });
+      var bar = el("span");
+      bar.style.width = Math.max(2, (r.views / list[0].views) * 100) + "%";
+      cell.appendChild(bar);
+      var label = el("div");
+      if (r.page.charAt(0) === "/") {
+        var link = el("a", { href: "https://vedantayojana.org" + r.page, target: "_blank", rel: "noopener noreferrer" },
+          r.page === "/" ? "Home" : r.page);
+        label.appendChild(link);
+      } else {
+        label.textContent = "Other (unusual address)";
+      }
+      cell.appendChild(label);
+      tr.appendChild(cell);
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.views))));
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.entries))));
+      table.appendChild(tr);
+    });
+    box.appendChild(table);
+  }
+
   function metricOf(kind) {
     if (kind === "web") return "web";
     if (kind === "/app-version.json") return "launches";
@@ -396,15 +500,21 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 
   function render() {
     var d = state.data;
+    // One bucket per day, or per hour for the 24-hour view. Keys are UTC:
+    // "YYYY-MM-DD" for days, "YYYY-MM-DDTHH" for hours.
     var byDay = {};
+    var hourly = !!d.hourly;
+    var step = hourly ? 3600000 : 86400000;
+    var count = hourly ? 24 : d.days;
+    document.querySelectorAll(".per").forEach(function (n) { n.textContent = hourly ? "per hour" : "per day"; });
     var start = new Date();
-    start.setUTCHours(0, 0, 0, 0);
-    for (var i = d.days - 1; i >= 0; i--) {
-      var key = new Date(start.getTime() - i * 86400000).toISOString().slice(0, 10);
+    if (hourly) start.setUTCMinutes(0, 0, 0); else start.setUTCHours(0, 0, 0, 0);
+    for (var i = count - 1; i >= 0; i--) {
+      var key = new Date(start.getTime() - i * step).toISOString().slice(0, hourly ? 13 : 10);
       byDay[key] = { day: key, views: 0, visits: 0, launches: 0, downloads: 0 };
     }
     d.daily.forEach(function (row) {
-      var key = String(row.day).slice(0, 10);
+      var key = String(row.day).replace(" ", "T").slice(0, hourly ? 13 : 10);
       var slot = byDay[key];
       var m = metricOf(row.kind);
       if (!slot || !m) return;
@@ -443,12 +553,17 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     document.getElementById("t-visits").textContent = fmt.format(Math.round(sum("visits")));
     document.getElementById("t-views").textContent = fmt.format(Math.round(sum("views")));
     document.getElementById("t-launches").textContent = fmt.format(Math.round(sum("launches")));
-    document.getElementById("t-launches-hint").textContent =
-      "Android app opens · about " + fmt.format(Math.round(sum("launches") / d.days)) + " a day";
+    document.getElementById("t-launches-hint").textContent = hourly
+      ? "Android app opens · last 24 hours"
+      : "Android app opens · about " + fmt.format(Math.round(sum("launches") / d.days)) + " a day";
     if (snaps.length) {
       document.getElementById("t-downloads").textContent = fmt.format(snaps[snaps.length - 1].total);
-      document.getElementById("t-downloads-hint").textContent =
-        "+" + fmt.format(sum("downloads")) + " in this range · as of " + shortDate(snaps[snaps.length - 1].date);
+      var lastSnap = snaps[snaps.length - 1];
+      // Downloads are only known per day, so the 24-hour view shows the
+      // latest recorded day's gain instead of a range total.
+      document.getElementById("t-downloads-hint").textContent = hourly
+        ? (snaps.length > 1 ? "+" + fmt.format(Math.max(0, lastSnap.total - snaps[snaps.length - 2].total)) + " on " : "as of ") + shortDate(lastSnap.date)
+        : "+" + fmt.format(sum("downloads")) + " in this range · as of " + shortDate(lastSnap.date);
     } else {
       document.getElementById("t-downloads").textContent = "—";
       document.getElementById("t-downloads-hint").textContent = "download history unavailable";
@@ -468,7 +583,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     ]);
     // Only days with a recorded figure: before the first snapshot, and
     // today until the daily snapshot runs, "no data" must not read as 0.
-    var recorded = snaps.length > 1 ? days.filter(function (x) {
+    var recorded = !hourly && snaps.length > 1 ? days.filter(function (x) {
       return x.day > snaps[0].date && x.day <= snaps[snaps.length - 1].date;
     }) : [];
     var dlHost = document.getElementById("c-downloads");
@@ -478,9 +593,13 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       ]);
     } else {
       dlHost.textContent = "";
-      dlHost.appendChild(el("div", { class: "empty" }, "No daily download figures in this range yet."));
+      dlHost.appendChild(el("div", { class: "empty" }, hourly
+        ? "Downloads are recorded once a day — choose 7 days or longer to see them."
+        : "No daily download figures in this range yet."));
     }
     sourceTable(d.sources || []);
+    languageTable(d.languages || []);
+    pageTable(d.pages || []);
     placeTable("countries", Object.values(countries));
     placeTable("cities", Object.values(cities));
   }
@@ -531,8 +650,19 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     }
     return 10 * p * 4;
   }
+  // Day keys read "Sep 25"; hour keys ("YYYY-MM-DDTHH", UTC) read as the
+  // viewer's own local time, "3 PM".
   function shortDate(key) {
+    if (key.length > 10) {
+      return new Date(key + ":00:00Z").toLocaleTimeString("en", { hour: "numeric" });
+    }
     return new Date(key + "T00:00:00Z").toLocaleDateString("en", { month: "short", day: "numeric", timeZone: "UTC" });
+  }
+  function longLabel(key) {
+    if (key.length > 10) {
+      return new Date(key + ":00:00Z").toLocaleString("en", { weekday: "short", hour: "numeric", minute: "2-digit" });
+    }
+    return shortDate(key);
   }
 
   function lineChart(host, days, series) {
@@ -592,7 +722,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         dot.setAttribute("cx", cx); dot.setAttribute("cy", y(d[series[k].key])); dot.setAttribute("visibility", "visible");
       });
       tip.textContent = "";
-      tip.appendChild(el("b", {}, shortDate(d.day)));
+      tip.appendChild(el("b", {}, longLabel(d.day)));
       series.forEach(function (s) {
         var line = el("div");
         var sw = el("i"); sw.style.background = s.color;

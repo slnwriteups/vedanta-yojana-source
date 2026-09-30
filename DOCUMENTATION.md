@@ -754,6 +754,11 @@ APKs are published on
 apps through EAS over-the-air updates. See
 [docs/APK-VERIFICATION.md](docs/APK-VERIFICATION.md).
 
+**Update (2026-09-29):** the GitHub-only decision covers Android. With
+Apple Developer Program access in place, iOS is being prepared for the
+App Store, built with the `production` EAS profile and uploaded with
+`eas submit`. The APK update banner is disabled on iOS.
+
 ---
 
 ## 8. Engineering decisions
@@ -1107,7 +1112,8 @@ whether the patch is still needed.
 - The mobile app is not yet submitted to either app store; no `eas.json`
   exists; distribution is currently via a GitHub Release
   (`mobile-v1.0.0`) or direct Expo Go / EAS internal-distribution sharing
-  (§7.6).
+  (§7.6). *(Superseded: Android ships via GitHub releases with EAS
+  builds; iOS is being prepared for the App Store — see §7.6 updates.)*
 - For genuine offline-first image handling at scale (230+ images),
   `mobile/README.md` identifies `expo-file-system` with on-first-use
   caching as the natural next step, not yet implemented — images are

@@ -34,8 +34,9 @@
  * person or a device.
  *
  * It also answers the website's page-view ping (PING_PATH below), which
- * records the same geography plus whether the view began a visit -- and
- * nothing about which page was viewed.
+ * records the same geography, whether the view began a visit, where a
+ * visit came from, and which page was viewed -- as totals per page, with
+ * nothing that links one page view to another.
  *
  * Deploy: this Worker is bound to a route on the zone rather than a
  * workers.dev URL, so it requires the vedantayojana.org DNS records to
@@ -61,10 +62,10 @@ const COUNTED_PATHS = new Set(["/app-version.json", "/content-manifest.json"]);
  * manifests above, nothing lives at this path on GitHub Pages: the
  * Worker answers it itself and never forwards it to the origin.
  *
- * The page sends no path, no title and no identifier -- only `?v=1` when
- * the page load is a *visit* (the reader arrived from another site, a
- * search engine, a shared link, or typed the address) and `?v=0` for a
- * further page within the same visit. That is the same cookieless
+ * The page sends no title and no identifier -- only its path (`p=`) and
+ * `?v=1` when the page load is a *visit* (the reader arrived from another
+ * site, a search engine, a shared link, or typed the address) or `?v=0`
+ * for a further page within the same visit. That is the same cookieless
  * definition of a visit Cloudflare Web Analytics uses, and it is what
  * stands in for a "session" here: counting true sessions would require
  * a cookie or a stored identifier, which this project does not use.
@@ -100,6 +101,25 @@ function visitSource(url) {
   return /^[a-z0-9.-]{1,100}$/.test(host) ? host : "(direct)";
 }
 
+/**
+ * The page a view was of, as sent by the site: its path only ("/library"),
+ * without a trailing slash. Anything that is not a plain path -- too
+ * long, or with characters a route here never has -- is recorded as
+ * "(other)" rather than stored as sent, and a missing path as "".
+ */
+function pagePath(url) {
+  const raw = url.searchParams.get("p") ?? "";
+  if (!raw.startsWith("/")) return "";
+  const path = raw.length > 1 ? raw.replace(/\/+$/, "") || "/" : raw;
+  return /^\/[\p{L}\p{M}\p{N}\/_.~%-]{0,200}$/u.test(path) ? path : "(other)";
+}
+
+/** The site language a view was in ("en", "ta", …), or "" if not a plain code. */
+function pageLanguage(url) {
+  const code = url.searchParams.get("l") ?? "";
+  return /^[a-z]{2,3}$/.test(code) ? code : "";
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -111,8 +131,9 @@ export default {
           env.REQUEST_STATS.writeDataPoint({
             // Same blob layout as the manifest counts, with "web" in the
             // path slot so every existing per-path query is unaffected.
-            // blob6: the visit's source (see visitSource).
-            blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url)],
+            // blob6: the visit's source (see visitSource). blob7: the page
+            // viewed (see pagePath). blob8: its language (see pageLanguage).
+            blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url), pagePath(url), pageLanguage(url)],
             // double1: one page view. double2: 1 when that view began a
             // visit, so SUM(double2 * _sample_interval) counts visits.
             doubles: [1, url.searchParams.get("v") === "1" ? 1 : 0],
