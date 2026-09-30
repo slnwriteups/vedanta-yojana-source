@@ -137,7 +137,7 @@ export function Section({
               }
               const subheading =
                 (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
-                isVerseLine(paragraphs, index);
+                isVerseLine(paragraphs, index, text);
               nodes.push(
                 <Text
                   key={index}
