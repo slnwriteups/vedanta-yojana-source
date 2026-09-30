@@ -69,9 +69,9 @@ import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile
  * next/previous chapter (Kindle/Apple Books convention -- swipe left
  * advances, matching left-to-right reading order), on top of the
  * existing tap-based Previous/Next pager. Built with PanResponder
- * (React Native core, no new dependency) rather than
- * react-native-gesture-handler, which isn't installed elsewhere in
- * this app. `onMoveShouldSetPanResponder` only claims the gesture once
+ * (React Native core) rather than react-native-gesture-handler, which
+ * is installed since Expo SDK 56 only as a peer of expo-router's
+ * drawer dependency. `onMoveShouldSetPanResponder` only claims the gesture once
  * horizontal movement is both clearly larger than vertical AND past a
  * real threshold, so it never steals an ordinary vertical scroll --
  * verified by keeping normal scrolling intact after adding this.
