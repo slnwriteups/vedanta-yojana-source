@@ -192,24 +192,32 @@ export const PAGE = `<!doctype html>
 <meta name="robots" content="noindex">
 <title>Vedanta Yojana Analytics</title>
 <style>
-/* One colour per measure, held across the whole page: website visits are
-   always blue, page views orange, app launches aqua, downloads yellow --
-   in the chart, in the tile's edge and in the bar behind each table row.
-   Colour follows the measure, never its rank, so nothing is repainted when
-   a filter changes the order.
+/* One colour per measure, held across the whole page: website visits blue,
+   page views orange, and the two app measures as two shades of aqua -- in
+   the chart, the tile and the bar behind each table row. Colour follows the
+   measure, never its rank, so nothing is repainted when a sort changes.
 
-   The four are the documented categorical slots 1-4, validated as a set
-   against both surfaces: worst adjacent CVD dE 9.1 light / 8.4 dark, worst
-   unsimulated 22.9 / 19.8, every hue inside the lightness band and over the
-   chroma floor. On the light surface aqua (2.74:1) and yellow (2.11:1) sit
-   under 3:1, so they are never used for text -- only for marks, with a
-   visible peak label on every chart and numbers in every table. */
+   THREE hue families, not four, and that is a measured constraint rather
+   than a preference. All four measures are on screen at once, so the honest
+   test is every pair, not just neighbours. Under that test a fourth hue has
+   nowhere to go: yellow against orange scores dE 4.8 under deuteranopia on
+   the dark surface (floor 8) and 13.7 unsimulated on light (floor 15);
+   violet against blue scores 1.9 under protanopia. Both are the same colour
+   to a colourblind reader. Blue/orange/aqua clears every pair in both modes
+   -- worst CVD dE 9.2 light / 9.4 dark, worst unsimulated 24.0 / 20.9 -- so
+   the fourth measure takes a second shade of aqua instead of a fourth hue.
+   The two app measures share a family because they are the same subject,
+   and they never share a plot, so the shade is never load-bearing.
+
+   On the light surface aqua is 2.74:1, under 3:1, which is legal only with
+   visible relief: every chart carries a peak label and every table its
+   numbers. No text anywhere wears a measure colour. */
 :root {
   color-scheme: light;
   --bg: #f6f5f1; --surface: #fcfcfb; --border: #e4e2dc; --grid: #ecebe6;
   --text: #0b0b0b; --text-2: #52514e; --muted: #7a7873;
   --accent: #2a78d6;
-  --m-visits: #2a78d6; --m-views: #eb6834; --m-launches: #1baf7a; --m-downloads: #eda100;
+  --m-visits: #2a78d6; --m-views: #eb6834; --m-launches: #1baf7a; --m-downloads: #0e7a55;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -217,7 +225,7 @@ export const PAGE = `<!doctype html>
     --bg: #111110; --surface: #1a1a19; --border: #2f2f2c; --grid: #262624;
     --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
     --accent: #6da7ec;
-    --m-visits: #3987e5; --m-views: #d95926; --m-launches: #199e70; --m-downloads: #c98500;
+    --m-visits: #3987e5; --m-views: #d95926; --m-launches: #199e70; --m-downloads: #46c79a;
   }
 }
 :root[data-theme="dark"] {
@@ -225,19 +233,19 @@ export const PAGE = `<!doctype html>
   --bg: #111110; --surface: #1a1a19; --border: #2f2f2c; --grid: #262624;
   --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
   --accent: #6da7ec;
-  --m-visits: #3987e5; --m-views: #d95926; --m-launches: #199e70; --m-downloads: #c98500;
+  --m-visits: #3987e5; --m-views: #d95926; --m-launches: #199e70; --m-downloads: #46c79a;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text);
   font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
 header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-h1 { font-size: 20px; margin: 0; }
+h1 { font-size: 21px; margin: 0; font-weight: 750; letter-spacing: -0.02em; }
 h2 { font-size: 15px; margin: 0 0 4px; }
 .sub { color: var(--text-2); font-size: 13px; line-height: 1.55; margin: 0 0 14px; max-width: 76ch; }
 .sub b { color: var(--text); font-weight: 600; }
 .section-head { margin-top: 4px; }
-.range { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+.range { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
 .range button { background: var(--surface); color: var(--text-2); border: 0; padding: 7px 14px; font: inherit; cursor: pointer; }
 .range button + button { border-left: 1px solid var(--border); }
 .range button[aria-pressed="true"] { background: var(--accent); color: #fff; }
@@ -245,12 +253,15 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 /* Colour rides the marks; every word stays in an ink token. A 28px value
    in aqua (2.74:1) or yellow (2.11:1) on the light surface is not readable,
    so each tile carries a coloured rule down its edge instead. */
-.tile, .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-.tile { border-left: 3px solid var(--measure, var(--border)); }
+.tile, .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; }
+/* A wash of the measure's own colour behind its tile: colour on a surface,
+   where it cannot touch text contrast, rather than on the words. */
+.tile { border: 1px solid var(--border); border-left: 4px solid var(--measure, var(--border));
+  background: color-mix(in srgb, var(--measure, transparent) 7%, var(--surface)); }
 .barcell div, .pagecell a { color: var(--text); }
 .place small { color: var(--muted); }
 .tile .label { color: var(--text-2); font-size: 13px; }
-.tile .value { font-size: 28px; font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.tile .value { font-size: 34px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin-top: 2px; }
 .tile .hint { color: var(--muted); font-size: 12px; }
 .card { margin-bottom: 16px; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
@@ -273,8 +284,8 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .xaxis { display: flex; justify-content: space-between; margin-top: 7px; color: var(--muted); font-size: 11px; }
 .crosshair { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); pointer-events: none; }
 .hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; margin: 2px 0 18px; }
-.hero::before { content: ""; width: 4px; align-self: stretch; border-radius: 2px; background: var(--m-launches); }
-.hero .value { font-size: 52px; line-height: 1; font-weight: 650; letter-spacing: -0.02em; color: var(--text); }
+.hero::before { content: ""; width: 6px; align-self: stretch; border-radius: 3px; background: var(--m-launches); }
+.hero .value { font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; color: var(--text); }
 .hero .unit { color: var(--text-2); font-size: 14px; padding-bottom: 6px; }
 .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: nowrap; display: none; }

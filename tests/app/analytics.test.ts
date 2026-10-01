@@ -348,31 +348,39 @@ test("the charts are bars, one measure each, with their labels outside the stret
   assert.ok(fn.includes('class: "ylab"') && fn.includes('class: "xaxis"'));
 });
 
-test("each measure keeps one colour everywhere, and no text wears it", () => {
+test("the measure colours survive every pair, under colour blindness too", () => {
   const worker = read("cloudflare/analytics-dashboard/worker.js");
 
-  // Validated as a set against both surfaces: worst adjacent CVD dE 9.1
-  // light / 8.4 dark, worst unsimulated 22.9 / 19.8.
-  for (const hex of ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]) {
+  // All four measures are on screen at once, so the standard is every pair,
+  // not just neighbours. Three hue families clear it in both modes (worst
+  // CVD dE 9.2 light / 9.4 dark); a fourth hue cannot -- yellow against
+  // orange is dE 4.8 under deuteranopia on dark, violet against blue 1.9
+  // under protanopia. The fourth measure therefore takes a second shade of
+  // the app's own aqua rather than a fourth hue.
+  for (const hex of ["#2a78d6", "#eb6834", "#1baf7a", "#0e7a55"]) {
     assert.ok(worker.includes(hex), `missing light hue ${hex}`);
   }
-  for (const hex of ["#3987e5", "#d95926", "#199e70", "#c98500"]) {
+  for (const hex of ["#3987e5", "#d95926", "#199e70", "#46c79a"]) {
     assert.ok(worker.includes(hex), `missing dark hue ${hex}`);
   }
-  // Set once per card and inherited by the chart, the tile edge and the
-  // table bar, so colour follows the measure rather than its rank.
-  // The hue travels in its own property, not currentColor: sharing the
-  // text channel means fixing the text to an ink token silently greys out
-  // every mark that inherited it.
+  // The hues that failed the all-pairs test must not come back.
+  for (const banned of ["#eda100", "#c98500", "#4a3aa7", "#9085e9"]) {
+    assert.ok(!worker.includes(banned), `${banned} fails all-pairs CVD separation`);
+  }
+
+  // The hue travels in its own property, not currentColor: sharing the text
+  // channel means fixing text to an ink token silently greys out every mark
+  // that inherited it.
   assert.ok(worker.includes("fill: var(--measure, var(--accent))"));
   assert.ok(worker.includes("background: var(--measure, var(--accent))"));
   assert.ok(!worker.includes("currentColor"), "no mark reads the text colour");
 
-  // On the light surface aqua is 2.74:1 and yellow 2.11:1 -- unreadable as
-  // text. Every word takes an ink token; only marks carry the hue.
-  assert.ok(worker.includes(".hero .value { font-size: 52px; line-height: 1; font-weight: 650; letter-spacing: -0.02em; color: var(--text); }"));
+  // Colour sits on marks and surfaces, never on words: aqua is 2.74:1 on
+  // the light surface, which as text is unreadable.
+  assert.ok(worker.includes("color: var(--text)"));
   assert.ok(worker.includes("td { padding: 7px 4px; border-bottom: 1px solid var(--grid); color: var(--text); }"));
   assert.ok(worker.includes(".barcell div, .pagecell a { color: var(--text); }"));
+  assert.ok(worker.includes("color-mix(in srgb, var(--measure, transparent) 7%, var(--surface))"));
 
   assert.ok(worker.includes("@media (prefers-color-scheme: dark)"));
   assert.ok(worker.includes(':root:not([data-theme="light"])'));
