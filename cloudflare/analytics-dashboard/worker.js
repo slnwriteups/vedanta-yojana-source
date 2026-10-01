@@ -239,13 +239,17 @@ export const PAGE = `<!doctype html>
 body { margin: 0; background: var(--bg); color: var(--text);
   font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 24px 16px 48px; }
-header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-h1 { font-size: 21px; margin: 0; font-weight: 750; letter-spacing: -0.02em; }
+header { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.provenance { color: var(--muted); font-size: 12px; margin: 4px 0 0; font-variant-numeric: tabular-nums; }
+.theme { background: var(--surface); color: var(--text-2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 7px 12px; font: inherit; font-size: 13px; cursor: pointer; }
+h1 { font-size: 19px; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 h2 { font-size: 15px; margin: 0 0 4px; }
 .sub { color: var(--text-2); font-size: 13px; line-height: 1.55; margin: 0 0 14px; max-width: 76ch; }
 .sub b { color: var(--text); font-weight: 600; }
 .section-head { margin-top: 4px; }
-.range { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+.range { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
 .range button { background: var(--surface); color: var(--text-2); border: 0; padding: 7px 14px; font: inherit; cursor: pointer; }
 .range button + button { border-left: 1px solid var(--border); }
 .range button[aria-pressed="true"] { background: var(--accent); color: #fff; }
@@ -253,15 +257,16 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 /* Colour rides the marks; every word stays in an ink token. A 28px value
    in aqua (2.74:1) or yellow (2.11:1) on the light surface is not readable,
    so each tile carries a coloured rule down its edge instead. */
-.tile, .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 16px 18px; }
-/* A wash of the measure's own colour behind its tile: colour on a surface,
-   where it cannot touch text contrast, rather than on the words. */
-.tile { border: 1px solid var(--border); border-left: 4px solid var(--measure, var(--border));
-  background: color-mix(in srgb, var(--measure, transparent) 7%, var(--surface)); }
+.tile, .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; }
+/* Identity on the edge, never a wash behind the figures: a tinted panel is
+   decoration, and decoration is the first thing a sceptical reader
+   discounts. The surface stays the neutral one the palette was validated
+   against. */
+.tile { border: 1px solid var(--border); border-left: 3px solid var(--measure, var(--border)); }
 .barcell div, .pagecell a { color: var(--text); }
 .place small { color: var(--muted); }
 .tile .label { color: var(--text-2); font-size: 13px; }
-.tile .value { font-size: 34px; font-weight: 750; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.tile .value { font-size: 30px; font-weight: 700; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; margin-top: 2px; }
 .tile .hint { color: var(--muted); font-size: 12px; }
 .card { margin-bottom: 16px; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
@@ -284,8 +289,8 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .xaxis { display: flex; justify-content: space-between; margin-top: 7px; color: var(--muted); font-size: 11px; }
 .crosshair { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); pointer-events: none; }
 .hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; margin: 2px 0 18px; }
-.hero::before { content: ""; width: 6px; align-self: stretch; border-radius: 3px; background: var(--m-launches); }
-.hero .value { font-size: 64px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; color: var(--text); }
+.hero::before { content: ""; width: 4px; align-self: stretch; border-radius: 2px; background: var(--m-launches); }
+.hero .value { font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
 .hero .unit { color: var(--text-2); font-size: 14px; padding-bottom: 6px; }
 .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: nowrap; display: none; }
@@ -313,9 +318,22 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 <body>
 <div class="wrap">
   <header>
-    <h1>Vedanta Yojana analytics</h1>
-    <div class="range" role="group" aria-label="Time range">
-      <button data-days="1">24 hours</button><button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
+    <div>
+      <h1>Vedanta Yojana analytics</h1>
+      <!-- Provenance on the page itself: a screenshot of this ends up in a
+           slide or a document, where the window it covers and the moment it
+           was taken are the first things anyone should be able to check
+           without having to ask. -->
+      <p class="provenance" id="provenance"></p>
+    </div>
+    <div class="controls">
+      <div class="range" role="group" aria-label="Time range">
+        <button data-days="1">24 hours</button><button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
+      </div>
+      <!-- Projectors crush dark backgrounds and shift hues, so the theme has
+           to be forcible rather than left to whatever the room's laptop
+           prefers. -->
+      <button class="theme" id="theme" type="button" title="Switch theme">Theme: auto</button>
     </div>
   </header>
   <div id="status" class="empty">Loading…</div>
@@ -628,6 +646,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       document.getElementById("t-downloads").textContent = "—";
       document.getElementById("t-downloads-hint").textContent = "download history unavailable";
     }
+    var now = new Date();
+    document.getElementById("provenance").textContent =
+      (hourly ? "Last 24 hours" : "Last " + d.days + " days") +
+      " \u00b7 as of " + now.toISOString().slice(0, 16).replace("T", " ") + " UTC" +
+      " \u00b7 counts estimated from Cloudflare's sampling";
     document.getElementById("hero-value").textContent = fmt.format(Math.round(sum("launches")));
     document.getElementById("hero-unit").textContent = hourly
       ? "app launches in the last 24 hours"
@@ -841,6 +864,24 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       if (e.key === "Escape") hide();
     });
   }
+
+  // localStorage can throw in a private window or with site data blocked,
+  // so every access is guarded and the page renders correctly without it.
+  var THEMES = ["auto", "light", "dark"];
+  function readTheme() {
+    try { var v = localStorage.getItem("vy-theme"); return THEMES.indexOf(v) > -1 ? v : "auto"; }
+    catch (e) { return "auto"; }
+  }
+  function applyTheme(value) {
+    if (value === "auto") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", value);
+    document.getElementById("theme").textContent = "Theme: " + value;
+    try { localStorage.setItem("vy-theme", value); } catch (e) { /* not essential */ }
+  }
+  applyTheme(readTheme());
+  document.getElementById("theme").onclick = function () {
+    applyTheme(THEMES[(THEMES.indexOf(readTheme()) + 1) % THEMES.length]);
+  };
 
   document.querySelectorAll(".range button").forEach(function (b) {
     b.onclick = function () {
