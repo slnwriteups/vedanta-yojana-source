@@ -380,7 +380,8 @@ test("the measure colours survive every pair, under colour blindness too", () =>
   assert.ok(worker.includes("color: var(--text)"));
   assert.ok(worker.includes("td { padding: 7px 4px; border-bottom: 1px solid var(--grid); color: var(--text); }"));
   assert.ok(worker.includes(".barcell div, .pagecell a { color: var(--text); }"));
-  assert.ok(worker.includes("color-mix(in srgb, var(--measure, transparent) 7%, var(--surface))"));
+  assert.ok(worker.includes(".tile { border: 1px solid var(--border); border-left: 3px solid var(--measure, var(--border)); }"));
+  assert.ok(!worker.includes("color-mix"), "no tinted surface behind the figures");
 
   assert.ok(worker.includes("@media (prefers-color-scheme: dark)"));
   assert.ok(worker.includes(':root:not([data-theme="light"])'));
@@ -411,4 +412,23 @@ test("the preview shows the real data or an honest error, and never invents figu
   assert.ok(!/Math\.(random|sin)/.test(preview), "no generated series");
   assert.ok(!/\bhits:\s*\d/.test(preview) && !/\bvisits:\s*\d/.test(preview), "no hand-written rows");
   assert.ok(!/\bfixture/i.test(preview), "no fixture data path");
+});
+
+test("the page carries its own provenance and can be forced to a theme", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // A screenshot of this ends up in a slide. The window it covers, the
+  // moment it was taken, and the fact that the counts are sampled estimates
+  // rather than exact tallies all have to travel with the image.
+  assert.ok(worker.includes('<p class="provenance" id="provenance"></p>'));
+  assert.ok(worker.includes('" \\u00b7 as of "'));
+  assert.ok(worker.includes("counts estimated from Cloudflare's sampling"));
+
+  // Projectors crush dark backgrounds, so the theme cannot be left to the
+  // room's laptop. Auto / light / dark, remembered, with the storage access
+  // guarded -- it throws in a private window.
+  assert.ok(worker.includes('var THEMES = ["auto", "light", "dark"];'));
+  assert.ok(worker.includes('document.documentElement.setAttribute("data-theme", value)'));
+  const themeFns = worker.slice(worker.indexOf("function readTheme()"), worker.indexOf("applyTheme(readTheme());"));
+  assert.equal((themeFns.match(/catch \(e\)/g) ?? []).length, 2, "every storage access is guarded");
 });
