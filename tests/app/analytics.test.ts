@@ -361,8 +361,12 @@ test("each measure keeps one colour everywhere, and no text wears it", () => {
   }
   // Set once per card and inherited by the chart, the tile edge and the
   // table bar, so colour follows the measure rather than its rank.
-  assert.ok(worker.includes("fill: currentColor"));
-  assert.ok(worker.includes("background: currentColor"));
+  // The hue travels in its own property, not currentColor: sharing the
+  // text channel means fixing the text to an ink token silently greys out
+  // every mark that inherited it.
+  assert.ok(worker.includes("fill: var(--measure, var(--accent))"));
+  assert.ok(worker.includes("background: var(--measure, var(--accent))"));
+  assert.ok(!worker.includes("currentColor"), "no mark reads the text colour");
 
   // On the light surface aqua is 2.74:1 and yellow 2.11:1 -- unreadable as
   // text. Every word takes an ink token; only marks carry the hue.

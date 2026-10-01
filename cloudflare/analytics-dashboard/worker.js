@@ -246,7 +246,7 @@ h2 { font-size: 15px; margin: 0 0 4px; }
    in aqua (2.74:1) or yellow (2.11:1) on the light surface is not readable,
    so each tile carries a coloured rule down its edge instead. */
 .tile, .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
-.tile { border-left: 3px solid var(--tile-hue, var(--border)); }
+.tile { border-left: 3px solid var(--measure, var(--border)); }
 .barcell div, .pagecell a { color: var(--text); }
 .place small { color: var(--muted); }
 .tile .label { color: var(--text-2); font-size: 13px; }
@@ -265,7 +265,7 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .chart { position: relative; padding-left: 40px; }
 .plot { position: relative; height: 180px; }
 .plot svg { display: block; width: 100%; height: 100%; }
-.plot rect.col { fill: currentColor; }
+.plot rect.col { fill: var(--measure, var(--accent)); }
 .plot line.grid { stroke: var(--grid); stroke-width: 1; }
 .ylab { position: absolute; right: calc(100% + 8px); transform: translateY(-50%);
   color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -289,7 +289,7 @@ td { padding: 7px 4px; border-bottom: 1px solid var(--grid); color: var(--text);
 td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; width: 1%; white-space: nowrap; padding-left: 12px; }
 .place small { color: var(--muted); display: block; font-size: 12px; }
 .barcell { position: relative; }
-.barcell span { position: absolute; left: 0; top: 4px; bottom: 4px; background: currentColor; border-radius: 0 4px 4px 0; opacity: .28; }
+.barcell span { position: absolute; left: 0; top: 4px; bottom: 4px; background: var(--measure, var(--accent)); border-radius: 0 4px 4px 0; opacity: .3; }
 .barcell div { position: relative; }
 .pagecell div { overflow-wrap: anywhere; }
 .pagecell a { color: var(--text); text-decoration: none; }
@@ -314,59 +314,59 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <span class="unit" id="hero-unit">app launches</span>
     </div>
     <div class="tiles">
-      <div class="tile" style="--tile-hue:var(--m-visits)"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
-      <div class="tile" style="--tile-hue:var(--m-views)"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
-      <div class="tile" style="--tile-hue:var(--m-launches)"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
-      <div class="tile" style="--tile-hue:var(--m-downloads)"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
+      <div class="tile" style="--measure:var(--m-visits)"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
+      <div class="tile" style="--measure:var(--m-views)"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
+      <div class="tile" style="--measure:var(--m-launches)"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
+      <div class="tile" style="--measure:var(--m-downloads)"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
       <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint">with any site or app activity</div></div>
     </div>
     <div class="card">
       <h2>Website visits, <span class="per">per day</span></h2>
       <p class="sub">Someone arriving from a search, a link or a typed address.</p>
-      <div class="chart" id="c-visits" style="color:var(--m-visits)"></div>
+      <div class="chart" id="c-visits" style="--measure:var(--m-visits)"></div>
     </div>
     <div class="card">
       <h2>Website page views, <span class="per">per day</span></h2>
       <p class="sub">Every page opened. One visitor reading six chapters counts six times.</p>
-      <div class="chart" id="c-views" style="color:var(--m-views)"></div>
+      <div class="chart" id="c-views" style="--measure:var(--m-views)"></div>
     </div>
     <div class="card">
       <h2>App launches, <span class="per">per day</span></h2>
       <p class="sub">Each time the Android app is opened it checks for updates; that check is what is counted. Launches, not people.</p>
-      <div class="chart" id="c-app" style="color:var(--m-launches)"></div>
+      <div class="chart" id="c-app" style="--measure:var(--m-launches)"></div>
     </div>
     <div class="card">
       <h2>App downloads, per day</h2>
       <p class="sub">APK downloads from GitHub, recorded once a day. People updating download it again, so this runs ahead of the number of people using the app.</p>
-      <div class="chart" id="c-downloads" style="color:var(--m-downloads)"></div>
+      <div class="chart" id="c-downloads" style="--measure:var(--m-downloads)"></div>
     </div>
     <div class="card">
       <h2>Where visitors come from</h2>
       <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
-      <div id="sources" style="color:var(--m-visits)"></div>
+      <div id="sources" style="--measure:var(--m-visits)"></div>
     </div>
     <div class="card">
       <h2>Languages</h2>
       <p class="sub">The language readers had the website set to for each page they opened.</p>
-      <div id="languages" style="color:var(--m-views)"></div>
+      <div id="languages" style="--measure:var(--m-views)"></div>
     </div>
     <div class="card">
       <h2>Top pages</h2>
       <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
-      <div id="pages" style="color:var(--m-views)"></div>
+      <div id="pages" style="--measure:var(--m-views)"></div>
     </div>
     <div class="grid2">
       <div class="card">
         <h2>Countries</h2>
         <p class="sub">Where the site and the app are being used.</p>
         <div class="tabs" data-for="countries"></div>
-        <div id="countries" style="color:var(--m-visits)"></div>
+        <div id="countries" style="--measure:var(--m-visits)"></div>
       </div>
       <div class="card">
         <h2>Cities</h2>
         <p class="sub">Approximate — usually the nearest large city on the reader's provider.</p>
         <div class="tabs" data-for="cities"></div>
-        <div id="cities" style="color:var(--m-visits)"></div>
+        <div id="cities" style="--measure:var(--m-visits)"></div>
       </div>
     </div>
     <footer>Days are UTC; hours in the 24-hour view are your local time. Cities are approximate — usually the nearest large city of the reader's internet provider. No cookies, IP addresses or identifiers are stored; figures are Cloudflare's, adjusted for its sampling.</footer>
@@ -714,9 +714,9 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 
   // Columns, not a line. These are discrete per-day counts, and a line
   // drawn between them implies values on the way that do not exist. Each
-  // chart carries one measure in that measure's own colour, inherited
-  // through currentColor from the host, so nothing has to be matched
-  // against a legend.
+  // chart carries one measure in that measure's own colour, taken from the
+  // --measure property its card sets, so nothing has to be matched against
+  // a legend.
   function barChart(host, rows, key) {
     host.textContent = "";
     if (!rows.length) {
@@ -804,7 +804,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       tip.appendChild(el("b", {}, longLabel(rows[i].day)));
       var line = el("div");
       var dot = el("i");
-      dot.style.background = "currentColor";
+      dot.style.background = "var(--measure, var(--accent))";
       line.appendChild(dot);
       line.appendChild(document.createTextNode(fmt.format(Math.round(values[i]))));
       tip.appendChild(line);
