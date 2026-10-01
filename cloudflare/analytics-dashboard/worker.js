@@ -192,37 +192,40 @@ export const PAGE = `<!doctype html>
 <meta name="robots" content="noindex">
 <title>Vedanta Yojana Analytics</title>
 <style>
-/* Jetpack's own palette (Automattic Color Studio): Jetpack Green 40
-   #069e08 is the primary, with Green 0 #f0f2eb as the page tint and the
-   darker steps for ink and accents.
+/* One colour per measure, held across the whole page: website visits are
+   always blue, page views orange, app launches aqua, downloads yellow --
+   in the chart, in the tile's edge and in the bar behind each table row.
+   Colour follows the measure, never its rank, so nothing is repainted when
+   a filter changes the order.
 
-   One data hue, not two. Jetpack Stats draws views and visitors as two
-   greens, but measured against this surface no pair of Jetpack greens is
-   separable: the best pair (#069e08 vs #64ca43) scores OKLab dE 14.5
-   unsimulated, under the 15 floor at which full-colour-vision readers can
-   still tell two marks apart, and #069e08 vs #2fb41f scores 6.8. Rather
-   than ship two lines nobody can distinguish, each chart carries a single
-   series and the pair is shown as two charts -- which is also why no chart
-   here needs a legend. #069e08 alone passes every check in both themes. */
+   The four are the documented categorical slots 1-4, validated as a set
+   against both surfaces: worst adjacent CVD dE 9.1 light / 8.4 dark, worst
+   unsimulated 22.9 / 19.8, every hue inside the lightness band and over the
+   chroma floor. On the light surface aqua (2.74:1) and yellow (2.11:1) sit
+   under 3:1, so they are never used for text -- only for marks, with a
+   visible peak label on every chart and numbers in every table. */
 :root {
   color-scheme: light;
-  --bg: #f0f2eb; --surface: #fcfcfb; --border: #dfe3d6; --grid: #e9ece2;
-  --text: #001c09; --text-2: #4a5247; --muted: #7a8276;
-  --s1: #069e08; --bar: #9dd977; --accent: #008710;
+  --bg: #f6f5f1; --surface: #fcfcfb; --border: #e4e2dc; --grid: #ecebe6;
+  --text: #0b0b0b; --text-2: #52514e; --muted: #7a7873;
+  --accent: #2a78d6;
+  --m-visits: #2a78d6; --m-views: #eb6834; --m-launches: #1baf7a; --m-downloads: #eda100;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #001c09; --surface: #1a1a19; --border: #2f3a2c; --grid: #263024;
-    --text: #ffffff; --text-2: #c3c7bb; --muted: #8f968b;
-    --s1: #069e08; --bar: #005b18; --accent: #2fb41f;
+    --bg: #111110; --surface: #1a1a19; --border: #2f2f2c; --grid: #262624;
+    --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
+    --accent: #6da7ec;
+    --m-visits: #3987e5; --m-views: #d95926; --m-launches: #199e70; --m-downloads: #c98500;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #001c09; --surface: #1a1a19; --border: #2f3a2c; --grid: #263024;
-  --text: #ffffff; --text-2: #c3c7bb; --muted: #8f968b;
-  --s1: #069e08; --bar: #005b18; --accent: #2fb41f;
+  --bg: #111110; --surface: #1a1a19; --border: #2f2f2c; --grid: #262624;
+  --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
+  --accent: #6da7ec;
+  --m-visits: #3987e5; --m-views: #d95926; --m-launches: #199e70; --m-downloads: #c98500;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text);
@@ -239,16 +242,40 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .range button + button { border-left: 1px solid var(--border); }
 .range button[aria-pressed="true"] { background: var(--accent); color: #fff; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+/* Colour rides the marks; every word stays in an ink token. A 28px value
+   in aqua (2.74:1) or yellow (2.11:1) on the light surface is not readable,
+   so each tile carries a coloured rule down its edge instead. */
 .tile, .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.tile { border-left: 3px solid var(--tile-hue, var(--border)); }
+.barcell div, .pagecell a { color: var(--text); }
+.place small { color: var(--muted); }
 .tile .label { color: var(--text-2); font-size: 13px; }
 .tile .value { font-size: 28px; font-weight: 650; font-variant-numeric: tabular-nums; margin-top: 2px; }
 .tile .hint { color: var(--muted); font-size: 12px; }
 .card { margin-bottom: 16px; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
 .grid2 .card { margin-bottom: 0; }
-.chart { position: relative; }
-.chart svg { display: block; width: 100%; height: 220px; overflow: visible; }
-.chart text { fill: var(--muted); font-size: 11px; }
+/* Bars, not lines: these are discrete per-day counts, and a line drawn
+   between them implies values on the way that do not exist.
+
+   The plot is a stretched SVG; every LABEL is HTML beside it. Text inside a
+   non-uniformly scaled SVG is distorted and shrinks with the viewport -- at
+   phone width an 11px SVG label renders near 5px, and this page is mostly
+   read on a phone. */
+.chart { position: relative; padding-left: 40px; }
+.plot { position: relative; height: 180px; }
+.plot svg { display: block; width: 100%; height: 100%; }
+.plot rect.col { fill: currentColor; }
+.plot line.grid { stroke: var(--grid); stroke-width: 1; }
+.ylab { position: absolute; right: calc(100% + 8px); transform: translateY(-50%);
+  color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.peak { position: absolute; transform: translateX(-50%); color: var(--text-2); font-size: 11px; font-weight: 600; }
+.xaxis { display: flex; justify-content: space-between; margin-top: 7px; color: var(--muted); font-size: 11px; }
+.crosshair { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); pointer-events: none; }
+.hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; margin: 2px 0 18px; }
+.hero::before { content: ""; width: 4px; align-self: stretch; border-radius: 2px; background: var(--m-launches); }
+.hero .value { font-size: 52px; line-height: 1; font-weight: 650; letter-spacing: -0.02em; color: var(--text); }
+.hero .unit { color: var(--text-2); font-size: 14px; padding-bottom: 6px; }
 .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
   border-radius: 8px; padding: 6px 10px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: nowrap; display: none; }
 .tip b { display: block; margin-bottom: 2px; }
@@ -258,11 +285,11 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .tabs button[aria-pressed="true"] { border-color: var(--accent); color: var(--text); }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
 th { text-align: left; color: var(--muted); font-weight: 500; font-size: 12px; padding: 6px 4px; border-bottom: 1px solid var(--border); }
-td { padding: 7px 4px; border-bottom: 1px solid var(--grid); }
+td { padding: 7px 4px; border-bottom: 1px solid var(--grid); color: var(--text); }
 td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; width: 1%; white-space: nowrap; padding-left: 12px; }
 .place small { color: var(--muted); display: block; font-size: 12px; }
 .barcell { position: relative; }
-.barcell span { position: absolute; left: 0; top: 4px; bottom: 4px; background: var(--bar); border-radius: 0 4px 4px 0; opacity: .45; }
+.barcell span { position: absolute; left: 0; top: 4px; bottom: 4px; background: currentColor; border-radius: 0 4px 4px 0; opacity: .28; }
 .barcell div { position: relative; }
 .pagecell div { overflow-wrap: anywhere; }
 .pagecell a { color: var(--text); text-decoration: none; }
@@ -282,72 +309,64 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
   </header>
   <div id="status" class="empty">Loading…</div>
   <div id="content" hidden>
-    <h2 class="section-head">The headline numbers</h2>
-    <p class="sub"><b>What this counts:</b> the totals for whichever range is selected above, with the website and the app side by side.<br>
-    <b>How to read it:</b> visits is the "how many people" number and page views the "how much did they read" number; the two app figures are separate audiences, since an APK download is a new install and a launch is somebody coming back.</p>
+    <div class="hero">
+      <span class="value" id="hero-value">—</span>
+      <span class="unit" id="hero-unit">app launches</span>
+    </div>
     <div class="tiles">
-      <div class="tile"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
-      <div class="tile"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
-      <div class="tile"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
-      <div class="tile"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
+      <div class="tile" style="--tile-hue:var(--m-visits)"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
+      <div class="tile" style="--tile-hue:var(--m-views)"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
+      <div class="tile" style="--tile-hue:var(--m-launches)"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
+      <div class="tile" style="--tile-hue:var(--m-downloads)"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
       <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint">with any site or app activity</div></div>
     </div>
     <div class="card">
       <h2>Website visits, <span class="per">per day</span></h2>
-      <p class="sub"><b>What this counts:</b> one visit each time somebody arrives at the site from a search, a link or a typed address — the closest thing here to "how many people came".<br>
-      <b>How to read it:</b> this is the line to watch for growth; a spike almost always means somebody shared a link, and the "Where visitors come from" section below says who.</p>
-      <div class="chart" id="c-visits"></div>
+      <p class="sub">Someone arriving from a search, a link or a typed address.</p>
+      <div class="chart" id="c-visits" style="color:var(--m-visits)"></div>
     </div>
     <div class="card">
       <h2>Website page views, <span class="per">per day</span></h2>
-      <p class="sub"><b>What this counts:</b> every page opened, so one visitor reading six chapters counts once above and six times here.<br>
-      <b>How to read it:</b> compare its shape to visits — views rising faster than visits means people are reading further in, which is the better kind of growth.</p>
-      <div class="chart" id="c-views"></div>
+      <p class="sub">Every page opened. One visitor reading six chapters counts six times.</p>
+      <div class="chart" id="c-views" style="color:var(--m-views)"></div>
     </div>
     <div class="card">
       <h2>App launches, <span class="per">per day</span></h2>
-      <p class="sub"><b>What this counts:</b> each time the Android app is opened it checks for an update, and that check is what is counted — launches, never people, since nothing here can tell two phones apart.<br>
-      <b>How to read it:</b> a steady floor that doesn't fall away is the sign installs are being kept and used; opening the app twice in a day counts twice.</p>
-      <div class="chart" id="c-app"></div>
+      <p class="sub">Each time the Android app is opened it checks for updates; that check is what is counted. Launches, not people.</p>
+      <div class="chart" id="c-app" style="color:var(--m-launches)"></div>
     </div>
     <div class="card">
       <h2>App downloads, per day</h2>
-      <p class="sub"><b>What this counts:</b> APK downloads from GitHub, recorded once a day, which is the only install figure that exists while the app is not on Google Play.<br>
-      <b>How to read it:</b> it runs ahead of the number of people using the app, because everyone updating downloads the file again — treat a flat stretch as "no new release", not "nobody came".</p>
-      <div class="chart" id="c-downloads"></div>
+      <p class="sub">APK downloads from GitHub, recorded once a day. People updating download it again, so this runs ahead of the number of people using the app.</p>
+      <div class="chart" id="c-downloads" style="color:var(--m-downloads)"></div>
     </div>
     <div class="card">
       <h2>Where visitors come from</h2>
-      <p class="sub"><b>What this counts:</b> the site that sent each visit, so you can see which of search, social and word of mouth is actually bringing people.<br>
-      <b>How to read it:</b> "Direct" means a typed address, a bookmark, or an app that hides where the link was opened — WhatsApp forwards nearly always land there, so it reads as word of mouth.</p>
-      <div id="sources"></div>
+      <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
+      <div id="sources" style="color:var(--m-visits)"></div>
     </div>
     <div class="card">
       <h2>Languages</h2>
-      <p class="sub"><b>What this counts:</b> the language each reader had the website set to when they opened a page.<br>
-      <b>How to read it:</b> it tells you which translations are earning their keep — a language with real numbers deserves the next round of content work.</p>
-      <div id="languages"></div>
+      <p class="sub">The language readers had the website set to for each page they opened.</p>
+      <div id="languages" style="color:var(--m-views)"></div>
     </div>
     <div class="card">
       <h2>Top pages</h2>
-      <p class="sub"><b>What this counts:</b> how often each page was opened, and how many visits began on it, as totals per page — never one reader's path through the site.<br>
-      <b>How to read it:</b> a page high in "visits began here" is a front door people arrive at from outside, and is usually worth more attention than the home page.</p>
-      <div id="pages"></div>
+      <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
+      <div id="pages" style="color:var(--m-views)"></div>
     </div>
     <div class="grid2">
       <div class="card">
         <h2>Countries</h2>
-        <p class="sub"><b>What this counts:</b> where in the world the site and the app are being used, from the country the network edge reports.<br>
-        <b>How to read it:</b> switch the buttons to sort by visits, views or app launches — a country high in launches but low in visits is an audience the website isn't reaching.</p>
+        <p class="sub">Where the site and the app are being used.</p>
         <div class="tabs" data-for="countries"></div>
-        <div id="countries"></div>
+        <div id="countries" style="color:var(--m-visits)"></div>
       </div>
       <div class="card">
         <h2>Cities</h2>
-        <p class="sub"><b>What this counts:</b> the same thing as Countries, one level finer, for the places with enough activity to name.<br>
-        <b>How to read it:</b> treat these as approximate — it is usually the nearest large city on the reader's internet provider, not where they actually are.</p>
+        <p class="sub">Approximate — usually the nearest large city on the reader's provider.</p>
         <div class="tabs" data-for="cities"></div>
-        <div id="cities"></div>
+        <div id="cities" style="color:var(--m-visits)"></div>
       </div>
     </div>
     <footer>Days are UTC; hours in the 24-hour view are your local time. Cities are approximate — usually the nearest large city of the reader's internet provider. No cookies, IP addresses or identifiers are stored; figures are Cloudflare's, adjusted for its sampling.</footer>
@@ -598,21 +617,19 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       document.getElementById("t-downloads").textContent = "—";
       document.getElementById("t-downloads-hint").textContent = "download history unavailable";
     }
+    document.getElementById("hero-value").textContent = fmt.format(Math.round(sum("launches")));
+    document.getElementById("hero-unit").textContent = hourly
+      ? "app launches in the last 24 hours"
+      : "app launches in the last " + d.days + " days";
     document.getElementById("t-countries").textContent = fmt.format(Object.keys(countries).filter(function (k) { return k !== "XX"; }).length);
 
     // Shown before drawing: a hidden container measures zero wide.
     document.getElementById("status").hidden = true;
     document.getElementById("content").hidden = false;
 
-    lineChart(document.getElementById("c-visits"), days, [
-      { key: "visits", label: "Visits", color: "var(--s1)" },
-    ]);
-    lineChart(document.getElementById("c-views"), days, [
-      { key: "views", label: "Page views", color: "var(--s1)" },
-    ]);
-    lineChart(document.getElementById("c-app"), days, [
-      { key: "launches", label: "App launches", color: "var(--s1)" },
-    ]);
+    barChart(document.getElementById("c-visits"), days, "visits");
+    barChart(document.getElementById("c-views"), days, "views");
+    barChart(document.getElementById("c-app"), days, "launches");
     // Only days with a recorded figure: before the first snapshot, and
     // today until the daily snapshot runs, "no data" must not read as 0.
     var recorded = !hourly && snaps.length > 1 ? days.filter(function (x) {
@@ -620,9 +637,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     }) : [];
     var dlHost = document.getElementById("c-downloads");
     if (recorded.length) {
-      lineChart(dlHost, recorded, [
-        { key: "downloads", label: "APK downloads", color: "var(--s1)" },
-      ]);
+      barChart(dlHost, recorded, "downloads");
     } else {
       dlHost.textContent = "";
       dlHost.appendChild(el("div", { class: "empty" }, hourly
@@ -697,85 +712,123 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     return shortDate(key);
   }
 
-  function lineChart(host, days, series) {
+  // Columns, not a line. These are discrete per-day counts, and a line
+  // drawn between them implies values on the way that do not exist. Each
+  // chart carries one measure in that measure's own colour, inherited
+  // through currentColor from the host, so nothing has to be matched
+  // against a legend.
+  function barChart(host, rows, key) {
     host.textContent = "";
+    if (!rows.length) {
+      host.appendChild(el("div", { class: "empty" }, "Nothing recorded in this range yet."));
+      return;
+    }
     var NS = "http://www.w3.org/2000/svg";
-    var W = Math.max(280, host.clientWidth || 600), H = 220, L = 40, R = 8, T = 8, B = 24;
-    var max = niceMax(Math.max.apply(null, days.map(function (d) {
-      return Math.max.apply(null, series.map(function (s) { return d[s.key]; }));
-    })));
-    var x = function (i) { return L + (days.length === 1 ? 0 : (i / (days.length - 1)) * (W - L - R)); };
-    var y = function (v) { return T + (1 - v / max) * (H - T - B); };
+    var W = 720, H = 166;
+    var values = rows.map(function (r) { return Number(r[key]) || 0; });
+    var max = niceMax(Math.max.apply(null, values));
+    var slot = W / rows.length;
+    var barW = Math.max(1, Math.min(24, slot - 2));
+    var peakIndex = values.indexOf(Math.max.apply(null, values));
+
+    var plot = el("div", { class: "plot" });
+    [1, 0.5, 0].forEach(function (f) {
+      plot.appendChild(el("span", { class: "ylab", style: "top:" + ((1 - f) * 100) + "%" },
+        fmt.format(Math.round(max * f))));
+    });
+
     var svg = document.createElementNS(NS, "svg");
     svg.setAttribute("viewBox", "0 0 " + W + " " + H);
-    svg.setAttribute("role", "img");
-    svg.setAttribute("aria-label", series.map(function (s) { return s.label; }).join(" and ") + " per day");
-    function add(tag, attrs, text) {
+    svg.setAttribute("preserveAspectRatio", "none");
+    svg.setAttribute("aria-hidden", "true");
+    function add(tag, attrs) {
       var n = document.createElementNS(NS, tag);
       for (var k in attrs) n.setAttribute(k, attrs[k]);
-      if (text != null) n.textContent = text;
       svg.appendChild(n);
       return n;
     }
-    for (var g = 0; g <= 4; g++) {
-      var v = (max / 4) * g, gy = y(v);
-      add("line", { x1: L, x2: W - R, y1: gy, y2: gy, stroke: "var(--grid)", "stroke-width": 1 });
-      add("text", { x: L - 6, y: gy + 4, "text-anchor": "end" }, fmt.format(v));
-    }
-    // Evenly spaced date labels, always ending on the latest day; any
-    // label that would crowd that last one is dropped.
-    var every = Math.ceil(days.length / Math.max(2, Math.floor((W - L) / 70)));
-    var last = days.length - 1;
-    days.forEach(function (d, i) {
-      if (i !== last && (i % every !== 0 || x(last) - x(i) < 60)) return;
-      add("text", { x: x(i), y: H - 6, "text-anchor": i === 0 ? "start" : i === last ? "end" : "middle" }, shortDate(d.day));
+    [0, 0.5, 1].forEach(function (f) {
+      add("line", { class: "grid", x1: 0, x2: W, y1: H - f * H, y2: H - f * H, "vector-effect": "non-scaling-stroke" });
     });
-    series.forEach(function (s) {
-      var dAttr = days.map(function (d, i) { return (i ? "L" : "M") + x(i).toFixed(1) + " " + y(d[s.key]).toFixed(1); }).join(" ");
-      add("path", { d: dAttr, fill: "none", stroke: s.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" });
+    values.forEach(function (v, i) {
+      var h = max > 0 ? (v / max) * H : 0;
+      // A zero-height rounded rect renders as a stray sliver; the day is
+      // still in the data the crosshair reads.
+      if (h < 0.5) return;
+      var x = i * slot + (slot - barW) / 2, y = H - h;
+      var r = Math.min(4, barW / 2, h);
+      // Rounded cap plus a square-cornered foot, so the bar stays square
+      // where it meets the baseline.
+      add("rect", { class: "col", x: x, y: y, width: barW, height: h, rx: r });
+      add("rect", { class: "col", x: x, y: y + h - r, width: barW, height: r });
     });
-    var cross = add("line", { y1: T, y2: H - B, stroke: "var(--muted)", "stroke-width": 1, "stroke-dasharray": "3 3", visibility: "hidden" });
-    var dots = series.map(function (s) {
-      return add("circle", { r: 4, fill: s.color, stroke: "var(--surface)", "stroke-width": 2, visibility: "hidden" });
-    });
-    var hit = add("rect", { x: L, y: 0, width: W - L - R, height: H, fill: "transparent" });
-    host.appendChild(svg);
-    var tip = el("div", { class: "tip" });
-    host.appendChild(tip);
+    plot.appendChild(svg);
 
-    function show(evt) {
-      var box = svg.getBoundingClientRect();
-      var px = ((evt.clientX - box.left) / box.width) * W;
-      var i = Math.round(((px - L) / (W - L - R)) * (days.length - 1));
-      i = Math.max(0, Math.min(days.length - 1, i));
-      var d = days[i], cx = x(i);
-      cross.setAttribute("x1", cx); cross.setAttribute("x2", cx); cross.setAttribute("visibility", "visible");
-      dots.forEach(function (dot, k) {
-        dot.setAttribute("cx", cx); dot.setAttribute("cy", y(d[series[k].key])); dot.setAttribute("visibility", "visible");
-      });
+    var cross = el("span", { class: "crosshair" });
+    cross.hidden = true;
+    plot.appendChild(cross);
+
+    // Only the peak is labelled. A number on every column is unreadable,
+    // and it is also the visible relief a sub-3:1 mark needs on light.
+    if (values[peakIndex] > 0) {
+      plot.appendChild(el("span", {
+        class: "peak",
+        style: "left:" + (((peakIndex + 0.5) / rows.length) * 100).toFixed(2) + "%;bottom:calc(" +
+          ((values[peakIndex] / max) * 100).toFixed(2) + "% + 4px)",
+      }, fmt.format(values[peakIndex])));
+    }
+
+    var tip = el("div", { class: "tip" });
+    plot.appendChild(tip);
+    host.appendChild(plot);
+
+    // First, middle and last only: every date collides at 30 columns.
+    var ticks = el("div", { class: "xaxis" });
+    var marks = rows.length <= 2 ? [0, rows.length - 1] : [0, Math.floor((rows.length - 1) / 2), rows.length - 1];
+    marks.filter(function (v, i, a) { return a.indexOf(v) === i; }).forEach(function (i) {
+      ticks.appendChild(el("span", {}, shortDate(rows[i].day)));
+    });
+    host.appendChild(ticks);
+
+    // The reader aims at a day, not at a 2px column: one overlay finds the
+    // nearest, so the hit area is the whole plot however thin the columns
+    // get at 90 days. Keyboard gets the identical readout.
+    var active = -1;
+    function show(i) {
+      if (i < 0 || i >= rows.length) return;
+      active = i;
+      var centre = ((i + 0.5) / rows.length) * 100;
+      cross.style.left = centre + "%";
+      cross.hidden = false;
       tip.textContent = "";
-      tip.appendChild(el("b", {}, longLabel(d.day)));
-      series.forEach(function (s) {
-        var line = el("div");
-        var sw = el("i"); sw.style.background = s.color;
-        line.appendChild(sw);
-        line.appendChild(document.createTextNode(s.label + ": " + fmt.format(Math.round(d[s.key]))));
-        tip.appendChild(line);
-      });
+      tip.appendChild(el("b", {}, longLabel(rows[i].day)));
+      var line = el("div");
+      var dot = el("i");
+      dot.style.background = "currentColor";
+      line.appendChild(dot);
+      line.appendChild(document.createTextNode(fmt.format(Math.round(values[i]))));
+      tip.appendChild(line);
       tip.style.display = "block";
-      var left = (cx / W) * box.width + 12;
-      if (left + tip.offsetWidth > box.width) left = (cx / W) * box.width - tip.offsetWidth - 12;
-      tip.style.left = Math.max(0, left) + "px";
-      tip.style.top = "8px";
+      var width = plot.clientWidth;
+      tip.style.left = Math.min(Math.max((centre / 100) * width - tip.offsetWidth / 2, 0),
+        Math.max(0, width - tip.offsetWidth)) + "px";
+      tip.style.top = "0px";
     }
-    function hide() {
-      tip.style.display = "none";
-      cross.setAttribute("visibility", "hidden");
-      dots.forEach(function (dot) { dot.setAttribute("visibility", "hidden"); });
-    }
-    hit.addEventListener("pointermove", show);
-    hit.addEventListener("pointerdown", show);
-    hit.addEventListener("pointerleave", hide);
+    function hide() { active = -1; cross.hidden = true; tip.style.display = "none"; }
+    host.addEventListener("pointermove", function (e) {
+      var box = plot.getBoundingClientRect();
+      if (!box.width) return;
+      show(Math.min(rows.length - 1, Math.max(0, Math.floor(((e.clientX - box.left) / box.width) * rows.length))));
+    });
+    host.addEventListener("pointerleave", hide);
+    host.setAttribute("tabindex", "0");
+    host.addEventListener("focus", function () { show(active < 0 ? rows.length - 1 : active); });
+    host.addEventListener("blur", hide);
+    host.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { show(Math.min(rows.length - 1, active + 1)); e.preventDefault(); }
+      if (e.key === "ArrowLeft") { show(Math.max(0, active - 1)); e.preventDefault(); }
+      if (e.key === "Escape") hide();
+    });
   }
 
   document.querySelectorAll(".range button").forEach(function (b) {
