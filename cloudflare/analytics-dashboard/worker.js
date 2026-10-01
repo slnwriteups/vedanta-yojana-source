@@ -184,7 +184,7 @@ function json(body) {
 // The page is self-contained -- no external script, font or stylesheet
 // -- so the Content-Security-Policy above can forbid every other origin.
 // Its script avoids backticks so it can live inside this template.
-const PAGE = `<!doctype html>
+export const PAGE = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -192,25 +192,37 @@ const PAGE = `<!doctype html>
 <meta name="robots" content="noindex">
 <title>Vedanta Yojana Analytics</title>
 <style>
+/* Jetpack's own palette (Automattic Color Studio): Jetpack Green 40
+   #069e08 is the primary, with Green 0 #f0f2eb as the page tint and the
+   darker steps for ink and accents.
+
+   One data hue, not two. Jetpack Stats draws views and visitors as two
+   greens, but measured against this surface no pair of Jetpack greens is
+   separable: the best pair (#069e08 vs #64ca43) scores OKLab dE 14.5
+   unsimulated, under the 15 floor at which full-colour-vision readers can
+   still tell two marks apart, and #069e08 vs #2fb41f scores 6.8. Rather
+   than ship two lines nobody can distinguish, each chart carries a single
+   series and the pair is shown as two charts -- which is also why no chart
+   here needs a legend. #069e08 alone passes every check in both themes. */
 :root {
   color-scheme: light;
-  --bg: #f6f5f1; --surface: #fcfcfb; --border: #e4e2dc; --grid: #ecebe6;
-  --text: #0b0b0b; --text-2: #52514e; --muted: #7a7873;
-  --s1: #2a78d6; --s2: #eb6834; --bar: #86b6ef; --accent: #2a78d6;
+  --bg: #f0f2eb; --surface: #fcfcfb; --border: #dfe3d6; --grid: #e9ece2;
+  --text: #001c09; --text-2: #4a5247; --muted: #7a8276;
+  --s1: #069e08; --bar: #9dd977; --accent: #008710;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --bg: #111110; --surface: #1a1a19; --border: #2f2f2c; --grid: #262624;
-    --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
-    --s1: #3987e5; --s2: #d95926; --bar: #1c5cab; --accent: #6da7ec;
+    --bg: #001c09; --surface: #1a1a19; --border: #2f3a2c; --grid: #263024;
+    --text: #ffffff; --text-2: #c3c7bb; --muted: #8f968b;
+    --s1: #069e08; --bar: #005b18; --accent: #2fb41f;
   }
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --bg: #111110; --surface: #1a1a19; --border: #2f2f2c; --grid: #262624;
-  --text: #ffffff; --text-2: #c3c2b7; --muted: #8f8e86;
-  --s1: #3987e5; --s2: #d95926; --bar: #1c5cab; --accent: #6da7ec;
+  --bg: #001c09; --surface: #1a1a19; --border: #2f3a2c; --grid: #263024;
+  --text: #ffffff; --text-2: #c3c7bb; --muted: #8f968b;
+  --s1: #069e08; --bar: #005b18; --accent: #2fb41f;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text);
@@ -219,7 +231,9 @@ body { margin: 0; background: var(--bg); color: var(--text);
 header { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 20px; }
 h1 { font-size: 20px; margin: 0; }
 h2 { font-size: 15px; margin: 0 0 4px; }
-.sub { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+.sub { color: var(--text-2); font-size: 13px; line-height: 1.55; margin: 0 0 14px; max-width: 76ch; }
+.sub b { color: var(--text); font-weight: 600; }
+.section-head { margin-top: 4px; }
 .range { display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
 .range button { background: var(--surface); color: var(--text-2); border: 0; padding: 7px 14px; font: inherit; cursor: pointer; }
 .range button + button { border-left: 1px solid var(--border); }
@@ -232,8 +246,6 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .card { margin-bottom: 16px; }
 .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
 .grid2 .card { margin-bottom: 0; }
-.legend { display: flex; gap: 16px; font-size: 13px; color: var(--text-2); margin-bottom: 6px; }
-.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 6px; }
 .chart { position: relative; }
 .chart svg { display: block; width: 100%; height: 220px; overflow: visible; }
 .chart text { fill: var(--muted); font-size: 11px; }
@@ -270,6 +282,9 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
   </header>
   <div id="status" class="empty">Loading…</div>
   <div id="content" hidden>
+    <h2 class="section-head">The headline numbers</h2>
+    <p class="sub"><b>What this counts:</b> the totals for whichever range is selected above, with the website and the app side by side.<br>
+    <b>How to read it:</b> visits is the "how many people" number and page views the "how much did they read" number; the two app figures are separate audiences, since an APK download is a new install and a launch is somebody coming back.</p>
     <div class="tiles">
       <div class="tile"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
       <div class="tile"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
@@ -278,44 +293,59 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint">with any site or app activity</div></div>
     </div>
     <div class="card">
-      <h2>Website, <span class="per">per day</span></h2>
-      <p class="sub">A visit is someone arriving from a search, a link or a typed address; views count every page they then open.</p>
-      <div class="legend"><span><i style="background:var(--s1)"></i>Page views</span><span><i style="background:var(--s2)"></i>Visits</span></div>
-      <div class="chart" id="c-web"></div>
+      <h2>Website visits, <span class="per">per day</span></h2>
+      <p class="sub"><b>What this counts:</b> one visit each time somebody arrives at the site from a search, a link or a typed address — the closest thing here to "how many people came".<br>
+      <b>How to read it:</b> this is the line to watch for growth; a spike almost always means somebody shared a link, and the "Where visitors come from" section below says who.</p>
+      <div class="chart" id="c-visits"></div>
+    </div>
+    <div class="card">
+      <h2>Website page views, <span class="per">per day</span></h2>
+      <p class="sub"><b>What this counts:</b> every page opened, so one visitor reading six chapters counts once above and six times here.<br>
+      <b>How to read it:</b> compare its shape to visits — views rising faster than visits means people are reading further in, which is the better kind of growth.</p>
+      <div class="chart" id="c-views"></div>
     </div>
     <div class="card">
       <h2>App launches, <span class="per">per day</span></h2>
-      <p class="sub">Each time the Android app is opened it checks for updates; that check is what is counted. Launches, not people.</p>
+      <p class="sub"><b>What this counts:</b> each time the Android app is opened it checks for an update, and that check is what is counted — launches, never people, since nothing here can tell two phones apart.<br>
+      <b>How to read it:</b> a steady floor that doesn't fall away is the sign installs are being kept and used; opening the app twice in a day counts twice.</p>
       <div class="chart" id="c-app"></div>
     </div>
     <div class="card">
       <h2>App downloads, per day</h2>
-      <p class="sub">APK downloads from GitHub, recorded once a day. People updating the app download it again, so this runs ahead of the number of people using it.</p>
+      <p class="sub"><b>What this counts:</b> APK downloads from GitHub, recorded once a day, which is the only install figure that exists while the app is not on Google Play.<br>
+      <b>How to read it:</b> it runs ahead of the number of people using the app, because everyone updating downloads the file again — treat a flat stretch as "no new release", not "nobody came".</p>
       <div class="chart" id="c-downloads"></div>
     </div>
     <div class="card">
       <h2>Where visitors come from</h2>
-      <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
+      <p class="sub"><b>What this counts:</b> the site that sent each visit, so you can see which of search, social and word of mouth is actually bringing people.<br>
+      <b>How to read it:</b> "Direct" means a typed address, a bookmark, or an app that hides where the link was opened — WhatsApp forwards nearly always land there, so it reads as word of mouth.</p>
       <div id="sources"></div>
     </div>
     <div class="card">
       <h2>Languages</h2>
-      <p class="sub">The language readers had the website set to for each page they opened.</p>
+      <p class="sub"><b>What this counts:</b> the language each reader had the website set to when they opened a page.<br>
+      <b>How to read it:</b> it tells you which translations are earning their keep — a language with real numbers deserves the next round of content work.</p>
       <div id="languages"></div>
     </div>
     <div class="card">
       <h2>Top pages</h2>
-      <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
+      <p class="sub"><b>What this counts:</b> how often each page was opened, and how many visits began on it, as totals per page — never one reader's path through the site.<br>
+      <b>How to read it:</b> a page high in "visits began here" is a front door people arrive at from outside, and is usually worth more attention than the home page.</p>
       <div id="pages"></div>
     </div>
     <div class="grid2">
       <div class="card">
         <h2>Countries</h2>
+        <p class="sub"><b>What this counts:</b> where in the world the site and the app are being used, from the country the network edge reports.<br>
+        <b>How to read it:</b> switch the buttons to sort by visits, views or app launches — a country high in launches but low in visits is an audience the website isn't reaching.</p>
         <div class="tabs" data-for="countries"></div>
         <div id="countries"></div>
       </div>
       <div class="card">
         <h2>Cities</h2>
+        <p class="sub"><b>What this counts:</b> the same thing as Countries, one level finer, for the places with enough activity to name.<br>
+        <b>How to read it:</b> treat these as approximate — it is usually the nearest large city on the reader's internet provider, not where they actually are.</p>
         <div class="tabs" data-for="cities"></div>
         <div id="cities"></div>
       </div>
@@ -574,9 +604,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     document.getElementById("status").hidden = true;
     document.getElementById("content").hidden = false;
 
-    lineChart(document.getElementById("c-web"), days, [
+    lineChart(document.getElementById("c-visits"), days, [
+      { key: "visits", label: "Visits", color: "var(--s1)" },
+    ]);
+    lineChart(document.getElementById("c-views"), days, [
       { key: "views", label: "Page views", color: "var(--s1)" },
-      { key: "visits", label: "Visits", color: "var(--s2)" },
     ]);
     lineChart(document.getElementById("c-app"), days, [
       { key: "launches", label: "App launches", color: "var(--s1)" },

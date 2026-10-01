@@ -58,3 +58,7 @@ yarn-error.log*
 google-services.json
 GoogleService-Info.plist
 credentials.json
+
+# Local dashboard preview output, if any (scripts/preview-dashboard.ts serves
+# from memory and writes nothing, but keep stray renders out of the repo).
+out-preview/
