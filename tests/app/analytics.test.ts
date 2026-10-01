@@ -365,3 +365,20 @@ test("the dashboard page is exported so it can be previewed without deploying", 
   assert.ok(preview.includes('from "../cloudflare/analytics-dashboard/worker.js"'));
   assert.ok(preview.includes('url.pathname === "/data"'));
 });
+
+test("the preview shows the real data or an honest error, and never invents figures", () => {
+  const preview = read("scripts/preview-dashboard.ts");
+
+  // It calls the Worker's own loader rather than reimplementing the
+  // queries, so it cannot show anything the deployed dashboard would not.
+  assert.ok(preview.includes("loadData(env, days)"));
+  assert.ok(read("cloudflare/analytics-dashboard/worker.js").includes("export async function loadData"));
+
+  // Without credentials loadData returns { error }, which the page renders.
+  // Nothing here substitutes plausible-looking numbers for missing ones: a
+  // screenshot of the preview is a screenshot of the real thing or of an
+  // honest error, never of fiction.
+  assert.ok(!/Math\.(random|sin)/.test(preview), "no generated series");
+  assert.ok(!/\bhits:\s*\d/.test(preview) && !/\bvisits:\s*\d/.test(preview), "no hand-written rows");
+  assert.ok(!/\bfixture/i.test(preview), "no fixture data path");
+});
