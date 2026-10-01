@@ -299,7 +299,7 @@ test("the dashboard lists top pages from the stored path, excluding views record
 
   assert.ok(worker.includes("SELECT blob7 AS page"));
   assert.ok(worker.includes("AND blob7 != ''"));
-  assert.ok(worker.includes('<div id="pages"></div>'));
+  assert.ok(worker.includes('id="pages"'));
 });
 
 test("the dashboard lists languages from the stored code, and the Worker keeps only plain codes", () => {
@@ -311,48 +311,70 @@ test("the dashboard lists languages from the stored code, and the Worker keeps o
   assert.ok(worker.includes("/^[a-z]{2,3}$/.test(code)"));
 });
 
-test("every section of the dashboard explains what it counts and how to read it", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-  const page = worker.slice(worker.indexOf("export const PAGE"));
+test("each section carries one short line of context, in plain wording", () => {
+  const page = read("cloudflare/analytics-dashboard/worker.js");
+  const body = page.slice(page.indexOf("export const PAGE"));
 
-  // A heading and a number are not an explanation. Each section says what
-  // the figure is and what a change in it means, because the figures here
-  // (visits vs views, launches vs downloads) are easy to read as the same
-  // thing when they are not.
-  const headings = page.match(/<h2[^>]*>/g) ?? [];
-  const whatCounts = page.match(/<b>What this counts:<\/b>/g) ?? [];
-  const howToRead = page.match(/<b>How to read it:<\/b>/g) ?? [];
-  assert.ok(headings.length >= 9, `expected every section to have a heading, saw ${headings.length}`);
-  assert.equal(whatCounts.length, headings.length, "one 'what this counts' per section");
-  assert.equal(howToRead.length, headings.length, "one 'how to read it' per section");
+  const headings = (body.match(/<h2[^>]*>/g) ?? []).length;
+  const subs = (body.match(/<p class="sub">/g) ?? []).length;
+  assert.ok(headings >= 9, `expected a heading per section, saw ${headings}`);
+  assert.ok(subs >= headings - 1, "each section keeps one line of context");
+
+  // The two-line "What this counts / How to read it" scaffold was removed
+  // deliberately: it read as generated boilerplate rather than as something
+  // a person wrote. One short line per section is the replacement, not none.
+  assert.ok(!body.includes("What this counts"));
+  assert.ok(!body.includes("How to read it"));
 });
 
-test("each dashboard chart draws a single series, so none of them needs a legend", () => {
+test("the charts are bars, one measure each, with their labels outside the stretched SVG", () => {
   const worker = read("cloudflare/analytics-dashboard/worker.js");
 
-  // Jetpack Stats overlays views and visitors as two greens. Measured
-  // against this surface no pair of Jetpack greens clears the floor at
-  // which two marks stay distinguishable (the best pair scores OKLab dE
-  // 14.5 unsimulated, under 15), so the pair is drawn as two charts
-  // instead of two lines nobody can tell apart.
-  for (const match of worker.matchAll(/lineChart\([^;]*?\[([\s\S]*?)\]\s*\)/g)) {
-    const series = (match[1].match(/\{\s*key:/g) ?? []).length;
-    assert.equal(series, 1, `each chart plots one series, found ${series}`);
+  // Discrete per-day counts: a line drawn between them implies values on
+  // the way that do not exist.
+  assert.ok(!worker.includes("lineChart"), "no line chart survives");
+  assert.ok(worker.includes("function barChart(host, rows, key)"));
+  const calls = [...worker.matchAll(/barChart\(.*?\);/g)].map((m) => m[0]);
+  assert.equal(calls.length, 4, "one call per chart");
+  for (const call of calls) {
+    assert.ok(/, "(visits|views|launches|downloads)"\);$/.test(call), `one measure per chart: ${call}`);
   }
-  assert.ok(worker.includes('id="c-visits"') && worker.includes('id="c-views"'));
-  assert.ok(!worker.includes('class="legend"'), "a single-series chart is named by its own title");
+
+  // Text inside a preserveAspectRatio="none" plot distorts and shrinks to
+  // about 5px at phone width, which is where this page is mostly read.
+  const fn = worker.slice(worker.indexOf("function barChart"), worker.indexOf('document.querySelectorAll(".range button")'));
+  assert.ok(!fn.includes('createElementNS(NS, "text")'), "no text inside the stretched SVG");
+  assert.ok(fn.includes("non-scaling-stroke"));
+  assert.ok(fn.includes('class: "ylab"') && fn.includes('class: "xaxis"'));
 });
 
-test("the dashboard uses Jetpack's own palette", () => {
+test("each measure keeps one colour everywhere, and no text wears it", () => {
   const worker = read("cloudflare/analytics-dashboard/worker.js");
 
-  // Automattic Color Studio: Jetpack Green 40 is the primary.
-  assert.ok(worker.includes("--s1: #069e08"), "Jetpack Green 40 is the data hue");
-  assert.ok(worker.includes("--bg: #f0f2eb"), "Jetpack Green 0 is the light page tint");
-  // The old reference-palette blue and orange are gone.
-  assert.ok(!worker.includes("#2a78d6") && !worker.includes("#eb6834"));
-  // Dark mode is still declared under both scopes.
-  assert.ok(worker.includes('@media (prefers-color-scheme: dark)'));
+  // Validated as a set against both surfaces: worst adjacent CVD dE 9.1
+  // light / 8.4 dark, worst unsimulated 22.9 / 19.8.
+  for (const hex of ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]) {
+    assert.ok(worker.includes(hex), `missing light hue ${hex}`);
+  }
+  for (const hex of ["#3987e5", "#d95926", "#199e70", "#c98500"]) {
+    assert.ok(worker.includes(hex), `missing dark hue ${hex}`);
+  }
+  // Set once per card and inherited by the chart, the tile edge and the
+  // table bar, so colour follows the measure rather than its rank.
+  // The hue travels in its own property, not currentColor: sharing the
+  // text channel means fixing the text to an ink token silently greys out
+  // every mark that inherited it.
+  assert.ok(worker.includes("fill: var(--measure, var(--accent))"));
+  assert.ok(worker.includes("background: var(--measure, var(--accent))"));
+  assert.ok(!worker.includes("currentColor"), "no mark reads the text colour");
+
+  // On the light surface aqua is 2.74:1 and yellow 2.11:1 -- unreadable as
+  // text. Every word takes an ink token; only marks carry the hue.
+  assert.ok(worker.includes(".hero .value { font-size: 52px; line-height: 1; font-weight: 650; letter-spacing: -0.02em; color: var(--text); }"));
+  assert.ok(worker.includes("td { padding: 7px 4px; border-bottom: 1px solid var(--grid); color: var(--text); }"));
+  assert.ok(worker.includes(".barcell div, .pagecell a { color: var(--text); }"));
+
+  assert.ok(worker.includes("@media (prefers-color-scheme: dark)"));
   assert.ok(worker.includes(':root:not([data-theme="light"])'));
   assert.ok(worker.includes(':root[data-theme="dark"]'));
 });
