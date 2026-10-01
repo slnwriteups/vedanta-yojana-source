@@ -310,3 +310,75 @@ test("the dashboard lists languages from the stored code, and the Worker keeps o
   assert.ok(dashboard.includes("AND blob8 != ''"));
   assert.ok(worker.includes("/^[a-z]{2,3}$/.test(code)"));
 });
+
+test("every section of the dashboard explains what it counts and how to read it", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+  const page = worker.slice(worker.indexOf("export const PAGE"));
+
+  // A heading and a number are not an explanation. Each section says what
+  // the figure is and what a change in it means, because the figures here
+  // (visits vs views, launches vs downloads) are easy to read as the same
+  // thing when they are not.
+  const headings = page.match(/<h2[^>]*>/g) ?? [];
+  const whatCounts = page.match(/<b>What this counts:<\/b>/g) ?? [];
+  const howToRead = page.match(/<b>How to read it:<\/b>/g) ?? [];
+  assert.ok(headings.length >= 9, `expected every section to have a heading, saw ${headings.length}`);
+  assert.equal(whatCounts.length, headings.length, "one 'what this counts' per section");
+  assert.equal(howToRead.length, headings.length, "one 'how to read it' per section");
+});
+
+test("each dashboard chart draws a single series, so none of them needs a legend", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // Jetpack Stats overlays views and visitors as two greens. Measured
+  // against this surface no pair of Jetpack greens clears the floor at
+  // which two marks stay distinguishable (the best pair scores OKLab dE
+  // 14.5 unsimulated, under 15), so the pair is drawn as two charts
+  // instead of two lines nobody can tell apart.
+  for (const match of worker.matchAll(/lineChart\([^;]*?\[([\s\S]*?)\]\s*\)/g)) {
+    const series = (match[1].match(/\{\s*key:/g) ?? []).length;
+    assert.equal(series, 1, `each chart plots one series, found ${series}`);
+  }
+  assert.ok(worker.includes('id="c-visits"') && worker.includes('id="c-views"'));
+  assert.ok(!worker.includes('class="legend"'), "a single-series chart is named by its own title");
+});
+
+test("the dashboard uses Jetpack's own palette", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // Automattic Color Studio: Jetpack Green 40 is the primary.
+  assert.ok(worker.includes("--s1: #069e08"), "Jetpack Green 40 is the data hue");
+  assert.ok(worker.includes("--bg: #f0f2eb"), "Jetpack Green 0 is the light page tint");
+  // The old reference-palette blue and orange are gone.
+  assert.ok(!worker.includes("#2a78d6") && !worker.includes("#eb6834"));
+  // Dark mode is still declared under both scopes.
+  assert.ok(worker.includes('@media (prefers-color-scheme: dark)'));
+  assert.ok(worker.includes(':root:not([data-theme="light"])'));
+  assert.ok(worker.includes(':root[data-theme="dark"]'));
+});
+
+test("the dashboard page is exported so it can be previewed without deploying", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+  assert.ok(worker.includes("export const PAGE"));
+  // The preview serves the same /data contract the Worker does.
+  const preview = read("scripts/preview-dashboard.ts");
+  assert.ok(preview.includes('from "../cloudflare/analytics-dashboard/worker.js"'));
+  assert.ok(preview.includes('url.pathname === "/data"'));
+});
+
+test("the preview shows the real data or an honest error, and never invents figures", () => {
+  const preview = read("scripts/preview-dashboard.ts");
+
+  // It calls the Worker's own loader rather than reimplementing the
+  // queries, so it cannot show anything the deployed dashboard would not.
+  assert.ok(preview.includes("loadData(env, days)"));
+  assert.ok(read("cloudflare/analytics-dashboard/worker.js").includes("export async function loadData"));
+
+  // Without credentials loadData returns { error }, which the page renders.
+  // Nothing here substitutes plausible-looking numbers for missing ones: a
+  // screenshot of the preview is a screenshot of the real thing or of an
+  // honest error, never of fiction.
+  assert.ok(!/Math\.(random|sin)/.test(preview), "no generated series");
+  assert.ok(!/\bhits:\s*\d/.test(preview) && !/\bvisits:\s*\d/.test(preview), "no hand-written rows");
+  assert.ok(!/\bfixture/i.test(preview), "no fixture data path");
+});
