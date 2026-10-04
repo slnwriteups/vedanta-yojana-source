@@ -127,9 +127,9 @@ export async function loadData(env, days) {
       // a view recorded before pages were, and is left out.
       query(
         env,
-        `SELECT blob7 AS page, SUM(_sample_interval) AS views, SUM(_sample_interval * double2) AS entries
-         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob7 != ''
-         GROUP BY page ORDER BY views DESC LIMIT 100`,
+        `SELECT blob2 AS surface, blob7 AS page, SUM(_sample_interval) AS views, SUM(_sample_interval * double2) AS entries
+         FROM ${DATASET} WHERE ${since} AND blob2 IN ('web', 'app') AND blob7 != ''
+         GROUP BY surface, page ORDER BY views DESC LIMIT 200`,
       ),
       // Views by the language the site was read in. Blank blob8 is a view
       // recorded before languages were, and is left out.
@@ -145,19 +145,19 @@ export async function loadData(env, days) {
       // reaches the page.
       query(
         env,
-        `SELECT blob9 AS src, blob7 AS dst, SUM(_sample_interval) AS moves
-         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob9 != '' AND blob7 != ''
-         GROUP BY src, dst HAVING moves >= 5 ORDER BY moves DESC LIMIT 100`,
+        `SELECT blob2 AS surface, blob9 AS src, blob7 AS dst, SUM(_sample_interval) AS moves
+         FROM ${DATASET} WHERE ${since} AND blob2 IN ('web', 'app') AND blob9 != '' AND blob7 != ''
+         GROUP BY surface, src, dst HAVING moves >= 5 ORDER BY moves DESC LIMIT 200`,
       ),
       // How far pages are actually read. Depth rows are written when a
       // page is left, so they are their own kind and never counted as
       // views; the same five-reader floor applies.
       query(
         env,
-        `SELECT blob7 AS page, SUM(_sample_interval) AS readers,
+        `SELECT blob2 AS surface, blob7 AS page, SUM(_sample_interval) AS readers,
                 SUM(_sample_interval * double3) / SUM(_sample_interval) AS depth
-         FROM ${DATASET} WHERE ${since} AND blob2 = 'web-depth' AND blob7 != ''
-         GROUP BY page HAVING readers >= 5 ORDER BY readers DESC LIMIT 50`,
+         FROM ${DATASET} WHERE ${since} AND blob2 IN ('web-depth', 'app-depth') AND blob7 != ''
+         GROUP BY surface, page HAVING readers >= 5 ORDER BY readers DESC LIMIT 100`,
       ),
       loadDownloads(),
     ]);
@@ -400,6 +400,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <div id="languages" style="--measure:var(--m-views)"></div>
     </div>
     <div class="card">
+      <h2>What is read</h2>
+      <p class="sub">The website and the Android app keep separate figures: a page path and a screen route are different things, and adding them together would give a number that is neither.</p>
+      <div class="tabs" id="surface-tabs"></div>
+    </div>
+    <div class="card">
       <h2>Top pages</h2>
       <p class="sub">How often each page was opened, and how many visits began on it, as totals across all readers.</p>
       <div id="pages" style="--measure:var(--m-views)"></div>
@@ -433,7 +438,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 </div>
 <script>
 (function () {
-  var state = { days: 30, data: null, sort: { countries: "visits", cities: "visits" } };
+  var state = { days: 30, data: null, sort: { countries: "visits", cities: "visits" }, surface: "web" };
   var METRICS = [["visits", "Visits"], ["views", "Page views"], ["launches", "App launches"]];
   var names;
   try { names = new Intl.DisplayNames(["en"], { type: "region" }); } catch (e) { names = null; }
@@ -545,6 +550,34 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     box.appendChild(table);
   }
 
+  /**
+   * The website/app switch above the three content cards. One switch for
+   * all of them, so the three always describe the same surface and can
+   * never be read as one mixed set.
+   */
+  function surfaceTabs() {
+    var tabs = document.getElementById("surface-tabs");
+    tabs.textContent = "";
+    [["web", "Website"], ["app", "Android app"]].forEach(function (option) {
+      var button = el("button", { "aria-pressed": String(state.surface === option[0]) }, option[1]);
+      button.onclick = function () { state.surface = option[0]; surfaceTabs(); contentTables(); };
+      tabs.appendChild(button);
+    });
+  }
+
+  /** Rows for the selected surface only. Depth rows carry their own kind. */
+  function forSurface(rows, depth) {
+    var want = state.surface + (depth ? "-depth" : "");
+    return (rows || []).filter(function (r) { return String(r.surface) === want; });
+  }
+
+  function contentTables() {
+    var d = state.data;
+    pageTable(forSurface(d.pages));
+    nextPageTable(forSurface(d.nextPages));
+    depthTable(forSurface(d.depths, true));
+  }
+
   // "Readers who opened this page opened that one next." The share is of
   // the moves away from the source page, so it reads as "of everyone who
   // left this page, this is where they went".
@@ -653,10 +686,13 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       bar.style.width = Math.max(2, (r.views / list[0].views) * 100) + "%";
       cell.appendChild(bar);
       var label = el("div");
-      if (r.page.charAt(0) === "/") {
+      if (r.page.charAt(0) === "/" && state.surface === "web") {
         var link = el("a", { href: "https://vedantayojana.org" + r.page, target: "_blank", rel: "noopener noreferrer" },
           r.page === "/" ? "Home" : r.page);
         label.appendChild(link);
+      } else if (r.page.charAt(0) === "/") {
+        // An app route is not a web address, so it is not a link.
+        label.textContent = r.page === "/" ? "Home" : r.page;
       } else {
         label.textContent = "Other (unusual address)";
       }
@@ -796,11 +832,11 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         ? "Downloads are recorded once a day — choose 7 days or longer to see them."
         : "No daily download figures in this range yet."));
     }
-    nextPageTable(d.nextPages || []);
-    depthTable(d.depths || []);
+    surfaceTabs();
+    contentTables();
     sourceTable(d.sources || []);
     languageTable(d.languages || []);
-    pageTable(d.pages || []);
+
     placeTable("countries", Object.values(countries));
     placeTable("cities", Object.values(cities));
   }

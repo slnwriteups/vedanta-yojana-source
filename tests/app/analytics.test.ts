@@ -297,7 +297,7 @@ test("the dashboard offers a 24-hour view bucketed by hour", () => {
 test("the dashboard lists top pages from the stored path, excluding views recorded before paths were", () => {
   const worker = read("cloudflare/analytics-dashboard/worker.js");
 
-  assert.ok(worker.includes("SELECT blob7 AS page"));
+  assert.ok(worker.includes("blob7 AS page"));
   assert.ok(worker.includes("AND blob7 != ''"));
   assert.ok(worker.includes('id="pages"'));
 });
@@ -474,7 +474,7 @@ test("a page pair is only shown once five readers have made the same move", () =
   // at all rather than being filtered after it arrives.
   assert.ok(dashboard.includes("HAVING moves >= 5"));
   assert.ok(dashboard.includes("HAVING readers >= 5"));
-  assert.ok(dashboard.includes("blob2 = 'web-depth'"));
+  assert.ok(dashboard.includes("blob2 IN ('web-depth', 'app-depth')"));
 });
 
 test("nothing still claims the site records no path", () => {
@@ -486,4 +486,66 @@ test("nothing still claims the site records no path", () => {
   const policy = read("docs/privacy-policy.html");
   assert.ok(policy.includes("which page is opened next"), "the policy describes what is now collected");
   assert.ok(policy.includes("fewer than five readers"), "the policy states the disclosure floor");
+});
+
+test("the Android app reports what is read, and iOS reports nothing", () => {
+  const service = read("mobile/services/readingPingService.ts");
+
+  // Same gate as the update check: iOS is being prepared for the App
+  // Store separately, so an iOS build sends nothing and its privacy
+  // declaration is unaffected by any of this.
+  assert.ok(service.includes('if (Platform.OS !== "android") return;'));
+  // Router group segments are not content, so app and website rows line
+  // up on the same route names.
+  assert.ok(service.includes("!/^\\(.*\\)$/.test(segment)"));
+  assert.ok(service.includes("Math.round(percent / 25) * 25"), "depth is quartiles");
+
+  // Still no identifier and nothing kept on the device, so two openings
+  // of the app cannot be joined.
+  for (const banned of ["AsyncStorage", "writeJSON", "randomUUID", "getItem", "installationId"]) {
+    assert.ok(!service.includes(banned), `the reading ping must not use ${banned}`);
+  }
+});
+
+test("app rows are their own kind, so app and website figures are never summed", () => {
+  const worker = read("cloudflare/request-analytics/worker.js");
+
+  // A screen route and a page path are different namespaces; adding them
+  // would give a number that is neither.
+  assert.ok(worker.includes('isDepth ? "app-depth" : "app"'));
+  assert.ok(worker.includes("doubles: isDepth ? [0, 0, depth] : [1, 0]"), "a depth row is not a view");
+
+  const dashboard = read("cloudflare/analytics-dashboard/worker.js");
+  // The dashboard keeps them apart behind one switch for all three
+  // content cards, so the three always describe the same surface.
+  assert.ok(dashboard.includes("blob2 IN ('web', 'app')"));
+  assert.ok(dashboard.includes("blob2 IN ('web-depth', 'app-depth')"));
+  assert.ok(dashboard.includes('function surfaceTabs()'));
+  assert.ok(dashboard.includes('state.surface + (depth ? "-depth" : "")'));
+});
+
+test("the app's screen reporting rides the language provider and fires once per route", () => {
+  const layout = read("mobile/app/_layout.tsx");
+
+  assert.ok(layout.includes("function ScreenReporting()"));
+  assert.ok(layout.includes("reported.current === pathname"), "a language change is not another view");
+  // Mounted inside LanguageProvider, so the content language travels with
+  // the screen rather than defaulting.
+  const tree = layout.slice(layout.indexOf("<LanguageProvider>"), layout.indexOf("</LanguageProvider>"));
+  assert.ok(tree.includes("<ScreenReporting />"));
+
+  // Depth reuses the progress the chapter screen already computes for its
+  // progress bar, and reports the furthest point, not the last one.
+  const chapter = read("mobile/app/(tabs)/library/[book]/[chapter].tsx");
+  assert.ok(chapter.includes("deepest.current = Math.max(deepest.current, reached)"));
+  assert.ok(chapter.includes("reportDepth(`/library/${bookSlug}/${chapterSlug}`, deepest.current)"));
+});
+
+test("nothing still claims the app measures nothing", () => {
+  for (const file of ["docs/privacy-policy.html", "README.md"]) {
+    assert.ok(!read(file).includes("measures nothing"), `${file} still claims the app measures nothing`);
+  }
+  const policy = read("docs/privacy-policy.html");
+  assert.ok(policy.includes("What is read in the Android app"));
+  assert.ok(policy.includes("The iOS app reports none of this."));
 });

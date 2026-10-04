@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AppState, View } from "react-native";
-import { Stack } from "expo-router";
+import { Stack, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as Updates from "expo-updates";
@@ -10,6 +10,8 @@ import { ThemeProvider } from "../ThemeProvider";
 import { ReadingPreferencesProvider } from "../ReadingPreferencesProvider";
 import { LanguageProvider } from "../LanguageProvider";
 import { ReadingPositionProvider } from "../ReadingPositionProvider";
+import { useLanguage } from "../language-context.ts";
+import { reportScreen } from "../services/readingPingService.ts";
 import { BookmarksProvider } from "../BookmarksProvider";
 import { WelcomeScreen } from "../components/WelcomeScreen";
 import { OnboardingScreen } from "../components/OnboardingScreen";
@@ -184,6 +186,35 @@ function useForegroundUpdates() {
   }, []);
 }
 
+/**
+ * Reports each screen the reader opens and the screen before it, so the
+ * Library can be written toward what is actually read. Totals only: no
+ * identifier, nothing stored, and one hop per row rather than a trail --
+ * see services/readingPingService.ts, which is also where the
+ * Android-only gate lives.
+ *
+ * It sits inside LanguageProvider so the content language travels with
+ * the screen, and reports once per route: a language change on a screen
+ * already open is not another view of it.
+ */
+function ScreenReporting() {
+  const pathname = usePathname();
+  const { language } = useLanguage();
+  const previous = useRef("");
+  const reported = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!pathname || reported.current === pathname) return;
+    reported.current = pathname;
+    const from = previous.current;
+    previous.current = pathname;
+    reportScreen(pathname, from, language);
+    // `language` is read, not a dependency, for the reason above.
+  }, [pathname]);
+
+  return null;
+}
+
 export default function RootLayout() {
   useUnlockedOrientation();
   useForegroundUpdates();
@@ -195,6 +226,7 @@ export default function RootLayout() {
           <ReadingPositionProvider>
             <BookmarksProvider>
               <SafeAreaProvider>
+                <ScreenReporting />
                 <RootStack />
                 <StatusBar style="auto" />
               </SafeAreaProvider>
