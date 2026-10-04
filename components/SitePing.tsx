@@ -84,8 +84,8 @@ function depthBucket(percent: number): number {
  * `f=` is what makes "readers who opened this chapter opened that one
  * next" answerable. It is a pair of pages, never a trail: each row knows
  * one hop and nothing about the hop before it, there is no identifier to
- * join rows by, and the dashboard discards any pair seen fewer than five
- * times so a single unusual route cannot be picked out.
+ * join rows by, and any pair seen fewer than five times is discarded when
+ * the counts are read back, so a single unusual route cannot be picked out.
  */
 export function SitePing() {
   const pathname = usePathname();

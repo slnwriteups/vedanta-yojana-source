@@ -129,8 +129,8 @@ function pageLanguage(url) {
  * It is one hop, not a trail: the row knows the page before this one and
  * nothing before that, and there is no identifier to join rows by, so no
  * sequence longer than a pair can be reconstructed from this data. The
- * dashboard additionally discards any pair seen fewer than five times, so
- * one reader's unusual route cannot be singled out.
+ * Any pair seen fewer than five times is additionally discarded when the
+ * counts are read back, so one reader's unusual route cannot be singled out.
  */
 function fromPath(url) {
   const raw = url.searchParams.get("f") ?? "";
@@ -165,7 +165,7 @@ export default {
           // because a screen route and a page path are different
           // namespaces and summing them would invent a number that is
           // neither. Every existing website query is therefore untouched
-          // by the app, and the dashboard shows the two side by side.
+          // by the app, and the two are counted side by side.
           const type = url.searchParams.get("t");
 
           if (type === "app" || type === "ad") {
