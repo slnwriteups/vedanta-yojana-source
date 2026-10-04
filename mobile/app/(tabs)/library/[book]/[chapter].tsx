@@ -29,6 +29,7 @@ import {
 } from "../../../../../content-lib/text-format.ts";
 import { useLanguage } from "../../../../language-context.ts";
 import { useReadingPosition } from "../../../../reading-position-context.ts";
+import { reportDepth } from "../../../../services/readingPingService.ts";
 import { useBookmarks } from "../../../../bookmarks-context.ts";
 import { chapterPositionLabel, minReadLabel, nowReadingAnnouncement, useT } from "../../../../ui-strings.ts";
 import { getOfflineBookImageUri, isBookAvailable, loadOfflineBook } from "../../../../services/bookOfflineService.ts";
@@ -118,6 +119,8 @@ export default function LibraryChapterScreen() {
   const { recordChapterView } = useReadingPosition();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const [progress, setProgress] = useState(0);
+  /** Furthest point reached in the chapter currently open, for read depth. */
+  const deepest = useRef(0);
   const loadedBook = loadBook(bookSlug);
   const book = loadedBook ? localizeBook(loadedBook, language) : null;
   // Memoized on bookSlug alone (not re-run on every scroll-driven
@@ -163,8 +166,24 @@ export default function LibraryChapterScreen() {
   function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
     const scrollable = contentSize.height - layoutMeasurement.height;
-    setProgress(scrollable > 0 ? Math.min(1, Math.max(0, contentOffset.y / scrollable)) : 1);
+    const reached = scrollable > 0 ? Math.min(1, Math.max(0, contentOffset.y / scrollable)) : 1;
+    setProgress(reached);
+    // The furthest point reached, not the current one: scrolling back up
+    // to re-read a passage does not un-read the chapter. Held in a ref so
+    // it costs no re-render on a handler that fires constantly.
+    deepest.current = Math.max(deepest.current, reached);
   }
+
+  // How far this chapter was read, reported when the reader leaves it:
+  // on unmount, and on a switch to another chapter, which replaces the
+  // route rather than unmounting. Totals only -- see
+  // services/readingPingService.ts.
+  useEffect(() => {
+    deepest.current = 0;
+    return () => {
+      reportDepth(`/library/${bookSlug}/${chapterSlug}`, deepest.current);
+    };
+  }, [bookSlug, chapterSlug]);
 
   function goTo(targetSlug: string, title: string) {
     void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);

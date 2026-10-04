@@ -159,7 +159,37 @@ export default {
           const geo = geography(request);
           const depth = readDepth(url);
 
-          if (url.searchParams.get("t") === "d") {
+          // The Android app reports the same two things the website
+          // does, from mobile/services/readingPingService.ts. Its rows
+          // are their own kinds ("app", "app-depth") rather than "web",
+          // because a screen route and a page path are different
+          // namespaces and summing them would invent a number that is
+          // neither. Every existing website query is therefore untouched
+          // by the app, and the dashboard shows the two side by side.
+          const type = url.searchParams.get("t");
+
+          if (type === "app" || type === "ad") {
+            const isDepth = type === "ad";
+            // A depth value this site's own screens never send is
+            // discarded rather than stored.
+            if (!isDepth || depth >= 0) env.REQUEST_STATS.writeDataPoint({
+              blobs: [
+                geo.country,
+                isDepth ? "app-depth" : "app",
+                geo.colo,
+                geo.city,
+                geo.region,
+                "",
+                pagePath(url),
+                isDepth ? "" : pageLanguage(url),
+                isDepth ? "" : fromPath(url),
+              ],
+              // A depth row is not a screen view and must never be
+              // counted as one, exactly as on the website.
+              doubles: isDepth ? [0, 0, depth] : [1, 0],
+              indexes: [geo.country],
+            });
+          } else if (type === "d") {
             // Read depth is its own kind of row rather than an extra
             // field on a page view, because a page view is reported when
             // a page opens and depth only when it is left. Writing both

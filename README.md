@@ -558,8 +558,12 @@ to confirm a downloaded file is genuine.
 ## Privacy & data summary
 
 - No analytics, advertising, crash-reporting, or tracking SDK is
-  present in the mobile app's dependencies. This is a statement about
-  the **app**, and it remains unconditionally true.
+  present in the mobile app's dependencies, and no third party receives
+  anything about a reader. The **Android** app reports which screens are
+  opened and how far a chapter is read, to this project's own endpoint,
+  as totals across everyone — no identifier, nothing stored on the
+  device, and routes taken by fewer than five readers discarded. The
+  **iOS** app reports none of it.
 - The **website** (vedantayojana.org) carries cookieless, aggregate
   measurement of which pages are read, which page is opened next, and how
   far down a page readers reach — all as totals across everyone, with no
