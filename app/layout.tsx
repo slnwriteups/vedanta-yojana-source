@@ -117,8 +117,8 @@ export default function RootLayout({
         <AppProviders>
           {/*
             Page views and visits by country and approximate city, source,
-            page and language, for the private dashboard
-            (cloudflare/analytics-dashboard/). Inside AppProviders so it can
+            page and language
+            Inside AppProviders so it can
             read the reader's language; reports only from the production
             host -- see components/SitePing.tsx.
           */}

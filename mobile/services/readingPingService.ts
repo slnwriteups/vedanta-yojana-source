@@ -47,7 +47,7 @@ function send(query: string): void {
 
 /**
  * The route as the website would name the same content, so app and
- * website rows line up in the dashboard: the router's group segments
+ * website rows line up when counted: the router's group segments
  * ("(tabs)") are not content and are dropped, and a trailing slash is
  * removed. Anything that is not a plain route is reported as "(other)"
  * rather than sent as-is.

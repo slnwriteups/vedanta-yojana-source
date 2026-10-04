@@ -14,7 +14,7 @@ import {
  * Covers the three measurement mechanisms added for traffic/install
  * visibility (docs/ANALYTICS.md): the APK download snapshot series, the
  * Cloudflare Web Analytics beacon in the site layout, the counting
- * Worker and the website's page-view ping, and the private dashboard.
+ * Worker and the website's page-view ping.
  *
  * The download-stats assertions exercise the real merge/aggregation
  * logic. The other two are structural source checks in the style of
@@ -254,185 +254,6 @@ test("the ping is answered by the Worker itself and never forwarded to the origi
   assert.ok(worker.includes("/^[a-z0-9.-]{1,100}$/.test(host)"));
 });
 
-test("the analytics dashboard is password-protected and keeps its credentials out of the repository", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-  const config = read("cloudflare/analytics-dashboard/wrangler.toml");
-
-  // Every request is checked before routing, and an unset password
-  // refuses everything rather than serving an open dashboard.
-  const authIdx = worker.indexOf("if (!(await authorized(request, env)))");
-  assert.ok(authIdx > 0 && authIdx < worker.indexOf('url.pathname === "/data"'));
-  assert.ok(worker.includes("if (!expected) return false;"));
-  assert.ok(worker.includes("timingSafeEqual"));
-
-  // Secrets live in Cloudflare, never in wrangler.toml.
-  assert.ok(!/^\s*\[vars\]/m.test(config), "no plain-text vars block");
-  assert.ok(!/^\s*(DASHBOARD_PASSWORD|CF_API_TOKEN|CF_ACCOUNT_ID)\s*=/m.test(config));
-  // Read-only: it queries the dataset and cannot write to it.
-  assert.ok(!config.includes("analytics_engine_datasets"));
-  assert.ok(!worker.includes("writeDataPoint"));
-});
-
-test("the dashboard reads download history from the committed snapshot file, without a credential", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  // The same file the daily snapshot workflow writes; GitHub itself keeps
-  // no download history to read instead.
-  assert.ok(worker.includes("/main/stats/apk-downloads.json"));
-  const fn = worker.slice(worker.indexOf("async function loadDownloads()"), worker.indexOf("async function query("));
-  assert.ok(!fn.includes("Authorization"), "the public file is fetched without any token");
-  // A download-history failure blanks one chart, never the whole dashboard.
-  assert.ok(fn.includes("return null;"));
-});
-
-test("the dashboard offers a 24-hour view bucketed by hour", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  assert.ok(worker.includes("const RANGES = new Set([1, 7, 30, 90]);"));
-  assert.ok(worker.includes(`"timestamp > NOW() - INTERVAL '24' HOUR"`));
-  assert.ok(worker.includes(`hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY"`));
-  assert.ok(worker.includes('<button data-days="1">24 hours</button>'));
-});
-
-test("the dashboard lists top pages from the stored path, excluding views recorded before paths were", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  assert.ok(worker.includes("blob7 AS page"));
-  assert.ok(worker.includes("AND blob7 != ''"));
-  assert.ok(worker.includes('id="pages"'));
-});
-
-test("the dashboard lists languages from the stored code, and the Worker keeps only plain codes", () => {
-  const dashboard = read("cloudflare/analytics-dashboard/worker.js");
-  const worker = read("cloudflare/request-analytics/worker.js");
-
-  assert.ok(dashboard.includes("SELECT blob8 AS language"));
-  assert.ok(dashboard.includes("AND blob8 != ''"));
-  assert.ok(worker.includes("/^[a-z]{2,3}$/.test(code)"));
-});
-
-test("each section carries one short line of context, in plain wording", () => {
-  const page = read("cloudflare/analytics-dashboard/worker.js");
-  const body = page.slice(page.indexOf("export const PAGE"));
-
-  const headings = (body.match(/<h2[^>]*>/g) ?? []).length;
-  const subs = (body.match(/<p class="sub"/g) ?? []).length;
-  assert.ok(headings >= 9, `expected a heading per section, saw ${headings}`);
-  assert.ok(subs >= headings - 1, "each section keeps one line of context");
-
-  // The two-line "What this counts / How to read it" scaffold was removed
-  // deliberately: it read as generated boilerplate rather than as something
-  // a person wrote. One short line per section is the replacement, not none.
-  assert.ok(!body.includes("What this counts"));
-  assert.ok(!body.includes("How to read it"));
-});
-
-test("the charts are bars, one measure each, with their labels outside the stretched SVG", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  // Discrete per-day counts: a line drawn between them implies values on
-  // the way that do not exist.
-  assert.ok(!worker.includes("lineChart"), "no line chart survives");
-  assert.ok(worker.includes("function barChart(host, rows, key)"));
-  const calls = [...worker.matchAll(/barChart\(.*?\);/g)].map((m) => m[0]);
-  assert.equal(calls.length, 5, "one call per chart");
-  for (const call of calls) {
-    assert.ok(/, "(visits|views|launches|downloads|screens)"\);$/.test(call), `one measure per chart: ${call}`);
-  }
-
-  // Text inside a preserveAspectRatio="none" plot distorts and shrinks to
-  // about 5px at phone width, which is where this page is mostly read.
-  const fn = worker.slice(worker.indexOf("function barChart"), worker.indexOf('document.querySelectorAll(".range button")'));
-  assert.ok(!fn.includes('createElementNS(NS, "text")'), "no text inside the stretched SVG");
-  assert.ok(fn.includes("non-scaling-stroke"));
-  assert.ok(fn.includes('class: "ylab"') && fn.includes('class: "xaxis"'));
-});
-
-test("the measure colours survive every pair, under colour blindness too", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  // All four measures are on screen at once, so the standard is every pair,
-  // not just neighbours. Three hue families clear it in both modes (worst
-  // CVD dE 9.2 light / 9.4 dark); a fourth hue cannot -- yellow against
-  // orange is dE 4.8 under deuteranopia on dark, violet against blue 1.9
-  // under protanopia. The fourth measure therefore takes a second shade of
-  // the app's own aqua rather than a fourth hue.
-  for (const hex of ["#2a78d6", "#eb6834", "#1baf7a", "#0e7a55"]) {
-    assert.ok(worker.includes(hex), `missing light hue ${hex}`);
-  }
-  for (const hex of ["#3987e5", "#d95926", "#199e70", "#46c79a"]) {
-    assert.ok(worker.includes(hex), `missing dark hue ${hex}`);
-  }
-  // The hues that failed the all-pairs test must not come back.
-  for (const banned of ["#eda100", "#c98500", "#4a3aa7", "#9085e9"]) {
-    assert.ok(!worker.includes(banned), `${banned} fails all-pairs CVD separation`);
-  }
-
-  // The hue travels in its own property, not currentColor: sharing the text
-  // channel means fixing text to an ink token silently greys out every mark
-  // that inherited it.
-  assert.ok(worker.includes("fill: var(--measure, var(--accent))"));
-  assert.ok(worker.includes("background: var(--measure, var(--accent))"));
-  assert.ok(!worker.includes("currentColor"), "no mark reads the text colour");
-
-  // Colour sits on marks and surfaces, never on words: aqua is 2.74:1 on
-  // the light surface, which as text is unreadable.
-  assert.ok(worker.includes("color: var(--text)"));
-  assert.ok(worker.includes("td { padding: 7px 4px; border-bottom: 1px solid var(--grid); color: var(--text); }"));
-  assert.ok(worker.includes(".barcell div, .pagecell a { color: var(--text); }"));
-  assert.ok(worker.includes(".tile { border: 1px solid var(--border); border-left: 3px solid var(--measure, var(--border)); }"));
-  assert.ok(!worker.includes("color-mix"), "no tinted surface behind the figures");
-
-  assert.ok(worker.includes("@media (prefers-color-scheme: dark)"));
-  assert.ok(worker.includes(':root:not([data-theme="light"])'));
-  assert.ok(worker.includes(':root[data-theme="dark"]'));
-});
-
-test("the dashboard page is exported so it can be previewed without deploying", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-  assert.ok(worker.includes("export const PAGE"));
-  // The preview serves the same /data contract the Worker does.
-  const preview = read("scripts/preview-dashboard.ts");
-  assert.ok(preview.includes('from "../cloudflare/analytics-dashboard/worker.js"'));
-  assert.ok(preview.includes('url.pathname === "/data"'));
-});
-
-test("the preview shows the real data or an honest error, and never invents figures", () => {
-  const preview = read("scripts/preview-dashboard.ts");
-
-  // It calls the Worker's own loader rather than reimplementing the
-  // queries, so it cannot show anything the deployed dashboard would not.
-  assert.ok(preview.includes("loadData(env, days)"));
-  assert.ok(read("cloudflare/analytics-dashboard/worker.js").includes("export async function loadData"));
-
-  // Without credentials loadData returns { error }, which the page renders.
-  // Nothing here substitutes plausible-looking numbers for missing ones: a
-  // screenshot of the preview is a screenshot of the real thing or of an
-  // honest error, never of fiction.
-  assert.ok(!/Math\.(random|sin)/.test(preview), "no generated series");
-  assert.ok(!/\bhits:\s*\d/.test(preview) && !/\bvisits:\s*\d/.test(preview), "no hand-written rows");
-  assert.ok(!/\bfixture/i.test(preview), "no fixture data path");
-});
-
-test("the page carries its own provenance and can be forced to a theme", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  // A screenshot of this ends up in a slide. The window it covers, the
-  // moment it was taken, and the fact that the counts are sampled estimates
-  // rather than exact tallies all have to travel with the image.
-  assert.ok(worker.includes('<p class="provenance" id="provenance"></p>'));
-  assert.ok(worker.includes('" \\u00b7 as of "'));
-  assert.ok(worker.includes("counts estimated from Cloudflare's sampling"));
-
-  // Projectors crush dark backgrounds, so the theme cannot be left to the
-  // room's laptop. Auto / light / dark, remembered, with the storage access
-  // guarded -- it throws in a private window.
-  assert.ok(worker.includes('var THEMES = ["auto", "light", "dark"];'));
-  assert.ok(worker.includes('document.documentElement.setAttribute("data-theme", value)'));
-  const themeFns = worker.slice(worker.indexOf("function readTheme()"), worker.indexOf("applyTheme(readTheme());"));
-  assert.equal((themeFns.match(/catch \(e\)/g) ?? []).length, 2, "every storage access is guarded");
-});
-
 test("the page beacon reports the hop it came from and how far the page was read", () => {
   const ping = read("components/SitePing.tsx");
 
@@ -467,20 +288,10 @@ test("read depth is its own row kind and can never inflate the page-view count",
   assert.ok(worker.includes("function fromPath(url)"));
 });
 
-test("a page pair is only shown once five readers have made the same move", () => {
-  const dashboard = read("cloudflare/analytics-dashboard/worker.js");
-
-  // The floor is applied in SQL, so a rare route never reaches the page
-  // at all rather than being filtered after it arrives.
-  assert.ok(dashboard.includes("HAVING moves >= 5"));
-  assert.ok(dashboard.includes("HAVING readers >= 5"));
-  assert.ok(dashboard.includes("blob2 IN ('web-depth', 'app-depth')"));
-});
-
 test("nothing still claims the site records no path", () => {
-  // The site now counts page-to-page moves, so the three places that said
+  // The site now counts page-to-page moves, so the places that said
   // otherwise had to change in the same commit as the collection.
-  for (const file of ["cloudflare/analytics-dashboard/worker.js", "docs/privacy-policy.html", "README.md"]) {
+  for (const file of ["docs/privacy-policy.html", "README.md"]) {
     assert.ok(!read(file).includes("never one reader's path"), `${file} still claims no path is recorded`);
   }
   const policy = read("docs/privacy-policy.html");
@@ -515,13 +326,6 @@ test("app rows are their own kind, so app and website figures are never summed",
   assert.ok(worker.includes('isDepth ? "app-depth" : "app"'));
   assert.ok(worker.includes("doubles: isDepth ? [0, 0, depth] : [1, 0]"), "a depth row is not a view");
 
-  const dashboard = read("cloudflare/analytics-dashboard/worker.js");
-  // The dashboard keeps them apart behind one switch for all three
-  // content cards, so the three always describe the same surface.
-  assert.ok(dashboard.includes("blob2 IN ('web', 'app')"));
-  assert.ok(dashboard.includes("blob2 IN ('web-depth', 'app-depth')"));
-  assert.ok(dashboard.includes("function applySurface()"));
-  assert.ok(dashboard.includes('state.surface + (depth ? "-depth" : "")'));
 });
 
 test("the app's screen reporting rides the language provider and fires once per route", () => {
@@ -550,43 +354,3 @@ test("nothing still claims the app measures nothing", () => {
   assert.ok(policy.includes("The iOS app reports none of this."));
 });
 
-test("the website/app switch governs the whole page, not one section", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  // A visit and an app launch are different things. A page showing some
-  // cards from one surface and some from the other invites exactly the
-  // comparison that is not valid, so the switch is page-wide.
-  assert.ok(worker.includes('<div class="range" role="group" aria-label="Surface" id="surface-switch">'));
-  assert.ok(worker.includes("function applySurface()"));
-  assert.ok(worker.includes('node.hidden = node.getAttribute("data-surface") !== state.surface'));
-
-  // Cards and tiles that belong to one surface say so.
-  assert.ok(worker.includes('<div class="card" data-surface="web">'));
-  assert.ok(worker.includes('<div class="card" data-surface="app">'));
-  assert.ok(worker.includes('<div class="tile" data-surface="app"'));
-
-  // The surface switch shares .range's styling, so an unscoped
-  // `.range button` selector would claim its buttons and overwrite their
-  // handler -- the switch would then set days to NaN. Both handlers
-  // select on the attribute they act on.
-  assert.ok(worker.includes('.range button[data-days]'));
-  assert.ok(!/querySelectorAll\("\.range button"\)/.test(worker));
-});
-
-test("each surface offers only measures that exist on it", () => {
-  const worker = read("cloudflare/analytics-dashboard/worker.js");
-
-  // A referring site exists only on the web; a screen view only in the app.
-  assert.ok(worker.includes('web: [["visits", "Visits"], ["views", "Page views"]]'));
-  assert.ok(worker.includes('app: [["launches", "App launches"], ["screens", "Screens opened"]]'));
-  assert.ok(worker.includes('if (kind === "app") return "screens";'));
-  // A sort chosen on one surface may not exist on the other.
-  assert.ok(worker.includes("if (allowed.indexOf(state.sort[id]) === -1) state.sort[id] = allowed[0];"));
-
-  // Wording and columns follow the surface rather than naming the website
-  // while showing the app.
-  assert.ok(worker.includes('app ? "Top screens" : "Top pages"'));
-  assert.ok(worker.includes('app ? "How far chapters are read" : "How far pages are read"'));
-  assert.ok(worker.includes('if (!app) head.appendChild(el("th", { class: "n" }, "Visits began here"));'),
-    "a visit cannot begin on an app screen");
-});
