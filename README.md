@@ -561,7 +561,10 @@ to confirm a downloaded file is genuine.
   present in the mobile app's dependencies. This is a statement about
   the **app**, and it remains unconditionally true.
 - The **website** (vedantayojana.org) carries cookieless, aggregate
-  page-view measurement — no cookies, no client-side storage, no
+  measurement of which pages are read, which page is opened next, and how
+  far down a page readers reach — all as totals across everyone, with no
+  identifier stored or sent and routes taken by fewer than five readers
+  discarded. Page-view measurement — no cookies, no client-side storage, no
   cross-site identifier, no individual profiles. Separately, the
   version-check and Library-catalog requests the app already makes to
   that site are counted by country at the network edge; that counting

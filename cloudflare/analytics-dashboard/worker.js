@@ -100,7 +100,7 @@ export async function loadData(env, days) {
   const since = hourly ? "timestamp > NOW() - INTERVAL '24' HOUR" : `timestamp > NOW() - INTERVAL '${days}' DAY`;
   const bucket = hourly ? "INTERVAL '1' HOUR" : "INTERVAL '1' DAY";
   try {
-    const [daily, places, sources, pages, languages, downloads] = await Promise.all([
+    const [daily, places, sources, pages, languages, nextPages, depths, downloads] = await Promise.all([
       query(
         env,
         `SELECT toStartOfInterval(timestamp, ${bucket}) AS day, blob2 AS kind,
@@ -139,9 +139,29 @@ export async function loadData(env, days) {
          FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob8 != ''
          GROUP BY language ORDER BY views DESC LIMIT 50`,
       ),
+      // What readers open next. HAVING is the disclosure control, not a
+      // tidy-up: at this traffic a rare pair can be close to unique, so a
+      // pair seen fewer than five times is dropped in the query and never
+      // reaches the page.
+      query(
+        env,
+        `SELECT blob9 AS src, blob7 AS dst, SUM(_sample_interval) AS moves
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web' AND blob9 != '' AND blob7 != ''
+         GROUP BY src, dst HAVING moves >= 5 ORDER BY moves DESC LIMIT 100`,
+      ),
+      // How far pages are actually read. Depth rows are written when a
+      // page is left, so they are their own kind and never counted as
+      // views; the same five-reader floor applies.
+      query(
+        env,
+        `SELECT blob7 AS page, SUM(_sample_interval) AS readers,
+                SUM(_sample_interval * double3) / SUM(_sample_interval) AS depth
+         FROM ${DATASET} WHERE ${since} AND blob2 = 'web-depth' AND blob7 != ''
+         GROUP BY page HAVING readers >= 5 ORDER BY readers DESC LIMIT 50`,
+      ),
       loadDownloads(),
     ]);
-    return { days, hourly, daily, places, sources, pages, languages, downloads };
+    return { days, hourly, daily, places, sources, pages, languages, nextPages, depths, downloads };
   } catch (error) {
     return { error: `Cloudflare returned an error: ${error.message}` };
   }
@@ -381,8 +401,18 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     </div>
     <div class="card">
       <h2>Top pages</h2>
-      <p class="sub">How often each page was opened, and how many visits began on it. Totals per page only — never one reader's path through the site.</p>
+      <p class="sub">How often each page was opened, and how many visits began on it, as totals across all readers.</p>
       <div id="pages" style="--measure:var(--m-views)"></div>
+    </div>
+    <div class="card">
+      <h2>What readers open next</h2>
+      <p class="sub">Where readers went after each page, as totals across everyone. Pairs seen fewer than five times are left out.</p>
+      <div id="nextpages" style="--measure:var(--m-views)"></div>
+    </div>
+    <div class="card">
+      <h2>How far pages are read</h2>
+      <p class="sub">The average share of a page reached before leaving it. A short page counts as fully read.</p>
+      <div id="depths" style="--measure:var(--m-views)"></div>
     </div>
     <div class="grid2">
       <div class="card">
@@ -513,6 +543,94 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       table.appendChild(tr);
     });
     box.appendChild(table);
+  }
+
+  // "Readers who opened this page opened that one next." The share is of
+  // the moves away from the source page, so it reads as "of everyone who
+  // left this page, this is where they went".
+  function nextPageTable(rows) {
+    var bySource = {};
+    rows.forEach(function (r) {
+      var src = String(r.src);
+      (bySource[src] = bySource[src] || []).push({ dst: String(r.dst), moves: Number(r.moves) });
+    });
+    var sources = Object.keys(bySource).map(function (src) {
+      var moves = bySource[src].reduce(function (a, r) { return a + r.moves; }, 0);
+      return { src: src, moves: moves, next: bySource[src].sort(function (a, b) { return b.moves - a.moves; }).slice(0, 4) };
+    }).sort(function (a, b) { return b.moves - a.moves; }).slice(0, 12);
+
+    var box = document.getElementById("nextpages");
+    box.textContent = "";
+    if (!sources.length) {
+      box.appendChild(el("div", { class: "empty" },
+        "No page-to-page moves recorded yet in this range. Pairs appear once five readers have made the same move."));
+      return;
+    }
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "After this page"));
+    head.appendChild(el("th", {}, "they opened"));
+    head.appendChild(el("th", { class: "n" }, "Readers"));
+    head.appendChild(el("th", { class: "n" }, "Share"));
+    table.appendChild(head);
+    sources.forEach(function (s) {
+      s.next.forEach(function (r, i) {
+        var tr = el("tr");
+        var from = el("td", {}, i === 0 ? pageLabel(s.src) : "");
+        if (i === 0) from.className = "place";
+        tr.appendChild(from);
+        var cell = el("td", { class: "place barcell pagecell" });
+        var bar = el("span");
+        bar.style.width = Math.max(2, (r.moves / s.next[0].moves) * 100) + "%";
+        cell.appendChild(bar);
+        cell.appendChild(el("div", {}, pageLabel(r.dst)));
+        tr.appendChild(cell);
+        tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.moves))));
+        tr.appendChild(el("td", { class: "n" }, Math.round((r.moves / s.moves) * 100) + "%"));
+        table.appendChild(tr);
+      });
+    });
+    box.appendChild(table);
+  }
+
+  function depthTable(rows) {
+    var list = rows.map(function (r) {
+      return { page: String(r.page), readers: Number(r.readers), depth: Number(r.depth) };
+    }).sort(function (a, b) { return b.readers - a.readers; }).slice(0, 25);
+    var box = document.getElementById("depths");
+    box.textContent = "";
+    if (!list.length) {
+      box.appendChild(el("div", { class: "empty" },
+        "No read-depth recorded yet in this range. A page appears once five readers have opened and left it."));
+      return;
+    }
+    var table = el("table");
+    var head = el("tr");
+    head.appendChild(el("th", {}, "Page"));
+    head.appendChild(el("th", { class: "n" }, "Readers"));
+    head.appendChild(el("th", { class: "n" }, "Average read"));
+    table.appendChild(head);
+    list.forEach(function (r) {
+      var tr = el("tr");
+      var cell = el("td", { class: "place barcell pagecell" });
+      var bar = el("span");
+      // The bar is the depth itself, so a page people abandon early reads
+      // as a short bar however many readers it had.
+      bar.style.width = Math.max(2, r.depth) + "%";
+      cell.appendChild(bar);
+      cell.appendChild(el("div", {}, pageLabel(r.page)));
+      tr.appendChild(cell);
+      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.readers))));
+      tr.appendChild(el("td", { class: "n" }, Math.round(r.depth) + "%"));
+      table.appendChild(tr);
+    });
+    box.appendChild(table);
+  }
+
+  /** "/" reads as Home; anything not a path is an unusual address. */
+  function pageLabel(path) {
+    if (path === "/") return "Home";
+    return path.charAt(0) === "/" ? path : "Other (unusual address)";
   }
 
   function pageTable(rows) {
@@ -678,6 +796,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         ? "Downloads are recorded once a day — choose 7 days or longer to see them."
         : "No daily download figures in this range yet."));
     }
+    nextPageTable(d.nextPages || []);
+    depthTable(d.depths || []);
     sourceTable(d.sources || []);
     languageTable(d.languages || []);
     pageTable(d.pages || []);

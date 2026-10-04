@@ -120,6 +120,35 @@ function pageLanguage(url) {
   return /^[a-z]{2,3}$/.test(code) ? code : "";
 }
 
+/**
+ * The page this view was reached FROM, when that page was on this site --
+ * the raw material for "readers who opened this chapter opened that one
+ * next". Empty for the first page of a visit, which was reached from
+ * outside.
+ *
+ * It is one hop, not a trail: the row knows the page before this one and
+ * nothing before that, and there is no identifier to join rows by, so no
+ * sequence longer than a pair can be reconstructed from this data. The
+ * dashboard additionally discards any pair seen fewer than five times, so
+ * one reader's unusual route cannot be singled out.
+ */
+function fromPath(url) {
+  const raw = url.searchParams.get("f") ?? "";
+  if (!raw.startsWith("/")) return "";
+  const path = raw.length > 1 ? raw.replace(/\/+$/, "") || "/" : raw;
+  return /^\/[\p{L}\p{M}\p{N}\/_.~%-]{0,200}$/u.test(path) ? path : "(other)";
+}
+
+/**
+ * How far down a page the reader reached, in quarters: 0, 25, 50, 75 or
+ * 100. Anything else -- a value not sent by this site's own page -- is
+ * discarded rather than stored.
+ */
+function readDepth(url) {
+  const raw = Number(url.searchParams.get("d"));
+  return [0, 25, 50, 75, 100].includes(raw) ? raw : -1;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -128,17 +157,39 @@ export default {
       try {
         if (request.method === "POST" && env.REQUEST_STATS) {
           const geo = geography(request);
-          env.REQUEST_STATS.writeDataPoint({
-            // Same blob layout as the manifest counts, with "web" in the
-            // path slot so every existing per-path query is unaffected.
-            // blob6: the visit's source (see visitSource). blob7: the page
-            // viewed (see pagePath). blob8: its language (see pageLanguage).
-            blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url), pagePath(url), pageLanguage(url)],
-            // double1: one page view. double2: 1 when that view began a
-            // visit, so SUM(double2 * _sample_interval) counts visits.
-            doubles: [1, url.searchParams.get("v") === "1" ? 1 : 0],
-            indexes: [geo.country],
-          });
+          const depth = readDepth(url);
+
+          if (url.searchParams.get("t") === "d") {
+            // Read depth is its own kind of row rather than an extra
+            // field on a page view, because a page view is reported when
+            // a page opens and depth only when it is left. Writing both
+            // onto one row would mean either holding the view back until
+            // the reader leaves, or counting the page twice. "web-depth"
+            // is not "web", so every existing query -- views, visits,
+            // sources, pages, languages, places -- is unaffected by it.
+            if (depth >= 0) {
+              env.REQUEST_STATS.writeDataPoint({
+                blobs: [geo.country, "web-depth", geo.colo, geo.city, geo.region, "", pagePath(url), ""],
+                // double1 is 0: this row is not a page view and must
+                // never be counted as one. double3 carries the quarter.
+                doubles: [0, 0, depth],
+                indexes: [geo.country],
+              });
+            }
+          } else {
+            env.REQUEST_STATS.writeDataPoint({
+              // Same blob layout as the manifest counts, with "web" in the
+              // path slot so every existing per-path query is unaffected.
+              // blob6: the visit's source (see visitSource). blob7: the page
+              // viewed (see pagePath). blob8: its language (see pageLanguage).
+              // blob9: the page this one was reached from (see fromPath).
+              blobs: [geo.country, "web", geo.colo, geo.city, geo.region, visitSource(url), pagePath(url), pageLanguage(url), fromPath(url)],
+              // double1: one page view. double2: 1 when that view began a
+              // visit, so SUM(double2 * _sample_interval) counts visits.
+              doubles: [1, url.searchParams.get("v") === "1" ? 1 : 0],
+              indexes: [geo.country],
+            });
+          }
         }
       } catch {
         // A lost page view is not worth an error in the reader's console.

@@ -432,3 +432,58 @@ test("the page carries its own provenance and can be forced to a theme", () => {
   const themeFns = worker.slice(worker.indexOf("function readTheme()"), worker.indexOf("applyTheme(readTheme());"));
   assert.equal((themeFns.match(/catch \(e\)/g) ?? []).length, 2, "every storage access is guarded");
 });
+
+test("the page beacon reports the hop it came from and how far the page was read", () => {
+  const ping = read("components/SitePing.tsx");
+
+  // `f=` is one hop, not a trail: the beacon knows the page before this
+  // one and nothing before that.
+  assert.ok(ping.includes("const from = first.current ? \"\" : previous.current;"));
+  assert.ok(ping.includes("&f=${encodeURIComponent(from)}"));
+  // The first page of a visit was reached from outside, so it has no hop.
+  assert.ok(ping.includes("previous.current = pathname;"));
+
+  // Depth is quartiles, never a scroll trail, and is flushed when the tab
+  // hides -- `unload` does not fire reliably on a phone.
+  assert.ok(ping.includes("Math.round(percent / 25) * 25"));
+  assert.ok(ping.includes('document.addEventListener("visibilitychange", onHide)'));
+  assert.ok(ping.includes('window.addEventListener("pagehide", sendDepth)'));
+
+  // Still no identifier and nothing kept on the device.
+  for (const banned of ["localStorage", "sessionStorage", "document.cookie", "crypto.randomUUID"]) {
+    assert.ok(!ping.includes(banned), `SitePing must not use ${banned}`);
+  }
+});
+
+test("read depth is its own row kind and can never inflate the page-view count", () => {
+  const worker = read("cloudflare/request-analytics/worker.js");
+
+  // A view is reported when a page opens, depth when it is left; one row
+  // cannot carry both without either delaying the view or double-counting.
+  assert.ok(worker.includes('"web-depth"'));
+  assert.ok(worker.includes("doubles: [0, 0, depth]"), "a depth row is not a page view");
+  // Only the values this site's own page sends are stored.
+  assert.ok(worker.includes("[0, 25, 50, 75, 100].includes(raw)"));
+  assert.ok(worker.includes("function fromPath(url)"));
+});
+
+test("a page pair is only shown once five readers have made the same move", () => {
+  const dashboard = read("cloudflare/analytics-dashboard/worker.js");
+
+  // The floor is applied in SQL, so a rare route never reaches the page
+  // at all rather than being filtered after it arrives.
+  assert.ok(dashboard.includes("HAVING moves >= 5"));
+  assert.ok(dashboard.includes("HAVING readers >= 5"));
+  assert.ok(dashboard.includes("blob2 = 'web-depth'"));
+});
+
+test("nothing still claims the site records no path", () => {
+  // The site now counts page-to-page moves, so the three places that said
+  // otherwise had to change in the same commit as the collection.
+  for (const file of ["cloudflare/analytics-dashboard/worker.js", "docs/privacy-policy.html", "README.md"]) {
+    assert.ok(!read(file).includes("never one reader's path"), `${file} still claims no path is recorded`);
+  }
+  const policy = read("docs/privacy-policy.html");
+  assert.ok(policy.includes("which page is opened next"), "the policy describes what is now collected");
+  assert.ok(policy.includes("fewer than five readers"), "the policy states the disclosure floor");
+});
