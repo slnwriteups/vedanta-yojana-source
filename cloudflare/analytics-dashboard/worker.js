@@ -309,7 +309,7 @@ h2 { font-size: 15px; margin: 0 0 4px; }
 .xaxis { display: flex; justify-content: space-between; margin-top: 7px; color: var(--muted); font-size: 11px; }
 .crosshair { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); pointer-events: none; }
 .hero { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px; margin: 2px 0 18px; }
-.hero::before { content: ""; width: 4px; align-self: stretch; border-radius: 2px; background: var(--m-launches); }
+.hero::before { content: ""; width: 4px; align-self: stretch; border-radius: 2px; background: var(--measure, var(--m-visits)); }
 .hero .value { font-size: 46px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: var(--text); }
 .hero .unit { color: var(--text-2); font-size: 14px; padding-bottom: 6px; }
 .tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
@@ -347,6 +347,9 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <p class="provenance" id="provenance"></p>
     </div>
     <div class="controls">
+      <div class="range" role="group" aria-label="Surface" id="surface-switch">
+        <button data-surface="web" aria-pressed="true">Website</button><button data-surface="app">Android app</button>
+      </div>
       <div class="range" role="group" aria-label="Time range">
         <button data-days="1">24 hours</button><button data-days="7">7 days</button><button data-days="30" aria-pressed="true">30 days</button><button data-days="90">90 days</button>
       </div>
@@ -358,55 +361,56 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
   </header>
   <div id="status" class="empty">Loading…</div>
   <div id="content" hidden>
-    <div class="hero">
+    <div class="hero" id="hero">
       <span class="value" id="hero-value">—</span>
       <span class="unit" id="hero-unit">app launches</span>
     </div>
     <div class="tiles">
-      <div class="tile" style="--measure:var(--m-visits)"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
-      <div class="tile" style="--measure:var(--m-views)"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
-      <div class="tile" style="--measure:var(--m-launches)"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
-      <div class="tile" style="--measure:var(--m-downloads)"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
-      <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint">with any site or app activity</div></div>
+      <div class="tile" data-surface="web" style="--measure:var(--m-visits)"><div class="label">Website visits</div><div class="value" id="t-visits"></div><div class="hint">arrivals from outside the site</div></div>
+      <div class="tile" data-surface="web" style="--measure:var(--m-views)"><div class="label">Website page views</div><div class="value" id="t-views"></div><div class="hint">every page loaded</div></div>
+      <div class="tile" data-surface="app" style="--measure:var(--m-launches)"><div class="label">App launches</div><div class="value" id="t-launches"></div><div class="hint" id="t-launches-hint">Android app opens</div></div>
+      <div class="tile" data-surface="app" style="--measure:var(--m-views)"><div class="label">Screens opened</div><div class="value" id="t-screens"></div><div class="hint">every screen the app shows</div></div>
+      <div class="tile" data-surface="app" style="--measure:var(--m-downloads)"><div class="label">APK downloads, all time</div><div class="value" id="t-downloads"></div><div class="hint" id="t-downloads-hint"></div></div>
+      <div class="tile"><div class="label">Countries</div><div class="value" id="t-countries"></div><div class="hint" id="t-countries-hint">with any activity</div></div>
     </div>
-    <div class="card">
+    <div class="card" data-surface="web">
       <h2>Website visits, <span class="per">per day</span></h2>
       <p class="sub">Someone arriving from a search, a link or a typed address.</p>
       <div class="chart" id="c-visits" style="--measure:var(--m-visits)"></div>
     </div>
-    <div class="card">
+    <div class="card" data-surface="web">
       <h2>Website page views, <span class="per">per day</span></h2>
       <p class="sub">Every page opened. One visitor reading six chapters counts six times.</p>
       <div class="chart" id="c-views" style="--measure:var(--m-views)"></div>
     </div>
-    <div class="card">
+    <div class="card" data-surface="app">
       <h2>App launches, <span class="per">per day</span></h2>
       <p class="sub">Each time the Android app is opened it checks for updates; that check is what is counted. Launches, not people.</p>
       <div class="chart" id="c-app" style="--measure:var(--m-launches)"></div>
     </div>
-    <div class="card">
+    <div class="card" data-surface="app">
+      <h2>Screens opened, <span class="per">per day</span></h2>
+      <p class="sub">Every screen the app shows, so one reader moving through four chapters counts four times.</p>
+      <div class="chart" id="c-screens" style="--measure:var(--m-views)"></div>
+    </div>
+    <div class="card" data-surface="app">
       <h2>App downloads, per day</h2>
       <p class="sub">APK downloads from GitHub, recorded once a day. People updating download it again, so this runs ahead of the number of people using the app.</p>
       <div class="chart" id="c-downloads" style="--measure:var(--m-downloads)"></div>
     </div>
-    <div class="card">
+    <div class="card" data-surface="web">
       <h2>Where visitors come from</h2>
       <p class="sub">The site that sent each visit. "Direct" is a typed address, a bookmark, or an app that doesn't say where the link was opened — WhatsApp usually lands here.</p>
       <div id="sources" style="--measure:var(--m-visits)"></div>
     </div>
     <div class="card">
       <h2>Languages</h2>
-      <p class="sub">The language readers had the website set to for each page they opened.</p>
+      <p class="sub" id="s-languages">The language readers had the website set to for each page they opened.</p>
       <div id="languages" style="--measure:var(--m-views)"></div>
     </div>
     <div class="card">
-      <h2>What is read</h2>
-      <p class="sub">The website and the Android app keep separate figures: a page path and a screen route are different things, and adding them together would give a number that is neither.</p>
-      <div class="tabs" id="surface-tabs"></div>
-    </div>
-    <div class="card">
-      <h2>Top pages</h2>
-      <p class="sub">How often each page was opened, and how many visits began on it, as totals across all readers.</p>
+      <h2 id="h-pages">Top pages</h2>
+      <p class="sub" id="s-pages"></p>
       <div id="pages" style="--measure:var(--m-views)"></div>
     </div>
     <div class="card">
@@ -415,14 +419,14 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       <div id="nextpages" style="--measure:var(--m-views)"></div>
     </div>
     <div class="card">
-      <h2>How far pages are read</h2>
-      <p class="sub">The average share of a page reached before leaving it. A short page counts as fully read.</p>
+      <h2 id="h-depth">How far pages are read</h2>
+      <p class="sub" id="s-depth"></p>
       <div id="depths" style="--measure:var(--m-views)"></div>
     </div>
     <div class="grid2">
       <div class="card">
         <h2>Countries</h2>
-        <p class="sub">Where the site and the app are being used.</p>
+        <p class="sub" id="s-countries"></p>
         <div class="tabs" data-for="countries"></div>
         <div id="countries" style="--measure:var(--m-visits)"></div>
       </div>
@@ -439,7 +443,12 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 <script>
 (function () {
   var state = { days: 30, data: null, sort: { countries: "visits", cities: "visits" }, surface: "web" };
-  var METRICS = [["visits", "Visits"], ["views", "Page views"], ["launches", "App launches"]];
+  // Which measures a place can be ranked by depends on the surface: a
+  // visit is a website idea, a launch an app one.
+  var METRICS_BY_SURFACE = {
+    web: [["visits", "Visits"], ["views", "Page views"]],
+    app: [["launches", "App launches"], ["screens", "Screens opened"]],
+  };
   var names;
   try { names = new Intl.DisplayNames(["en"], { type: "region" }); } catch (e) { names = null; }
   var fmt = new Intl.NumberFormat("en");
@@ -551,17 +560,42 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
   }
 
   /**
-   * The website/app switch above the three content cards. One switch for
-   * all of them, so the three always describe the same surface and can
-   * never be read as one mixed set.
+   * The website/app switch. It governs the whole page rather than one
+   * section: a visit and an app launch are different things, and a page
+   * showing some cards from one surface and some from the other invites
+   * exactly the comparison that is not valid. Cards that belong to one
+   * surface carry data-surface and are hidden for the other; cards that
+   * mean something on both stay and are refilled.
    */
-  function surfaceTabs() {
-    var tabs = document.getElementById("surface-tabs");
-    tabs.textContent = "";
-    [["web", "Website"], ["app", "Android app"]].forEach(function (option) {
-      var button = el("button", { "aria-pressed": String(state.surface === option[0]) }, option[1]);
-      button.onclick = function () { state.surface = option[0]; surfaceTabs(); contentTables(); };
-      tabs.appendChild(button);
+  function applySurface() {
+    document.querySelectorAll("#surface-switch button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.getAttribute("data-surface") === state.surface));
+    });
+    document.querySelectorAll("[data-surface]").forEach(function (node) {
+      if (node.closest("#surface-switch")) return;
+      node.hidden = node.getAttribute("data-surface") !== state.surface;
+    });
+    var app = state.surface === "app";
+    document.getElementById("h-pages").textContent = app ? "Top screens" : "Top pages";
+    document.getElementById("h-depth").textContent = app ? "How far chapters are read" : "How far pages are read";
+    document.getElementById("t-countries-hint").textContent =
+      app ? "with any Android app activity" : "with any website activity";
+    document.getElementById("s-languages").textContent = app
+      ? "The language each reader had the app set to for each screen they opened."
+      : "The language readers had the website set to for each page they opened.";
+    document.getElementById("s-pages").textContent = app
+      ? "How often each screen was opened, as totals across all readers."
+      : "How often each page was opened, and how many visits began on it, as totals across all readers.";
+    document.getElementById("s-depth").textContent = app
+      ? "The average share of a chapter reached before leaving it. A short chapter counts as fully read."
+      : "The average share of a page reached before leaving it. A short page counts as fully read.";
+    document.getElementById("s-countries").textContent = app
+      ? "Where the Android app is being used."
+      : "Where the website is being read.";
+    // A sort chosen on one surface may not exist on the other.
+    ["countries", "cities"].forEach(function (id) {
+      var allowed = METRICS_BY_SURFACE[state.surface].map(function (m) { return m[0]; });
+      if (allowed.indexOf(state.sort[id]) === -1) state.sort[id] = allowed[0];
     });
   }
 
@@ -577,6 +611,13 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     nextPageTable(forSurface(d.nextPages));
     depthTable(forSurface(d.depths, true));
   }
+
+  document.querySelectorAll("#surface-switch button[data-surface]").forEach(function (b) {
+    b.onclick = function () {
+      state.surface = b.getAttribute("data-surface");
+      if (state.data) render();
+    };
+  });
 
   // "Readers who opened this page opened that one next." The share is of
   // the moves away from the source page, so it reads as "of everyone who
@@ -601,7 +642,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     }
     var table = el("table");
     var head = el("tr");
-    head.appendChild(el("th", {}, "After this page"));
+    head.appendChild(el("th", {}, state.surface === "app" ? "After this screen" : "After this page"));
     head.appendChild(el("th", {}, "they opened"));
     head.appendChild(el("th", { class: "n" }, "Readers"));
     head.appendChild(el("th", { class: "n" }, "Share"));
@@ -675,9 +716,10 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     if (!list.length) { box.appendChild(el("div", { class: "empty" }, "No page views recorded in this range yet.")); return; }
     var table = el("table");
     var head = el("tr");
-    head.appendChild(el("th", {}, "Page"));
-    head.appendChild(el("th", { class: "n" }, "Views"));
-    head.appendChild(el("th", { class: "n" }, "Visits began here"));
+    var app = state.surface === "app";
+    head.appendChild(el("th", {}, app ? "Screen" : "Page"));
+    head.appendChild(el("th", { class: "n" }, app ? "Opened" : "Views"));
+    if (!app) head.appendChild(el("th", { class: "n" }, "Visits began here"));
     table.appendChild(head);
     list.forEach(function (r) {
       var tr = el("tr");
@@ -699,7 +741,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       cell.appendChild(label);
       tr.appendChild(cell);
       tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.views))));
-      tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.entries))));
+      if (!app) tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r.entries))));
       table.appendChild(tr);
     });
     box.appendChild(table);
@@ -707,6 +749,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 
   function metricOf(kind) {
     if (kind === "web") return "web";
+    if (kind === "app") return "screens";
     if (kind === "/app-version.json") return "launches";
     return null;
   }
@@ -732,6 +775,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
 
   function render() {
     var d = state.data;
+    applySurface();
     // One bucket per day, or per hour for the 24-hour view. Keys are UTC:
     // "YYYY-MM-DD" for days, "YYYY-MM-DDTHH" for hours.
     var byDay = {};
@@ -743,7 +787,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     if (hourly) start.setUTCMinutes(0, 0, 0); else start.setUTCHours(0, 0, 0, 0);
     for (var i = count - 1; i >= 0; i--) {
       var key = new Date(start.getTime() - i * step).toISOString().slice(0, hourly ? 13 : 10);
-      byDay[key] = { day: key, views: 0, visits: 0, launches: 0, downloads: 0 };
+      byDay[key] = { day: key, views: 0, visits: 0, launches: 0, screens: 0, downloads: 0 };
     }
     d.daily.forEach(function (row) {
       var key = String(row.day).replace(" ", "T").slice(0, hourly ? 13 : 10);
@@ -751,6 +795,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       var m = metricOf(row.kind);
       if (!slot || !m) return;
       if (m === "web") { slot.views += Number(row.hits); slot.visits += Number(row.visits); }
+      else if (m === "screens") slot.screens += Number(row.hits);
       else slot.launches += Number(row.hits);
     });
     var days = Object.keys(byDay).sort().map(function (k) { return byDay[k]; });
@@ -768,15 +813,16 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     d.places.forEach(function (row) {
       var m = metricOf(row.kind);
       if (!m) return;
-      var c = countries[row.country] || (countries[row.country] = { name: countryName(row.country), views: 0, visits: 0, launches: 0 });
+      var c = countries[row.country] || (countries[row.country] = { name: countryName(row.country), views: 0, visits: 0, launches: 0, screens: 0 });
       var cityKey = row.country + "|" + row.region + "|" + row.city;
       var t = cities[cityKey] || (cities[cityKey] = {
         name: row.city || "Unknown city",
         detail: [row.region, countryName(row.country)].filter(Boolean).join(", "),
-        views: 0, visits: 0, launches: 0,
+        views: 0, visits: 0, launches: 0, screens: 0,
       });
       [c, t].forEach(function (x) {
         if (m === "web") { x.views += Number(row.hits); x.visits += Number(row.visits); }
+        else if (m === "screens") x.screens += Number(row.hits);
         else x.launches += Number(row.hits);
       });
     });
@@ -805,18 +851,31 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       (hourly ? "Last 24 hours" : "Last " + d.days + " days") +
       " \u00b7 as of " + now.toISOString().slice(0, 16).replace("T", " ") + " UTC" +
       " \u00b7 counts estimated from Cloudflare's sampling";
-    document.getElementById("hero-value").textContent = fmt.format(Math.round(sum("launches")));
-    document.getElementById("hero-unit").textContent = hourly
-      ? "app launches in the last 24 hours"
-      : "app launches in the last " + d.days + " days";
-    document.getElementById("t-countries").textContent = fmt.format(Object.keys(countries).filter(function (k) { return k !== "XX"; }).length);
+    var app = state.surface === "app";
+    document.getElementById("hero").style.setProperty("--measure", app ? "var(--m-launches)" : "var(--m-visits)");
+    var heroKey = app ? "launches" : "visits";
+    var heroName = app ? "app launches" : "website visits";
+    document.getElementById("hero-value").textContent = fmt.format(Math.round(sum(heroKey)));
+    document.getElementById("hero-unit").textContent =
+      heroName + (hourly ? " in the last 24 hours" : " in the last " + d.days + " days");
+    document.getElementById("t-screens").textContent = fmt.format(Math.round(sum("screens")));
+    document.getElementById("t-countries").textContent = fmt.format(
+      Object.keys(countries).filter(function (k) {
+        if (k === "XX") return false;
+        var c = countries[k];
+        return app ? (c.launches > 0 || c.screens > 0) : (c.visits > 0 || c.views > 0);
+      }).length);
 
     // Shown before drawing: a hidden container measures zero wide.
     document.getElementById("status").hidden = true;
     document.getElementById("content").hidden = false;
 
-    barChart(document.getElementById("c-visits"), days, "visits");
-    barChart(document.getElementById("c-views"), days, "views");
+    if (app) {
+      barChart(document.getElementById("c-screens"), days, "screens");
+    } else {
+      barChart(document.getElementById("c-visits"), days, "visits");
+      barChart(document.getElementById("c-views"), days, "views");
+    }
     barChart(document.getElementById("c-app"), days, "launches");
     // Only days with a recorded figure: before the first snapshot, and
     // today until the daily snapshot runs, "no data" must not read as 0.
@@ -832,7 +891,6 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
         ? "Downloads are recorded once a day — choose 7 days or longer to see them."
         : "No daily download figures in this range yet."));
     }
-    surfaceTabs();
     contentTables();
     sourceTable(d.sources || []);
     languageTable(d.languages || []);
@@ -844,7 +902,8 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
   function placeTable(id, rows) {
     var tabs = document.querySelector('.tabs[data-for="' + id + '"]');
     tabs.textContent = "";
-    METRICS.forEach(function (m) {
+    var metrics = METRICS_BY_SURFACE[state.surface];
+    metrics.forEach(function (m) {
       var b = el("button", { "aria-pressed": String(state.sort[id] === m[0]) }, m[1]);
       b.onclick = function () { state.sort[id] = m[0]; placeTable(id, rows); };
       tabs.appendChild(b);
@@ -859,7 +918,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     var table = el("table");
     var head = el("tr");
     head.appendChild(el("th", {}, id === "countries" ? "Country" : "City"));
-    METRICS.forEach(function (m) { head.appendChild(el("th", { class: "n" }, m[1])); });
+    metrics.forEach(function (m) { head.appendChild(el("th", { class: "n" }, m[1])); });
     table.appendChild(head);
     shown.forEach(function (r) {
       var tr = el("tr");
@@ -870,7 +929,7 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
       if (r.detail) label.appendChild(el("small", {}, r.detail));
       place.appendChild(bar); place.appendChild(label);
       tr.appendChild(place);
-      METRICS.forEach(function (m) { tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r[m[0]])))); });
+      metrics.forEach(function (m) { tr.appendChild(el("td", { class: "n" }, fmt.format(Math.round(r[m[0]])))); });
       table.appendChild(tr);
     });
     box.appendChild(table);
@@ -1039,10 +1098,12 @@ footer { color: var(--muted); font-size: 12px; margin-top: 20px; }
     applyTheme(THEMES[(THEMES.indexOf(readTheme()) + 1) % THEMES.length]);
   };
 
-  document.querySelectorAll(".range button").forEach(function (b) {
+  document.querySelectorAll(".range button[data-days]").forEach(function (b) {
     b.onclick = function () {
       state.days = Number(b.getAttribute("data-days"));
-      document.querySelectorAll(".range button").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      document.querySelectorAll(".range button[data-days]").forEach(function (o) {
+        o.setAttribute("aria-pressed", String(o === b));
+      });
       load();
     };
   });

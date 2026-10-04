@@ -316,7 +316,7 @@ test("each section carries one short line of context, in plain wording", () => {
   const body = page.slice(page.indexOf("export const PAGE"));
 
   const headings = (body.match(/<h2[^>]*>/g) ?? []).length;
-  const subs = (body.match(/<p class="sub">/g) ?? []).length;
+  const subs = (body.match(/<p class="sub"/g) ?? []).length;
   assert.ok(headings >= 9, `expected a heading per section, saw ${headings}`);
   assert.ok(subs >= headings - 1, "each section keeps one line of context");
 
@@ -335,9 +335,9 @@ test("the charts are bars, one measure each, with their labels outside the stret
   assert.ok(!worker.includes("lineChart"), "no line chart survives");
   assert.ok(worker.includes("function barChart(host, rows, key)"));
   const calls = [...worker.matchAll(/barChart\(.*?\);/g)].map((m) => m[0]);
-  assert.equal(calls.length, 4, "one call per chart");
+  assert.equal(calls.length, 5, "one call per chart");
   for (const call of calls) {
-    assert.ok(/, "(visits|views|launches|downloads)"\);$/.test(call), `one measure per chart: ${call}`);
+    assert.ok(/, "(visits|views|launches|downloads|screens)"\);$/.test(call), `one measure per chart: ${call}`);
   }
 
   // Text inside a preserveAspectRatio="none" plot distorts and shrinks to
@@ -520,7 +520,7 @@ test("app rows are their own kind, so app and website figures are never summed",
   // content cards, so the three always describe the same surface.
   assert.ok(dashboard.includes("blob2 IN ('web', 'app')"));
   assert.ok(dashboard.includes("blob2 IN ('web-depth', 'app-depth')"));
-  assert.ok(dashboard.includes('function surfaceTabs()'));
+  assert.ok(dashboard.includes("function applySurface()"));
   assert.ok(dashboard.includes('state.surface + (depth ? "-depth" : "")'));
 });
 
@@ -548,4 +548,45 @@ test("nothing still claims the app measures nothing", () => {
   const policy = read("docs/privacy-policy.html");
   assert.ok(policy.includes("What is read in the Android app"));
   assert.ok(policy.includes("The iOS app reports none of this."));
+});
+
+test("the website/app switch governs the whole page, not one section", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // A visit and an app launch are different things. A page showing some
+  // cards from one surface and some from the other invites exactly the
+  // comparison that is not valid, so the switch is page-wide.
+  assert.ok(worker.includes('<div class="range" role="group" aria-label="Surface" id="surface-switch">'));
+  assert.ok(worker.includes("function applySurface()"));
+  assert.ok(worker.includes('node.hidden = node.getAttribute("data-surface") !== state.surface'));
+
+  // Cards and tiles that belong to one surface say so.
+  assert.ok(worker.includes('<div class="card" data-surface="web">'));
+  assert.ok(worker.includes('<div class="card" data-surface="app">'));
+  assert.ok(worker.includes('<div class="tile" data-surface="app"'));
+
+  // The surface switch shares .range's styling, so an unscoped
+  // `.range button` selector would claim its buttons and overwrite their
+  // handler -- the switch would then set days to NaN. Both handlers
+  // select on the attribute they act on.
+  assert.ok(worker.includes('.range button[data-days]'));
+  assert.ok(!/querySelectorAll\("\.range button"\)/.test(worker));
+});
+
+test("each surface offers only measures that exist on it", () => {
+  const worker = read("cloudflare/analytics-dashboard/worker.js");
+
+  // A referring site exists only on the web; a screen view only in the app.
+  assert.ok(worker.includes('web: [["visits", "Visits"], ["views", "Page views"]]'));
+  assert.ok(worker.includes('app: [["launches", "App launches"], ["screens", "Screens opened"]]'));
+  assert.ok(worker.includes('if (kind === "app") return "screens";'));
+  // A sort chosen on one surface may not exist on the other.
+  assert.ok(worker.includes("if (allowed.indexOf(state.sort[id]) === -1) state.sort[id] = allowed[0];"));
+
+  // Wording and columns follow the surface rather than naming the website
+  // while showing the app.
+  assert.ok(worker.includes('app ? "Top screens" : "Top pages"'));
+  assert.ok(worker.includes('app ? "How far chapters are read" : "How far pages are read"'));
+  assert.ok(worker.includes('if (!app) head.appendChild(el("th", { class: "n" }, "Visits began here"));'),
+    "a visit cannot begin on an app screen");
 });
