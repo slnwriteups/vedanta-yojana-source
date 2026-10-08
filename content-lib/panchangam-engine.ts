@@ -1078,7 +1078,7 @@ export interface ComputedPanchangam {
   /** "Next Ekadasi: Thursday, 22nd Oct 2026." */
   upcomingEkadashiText: string;
   sankalpamText: string;
-  /** 24-hour local "HH:MM", or "" where the Sun doesn't rise/set. */
+  /** 24-hour local "HH:MM" ("HH:MM (+1)" past midnight, near the poles), or "" where the Sun doesn't rise/set. */
   sunrise: string;
   sunset: string;
   /** "HH:MM-HH:MM". */
@@ -1103,6 +1103,11 @@ const GULIKA_PART = [6, 5, 4, 3, 2, 1, 0];
  * minute, each eighth the whole minutes in an eighth of the daylight,
  * and the last eighth running on to sunset.
  */
+/** "HH:MM", or "HH:MM (+1)" when `ms` falls after midnight of day `d` (summer near the poles). */
+function clockOnDay(ms: number, d: number, timeZone: string): string {
+  return `${clock24(ms, timeZone)}${localTime(ms, timeZone).dayNumber > d ? " (+1)" : ""}`;
+}
+
 function kaalam(day: SunDay, part: number, timeZone: string): string {
   if (!day.hasSunEvents) return "";
   const sunrise = Math.floor(day.sunrise / MS_PER_MINUTE) * MS_PER_MINUTE;
@@ -1110,7 +1115,7 @@ function kaalam(day: SunDay, part: number, timeZone: string): string {
   const eighth = Math.floor((day.sunset - day.sunrise) / 8 / MS_PER_MINUTE) * MS_PER_MINUTE;
   const start = sunrise + part * eighth;
   const end = part === 7 ? sunset : start + eighth;
-  return `${clock24(start, timeZone)}-${clock24(end, timeZone)}`;
+  return `${clockOnDay(start, day.dayNumber, timeZone)}-${clockOnDay(end, day.dayNumber, timeZone)}`;
 }
 
 function endsLabel(cal: SunCalendar, d: number, ms: number): string {
@@ -1157,7 +1162,7 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
     upcomingEkadashiText,
     sankalpamText: sankalpamText(cal, options.sankalpamAt ?? day.sunrise, options.placeName),
     sunrise: day.hasSunEvents ? clock24(day.sunrise, timeZone) : "",
-    sunset: day.hasSunEvents ? clock24(day.sunset, timeZone) : "",
+    sunset: day.hasSunEvents ? clockOnDay(day.sunset, dayNumber, timeZone) : "",
     rahuKaalam: kaalam(day, RAHU_PART[weekday], timeZone),
     yamagandam: kaalam(day, YAMAGANDAM_PART[weekday], timeZone),
     gulikaKaalam: kaalam(day, GULIKA_PART[weekday], timeZone),

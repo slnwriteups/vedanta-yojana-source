@@ -241,3 +241,41 @@ test("a polar day with no sunrise still computes, with no sun times rather than 
   assert.equal(p.sunrise, "");
   assert.equal(p.rahuKaalam, "");
 });
+
+test("works the same way everywhere in the world, across a whole year", () => {
+  // Every inhabited latitude band and the extremes of time zone and
+  // daylight-saving rules: no failures, the same Ekadasis everywhere, each
+  // yearly observance kept exactly once, and the kaalams inside daylight.
+  const places: Array<[string, PanchangamPlace]> = [
+    ["Chennai", CHENNAI],
+    ["Kathmandu", { latitude: 27.72, longitude: 85.32, timeZone: "Asia/Kathmandu" }],
+    ["Nairobi", { latitude: -1.29, longitude: 36.82, timeZone: "Africa/Nairobi" }],
+    ["Reykjavik", { latitude: 64.15, longitude: -21.94, timeZone: "Atlantic/Reykjavik" }],
+    ["Los Angeles", { latitude: 34.05, longitude: -118.24, timeZone: "America/Los_Angeles" }],
+    ["Sao Paulo", { latitude: -23.55, longitude: -46.63, timeZone: "America/Sao_Paulo" }],
+    ["Honolulu", { latitude: 21.31, longitude: -157.86, timeZone: "Pacific/Honolulu" }],
+    ["Auckland", { latitude: -36.85, longitude: 174.76, timeZone: "Pacific/Auckland" }],
+    ["Kiritimati", { latitude: 1.87, longitude: -157.4, timeZone: "Pacific/Kiritimati" }],
+    ["Tromso", { latitude: 69.65, longitude: 18.96, timeZone: "Europe/Oslo" }],
+  ];
+  const yearly = ["Sri Jayanthi", "Sri Bhagavad Ramanuja", "Sri Vedanta Desikan", "Vijaya Dasami", "Deepavali", "Vaikunta Ekadasi"];
+  const start = dayNumberOf(2026, 4, 1);
+  for (const [name, place] of places) {
+    let ekadasis = 0;
+    const seen = new Map<string, number>();
+    for (let offset = 0; offset < 365; offset += 1) {
+      const p = computePanchangam(start + offset, place, { placeName: name });
+      assert.ok(p.tithi && p.nakshatram && p.sankalpamText, `${name} day ${offset} is incomplete`);
+      const festivals = p.festival.split(", ");
+      ekadasis += festivals.filter((f) => /Ekadasi/.test(f) && !/Paranai/.test(f)).length;
+      for (const f of yearly) if (festivals.includes(f)) seen.set(f, (seen.get(f) ?? 0) + 1);
+      if (p.sunrise && p.rahuKaalam) {
+        const minutesOf = (clock: string) => minutes(clock);
+        const [from, to] = p.rahuKaalam.split("-");
+        assert.ok(minutesOf(from) >= minutesOf(p.sunrise) && minutesOf(to) <= minutesOf(p.sunset), `${name} day ${offset}: ${p.rahuKaalam}`);
+      }
+    }
+    assert.equal(ekadasis, 24, `${name} Ekadasis`);
+    for (const f of yearly) assert.equal(seen.get(f), 1, `${name}: ${f}`);
+  }
+});

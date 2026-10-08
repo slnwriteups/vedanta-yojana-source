@@ -12,3 +12,8 @@ test("anything not in HH:MM shape is shown exactly as received", () => {
   assert.equal(formatPanchangamTime("around noon", "en-US"), "around noon");
   assert.equal(formatPanchangamTime("25:00-26:00", "en-US"), "25:00-26:00");
 });
+
+test("a time past midnight keeps its (+1)", () => {
+  assert.equal(formatPanchangamTime("00:14 (+1)", "en-US"), "12:14 AM (+1)");
+  assert.equal(formatPanchangamTime("22:56-00:14 (+1)", "en-US"), "10:56 PM – 12:14 AM (+1)");
+});
