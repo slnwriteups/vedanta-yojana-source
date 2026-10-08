@@ -458,7 +458,13 @@ Everything below reflects what is actually implemented, not planned:
   connection required
 - **Search** — across Divya Desams, the Library, and Knowledge records
 - **Daily Panchangam** — daily Panchangam and Sankalpam for the place
-  you are in, named on screen ("Chennai"), not an assumed fixed city
+  you are in, named on screen ("Chennai"), not an assumed fixed city.
+  Calculated on the device in the traditional Sri Vaishnava reckoning
+  (the reckoning of Sri Ahobila Mutt's calendar), so it works offline
+  and anywhere in the world: tithi, nakshatram, sunrise/sunset, the
+  kaalams, Ekadasi and Dvadasi Paranai, and the tirunakshatrams of the
+  Āzhvārs, acharyas and Azhagiyasingars. See
+  [Panchangam](docs/PANCHANGAM.md)
 - **Divya Desam Spotlight** — a daily-rotating featured temple on the
   home screen
 - **Reading preferences** — font scale, light/dark theme, reading-position
@@ -536,6 +542,7 @@ to confirm a downloaded file is genuine.
 - [Security Architecture](docs/SECURITY.md) — threat model, dependency security, build/Android/network security, signing
 - [APK Verification Guide](docs/APK-VERIFICATION.md) — how to confirm a downloaded Android release is genuine
 - [Traffic & Install Measurement](docs/ANALYTICS.md) — what is measured, where, and why none of it is in the app
+- [Panchangam](docs/PANCHANGAM.md) — how the daily Panchangam is reckoned, how it was verified worldwide, and the monthly Sri Ranganātha Pādukā update
 - [Vulnerability Reporting](SECURITY.md) — how to report a security issue
 
 ## Security & verification summary
@@ -580,8 +587,9 @@ to confirm a downloaded file is genuine.
   checks) from this project's own GitHub Pages site over HTTPS; nothing
   in the audited source uploads user data anywhere. The source is
   public, so this can be checked directly.
-- Location access (coarse/fine) is used only to show the day's
-  Panchangam for the user's approximate location, and to name that place
+- Location access (coarse/fine) is used only to calculate the day's
+  Panchangam on the device for the user's approximate location (the
+  coordinates are not sent to any calendar service), and to name that place
   on screen so the reader can see which place the Panchangam and
   Sankalpam are valid for. On Android the name comes from the device's
   own OS geocoder; on the website, from BigDataCloud's public,

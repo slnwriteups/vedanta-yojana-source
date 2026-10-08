@@ -41,7 +41,7 @@ test("padukaPanchangamFor returns null for dates no transcribed issue covers", (
   assert.equal(padukaPanchangamFor(new Date(2026, 9, 25)), null);
 });
 
-test("every day uses the Ahobila calendar's own paksha/tithi/nakshatram vocabulary, so it localizes identically", () => {
+test("every day uses the computed calendar's paksha/tithi/nakshatram vocabulary, so it localizes identically", () => {
   for (const issue of PADUKA_PANCHANGAM_ISSUES) {
     for (const day of issue.days) {
       assert.notEqual(pakshaLabel(day.paksha, "ta"), day.paksha, `${day.date} paksha ${day.paksha}`);
@@ -116,26 +116,26 @@ test("padukaFeaturedObservances keeps only the Ashramam's own tirunakshatrams", 
     padukaFeaturedObservances("Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram"),
     ["Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram"]
   );
-  // General observances Ahobila already lists under its own names are not repeated.
+  // General observances the computed calendar already lists under its own names are not repeated.
   assert.deepEqual(padukaFeaturedObservances("Svami Desikan Tirunakshatram, Sarva Ekadasi, Sravana Vratam"), []);
   assert.deepEqual(padukaFeaturedObservances("Mahapradosham"), []);
   assert.deepEqual(padukaFeaturedObservances(""), []);
 });
 
-test("calendarFestivalLine appends featured observances to Ahobila's own festival text", () => {
+test("calendarFestivalLine appends featured observances to the computed festival text", () => {
   const day = padukaPanchangamFor(new Date(2026, 8, 27))?.day ?? null;
   assert.equal(
     calendarFestivalLine("Mahalaya Paksham Begins", day, null),
     "Mahalaya Paksham Begins, Srimad Akkur Andavan Sri Srinivasa Mahadesikan Tirunakshatram"
   );
-  // A day with nothing to feature leaves Ahobila's text untouched, and an empty one stays empty.
+  // A day with nothing to feature leaves the computed text untouched, and an empty one stays empty.
   const pradosham = padukaPanchangamFor(new Date(2026, 8, 24))?.day ?? null;
   assert.equal(calendarFestivalLine("Pradosham", pradosham, null), "Pradosham");
   assert.equal(calendarFestivalLine("", pradosham, null), "");
-  // Featured on its own when Ahobila has no festival that day.
+  // Featured on its own when the computed calendar has no festival that day.
   const oct17 = padukaPanchangamFor(new Date(2026, 9, 17))?.day ?? null;
   assert.equal(calendarFestivalLine("", oct17, null), "Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram");
-  assert.equal(calendarFestivalLine("HH 18", null, null), "HH 18");
+  assert.equal(calendarFestivalLine("Ekadasi", null, null), "Ekadasi");
 });
 
 test("calendarFestivalLine localizes the featured observances", () => {

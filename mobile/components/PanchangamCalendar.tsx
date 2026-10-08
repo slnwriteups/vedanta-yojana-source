@@ -11,7 +11,7 @@ import {
   pakshaLabel,
   tithiLabel,
 } from "../panchangam-labels.ts";
-import { fetchAhobilaPanchangam, type PanchangamData } from "../services/panchangamService.ts";
+import { fetchPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 import {
   calendarFestivalLine,
   localizePadukaFestival,
@@ -50,7 +50,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
     let cancelled = false;
     setIsLoading(true);
-    fetchAhobilaPanchangam(selectedDate)
+    fetchPanchangam(selectedDate)
       .then((res) => {
         if (!cancelled) {
           setData(res);
@@ -105,7 +105,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
-  const showAhobila = !isLoading && hasData;
+  const showComputed = !isLoading && hasData;
   const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
@@ -304,7 +304,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
-                ahobilaText={data.sankalpamText || null}
+                dailyText={data.sankalpamText || null}
                 tarpanam={paduka?.tarpanam ?? null}
                 show={showSankalpam}
                 onToggle={() => setShowSankalpam((prev) => !prev)}
@@ -315,11 +315,11 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
         )}
 
-        {/* Bundled data: stands in for the Ahobila rows while that fetch is loading or unavailable. */}
-        {paduka?.day && !showAhobila ? <PadukaFallbackRows day={paduka.day} /> : null}
-        {paduka?.tarpanam && !showAhobila ? (
+        {/* Bundled data: stands in for the computed rows while they are loading or unavailable. */}
+        {paduka?.day && !showComputed ? <PadukaFallbackRows day={paduka.day} /> : null}
+        {paduka?.tarpanam && !showComputed ? (
           <SankalpamSection
-            ahobilaText={null}
+            dailyText={null}
             tarpanam={paduka.tarpanam}
             show={showSankalpam}
             onToggle={() => setShowSankalpam((prev) => !prev)}
@@ -341,7 +341,7 @@ function Row({ label, value, muted, fg }: { label: string; value: string; muted:
 
 /**
  * The journal's tithi, nakshatram and observances for the selected day,
- * in the same rows as the Ahobila figures and with no heading of its own,
+ * in the same rows as the computed figures and with no heading of its own,
  * shown only while those live figures are loading or unavailable. Bundled
  * data, so it needs no network or location access.
  */
@@ -368,18 +368,18 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
 }
 
 /**
- * The single Sankalpam box: Ahobila's live daily sankalpam and, on the
+ * The single Sankalpam box: the computed daily sankalpam and, on the
  * days the Paduka Panchangam prints one, its Tarpana Sankalpam beneath
  * it. Both are shown exactly as their sources give them; the small
  * labels only appear when there are two to tell apart.
  */
 function SankalpamSection({
-  ahobilaText,
+  dailyText,
   tarpanam,
   show,
   onToggle,
 }: {
-  ahobilaText: string | null;
+  dailyText: string | null;
   tarpanam: PadukaTarpanam | null;
   show: boolean;
   onToggle: () => void;
@@ -387,7 +387,7 @@ function SankalpamSection({
   const theme = useTheme();
   const t = useT();
   const { language } = useLanguage();
-  const both = Boolean(ahobilaText && tarpanam);
+  const both = Boolean(dailyText && tarpanam);
   const bodyStyle = [
     styles.sankalpamBody,
     { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
@@ -412,12 +412,12 @@ function SankalpamSection({
             { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
           ]}
         >
-          {ahobilaText ? (
+          {dailyText ? (
             <View>
               {both ? (
                 <Text style={[styles.sankalpamPartLabel, { color: theme.colors.accent }]}>{t("sankalpamDailyLabel")}</Text>
               ) : null}
-              <Text style={bodyStyle}>{localizeSankalpamText(ahobilaText, language)}</Text>
+              <Text style={bodyStyle}>{localizeSankalpamText(dailyText, language)}</Text>
             </View>
           ) : null}
           {tarpanam ? (

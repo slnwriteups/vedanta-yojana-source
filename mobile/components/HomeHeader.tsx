@@ -8,7 +8,7 @@ import type { PanchangamData } from "../services/panchangamService.ts";
 
 /**
  * Home's greeting + Panchangam banner. `panchangam` is owned by
- * HomeScreen (a single fetchAhobilaPanchangam() call shared with
+ * HomeScreen (a single fetchPanchangam() call shared with
  * SankalpamCard, so this never triggers its own network request) --
  * `null` means "still loading", never "no data", so the skeleton and
  * the empty/offline state are visually distinct.

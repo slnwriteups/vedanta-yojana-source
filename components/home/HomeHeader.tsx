@@ -8,7 +8,7 @@ import type { PanchangamData } from "@/lib/panchangam-service";
 /**
  * Web port of mobile/components/HomeHeader.tsx -- Home's greeting +
  * compact Panchangam banner. `panchangam` is owned by the page's own
- * client dashboard component (one fetchAhobilaPanchangam() call shared
+ * client dashboard component (one fetchPanchangam() call shared
  * with SankalpamCard/PanchangamCard, so this never triggers its own
  * network request) -- `null` means "still loading", never "no data", so
  * the skeleton and the empty/offline state stay visually distinct.

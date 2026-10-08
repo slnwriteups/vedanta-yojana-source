@@ -6,32 +6,24 @@ import type { LanguageCode } from "./content-lib/preferences.ts";
  * same convention as divya-desam-region-labels.ts: real Sanskrit/Tamil
  * calendar terms are transliterated into Tamil/Kannada/Devanagari
  * script, not translated into different words. English (language ===
- * null) keeps the source API's own value untouched.
+ * null) keeps the engine's English value untouched.
  *
- * Unlike DivyaDesamRegion's small closed enum, these values come
- * straight from a third-party API's free-text response, so each map is
- * keyed by exactly the capitalized string parseDailyCalendar() /
- * parseUpcomingEkadashi() produce, with a fallback to the original
- * English value for anything not yet mapped -- a missing entry
- * degrades to English, never a blank or wrong label.
+ * Each map is keyed by exactly the English name
+ * content-lib/panchangam-engine.ts produces (TITHI/NAKSHATRA name
+ * lists there), with a fallback to the English value for anything not
+ * mapped -- a missing entry degrades to English, never a blank or wrong
+ * label.
  *
- * Deliberately does NOT cover `festival`: open-ended prose the calendar
- * API generates fresh per day (dozens of distinct festival names across
- * a year), not a small fixed vocabulary -- there is no lookup table
- * that could cover it correctly, unlike the ~45 fixed paksha/tithi/
- * nakshatram values below.
+ * Does NOT cover `festival` (left in English, as before).
  *
  * `upcomingEkadashiText`/`sankalpamText` ARE partially covered, by
- * localizeUpcomingEkadashi()/localizeSankalpamText() below: the actual
- * date/time/Sanskrit-declaration values inside them are still
- * open-ended API prose left completely untouched, but the small set of
- * FIXED English wrapper phrasing around those values ("Next Ekadasi:",
- * "Sankalpam for X on Y At Z IST and valid through W of following
- * day:") is itself a closed, known vocabulary -- services/
- * panchangamService.ts's own parseUpcomingEkadashi()/parseSankalpam()
- * always produce exactly this shape, so it can be safely
- * pattern-matched and re-templated per language without ever altering
- * the dynamic values themselves.
+ * localizeUpcomingEkadashi()/localizeSankalpamText() below: the
+ * date/time/Sanskrit-declaration values inside them are left untouched,
+ * but the FIXED English wrapper phrasing around those values ("Next
+ * Ekadasi:", "Sankalpam for X on Y At Z IST and valid through W of
+ * following day:") is a closed, known shape the engine always produces,
+ * so it can be safely pattern-matched and re-templated per language
+ * without ever altering the dynamic values themselves.
  */
 
 const PAKSHA_LABELS: Record<string, Record<LanguageCode, string>> = {
@@ -53,12 +45,12 @@ const TITHI_LABELS: Record<string, Record<LanguageCode, string>> = {
   Ekadasi: { ta: "ஏகாதசி", kn: "ಏಕಾದಶಿ", hi: "एकादशी", te: "ఏకాదశి" },
   Dvadasi: { ta: "துவாதசி", kn: "ದ್ವಾದಶಿ", hi: "द्वादशी", te: "ద్వాదశి" },
   Trayodasi: { ta: "திரயோதசி", kn: "ತ್ರಯೋದಶಿ", hi: "त्रयोदशी", te: "త్రయోదశి" },
-  Chaturdasi: { ta: "சதுர்த்தசி", kn: "ಚತುರ್ದಶಿ", hi: "चतुर्दशी", te: "చతుర్థశి" },
+  Chaturdasi: { ta: "சதுர்த்தசி", kn: "ಚತುರ್ದಶಿ", hi: "चतुर्दशी", te: "చతుర్దశి" },
   Pournami: { ta: "பௌர்ணமி", kn: "ಹುಣ್ಣಿಮೆ", hi: "पूर्णिमा", te: "పౌర్ణమి" },
   Amavasya: { ta: "அமாவாசை", kn: "ಅಮಾವಾಸ್ಯೆ", hi: "अमावस्या", te: "అమావాస్య" },
 };
 
-/** Full 27-nakshatra cycle. The six Purva/Uttara-qualified entries are each their own distinct traditional name (esp. in Tamil), not a composed "qualifier + base" -- so each is its own key, keyed by exactly what parseDailyCalendar()'s "Purva "/"Uttara " expansion produces. */
+/** Full 27-nakshatra cycle. The six Purva/Uttara-qualified entries are each their own distinct traditional name (esp. in Tamil), not a composed "qualifier + base" -- so each is its own key, keyed by exactly the engine's NAKSHATRA_NAMES spelling (the alternate spellings are kept for the bundled Paduka data and older cached values). */
 const NAKSHATRAM_LABELS: Record<string, Record<LanguageCode, string>> = {
   Aswini: { ta: "அஸ்வினி", kn: "ಅಶ್ವಿನಿ", hi: "अश्विनी", te: "అశ్విని" },
   Asvini: { ta: "அஸ்வினி", kn: "ಅಶ್ವಿನಿ", hi: "अश्विनी", te: "అశ్విని" },
@@ -111,12 +103,11 @@ export function nakshatramLabel(nakshatram: string, language: LanguageCode | nul
 }
 
 /**
- * parseUpcomingEkadashi() (services/panchangamService.ts) always
- * produces exactly "Next Ekadasi: {dateSentence}" (or one of the
- * offline/location-unavailable fallback sentences, which don't match
- * this shape and are returned untouched). Only the fixed "Next
- * Ekadasi:" label is replaced; the date sentence itself is left
- * byte-for-byte as the API returned it.
+ * content-lib/panchangam-engine.ts always produces exactly "Next
+ * Ekadasi: {dateSentence}" (the location-unavailable fallback sentence
+ * doesn't match this shape and is returned untouched). Only the fixed
+ * "Next Ekadasi:" label is replaced; the date sentence itself is left
+ * byte-for-byte.
  */
 const NEXT_EKADASHI_PREFIX: Record<LanguageCode, string> = {
   ta: "அடுத்த ஏகாதசி: ",
@@ -133,21 +124,20 @@ export function localizeUpcomingEkadashi(text: string, language: LanguageCode | 
 }
 
 /**
- * parseSankalpam() (services/panchangamService.ts) always produces
- * exactly "Sankalpam for {location} on {date} At {time} IST and valid
- * through {validUntil}[ of following day]: {declaration}" (or "" when
+ * content-lib/panchangam-engine.ts always produces exactly "Sankalpam
+ * for {location} on {date} At {time} {zone} and valid through
+ * {validUntil}[ of following day]: {declaration}" (or "" when
  * unavailable, which doesn't match this shape and is returned
- * untouched) -- "of following day" only appears when the validity
- * window actually crosses midnight into the next calendar day; when it
- * doesn't, the API's own text omits that phrase entirely. The regex and
- * the localized wording both have to treat it as optional, not assume
- * it's always present. Only the fixed English wrapper phrasing is
- * re-templated per language; {location}/{date}/{time}/{validUntil} are
- * substituted verbatim, and {declaration} -- the Sanskrit sankalpam
- * formula itself ("parAbhava nAma saMvathsare...") -- is appended
- * completely untranslated, matching the app's existing convention that
- * a Sanskrit shloka/declaration is always shown in Sanskrit regardless
- * of UI language.
+ * untouched) -- {zone} is the reader's own short time-zone label ("IST",
+ * "EDT", "GMT+1"), and "of following day" only appears when the
+ * validity window actually crosses midnight into the next calendar day,
+ * so the regex and the localized wording both treat it as optional.
+ * Only the fixed English wrapper phrasing is re-templated per language;
+ * {location}/{date}/{time}/{zone}/{validUntil} are substituted verbatim,
+ * and {declaration} -- the Sanskrit sankalpam formula itself
+ * ("Parābhava nāma saṁvatsare...") -- is appended untranslated, matching
+ * the app's convention that a Sanskrit declaration is always shown in
+ * Sanskrit regardless of UI language.
  */
 // Matches "2:13 PM" / "07:18 PM" / "03:19:12 PM" -- a real time-of-day, with
 // or without seconds. Needed because a bare `:` can't reliably terminate the
@@ -155,37 +145,37 @@ export function localizeUpcomingEkadashi(text: string, language: LanguageCode | 
 // ("03:19:12 PM"), so a generic `(.+?):` stops at the first one, inside the
 // time, rather than the one that actually ends the sentence.
 const TIME_OF_DAY = /\d{1,2}:\d{2}(?::\d{2})?\s*[AP]M/.source;
-// Matches "22nd Sep 2026" -- the endpoint's own date format. Anchored to
+// Matches "22nd Sep 2026" -- the engine's own date format. Anchored to
 // that shape for the same reason TIME_OF_DAY is: now that a real
-// reverse-geocoded place name reaches `cityfld`, the location capture
+// reverse-geocoded place name is named in the sentence, the location capture
 // can itself contain the word "on" ("Stratford on Avon", "Newcastle upon
 // Tyne"), and a generic `(.+?) on (.+?)` pair splits such a name down
 // the middle -- location "Stratford", date "Avon on 22nd Sep 2026".
 const DATE_OF_MONTH = /\d{1,2}(?:st|nd|rd|th)\s+[A-Za-z]+\s+\d{4}/.source;
 const SANKALPAM_PATTERN = new RegExp(
-  `^Sankalpam for (.+?) on (${DATE_OF_MONTH}) At (${TIME_OF_DAY}) IST and valid through (${TIME_OF_DAY})( of following day)?:\\s*(.*)$`,
+  `^Sankalpam for (.+?) on (${DATE_OF_MONTH}) At (${TIME_OF_DAY}) (\\S+) and valid through (${TIME_OF_DAY})( of following day)?:\\s*(.*)$`,
   "i"
 );
 
 const SANKALPAM_INTRO: Record<
   LanguageCode,
-  (location: string, date: string, time: string, validUntil: string, nextDay: boolean) => string
+  (location: string, date: string, time: string, zone: string, validUntil: string, nextDay: boolean) => string
 > = {
-  ta: (location, date, time, validUntil, nextDay) =>
-    `${location} க்கான சங்கல்பம் — ${date}, ${time} IST முதல்${nextDay ? " மறுநாள்" : ""} ${validUntil} வரை செல்லுபடியாகும்:`,
-  kn: (location, date, time, validUntil, nextDay) =>
-    `${location} ಗಾಗಿ ಸಂಕಲ್ಪ — ${date}, ${time} IST ನಿಂದ${nextDay ? " ಮರುದಿನ" : ""} ${validUntil} ವರೆಗೆ ಮಾನ್ಯ:`,
-  hi: (location, date, time, validUntil, nextDay) =>
-    `${location} के लिए संकल्प — ${date}, ${time} IST से${nextDay ? " अगले दिन" : ""} ${validUntil} तक मान्य:`,
-  te: (location, date, time, validUntil, nextDay) =>
-    `${location} కొరకు సంకల్పం — ${date}, ${time} IST నుండి${nextDay ? " మరుసటి రోజు" : ""} ${validUntil} వరకు చెల్లుబాటు:`,
+  ta: (location, date, time, zone, validUntil, nextDay) =>
+    `${location} க்கான சங்கல்பம் — ${date}, ${time} ${zone} முதல்${nextDay ? " மறுநாள்" : ""} ${validUntil} வரை செல்லுபடியாகும்:`,
+  kn: (location, date, time, zone, validUntil, nextDay) =>
+    `${location} ಗಾಗಿ ಸಂಕಲ್ಪ — ${date}, ${time} ${zone} ನಿಂದ${nextDay ? " ಮರುದಿನ" : ""} ${validUntil} ವರೆಗೆ ಮಾನ್ಯ:`,
+  hi: (location, date, time, zone, validUntil, nextDay) =>
+    `${location} के लिए संकल्प — ${date}, ${time} ${zone} से${nextDay ? " अगले दिन" : ""} ${validUntil} तक मान्य:`,
+  te: (location, date, time, zone, validUntil, nextDay) =>
+    `${location} కొరకు సంకల్పం — ${date}, ${time} ${zone} నుండి${nextDay ? " మరుసటి రోజు" : ""} ${validUntil} వరకు చెల్లుబాటు:`,
 };
 
 export function localizeSankalpamText(text: string, language: LanguageCode | null): string {
   if (!language) return text;
   const match = text.match(SANKALPAM_PATTERN);
   if (!match) return text;
-  const [, location, date, time, validUntil, followingDayPhrase, declaration] = match;
-  const intro = SANKALPAM_INTRO[language](location, date, time, validUntil, Boolean(followingDayPhrase));
+  const [, location, date, time, zone, validUntil, followingDayPhrase, declaration] = match;
+  const intro = SANKALPAM_INTRO[language](location, date, time, zone, validUntil, Boolean(followingDayPhrase));
   return declaration ? `${intro} ${declaration}` : intro;
 }
