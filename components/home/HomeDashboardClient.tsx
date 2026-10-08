@@ -9,7 +9,7 @@ import { bookCoverAsset } from "@/lib/book-covers";
 import { useT } from "@/lib/ui-strings";
 import { useReadingPosition } from "@/lib/reading-position-context";
 import { resolveAllLastRead, type HomeCatalogEntry } from "@/lib/resolve-last-read";
-import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
+import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
 import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
@@ -57,7 +57,7 @@ export function HomeDashboardClient({
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
   useEffect(() => {
     let cancelled = false;
-    fetchAhobilaPanchangam().then((data) => {
+    fetchPanchangam().then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {

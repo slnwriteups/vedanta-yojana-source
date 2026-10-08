@@ -10,7 +10,7 @@ import {
   pakshaLabel,
   tithiLabel,
 } from "@/lib/panchangam-labels";
-import { fetchAhobilaPanchangam, type PanchangamData } from "@/lib/panchangam-service";
+import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import {
   calendarFestivalLine,
   localizePadukaFestival,
@@ -60,7 +60,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
     let cancelled = false;
     setIsLoading(true);
-    fetchAhobilaPanchangam(selectedDate)
+    fetchPanchangam(selectedDate)
       .then((res) => {
         if (!cancelled) {
           setData(res);
@@ -117,7 +117,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
-  const showAhobila = !isLoading && hasData;
+  const showComputed = !isLoading && hasData;
   const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
@@ -265,7 +265,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {/* Sankalpam Section for Selected Day */}
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
-                ahobilaText={data.sankalpamText || null}
+                dailyText={data.sankalpamText || null}
                 tarpanam={paduka?.tarpanam ?? null}
                 show={showSankalpam}
                 onToggle={() => setShowSankalpam((prev) => !prev)}
@@ -276,11 +276,11 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           <p className="py-2 text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
         )}
 
-        {/* Bundled data: stands in for the Ahobila rows while that fetch is loading or unavailable. */}
-        {paduka?.day && !showAhobila ? <PadukaFallbackRows day={paduka.day} /> : null}
-        {paduka?.tarpanam && !showAhobila ? (
+        {/* Bundled data: stands in for the computed rows while they are loading or unavailable. */}
+        {paduka?.day && !showComputed ? <PadukaFallbackRows day={paduka.day} /> : null}
+        {paduka?.tarpanam && !showComputed ? (
           <SankalpamSection
-            ahobilaText={null}
+            dailyText={null}
             tarpanam={paduka.tarpanam}
             show={showSankalpam}
             onToggle={() => setShowSankalpam((prev) => !prev)}
@@ -303,7 +303,7 @@ function Row({ label, value }: { label: string; value: string }) {
 
 /**
  * The journal's tithi, nakshatram and observances for the selected day,
- * in the same rows as the Ahobila figures and with no heading of its own,
+ * in the same rows as the computed figures and with no heading of its own,
  * shown only while those live figures are loading or unavailable. Bundled
  * data, so it needs no network or location access.
  */
@@ -323,25 +323,25 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
 }
 
 /**
- * The single Sankalpam box: Ahobila's live daily sankalpam and, on the
+ * The single Sankalpam box: the computed daily sankalpam and, on the
  * days the Paduka Panchangam prints one, its Tarpana Sankalpam beneath
  * it. Both are shown exactly as their sources give them; the small
  * labels only appear when there are two to tell apart.
  */
 function SankalpamSection({
-  ahobilaText,
+  dailyText,
   tarpanam,
   show,
   onToggle,
 }: {
-  ahobilaText: string | null;
+  dailyText: string | null;
   tarpanam: PadukaTarpanam | null;
   show: boolean;
   onToggle: () => void;
 }) {
   const t = useT();
   const { language } = useLanguage();
-  const both = Boolean(ahobilaText && tarpanam);
+  const both = Boolean(dailyText && tarpanam);
 
   return (
     <div className="mt-4 border-t border-[var(--border)] pt-3">
@@ -360,13 +360,13 @@ function SankalpamSection({
       </div>
       {show ? (
         <div className="space-y-3 rounded-md border border-[var(--border)] bg-[var(--background)] p-3.5">
-          {ahobilaText ? (
+          {dailyText ? (
             <div>
               {both ? (
                 <p className="pb-1 text-xs font-semibold text-[var(--accent)]">{t("sankalpamDailyLabel")}</p>
               ) : null}
               <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
-                {localizeSankalpamText(ahobilaText, language)}
+                {localizeSankalpamText(dailyText, language)}
               </p>
             </div>
           ) : null}

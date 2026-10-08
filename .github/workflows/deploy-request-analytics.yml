@@ -11,8 +11,8 @@ name: Deploy request-analytics Worker
 # Scoped by path: this runs only when the Worker's own directory changes,
 # so ordinary content and site commits do not redeploy it.
 #
-# Deliberately NOT a Cloudflare Workers Build (the Git integration used
-# for cloudflare/panchangam-proxy): that integration's production and
+# Deliberately NOT a Cloudflare Workers Build (the Git integration the
+# since-removed panchangam-proxy Worker used): that integration's production and
 # non-production commands drifted apart -- the deploy command carries
 # --config, the version command does not -- and every pull request build
 # has failed since it was connected. Keeping this deploy in Actions puts

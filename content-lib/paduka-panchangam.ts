@@ -2,12 +2,13 @@
  * The monthly "Pañcāṅga Saṅgraham" printed in Sri Ranganātha Pādukā
  * (English e-Edition), the journal of Srirangam Srimad Andavan Ashramam,
  * transcribed day by day. The Home calendar features the Ashramam's own
- * special days (calendarFestivalLine) in the location-based Ahobila Mutt
- * festival line, shows its Tarpaṇa Saṅkalpam in the Sankalpam box, and
- * falls back to its tithi/nakshatram while the Ahobila figures are
- * loading or unavailable.
+ * special days (calendarFestivalLine) in the location-based festival
+ * line computed by content-lib/panchangam-engine.ts, shows its Tarpaṇa
+ * Saṅkalpam in the Sankalpam box, and falls back to its
+ * tithi/nakshatram while the computed figures are loading or
+ * unavailable.
  *
- * Each day is stored in the same shape the Ahobila rows use
+ * Each day is stored in the same shape the computed rows use
  * (lib/panchangam-service.ts PanchangamData): `paksha`, `tithi` and
  * `nakshatram` are the tithi/nakshatram prevailing at sunrise (the first
  * one the journal lists), spelled exactly as that service spells them so
@@ -304,10 +305,11 @@ export function localizePadukaFestival(festival: string, language: LanguageCode 
 
 /**
  * The Ashramam's own observances in a day's `festival` -- its Andavans'
- * and ācāryas' tirunakshatrams -- which the Ahobila Mutt calendar doesn't
+ * and ācāryas' tirunakshatrams -- which the computed calendar doesn't
  * carry. The journal's general observances (Ekadasi, Pradosham, Mahalaya,
- * the Āzhvārs...) are not featured: Ahobila already lists them under its
- * own names, and repeating them would print the same day twice.
+ * the Āzhvārs, Svami Desikan...) are not featured: the computed calendar
+ * already lists them under its own names, and repeating them would print
+ * the same day twice.
  */
 const ASHRAMAM_OBSERVANCE = /\b(Andavan|Mahadesikan)\b/;
 
@@ -316,18 +318,18 @@ export function padukaFeaturedObservances(festival: string): string[] {
 }
 
 /**
- * The Home calendar's festival line for a day: Ahobila's own text ("HH 18,
- * Ekadasi Vratam") followed by the journal's featured observances in
- * `language`, so the Ashramam's special days read the same way Ahobila's
- * do rather than under a separate heading.
+ * The Home calendar's festival line for a day: the computed text
+ * ("Ekadasi, Swami Desikan Tirunakshatram") followed by the journal's
+ * featured observances in `language`, so the Ashramam's special days read
+ * the same way the computed ones do rather than under a separate heading.
  */
 export function calendarFestivalLine(
-  ahobilaFestival: string,
+  computedFestival: string,
   day: PadukaPanchangamDay | null,
   language: LanguageCode | null
 ): string {
   const featured = day ? padukaFeaturedObservances(day.festival).join(", ") : "";
-  return [ahobilaFestival, localizePadukaFestival(featured, language)].filter(Boolean).join(", ");
+  return [computedFestival, localizePadukaFestival(featured, language)].filter(Boolean).join(", ");
 }
 
 /** The tarpaṇam as the sankalpam box shows it ("title: sankalpam"), in `language`'s script. */

@@ -14,7 +14,7 @@ import { bookCoverAsset } from "../../book-covers.ts";
 import { useLanguage } from "../../language-context.ts";
 import { useT } from "../../ui-strings.ts";
 import { useReadingPosition } from "../../reading-position-context.ts";
-import { fetchAhobilaPanchangam, type PanchangamData } from "../../services/panchangamService.ts";
+import { fetchPanchangam, type PanchangamData } from "../../services/panchangamService.ts";
 import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
 import { loadOfflineBook } from "../../services/bookOfflineService.ts";
 
@@ -53,7 +53,7 @@ export default function HomeScreen() {
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
   useEffect(() => {
     let cancelled = false;
-    fetchAhobilaPanchangam().then((data) => {
+    fetchPanchangam().then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {
