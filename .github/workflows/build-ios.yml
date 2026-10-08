@@ -1,0 +1,92 @@
+name: Build iOS app (App Store)
+
+# Builds the iOS app on EAS Build (Expo's cloud macOS machines) and, when
+# asked, uploads it to App Store Connect -- so a new App Store build needs
+# no Mac or laptop: run this workflow from the GitHub app or website
+# (Actions -> "Build iOS app (App Store)" -> Run workflow).
+#
+# Needs:
+# - EXPO_TOKEN secret (already used by publish-ota-update.yml).
+# - iOS signing credentials stored on EAS (created by the first
+#   `eas build -p ios`; manage them at expo.dev -> project -> Credentials).
+# - For upload: an App Store Connect API key stored on EAS for this app
+#   (expo.dev -> Credentials -> iOS -> App Store Connect API Key), and the
+#   app's numeric Apple ID (App Store Connect -> App Information -> Apple ID)
+#   given as the asc_app_id input.
+#
+# The build number comes from mobile/app.json "ios.buildNumber"; the
+# production profile's autoIncrement raises it by one for this build only
+# (appVersionSource is local and the bump is not committed back), so raise
+# the committed value after each upload that App Store Connect accepted.
+on:
+  workflow_dispatch:
+    inputs:
+      submit:
+        description: "Upload the finished build to App Store Connect"
+        type: boolean
+        default: true
+      asc_app_id:
+        description: "App Store Connect Apple ID of the app (numbers only; needed for upload)"
+        type: string
+        required: false
+
+concurrency:
+  group: build-ios
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: eas build (ios, production)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      # Root node_modules is on Metro's resolver path for the shared
+      # content-lib/ code (mobile/metro.config.js nodeModulesPaths).
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Point eas submit at the App Store Connect app
+        if: inputs.submit && inputs.asc_app_id != ''
+        working-directory: mobile
+        env:
+          ASC_APP_ID: ${{ inputs.asc_app_id }}
+        run: |
+          case "$ASC_APP_ID" in
+            ''|*[!0-9]*) echo "::error::asc_app_id must be digits only"; exit 1 ;;
+          esac
+          node -e '
+            const fs = require("fs");
+            const eas = JSON.parse(fs.readFileSync("eas.json", "utf8"));
+            eas.submit.production.ios = { ascAppId: process.env.ASC_APP_ID };
+            fs.writeFileSync("eas.json", JSON.stringify(eas, null, 2) + "\n");
+          '
+
+      - name: Build (and upload) on EAS
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          SUBMIT: ${{ inputs.submit }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::error::EXPO_TOKEN is not set"
+            exit 1
+          fi
+          ARGS="--platform ios --profile production --non-interactive"
+          if [ "$SUBMIT" = "true" ]; then ARGS="$ARGS --auto-submit"; fi
+          npx --yes eas-cli@latest build $ARGS
+          echo "EAS iOS build finished (submit: $SUBMIT). Details: https://expo.dev/accounts/slnwriteupss-team/projects/vedanta-yojana/builds" >> "$GITHUB_STEP_SUMMARY"
