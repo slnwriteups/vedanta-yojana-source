@@ -3,7 +3,9 @@ name: Build iOS app (App Store)
 # Builds the iOS app on EAS Build (Expo's cloud macOS machines) and, when
 # asked, uploads it to App Store Connect -- so a new App Store build needs
 # no Mac or laptop: run this workflow from the GitHub app or website
-# (Actions -> "Build iOS app (App Store)" -> Run workflow).
+# (Actions -> "Build iOS app (App Store)" -> Run workflow). To upload a
+# build that already finished (for example after a failed upload), give
+# its EAS build ID as build_id and nothing is rebuilt.
 #
 # Needs:
 # - EXPO_TOKEN secret (already used by publish-ota-update.yml).
@@ -27,6 +29,10 @@ on:
         default: true
       asc_app_id:
         description: "App Store Connect Apple ID of the app (numbers only; needed for upload)"
+        type: string
+        required: false
+      build_id:
+        description: "Upload this existing EAS build instead of building again (EAS build ID)"
         type: string
         required: false
 
@@ -60,14 +66,17 @@ jobs:
         working-directory: mobile
         run: npm ci
 
+      # eas submit cannot find the App Store Connect app on its own in
+      # non-interactive mode; fail before spending a build on it.
       - name: Point eas submit at the App Store Connect app
-        if: inputs.submit && inputs.asc_app_id != ''
+        if: inputs.submit || inputs.build_id != ''
         working-directory: mobile
         env:
           ASC_APP_ID: ${{ inputs.asc_app_id }}
         run: |
           case "$ASC_APP_ID" in
-            ''|*[!0-9]*) echo "::error::asc_app_id must be digits only"; exit 1 ;;
+            '') echo "::error::Uploading needs asc_app_id: App Store Connect -> the app -> App Information -> Apple ID"; exit 1 ;;
+            *[!0-9]*) echo "::error::asc_app_id must be digits only"; exit 1 ;;
           esac
           node -e '
             const fs = require("fs");
@@ -76,7 +85,21 @@ jobs:
             fs.writeFileSync("eas.json", JSON.stringify(eas, null, 2) + "\n");
           '
 
+      - name: Upload existing build to App Store Connect
+        if: inputs.build_id != ''
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          BUILD_ID: ${{ inputs.build_id }}
+        run: |
+          case "$BUILD_ID" in
+            ''|*[!0-9a-f-]*) echo "::error::build_id must be an EAS build ID"; exit 1 ;;
+          esac
+          npx --yes eas-cli@latest submit --platform ios --profile production --id "$BUILD_ID" --non-interactive --wait
+          echo "Uploaded EAS build $BUILD_ID to App Store Connect." >> "$GITHUB_STEP_SUMMARY"
+
       - name: Build (and upload) on EAS
+        if: inputs.build_id == ''
         working-directory: mobile
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
