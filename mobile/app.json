@@ -72,7 +72,8 @@
           }
         }
       ],
-      "./plugins/with-gradle-jvm-args.js"
+      "./plugins/with-gradle-jvm-args.js",
+      "./plugins/with-android-multi-window.js"
     ],
     "extra": {
       "router": {},
