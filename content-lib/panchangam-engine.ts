@@ -1,37 +1,43 @@
 /**
  * Vedanta Yojana's own Panchangam: the day's tithi, nakshatram,
- * sunrise/sunset, kaalams, festivals, next Ekadasi and the Sankalpam
- * declaration, all computed on the reader's device from
- * content-lib/panchangam-astronomy.ts. No network service is consulted,
- * so the calendar works offline and depends on no third party.
+ * sunrise/sunset, kaalams, observances, next Ekadasi and the Sankalpam
+ * declaration, computed on the reader's device. No network service is
+ * consulted, so the calendar works offline and depends on no third party.
  *
- * Conventions (the ones South Indian Sri Vaishnava panchangams use):
+ * It follows the traditional Sri Vaishnava reckoning of Sri Ahobila
+ * Mutt's published calendar, and was checked day by day against the
+ * Mutt's Parābhava (2026–27) calendar for Chennai, New York, London,
+ * Sydney and Singapore:
  *
- *  - The day runs sunrise to sunrise. A day's tithi and nakshatram are
- *    the ones prevailing at its sunrise; their end times are given too.
- *  - Lunar months are amanta (new moon to new moon), named from the
- *    sidereal sign the Sun occupies at the opening new moon (Sun in Mina
- *    → Chaitra). A month with no sankranti in it is adhika, and
- *    month-specific festivals are kept to the nija month.
- *  - Solar (Tamil) months begin on the day whose sunset follows the
- *    sankranti. The 60-year samvatsara cycle turns at Mesha sankranti.
- *  - Ekadasi follows the Vaishnava rule: an Ekadasi touched by Dasami at
- *    arunodaya (96 minutes before sunrise), or prevailing at two
- *    sunrises, is observed the following day; a kshaya Ekadasi (one that
- *    sees no sunrise) is observed on the Dvadasi day.
- *
- * Festival dates come from fixed, published rules (a tithi in a lunar
- * month, or a nakshatram in a Tamil month) rather than a per-year list,
- * so they extend to any year without new data.
+ *  - Tithi, nakshatram and the solar months come from the traditional
+ *    (siddhantic) Sun and Moon of panchangam-siddhanta.ts; sunrise and
+ *    sunset from the observed Sun at the reader's own place, its centre
+ *    on the true horizon (panchangam-astronomy.ts). Every rule below is
+ *    applied to the reader's local sunrise and clock, so the calendar is
+ *    correct anywhere in the world, not only in India.
+ *  - The day runs sunrise to sunrise; its tithi and nakshatram are the
+ *    ones in force at its sunrise. Kaalams are eighths of the daylight in
+ *    whole minutes.
+ *  - Lunar months are amanta, named from the Sun's sign at the opening new
+ *    moon; a month without a sankranti is adhika. Tamil months begin on
+ *    the day whose sunset follows the sankranti. The samvatsara turns at
+ *    Mesha sankranti.
+ *  - Ekadasi follows the Vaishnava rules (arunodaya viddha, two-sunrise
+ *    Ekadasi, vyañjulī mahādvādaśī, kshaya Ekadasi); Dvadasi Paranai
+ *    waits out Hari Vasara.
+ *  - Each observance is kept by its own traditional day rule -- sunrise,
+ *    sunset, aparahna (sraddha days), or the nazhigai rule for
+ *    tirunakshatrams and full-moon days -- documented with the festival
+ *    tables below. The rules, not a per-year list, decide the dates, so
+ *    they carry to any year and any place.
  */
 
+import { normalizeDegrees, sunEvent } from "./panchangam-astronomy.ts";
 import {
-  lunarElongation,
-  normalizeDegrees,
-  siderealMoonLongitude,
-  siderealSunLongitude,
-  sunEvent,
-} from "./panchangam-astronomy.ts";
+  traditionalElongation as lunarElongation,
+  traditionalMoonLongitude as siderealMoonLongitude,
+  traditionalSunLongitude as siderealSunLongitude,
+} from "./panchangam-siddhanta.ts";
 
 const MS_PER_MINUTE = 60_000;
 const MS_PER_HOUR = 3_600_000;
@@ -423,6 +429,29 @@ class SunCalendar {
     return index;
   }
 
+  private readonly starMonths = new Map<number, number>();
+
+  /**
+   * The Tamil month tirunakshatrams are reckoned in: it turns on the
+   * sankranti's punyakalam day (see punyakalamDay) rather than by the
+   * sunset rule.
+   */
+  tamilMonthOfStars(dayNumber: number): number {
+    let month = this.starMonths.get(dayNumber);
+    if (month === undefined) {
+      month = this.tamilMonth(dayNumber);
+      for (let back = 0; back < 33; back += 1) {
+        const rasi = punyakalamRasiOn(this, dayNumber - back);
+        if (rasi !== null) {
+          month = rasi;
+          break;
+        }
+      }
+      this.starMonths.set(dayNumber, month);
+    }
+    return month;
+  }
+
   /** Tamil (solar) month of a civil day: the Sun's sign at that day's sunset. */
   tamilMonth(dayNumber: number): number {
     let month = this.tamilMonths.get(dayNumber);
@@ -435,45 +464,36 @@ class SunCalendar {
 }
 
 /** Aparahna is the fourth fifth of the daytime; its middle is used. */
-type DayPoint = "sunrise" | "midday" | "aparahna" | "sunset";
+type DayPoint = "arunodaya" | "sunrise" | "midday" | "aparahna" | "sunset";
 
 function pointOf(day: SunDay, point: DayPoint): number {
   if (point === "sunrise") return day.sunrise;
+  if (point === "arunodaya") return day.sunrise - ARUNODAYA_MS;
   if (point === "sunset") return day.sunset;
   if (point === "aparahna") return day.sunrise + 0.7 * (day.sunset - day.sunrise);
   return (day.sunrise + day.sunset) / 2;
 }
 
 /**
- * The civil day a tithi/nakshatram occurrence is kept on: the first day
- * whose `point` falls inside it, or -- for one too short to contain any
- * such point -- the day whose point it follows.
+ * The civil day a tithi/nakshatram occurrence is kept on: the first (or,
+ * with `latest`, the last) day whose `point` falls inside it, or -- for
+ * one too short to contain any such point -- the day whose point it
+ * follows.
  */
-function dayAtPoint(cal: SunCalendar, segment: Segment, point: DayPoint): number {
+function dayAtPoint(cal: SunCalendar, segment: Segment, point: DayPoint, latest = false): number {
   const first = cal.dayOf(segment.start) - 1;
   const last = cal.dayOf(segment.end) + 1;
   let previous = first;
+  let found: number | null = null;
   for (let d = first; d <= last; d += 1) {
     const at = pointOf(cal.day(d), point);
-    if (at >= segment.start && at < segment.end) return d;
+    if (at >= segment.start && at < segment.end) {
+      if (!latest) return d;
+      found = d;
+    }
     if (at < segment.start) previous = d;
   }
-  return previous;
-}
-
-/** The civil day on which an occurrence covers the most daylight. */
-function dayOfMostDaylight(cal: SunCalendar, segment: Segment): number {
-  let best = cal.dayOf(segment.end);
-  let bestCoverage = 0;
-  for (let d = cal.dayOf(segment.start); d <= cal.dayOf(segment.end); d += 1) {
-    const day = cal.day(d);
-    const coverage = Math.min(segment.end, day.sunset) - Math.max(segment.start, day.sunrise);
-    if (coverage > bestCoverage) {
-      bestCoverage = coverage;
-      best = d;
-    }
-  }
-  return best;
+  return found ?? previous;
 }
 
 /** Every occurrence of a tithi/nakshatram that overlaps civil days `from`..`to`. */
@@ -528,136 +548,429 @@ function nextEkadasiDay(cal: SunCalendar, from: number): number | null {
 }
 
 // ---------------------------------------------------------------------------
-// Festivals
+// Festivals -- the Sri Vaishnava pattern of Sri Ahobila Mutt's calendar:
+// the same observances, kept by the same day rules.
+//
+//  - A tithi festival is kept on the day whose sunrise falls in that
+//    tithi; a tithi that sees no sunrise (kshaya) is kept on the day it
+//    begins. A few use another moment of the day (noted per rule).
+//  - A tirunakshatram (Azhvars, acharyas, the Azhagiyasingars) is kept in
+//    its Tamil month on the day whose sunrise the nakshatram holds, if it
+//    runs on for at least 10 nazhigai (4 hours) after that sunrise --
+//    otherwise on the day before, when it began; if it falls twice in the
+//    month, on the second. The monthly Rohini and Swathi days follow the
+//    same rule; the monthly Sravanam keeps the plain sunrise rule.
+//  - Aradhanams follow the sraddha rule: the day the tithi covers the
+//    most of the aparahna (the fourth fifth of the daytime).
 // ---------------------------------------------------------------------------
 
-interface TithiFestival {
-  name: string;
-  /** Amanta lunar month, 0 = Chaitra; null for every month. */
-  month: number | null;
-  tithi: number;
-  at: DayPoint;
+/** Daylight `from`..`to` (fractions of sunrise→sunset) on day `d` covered by `segment`, in ms. */
+function coverage(cal: SunCalendar, segment: Segment, d: number, from = 0, to = 1): number {
+  const day = cal.day(d);
+  const length = day.sunset - day.sunrise;
+  return Math.max(0, Math.min(segment.end, day.sunrise + to * length) - Math.max(segment.start, day.sunrise + from * length));
 }
 
-interface NakshatraFestival {
-  name: string;
-  /** Tamil month, 0 = Chithirai. */
-  tamilMonth: number;
-  nakshatra: number;
-  krishnaPakshaOnly?: boolean;
+const NAZHIGAI_MS = 24 * MS_PER_MINUTE;
+/** A tirunakshatram must hold 12 nazhigai past sunrise to be kept that day. */
+const TIRUNAKSHATRAM_NAZHIGAI = 12;
+/** The monthly Sravanam, Rohini and Swathi days need 6. */
+const MONTHLY_STAR_NAZHIGAI = 6;
+
+/**
+ * The day a nakshatram's tirunakshatram is kept on: the day whose sunrise
+ * it holds, provided it lasts 10 nazhigai past that sunrise -- else the
+ * day it began. One that holds no sunrise is kept on the day it began.
+ */
+function dayOfStar(cal: SunCalendar, segment: Segment, nazhigai = TIRUNAKSHATRAM_NAZHIGAI): number {
+  for (let d = cal.dayOf(segment.start); d <= cal.dayOf(segment.end); d += 1) {
+    const sunrise = cal.day(d).sunrise;
+    if (sunrise >= segment.start && sunrise < segment.end) {
+      return segment.end - sunrise >= nazhigai * NAZHIGAI_MS ? d : d - 1;
+    }
+  }
+  return cal.hinduDayOf(segment.start);
 }
 
-const TITHI_FESTIVALS: TithiFestival[] = [
-  { name: "Yugadi", month: 0, tithi: 0, at: "sunrise" },
-  { name: "Sri Rama Navami", month: 0, tithi: 8, at: "sunrise" },
-  { name: "Akshaya Tritiya", month: 1, tithi: 2, at: "sunrise" },
-  { name: "Sri Narasimha Jayanthi", month: 1, tithi: 13, at: "sunset" },
-  { name: "Yajur Upakarma", month: 4, tithi: 14, at: "midday" },
-  { name: "Vinayaka Chaturthi", month: 5, tithi: 3, at: "midday" },
-  { name: "Vamana Jayanthi", month: 5, tithi: 11, at: "sunrise" },
-  { name: "Mahalaya Paksham begins", month: 5, tithi: 15, at: "sunrise" },
-  { name: "Mahalaya Amavasya", month: 5, tithi: 29, at: "sunrise" },
-  { name: "Navaratri begins", month: 6, tithi: 0, at: "sunrise" },
-  { name: "Maha Navami", month: 6, tithi: 8, at: "sunrise" },
-  { name: "Vijaya Dasami", month: 6, tithi: 9, at: "sunrise" },
-  { name: "Deepavali", month: 6, tithi: 28, at: "sunrise" },
-  { name: "Ratha Saptami", month: 10, tithi: 6, at: "sunrise" },
-  { name: "Pradosham", month: null, tithi: 12, at: "sunset" },
-  { name: "Pradosham", month: null, tithi: 27, at: "sunset" },
-  { name: "Amavasya Tarpanam", month: null, tithi: 29, at: "aparahna" },
+/** The day an occurrence covers the most of daylight window `from`..`to`, or null if it covers none. */
+function dayOfMostCoverage(cal: SunCalendar, segment: Segment, from = 0, to = 1): number | null {
+  let best: number | null = null;
+  let bestCoverage = 0;
+  for (let d = cal.dayOf(segment.start); d <= cal.dayOf(segment.end); d += 1) {
+    const c = coverage(cal, segment, d, from, to);
+    if (c > bestCoverage) {
+      bestCoverage = c;
+      best = d;
+    }
+  }
+  return best;
+}
+
+const RASI_NAMES = ["Mesha", "Vrishabha", "Mithuna", "Kataka", "Simha", "Kanya", "Thula", "Vruschika", "Dhanur", "Makara", "Kumbha", "Meena"];
+const LUNAR_MONTH_NAMES = [
+  "Chaitram", "Vaisakham", "Jyeshtham", "Aashaadham", "Sraavanam", "Bhaadrapadam",
+  "Aashvayujam", "Kaartikam", "Maargasirsham", "Pushyam", "Maagham", "Phaalgunam",
 ];
 
-const NAKSHATRA_FESTIVALS: NakshatraFestival[] = [
-  { name: "Sri Ramanuja Jayanthi", tamilMonth: 0, nakshatra: 5 },
-  { name: "Madhurakavi Azhvar Tirunakshatram", tamilMonth: 0, nakshatra: 13 },
-  { name: "Nammazhvar Tirunakshatram", tamilMonth: 1, nakshatra: 15 },
-  { name: "Periyazhvar Tirunakshatram", tamilMonth: 2, nakshatra: 14 },
-  { name: "Nathamunigal Tirunakshatram", tamilMonth: 2, nakshatra: 16 },
-  { name: "Andal Tiruvadipuram", tamilMonth: 3, nakshatra: 10 },
-  { name: "Alavandar Tirunakshatram", tamilMonth: 3, nakshatra: 20 },
-  { name: "Sri Hayagriva Jayanthi", tamilMonth: 4, nakshatra: 21 },
-  { name: "Rig Upakarma", tamilMonth: 4, nakshatra: 21 },
+type TithiRule = {
+  name: string;
+  month: number | null;
+  tithi: number;
+  at?: DayPoint | "aparahna-coverage" | "last-sunset" | "last-arunodaya" | "6-nazhigai" | "12-nazhigai";
+};
+
+/** Lunar months: 0 Chaitra … 11 Phalguna (amanta, nija months only). Tithis: 0 Shukla Prathama … 29 Amavasya. */
+const TITHI_FESTIVALS: TithiRule[] = [
+  { name: "Sri Rama Navami", month: 0, tithi: 8 },
+  { name: "Akshaya Tritiya", month: 1, tithi: 2 },
+  { name: "Sri Nrsimha Jayanthi", month: 1, tithi: 13 },
+  { name: "Yajur Upakarma", month: 4, tithi: 14, at: "12-nazhigai" },
+  { name: "Gayatri Japam", month: 4, tithi: 15, at: "aparahna-coverage" },
+  { name: "Mahalaya Paksham Begins", month: 5, tithi: 15, at: "aparahna-coverage" },
+  { name: "Madhyashtami", month: 5, tithi: 22, at: "aparahna-coverage" },
+  { name: "Mahalaya Amavasya", month: 5, tithi: 29, at: "aparahna-coverage" },
+  { name: "Maha Navami", month: 6, tithi: 8 },
+  { name: "Vijaya Dasami", month: 6, tithi: 9 },
+  { name: "Deepavali", month: 6, tithi: 28, at: "last-arunodaya" },
+  { name: "Ratha Saptami", month: 10, tithi: 6 },
+  { name: "Ashtaka", month: 10, tithi: 22, at: "aparahna-coverage" },
+  { name: "Anvashtaka", month: 10, tithi: 23, at: "aparahna-coverage" },
+  // The first evening in Ashvina Shukla Dvitiya.
+  { name: "Navaratri Pooja Begins", month: 6, tithi: 1, at: "sunset" },
+  // Trayodasi at sunset; when it spans two sunsets, the second.
+  { name: "Pradosham", month: null, tithi: 12, at: "last-sunset" },
+  { name: "Pradosham", month: null, tithi: 27, at: "last-sunset" },
+  { name: "Amavasya Tarpanam", month: null, tithi: 29, at: "aparahna-coverage" },
+];
+
+/** Observances kept by Tamil month (0 Chithirai … 11 Panguni) and tithi. */
+const TAMIL_MONTH_TITHI_FESTIVALS: Array<{ name: string; tamilMonth: number; tithi: number; at: TithiRule["at"] }> = [
+  { name: "Chitra Pournami", tamilMonth: 0, tithi: 14, at: "12-nazhigai" },
+];
+
+type StarRule = { name: string; tamilMonth: number; nakshatra: number; krishnaPakshaOnly?: boolean };
+
+/** Nakshatras: 0 Aswini … 26 Revathi. */
+const STAR_FESTIVALS: StarRule[] = [
+  // Chithirai
+  { name: "Uyyakondar", tamilMonth: 0, nakshatra: 2 },
+  { name: "Sri Bhagavad Ramanuja", tamilMonth: 0, nakshatra: 5 },
+  { name: "Sri Appullar", tamilMonth: 0, nakshatra: 5 },
+  { name: "Sri Mudaliyandan", tamilMonth: 0, nakshatra: 6 },
+  { name: "Sri Gadikasatam Ammal", tamilMonth: 0, nakshatra: 12 },
+  { name: "Kidambi Achan", tamilMonth: 0, nakshatra: 12 },
+  { name: "Madhurakavi Azhvar", tamilMonth: 0, nakshatra: 13 },
+  { name: "Sri Nadadur Ammal", tamilMonth: 0, nakshatra: 13 },
+  { name: "Srirangachariar", tamilMonth: 0, nakshatra: 26 },
+  // Vaikasi
+  { name: "Vaduka Nambi", tamilMonth: 1, nakshatra: 0 },
+  { name: "Sri Thirukottiyur Nambi", tamilMonth: 1, nakshatra: 3 },
+  { name: "Sri Nammazhvar", tamilMonth: 1, nakshatra: 15 },
+  { name: "Sri Parasara Bhattar", tamilMonth: 1, nakshatra: 16 },
+  { name: "Perumal Arayar", tamilMonth: 1, nakshatra: 17 },
+  // Ani
+  { name: "Sudarshana Jayanthi", tamilMonth: 2, nakshatra: 13 },
+  { name: "Sri Periyazhvar", tamilMonth: 2, nakshatra: 14 },
+  { name: "Vadakku Thiruveedhi Pillai", tamilMonth: 2, nakshatra: 14 },
+  { name: "Nathamunigal", tamilMonth: 2, nakshatra: 16 },
+  // Adi
+  { name: "Thiru Adi Pooram", tamilMonth: 3, nakshatra: 10 },
+  { name: "Sri Alavandar", tamilMonth: 3, nakshatra: 20 },
+  // Avani
   { name: "Sri Jayanthi", tamilMonth: 4, nakshatra: 3, krishnaPakshaOnly: true },
-  { name: "Swami Desikan Tirunakshatram", tamilMonth: 5, nakshatra: 21 },
-  { name: "Poigai Azhvar Tirunakshatram", tamilMonth: 6, nakshatra: 21 },
-  { name: "Bhoothathazhvar Tirunakshatram", tamilMonth: 6, nakshatra: 22 },
-  { name: "Peyazhvar Tirunakshatram", tamilMonth: 6, nakshatra: 23 },
-  { name: "Manavala Mamunigal Tirunakshatram", tamilMonth: 6, nakshatra: 18 },
-  { name: "Thirumangai Azhvar Tirunakshatram", tamilMonth: 7, nakshatra: 2 },
-  { name: "Karthigai Deepam", tamilMonth: 7, nakshatra: 2 },
-  { name: "Thiruppanazhvar Tirunakshatram", tamilMonth: 7, nakshatra: 3 },
-  { name: "Thondaradippodi Azhvar Tirunakshatram", tamilMonth: 8, nakshatra: 17 },
-  { name: "Thirumazhisai Azhvar Tirunakshatram", tamilMonth: 9, nakshatra: 9 },
-  { name: "Kulasekhara Azhvar Tirunakshatram", tamilMonth: 10, nakshatra: 6 },
+  { name: "Periyavachan Pillai", tamilMonth: 4, nakshatra: 3, krishnaPakshaOnly: true },
+  { name: "Kumara Varadacharyar", tamilMonth: 4, nakshatra: 3, krishnaPakshaOnly: true },
+  { name: "Sama Upakarma", tamilMonth: 4, nakshatra: 12 },
+  { name: "Rig Upakarma", tamilMonth: 4, nakshatra: 21 },
+  // Purattasi
+  { name: "Sri Adivan Satagopa Jeeyar", tamilMonth: 5, nakshatra: 17 },
+  { name: "Sri Kesavacharyar", tamilMonth: 5, nakshatra: 17 },
+  { name: "Sri Vedanta Desikan", tamilMonth: 5, nakshatra: 21 },
+  { name: "Sri Kamalavasar", tamilMonth: 5, nakshatra: 21 },
+  { name: "Sri Srinivasar", tamilMonth: 5, nakshatra: 21 },
+  // Aippasi
+  { name: "Sri Vishwaksenar", tamilMonth: 6, nakshatra: 19 },
+  { name: "Thirukurugai Piran Pillan", tamilMonth: 6, nakshatra: 19 },
+  { name: "Poigai Azhvar", tamilMonth: 6, nakshatra: 21 },
+  { name: "Bhoothathazhvar", tamilMonth: 6, nakshatra: 22 },
+  { name: "Peyazhvar", tamilMonth: 6, nakshatra: 23 },
+  // Karthigai
+  { name: "Thirumangai Azhvar", tamilMonth: 7, nakshatra: 2 },
+  { name: "Nampillai", tamilMonth: 7, nakshatra: 2 },
+  { name: "Thiruppanazhvar", tamilMonth: 7, nakshatra: 3 },
+  // Margazhi
+  { name: "Thondaradippodi Azhvar", tamilMonth: 8, nakshatra: 17 },
+  { name: "Periya Nambi", tamilMonth: 8, nakshatra: 17 },
+  // Thai
+  { name: "Embar", tamilMonth: 9, nakshatra: 6 },
+  { name: "Thirumazhisai Azhvar", tamilMonth: 9, nakshatra: 9 },
+  { name: "Sri Koorathazhvan", tamilMonth: 9, nakshatra: 12 },
+  { name: "Pallandu Recitation Resumes", tamilMonth: 9, nakshatra: 12 },
+  // Masi
+  { name: "Thirukkachi Nambi", tamilMonth: 10, nakshatra: 4 },
+  { name: "Kulasekhara Azhvar", tamilMonth: 10, nakshatra: 6 },
+  { name: "Kesavacharyar", tamilMonth: 10, nakshatra: 6 },
+  { name: "Sri Manakkal Nambi", tamilMonth: 10, nakshatra: 9 },
   { name: "Masi Magam", tamilMonth: 10, nakshatra: 9 },
-  { name: "Panguni Uttiram", tamilMonth: 11, nakshatra: 11 },
+  // Panguni
+  { name: "Panguni Uthiram", tamilMonth: 11, nakshatra: 11 },
+  { name: "Nanjeeyar", tamilMonth: 11, nakshatra: 11 },
+  { name: "Sri Ranganathar", tamilMonth: 11, nakshatra: 26 },
 ];
 
 /**
- * Every festival name this module can produce -- a closed vocabulary,
- * unlike a feed's free text. The one formatted entry is the day after an
- * Ekadasi's "Dvadasi Paranai 06:01-08:27" (or "… after 08:47"), the
- * window for breaking the fast.
+ * The Azhagiyasingars (the pontiffs of Sri Ahobila Mutt, 2nd–46th; the
+ * 1st is Sri Adivan Satagopa Jeeyar above): [pattam, Tamil month,
+ * nakshatram] of each one's tirunakshatram.
  */
+const AZHAGIYASINGAR_STARS: Array<[number, number, number]> = [
+  [2, 4, 17], [3, 9, 21], [4, 8, 13], [5, 7, 2], [6, 9, 24], [7, 1, 15], [8, 8, 0], [9, 2, 5], [10, 1, 15],
+  [11, 6, 18], [12, 5, 10], [13, 2, 20], [14, 3, 20], [15, 9, 13], [16, 8, 4], [17, 5, 23], [18, 5, 8],
+  [19, 10, 9], [20, 5, 18], [21, 11, 12], [22, 3, 3], [23, 2, 25], [24, 0, 6], [25, 3, 14], [26, 3, 10],
+  [27, 1, 22], [28, 4, 18], [29, 0, 13], [30, 8, 15], [31, 7, 9], [32, 0, 24], [33, 5, 15], [34, 7, 20],
+  [35, 1, 17], [36, 3, 7], [37, 10, 7], [38, 9, 5], [39, 1, 1], [40, 8, 15], [41, 8, 24], [42, 9, 20],
+  [43, 7, 19], [44, 4, 12], [45, 7, 25], [46, 2, 9],
+];
+
+function azhagiyasingar(pattam: number): string {
+  return `${ordinal(pattam)} Azhagiyasingar`;
+}
+
+for (const [pattam, tamilMonth, nakshatra] of AZHAGIYASINGAR_STARS) {
+  STAR_FESTIVALS.push({ name: `${azhagiyasingar(pattam)} Tirunakshatram`, tamilMonth, nakshatra });
+}
+STAR_FESTIVALS.push(
+  { name: `${azhagiyasingar(46)} Ashrama Sweekaram`, tamilMonth: 0, nakshatra: 14 },
+  { name: `${azhagiyasingar(45)} Ashrama Sweekaram`, tamilMonth: 6, nakshatra: 25 }
+);
+
+/** Aradhanams, by the sraddha rule: [pattam, Tamil month, tithi]. */
+const ARADHANAMS: Array<[number, number, number]> = [
+  [45, 1, 8],
+  [44, 3, 17],
+];
+
+
+/** Every fixed festival name -- the line also carries the timed sankranti and Dvadasi Paranai entries. */
 export const FESTIVAL_NAMES: readonly string[] = Array.from(
   new Set([
+    "Ugadi",
     ...TITHI_FESTIVALS.map((f) => f.name),
-    ...NAKSHATRA_FESTIVALS.map((f) => f.name),
-    "Gayatri Japam",
-    "Ekadasi",
-    "Vaikunta Ekadasi",
+    ...TAMIL_MONTH_TITHI_FESTIVALS.map((f) => f.name),
+    ...STAR_FESTIVALS.map((f) => f.name),
+    ...ARADHANAMS.map(([pattam]) => `${azhagiyasingar(pattam)} Aradhanam`),
+    "Sravanam",
+    "Rohini",
+    "Swathi",
+    ...LUNAR_MONTH_NAMES,
+    ...LUNAR_MONTH_NAMES.flatMap((m) => [`Adhika ${m}`, `Nija ${m}`]),
+    "Karthigai Deepam",
+    "Ekadasi Vratam",
     "Kaisika Ekadasi",
-    "Tamil New Year",
+    "Vaikunta Ekadasi",
+    "Bhishma Ekadasi",
+    "Gayatri Japam",
+    "Navaratri Pooja Begins",
+    "Maha Bharani",
+    "AnadhyAyana Kalam Begins",
+    "Koodarai Vellum",
+    "Vanga Kadal",
     "Bhogi",
+    "Kanu Pandigai",
+    "Punyakalam",
+    "Dakshinayana Punyakalam",
     "Makara Sankranti",
-    ...TAMIL_MONTH_NAMES.map((m) => `${m} Masa Pravesam`),
+    "Uttarayana Punyakalam",
+    "Varsha Pirappu",
+    "Margazhi Thingal",
+    "Karadayan Nonbu",
+    ...RASI_NAMES.map((r) => `${r} Masa Punyakalam`),
   ])
 );
 
-/** Shukla Ekadasis with names of their own, by Tamil month. */
-const SHUKLA_EKADASI_NAMES: Record<number, string> = { 7: "Kaisika Ekadasi", 8: "Vaikunta Ekadasi" };
-
 /**
- * When a nakshatram falls twice in one Tamil month, its festival is kept
- * on the second occurrence.
+ * When a nakshatram falls twice in one Tamil month, its tirunakshatram is
+ * kept on the second occurrence.
  */
 function recursInSameTamilMonth(cal: SunCalendar, segment: Segment, tamilMonth: number): boolean {
   let next = nakshatraAt(segment.start + 27.3217 * MS_PER_DAY + 6 * MS_PER_HOUR);
-  if (next.index !== segment.index) next = nakshatraAt(next.index === (segment.index + 1) % 27 ? next.start - MS_PER_HOUR : next.end + MS_PER_HOUR);
-  return next.index === segment.index && cal.tamilMonth(dayOfMostDaylight(cal, next)) === tamilMonth;
+  if (next.index !== segment.index) {
+    next = nakshatraAt(next.index === (segment.index + 1) % 27 ? next.start - MS_PER_HOUR : next.end + MS_PER_HOUR);
+  }
+  if (next.index !== segment.index) return false;
+  return cal.tamilMonthOfStars(dayOfStar(cal, next)) === tamilMonth;
+}
+
+/** Lunar month of an occurrence, "Adhika"/"Nija" aware. */
+function lunarMonthOf(segment: Segment): { index: number; adhika: boolean; nija: boolean } {
+  const month = lunarMonthAt(segment.start + MS_PER_MINUTE);
+  const previous = lunarMonthAt(segment.start - 15 * MS_PER_DAY);
+  return { ...month, nija: !month.adhika && previous.adhika && previous.index === month.index };
 }
 
 /**
- * The Dvadasi Paranai window on day `d`, after the Ekadasi (paksha
- * index `e`) fasted the day before: from sunrise -- or from the end of
- * the Ekadasi if it is still running -- through the first fifth of the
- * daytime, cut short if Dvadasi itself ends sooner.
+ * The Dvadasi Paranai on day `d`, after the Ekadasi (paksha index `e`)
+ * fasted the day before: from sunrise -- or from the end of the Ekadasi,
+ * or of Hari Vasara (the first quarter of Dvadasi), whichever is later --
+ * to the end of the first fifth of the daytime; "Alpa" when Dvadasi
+ * itself ends sooner and cuts the window short.
  */
 function paranaText(cal: SunCalendar, d: number, e: number): string {
   const { timeZone } = cal.place;
   const day = cal.day(d);
   const atSunrise = tithiAt(day.sunrise);
-  const start = atSunrise.index === e ? atSunrise.end : day.sunrise;
-  let end = day.sunrise + (day.sunset - day.sunrise) / 5;
-  const dvadasi = tithiAt(start + MS_PER_MINUTE);
-  if (dvadasi.index === e + 1) end = Math.min(end, dvadasi.end);
-  return end - start < MS_PER_MINUTE
-    ? `Dvadasi Paranai after ${clock24(start, timeZone)}`
-    : `Dvadasi Paranai ${clock24(start, timeZone)}-${clock24(end, timeZone)}`;
+  const ekadasiEnd = atSunrise.index === e ? atSunrise.end : day.sunrise;
+  const dvadasi = tithiAt(Math.max(day.sunrise, ekadasiEnd) + MS_PER_MINUTE);
+  const hasDvadasi = dvadasi.index === e + 1;
+  const hariVasaraEnd = hasDvadasi ? dvadasi.start + (dvadasi.end - dvadasi.start) / 4 : day.sunrise;
+  const start = Math.max(day.sunrise, ekadasiEnd, hariVasaraEnd);
+  const prathamaBhagaEnd = day.sunrise + (day.sunset - day.sunrise) / 5;
+  const alpa = hasDvadasi && dvadasi.end < prathamaBhagaEnd;
+  const end = alpa ? dvadasi.end : prathamaBhagaEnd;
+  if (end - start < MS_PER_MINUTE) return `Dvadasi Paranai after ${clock24(start, timeZone)}`;
+  return `${alpa ? "Alpa " : ""}Dvadasi Paranai ${clock24(start, timeZone)}-${clock24(end, timeZone)}`;
+}
+
+/** The sankranti (if any) in the Hindu day starting at day `d`'s sunrise. */
+function sankrantiIn(cal: SunCalendar, d: number): { rasi: number; at: number } | null {
+  const sign = rasiAt(cal.day(d).sunrise);
+  return sign.end < cal.day(d + 1).sunrise ? { rasi: (sign.index + 1) % 12, at: sign.end } : null;
+}
+
+const SANKRANTI_PUNYAKALAM: Record<number, string[]> = {
+  0: ["Varsha Pirappu", "Punyakalam"],
+  3: ["Dakshinayana Punyakalam"],
+  8: ["Punyakalam"],
+  9: ["Makara Sankranti", "Uttarayana Punyakalam"],
+};
+const NEXT_DAY_PUNYAKALAM: Record<number, string[]> = {
+  0: ["Varsha Pirappu", "Mesha Masa Punyakalam"],
+  3: ["Dakshinayana Punyakalam"],
+  8: ["Dhanur Masa Punyakalam"],
+  9: ["Makara Sankranti", "Uttarayana Punyakalam"],
+};
+
+/**
+ * The punyakalam day of the sankranti -- the civil day it falls on -- if
+ * that is `d`; the sankranti itself is listed on the Hindu day it falls
+ * in, which differs when it comes after midnight.
+ */
+function punyakalamRasiOn(cal: SunCalendar, d: number): number | null {
+  for (const h of [d, d - 1]) {
+    const s = sankrantiIn(cal, h);
+    if (s && punyakalamDay(cal, h, s) === d) return s.rasi;
+  }
+  return null;
+}
+
+/**
+ * The day a sankranti's punyakalam is kept, for a sankranti in Hindu day
+ * `h`: the civil day it falls on -- so one after midnight moves to the
+ * next day. Karkata's (Dakshinayana) punyakalam precedes the sankranti
+ * and stays on day `h`; Makara's (Uttarayana) follows it, so one after
+ * sunset moves to the next day.
+ */
+function punyakalamDay(cal: SunCalendar, h: number, sankranti: { rasi: number; at: number }): number {
+  if (sankranti.rasi === 3) return h;
+  if (sankranti.rasi === 9 && sankranti.at > cal.day(h).sunset) return h + 1;
+  return localTime(sankranti.at, cal.place.timeZone).dayNumber;
+}
+
+function sankrantiFestivals(cal: SunCalendar, d: number): string[] {
+  const names: string[] = [];
+  const { timeZone } = cal.place;
+  const today = sankrantiIn(cal, d);
+  if (today) {
+    if (today.rasi === 11) names.push("Karadayan Nonbu");
+    const nextDay = localTime(today.at, timeZone).dayNumber > d;
+    names.push(`${RASI_NAMES[today.rasi]} Ravi ${clock24(today.at, timeZone)}${nextDay ? " (+1)" : ""}`);
+    if (punyakalamDay(cal, d, today) === d) names.push(...(SANKRANTI_PUNYAKALAM[today.rasi] ?? ["Punyakalam"]));
+  }
+  const yesterday = sankrantiIn(cal, d - 1);
+  if (yesterday && punyakalamDay(cal, d - 1, yesterday) === d) {
+    names.push(...(NEXT_DAY_PUNYAKALAM[yesterday.rasi] ?? [`${RASI_NAMES[yesterday.rasi]} Masa Punyakalam`]));
+  }
+  return names;
+}
+
+/**
+ * Days since Margazhi Thingal (Margazhi 1 = 0), for the Tiruppavai days --
+ * counted on even past the month's end, so Vanga Kadal (day 30) is kept
+ * in a 29-day Margazhi too -- or null when not within 30 days of it.
+ */
+function margazhiDayIndex(cal: SunCalendar, d: number): number | null {
+  for (let back = 0; back < 30; back += 1) {
+    if (cal.tamilMonth(d - back) === 8 && cal.tamilMonth(d - back - 1) !== 8) return back;
+  }
+  return null;
 }
 
 function tithiFestivalsOn(cal: SunCalendar, d: number): string[] {
   const names: string[] = [];
+  const tamilMonth = cal.tamilMonth(d);
   for (const segment of segmentsBetween(cal, tithiAt, d - 2, d + 2)) {
-    const rules = TITHI_FESTIVALS.filter((rule) => rule.tithi === segment.index);
-    if (rules.length === 0) continue;
-    let month: { index: number; adhika: boolean } | null = null;
-    for (const rule of rules) {
-      if (dayAtPoint(cal, segment, rule.at) !== d) continue;
-      if (rule.month !== null) {
-        month ??= lunarMonthAt(segment.start + MS_PER_MINUTE);
-        if (month.adhika || month.index !== rule.month) continue;
+    const keptOn = (at: TithiRule["at"]) =>
+      at === "aparahna-coverage"
+        ? dayOfMostCoverage(cal, segment, 0.6, 0.8)
+        : at === "last-sunset"
+          ? dayAtPoint(cal, segment, "sunset", true)
+          : at === "last-arunodaya"
+            ? dayAtPoint(cal, segment, "arunodaya", true)
+            : at === "6-nazhigai" || at === "12-nazhigai"
+              ? dayOfStar(cal, segment, at === "6-nazhigai" ? 6 : 12)
+              : dayAtPoint(cal, segment, at ?? "sunrise");
+    let month: ReturnType<typeof lunarMonthOf> | null = null;
+    const monthOf = () => (month ??= lunarMonthOf(segment));
+
+    // The lunar month opens on the day of its Shukla Prathama.
+    // The lunar month opens on the day of its Shukla Prathama (sunrise
+    // rule); Chaitra -- Ugadi -- on the day Prathama covers the most daylight.
+    if (segment.index === 0) {
+      const m = monthOf();
+      const opensOn = m.index === 0 && !m.adhika ? dayOfStar(cal, segment, 6) : dayAtPoint(cal, segment, "sunrise");
+      if (opensOn === d) names.push(`${m.adhika ? "Adhika " : m.nija ? "Nija " : ""}${LUNAR_MONTH_NAMES[m.index]}`);
+      if (opensOn === d && m.index === 0 && !m.adhika) names.push("Ugadi");
+    }
+    for (const rule of TITHI_FESTIVALS) {
+      if (rule.tithi !== segment.index || keptOn(rule.at) !== d) continue;
+      if (rule.month !== null && (monthOf().adhika || monthOf().index !== rule.month)) continue;
+      names.push(rule.name);
+    }
+    for (const rule of TAMIL_MONTH_TITHI_FESTIVALS) {
+      if (rule.tithi === segment.index && rule.tamilMonth === tamilMonth && keptOn(rule.at) === d) names.push(rule.name);
+    }
+    for (const [pattam, month, tithi] of ARADHANAMS) {
+      if (tithi === segment.index && month === tamilMonth && keptOn("aparahna-coverage") === d) {
+        names.push(`${azhagiyasingar(pattam)} Aradhanam`);
       }
+    }
+  }
+  return names;
+}
+
+function starFestivalsOn(cal: SunCalendar, d: number): string[] {
+  const names: string[] = [];
+  const tamilMonth = cal.tamilMonth(d);
+  for (const segment of segmentsBetween(cal, nakshatraAt, d - 2, d + 2)) {
+    if (dayOfStar(cal, segment, MONTHLY_STAR_NAZHIGAI) === d) {
+      if (segment.index === 21) names.push("Sravanam");
+      if (segment.index === 3) names.push("Rohini");
+      if (segment.index === 14) names.push("Swathi");
+    }
+    // Bharani in Mahalaya Paksham (the Krishna Paksha of Bhadrapada), a
+    // sraddha day: kept where it covers the most of the aparahna.
+    if (segment.index === 1 && dayOfMostCoverage(cal, segment, 0.6, 0.8) === d && cal.tithiAtSunrise(d) >= 15) {
+      const m = lunarMonthAt(cal.day(d).sunrise);
+      if (!m.adhika && m.index === 5) names.push("Maha Bharani");
+    }
+    const starMonth = cal.tamilMonthOfStars(d);
+    // Karthigai Deepam: Krittika at sunrise in Karthigai.
+    if (segment.index === 2 && starMonth === 7 && dayAtPoint(cal, segment, "sunrise") === d) names.push("Karthigai Deepam");
+    if (dayOfStar(cal, segment) !== d) continue;
+    const rules = STAR_FESTIVALS.filter((rule) => rule.nakshatra === segment.index && rule.tamilMonth === starMonth);
+    if (rules.length === 0 || recursInSameTamilMonth(cal, segment, starMonth)) continue;
+    for (const rule of rules) {
+      if (rule.krishnaPakshaOnly && cal.tithiAtSunrise(d) < 15) continue;
       names.push(rule.name);
     }
   }
@@ -666,39 +979,35 @@ function tithiFestivalsOn(cal: SunCalendar, d: number): string[] {
 
 function festivalsOn(cal: SunCalendar, d: number): string[] {
   const names: string[] = [];
-
-  // Solar month starts.
   const tamilMonth = cal.tamilMonth(d);
-  if (tamilMonth !== cal.tamilMonth(d - 1)) {
-    names.push(`${TAMIL_MONTH_NAMES[tamilMonth]} Masa Pravesam`);
-    if (tamilMonth === 0) names.push("Tamil New Year");
-    if (tamilMonth === 9) names.push("Makara Sankranti");
-  }
-  if (cal.tamilMonth(d + 1) === 9 && tamilMonth === 8) names.push("Bhogi");
 
-  // Ekadasi.
+  names.push(...starFestivalsOn(cal, d));
+  if (starFestivalsOn(cal, d - 1).includes("Karthigai Deepam")) names.push("AnadhyAyana Kalam Begins");
+
+  // Ekadasi, and the next morning's Paranai.
   const ekadasi = ekadasiObservedOn(cal, d);
   if (ekadasi !== null) {
-    const special = ekadasi === 10 ? SHUKLA_EKADASI_NAMES[tamilMonth] : undefined;
-    names.push(special ?? "Ekadasi");
+    let name = "Ekadasi Vratam";
+    if (ekadasi === 10 && tamilMonth === 7) name = "Kaisika Ekadasi";
+    if (ekadasi === 10 && tamilMonth === 8) name = "Vaikunta Ekadasi";
+    if (ekadasi === 10 && lunarMonthAt(cal.day(d).sunrise).index === 10) name = "Bhishma Ekadasi";
+    names.push(name);
   }
   const ekadasiYesterday = ekadasiObservedOn(cal, d - 1);
   if (ekadasiYesterday !== null) names.push(paranaText(cal, d, ekadasiYesterday));
 
-  // Tithi festivals; Gayatri Japam follows the day after Yajur Upakarma.
+  // Tithi festivals.
   names.push(...tithiFestivalsOn(cal, d));
-  if (tithiFestivalsOn(cal, d - 1).includes("Yajur Upakarma")) names.push("Gayatri Japam");
 
-  // Nakshatram festivals.
-  for (const segment of segmentsBetween(cal, nakshatraAt, d - 2, d + 2)) {
-    const rules = NAKSHATRA_FESTIVALS.filter((rule) => rule.nakshatra === segment.index && rule.tamilMonth === tamilMonth);
-    if (rules.length === 0 || dayOfMostDaylight(cal, segment) !== d) continue;
-    if (recursInSameTamilMonth(cal, segment, tamilMonth)) continue;
-    for (const rule of rules) {
-      if (rule.krishnaPakshaOnly && cal.tithiAtSunrise(d) < 15) continue;
-      names.push(rule.name);
-    }
-  }
+
+  // The solar year: sankrantis, and the Margazhi/Thai days around Pongal.
+  names.push(...sankrantiFestivals(cal, d));
+  const margazhiDay = margazhiDayIndex(cal, d);
+  if (margazhiDay === 0) names.push("Margazhi Thingal");
+  if (margazhiDay === 26) names.push("Koodarai Vellum");
+  if (margazhiDay === 29) names.push("Vanga Kadal");
+  if (punyakalamRasiOn(cal, d + 1) === 9) names.push("Bhogi");
+  if (punyakalamRasiOn(cal, d - 1) === 9) names.push("Kanu Pandigai");
 
   // Mahalaya Amavasya is itself the month's Amavasya tarpanam.
   const unique = Array.from(new Set(names));
@@ -788,11 +1097,20 @@ const RAHU_PART = [7, 1, 6, 4, 5, 3, 2];
 const YAMAGANDAM_PART = [4, 3, 2, 1, 0, 6, 5];
 const GULIKA_PART = [6, 5, 4, 3, 2, 1, 0];
 
+/**
+ * The kaalam taking eighth `part` of the daylight, reckoned in whole
+ * minutes as printed panchangams do: counted from sunrise to the
+ * minute, each eighth the whole minutes in an eighth of the daylight,
+ * and the last eighth running on to sunset.
+ */
 function kaalam(day: SunDay, part: number, timeZone: string): string {
   if (!day.hasSunEvents) return "";
-  const eighth = (day.sunset - day.sunrise) / 8;
-  const start = day.sunrise + part * eighth;
-  return `${clock24(start, timeZone)}-${clock24(start + eighth, timeZone)}`;
+  const sunrise = Math.floor(day.sunrise / MS_PER_MINUTE) * MS_PER_MINUTE;
+  const sunset = Math.floor(day.sunset / MS_PER_MINUTE) * MS_PER_MINUTE;
+  const eighth = Math.floor((day.sunset - day.sunrise) / 8 / MS_PER_MINUTE) * MS_PER_MINUTE;
+  const start = sunrise + part * eighth;
+  const end = part === 7 ? sunset : start + eighth;
+  return `${clock24(start, timeZone)}-${clock24(end, timeZone)}`;
 }
 
 function endsLabel(cal: SunCalendar, d: number, ms: number): string {
