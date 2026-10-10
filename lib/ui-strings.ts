@@ -168,12 +168,57 @@ const UI_STRINGS = {
     te: "పంచాంగం లోడ్ అవుతోంది...",
   },
   homeLocationUnavailable: {
-    en: "Enable location access for today's Panchangam",
-    ta: "இன்றைய பஞ்சாங்கத்திற்கு இருப்பிட அணுகலை இயக்கவும்",
-    kn: "ಇಂದಿನ ಪಂಚಾಂಗಕ್ಕಾಗಿ ಸ್ಥಳ ಪ್ರವೇಶವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ",
-    hi: "आज के पंचांग के लिए स्थान एक्सेस चालू करें",
-    te: "నేటి పంచాంగం కొరకు లొకేషన్ అనుమతిని ప్రారంభించండి",
+    en: "Enable location access, or choose a city, for today's Panchangam",
+    ta: "இன்றைய பஞ்சாங்கத்திற்கு இருப்பிட அணுகலை இயக்கவும் அல்லது ஒரு நகரத்தைத் தேர்ந்தெடுக்கவும்",
+    kn: "ಇಂದಿನ ಪಂಚಾಂಗಕ್ಕಾಗಿ ಸ್ಥಳ ಪ್ರವೇಶವನ್ನು ಸಕ್ರಿಯಗೊಳಿಸಿ ಅಥವಾ ಒಂದು ನಗರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    hi: "आज के पंचांग के लिए स्थान एक्सेस चालू करें या कोई शहर चुनें",
+    te: "నేటి పంచాంగం కొరకు లొకేషన్ అనుమతిని ప్రారంభించండి లేదా ఒక నగరాన్ని ఎంచుకోండి",
   },
+  panchangamChangePlace: { en: "Change", ta: "மாற்று", kn: "ಬದಲಿಸಿ", hi: "बदलें", te: "మార్చు" },
+  panchangamChoosePlace: {
+    en: "Choose a city",
+    ta: "நகரத்தைத் தேர்ந்தெடுக்கவும்",
+    kn: "ನಗರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    hi: "शहर चुनें",
+    te: "నగరాన్ని ఎంచుకోండి",
+  },
+  panchangamPlaceSearchPlaceholder: {
+    en: "Search for a city or town",
+    ta: "நகரம் அல்லது ஊரைத் தேடுங்கள்",
+    kn: "ನಗರ ಅಥವಾ ಊರನ್ನು ಹುಡುಕಿ",
+    hi: "शहर या कस्बा खोजें",
+    te: "నగరం లేదా ఊరిని వెతకండి",
+  },
+  panchangamUseMyLocation: {
+    en: "Use my location",
+    ta: "என் இருப்பிடத்தைப் பயன்படுத்து",
+    kn: "ನನ್ನ ಸ್ಥಳವನ್ನು ಬಳಸಿ",
+    hi: "मेरा स्थान उपयोग करें",
+    te: "నా స్థానాన్ని ఉపయోగించు",
+  },
+  panchangamPlaceHint: {
+    en: "If your town isn't listed, choose the nearest city.",
+    ta: "உங்கள் ஊர் பட்டியலில் இல்லையெனில், அருகிலுள்ள நகரத்தைத் தேர்ந்தெடுக்கவும்.",
+    kn: "ನಿಮ್ಮ ಊರು ಪಟ್ಟಿಯಲ್ಲಿ ಇಲ್ಲದಿದ್ದರೆ, ಹತ್ತಿರದ ನಗರವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+    hi: "यदि आपका कस्बा सूची में नहीं है, तो निकटतम शहर चुनें।",
+    te: "మీ ఊరు జాబితాలో లేకపోతే, సమీప నగరాన్ని ఎంచుకోండి.",
+  },
+  panchangamNoPlaces: {
+    en: "No matching places",
+    ta: "பொருந்தும் இடங்கள் இல்லை",
+    kn: "ಹೊಂದುವ ಸ್ಥಳಗಳಿಲ್ಲ",
+    hi: "कोई मिलता-जुलता स्थान नहीं",
+    te: "సరిపోలే స్థలాలు లేవు",
+  },
+  panchangamClosePlaces: { en: "Close", ta: "மூடு", kn: "ಮುಚ್ಚಿ", hi: "बंद करें", te: "మూసివేయి" },
+  panchangamPlacesCredit: {
+    en: "Place data: GeoNames (CC BY 4.0)",
+    ta: "இட விவரங்கள்: GeoNames (CC BY 4.0)",
+    kn: "ಸ್ಥಳ ಮಾಹಿತಿ: GeoNames (CC BY 4.0)",
+    hi: "स्थान डेटा: GeoNames (CC BY 4.0)",
+    te: "స్థల సమాచారం: GeoNames (CC BY 4.0)",
+  },
+
   divyaDesamsCardSubtitle: {
     en: "The 108 sacred abodes of Vishnu venerated by the Alwars.",
     ta: "ஆழ்வார்களால் போற்றப்படும் விஷ்ணுவின் 108 திருத்தலங்கள்.",
@@ -477,6 +522,18 @@ export function chapterCountLabel(language: LanguageCode | null, count: number):
     `${count} ${count === 1 ? "ಅಧ್ಯಾಯ" : "ಅಧ್ಯಾಯಗಳು"}`,
     `${count} अध्याय`,
     `${count} ${count === 1 ? "అధ్యాయం" : "అధ్యాయాలు"}`
+  );
+}
+
+/** "Times are in IST" -- shown when a chosen city keeps a different clock from the phone's. */
+export function timesInZoneLabel(language: LanguageCode | null, zone: string): string {
+  return pick(
+    language,
+    `Times are in ${zone}`,
+    `நேரங்கள் ${zone} நேரப்படி`,
+    `ಸಮಯಗಳು ${zone} ಪ್ರಕಾರ`,
+    `समय ${zone} के अनुसार`,
+    `సమయాలు ${zone} ప్రకారం`
   );
 }
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useMemo } from "react";
 import { useLanguage } from "@/lib/language-context";
-import { useT } from "@/lib/ui-strings";
+import { timesInZoneLabel, useT } from "@/lib/ui-strings";
 import {
   localizeSankalpamText,
   localizeUpcomingEkadashi,
@@ -20,6 +20,8 @@ import {
   type PadukaTarpanam,
 } from "@/content-lib/paduka-panchangam.ts";
 import { formatPanchangamTime } from "@/lib/panchangam-timings";
+import { setPanchangamPlace, usePanchangamPlace } from "@/lib/panchangam-place-store";
+import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
 
 function formatDateKey(d: Date): string {
   const y = d.getFullYear();
@@ -50,8 +52,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
   const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const { place, ready: placeReady } = usePanchangamPlace();
 
   useEffect(() => {
+    // Wait for the saved city (if any) rather than computing for the browser's location first.
+    if (!placeReady) return;
     if (initialPanchangam && isSameDay(selectedDate, today)) {
       setData(initialPanchangam);
       setIsLoading(false);
@@ -60,7 +66,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
     let cancelled = false;
     setIsLoading(true);
-    fetchPanchangam(selectedDate)
+    fetchPanchangam(selectedDate, place)
       .then((res) => {
         if (!cancelled) {
           setData(res);
@@ -76,7 +82,28 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     return () => {
       cancelled = true;
     };
-  }, [selectedDate, initialPanchangam, today]);
+  }, [selectedDate, initialPanchangam, today, place, placeReady]);
+
+  const chooseButton = (
+    <button
+      type="button"
+      onClick={() => setPickerOpen((open) => !open)}
+      aria-expanded={pickerOpen}
+      className="text-xs sm:text-sm font-semibold text-[var(--accent)] underline"
+    >
+      {t("panchangamChangePlace")}
+    </button>
+  );
+  const picker = pickerOpen ? (
+    <PanchangamPlacePicker
+      current={place}
+      onChoose={(chosen) => {
+        setPanchangamPlace(chosen);
+        setPickerOpen(false);
+      }}
+      onClose={() => setPickerOpen(false)}
+    />
+  ) : null;
 
   const goToOffset = (days: number) => {
     const next = new Date(selectedDate.getTime() + days * 24 * 60 * 60 * 1000);
@@ -260,7 +287,19 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {timingRows.map(({ label, value }) => (
               <Row key={label} label={label} value={value} />
             ))}
-            {data.location ? <Row label={t("homeCalendarLocationLabel")} value={data.location} /> : null}
+            {data.timeZoneNote ? (
+              <p className="text-xs italic text-[var(--muted)]">{timesInZoneLabel(language, data.timeZoneNote)}</p>
+            ) : null}
+            <div className="flex items-baseline justify-between gap-4">
+              <span className="text-xs sm:text-sm text-[var(--muted)]">{t("homeCalendarLocationLabel")}</span>
+              <span className="flex items-baseline gap-2 text-right">
+                {data.location ? (
+                  <span className="text-xs sm:text-sm font-semibold text-[var(--foreground)]">{data.location}</span>
+                ) : null}
+                {chooseButton}
+              </span>
+            </div>
+            {picker}
 
             {/* Sankalpam Section for Selected Day */}
             {data.sankalpamText || paduka?.tarpanam ? (
@@ -273,7 +312,20 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             ) : null}
           </div>
         ) : (
-          <p className="py-2 text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
+          <div className="py-2">
+            <p className="text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
+            {pickerOpen ? (
+              picker
+            ) : (
+              <button
+                type="button"
+                onClick={() => setPickerOpen(true)}
+                className="mt-2 rounded-md border border-[var(--accent)] px-3 py-1.5 text-xs font-semibold text-[var(--accent)]"
+              >
+                {t("panchangamChoosePlace")}
+              </button>
+            )}
+          </div>
         )}
 
         {/* Bundled data: stands in for the computed rows while they are loading or unavailable. */}

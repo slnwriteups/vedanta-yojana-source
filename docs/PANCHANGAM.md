@@ -17,6 +17,11 @@ which tradition it follows, how it was verified, and how to keep it current.
   deliberately follows the tradition.
 - **Worldwide.** Every rule is applied to the reader's own sunrise, location and
   clock, so the calendar is correct wherever the reader is, not only in India.
+- **Any city.** Instead of their own location, a reader can choose a city
+  ("Change" on the Panchangam card). The Panchangam is then computed for that
+  city, on that city's clock, with a "Times are in IST" note when its clock
+  differs from the device's. The choice is saved on the device; see
+  [Choosing a city](#choosing-a-city).
 
 ## Code
 
@@ -25,6 +30,9 @@ which tradition it follows, how it was verified, and how to keep it current.
 | `content-lib/panchangam-siddhanta.ts` | The traditional Sun and Moon that tithi, nakshatram and the solar months are reckoned from |
 | `content-lib/panchangam-astronomy.ts` | The observed Sun at the reader's place: sunrise and sunset |
 | `content-lib/panchangam-engine.ts` | Days, tithi/nakshatram and their end times, months, kaalams, Ekadasi, observances, the Sankalpam |
+| `content-lib/panchangam-place.ts` | A chosen city: its type, label and the check on a saved value |
+| `content-lib/panchangam-places.ts`, `content-lib/panchangam-places-data.ts` | The bundled city list (generated) and the search over it |
+| `mobile/services/panchangamPlaceStore.ts`, `lib/panchangam-place-store.ts` | The saved choice, shared by the Home header and the calendar card |
 | `content-lib/paduka-panchangam.ts` | The Sri Ranganātha Pādukā journal's monthly Pañcāṅgam, transcribed (see [Monthly update](#monthly-update-sri-ranganatha-paduka)) |
 | `lib/panchangam-service.ts`, `mobile/services/panchangamService.ts` | Get the reader's location (web / Android) and call the engine |
 | `lib/panchangam-labels.ts`, `mobile/panchangam-labels.ts` | Tamil, Kannada, Hindi and Telugu labels |
@@ -209,3 +217,26 @@ To add an issue:
 Observances both calendars carry (Ekadasi, Pradosham, the Āzhvārs, Swami
 Desikan, …) are shown once. Only the Ashramam's own (names containing
 "Andavan" or "Mahadesikan") are added from the journal.
+
+## Choosing a city
+
+The city list is bundled, not looked up online, so choosing a city works
+offline and sends nothing anywhere.
+
+- **Contents:** 16,831 places from [GeoNames](https://www.geonames.org)
+  (CC BY 4.0, credited in the picker). That is every Indian town of 5,000+
+  people, places of 50,000+ elsewhere, and six smaller Sri Vaishnava
+  pilgrimage towns (Srirangam, Melukote, Ahobilam, Naimisharanya,
+  Tirukkannapuram, Tirukkoshtiyur). Each has its coordinates and time zone.
+- **Search:** exact names first, then names starting with what was typed,
+  then names with a word starting with it. Within each, Indian places come
+  first, then larger places. Former names (Bangalore, Madras, Trichy, …)
+  find the current one, diacritics are ignored, and "Springfield, Illinois"
+  narrows by region or country.
+- **Size:** the list is about 570 KB and is loaded only when the picker
+  opens: a separate chunk on the website, a dynamic import in the app.
+- **Regenerating:** download `cities15000.zip`, `cities5000.zip`, `IN.zip`,
+  `admin1CodesASCII.txt` and `countryInfo.txt` from
+  https://download.geonames.org/export/dump/, unzip them into one folder,
+  and run `node scripts/build-panchangam-places.ts <folder>`.
+
