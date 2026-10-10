@@ -15,6 +15,7 @@ import { useLanguage } from "../../language-context.ts";
 import { useT } from "../../ui-strings.ts";
 import { useReadingPosition } from "../../reading-position-context.ts";
 import { fetchPanchangam, type PanchangamData } from "../../services/panchangamService.ts";
+import { loadPanchangamPlace, usePanchangamPlace } from "../../services/panchangamPlaceStore.ts";
 import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
 import { loadOfflineBook } from "../../services/bookOfflineService.ts";
 
@@ -50,16 +51,24 @@ export default function HomeScreen() {
   const { lastReadByBook } = useReadingPosition();
   const resolvedList = resolveAllLastRead(lastReadByBook, language, loadOfflineBook);
 
+  // Today's Panchangam for the chosen city, or the phone's location when
+  // none is chosen; recomputed when the reader changes the city.
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
+  const { place, ready: placeReady } = usePanchangamPlace();
   useEffect(() => {
+    void loadPanchangamPlace();
+  }, []);
+  useEffect(() => {
+    if (!placeReady) return;
     let cancelled = false;
-    fetchPanchangam().then((data) => {
+    setPanchangam(null);
+    fetchPanchangam(new Date(), place).then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [place, placeReady]);
 
   // This app is distributed as a direct-download APK, not through
   // Google Play, so there's no OS-level background update -- checked

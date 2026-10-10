@@ -10,6 +10,7 @@ import { useT } from "@/lib/ui-strings";
 import { useReadingPosition } from "@/lib/reading-position-context";
 import { resolveAllLastRead, type HomeCatalogEntry } from "@/lib/resolve-last-read";
 import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
+import { loadPanchangamPlace, usePanchangamPlace } from "@/lib/panchangam-place-store";
 import { HomeHeader } from "@/components/home/HomeHeader";
 import { ContinueReadingCard } from "@/components/home/ContinueReadingCard";
 import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
@@ -54,16 +55,24 @@ export function HomeDashboardClient({
   const { lastReadByBook } = useReadingPosition();
   const resolvedList = resolveAllLastRead(lastReadByBook, catalog, language);
 
+  // Today's Panchangam for the chosen city, or the browser's location when
+  // none is chosen; recomputed when the reader changes the city.
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
+  const { place, ready: placeReady } = usePanchangamPlace();
   useEffect(() => {
+    void loadPanchangamPlace();
+  }, []);
+  useEffect(() => {
+    if (!placeReady) return;
     let cancelled = false;
-    fetchPanchangam().then((data) => {
+    setPanchangam(null);
+    fetchPanchangam(new Date(), place).then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [place, placeReady]);
 
   return (
     <div className="space-y-8">

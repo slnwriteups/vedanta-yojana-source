@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
-import { computePanchangamForDate } from "../../content-lib/panchangam-engine.ts";
+import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes } from "../../content-lib/panchangam-engine.ts";
+import type { ChosenPlace } from "../../content-lib/panchangam-place.ts";
 
 /**
  * Today's Panchangam (Hindu lunar calendar) for the device's own
@@ -15,6 +16,10 @@ import { computePanchangamForDate } from "../../content-lib/panchangam-engine.ts
  * than assuming any one fixed city. Falls back to
  * LOCATION_UNAVAILABLE_FALLBACK (never a guessed city) if location
  * permission is denied or a fix can't be obtained.
+ *
+ * A reader may instead choose a city (panchangamPlaceStore.ts); the
+ * Panchangam is then computed for that city, on that city's clock, and
+ * the phone's location is not asked for at all.
  *
  * lib/panchangam-service.ts is the web twin; the two differ only in how
  * they obtain the location.
@@ -63,6 +68,14 @@ export interface PanchangamData {
   rahuKaalam?: string;
   yamagandam?: string;
   gulikaKaalam?: string;
+  /** True when this is for a city the reader chose rather than the phone's location. */
+  isChosenPlace?: boolean;
+  /**
+   * The time zone the times are in ("IST"), set only when it differs
+   * from the phone's own clock -- a reader in London who chooses Chennai
+   * needs to know the sunrise shown is Chennai's.
+   */
+  timeZoneNote?: string;
 }
 
 /**
@@ -146,12 +159,15 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
 
 /**
  * The Panchangam for `date` (the Sankalpam for the present moment when
- * `date` is today) at the device's own real location. Falls back to
+ * `date` is today) at the chosen city, or at the device's own real
+ * location when `chosen` is null. Falls back to
  * LOCATION_UNAVAILABLE_FALLBACK if location permission is denied/no fix
  * is available -- never a fabricated Panchangam.
  */
-export async function fetchPanchangam(date: Date = new Date()): Promise<PanchangamData> {
-  const location = await resolveLocation();
+export async function fetchPanchangam(date: Date = new Date(), chosen: ChosenPlace | null = null): Promise<PanchangamData> {
+  const location: ResolvedLocation | null = chosen
+    ? { city: chosen.name, latitude: chosen.latitude, longitude: chosen.longitude, timezone: chosen.timeZone }
+    : await resolveLocation();
   if (!location) return LOCATION_UNAVAILABLE_FALLBACK;
 
   try {
@@ -160,7 +176,10 @@ export async function fetchPanchangam(date: Date = new Date()): Promise<Panchang
       { latitude: location.latitude, longitude: location.longitude, timeZone: location.timezone },
       location.city
     );
-    return {
+    const now = Date.now();
+    const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const sameClock = utcOffsetMinutes(now, location.timezone) === utcOffsetMinutes(now, deviceZone);
+    const data: PanchangamData = {
       tithi: computed.tithi,
       paksha: computed.paksha,
       nakshatram: computed.nakshatram,
@@ -175,7 +194,13 @@ export async function fetchPanchangam(date: Date = new Date()): Promise<Panchang
       // "" rather than the placeholder itself: an unresolved name is
       // shown as no location row at all, never as a fake city.
       location: location.city === UNNAMED_LOCATION ? "" : location.city,
+      isChosenPlace: Boolean(chosen),
+      timeZoneNote: sameClock ? undefined : timeZoneLabel(now, location.timezone),
     };
+    // A chosen city is labelled with its region too ("Chennai, Tamil Nadu"), so a
+    // reader can tell same-named places apart; the Sankalpam names the city alone.
+    if (chosen) data.location = [chosen.name, chosen.region === chosen.name ? "" : chosen.region].filter(Boolean).join(", ");
+    return data;
   } catch {
     return UNAVAILABLE_FALLBACK;
   }

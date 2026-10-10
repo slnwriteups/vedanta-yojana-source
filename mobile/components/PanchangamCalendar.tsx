@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { shadows } from "../shadows";
-import { useT } from "../ui-strings.ts";
+import { timesInZoneLabel, useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import {
   localizeSankalpamText,
@@ -21,6 +21,8 @@ import {
   type PadukaTarpanam,
 } from "../../content-lib/paduka-panchangam.ts";
 import { formatPanchangamTime } from "../services/panchangamTimings.ts";
+import { setPanchangamPlace, usePanchangamPlace } from "../services/panchangamPlaceStore.ts";
+import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -40,8 +42,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
   const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const { place, ready: placeReady } = usePanchangamPlace();
 
   useEffect(() => {
+    // Wait for the saved city (if any) rather than computing for the phone's location first.
+    if (!placeReady) return;
     if (initialPanchangam && isSameDay(selectedDate, today)) {
       setData(initialPanchangam);
       setIsLoading(false);
@@ -50,7 +56,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
     let cancelled = false;
     setIsLoading(true);
-    fetchPanchangam(selectedDate)
+    fetchPanchangam(selectedDate, place)
       .then((res) => {
         if (!cancelled) {
           setData(res);
@@ -66,7 +72,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     return () => {
       cancelled = true;
     };
-  }, [selectedDate, initialPanchangam, today]);
+  }, [selectedDate, initialPanchangam, today, place, placeReady]);
 
   const goToOffset = (days: number) => {
     const next = new Date(selectedDate.getTime() + days * 24 * 60 * 60 * 1000);
@@ -293,14 +299,27 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {timingRows.map(({ label, value }) => (
               <Row key={label} label={label} value={value} muted={theme.colors.muted} fg={theme.colors.foreground} />
             ))}
-            {data.location ? (
-              <Row
-                label={t("homeCalendarLocationLabel")}
-                value={data.location}
-                muted={theme.colors.muted}
-                fg={theme.colors.foreground}
-              />
+            {data.timeZoneNote ? (
+              <Text style={[styles.zoneNote, { color: theme.colors.muted }]}>
+                {timesInZoneLabel(language, data.timeZoneNote)}
+              </Text>
             ) : null}
+            <View style={styles.row}>
+              <Text style={[styles.rowLabel, { color: theme.colors.muted }]}>{t("homeCalendarLocationLabel")}</Text>
+              <View style={styles.locationValue}>
+                {data.location ? (
+                  <Text style={[styles.rowValue, styles.locationText, { color: theme.colors.foreground }]}>{data.location}</Text>
+                ) : null}
+                <Pressable
+                  onPress={() => setPickerOpen(true)}
+                  accessibilityRole="button"
+                  accessibilityLabel={t("panchangamChoosePlace")}
+                  hitSlop={10}
+                >
+                  <Text style={[styles.changeLink, { color: theme.colors.accent }]}>{t("panchangamChangePlace")}</Text>
+                </Pressable>
+              </View>
+            </View>
 
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
@@ -312,7 +331,19 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             ) : null}
           </View>
         ) : (
-          <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
+          <View>
+            <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
+            <Pressable
+              onPress={() => setPickerOpen(true)}
+              accessibilityRole="button"
+              style={({ pressed }) => [
+                styles.chooseBtn,
+                { borderColor: theme.colors.accent, opacity: pressed ? 0.7 : 1 },
+              ]}
+            >
+              <Text style={[styles.chooseBtnText, { color: theme.colors.accent }]}>{t("panchangamChoosePlace")}</Text>
+            </Pressable>
+          </View>
         )}
 
         {/* Bundled data: stands in for the computed rows while they are loading or unavailable. */}
@@ -326,6 +357,15 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           />
         ) : null}
       </View>
+      <PanchangamPlacePicker
+        visible={pickerOpen}
+        current={place}
+        onChoose={(chosen) => {
+          setPanchangamPlace(chosen);
+          setPickerOpen(false);
+        }}
+        onClose={() => setPickerOpen(false)}
+      />
     </View>
   );
 }
@@ -596,6 +636,38 @@ const styles = StyleSheet.create({
   unavailable: {
     fontSize: typography.small,
     paddingVertical: spacing.sm,
+  },
+  chooseBtn: {
+    alignSelf: "flex-start",
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.md,
+    minHeight: layout.minTouchTarget,
+    justifyContent: "center",
+    marginBottom: spacing.sm,
+  },
+  chooseBtnText: {
+    fontSize: typography.small,
+    fontWeight: "600",
+  },
+  zoneNote: {
+    fontSize: typography.small,
+    fontStyle: "italic",
+  },
+  locationValue: {
+    flexDirection: "row",
+    alignItems: "baseline",
+    flexShrink: 1,
+    gap: spacing.sm,
+    justifyContent: "flex-end",
+  },
+  locationText: {
+    textAlign: "right",
+  },
+  changeLink: {
+    fontSize: typography.small,
+    fontWeight: "600",
+    textDecorationLine: "underline",
   },
 });
 
