@@ -210,6 +210,17 @@ const UI_STRINGS = {
     hi: "कोई मिलता-जुलता स्थान नहीं",
     te: "సరిపోలే స్థలాలు లేవు",
   },
+  panchangamChooseDate: {
+    en: "Choose a date",
+    ta: "தேதியைத் தேர்ந்தெடுக்கவும்",
+    kn: "ದಿನಾಂಕವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+    hi: "तारीख चुनें",
+    te: "తేదీని ఎంచుకోండి",
+  },
+  panchangamPreviousMonth: { en: "Previous month", ta: "முந்தைய மாதம்", kn: "ಹಿಂದಿನ ತಿಂಗಳು", hi: "पिछला महीना", te: "మునుపటి నెల" },
+  panchangamNextMonth: { en: "Next month", ta: "அடுத்த மாதம்", kn: "ಮುಂದಿನ ತಿಂಗಳು", hi: "अगला महीना", te: "తదుపరి నెల" },
+  panchangamPreviousYear: { en: "Previous year", ta: "முந்தைய ஆண்டு", kn: "ಹಿಂದಿನ ವರ್ಷ", hi: "पिछला वर्ष", te: "మునుపటి సంవత్సరం" },
+  panchangamNextYear: { en: "Next year", ta: "அடுத்த ஆண்டு", kn: "ಮುಂದಿನ ವರ್ಷ", hi: "अगला वर्ष", te: "తదుపరి సంవత్సరం" },
   panchangamClosePlaces: { en: "Close", ta: "மூடு", kn: "ಮುಚ್ಚಿ", hi: "बंद करें", te: "మూసివేయి" },
   panchangamPlacesCredit: {
     en: "Place data: GeoNames (CC BY 4.0)",

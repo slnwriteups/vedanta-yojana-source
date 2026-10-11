@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
+import { calendarDay, todayIn } from "@/content-lib/panchangam-place.ts";
 import { useLanguage } from "@/lib/language-context";
 import { timesInZoneLabel, useT } from "@/lib/ui-strings";
 import {
@@ -32,7 +33,7 @@ function formatDateKey(d: Date): string {
 
 function parseDateKey(key: string): Date {
   const [y, m, d] = key.split("-").map(Number);
-  return new Date(y, m - 1, d);
+  return calendarDay(y, m - 1, d);
 }
 
 function isSameDay(d1: Date, d2: Date): boolean {
@@ -47,13 +48,18 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const t = useT();
   const { language } = useLanguage();
 
-  const today = useMemo(() => new Date(), []);
-  const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(() => todayIn());
   const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
   const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
   const [pickerOpen, setPickerOpen] = useState(false);
   const { place, ready: placeReady } = usePanchangamPlace();
+  // "Today" is today at the place the Panchangam is for: with a city chosen
+  // in another time zone, that city's date, which can differ from the device's.
+  const today = useMemo(() => todayIn(place?.timeZone), [place]);
+  useEffect(() => {
+    if (placeReady) setSelectedDate(todayIn(place?.timeZone));
+  }, [place, placeReady]);
 
   useEffect(() => {
     // Wait for the saved city (if any) rather than computing for the browser's location first.
@@ -111,7 +117,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   };
 
   const goToToday = () => {
-    setSelectedDate(new Date());
+    setSelectedDate(todayIn(place?.timeZone));
   };
 
   const isCurrentToday = isSameDay(selectedDate, today);
