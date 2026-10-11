@@ -158,21 +158,24 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
 }
 
 /**
- * The Panchangam for `date` (the Sankalpam for the present moment when
- * `date` is today) at the chosen city, or at the device's own real
+ * The Panchangam for calendar date `day` -- the place's own today when
+ * omitted (the Sankalpam for the present moment on today) at the chosen city, or at the device's own real
  * location when `chosen` is null. Falls back to
  * LOCATION_UNAVAILABLE_FALLBACK if location permission is denied/no fix
  * is available -- never a fabricated Panchangam.
  */
-export async function fetchPanchangam(date: Date = new Date(), chosen: ChosenPlace | null = null): Promise<PanchangamData> {
+export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = null): Promise<PanchangamData> {
   const location: ResolvedLocation | null = chosen
     ? { city: chosen.name, latitude: chosen.latitude, longitude: chosen.longitude, timezone: chosen.timeZone }
     : await resolveLocation();
   if (!location) return LOCATION_UNAVAILABLE_FALLBACK;
 
   try {
+    // `day` is a calendar date (its year/month/date); it means that date at the
+    // place, so it is taken at noon there. With no day, the place's own today.
+    const when = day ? noonAt(day, location.timezone) : new Date();
     const computed = computePanchangamForDate(
-      date,
+      when,
       { latitude: location.latitude, longitude: location.longitude, timeZone: location.timezone },
       location.city
     );
@@ -205,3 +208,10 @@ export async function fetchPanchangam(date: Date = new Date(), chosen: ChosenPla
     return UNAVAILABLE_FALLBACK;
   }
 }
+
+/** Noon at `timeZone` on the calendar date `day` names (its device-local year, month and date). */
+function noonAt(day: Date, timeZone: string): Date {
+  const guess = Date.UTC(day.getFullYear(), day.getMonth(), day.getDate(), 12);
+  return new Date(guess - utcOffsetMinutes(guess, timeZone) * 60000);
+}
+

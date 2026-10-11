@@ -47,3 +47,26 @@ function isValidTimeZone(timeZone: string): boolean {
     return false;
   }
 }
+
+/**
+ * The calendar's day values are device-local Dates at noon: the year,
+ * month and date are the day meant, wherever the Panchangam is for.
+ * Noon keeps a day arrow's 24-hour step on the same date across a
+ * daylight-saving change.
+ */
+export function calendarDay(year: number, month: number, day: number): Date {
+  return new Date(year, month, day, 12);
+}
+
+/** Today's date at `timeZone` (the device's own when omitted), as a calendar day value. */
+export function todayIn(timeZone?: string, now: Date = new Date()): Date {
+  if (!timeZone) return calendarDay(now.getFullYear(), now.getMonth(), now.getDate());
+  try {
+    const parts = new Intl.DateTimeFormat("en-US", { timeZone, year: "numeric", month: "numeric", day: "numeric" }).formatToParts(now);
+    const get = (type: string) => Number(parts.find((p) => p.type === type)?.value);
+    return calendarDay(get("year"), get("month") - 1, get("day"));
+  } catch {
+    return calendarDay(now.getFullYear(), now.getMonth(), now.getDate());
+  }
+}
+

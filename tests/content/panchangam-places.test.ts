@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 
 import { searchPlaces, normalizePlaceText } from "../../content-lib/panchangam-places.ts";
-import { isChosenPlace, placeLabel } from "../../content-lib/panchangam-place.ts";
+import { calendarDay, isChosenPlace, placeLabel, todayIn } from "../../content-lib/panchangam-place.ts";
 import { PLACE_ROWS, PLACE_TIME_ZONES } from "../../content-lib/panchangam-places-data.ts";
 import { computePanchangamForDate } from "../../content-lib/panchangam-engine.ts";
 
@@ -83,3 +83,16 @@ test("choosing Chennai gives the traditional calendar's Chennai day, on Chennai'
   assert.ok(["17:50", "17:51"].includes(p.sunset), p.sunset);
   assert.match(p.sankalpamText, /Chennai/);
 });
+
+test("today is the chosen city's date, which can differ from the device's", () => {
+  // 01:51 UTC on 11 Oct 2026: already the 11th in India, still the 10th in New York.
+  const now = new Date(Date.UTC(2026, 9, 11, 1, 51));
+  const ymd = (d: Date) => [d.getFullYear(), d.getMonth() + 1, d.getDate()];
+  assert.deepEqual(ymd(todayIn("Asia/Kolkata", now)), [2026, 10, 11]);
+  assert.deepEqual(ymd(todayIn("America/New_York", now)), [2026, 10, 10]);
+  assert.deepEqual(ymd(todayIn("Pacific/Kiritimati", now)), [2026, 10, 11]);
+  // A calendar day is noon, so a 24-hour day arrow lands on the next date even across a DST change.
+  const day = calendarDay(2026, 2, 7);
+  assert.equal(new Date(day.getTime() + 24 * 3600 * 1000).getDate(), 8);
+});
+

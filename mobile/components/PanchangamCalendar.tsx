@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { calendarDay, todayIn } from "../../content-lib/panchangam-place.ts";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { shadows } from "../shadows";
@@ -23,6 +24,7 @@ import {
 import { formatPanchangamTime } from "../services/panchangamTimings.ts";
 import { setPanchangamPlace, usePanchangamPlace } from "../services/panchangamPlaceStore.ts";
 import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
+import { PanchangamDatePicker } from "./PanchangamDatePicker";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -37,13 +39,19 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const t = useT();
   const { language } = useLanguage();
 
-  const today = useMemo(() => new Date(), []);
-  const [selectedDate, setSelectedDate] = useState<Date>(() => new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(() => todayIn());
   const [data, setData] = useState<PanchangamData | null>(initialPanchangam ?? null);
   const [isLoading, setIsLoading] = useState<boolean>(!initialPanchangam);
   const [showSankalpam, setShowSankalpam] = useState<boolean>(true);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [datePickerOpen, setDatePickerOpen] = useState(false);
   const { place, ready: placeReady } = usePanchangamPlace();
+  // "Today" is today at the place the Panchangam is for: with a city chosen
+  // in another time zone, that city's date, which can differ from the device's.
+  const today = useMemo(() => todayIn(place?.timeZone), [place]);
+  useEffect(() => {
+    if (placeReady) setSelectedDate(todayIn(place?.timeZone));
+  }, [place, placeReady]);
 
   useEffect(() => {
     // Wait for the saved city (if any) rather than computing for the phone's location first.
@@ -80,7 +88,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   };
 
   const goToToday = () => {
-    setSelectedDate(new Date());
+    setSelectedDate(todayIn(place?.timeZone));
   };
 
   const isCurrentToday = isSameDay(selectedDate, today);
@@ -240,7 +248,19 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
         {/* Selected Date Header with Status Badge */}
         <View style={[styles.dateHeadingRow, { borderTopColor: theme.colors.border }]}>
-          <Text style={[styles.dateHeadingText, { color: theme.colors.foreground }]}>{formattedDateHeading}</Text>
+          <Pressable
+            onPress={() => setDatePickerOpen(true)}
+            accessibilityRole="button"
+            accessibilityLabel={`${t("panchangamChooseDate")}: ${formattedDateHeading}`}
+            hitSlop={8}
+            style={({ pressed }) => [
+              styles.dateButton,
+              { borderColor: theme.colors.border, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
+            ]}
+          >
+            <Text style={[styles.dateHeadingText, { color: theme.colors.foreground }]}>{formattedDateHeading}</Text>
+            <Text style={[styles.dateCaret, { color: theme.colors.muted }]}>▾</Text>
+          </Pressable>
           <View
             style={[
               styles.badge,
@@ -357,6 +377,16 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           />
         ) : null}
       </View>
+      <PanchangamDatePicker
+        visible={datePickerOpen}
+        selected={selectedDate}
+        today={today}
+        onChoose={({ year, month, day }) => {
+          setSelectedDate(calendarDay(year, month, day));
+          setDatePickerOpen(false);
+        }}
+        onClose={() => setDatePickerOpen(false)}
+      />
       <PanchangamPlacePicker
         visible={pickerOpen}
         current={place}
@@ -547,6 +577,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: spacing.xs,
     borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  dateButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.xs,
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.sm,
+    minHeight: layout.minTouchTarget,
+    flexShrink: 1,
+  },
+  dateCaret: {
+    fontSize: typography.small,
   },
   dateHeadingText: {
     fontSize: typography.body,

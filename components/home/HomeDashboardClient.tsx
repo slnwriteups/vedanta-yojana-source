@@ -66,7 +66,7 @@ export function HomeDashboardClient({
     if (!placeReady) return;
     let cancelled = false;
     setPanchangam(null);
-    fetchPanchangam(new Date(), place).then((data) => {
+    fetchPanchangam(undefined, place).then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {
