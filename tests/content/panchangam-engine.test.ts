@@ -211,7 +211,7 @@ test("the Sankalpam names the moment, the place and how long it holds", () => {
     p.sankalpamText,
     /^Sankalpam for Chennai on 8th Oct 2026 At 10:00 AM IST and valid through 10:3[0-3]:\d\d PM: Parābhava nāma saṁvatsare, dakṣiṇāyane, varṣa ṛtau, kanyā māse, kṛṣṇa pakṣe, trayodaśyām śubha tithau, guru vāsara yuktāyām, pūrvaphalgunī nakṣatra yuktāyām, /
   );
-  assert.match(localizeSankalpamText(p.sankalpamText, "ta"), /^Chennai க்கான சங்கல்பம் — 8th Oct 2026, 10:00 AM IST முதல் 10:/);
+  assert.match(localizeSankalpamText(p.sankalpamText, "ta"), /^Chennai க்கான சங்கல்பம் — 8 அக்டோபர் 2026, 10:00 AM IST முதல் 10:/);
 });
 
 test("the Sankalpam reads on the reader's own clock outside India", () => {
@@ -221,7 +221,7 @@ test("the Sankalpam reads on the reader's own clock outside India", () => {
   });
   assert.match(p.sankalpamText, /^Sankalpam for New York on 4th Jul 2026 At 10:00 AM EDT and valid through .* of following day: /);
   assert.match(p.sankalpamText, /uttarāyaṇe, grīṣma ṛtau, mithuna māse/);
-  assert.match(localizeSankalpamText(p.sankalpamText, "hi"), /^New York के लिए संकल्प — 4th Jul 2026, 10:00 AM EDT से अगले दिन /);
+  assert.match(localizeSankalpamText(p.sankalpamText, "hi"), /^New York के लिए संकल्प — 4 जुलाई 2026, 10:00 AM EDT से अगले दिन /);
 });
 
 test("today's Sankalpam is for now; another day's is for its sunrise", () => {

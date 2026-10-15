@@ -1,4 +1,6 @@
 import type { LanguageCode } from "./preferences";
+import { iastToScript } from "../content-lib/sanskrit-script.ts";
+import { localizeEnglishDates } from "../content-lib/panchangam-dates.ts";
 
 /**
  * Web port of mobile/panchangam-labels.ts, verbatim (content unchanged,
@@ -108,8 +110,8 @@ export function nakshatramLabel(nakshatram: string, language: LanguageCode | nul
  * content-lib/panchangam-engine.ts always produces exactly "Next
  * Ekadasi: {dateSentence}" (the location-unavailable fallback sentence
  * doesn't match this shape and is returned untouched). Only the fixed
- * "Next Ekadasi:" label is replaced; the date sentence itself is left
- * byte-for-byte.
+ * "Next Ekadasi:" label is replaced, and the date is written in the
+ * reader's language (content-lib/panchangam-dates.ts).
  */
 const NEXT_EKADASHI_PREFIX: Record<LanguageCode, string> = {
   ta: "அடுத்த ஏகாதசி: ",
@@ -122,7 +124,7 @@ export function localizeUpcomingEkadashi(text: string, language: LanguageCode | 
   if (!language) return text;
   const match = text.match(/^Next Ekadasi:\s*(.*)$/i);
   if (!match) return text;
-  return `${NEXT_EKADASHI_PREFIX[language]}${match[1]}`;
+  return `${NEXT_EKADASHI_PREFIX[language]}${localizeEnglishDates(match[1], language)}`;
 }
 
 /**
@@ -135,11 +137,11 @@ export function localizeUpcomingEkadashi(text: string, language: LanguageCode | 
  * validity window actually crosses midnight into the next calendar day,
  * so the regex and the localized wording both treat it as optional.
  * Only the fixed English wrapper phrasing is re-templated per language;
- * {location}/{date}/{time}/{zone}/{validUntil} are substituted verbatim,
- * and {declaration} -- the Sanskrit sankalpam formula itself
- * ("Parābhava nāma saṁvatsare...") -- is appended untranslated, matching
- * the app's convention that a Sanskrit declaration is always shown in
- * Sanskrit regardless of UI language.
+ * {date} is written in the reader's language, {location}/{time}/{zone}/
+ * {validUntil} are substituted verbatim, and {declaration} -- the Sanskrit
+ * sankalpam formula itself ("Parābhava nāma saṁvatsare...") -- stays in
+ * Sanskrit but is written in the reader's script
+ * (content-lib/sanskrit-script.ts), as the Tarpaṇa Saṅkalpams are.
  */
 // Matches "2:13 PM" / "07:18 PM" / "03:19:12 PM" -- a real time-of-day, with
 // or without seconds. Needed because a bare `:` can't reliably terminate the
@@ -178,6 +180,13 @@ export function localizeSankalpamText(text: string, language: LanguageCode | nul
   const match = text.match(SANKALPAM_PATTERN);
   if (!match) return text;
   const [, location, date, time, zone, validUntil, followingDayPhrase, declaration] = match;
-  const intro = SANKALPAM_INTRO[language](location, date, time, zone, validUntil, Boolean(followingDayPhrase));
-  return declaration ? `${intro} ${declaration}` : intro;
+  const intro = SANKALPAM_INTRO[language](
+    location,
+    localizeEnglishDates(date, language),
+    time,
+    zone,
+    validUntil,
+    Boolean(followingDayPhrase)
+  );
+  return declaration ? `${intro} ${iastToScript(declaration, language)}` : intro;
 }

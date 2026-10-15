@@ -4,7 +4,7 @@ import assert from "node:assert/strict";
 import { searchPlaces, normalizePlaceText } from "../../content-lib/panchangam-places.ts";
 import { calendarDay, isChosenPlace, placeLabel, todayIn } from "../../content-lib/panchangam-place.ts";
 import { PLACE_ROWS, PLACE_TIME_ZONES } from "../../content-lib/panchangam-places-data.ts";
-import { computePanchangamForDate } from "../../content-lib/panchangam-engine.ts";
+import { computePanchangamForDate, timeZoneLabel } from "../../content-lib/panchangam-engine.ts";
 
 function first(query: string) {
   const [place] = searchPlaces(query, 1);
@@ -96,3 +96,11 @@ test("today is the chosen city's date, which can differ from the device's", () =
   assert.equal(new Date(day.getTime() + 24 * 3600 * 1000).getDate(), 8);
 });
 
+test("the times' zone is named even where the phone has no abbreviation for it", () => {
+  const ms = Date.UTC(2026, 9, 15, 6, 0);
+  assert.equal(timeZoneLabel(ms, "Asia/Kolkata"), "IST");
+  assert.equal(timeZoneLabel(ms, "Asia/Singapore"), "GMT+8");
+  assert.equal(timeZoneLabel(ms, "Asia/Kathmandu"), "GMT+5:45");
+  assert.equal(timeZoneLabel(ms, "Atlantic/Reykjavik"), "GMT");
+  assert.equal(timeZoneLabel(ms, "America/New_York"), "EDT");
+});
