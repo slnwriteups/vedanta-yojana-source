@@ -1,3 +1,5 @@
+import type { AppMatchResult } from "./app-content.ts";
+
 export type BlogPlatform = "wordpress" | "wix";
 
 /** One post as recovered from a source platform, before anything is written to disk. */
@@ -49,6 +51,8 @@ export interface ArchivedPost {
   images: ArchivedImage[];
   wordCount: number;
   files: { markdown: string; html: string };
+  /** Set when part of this post's text (or its title) is already in the app -- check before migrating. */
+  appCheck: AppMatchResult | null;
   migration: {
     status: MigrationStatus;
     /** Free-text note for the person doing the migration; preserved across re-imports. */

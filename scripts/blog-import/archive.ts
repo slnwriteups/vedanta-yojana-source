@@ -8,10 +8,16 @@
  * by platform + source ID, its files are refreshed, and its
  * migration.status / migration.notes (the hand-maintained progress of
  * moving it into the app) are preserved.
+ *
+ * When given the app's content corpus, a post whose text is already in
+ * the app (see app-content.ts) is not archived at all: it is recorded in
+ * duplicates.json instead, with the app records it matched. Posts with a
+ * weaker match are archived but carry the match in post.json.appCheck.
  */
 import fs from "node:fs";
 import path from "node:path";
-import { htmlToMarkdown, markdownImageUrls } from "./html.ts";
+import { findAppMatches, type AppCorpus, type AppMatch } from "./app-content.ts";
+import { htmlToMarkdown, htmlToPlainText, markdownImageUrls } from "./html.ts";
 import { duplicateKey, slugify } from "./slug.ts";
 import type { ArchivedImage, ArchivedPost, ImportedPost } from "./types.ts";
 
@@ -22,6 +28,36 @@ export interface ArchiveOptions {
   /** Omit to keep image URLs remote instead of downloading them. */
   fetchBinary?: FetchBinary;
   log?: (msg: string) => void;
+  /** The app's existing content; when given, posts already in the app are not archived. */
+  appCorpus?: AppCorpus;
+  /** Archive posts even when they duplicate app content (they stay flagged). */
+  includeDuplicates?: boolean;
+}
+
+/** A post left out of the archive because its text already exists in the app. */
+export interface DuplicateEntry {
+  platform: string;
+  sourceId: string;
+  sourceUrl: string | null;
+  title: string;
+  publishedAt: string | null;
+  /** Share of the post's text found in the app (0-1). */
+  containment: number;
+  matches: AppMatch[];
+  /** Set when an earlier import had already archived this post; that folder is left alone. */
+  existingFolder?: string;
+}
+
+export interface ArchiveResult {
+  archived: ArchivedPost[];
+  duplicates: DuplicateEntry[];
+}
+
+const DUPLICATES_FILE = "duplicates.json";
+
+function readDuplicates(root: string): Map<string, DuplicateEntry> {
+  const list = readJson<{ duplicates: DuplicateEntry[] }>(path.join(root, DUPLICATES_FILE))?.duplicates ?? [];
+  return new Map(list.map((d) => [`${d.platform}:${d.sourceId}`, d]));
 }
 
 const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "gif", "webp", "avif", "svg", "bmp", "tif", "tiff"]);
@@ -105,15 +141,41 @@ function existingFolders(root: string): Map<string, string> {
   return map;
 }
 
-export async function archivePosts(posts: ImportedPost[], options: ArchiveOptions): Promise<ArchivedPost[]> {
-  const { root, fetchBinary, log = () => {} } = options;
+export async function archivePosts(posts: ImportedPost[], options: ArchiveOptions): Promise<ArchiveResult> {
+  const { root, fetchBinary, appCorpus, includeDuplicates = false, log = () => {} } = options;
   const folders = existingFolders(root);
   const claimed = new Set(folders.values());
   const results: ArchivedPost[] = [];
+  const duplicates: DuplicateEntry[] = [];
+  const allDuplicates = readDuplicates(root);
 
   for (const post of posts) {
     const key = `${post.platform}:${post.sourceId}`;
     let dir = folders.get(key);
+
+    const check = appCorpus ? findAppMatches(appCorpus, post.title, htmlToPlainText(post.html)) : null;
+    if (appCorpus) allDuplicates.delete(key);
+    if (check?.verdict === "duplicate" && !includeDuplicates) {
+      const entry: DuplicateEntry = {
+        platform: post.platform,
+        sourceId: post.sourceId,
+        sourceUrl: post.sourceUrl,
+        title: post.title,
+        publishedAt: post.publishedAt,
+        containment: check.containment,
+        matches: check.matches,
+      };
+      const best = check.matches[0];
+      log(`  = "${post.title}" is already in the app (${Math.round(check.containment * 100)}% of its text, best match ${best?.file ?? "several records"}) -- not imported`);
+      if (dir) {
+        entry.existingFolder = path.relative(root, dir).split(path.sep).join("/");
+        log(`    (an earlier import archived it at ${entry.existingFolder}; left in place -- delete it or mark it skipped)`);
+      }
+      allDuplicates.set(key, entry);
+      duplicates.push(entry);
+      continue;
+    }
+
     if (!dir) {
       const date = post.publishedAt?.slice(0, 10).match(/^\d{4}-\d{2}-\d{2}$/)?.[0] ?? "undated";
       const stem = path.join(root, post.platform, `${date}-${post.slug}`);
@@ -153,6 +215,7 @@ export async function archivePosts(posts: ImportedPost[], options: ArchiveOption
       images,
       wordCount: wordCount(markdown),
       files: { markdown: "post.md", html: "original.html" },
+      appCheck: check && check.verdict !== "none" ? check : previous?.appCheck && !appCorpus ? previous.appCheck : null,
       migration: previous?.migration ?? { status: "archived", notes: "" },
     };
 
@@ -162,7 +225,13 @@ export async function archivePosts(posts: ImportedPost[], options: ArchiveOption
     if (!post.html.trim()) log(`  ! no body found for "${post.title}" -- see ${path.relative(root, dir)}`);
     results.push(archived);
   }
-  return results;
+
+  if (appCorpus) {
+    const list = [...allDuplicates.values()].sort((a, b) => (a.publishedAt ?? "9999").localeCompare(b.publishedAt ?? "9999") || a.title.localeCompare(b.title));
+    fs.mkdirSync(root, { recursive: true });
+    fs.writeFileSync(path.join(root, DUPLICATES_FILE), `${JSON.stringify({ count: list.length, duplicates: list }, null, 2)}\n`);
+  }
+  return { archived: results, duplicates };
 }
 
 async function downloadImage(
@@ -202,6 +271,8 @@ export interface ArchiveIndexEntry {
   migrationStatus: string;
   /** Folders of posts on the other platform with the same title -- likely the same post, moved. */
   possibleDuplicates: string[];
+  /** App records this post partly overlaps (a weaker match than a skipped duplicate) -- check before migrating. */
+  possiblyInApp: string[];
 }
 
 /** Rebuilds blog-archive/index.json and INDEX.md from every post.json present. */
@@ -224,6 +295,7 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
         imageCount: meta.images.length,
         migrationStatus: meta.migration.status,
         possibleDuplicates: [],
+        possiblyInApp: (meta.appCheck?.matches ?? []).map((m) => m.file),
       });
     }
   }
@@ -236,14 +308,19 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
   const index = entries.map(({ key: _key, ...rest }) => rest);
 
   fs.mkdirSync(root, { recursive: true });
-  fs.writeFileSync(path.join(root, "index.json"), `${JSON.stringify({ postCount: index.length, posts: index }, null, 2)}\n`);
+  const skipped = [...readDuplicates(root).values()].sort((a, b) => (a.publishedAt ?? "9999").localeCompare(b.publishedAt ?? "9999") || a.title.localeCompare(b.title));
+  fs.writeFileSync(
+    path.join(root, "index.json"),
+    `${JSON.stringify({ postCount: index.length, alreadyInAppCount: skipped.length, posts: index }, null, 2)}\n`
+  );
 
   const counts = (status: string) => index.filter((e) => e.migrationStatus === status).length;
   const rows = index.map((e) => {
     const done = e.migrationStatus === "migrated" || e.migrationStatus === "skipped" ? "x" : " ";
     const dup = e.possibleDuplicates.length ? " (also on " + e.possibleDuplicates.map((d) => d.split("/")[0]).join(", ") + ")" : "";
+    const inApp = e.possiblyInApp.length ? " ⚠ may already be in the app: " + e.possiblyInApp.map((f) => `\`${f}\``).join(", ") : "";
     const title = e.title.replace(/\|/g, "\\|");
-    return `| [${done}] | ${e.publishedAt?.slice(0, 10) ?? "—"} | [${title}](${encodeURI(e.folder)}/post.md)${dup} | ${e.platform} | ${e.sourceStatus} | ${e.wordCount} | ${e.migrationStatus} |`;
+    return `| [${done}] | ${e.publishedAt?.slice(0, 10) ?? "—"} | [${title}](${encodeURI(e.folder)}/post.md)${dup}${inApp} | ${e.platform} | ${e.sourceStatus} | ${e.wordCount} | ${e.migrationStatus} |`;
   });
   const md = [
     "# Blog archive — migration checklist",
@@ -258,6 +335,24 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
     "|---|---|---|---|---|---|---|",
     ...rows,
     "",
+    ...(skipped.length
+      ? [
+          `## Already in the app — not imported (${skipped.length})`,
+          "",
+          "These posts' text is already in the app (a book chapter, Divya Desam or Knowledge record), so they",
+          "were left out of the archive. Details in `duplicates.json`. To archive one anyway, re-run the",
+          "import with `--include-duplicates`.",
+          "",
+          "| Published | Title | Platform | Text found in app | Matches |",
+          "|---|---|---|---|---|",
+          ...skipped.map((d) => {
+            const title = d.sourceUrl ? `[${d.title.replace(/\|/g, "\\|")}](${d.sourceUrl})` : d.title.replace(/\|/g, "\\|");
+            const matches = d.matches.map((m) => `\`${m.file}\` (${Math.round(m.overlap * 100)}%)`).join(", ");
+            return `| ${d.publishedAt?.slice(0, 10) ?? "—"} | ${title} | ${d.platform} | ${Math.round(d.containment * 100)}% | ${matches} |`;
+          }),
+          "",
+        ]
+      : []),
   ].join("\n");
   fs.writeFileSync(path.join(root, "INDEX.md"), md);
   return index;

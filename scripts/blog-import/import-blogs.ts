@@ -10,6 +10,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parseArgs } from "node:util";
+import { loadAppCorpus } from "./app-content.ts";
 import { archivePosts, rebuildIndex, type FetchBinary } from "./archive.ts";
 import { parseWxr } from "./wordpress.ts";
 import { listWixPostUrls, parseWixPostPage, type FetchText } from "./wix.ts";
@@ -25,6 +26,8 @@ const { values } = parseArgs({
     "wix-site": { type: "string" },
     "wix-html-dir": { type: "string" },
     "no-images": { type: "boolean", default: false },
+    "include-duplicates": { type: "boolean", default: false },
+    "no-app-check": { type: "boolean", default: false },
     delay: { type: "string", default: "500" },
     out: { type: "string", default: path.join(REPO_ROOT, "blog-archive") },
     reindex: { type: "boolean", default: false },
@@ -40,6 +43,9 @@ if (values.help || (!values.wordpress && !values["wix-site"] && !values["wix-htm
   --wix-site <url>         Wix site address; posts are discovered from its sitemap + RSS feed.
   --wix-html-dir <dir>     Offline alternative: folder of Wix post pages saved from a browser.
   --no-images              Keep image URLs remote instead of downloading into the repo.
+  --include-duplicates     Also archive posts whose text is already in the app (normally left
+                           out and listed in duplicates.json / INDEX.md).
+  --no-app-check           Skip comparing posts against the app's content/ folder.
   --delay <ms>             Pause between Wix page requests (default 500).
   --out <dir>              Archive folder (default blog-archive/).
   --reindex                Only rebuild blog-archive/index.json and INDEX.md.`);
@@ -120,8 +126,17 @@ async function main() {
   }
 
   if (posts.length) {
+    const appCorpus = values["no-app-check"] ? undefined : loadAppCorpus(path.join(REPO_ROOT, "content"));
+    if (appCorpus) console.log(`Checking against ${appCorpus.records.length} records already in the app ...`);
     console.log(`Archiving ${posts.length} posts into ${path.relative(process.cwd(), out) || out} ...`);
-    await archivePosts(posts, { root: out, fetchBinary: values["no-images"] ? undefined : fetchBinary, log: console.warn });
+    const result = await archivePosts(posts, {
+      root: out,
+      fetchBinary: values["no-images"] ? undefined : fetchBinary,
+      appCorpus,
+      includeDuplicates: values["include-duplicates"],
+      log: console.warn,
+    });
+    console.log(`Archived ${result.archived.length}; ${result.duplicates.length} already in the app and not imported.`);
   }
   const index = rebuildIndex(out);
   const dups = index.filter((e) => e.possibleDuplicates.length).length;

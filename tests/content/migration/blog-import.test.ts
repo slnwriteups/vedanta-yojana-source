@@ -8,6 +8,8 @@ import { parseWxr, wpautop } from "../../../scripts/blog-import/wordpress.ts";
 import { listWixPostUrls, parseWixPostPage } from "../../../scripts/blog-import/wix.ts";
 import { archivePosts, fullSizeCandidates, rebuildIndex } from "../../../scripts/blog-import/archive.ts";
 import { slugify } from "../../../scripts/blog-import/slug.ts";
+import { addRecord, findAppMatches, loadAppCorpus, type AppCorpus } from "../../../scripts/blog-import/app-content.ts";
+import type { ImportedPost } from "../../../scripts/blog-import/types.ts";
 
 // Synthetic fixtures only -- no real blog content.
 const WXR = `<?xml version="1.0" encoding="UTF-8"?>
@@ -182,6 +184,101 @@ test("archivePosts writes per-post folders, localises images, flags cross-platfo
     const wpEntry = index.find((e) => e.folder === "wordpress/2019-05-01-example-post")!;
     assert.deepEqual(wpEntry.possibleDuplicates, ["wix/2021-03-04-example-post"]);
     assert.match(fs.readFileSync(path.join(root, "INDEX.md"), "utf8"), /\*\*3 posts\*\* — 2 archived, 0 in review, 1 migrated/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+// ---------------------------------------------------------------------------
+// Posts whose writing already exists in the app.
+// ---------------------------------------------------------------------------
+
+const CHAPTER_TEXT =
+  "Long ago a humble family of four lived on gleanings from the fields. One day, after a long fast, they had a single measure of flour. " +
+  "As they sat down to eat, a hungry guest arrived at their door, and each of them gave away their share without hesitation. " +
+  "When the guest had eaten, he revealed himself as Dharma, and the family ascended to the heavens. " +
+  "A small creature rolled in the spilt flour, and half of its body turned to gold. Ever since, it has searched for a sacrifice equal to that one.";
+
+function syntheticCorpus(): AppCorpus {
+  const corpus: AppCorpus = { records: [], shingles: new Map(), titles: new Map() };
+  addRecord(corpus, { file: "library/example-book/chapters/a-measure-of-flour.json", kind: "chapter", title: "A Measure of Flour" }, {
+    title: "A Measure of Flour",
+    body: CHAPTER_TEXT,
+    translations: { te: { body: "unrelated translated text that must not be indexed at all here" } },
+  });
+  addRecord(corpus, { file: "knowledge/introduction.json", kind: "knowledge", title: "Introduction" }, { title: "Introduction", body: "An introduction to the example temples." });
+  return corpus;
+}
+
+function post(overrides: Partial<ImportedPost>): ImportedPost {
+  return {
+    platform: "wordpress", sourceId: "1", sourceUrl: "https://example.wordpress.com/p/1", title: "Post", slug: "post",
+    sourceStatus: "publish", publishedAt: "2019-01-01T00:00:00Z", modifiedAt: null, author: null, categories: [], tags: [],
+    excerpt: null, coverImageUrl: null, html: "<p>Body</p>", ...overrides,
+  };
+}
+
+test("findAppMatches flags a revised, retitled post whose text is already an app chapter as a duplicate", () => {
+  // The blog version: different title, no IAST/curly quotes, one sentence reworded.
+  const blog = CHAPTER_TEXT.replace("When the guest had eaten", "Once the visitor finished his meal");
+  const result = findAppMatches(syntheticCorpus(), "The Golden Mongoose", blog);
+  assert.equal(result.verdict, "duplicate");
+  assert.ok(result.containment >= 0.5);
+  assert.equal(result.matches[0].file, "library/example-book/chapters/a-measure-of-flour.json");
+});
+
+test("findAppMatches does not treat unrelated writing as a duplicate, and only flags a bare title match as possible", () => {
+  const corpus = syntheticCorpus();
+  const essay = "Reflections on the festival season and the music, food and community that carry a tradition forward from one generation to the next across many villages and towns.";
+  assert.equal(findAppMatches(corpus, "Festival Thoughts", essay).verdict, "none");
+  const titled = findAppMatches(corpus, "Introduction", essay);
+  assert.equal(titled.verdict, "possible");
+  assert.equal(titled.titleMatch, true);
+});
+
+test("translations are not indexed", () => {
+  assert.equal(findAppMatches(syntheticCorpus(), "x", "unrelated translated text that must not be indexed at all here").containment, 0);
+});
+
+test("loadAppCorpus indexes the real content/ folder and skips _provenance/_unresolved", () => {
+  const corpus = loadAppCorpus(path.resolve(import.meta.dirname, "../../../content"));
+  assert.ok(corpus.records.some((r) => r.kind === "chapter"));
+  assert.ok(corpus.records.some((r) => r.kind === "divya-desams"));
+  assert.ok(corpus.records.every((r) => !r.file.startsWith("_")));
+});
+
+test("archivePosts leaves app duplicates out of the archive, records them in duplicates.json and INDEX.md, and flags weaker matches", async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "blog-archive-"));
+  try {
+    const corpus = syntheticCorpus();
+    const dupe = post({ sourceId: "1", title: "The Golden Mongoose", slug: "the-golden-mongoose", html: `<p>${CHAPTER_TEXT}</p>` });
+    const fresh = post({ sourceId: "2", title: "Introduction", slug: "introduction", html: "<p>Something new I wrote about a pilgrimage.</p>" });
+    const result = await archivePosts([dupe, fresh], { root, appCorpus: corpus });
+
+    assert.equal(result.archived.length, 1);
+    assert.equal(result.duplicates.length, 1);
+    assert.deepEqual(fs.readdirSync(path.join(root, "wordpress")), ["2019-01-01-introduction"]);
+    const saved = JSON.parse(fs.readFileSync(path.join(root, "duplicates.json"), "utf8"));
+    assert.equal(saved.count, 1);
+    assert.equal(saved.duplicates[0].title, "The Golden Mongoose");
+    assert.equal(saved.duplicates[0].matches[0].file, "library/example-book/chapters/a-measure-of-flour.json");
+
+    const freshMeta = JSON.parse(fs.readFileSync(path.join(root, "wordpress", "2019-01-01-introduction", "post.json"), "utf8"));
+    assert.equal(freshMeta.appCheck.verdict, "possible");
+
+    const index = rebuildIndex(root);
+    assert.deepEqual(index[0].possiblyInApp, ["knowledge/introduction.json"]);
+    const md = fs.readFileSync(path.join(root, "INDEX.md"), "utf8");
+    assert.match(md, /## Already in the app — not imported \(1\)/);
+    assert.match(md, /The Golden Mongoose/);
+    assert.match(md, /⚠ may already be in the app: `knowledge\/introduction.json`/);
+
+    // A later run for another platform keeps the earlier duplicates; --include-duplicates archives it anyway.
+    await archivePosts([post({ platform: "wix", sourceId: "https://example.com/post/x", title: "X", slug: "x", html: "<p>Brand new.</p>" })], { root, appCorpus: corpus });
+    assert.equal(JSON.parse(fs.readFileSync(path.join(root, "duplicates.json"), "utf8")).count, 1);
+    const forced = await archivePosts([dupe], { root, appCorpus: corpus, includeDuplicates: true });
+    assert.equal(forced.archived[0].appCheck?.verdict, "duplicate");
+    assert.equal(JSON.parse(fs.readFileSync(path.join(root, "duplicates.json"), "utf8")).count, 0);
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

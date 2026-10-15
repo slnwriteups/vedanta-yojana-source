@@ -36,7 +36,30 @@ npm run import:blogs -- --wix-html-dir ~/Downloads/wix-posts      # offline alte
 
 Flags: `--include-pages` (also WordPress static pages), `--no-images`
 (keep images remote), `--delay <ms>` (pause between Wix requests),
-`--out <dir>`, `--reindex`.
+`--include-duplicates`, `--no-app-check`, `--out <dir>`, `--reindex`.
+
+## Posts already in the app are not imported
+
+Before archiving, every post is compared with what the app already has
+in `content/` — book chapters, Divya Desam records and Knowledge records
+(not translations, and not `_provenance/` / `_unresolved/`). The
+comparison is on the writing itself, so a post that was later revised
+into a book chapter under a new title is still recognised:
+
+- **Duplicate** — half or more of the post's text is already in the app
+  (in one record or spread across several). The post is **not imported**;
+  it is listed in `blog-archive/duplicates.json` and in an "Already in the
+  app" section of `INDEX.md`, with the matching app records and how much
+  of the post each one covers. If an earlier import had already archived
+  it, that folder is left alone and the run warns about it.
+- **Possible match** — 15–50% of the text overlaps, or the title is
+  exactly an app record's title. The post *is* imported, but its
+  `post.json` carries an `appCheck` block and `INDEX.md` marks it with ⚠
+  so you can decide.
+
+`--include-duplicates` archives duplicates anyway (still flagged);
+`--no-app-check` turns the comparison off. As the app gains content,
+re-running the import re-checks every post against it.
 
 Re-running is safe: posts are matched to their existing folders, files
 are refreshed, already-downloaded images are kept, and your migration
@@ -48,6 +71,7 @@ progress (below) is preserved.
 blog-archive/
 ├── INDEX.md            checklist of every post, oldest first
 ├── index.json          the same, machine-readable
+├── duplicates.json     posts left out because they're already in the app
 ├── wordpress/2019-05-01-some-post/
 │   ├── post.md         readable Markdown (front matter + body, local image links)
 │   ├── original.html   the body exactly as the platform stored it — never edited
