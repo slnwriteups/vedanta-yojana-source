@@ -1,8 +1,9 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SettingsControls } from "../../components/SettingsControls";
 import { SocialButton } from "../../components/SocialButton";
-import { layout, spacing, typography, useTheme } from "../../theme";
+import { layout, radius, spacing, typography, useTheme } from "../../theme";
 import { useT } from "../../ui-strings.ts";
+import { TourTarget, useTour } from "../../tour/Tour";
 
 const INSTAGRAM_URL = "https://www.instagram.com/vedantayojana/";
 
@@ -22,6 +23,7 @@ const INSTAGRAM_URL = "https://www.instagram.com/vedantayojana/";
 export default function SettingsScreen() {
   const theme = useTheme();
   const t = useT();
+  const tour = useTour();
 
   return (
     <ScrollView
@@ -29,6 +31,18 @@ export default function SettingsScreen() {
       contentContainerStyle={styles.content}
     >
       <SettingsControls />
+      <TourTarget id="settings-tour" style={styles.tourTarget}>
+        <Pressable
+          onPress={tour.start}
+          accessibilityRole="button"
+          style={({ pressed }) => [
+            styles.tourButton,
+            { borderColor: theme.colors.accent, backgroundColor: theme.colors.surface, opacity: pressed ? 0.7 : 1 },
+          ]}
+        >
+          <Text style={[styles.tourButtonText, { color: theme.colors.accent }]}>{t("settingsHowToUse")}</Text>
+        </Pressable>
+      </TourTarget>
       <View style={styles.section}>
         <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("settingsConnectLabel")}</Text>
         <SocialButton icon="logo-instagram" label="Instagram" url={INSTAGRAM_URL} />
@@ -46,6 +60,20 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: spacing.xs,
+  },
+  tourTarget: {
+    alignSelf: "flex-start",
+  },
+  tourButton: {
+    borderWidth: 1,
+    borderRadius: radius.md,
+    paddingHorizontal: spacing.lg,
+    minHeight: layout.minTouchTarget,
+    justifyContent: "center",
+  },
+  tourButtonText: {
+    fontSize: typography.body,
+    fontWeight: "600",
   },
   sectionLabel: {
     fontSize: typography.eyebrow,

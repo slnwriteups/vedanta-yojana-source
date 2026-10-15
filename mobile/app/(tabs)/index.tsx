@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { resolveAllLastRead } from "../../content-lib/reading-position.ts";
@@ -18,6 +18,7 @@ import { fetchPanchangam, type PanchangamData } from "../../services/panchangamS
 import { loadPanchangamPlace, usePanchangamPlace } from "../../services/panchangamPlaceStore.ts";
 import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
 import { loadOfflineBook } from "../../services/bookOfflineService.ts";
+import { useTourScroller } from "../../tour/Tour";
 
 /**
  * UI/UX refactor: Home is now a proper dashboard rather than a plain
@@ -87,8 +88,21 @@ export default function HomeScreen() {
     };
   }, []);
 
+  // The "How to use the app" tour scrolls Home to the Panchangam controls it points at.
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollY = useRef(0);
+  const scrollBy = useCallback((dy: number) => {
+    scrollRef.current?.scrollTo({ y: Math.max(0, scrollY.current + dy), animated: true });
+  }, []);
+  useTourScroller(scrollBy);
+
   return (
     <ScrollView
+      ref={scrollRef}
+      onScroll={(e) => {
+        scrollY.current = e.nativeEvent.contentOffset.y;
+      }}
+      scrollEventThrottle={32}
       style={[styles.container, { backgroundColor: theme.colors.background }]}
       contentContainerStyle={styles.contentContainer}
       showsVerticalScrollIndicator={false}
