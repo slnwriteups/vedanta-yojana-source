@@ -158,10 +158,10 @@ test("a place name containing the word 'on' does not swallow the Sankalpam's dat
 
   const localized = localizeSankalpamText(sentence, "hi");
 
-  assert.match(localized, /^Stratford on Avon के लिए संकल्प — 22nd Sep 2026, /);
+  assert.match(localized, /^Stratford on Avon के लिए संकल्प — 22 सितंबर 2026, /);
 
   const localizedTe = localizeSankalpamText(sentence, "te");
-  assert.match(localizedTe, /^Stratford on Avon కొరకు సంకల్పం — 22nd Sep 2026, /);
+  assert.match(localizedTe, /^Stratford on Avon కొరకు సంకల్పం — 22 సెప్టెంబర్ 2026, /);
 });
 
 test("both platforms label the location row, in all five languages", () => {

@@ -284,13 +284,16 @@ export function timeZoneLabel(ms: number, timeZone: string): string {
     const name = new Intl.DateTimeFormat("en-US", { timeZone, timeZoneName: "short" })
       .formatToParts(ms)
       .find((part) => part.type === "timeZoneName")?.value;
-    if (name && !/\s/.test(name)) return name;
+    // Some engines (Hermes on iPhone) give a bare "GMT" for zones with no
+    // abbreviation, such as Singapore; only a real abbreviation is kept.
+    if (name && !/\s/.test(name) && !/^(GMT|UTC)/.test(name)) return name;
   } catch {
     // fall through to the numeric label
   }
   const offset = utcOffsetMinutes(ms, timeZone);
   const sign = offset < 0 ? "-" : "+";
   const abs = Math.abs(offset);
+  if (abs === 0) return "GMT";
   return `GMT${sign}${Math.floor(abs / 60)}${abs % 60 ? `:${pad2(abs % 60)}` : ""}`;
 }
 
