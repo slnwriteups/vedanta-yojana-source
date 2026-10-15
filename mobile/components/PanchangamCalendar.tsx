@@ -25,6 +25,7 @@ import { formatPanchangamTime } from "../services/panchangamTimings.ts";
 import { setPanchangamPlace, usePanchangamPlace } from "../services/panchangamPlaceStore.ts";
 import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
 import { PanchangamDatePicker } from "./PanchangamDatePicker";
+import { TourTarget } from "../tour/Tour";
 
 function isSameDay(d1: Date, d2: Date): boolean {
   return (
@@ -248,6 +249,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
         {/* Selected Date Header with Status Badge */}
         <View style={[styles.dateHeadingRow, { borderTopColor: theme.colors.border }]}>
+          <TourTarget id="panchangam-date" style={styles.dateTarget}>
           <Pressable
             onPress={() => setDatePickerOpen(true)}
             accessibilityRole="button"
@@ -261,6 +263,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <Text style={[styles.dateHeadingText, { color: theme.colors.foreground }]}>{formattedDateHeading}</Text>
             <Text style={[styles.dateCaret, { color: theme.colors.muted }]}>▾</Text>
           </Pressable>
+          </TourTarget>
           <View
             style={[
               styles.badge,
@@ -324,6 +327,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 {timesInZoneLabel(language, data.timeZoneNote)}
               </Text>
             ) : null}
+            <TourTarget id="panchangam-place">
             <View style={styles.row}>
               <Text style={[styles.rowLabel, { color: theme.colors.muted }]}>{t("homeCalendarLocationLabel")}</Text>
               <View style={styles.locationValue}>
@@ -340,6 +344,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 </Pressable>
               </View>
             </View>
+            </TourTarget>
 
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
@@ -353,6 +358,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
         ) : (
           <View>
             <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>
+            <TourTarget id="panchangam-place" style={styles.chooseTarget}>
             <Pressable
               onPress={() => setPickerOpen(true)}
               accessibilityRole="button"
@@ -363,6 +369,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             >
               <Text style={[styles.chooseBtnText, { color: theme.colors.accent }]}>{t("panchangamChoosePlace")}</Text>
             </Pressable>
+            </TourTarget>
           </View>
         )}
 
@@ -577,6 +584,12 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingTop: spacing.xs,
     borderTopWidth: StyleSheet.hairlineWidth,
+  },
+  dateTarget: {
+    flexShrink: 1,
+  },
+  chooseTarget: {
+    alignSelf: "flex-start",
   },
   dateButton: {
     flexDirection: "row",

@@ -4,6 +4,7 @@ import type { ImageSourcePropType } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "../../theme";
 import { useT } from "../../ui-strings.ts";
+import { TourTarget } from "../../tour/Tour";
 
 /**
  * Custom gold nav-icon artwork (designer-supplied; the source PNGs'
@@ -38,13 +39,15 @@ const ICON_LABEL_GAP = 2;
 // include both.
 const BAR_CONTENT_HEIGHT = ICON_SIZE + ICON_LABEL_GAP + LABEL_BOX_HEIGHT;
 
-function TabIcon({ source, focused }: { source: ImageSourcePropType; focused: boolean }) {
+function TabIcon({ source, focused, tourId }: { source: ImageSourcePropType; focused: boolean; tourId: string }) {
   return (
-    <Image
-      source={source}
-      resizeMode="contain"
-      style={{ width: ICON_SIZE, height: ICON_SIZE, opacity: focused ? 1 : 0.5 }}
-    />
+    <TourTarget id={tourId}>
+      <Image
+        source={source}
+        resizeMode="contain"
+        style={{ width: ICON_SIZE, height: ICON_SIZE, opacity: focused ? 1 : 0.5 }}
+      />
+    </TourTarget>
   );
 }
 
@@ -183,7 +186,7 @@ export default function TabsLayout() {
         options={{
           title: t("tabHome"),
           headerShown: true,
-          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.home} focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.home} focused={focused} tourId="tab-home" />,
         }}
       />
       <Tabs.Screen
@@ -191,7 +194,7 @@ export default function TabsLayout() {
         options={{
           title: t("tabDivyaDesams"),
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.divyaDesams} focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.divyaDesams} focused={focused} tourId="tab-divya-desams" />,
           tabBarLabel: ({ color, children }) => <TwoLineTabLabel color={color}>{children}</TwoLineTabLabel>,
         }}
         listeners={({ navigation }) => ({
@@ -205,7 +208,7 @@ export default function TabsLayout() {
         options={{
           title: t("tabLibrary"),
           headerShown: false,
-          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.library} focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.library} focused={focused} tourId="tab-library" />,
         }}
         listeners={({ navigation }) => ({
           tabPress: () => {
@@ -218,7 +221,7 @@ export default function TabsLayout() {
         options={{
           title: t("tabSearch"),
           headerShown: true,
-          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.search} focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.search} focused={focused} tourId="tab-search" />,
         }}
       />
       <Tabs.Screen
@@ -226,7 +229,7 @@ export default function TabsLayout() {
         options={{
           title: t("tabSettings"),
           headerShown: true,
-          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.settings} focused={focused} />,
+          tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.settings} focused={focused} tourId="tab-settings" />,
         }}
       />
     </Tabs>

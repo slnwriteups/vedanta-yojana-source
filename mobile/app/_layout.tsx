@@ -15,6 +15,7 @@ import { reportScreen } from "../services/readingPingService.ts";
 import { BookmarksProvider } from "../BookmarksProvider";
 import { WelcomeScreen } from "../components/WelcomeScreen";
 import { OnboardingScreen } from "../components/OnboardingScreen";
+import { TourProvider, useTour } from "../tour/Tour";
 import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/preferences.ts";
 import { readJSON, writeJSON } from "../storage.ts";
 import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
@@ -61,6 +62,7 @@ function RootStack() {
   const theme = useTheme();
   const [seenWelcome, setSeenWelcome] = useState(false);
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
+  const tour = useTour();
 
   useEffect(() => {
     let cancelled = false;
@@ -99,6 +101,8 @@ function RootStack() {
         onDone={() => {
           setOnboarded(true);
           void writeJSON(ONBOARDED_STORAGE_KEY, true);
+          // A new reader goes straight into the "How to use the app" tour.
+          tour.startSoon();
         }}
       />
     );
@@ -227,7 +231,9 @@ export default function RootLayout() {
             <BookmarksProvider>
               <SafeAreaProvider>
                 <ScreenReporting />
-                <RootStack />
+                <TourProvider>
+                  <RootStack />
+                </TourProvider>
                 <StatusBar style="auto" />
               </SafeAreaProvider>
             </BookmarksProvider>

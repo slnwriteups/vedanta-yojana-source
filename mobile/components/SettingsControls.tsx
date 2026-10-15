@@ -3,6 +3,7 @@ import { AccessibilityInfo, Pressable, StyleSheet, Text, View } from "react-nati
 import { layout, radius, spacing, typography, useTheme, useThemeControls, type ColorScheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
 import { useLanguage } from "../language-context.ts";
+import { TourTarget } from "../tour/Tour";
 import { FONT_SCALE_STEPS, SUPPORTED_LANGUAGES, type LanguageCode } from "../content-lib/preferences.ts";
 import { settingChangedAnnouncement, translateUi, useT, type UiStringKey } from "../ui-strings.ts";
 
@@ -32,9 +33,15 @@ export function SettingsControls() {
 
   return (
     <View style={styles.container}>
-      <PillGroup label={t("settingsLanguageLabel")} options={LANGUAGE_OPTIONS} selectedValue={language} onChange={setLanguage} />
-      <PillGroup label={t("settingsAppearanceLabel")} options={themeOptions} selectedValue={override} onChange={setOverride} />
-      <PillGroup label={t("settingsTextSizeLabel")} options={fontScaleOptions} selectedValue={preferences.fontScale} onChange={setFontScale} />
+      <TourTarget id="settings-language">
+        <PillGroup label={t("settingsLanguageLabel")} options={LANGUAGE_OPTIONS} selectedValue={language} onChange={setLanguage} />
+      </TourTarget>
+      <TourTarget id="settings-appearance">
+        <PillGroup label={t("settingsAppearanceLabel")} options={themeOptions} selectedValue={override} onChange={setOverride} />
+      </TourTarget>
+      <TourTarget id="settings-text-size">
+        <PillGroup label={t("settingsTextSizeLabel")} options={fontScaleOptions} selectedValue={preferences.fontScale} onChange={setFontScale} />
+      </TourTarget>
     </View>
   );
 }
