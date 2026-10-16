@@ -8,7 +8,7 @@ categories: ["Vishnu Puranam"]
 
 # Vishnu Puranam - 08 - Birth of Sri Krishna
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/e6a21-krishnabirth-226x300-1.jpg)
+![](images/01-aec967-b813bfbf5c7b4c1599f1a83c484d6bd9.jpg)
 
 As the atrocities and demonic forces wreaked havoc on the earth, it is said Bhoomi-Devi was not able to handle it. To eliminate the growing inhumanity and to re-establish religious practices on the planet, Bhoomi-Devi is said to have taken the form of a cow and visited Brahma to help her. Brahma then summoned all the celestials, and together all of them went to the heavenly abode of Vaikuntham where Lord Vishnu was resting on his serpent recliner Adisesha. Bhoomi-Devi cried in front of the Lord and pleaded with him to incarnate himself to eliminate all the evil that was causing havoc on the planet. The Lord then is said to throw two locks of hair. One black and the other white signifying that he would reincarnate himself as not one but two forms like Krishna and Balarama. He granted Bhoomi Devi Abaya and ensured her that he would eliminate all the evil and re-establish lost religious practices.
 

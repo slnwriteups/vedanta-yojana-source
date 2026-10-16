@@ -8,7 +8,7 @@ categories: ["108 Divyadesam","Pandiya Nadu Kshethrams"]
 
 # 108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/5173a-108-80.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/5173a-108-80.jpg)
+[![](images/01-aec967-8efe113a84b14b24a9e30b4785574a82.jpg)](images/01-aec967-8efe113a84b14b24a9e30b4785574a82.jpg)
 
  **Details of Kshethram:**
 

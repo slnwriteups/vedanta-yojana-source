@@ -8,7 +8,7 @@ categories: ["108 Divyadesam","Pandiya Nadu Kshethrams"]
 
 # 108 Divyadesam - 95) Tirumayam
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2025/05/79e9f-108-95.jpg?w=300&h=171)
+![](images/01-aec967-39d5f5fe3683479eab8450d7edd8dbc0.jpg)
 
 **Details of Kshethram**:
 

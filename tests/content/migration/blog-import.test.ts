@@ -324,3 +324,21 @@ test("posts with a title but no real content are not imported and are listed in 
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("posts listed in removed.json are not brought back by a re-import", async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "blog-archive-"));
+  try {
+    const copy = post({ platform: "wix", sourceId: "https://example.com/post/copy", title: "Copy", slug: "copy", html: FILLER });
+    fs.writeFileSync(
+      path.join(root, "removed.json"),
+      JSON.stringify({ count: 1, posts: [{ platform: "wix", sourceId: copy.sourceId, sourceUrl: null, title: "Copy", publishedAt: null, reason: "word-for-word copy", keptCopy: "wordpress/x" }] })
+    );
+    const result = await archivePosts([copy], { root });
+    assert.equal(result.archived.length, 0);
+    assert.equal(fs.existsSync(path.join(root, "wix")), false);
+    rebuildIndex(root);
+    assert.match(fs.readFileSync(path.join(root, "INDEX.md"), "utf8"), /## Removed as copies or older versions \(1\)/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});

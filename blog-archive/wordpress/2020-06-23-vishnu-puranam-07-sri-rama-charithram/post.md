@@ -8,7 +8,7 @@ categories: ["Vishnu Puranam"]
 
 # Vishnu Puranam - 07 - Sri Rama Charithram
 
-![SriRamaPattabhishekam](https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/48a69-sriramapattabhishekam-222x300-1.jpg)
+![SriRamaPattabhishekam](images/01-aec967-a0c737964e564e079eb1340eae3faf9a.jpg)
 
 The story of Lord Rama in Sri Vishnu Puranam is very brief. Parashara Maharishi has only touched upon the most significant events that took place in the life of the Lord as Sri Rama. The first event discussed by Parashara Maharishi is the birth of the Lord through the ***putrakamayeshti yagam***. There is no discussion of Sri Rama's education under Maharishi Vasishta. The next story discussed is that of Rama and Lakshmana going to the forest with Maharishi Vishwamitra to destroy the demonic forces of Taataka and her two sons Maricha and Subahu. After killing Taataka and Maricha, the two princes, along with Maharishi Vishwamitra, go to Mithila, where Lord Rama frees Ahalya from her curse. The next event discussed is Lord Rama's marriage to Devi Sita and calming down Lord Parashurama.
 

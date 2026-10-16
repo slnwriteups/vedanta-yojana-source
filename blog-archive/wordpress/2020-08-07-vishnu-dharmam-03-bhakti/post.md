@@ -8,7 +8,7 @@ categories: ["Vishnu Dharmam"]
 
 # Vishnu Dharmam - 03 - Bhakti
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg)
+![](images/01-aec967-ffa2f1d8659e45dda921fc575179245a.jpg)
 
 In our previous entry, we saw the concepts of a Mantra, Matrakavacham, Mantrasiddhi, and Mantrabalam. Now we shall see one of the more abstract concepts of our *Sanathana Dharma,* which is Bhakti.
 

@@ -8,7 +8,7 @@ categories: ["Vishnu Dharmam"]
 
 # Vishnu Dharmam - 01 - Introduction
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg)
+![](images/01-aec967-38a48c1ee5ea4f49a698ebbeea681bf9.jpg)
 
 Vishnu Dharmam is a Grantham that was given to Shathaneeka, the son of Janmejaya at Naimisharanyam by Shounaka Maharishi. This Grantham came as an answer to the questions posed by Shathaneeka as to how one must lead life ideally and rule the kingdom. The principles that are mentioned in this Grantham, if followed, will give the follower positive karma, thereby making the journey towards moksham somewhat easier. This Grantham consists of numerous *upakathas* (a story within the story ), which teaches us different morals that are to be followed.
 

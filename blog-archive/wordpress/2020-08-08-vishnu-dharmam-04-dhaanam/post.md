@@ -8,7 +8,7 @@ categories: ["Vishnu Dharmam"]
 
 # Vishnu Dharmam - 04 - Dhaanam
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg)
+![](images/01-aec967-f3f843d984d3407e9e294e72406cda26.jpg)
 
 In our previous entry, we discussed the concept of Bhakti. Now we shall see Dhaanam ( giving charity to those who are in dire need ).
 

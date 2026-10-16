@@ -66,6 +66,27 @@ export interface ArchiveResult {
 }
 
 const DUPLICATES_FILE = "duplicates.json";
+/**
+ * Posts deliberately removed from the archive by hand (e.g. a copy of a post kept on the other
+ * platform). Re-imports skip anything listed here so a removal is never silently undone.
+ */
+const REMOVED_FILE = "removed.json";
+
+export interface RemovedEntry {
+  platform: string;
+  sourceId: string;
+  sourceUrl: string | null;
+  title: string;
+  publishedAt: string | null;
+  reason: string;
+  /** Archive folder holding the version that was kept, if any. */
+  keptCopy: string | null;
+}
+
+export function readRemoved(root: string): Map<string, RemovedEntry> {
+  const list = readJson<{ posts: RemovedEntry[] }>(path.join(root, REMOVED_FILE))?.posts ?? [];
+  return new Map(list.map((d) => [`${d.platform}:${d.sourceId}`, d]));
+}
 const EMPTY_FILE = "empty.json";
 /**
  * Below this many words, with no images in the body, a post is an empty shell -- seen on Wix,
@@ -175,12 +196,17 @@ export async function archivePosts(posts: ImportedPost[], options: ArchiveOption
   const duplicates: DuplicateEntry[] = [];
   const allDuplicates = readDuplicates(root);
   const allEmpty = readEmpty(root);
+  const removed = readRemoved(root);
   const empty: EmptyEntry[] = [];
 
   for (const post of posts) {
     const key = `${post.platform}:${post.sourceId}`;
     let dir = folders.get(key);
 
+    if (removed.has(key)) {
+      log(`  x "${post.title}" was removed from the archive (${removed.get(key)!.reason}) -- not re-imported`);
+      continue;
+    }
     allEmpty.delete(key);
     const plain = htmlToPlainText(post.html);
     const words = wordCount(plain);
@@ -361,9 +387,10 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
   fs.mkdirSync(root, { recursive: true });
   const skipped = [...readDuplicates(root).values()].sort(byDateThenTitle);
   const emptyPosts = [...readEmpty(root).values()].sort(byDateThenTitle);
+  const removedPosts = [...readRemoved(root).values()].sort(byDateThenTitle);
   fs.writeFileSync(
     path.join(root, "index.json"),
-    `${JSON.stringify({ postCount: index.length, alreadyInAppCount: skipped.length, emptyCount: emptyPosts.length, posts: index }, null, 2)}\n`
+    `${JSON.stringify({ postCount: index.length, alreadyInAppCount: skipped.length, emptyCount: emptyPosts.length, removedCount: removedPosts.length, posts: index }, null, 2)}\n`
   );
   const link = (d: { title: string; sourceUrl: string | null }) => {
     const t = d.title.replace(/\|/g, "\\|");
@@ -418,6 +445,22 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
           "| Published | Title | Platform | Words |",
           "|---|---|---|---|",
           ...emptyPosts.map((d) => `| ${d.publishedAt?.slice(0, 10) ?? "—"} | ${link(d)} | ${d.platform} | ${d.wordCount} |`),
+          "",
+        ]
+      : []),
+    ...(removedPosts.length
+      ? [
+          `## Removed as copies or older versions (${removedPosts.length})`,
+          "",
+          "Removed from the archive because another archived post is the same text or a newer, fuller",
+          "version. Re-imports skip these. Details in `removed.json`.",
+          "",
+          "| Published | Title | Platform | Why | Kept copy |",
+          "|---|---|---|---|---|",
+          ...removedPosts.map(
+            (d) =>
+              `| ${d.publishedAt?.slice(0, 10) ?? "—"} | ${link(d)} | ${d.platform} | ${d.reason} | ${d.keptCopy ? `[${d.keptCopy}](${encodeURI(d.keptCopy)}/post.md)` : "—"} |`
+          ),
           "",
         ]
       : []),

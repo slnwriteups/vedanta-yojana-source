@@ -8,7 +8,7 @@ categories: ["Vishnu Dharmam"]
 
 # Vishnu Dharmam - 05 - Tapas
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg)
+![](images/01-aec967-66058b0ffe0647b9918b53152107c7e0.jpg)
 
 In our previous entry, we saw the concept of Dhaanam. Now we shall see the idea of Tapas.
 

@@ -8,7 +8,7 @@ categories: ["Abhimana Sthalam and Purana Kshethrams"]
 
 # Guruvayoor
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/64d2d-images.jpeg)
+![](images/01-aec967-1936f9d4245b4678ac238d2495d80033.jpg)
 
 **Details of Kshethram:**
 

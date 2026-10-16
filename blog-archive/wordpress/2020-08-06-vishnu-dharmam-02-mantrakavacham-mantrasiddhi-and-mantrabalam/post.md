@@ -8,7 +8,7 @@ categories: ["Vishnu Dharmam"]
 
 # Vishnu Dharmam - 02 - Mantrakavacham, Mantrasiddhi and Mantrabalam
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg)
+![](images/01-aec967-374f7d6f4736416b86d0124693ab6303.jpg)
 
 The first lesson that is taught by Sri Vishnu Dharmam is how one must reduce the sins that are committed during their life. Shounaka Maharishi tells Shathaneeka that one must first commit themselves to know what their purpose and meaning in life is. If one seeks this, they can find knowledge. Through finding knowledge, they learn about the world and everything nature has to teach. To keep the learning enthusiasm, one must follow some basic daily principles. According to one's Varna-Ashrama, some basic principles are to be followed. For example, if one is born into a brahmin family, its the person's fundamental duty to perform *Trikaala-Sandhyavandhanam.* If one is unable to perform *Trikaala-Sandhyavandhanam,* they must seek out a way to compensate for its effect in their life. To offer the same impact as performing *Trikaala-Sandhyavandhanam's* in the lives of those who are not born into a brahmin family, Shounaka Maharishi tells Shathaneeka to seek the mantras that have the same power and capabilities as performing *Trikaala-Sandhyavandhanam*. The mantras can be recited by anyone regardless of which Varna-Ashrama, age, or gender that they belong to.
 

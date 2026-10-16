@@ -8,7 +8,7 @@ categories: ["Vishnu Puranam"]
 
 # Vishnu Puranam- 01- An Introduction to Creation
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/a0e8c-sriman-narayana-e1592398360943-300x194-1.png)
+![](images/01-aec967-c4aea6a04d2241beb31ca8e89bd8c2e3.png)
 
 In Sanathana Dharma, there are two primary sources of information, namely ***ithihasams*** and ***puranams***. Ithihasams are further divided into two, namely Sri Mahabharatam and Srimad Ramayanam. Puranams again are many, but the eighteen main puranams are placed in three baskets as six each. The three divisions are ***Sattvic Puranams, Rajasic Puranams,*** and ***Tamasic Puranams***.
 
@@ -26,7 +26,7 @@ It was at this point that Pulastya Maharishi, who was the rakshasa guru at that 
 
 Impressed with the child's ability to listen to reason, Pulastya Maharishi blesses Parashara Maharishi, saying the child would experience ***Paramaathma-Jnanam*** resonating within his brain, thus enabling him to learn about everything in creation from Sriman Narayana Himself. Thus Parashara Maharishi became aware of the details of creation, preservation, and destruction of the world.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/a8dc4-avikaraya.png?w=300&h=53)
+![](images/02-aec967-5ef18269b282490580f9cf56eab7dc1e.png)
 
 This Shloka from both Vishnu Saharanaamam and Vishnu Puranam tells us the Sriman Narayana is responsible for the creation, protection, and destruction of this world.
 
