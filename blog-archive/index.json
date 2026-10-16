@@ -1,37 +1,9 @@
 {
-  "postCount": 142,
+  "postCount": 111,
   "alreadyInAppCount": 275,
   "emptyCount": 16,
-  "removedCount": 39,
+  "removedCount": 70,
   "posts": [
-    {
-      "folder": "wordpress/2018-09-24-shantanu-and-ganga",
-      "platform": "wordpress",
-      "title": "Shantanu and Ganga",
-      "publishedAt": "2018-09-24T16:30:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 787,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/shantanu-and-ganga.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2018-09-25-satyavati",
-      "platform": "wordpress",
-      "title": "Satyavati",
-      "publishedAt": "2018-09-25T16:03:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 1122,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/satyavati.json"
-      ]
-    },
     {
       "folder": "wordpress/2018-09-26-bhishma",
       "platform": "wordpress",
@@ -55,138 +27,6 @@
       "migrationStatus": "archived",
       "possibleDuplicates": [],
       "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-09-28-pandu-and-dhritharashtra",
-      "platform": "wordpress",
-      "title": "Pandu and Dhritharashtra",
-      "publishedAt": "2018-09-28T17:06:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 430,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-09-29-kunti",
-      "platform": "wordpress",
-      "title": "Kunti",
-      "publishedAt": "2018-09-29T14:13:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 635,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/kunti.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2018-09-29-gandhars-relationship-with-hastinapur",
-      "platform": "wordpress",
-      "title": "Gandhar's Relationship with Hastinapur",
-      "publishedAt": "2018-09-29T15:28:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 283,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-09-30-kauravas",
-      "platform": "wordpress",
-      "title": "Kauravas",
-      "publishedAt": "2018-09-30T14:26:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 334,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-10-01-birth-of-shri-krishna",
-      "platform": "wordpress",
-      "title": "Birth of Shri Krishna",
-      "publishedAt": "2018-10-01T17:42:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 538,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-10-02-krishna-leela-1",
-      "platform": "wordpress",
-      "title": "Krishna Leela - 1",
-      "publishedAt": "2018-10-02T11:17:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 1515,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/srimad-bhagavata-kathasagaram/chapters/krishna-leela-1.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2018-10-03-krishna-leela-2",
-      "platform": "wordpress",
-      "title": "Krishna Leela -2",
-      "publishedAt": "2018-10-03T16:56:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 722,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/srimad-bhagavata-kathasagaram/chapters/krishna-leela-2.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2018-10-04-krishna-in-mathura",
-      "platform": "wordpress",
-      "title": "Krishna in Mathura",
-      "publishedAt": "2018-10-04T17:20:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 859,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/srimad-bhagavata-kathasagaram/chapters/krishna-in-mathura.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2018-10-05-drona-and-drupada",
-      "platform": "wordpress",
-      "title": "Drona and Drupada",
-      "publishedAt": "2018-10-05T17:29:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 626,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/drona-and-drupada.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2018-10-06-karna",
-      "platform": "wordpress",
-      "title": "Karna",
-      "publishedAt": "2018-10-06T17:03:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 461,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/karna.json"
-      ]
     },
     {
       "folder": "wordpress/2018-10-07-lakshagriha-incident",
@@ -225,20 +65,6 @@
       "possiblyInApp": []
     },
     {
-      "folder": "wordpress/2018-10-10-draupadi",
-      "platform": "wordpress",
-      "title": "Draupadi",
-      "publishedAt": "2018-10-10T17:46:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 645,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/draupadi.json"
-      ]
-    },
-    {
       "folder": "wordpress/2018-10-11-indraprastha",
       "platform": "wordpress",
       "title": "Indraprastha",
@@ -249,20 +75,6 @@
       "migrationStatus": "archived",
       "possibleDuplicates": [],
       "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-10-12-jarasandha",
-      "platform": "wordpress",
-      "title": "Jarasandha",
-      "publishedAt": "2018-10-12T17:40:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 736,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/srimad-bhagavata-kathasagaram/chapters/jarasandha.json"
-      ]
     },
     {
       "folder": "wordpress/2018-10-13-rajasuya",
@@ -289,20 +101,6 @@
       "possiblyInApp": []
     },
     {
-      "folder": "wordpress/2018-10-15-the-gamble",
-      "platform": "wordpress",
-      "title": "The Gamble",
-      "publishedAt": "2018-10-15T17:17:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 821,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/the-gamble.json"
-      ]
-    },
-    {
       "folder": "wordpress/2018-10-16-encounter-with-jayadratha",
       "platform": "wordpress",
       "title": "Encounter with Jayadratha",
@@ -325,20 +123,6 @@
       "migrationStatus": "archived",
       "possibleDuplicates": [],
       "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-10-18-virata-nagari",
-      "platform": "wordpress",
-      "title": "Virata Nagari",
-      "publishedAt": "2018-10-18T14:07:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 468,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/virata-nagari.json"
-      ]
     },
     {
       "folder": "wordpress/2018-10-19-virata-yudha",
@@ -461,20 +245,6 @@
       "migrationStatus": "archived",
       "possibleDuplicates": [],
       "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-10-29-an-introduction-to-the-bhagavad-gita",
-      "platform": "wordpress",
-      "title": "An Introduction to the Bhagavad Gita",
-      "publishedAt": "2018-10-29T17:05:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 353,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/jaya/chapters/an-introduction-to-the-bhagavad-gita.json"
-      ]
     },
     {
       "folder": "wordpress/2018-10-30-bhagavad-gita-1",
@@ -767,38 +537,12 @@
       "possiblyInApp": []
     },
     {
-      "folder": "wordpress/2018-11-23-parikshith",
-      "platform": "wordpress",
-      "title": "Parikshith",
-      "publishedAt": "2018-11-23T16:21:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 450,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "library/srimad-bhagavata-kathasagaram/chapters/parikshith.json"
-      ]
-    },
-    {
       "folder": "wordpress/2018-11-24-the-end",
       "platform": "wordpress",
       "title": "The End",
       "publishedAt": "2018-11-24T16:58:00Z",
       "sourceStatus": "draft",
       "wordCount": 383,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2018-11-25-bhagavatham-01",
-      "platform": "wordpress",
-      "title": "Bhagavatham-01",
-      "publishedAt": "2018-11-25T12:32:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 364,
       "imageCount": 0,
       "migrationStatus": "archived",
       "possibleDuplicates": [],
@@ -841,22 +585,6 @@
       "possiblyInApp": []
     },
     {
-      "folder": "wordpress/2018-12-03-bhagavatham-08",
-      "platform": "wordpress",
-      "title": "Bhagavatham-08",
-      "publishedAt": "2018-12-03T17:33:00Z",
-      "sourceStatus": "draft",
-      "wordCount": 580,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "divya-desams/tirumanimada-kovil.json",
-        "divya-desams/tiruaadanoor.json",
-        "divya-desams/tiruttetriambalam-tirumanikoodam.json"
-      ]
-    },
-    {
       "folder": "wordpress/2019-06-29-rising-of-athi-varadar",
       "platform": "wordpress",
       "title": "Rising of Athi Varadar",
@@ -872,18 +600,6 @@
     },
     {
       "folder": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction",
-      "platform": "wordpress",
-      "title": "Azhwar Vaibhavam - An Introduction",
-      "publishedAt": "2019-06-30T10:14:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 380,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction-2",
       "platform": "wordpress",
       "title": "Azhwar Vaibhavam - An Introduction",
       "publishedAt": "2019-06-30T10:14:00Z",
@@ -915,18 +631,6 @@
       "publishedAt": "2019-07-02T11:01:00Z",
       "sourceStatus": "publish",
       "wordCount": 1277,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2019-07-02-azhwar-vaibhavam-2-2",
-      "platform": "wordpress",
-      "title": "Azhwar Vaibhavam-2",
-      "publishedAt": "2019-07-02T11:01:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 1100,
       "imageCount": 0,
       "migrationStatus": "archived",
       "possibleDuplicates": [],
@@ -981,31 +685,7 @@
       "possiblyInApp": []
     },
     {
-      "folder": "wordpress/2019-07-06-azhwar-vaibhavam-6-2",
-      "platform": "wordpress",
-      "title": "Azhwar Vaibhavam-6",
-      "publishedAt": "2019-07-06T05:43:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 760,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
       "folder": "wordpress/2019-07-07-azhwar-vaibhavam-7",
-      "platform": "wordpress",
-      "title": "Azhwar Vaibhavam-7",
-      "publishedAt": "2019-07-07T11:27:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 1280,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2019-07-07-azhwar-vaibhavam-7-2",
       "platform": "wordpress",
       "title": "Azhwar Vaibhavam-7",
       "publishedAt": "2019-07-07T11:27:00Z",
@@ -1103,83 +783,7 @@
       ]
     },
     {
-      "folder": "wordpress/2020-01-18-108-divyadesam-7-tirukkandiyur",
-      "platform": "wordpress",
-      "title": "108 Divyadesam- 7) Tirukkandiyur",
-      "publishedAt": "2020-01-18T17:02:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 146,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2020-02-15-108-divyadesam-35-tirudevanaar-togai",
-      "platform": "wordpress",
-      "title": "108 Divyadesam-35) Tirudevanaar Togai",
-      "publishedAt": "2020-02-15T15:01:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 99,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2020-03-26-108-divyadesam-76-tiruvattaaru",
-      "platform": "wordpress",
-      "title": "108 Divyadesam - 76) Tiruvattaaru",
-      "publishedAt": "2020-03-26T15:40:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 505,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "divya-desams/tiruvattaaru.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam",
-      "platform": "wordpress",
-      "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
-      "publishedAt": "2020-03-30T15:06:00Z",
-      "sourceStatus": "publish",
-      "wordCount": 169,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [
-        "divya-desams/tiruvaikuntam-srivaikuntam.json"
-      ]
-    },
-    {
-      "folder": "wordpress/2020-04-13-108-divyadesam-95-tirumayam",
-      "platform": "wordpress",
-      "title": "108 Divyadesam - 95) Tirumayam",
-      "publishedAt": "2020-04-13T12:33:20Z",
-      "sourceStatus": "publish",
-      "wordCount": 212,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
       "folder": "wordpress/2020-04-26-guruvayoor",
-      "platform": "wordpress",
-      "title": "Guruvayoor",
-      "publishedAt": "2020-04-26T15:11:27Z",
-      "sourceStatus": "publish",
-      "wordCount": 1461,
-      "imageCount": 1,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2020-04-26-guruvayoor-2",
       "platform": "wordpress",
       "title": "Guruvayoor",
       "publishedAt": "2020-04-26T15:11:27Z",
@@ -1382,18 +986,6 @@
       "sourceStatus": "publish",
       "wordCount": 327,
       "imageCount": 5,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": []
-    },
-    {
-      "folder": "wordpress/2021-02-19-untitled",
-      "platform": "wordpress",
-      "title": "(untitled)",
-      "publishedAt": "2021-02-19T06:01:33",
-      "sourceStatus": "draft",
-      "wordCount": 262,
-      "imageCount": 0,
       "migrationStatus": "archived",
       "possibleDuplicates": [],
       "possiblyInApp": []

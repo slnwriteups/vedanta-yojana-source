@@ -1,6 +1,186 @@
 {
-  "count": 39,
+  "count": 70,
   "posts": [
+    {
+      "platform": "wordpress",
+      "sourceId": "489",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=489",
+      "title": "Shantanu and Ganga",
+      "publishedAt": "2018-09-24T16:30:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/shantanu-and-ganga.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "488",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=488",
+      "title": "Satyavati",
+      "publishedAt": "2018-09-25T16:03:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/satyavati.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "485",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=485",
+      "title": "Pandu and Dhritharashtra",
+      "publishedAt": "2018-09-28T17:06:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/pandu-and-dhritarashtra.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "484",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=484",
+      "title": "Kunti",
+      "publishedAt": "2018-09-29T14:13:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/kunti.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "483",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=483",
+      "title": "Gandhar's Relationship with Hastinapur",
+      "publishedAt": "2018-09-29T15:28:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/gandharas-relationship-with-hastinapur.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "482",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=482",
+      "title": "Kauravas",
+      "publishedAt": "2018-09-30T14:26:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/kauravas.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "481",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=481",
+      "title": "Birth of Shri Krishna",
+      "publishedAt": "2018-10-01T17:42:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/srimad-bhagavata-kathasagaram/chapters/birth-of-shree-krishna.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "480",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=480",
+      "title": "Krishna Leela - 1",
+      "publishedAt": "2018-10-02T11:17:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "479",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=479",
+      "title": "Krishna Leela -2",
+      "publishedAt": "2018-10-03T16:56:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "478",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=478",
+      "title": "Krishna in Mathura",
+      "publishedAt": "2018-10-04T17:20:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-26-vishnu-puranam-10-sri-krishna-in-mathura"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "477",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=477",
+      "title": "Drona and Drupada",
+      "publishedAt": "2018-10-05T17:29:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/drona-and-drupada.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "476",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=476",
+      "title": "Karna",
+      "publishedAt": "2018-10-06T17:03:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/karna.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "472",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=472",
+      "title": "Draupadi",
+      "publishedAt": "2018-10-10T17:46:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/draupadi.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "470",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=470",
+      "title": "Jarasandha",
+      "publishedAt": "2018-10-12T17:40:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/srimad-bhagavata-kathasagaram/chapters/jarasandha.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "467",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=467",
+      "title": "The Gamble",
+      "publishedAt": "2018-10-15T17:17:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/the-gamble.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "464",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=464",
+      "title": "Virata Nagari",
+      "publishedAt": "2018-10-18T14:07:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/virata-nagari.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "453",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=453",
+      "title": "An Introduction to the Bhagavad Gita",
+      "publishedAt": "2018-10-29T17:05:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/an-introduction-to-the-bhagavad-gita.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "428",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=428",
+      "title": "Parikshith",
+      "publishedAt": "2018-11-23T16:21:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/srimad-bhagavata-kathasagaram/chapters/parikshith.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "426",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=426",
+      "title": "Bhagavatham-01",
+      "publishedAt": "2018-11-25T12:32:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-08-05-vishnu-dharmam-01-introduction"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "415",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=415",
+      "title": "Bhagavatham-08",
+      "publishedAt": "2018-12-03T17:33:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-19-vishnu-puranam-03-kurma-avataram"
+    },
     {
       "platform": "wix",
       "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rising-of-athi-varadar",
@@ -20,6 +200,15 @@
       "keptCopy": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction"
     },
     {
+      "platform": "wordpress",
+      "sourceId": "2596",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/06/30/azhwar-vaibhavam-an-introduction-2/",
+      "title": "Azhwar Vaibhavam - An Introduction",
+      "publishedAt": "2019-06-30T10:14:00Z",
+      "reason": "word-for-word copy of another archived post",
+      "keptCopy": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction"
+    },
+    {
       "platform": "wix",
       "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-1",
       "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-1",
@@ -36,6 +225,15 @@
       "publishedAt": "2019-07-02T11:01:00.000Z",
       "reason": "word-for-word copy of the WordPress post",
       "keptCopy": "wordpress/2019-07-02-azhwar-vaibhavam-2-2"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2594",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/02/azhwar-vaibhavam-2-2/",
+      "title": "Azhwar Vaibhavam-2",
+      "publishedAt": "2019-07-02T11:01:00Z",
+      "reason": "older, shorter version of another archived post",
+      "keptCopy": "wordpress/2019-07-02-azhwar-vaibhavam-2"
     },
     {
       "platform": "wix",
@@ -74,12 +272,30 @@
       "keptCopy": "wordpress/2019-07-06-azhwar-vaibhavam-6"
     },
     {
+      "platform": "wordpress",
+      "sourceId": "2590",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/05/azhwar-vaibhavam-6-2/",
+      "title": "Azhwar Vaibhavam-6",
+      "publishedAt": "2019-07-06T05:43:00Z",
+      "reason": "word-for-word copy of another archived post",
+      "keptCopy": "wordpress/2019-07-06-azhwar-vaibhavam-6"
+    },
+    {
       "platform": "wix",
       "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-7",
       "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-7",
       "title": "Azhwar Vaibhavam-7",
       "publishedAt": "2019-07-07T11:27:00.000Z",
       "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-07-azhwar-vaibhavam-7"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2589",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/07/azhwar-vaibhavam-7-2/",
+      "title": "Azhwar Vaibhavam-7",
+      "publishedAt": "2019-07-07T11:27:00Z",
+      "reason": "word-for-word copy of another archived post",
       "keptCopy": "wordpress/2019-07-07-azhwar-vaibhavam-7"
     },
     {
@@ -137,6 +353,33 @@
       "keptCopy": "wordpress/2019-08-02-veda-parichayam-6"
     },
     {
+      "platform": "wordpress",
+      "sourceId": "351",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/18/108-divyadesam-7-tirukkandiyur/",
+      "title": "108 Divyadesam- 7) Tirukkandiyur",
+      "publishedAt": "2020-01-18T17:02:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tirukkandiyur.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "253",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/15/108-divyadesam-35-tirudevanaar-togai/",
+      "title": "108 Divyadesam-35) Tirudevanaar Togai",
+      "publishedAt": "2020-02-15T15:01:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tirudevanaar-togai.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "116",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/26/108-divyadesam-76-tiruvattaaru/",
+      "title": "108 Divyadesam - 76) Tiruvattaaru",
+      "publishedAt": "2020-03-26T15:40:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tiruvattaaru.json"
+    },
+    {
       "platform": "wix",
       "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-80-tiruvaikuntam---srivaikuntam",
       "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-80-tiruvaikuntam---srivaikuntam",
@@ -144,6 +387,15 @@
       "publishedAt": "2020-03-30T15:06:00.000Z",
       "reason": "older, shorter copy of the WordPress post",
       "keptCopy": "wordpress/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "97",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/30/108-divyadesam-80-tiruvaikuntam-srivaikuntam/",
+      "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
+      "publishedAt": "2020-03-30T15:06:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tiruvaikuntam-srivaikuntam.json"
     },
     {
       "platform": "wix",
@@ -155,12 +407,30 @@
       "keptCopy": "wordpress/2020-04-13-108-divyadesam-95-tirumayam"
     },
     {
+      "platform": "wordpress",
+      "sourceId": "841",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/13/108-divyadesam-95-tirumayam/",
+      "title": "108 Divyadesam - 95) Tirumayam",
+      "publishedAt": "2020-04-13T12:33:20Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tirumayam.json"
+    },
+    {
       "platform": "wix",
       "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guruvayoor",
       "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guruvayoor",
       "title": "Guruvayoor",
       "publishedAt": "2020-04-26T15:11:27.000Z",
       "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-04-26-guruvayoor"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2773",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/26/guruvayoor-2/",
+      "title": "Guruvayoor",
+      "publishedAt": "2020-04-26T15:11:27Z",
+      "reason": "word-for-word copy of another archived post",
       "keptCopy": "wordpress/2020-04-26-guruvayoor"
     },
     {
@@ -306,6 +576,15 @@
       "publishedAt": "2020-12-10T04:29:41.000Z",
       "reason": "word-for-word copy of the WordPress post",
       "keptCopy": "wordpress/2020-12-10-desika-vaibhavam-03-hayagriva-stotram"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "1773",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=1773",
+      "title": "(untitled)",
+      "publishedAt": "2021-02-19T06:01:33",
+      "reason": "older, shorter version of another archived post",
+      "keptCopy": "wordpress/2021-03-05-untitled"
     },
     {
       "platform": "wix",
