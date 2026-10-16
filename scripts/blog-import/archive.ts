@@ -357,6 +357,7 @@ export interface ArchiveIndexEntry {
   migrationStatus: string;
   /** Folders of posts on the other platform with the same title -- likely the same post, moved. */
   possibleDuplicates: string[];
+  categories: string[];
   /** App records this post partly overlaps (a weaker match than a skipped duplicate) -- check before migrating. */
   possiblyInApp: string[];
 }
@@ -382,6 +383,7 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
         migrationStatus: meta.migration.status,
         possibleDuplicates: [],
         possiblyInApp: (meta.appCheck?.matches ?? []).map((m) => m.file),
+        categories: meta.categories,
       });
     }
   }
@@ -412,7 +414,8 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
     const dup = e.possibleDuplicates.length ? " (also on " + e.possibleDuplicates.map((d) => d.split("/")[0]).join(", ") + ")" : "";
     const inApp = e.possiblyInApp.length ? " ⚠ may already be in the app: " + e.possiblyInApp.map((f) => `\`${f}\``).join(", ") : "";
     const title = e.title.replace(/\|/g, "\\|");
-    return `| [${done}] | ${e.publishedAt?.slice(0, 10) ?? "—"} | [${title}](${encodeURI(e.folder)}/post.md)${dup}${inApp} | ${e.platform} | ${e.sourceStatus} | ${e.wordCount} | ${e.migrationStatus} |`;
+    const cats = e.categories.length ? e.categories.join(", ").replace(/\|/g, "\\|") : "—";
+    return `| [${done}] | ${e.publishedAt?.slice(0, 10) ?? "—"} | [${title}](${encodeURI(e.folder)}/post.md)${dup}${inApp} | ${cats} | ${e.platform} | ${e.sourceStatus} | ${e.wordCount} | ${e.migrationStatus} |`;
   });
   const md = [
     "# Blog archive — migration checklist",
@@ -423,8 +426,12 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
     "",
     `**${index.length} posts** — ${counts("archived")} archived, ${counts("in-review")} in review, ${counts("migrated")} migrated, ${counts("skipped")} skipped.`,
     "",
-    "| Done | Published | Title | Platform | Source status | Words | Migration |",
-    "|---|---|---|---|---|---|---|",
+    "Categories are copied from the source platform. WordPress gives a post its site's *default*",
+    "category when none was chosen, so a WordPress **draft** listed only under that default may not",
+    "really belong to it.",
+    "",
+    "| Done | Published | Title | Categories | Platform | Source status | Words | Migration |",
+    "|---|---|---|---|---|---|---|---|",
     ...rows,
     "",
     ...(skipped.length
