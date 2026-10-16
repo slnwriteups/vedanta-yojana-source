@@ -24,6 +24,14 @@ const SHINGLE_SIZE = 5;
 export const DUPLICATE_THRESHOLD = 0.5;
 /** Between this and DUPLICATE_THRESHOLD (or on an exact title match) the post is imported but flagged for review. */
 export const POSSIBLE_THRESHOLD = 0.15;
+/**
+ * A post whose title names a specific app record (e.g. "108 Divyadesam - 62) Tiruvidandai" and the
+ * Tiruvidandai record) is a duplicate at this lower overlap with that one record. Posts later
+ * revised into app records with small edits throughout (diacritics added, words changed in most
+ * sentences) break many 5-word runs and can land just under DUPLICATE_THRESHOLD; the title
+ * anchor makes the lower bar safe.
+ */
+export const TITLED_DUPLICATE_THRESHOLD = 0.2;
 /** Posts shorter than this many shingles are too short to judge by text; only an exact title match flags them. */
 const MIN_SHINGLES = 20;
 
@@ -57,6 +65,8 @@ export interface AppMatch {
 
 export interface AppMatchResult {
   verdict: "duplicate" | "possible" | "none";
+  /** Why a duplicate was judged one: most of its text is in the app, or its title names a record it substantially overlaps. */
+  reason?: "text" | "title-and-text";
   /** Share of the post's text found anywhere in the app (0-1) -- covers a post split across several chapters. */
   containment: number;
   titleMatch: boolean;
@@ -153,10 +163,50 @@ export function findAppMatches(corpus: AppCorpus, title: string, plainText: stri
     .slice(0, 5);
 
   const judgeable = total >= MIN_SHINGLES;
+  const titledOverlap =
+    judgeable &&
+    [...perRecord.entries()].some(([id, n]) => n / total >= TITLED_DUPLICATE_THRESHOLD && titleNamesRecord(title, corpus.records[id].title));
+
   let verdict: AppMatchResult["verdict"] = "none";
-  if (judgeable && containment >= DUPLICATE_THRESHOLD) verdict = "duplicate";
+  let reason: AppMatchResult["reason"];
+  if (judgeable && containment >= DUPLICATE_THRESHOLD) [verdict, reason] = ["duplicate", "text"];
+  else if (titledOverlap) [verdict, reason] = ["duplicate", "title-and-text"];
   else if (titleIds.length || (judgeable && containment >= POSSIBLE_THRESHOLD)) verdict = "possible";
-  return { verdict, containment: round(containment), titleMatch: titleIds.length > 0, matches };
+  return { verdict, ...(reason ? { reason } : {}), containment: round(containment), titleMatch: titleIds.length > 0, matches };
+}
+
+/**
+ * True when every word of the record's title appears in the post's title, allowing one-letter
+ * spelling differences in longer words -- transliterated names drift between versions
+ * ("Tirudwarakai (Dwaraka)" vs "Tirudwarkai (Dwarka)").
+ */
+export function titleNamesRecord(postTitle: string, recordTitle: string): boolean {
+  const recordWords = normaliseWords(recordTitle);
+  if (recordWords.join("").length < 6) return false;
+  const postWords = normaliseWords(postTitle);
+  return recordWords.every((rw) => postWords.some((pw) => pw === rw || (rw.length >= 5 && editDistanceAtMostOne(pw, rw))));
+}
+
+function editDistanceAtMostOne(a: string, b: string): boolean {
+  if (Math.abs(a.length - b.length) > 1) return false;
+  let i = 0;
+  let j = 0;
+  let edits = 0;
+  while (i < a.length && j < b.length) {
+    if (a[i] === b[j]) {
+      i++;
+      j++;
+      continue;
+    }
+    if (++edits > 1) return false;
+    if (a.length > b.length) i++;
+    else if (b.length > a.length) j++;
+    else {
+      i++;
+      j++;
+    }
+  }
+  return edits + (a.length - i) + (b.length - j) <= 1;
 }
 
 function round(n: number): number {

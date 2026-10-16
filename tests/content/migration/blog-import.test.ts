@@ -8,7 +8,7 @@ import { parseWxr, wpautop } from "../../../scripts/blog-import/wordpress.ts";
 import { listWixPostUrls, parseWixPostPage } from "../../../scripts/blog-import/wix.ts";
 import { archivePosts, fullSizeCandidates, rebuildIndex } from "../../../scripts/blog-import/archive.ts";
 import { slugify } from "../../../scripts/blog-import/slug.ts";
-import { addRecord, findAppMatches, loadAppCorpus, type AppCorpus } from "../../../scripts/blog-import/app-content.ts";
+import { addRecord, findAppMatches, loadAppCorpus, titleNamesRecord, type AppCorpus } from "../../../scripts/blog-import/app-content.ts";
 import type { ImportedPost } from "../../../scripts/blog-import/types.ts";
 
 // Synthetic fixtures only -- no real blog content.
@@ -282,4 +282,22 @@ test("archivePosts leaves app duplicates out of the archive, records them in dup
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
+});
+
+test("titleNamesRecord matches a record named in a post title, tolerating one-letter transliteration drift", () => {
+  assert.equal(titleNamesRecord("108 Divyadesam- 62) Tiruvidandai", "Tiruvidandai"), true);
+  assert.equal(titleNamesRecord("108 Divyadesam - 104) Tirudwarakai ( Dwaraka )", "Tirudwarkai (Dwarka)"), true);
+  assert.equal(titleNamesRecord("108 Divyadesam - 62) Tiruvidandai", "Tiruvanbil"), false);
+  assert.equal(titleNamesRecord("Rama", "Rama"), false, "titles too short to be a reliable anchor");
+});
+
+test("a post whose title names a record is a duplicate at a lower text overlap with that record", () => {
+  const corpus = syntheticCorpus();
+  // Keep the first two of four sentences (~40% of the text), then add new material.
+  const partial = CHAPTER_TEXT.split(". ").slice(0, 2).join(". ") +
+    ". Here the blog version went on at length about the author's own travels, the weather that week, and the friends met along the road home.";
+  assert.equal(findAppMatches(corpus, "Notes", partial).verdict, "possible");
+  const named = findAppMatches(corpus, "Mahabharata stories - 12) A Measure of Flour", partial);
+  assert.equal(named.verdict, "duplicate");
+  assert.equal(named.reason, "title-and-text");
 });
