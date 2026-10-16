@@ -1,0 +1,26 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-2",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-2",
+  "title": "Veda Parichayam- 2",
+  "slug": "veda-parichayam-2",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-28T08:18:00.000Z",
+  "modifiedAt": "2019-07-28T08:18:00.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "RIGVEDA SAMHITHANature and Importance:The Rigveda is the oldest compilation of human wisdom. This Samhita (Collection) is unique in its nature. In fact, it is not a book, but a compilation composed of several books which can be individually distinguished from each other. The present form of this Samhita clearly indicates that the collection is not a single word, but consists of older and later elements. Various indications of language, style, and ideas prove this point. Different hymns of this S",
+  "coverImage": null,
+  "images": [],
+  "wordCount": 2283,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

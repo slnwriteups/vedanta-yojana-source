@@ -1,0 +1,46 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/three-lesser-known-narasimha-temples-in-srirangam",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/three-lesser-known-narasimha-temples-in-srirangam",
+  "title": "Three Lesser-Known Narasimha Temples in Srirangam",
+  "slug": "three-lesser-known-narasimha-temples-in-srirangam",
+  "sourceStatus": "publish",
+  "publishedAt": "2025-05-11T03:20:12.289Z",
+  "modifiedAt": "2025-05-11T03:20:12.289Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "When most people think of Srirangam, they immediately think of the grand Ranganathaswamy Temple. And rightly so—it’s massive, ancient, and packed with history. But tucked away in and around Srirangam are three small but powerful temples dedicated to Lord Narasimha. These are not the usual tourist spots, but if you’re someone who loves quiet places with strong spiritual energy, you’ll really enjoy visiting them.Let me share a bit about each.1. Kaattu Azhagiya Singar This one’s quite special. In f",
+  "coverImage": {
+    "originalUrl": "https://static.wixstatic.com/media/aec967_2627cdc63b204a3f920d2eac5e9581af~mv2.jpg/v1/fill/w_709,h_1000,al_c,q_85,usm_0.66_1.00_0.01/aec967_2627cdc63b204a3f920d2eac5e9581af~mv2.jpg",
+    "file": "images/01-aec967-2627cdc63b204a3f920d2eac5e9581af.jpg"
+  },
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_2627cdc63b204a3f920d2eac5e9581af~mv2.jpg/v1/fill/w_709,h_1000,al_c,q_85,usm_0.66_1.00_0.01/aec967_2627cdc63b204a3f920d2eac5e9581af~mv2.jpg",
+      "file": "images/01-aec967-2627cdc63b204a3f920d2eac5e9581af.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_2627cdc63b204a3f920d2eac5e9581af~mv2.jpg/v1/fill/w_147,h_207,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_2627cdc63b204a3f920d2eac5e9581af~mv2.jpg",
+      "file": "images/02-aec967-2627cdc63b204a3f920d2eac5e9581af.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_120dba52193c449e92c45df8b2359e8a~mv2.png/v1/fill/w_73,h_162,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_120dba52193c449e92c45df8b2359e8a~mv2.png",
+      "file": "images/03-aec967-120dba52193c449e92c45df8b2359e8a.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_6594e1d146444ea69347ee1ec11ad438~mv2.jpg/v1/fill/w_117,h_152,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_6594e1d146444ea69347ee1ec11ad438~mv2.jpg",
+      "file": "images/04-aec967-6594e1d146444ea69347ee1ec11ad438.jpg"
+    }
+  ],
+  "wordCount": 714,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-09-sri-krishna-leela",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-09-sri-krishna-leela",
+  "title": "Vishnu Puranam - 09 - Sri Krishna Leela",
+  "slug": "vishnu-puranam-09-sri-krishna-leela",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-25T13:51:20.000Z",
+  "modifiedAt": "2020-06-25T13:51:20.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "\n\nUpon birth, Lord Krishna instructed that he be taken to Gokul and, in his place, be brought back the daughter born to Yashoda and Nanda. As soon as he had given his instructions, all the chains binding Vasudev unlocked themselves. The doors of the prison also opened themselves. Vasudev put the baby in a basket, placed the basket on his head, and began his journey to Gokul.\n\nAs he departed from the prison, Adisesha appeared to act as an umbrella to prevent the Lord from getting drenched in the ",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_4019c8e0cf794996ae09738fb3b02531~mv2.jpg",
+      "file": "images/01-aec967-4019c8e0cf794996ae09738fb3b02531.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_035e59b6960a48ad8991224eb66ae09e~mv2.png",
+      "file": "images/02-aec967-035e59b6960a48ad8991224eb66ae09e.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_257bccfe4ca6467e97fd00778def04e6~mv2.png",
+      "file": "images/03-aec967-257bccfe4ca6467e97fd00778def04e6.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_51e87b9a1ebd489d92f5d67ea0ce2fd6~mv2.jpg",
+      "file": "images/04-aec967-51e87b9a1ebd489d92f5d67ea0ce2fd6.jpg"
+    }
+  ],
+  "wordCount": 2159,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

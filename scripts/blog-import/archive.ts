@@ -48,17 +48,43 @@ export interface DuplicateEntry {
   existingFolder?: string;
 }
 
+/** A post left out because its page on the source site has no real content (a title with no text). */
+export interface EmptyEntry {
+  platform: string;
+  sourceId: string;
+  sourceUrl: string | null;
+  title: string;
+  publishedAt: string | null;
+  wordCount: number;
+  existingFolder?: string;
+}
+
 export interface ArchiveResult {
   archived: ArchivedPost[];
   duplicates: DuplicateEntry[];
+  empty: EmptyEntry[];
 }
 
 const DUPLICATES_FILE = "duplicates.json";
+const EMPTY_FILE = "empty.json";
+/**
+ * Below this many words, with no images in the body, a post is an empty shell -- seen on Wix,
+ * where some posts kept only their title when copied over from WordPress.
+ */
+export const EMPTY_POST_WORDS = 40;
 
 function readDuplicates(root: string): Map<string, DuplicateEntry> {
   const list = readJson<{ duplicates: DuplicateEntry[] }>(path.join(root, DUPLICATES_FILE))?.duplicates ?? [];
   return new Map(list.map((d) => [`${d.platform}:${d.sourceId}`, d]));
 }
+
+function readEmpty(root: string): Map<string, EmptyEntry> {
+  const list = readJson<{ posts: EmptyEntry[] }>(path.join(root, EMPTY_FILE))?.posts ?? [];
+  return new Map(list.map((d) => [`${d.platform}:${d.sourceId}`, d]));
+}
+
+const byDateThenTitle = (a: { publishedAt: string | null; title: string }, b: { publishedAt: string | null; title: string }) =>
+  (a.publishedAt ?? "9999").localeCompare(b.publishedAt ?? "9999") || a.title.localeCompare(b.title);
 
 const IMAGE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "gif", "webp", "avif", "svg", "bmp", "tif", "tiff"]);
 const CONTENT_TYPE_EXT: Record<string, string> = {
@@ -148,12 +174,33 @@ export async function archivePosts(posts: ImportedPost[], options: ArchiveOption
   const results: ArchivedPost[] = [];
   const duplicates: DuplicateEntry[] = [];
   const allDuplicates = readDuplicates(root);
+  const allEmpty = readEmpty(root);
+  const empty: EmptyEntry[] = [];
 
   for (const post of posts) {
     const key = `${post.platform}:${post.sourceId}`;
     let dir = folders.get(key);
 
-    const check = appCorpus ? findAppMatches(appCorpus, post.title, htmlToPlainText(post.html)) : null;
+    allEmpty.delete(key);
+    const plain = htmlToPlainText(post.html);
+    const words = wordCount(plain);
+    if (words < EMPTY_POST_WORDS && markdownImageUrls(htmlToMarkdown(post.html)).length === 0) {
+      const entry: EmptyEntry = {
+        platform: post.platform,
+        sourceId: post.sourceId,
+        sourceUrl: post.sourceUrl,
+        title: post.title,
+        publishedAt: post.publishedAt,
+        wordCount: words,
+      };
+      log(`  - "${post.title}" has no content on ${post.platform} (${words} words) -- not imported`);
+      if (dir) entry.existingFolder = path.relative(root, dir).split(path.sep).join("/");
+      allEmpty.set(key, entry);
+      empty.push(entry);
+      continue;
+    }
+
+    const check = appCorpus ? findAppMatches(appCorpus, post.title, plain) : null;
     if (appCorpus) allDuplicates.delete(key);
     if (check?.verdict === "duplicate" && !includeDuplicates) {
       const entry: DuplicateEntry = {
@@ -226,12 +273,16 @@ export async function archivePosts(posts: ImportedPost[], options: ArchiveOption
     results.push(archived);
   }
 
+  fs.mkdirSync(root, { recursive: true });
   if (appCorpus) {
-    const list = [...allDuplicates.values()].sort((a, b) => (a.publishedAt ?? "9999").localeCompare(b.publishedAt ?? "9999") || a.title.localeCompare(b.title));
-    fs.mkdirSync(root, { recursive: true });
+    const list = [...allDuplicates.values()].sort(byDateThenTitle);
     fs.writeFileSync(path.join(root, DUPLICATES_FILE), `${JSON.stringify({ count: list.length, duplicates: list }, null, 2)}\n`);
   }
-  return { archived: results, duplicates };
+  const emptyList = [...allEmpty.values()].sort(byDateThenTitle);
+  if (emptyList.length || fs.existsSync(path.join(root, EMPTY_FILE))) {
+    fs.writeFileSync(path.join(root, EMPTY_FILE), `${JSON.stringify({ count: emptyList.length, posts: emptyList }, null, 2)}\n`);
+  }
+  return { archived: results, duplicates, empty };
 }
 
 async function downloadImage(
@@ -308,11 +359,16 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
   const index = entries.map(({ key: _key, ...rest }) => rest);
 
   fs.mkdirSync(root, { recursive: true });
-  const skipped = [...readDuplicates(root).values()].sort((a, b) => (a.publishedAt ?? "9999").localeCompare(b.publishedAt ?? "9999") || a.title.localeCompare(b.title));
+  const skipped = [...readDuplicates(root).values()].sort(byDateThenTitle);
+  const emptyPosts = [...readEmpty(root).values()].sort(byDateThenTitle);
   fs.writeFileSync(
     path.join(root, "index.json"),
-    `${JSON.stringify({ postCount: index.length, alreadyInAppCount: skipped.length, posts: index }, null, 2)}\n`
+    `${JSON.stringify({ postCount: index.length, alreadyInAppCount: skipped.length, emptyCount: emptyPosts.length, posts: index }, null, 2)}\n`
   );
+  const link = (d: { title: string; sourceUrl: string | null }) => {
+    const t = d.title.replace(/\|/g, "\\|");
+    return d.sourceUrl ? `[${t}](${d.sourceUrl})` : t;
+  };
 
   const counts = (status: string) => index.filter((e) => e.migrationStatus === status).length;
   const rows = index.map((e) => {
@@ -346,10 +402,22 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
           "| Published | Title | Platform | Text found in app | Matches |",
           "|---|---|---|---|---|",
           ...skipped.map((d) => {
-            const title = d.sourceUrl ? `[${d.title.replace(/\|/g, "\\|")}](${d.sourceUrl})` : d.title.replace(/\|/g, "\\|");
             const matches = d.matches.map((m) => `\`${m.file}\` (${Math.round(m.overlap * 100)}%)`).join(", ");
-            return `| ${d.publishedAt?.slice(0, 10) ?? "—"} | ${title} | ${d.platform} | ${Math.round(d.containment * 100)}% | ${matches} |`;
+            return `| ${d.publishedAt?.slice(0, 10) ?? "—"} | ${link(d)} | ${d.platform} | ${Math.round(d.containment * 100)}% | ${matches} |`;
           }),
+          "",
+        ]
+      : []),
+    ...(emptyPosts.length
+      ? [
+          `## Empty on the source site — not imported (${emptyPosts.length})`,
+          "",
+          `These posts have a title but almost no text (under ${EMPTY_POST_WORDS} words, no images) on the site they`,
+          "were read from, so there was nothing to archive. Details in `empty.json`.",
+          "",
+          "| Published | Title | Platform | Words |",
+          "|---|---|---|---|",
+          ...emptyPosts.map((d) => `| ${d.publishedAt?.slice(0, 10) ?? "—"} | ${link(d)} | ${d.platform} | ${d.wordCount} |`),
           "",
         ]
       : []),

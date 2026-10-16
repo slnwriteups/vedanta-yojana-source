@@ -1,0 +1,26 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-6",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-6",
+  "title": "Veda Parichayam-6",
+  "slug": "veda-parichayam-6",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-08-02T10:35:00.000Z",
+  "modifiedAt": "2019-08-02T10:35:00.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "The Vedangas are the last treatises of the Vedic Literature. Paniniya Shiksha narrates two verses on the importance of the Vedangas which describe Veda as a Purusha having six limbs as six Vedangas: Chandas are His two feet, Kalpa are His two arms, Jyotisha are His eyes, Nirukta is His ears, Shiksha is His nose and Vyakarana is His mouth. The oldest record of their names occurs in the Mundaka Upanishad (1.1.5) where they are named as:1. Shiksha or phonetics or pronunciation2. Kalpa or ritual3. V",
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1233,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

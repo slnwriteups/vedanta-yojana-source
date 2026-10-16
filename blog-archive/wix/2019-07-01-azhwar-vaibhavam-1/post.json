@@ -1,0 +1,38 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-1",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-1",
+  "title": "Azhwar Vaibhavam-1",
+  "slug": "azhwar-vaibhavam-1",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-01T10:48:00.000Z",
+  "modifiedAt": "2019-07-01T10:48:00.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "Poigai AzhwarThondai Naadu, which is said to be the land full of brightness and nature's beauty, has a number of cities in it. Likewise, Kanchipuram is one of the cities, which is said to be gifted by Nature in its wealth and beauty. Thiru Atthiyoor (Chinna Kanchipuram) is one of the small parts of Kanchipuram, which is surrounded by numerous Vishnu temples and this Kanchi is called \"Vishnu Kanchi\". Big Kanchipuram is full of Shiva Perumal temple and it is named as \"Shiva Kanchi\".Thiru vekka, al",
+  "coverImage": null,
+  "images": [],
+  "wordCount": 981,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.15,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tirukkovilur.json",
+        "kind": "divya-desams",
+        "title": "Tirukkovilur",
+        "overlap": 0.15
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

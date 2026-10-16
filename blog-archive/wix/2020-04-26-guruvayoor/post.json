@@ -1,0 +1,31 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guruvayoor",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guruvayoor",
+  "title": "Guruvayoor",
+  "slug": "guruvayoor",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-04-26T15:11:27.000Z",
+  "modifiedAt": "2020-04-26T15:11:27.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "Details of Kshethram:Moolavar: Guruvaayurappan\n\nPushkarani: Narayana Saras\n\nTravel: This kshethram is located in the town of Guruvayur in Kerala.\n\n \n\nSthala Puranam:\n\nAccording to legend, Lord Guruvayurappan originated even before the start of Krita Yugam. There was once a couple who's names were Prsni and Suthapas who were desirous of having children. To have children, Prsni is said to have undertaken a vratham for twelve days in which she would offer the Lord milk and only have that milk. Afte",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_1936f9d4245b4678ac238d2495d80033~mv2.jpg",
+      "file": "images/01-aec967-1936f9d4245b4678ac238d2495d80033.jpg"
+    }
+  ],
+  "wordCount": 1417,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

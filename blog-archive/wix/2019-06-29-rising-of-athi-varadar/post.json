@@ -1,0 +1,63 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rising-of-athi-varadar",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rising-of-athi-varadar",
+  "title": "Rising of Athi Varadar",
+  "slug": "rising-of-athi-varadar",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-06-29T09:57:00.000Z",
+  "modifiedAt": "2019-06-29T09:57:00.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "A very warm welcome to all my readers. Today I'll be giving you an insight into the \"Rising of Athi Varadaraja\". Athi Varadaraja Swamy is a presiding deity of the Kanchipuram Varadaraja Swamy Temple. As per temple tradition, he rises once every forty years from the temple tank and can be seen by all his devotees. I'll now attempt to take you through a brief history of how this tradition came to be.The emergence of Athi VardarAs per temple history, the Lord first came to be in the Satya Yuga. The",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_1aea01437f9c411697f5e6f5aa0f01a8~mv2.jpg",
+      "file": "images/01-aec967-1aea01437f9c411697f5e6f5aa0f01a8.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_a201036bbb514ba5b2ff8439ab06711a~mv2.jpeg",
+      "file": "images/02-aec967-a201036bbb514ba5b2ff8439ab06711a.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_7d2f4ccbc65741c0b0abab60b6046047~mv2.jpg",
+      "file": "images/03-aec967-7d2f4ccbc65741c0b0abab60b6046047.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_1d3f21bc4dfe4042903a8feb136a5eb2~mv2.jpeg",
+      "file": "images/04-aec967-1d3f21bc4dfe4042903a8feb136a5eb2.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_3808c85cdf2a458b8ea0f1c2b660e8bc~mv2.jpg",
+      "file": "images/05-aec967-3808c85cdf2a458b8ea0f1c2b660e8bc.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_7a5cbabc10654003828716c186d62c81~mv2.jpg",
+      "file": "images/06-aec967-7a5cbabc10654003828716c186d62c81.jpg"
+    }
+  ],
+  "wordCount": 1170,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.48,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tirukachchi-hasthigiri.json",
+        "kind": "divya-desams",
+        "title": "Tirukachchi (Hasthigiri)",
+        "overlap": 0.48
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

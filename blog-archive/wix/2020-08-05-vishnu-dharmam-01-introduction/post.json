@@ -1,0 +1,31 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-01-introduction",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-01-introduction",
+  "title": "Vishnu Dharmam - 01 - Introduction",
+  "slug": "vishnu-dharmam-01-introduction",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-08-05T04:21:09.000Z",
+  "modifiedAt": "2020-08-05T04:21:09.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "\n\nVishnu Dharmam is a Grantham that was given to Shathaneeka, the son of Janmejaya at Naimisharanyam by Shounaka Maharishi. This Grantham came as an answer to the questions posed by Shathaneeka as to how one must lead life ideally and rule the kingdom. The principles that are mentioned in this Grantham, if followed, will give the follower positive karma, thereby making the journey towards moksham somewhat easier. This Grantham consists of numerous  (a story within the story ), which teaches us d",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_38a48c1ee5ea4f49a698ebbeea681bf9~mv2.jpg",
+      "file": "images/01-aec967-38a48c1ee5ea4f49a698ebbeea681bf9.jpg"
+    }
+  ],
+  "wordCount": 1043,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

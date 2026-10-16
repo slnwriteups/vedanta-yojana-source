@@ -1,6 +1,7 @@
 {
-  "postCount": 134,
-  "alreadyInAppCount": 139,
+  "postCount": 181,
+  "alreadyInAppCount": 275,
+  "emptyCount": 16,
   "posts": [
     {
       "folder": "wordpress/2018-09-24-shantanu-and-ganga",
@@ -855,6 +856,22 @@
       ]
     },
     {
+      "folder": "wix/2019-06-29-rising-of-athi-varadar",
+      "platform": "wix",
+      "title": "Rising of Athi Varadar",
+      "publishedAt": "2019-06-29T09:57:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1170,
+      "imageCount": 6,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-06-29-rising-of-athi-varadar"
+      ],
+      "possiblyInApp": [
+        "divya-desams/tirukachchi-hasthigiri.json"
+      ]
+    },
+    {
       "folder": "wordpress/2019-06-29-rising-of-athi-varadar",
       "platform": "wordpress",
       "title": "Rising of Athi Varadar",
@@ -863,10 +880,27 @@
       "wordCount": 1172,
       "imageCount": 7,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-06-29-rising-of-athi-varadar"
+      ],
       "possiblyInApp": [
         "divya-desams/tirukachchi-hasthigiri.json"
       ]
+    },
+    {
+      "folder": "wix/2019-06-30-azhwar-vaibhavam-an-introduction",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam - An Introduction",
+      "publishedAt": "2019-06-30T10:14:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 380,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction",
+        "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction-2"
+      ],
+      "possiblyInApp": []
     },
     {
       "folder": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction",
@@ -877,7 +911,9 @@
       "wordCount": 380,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-06-30-azhwar-vaibhavam-an-introduction"
+      ],
       "possiblyInApp": []
     },
     {
@@ -889,8 +925,26 @@
       "wordCount": 380,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-06-30-azhwar-vaibhavam-an-introduction"
+      ],
       "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-01-azhwar-vaibhavam-1",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam-1",
+      "publishedAt": "2019-07-01T10:48:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 981,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-01-azhwar-vaibhavam-1"
+      ],
+      "possiblyInApp": [
+        "divya-desams/tirukkovilur.json"
+      ]
     },
     {
       "folder": "wordpress/2019-07-01-azhwar-vaibhavam-1",
@@ -901,10 +955,27 @@
       "wordCount": 981,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-01-azhwar-vaibhavam-1"
+      ],
       "possiblyInApp": [
         "divya-desams/tirukkovilur.json"
       ]
+    },
+    {
+      "folder": "wix/2019-07-02-azhwar-vaibhavam-2",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam-2",
+      "publishedAt": "2019-07-02T11:01:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1100,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-02-azhwar-vaibhavam-2",
+        "wordpress/2019-07-02-azhwar-vaibhavam-2-2"
+      ],
+      "possiblyInApp": []
     },
     {
       "folder": "wordpress/2019-07-02-azhwar-vaibhavam-2",
@@ -915,7 +986,9 @@
       "wordCount": 1277,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-02-azhwar-vaibhavam-2"
+      ],
       "possiblyInApp": []
     },
     {
@@ -927,7 +1000,23 @@
       "wordCount": 1100,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-02-azhwar-vaibhavam-2"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-03-azwar-vaibhavam-3",
+      "platform": "wix",
+      "title": "Azwar Vaibhavam-3",
+      "publishedAt": "2019-07-03T11:19:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1975,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-03-azwar-vaibhavam-3"
+      ],
       "possiblyInApp": []
     },
     {
@@ -939,7 +1028,23 @@
       "wordCount": 2006,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-03-azwar-vaibhavam-3"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-04-azhwar-vaibhavam-4",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam - 4",
+      "publishedAt": "2019-07-04T11:16:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 2061,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-04-azhwar-vaibhavam-4"
+      ],
       "possiblyInApp": []
     },
     {
@@ -951,7 +1056,23 @@
       "wordCount": 2061,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-04-azhwar-vaibhavam-4"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-05-azhwar-vaibhavam-5",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam-5",
+      "publishedAt": "2019-07-05T11:04:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 3228,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-05-azhwar-vaibhavam-5"
+      ],
       "possiblyInApp": []
     },
     {
@@ -963,7 +1084,24 @@
       "wordCount": 3233,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-05-azhwar-vaibhavam-5"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-06-azhwar-vaibhavam-6",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam-6",
+      "publishedAt": "2019-07-06T05:43:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 760,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-06-azhwar-vaibhavam-6",
+        "wordpress/2019-07-06-azhwar-vaibhavam-6-2"
+      ],
       "possiblyInApp": []
     },
     {
@@ -975,7 +1113,9 @@
       "wordCount": 760,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-06-azhwar-vaibhavam-6"
+      ],
       "possiblyInApp": []
     },
     {
@@ -987,7 +1127,24 @@
       "wordCount": 760,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-06-azhwar-vaibhavam-6"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-07-azhwar-vaibhavam-7",
+      "platform": "wix",
+      "title": "Azhwar Vaibhavam-7",
+      "publishedAt": "2019-07-07T11:27:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1280,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-07-azhwar-vaibhavam-7",
+        "wordpress/2019-07-07-azhwar-vaibhavam-7-2"
+      ],
       "possiblyInApp": []
     },
     {
@@ -999,7 +1156,9 @@
       "wordCount": 1280,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-07-azhwar-vaibhavam-7"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1011,7 +1170,23 @@
       "wordCount": 1280,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-07-azhwar-vaibhavam-7"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-27-veda-parichayam-1",
+      "platform": "wix",
+      "title": "Veda Parichayam - 1",
+      "publishedAt": "2019-07-27T09:52:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1963,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-27-veda-parichayam-1"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1023,7 +1198,23 @@
       "wordCount": 1994,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-27-veda-parichayam-1"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-28-veda-parichayam-2",
+      "platform": "wix",
+      "title": "Veda Parichayam- 2",
+      "publishedAt": "2019-07-28T08:18:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 2283,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-28-veda-parichayam-2"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1035,7 +1226,23 @@
       "wordCount": 2381,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-28-veda-parichayam-2"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-29-veda-parichayam-3",
+      "platform": "wix",
+      "title": "Veda Parichayam-3",
+      "publishedAt": "2019-07-29T11:44:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 549,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-29-veda-parichayam-3"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1047,7 +1254,23 @@
       "wordCount": 549,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-29-veda-parichayam-3"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-30-veda-parichayam-4",
+      "platform": "wix",
+      "title": "Veda Parichayam-4",
+      "publishedAt": "2019-07-30T11:19:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 597,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-30-veda-parichayam-4"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1059,7 +1282,23 @@
       "wordCount": 597,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-30-veda-parichayam-4"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-07-31-veda-parichayam-5",
+      "platform": "wix",
+      "title": "Veda Parichayam-5",
+      "publishedAt": "2019-07-31T10:42:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1324,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-07-31-veda-parichayam-5"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1071,7 +1310,23 @@
       "wordCount": 1324,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-07-31-veda-parichayam-5"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2019-08-02-veda-parichayam-6",
+      "platform": "wix",
+      "title": "Veda Parichayam-6",
+      "publishedAt": "2019-08-02T10:35:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1233,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2019-08-02-veda-parichayam-6"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1083,7 +1338,9 @@
       "wordCount": 1234,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2019-08-02-veda-parichayam-6"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1139,6 +1396,22 @@
       ]
     },
     {
+      "folder": "wix/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam",
+      "platform": "wix",
+      "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
+      "publishedAt": "2020-03-30T15:06:00.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 119,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam"
+      ],
+      "possiblyInApp": [
+        "divya-desams/tiruvaikuntam-srivaikuntam.json"
+      ]
+    },
+    {
       "folder": "wordpress/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam",
       "platform": "wordpress",
       "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
@@ -1147,10 +1420,26 @@
       "wordCount": 169,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam"
+      ],
       "possiblyInApp": [
         "divya-desams/tiruvaikuntam-srivaikuntam.json"
       ]
+    },
+    {
+      "folder": "wix/2020-04-13-108-divyadesam-95-tirumayam",
+      "platform": "wix",
+      "title": "108 Divyadesam - 95) Tirumayam",
+      "publishedAt": "2020-04-13T12:33:20.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 115,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-04-13-108-divyadesam-95-tirumayam"
+      ],
+      "possiblyInApp": []
     },
     {
       "folder": "wordpress/2020-04-13-108-divyadesam-95-tirumayam",
@@ -1161,7 +1450,24 @@
       "wordCount": 212,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-04-13-108-divyadesam-95-tirumayam"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-04-26-guruvayoor",
+      "platform": "wix",
+      "title": "Guruvayoor",
+      "publishedAt": "2020-04-26T15:11:27.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1417,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-04-26-guruvayoor",
+        "wordpress/2020-04-26-guruvayoor-2"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1173,7 +1479,9 @@
       "wordCount": 1461,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-04-26-guruvayoor"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1185,7 +1493,23 @@
       "wordCount": 1461,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-04-26-guruvayoor"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-17-vishnu-puranam-01-an-introduction-to-creation",
+      "platform": "wix",
+      "title": "Vishnu Puranam- 01- An Introduction to Creation",
+      "publishedAt": "2020-06-17T14:28:26.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 863,
+      "imageCount": 2,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-17-vishnu-puranam-01-an-introduction-to-creation"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1197,7 +1521,23 @@
       "wordCount": 863,
       "imageCount": 2,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-17-vishnu-puranam-01-an-introduction-to-creation"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-18-vishnu-puranam-02-varaha-avataram",
+      "platform": "wix",
+      "title": "Vishnu Puranam- 02 - Varaha Avataram",
+      "publishedAt": "2020-06-18T14:14:06.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 721,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-18-vishnu-puranam-02-varaha-avataram"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1209,8 +1549,28 @@
       "wordCount": 781,
       "imageCount": 3,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-18-vishnu-puranam-02-varaha-avataram"
+      ],
       "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-19-vishnu-puranam-03-kurma-avataram",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 03 - Kurma Avataram",
+      "publishedAt": "2020-06-19T15:21:59.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 961,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-19-vishnu-puranam-03-kurma-avataram"
+      ],
+      "possiblyInApp": [
+        "divya-desams/tirumanimada-kovil.json",
+        "divya-desams/tiruaadanoor.json",
+        "divya-desams/tiruttetriambalam-tirumanikoodam.json"
+      ]
     },
     {
       "folder": "wordpress/2020-06-19-vishnu-puranam-03-kurma-avataram",
@@ -1221,12 +1581,28 @@
       "wordCount": 1028,
       "imageCount": 3,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-19-vishnu-puranam-03-kurma-avataram"
+      ],
       "possiblyInApp": [
         "divya-desams/tirumanimada-kovil.json",
         "divya-desams/tiruaadanoor.json",
         "divya-desams/tiruttetriambalam-tirumanikoodam.json"
       ]
+    },
+    {
+      "folder": "wix/2020-06-20-vishnu-puranam-04-dhruva-charithram",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 04 - Dhruva Charithram",
+      "publishedAt": "2020-06-20T11:47:14.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 643,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-20-vishnu-puranam-04-dhruva-charithram"
+      ],
+      "possiblyInApp": []
     },
     {
       "folder": "wordpress/2020-06-20-vishnu-puranam-04-dhruva-charithram",
@@ -1237,7 +1613,23 @@
       "wordCount": 643,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-20-vishnu-puranam-04-dhruva-charithram"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-22-vishnu-puranam-06-jadabharata-charithram",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 06 - Jadabharata Charithram",
+      "publishedAt": "2020-06-22T12:10:16.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 528,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-22-vishnu-puranam-06-jadabharata-charithram"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1249,7 +1641,23 @@
       "wordCount": 528,
       "imageCount": 2,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-22-vishnu-puranam-06-jadabharata-charithram"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-23-vishnu-puranam-07-sri-rama-charithram",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 07 - Sri Rama Charithram",
+      "publishedAt": "2020-06-23T13:18:25.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 337,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-23-vishnu-puranam-07-sri-rama-charithram"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1261,7 +1669,23 @@
       "wordCount": 337,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-23-vishnu-puranam-07-sri-rama-charithram"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-24-vishnu-puranam-08-birth-of-sri-krishna",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 08 - Birth of Sri Krishna",
+      "publishedAt": "2020-06-24T13:07:09.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 561,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-24-vishnu-puranam-08-birth-of-sri-krishna"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1273,7 +1697,23 @@
       "wordCount": 561,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-24-vishnu-puranam-08-birth-of-sri-krishna"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-25-vishnu-puranam-09-sri-krishna-leela",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 09 - Sri Krishna Leela",
+      "publishedAt": "2020-06-25T13:51:20.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 2159,
+      "imageCount": 4,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1285,7 +1725,23 @@
       "wordCount": 2159,
       "imageCount": 5,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-06-26-vishnu-puranam-10-sri-krishna-in-mathura",
+      "platform": "wix",
+      "title": "Vishnu Puranam - 10 - Sri Krishna in Mathura",
+      "publishedAt": "2020-06-26T13:00:34.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 548,
+      "imageCount": 5,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-06-26-vishnu-puranam-10-sri-krishna-in-mathura"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1297,7 +1753,23 @@
       "wordCount": 548,
       "imageCount": 5,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-06-26-vishnu-puranam-10-sri-krishna-in-mathura"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-08-05-vishnu-dharmam-01-introduction",
+      "platform": "wix",
+      "title": "Vishnu Dharmam - 01 - Introduction",
+      "publishedAt": "2020-08-05T04:21:09.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1043,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-08-05-vishnu-dharmam-01-introduction"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1309,7 +1781,23 @@
       "wordCount": 1044,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-08-05-vishnu-dharmam-01-introduction"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-08-06-vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam",
+      "platform": "wix",
+      "title": "Vishnu Dharmam - 02 - Mantrakavacham, Mantrasiddhi and Mantrabalam",
+      "publishedAt": "2020-08-06T03:58:10.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 603,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-08-06-vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1321,7 +1809,23 @@
       "wordCount": 635,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-08-06-vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-08-07-vishnu-dharmam-03-bhakti",
+      "platform": "wix",
+      "title": "Vishnu Dharmam - 03 - Bhakti",
+      "publishedAt": "2020-08-07T03:50:30.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 500,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-08-07-vishnu-dharmam-03-bhakti"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1333,7 +1837,23 @@
       "wordCount": 507,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-08-07-vishnu-dharmam-03-bhakti"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-08-08-vishnu-dharmam-04-dhaanam",
+      "platform": "wix",
+      "title": "Vishnu Dharmam - 04 - Dhaanam",
+      "publishedAt": "2020-08-08T02:40:13.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 301,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-08-08-vishnu-dharmam-04-dhaanam"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1345,7 +1865,23 @@
       "wordCount": 301,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-08-08-vishnu-dharmam-04-dhaanam"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-08-09-vishnu-dharmam-05-tapas",
+      "platform": "wix",
+      "title": "Vishnu Dharmam - 05 - Tapas",
+      "publishedAt": "2020-08-09T01:46:03.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 321,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-08-09-vishnu-dharmam-05-tapas"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1357,7 +1893,23 @@
       "wordCount": 322,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-08-09-vishnu-dharmam-05-tapas"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-08-10-vishnu-dharmam-06-yudhishthira-chandala-samwaadam",
+      "platform": "wix",
+      "title": "Vishnu Dharmam - 06 - Yudhishthira Chandala Samwaadam",
+      "publishedAt": "2020-08-10T02:59:30.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 282,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-08-10-vishnu-dharmam-06-yudhishthira-chandala-samwaadam"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1369,7 +1921,23 @@
       "wordCount": 284,
       "imageCount": 1,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-08-10-vishnu-dharmam-06-yudhishthira-chandala-samwaadam"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2020-12-10-desika-vaibhavam-03-hayagriva-stotram",
+      "platform": "wix",
+      "title": "Desika Vaibhavam - 03 - Hayagriva Stotram",
+      "publishedAt": "2020-12-10T04:29:41.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 327,
+      "imageCount": 4,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2020-12-10-desika-vaibhavam-03-hayagriva-stotram"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1381,7 +1949,9 @@
       "wordCount": 327,
       "imageCount": 5,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2020-12-10-desika-vaibhavam-03-hayagriva-stotram"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1445,6 +2015,23 @@
       "possiblyInApp": []
     },
     {
+      "folder": "wix/2021-06-19-sudarshana-mahima-sudarshana-ashtakam",
+      "platform": "wix",
+      "title": "Sudarshana Mahima: Sudarshana Ashtakam",
+      "publishedAt": "2021-06-19T17:19:45.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1230,
+      "imageCount": 3,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2021-06-19-sudarshana-mahima-sudarshana-ashtakam"
+      ],
+      "possiblyInApp": [
+        "divya-desams/kapisthalam.json",
+        "divya-desams/tirukkoodaloor.json"
+      ]
+    },
+    {
       "folder": "wordpress/2021-06-19-sudarshana-mahima-sudarshana-ashtakam",
       "platform": "wordpress",
       "title": "Sudarshana Mahima: Sudarshana Ashtakam",
@@ -1453,11 +2040,27 @@
       "wordCount": 1230,
       "imageCount": 4,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2021-06-19-sudarshana-mahima-sudarshana-ashtakam"
+      ],
       "possiblyInApp": [
         "divya-desams/kapisthalam.json",
         "divya-desams/tirukkoodaloor.json"
       ]
+    },
+    {
+      "folder": "wix/2023-06-30-krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls",
+      "platform": "wix",
+      "title": "Krishna as the Ultimate Teacher: Illuminating Wisdom and Guiding Souls",
+      "publishedAt": "2023-06-30T04:14:14.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 764,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2023-06-30-krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls"
+      ],
+      "possiblyInApp": []
     },
     {
       "folder": "wordpress/2023-06-30-krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls",
@@ -1468,7 +2071,9 @@
       "wordCount": 764,
       "imageCount": 0,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2023-06-30-krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1580,6 +2185,20 @@
       "possiblyInApp": []
     },
     {
+      "folder": "wix/2023-07-10-nara-narayana-the-profound-bond-between-krishna-and-arjuna",
+      "platform": "wix",
+      "title": "Nara-Narayana: The Profound Bond Between Krishna and Arjuna",
+      "publishedAt": "2023-07-10T02:23:53.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 53,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2023-07-10-nara-narayana-the-profound-bond-between-krishna-and-arjuna"
+      ],
+      "possiblyInApp": []
+    },
+    {
       "folder": "wordpress/2023-07-10-nara-narayana-the-profound-bond-between-krishna-and-arjuna",
       "platform": "wordpress",
       "title": "Nara-Narayana: The Profound Bond Between Krishna and Arjuna",
@@ -1588,7 +2207,9 @@
       "wordCount": 1394,
       "imageCount": 2,
       "migrationStatus": "archived",
-      "possibleDuplicates": [],
+      "possibleDuplicates": [
+        "wix/2023-07-10-nara-narayana-the-profound-bond-between-krishna-and-arjuna"
+      ],
       "possiblyInApp": []
     },
     {
@@ -1652,6 +2273,20 @@
       "possiblyInApp": []
     },
     {
+      "folder": "wix/2024-10-04-tirumala-navaratri-brahmotsavam",
+      "platform": "wix",
+      "title": "Tirumala Navaratri Brahmotsavam",
+      "publishedAt": "2024-10-04T18:25:10.000Z",
+      "sourceStatus": "publish",
+      "wordCount": 1858,
+      "imageCount": 25,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wordpress/2024-10-04-tirumala-navaratri-brahmotsavam"
+      ],
+      "possiblyInApp": []
+    },
+    {
       "folder": "wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
       "platform": "wordpress",
       "title": "Tirumala Navaratri Brahmotsavam",
@@ -1659,6 +2294,116 @@
       "sourceStatus": "publish",
       "wordCount": 1858,
       "imageCount": 25,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [
+        "wix/2024-10-04-tirumala-navaratri-brahmotsavam"
+      ],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2024-12-18-the-cosmic-cycle-of-creation-maha-vishnu-garbhodakshaayi-vishnu-and-ksheerodaksh",
+      "platform": "wix",
+      "title": "The Cosmic Cycle of Creation: Maha Vishnu, Garbhodakshaayi Vishnu, and Ksheerodakshaayi Vishnu",
+      "publishedAt": "2024-12-18T13:24:03.961Z",
+      "sourceStatus": "publish",
+      "wordCount": 2695,
+      "imageCount": 1,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-01-05-the-timelessness-of-the-vishnu-sahasranamam",
+      "platform": "wix",
+      "title": "The Timelessness of the Vishnu Sahasranamam",
+      "publishedAt": "2025-01-05T09:00:55.984Z",
+      "sourceStatus": "publish",
+      "wordCount": 4109,
+      "imageCount": 0,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-01-29-garuda-vaibhavam",
+      "platform": "wix",
+      "title": "Garuda Vaibhavam",
+      "publishedAt": "2025-01-29T23:11:38.598Z",
+      "sourceStatus": "publish",
+      "wordCount": 2613,
+      "imageCount": 3,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-05-11-three-lesser-known-narasimha-temples-in-srirangam",
+      "platform": "wix",
+      "title": "Three Lesser-Known Narasimha Temples in Srirangam",
+      "publishedAt": "2025-05-11T03:20:12.289Z",
+      "sourceStatus": "publish",
+      "wordCount": 714,
+      "imageCount": 4,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-06-10-jyeshtabhishekam-at-tirumala-a-timeless-ritual-of-care-and-sanctity",
+      "platform": "wix",
+      "title": "Jyeshtabhishekam at Tirumala – A Timeless Ritual of Care and Sanctity",
+      "publishedAt": "2025-06-10T14:32:37.187Z",
+      "sourceStatus": "publish",
+      "wordCount": 732,
+      "imageCount": 5,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-06-11-snana-yatra-the-sacred-bathing-festival-of-lord-jagannatha",
+      "platform": "wix",
+      "title": "Snana Yatra: The Sacred Bathing Festival of Lord Jagannatha",
+      "publishedAt": "2025-06-11T12:54:08.594Z",
+      "sourceStatus": "publish",
+      "wordCount": 594,
+      "imageCount": 3,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-06-27-rath-yatra-the-sacred-journey-of-lord-jagannath",
+      "platform": "wix",
+      "title": "Rath Yatra: The Sacred Journey of Lord Jagannath",
+      "publishedAt": "2025-06-27T15:45:38.153Z",
+      "sourceStatus": "publish",
+      "wordCount": 1503,
+      "imageCount": 7,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-07-06-ashadha-ekadashi-chaturmasya-and-pandharpur",
+      "platform": "wix",
+      "title": "Āshāḍha Ekādashi, Chāturmāsya, and Pandharpur",
+      "publishedAt": "2025-07-06T04:53:27.045Z",
+      "sourceStatus": "publish",
+      "wordCount": 1145,
+      "imageCount": 4,
+      "migrationStatus": "archived",
+      "possibleDuplicates": [],
+      "possiblyInApp": []
+    },
+    {
+      "folder": "wix/2025-07-06-ashadha-ekadashi-chaturmasya-and-pandharpur-2",
+      "platform": "wix",
+      "title": "Āshāḍha Ekādashi, Chāturmāsya, and Pandharpur",
+      "publishedAt": "2025-07-06T04:53:27.045Z",
+      "sourceStatus": "publish",
+      "wordCount": 1145,
+      "imageCount": 4,
       "migrationStatus": "archived",
       "possibleDuplicates": [],
       "possiblyInApp": []

@@ -1,0 +1,31 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-an-introduction",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-an-introduction",
+  "title": "Azhwar Vaibhavam - An Introduction",
+  "slug": "azhwar-vaibhavam-an-introduction",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-06-30T10:14:00.000Z",
+  "modifiedAt": "2019-06-30T10:14:00.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "A warm welcome to all my readers over the next few days I'll attempt to take you across the rich history of the Tamizh language. (Zh is pronounced as l)An important and often forgotten part of Tamizh history is the story of the twelve Azhwar saints who spread the message of Bhakti among the masses of South India. The twelve azhwars are often seen as a Hamsam ( reincarnation) of Lord Sriman Narayana. They dedicated their lives towards the service of Empurmaan ( as Lord Vishnu is called dearly in ",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_75624feb2232442caef1264d98763ec3~mv2.jpg",
+      "file": "images/01-aec967-75624feb2232442caef1264d98763ec3.jpg"
+    }
+  ],
+  "wordCount": 380,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

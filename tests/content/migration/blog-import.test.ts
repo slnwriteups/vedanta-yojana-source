@@ -78,6 +78,12 @@ const WIX_PAGE = `<!doctype html><html><head>
 <div data-hook="post-description"><div><p>Body <em>text</em> here.</p><div><h2>Heading</h2><ul><li>One</li><li>Two</li></ul></div></div></div>
 <footer>Footer</footer></body></html>`;
 
+/** ~50 words of neutral prose so fixture posts are not treated as empty shells. */
+const FILLER =
+  "<p>This paragraph is placeholder prose for the tests. It talks about walking to a village temple in the early morning, " +
+  "the sound of bells, the smell of flowers in the market, and the long conversations on the steps afterwards about old stories " +
+  "and the people who first told them to us.</p>";
+
 test("slugify folds IAST diacritics and produces SlugSchema-shaped output", () => {
   assert.equal(slugify("Śrīmad Bhāgavatam — Part 1"), "srimad-bhagavatam-part-1");
   assert.equal(slugify("Rāma's Exile!"), "ramas-exile");
@@ -153,8 +159,8 @@ test("fullSizeCandidates prefers original-size images", () => {
 test("archivePosts writes per-post folders, localises images, flags cross-platform duplicates and preserves migration progress on re-import", async () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "blog-archive-"));
   try {
-    const wp = parseWxr(WXR);
-    const wix = [parseWixPostPage(WIX_PAGE, "https://example.com/post/example-post")];
+    const wp = parseWxr(WXR).map((p) => ({ ...p, html: p.html + FILLER }));
+    const wix = [parseWixPostPage(WIX_PAGE, "https://example.com/post/example-post")].map((p) => ({ ...p, html: p.html + FILLER }));
     const fetched: string[] = [];
     const fetchBinary = async (url: string) => {
       fetched.push(url);
@@ -252,7 +258,7 @@ test("archivePosts leaves app duplicates out of the archive, records them in dup
   try {
     const corpus = syntheticCorpus();
     const dupe = post({ sourceId: "1", title: "The Golden Mongoose", slug: "the-golden-mongoose", html: `<p>${CHAPTER_TEXT}</p>` });
-    const fresh = post({ sourceId: "2", title: "Introduction", slug: "introduction", html: "<p>Something new I wrote about a pilgrimage.</p>" });
+    const fresh = post({ sourceId: "2", title: "Introduction", slug: "introduction", html: `<p>Something new I wrote about a pilgrimage.</p>${FILLER}` });
     const result = await archivePosts([dupe, fresh], { root, appCorpus: corpus });
 
     assert.equal(result.archived.length, 1);
@@ -274,7 +280,7 @@ test("archivePosts leaves app duplicates out of the archive, records them in dup
     assert.match(md, /⚠ may already be in the app: `knowledge\/introduction.json`/);
 
     // A later run for another platform keeps the earlier duplicates; --include-duplicates archives it anyway.
-    await archivePosts([post({ platform: "wix", sourceId: "https://example.com/post/x", title: "X", slug: "x", html: "<p>Brand new.</p>" })], { root, appCorpus: corpus });
+    await archivePosts([post({ platform: "wix", sourceId: "https://example.com/post/x", title: "X", slug: "x", html: `<p>Brand new.</p>${FILLER}` })], { root, appCorpus: corpus });
     assert.equal(JSON.parse(fs.readFileSync(path.join(root, "duplicates.json"), "utf8")).count, 1);
     const forced = await archivePosts([dupe], { root, appCorpus: corpus, includeDuplicates: true });
     assert.equal(forced.archived[0].appCheck?.verdict, "duplicate");
@@ -300,4 +306,21 @@ test("a post whose title names a record is a duplicate at a lower text overlap w
   const named = findAppMatches(corpus, "Mahabharata stories - 12) A Measure of Flour", partial);
   assert.equal(named.verdict, "duplicate");
   assert.equal(named.reason, "title-and-text");
+});
+
+test("posts with a title but no real content are not imported and are listed in empty.json and INDEX.md", async () => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "blog-archive-"));
+  try {
+    const shell = post({ platform: "wix", sourceId: "https://example.com/post/shell", title: "Shell", slug: "shell", html: "<p><br></p>" });
+    const pictureOnly = post({ sourceId: "3", title: "Photos", slug: "photos", html: '<p><img src="https://example.com/a.jpg"></p>' });
+    const result = await archivePosts([shell, pictureOnly], { root });
+    assert.deepEqual(result.empty.map((e) => e.title), ["Shell"]);
+    assert.deepEqual(result.archived.map((a) => a.title), ["Photos"], "a post that is only images is kept");
+    assert.equal(fs.existsSync(path.join(root, "wix")), false);
+    assert.equal(JSON.parse(fs.readFileSync(path.join(root, "empty.json"), "utf8")).count, 1);
+    rebuildIndex(root);
+    assert.match(fs.readFileSync(path.join(root, "INDEX.md"), "utf8"), /## Empty on the source site — not imported \(1\)/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
 });

@@ -1,0 +1,43 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-80-tiruvaikuntam---srivaikuntam",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-80-tiruvaikuntam---srivaikuntam",
+  "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
+  "slug": "108-divyadesam-80-tiruvaikuntam-srivaikuntam",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-03-30T15:06:00.000Z",
+  "modifiedAt": "2020-03-30T15:06:00.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "Details of Kshethram:Moolavar: Vaikunthanathar\nThayaar: Vaikuntavalli Nachiyar\nVimanam: Chandra Vimanam\nPushkarani: Brighu Theertham\nTravel: This kshetram is located on the banks of Tamaraparani, around 35 km from Tirunelveli.\nAzhwar Pashuram:\nNamazhwar: 2 Pashurams\n\nSthala Puranam: The legend has it that a local thief by name Kaladushaka used to donate half of the loot that he made to the deity in the temple. While the King caught him, Vaikunthanathar appeared before the king and expressed that",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_8efe113a84b14b24a9e30b4785574a82~mv2.jpg",
+      "file": "images/01-aec967-8efe113a84b14b24a9e30b4785574a82.jpg"
+    }
+  ],
+  "wordCount": 119,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.41,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tiruvaikuntam-srivaikuntam.json",
+        "kind": "divya-desams",
+        "title": "Tiruvaikuntam / Shrīvaikuṇṭham",
+        "overlap": 0.37
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

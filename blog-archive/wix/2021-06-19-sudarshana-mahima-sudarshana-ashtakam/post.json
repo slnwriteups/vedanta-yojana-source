@@ -1,0 +1,57 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/sudarshana-mahima-sudarshana-ashtakam",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/sudarshana-mahima-sudarshana-ashtakam",
+  "title": "Sudarshana Mahima: Sudarshana Ashtakam",
+  "slug": "sudarshana-mahima-sudarshana-ashtakam",
+  "sourceStatus": "publish",
+  "publishedAt": "2021-06-19T17:19:45.000Z",
+  "modifiedAt": "2021-06-19T17:19:45.000Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "\n\nGreetings to one and all! On the occasion of Sudarshana Jayanti, let us learn a little bit about Chakrathazhwan and His greatness.\n\nSwami Desikan in his Shodasha-Ayudha Stotram sheds light on the nature of Sudarshana as follows:\n\n\nSwami Desikan first prays for the well-being of all and asks the sixteen-handed Chakrathazhwan to protect us. He describes the quality of time saying it is an aspect of nature that is eternally moving forward. Swami Desikan says that time is controlled by Sudarshana,",
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_e7f92190772c4a33baec6fb81fadf041~mv2.jpg",
+      "file": "images/01-aec967-e7f92190772c4a33baec6fb81fadf041.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_7c0f8b69520f4db5971016d5c7f86af8~mv2.png",
+      "file": "images/02-aec967-7c0f8b69520f4db5971016d5c7f86af8.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_e5f986ff81174ed38f17b84603fd8e59~mv2.png",
+      "file": "images/03-aec967-e5f986ff81174ed38f17b84603fd8e59.png"
+    }
+  ],
+  "wordCount": 1230,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.28,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/kapisthalam.json",
+        "kind": "divya-desams",
+        "title": "Kapisthalam",
+        "overlap": 0.18
+      },
+      {
+        "file": "divya-desams/tirukkoodaloor.json",
+        "kind": "divya-desams",
+        "title": "Tirukkoodaloor",
+        "overlap": 0.08
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

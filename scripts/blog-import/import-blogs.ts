@@ -117,7 +117,10 @@ async function main() {
     if (!urls.length) console.warn("  ! No posts found. Check the address, or use --wix-html-dir (see README).");
     for (const [i, url] of urls.entries()) {
       const html = await fetchText(url);
-      if (!html) continue;
+      if (!html) {
+        console.warn(`  ! [${i + 1}/${urls.length}] could not fetch ${url} -- re-run to retry`);
+        continue;
+      }
       const post = parseWixPostPage(html, url);
       console.log(`  [${i + 1}/${urls.length}] ${post.title}`);
       posts.push(post);
@@ -136,7 +139,9 @@ async function main() {
       includeDuplicates: values["include-duplicates"],
       log: console.warn,
     });
-    console.log(`Archived ${result.archived.length}; ${result.duplicates.length} already in the app and not imported.`);
+    console.log(
+      `Archived ${result.archived.length}; not imported: ${result.duplicates.length} already in the app, ${result.empty.length} empty on the source site.`
+    );
   }
   const index = rebuildIndex(out);
   const dups = index.filter((e) => e.possibleDuplicates.length).length;

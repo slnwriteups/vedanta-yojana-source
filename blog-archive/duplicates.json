@@ -1,5 +1,5 @@
 {
-  "count": 139,
+  "count": 275,
   "duplicates": [
     {
       "platform": "wordpress",
@@ -56,6 +56,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/srinivasa-kalyanam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/srinivasa-kalyanam",
+      "title": "Srinivasa Kalyanam",
+      "publishedAt": "2019-07-08T16:29:00.000Z",
+      "containment": 0.81,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvenkatam.json",
+          "kind": "divya-desams",
+          "title": "Tiruvenkatam",
+          "overlap": 0.81
+        },
+        {
+          "file": "divya-desams/tirukkudandai.json",
+          "kind": "divya-desams",
+          "title": "Tirukkudandai",
+          "overlap": 0.08
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "391",
       "sourceUrl": "https://vedantayojana.wordpress.com/?p=391",
@@ -100,6 +122,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/charama-shlokam-varaha-charama-shlokam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/charama-shlokam-varaha-charama-shlokam",
+      "title": "Charama Shlokam - Varaha Charama Shlokam",
+      "publishedAt": "2019-12-29T11:39:00.000Z",
+      "containment": 0.77,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+          "kind": "chapter",
+          "title": "Varāha Charama Shlokam",
+          "overlap": 0.58
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/charama-shlokams.json",
+          "kind": "chapter",
+          "title": "Charama Shlokams",
+          "overlap": 0.19
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "379",
       "sourceUrl": "https://vedantayojana.wordpress.com/2019/12/29/charama-shlokam-varaha-charama-shlokam/",
@@ -118,6 +162,28 @@
           "kind": "chapter",
           "title": "Charama Shlokams",
           "overlap": 0.19
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/charama-shlokam-rama-charama-shlokam-krishna-charama-shlokam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/charama-shlokam-rama-charama-shlokam-krishna-charama-shlokam",
+      "title": "Charama Shlokam- Rama Charama Shlokam, Krishna Charama Shlokam",
+      "publishedAt": "2019-12-30T11:04:00.000Z",
+      "containment": 0.78,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+          "kind": "chapter",
+          "title": "Krishna Charama Shlokam",
+          "overlap": 0.4
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+          "kind": "chapter",
+          "title": "Rama Charama Shlokam",
+          "overlap": 0.39
         }
       ]
     },
@@ -144,6 +210,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-1-sri-rangam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-1-sri-rangam",
+      "title": "108 Divyadesam- 1) Sri Rangam",
+      "publishedAt": "2020-01-12T15:26:00.000Z",
+      "containment": 0.28,
+      "matches": [
+        {
+          "file": "divya-desams/sri-rangam.json",
+          "kind": "divya-desams",
+          "title": "Sri Raṅgam",
+          "overlap": 0.28
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "371",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/12/108-divyadesam-1-sri-rangam/",
@@ -156,6 +238,22 @@
           "kind": "divya-desams",
           "title": "Sri Raṅgam",
           "overlap": 0.25
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-2-tirukkozhi-urayur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-2-tirukkozhi-urayur",
+      "title": "108 Divyadesam-2) Tirukkozhi- Urayur",
+      "publishedAt": "2020-01-13T15:46:00.000Z",
+      "containment": 0.74,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkozhi-urayur.json",
+          "kind": "divya-desams",
+          "title": "Tirukkozhi - Urayur",
+          "overlap": 0.74
         }
       ]
     },
@@ -176,6 +274,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-3-tirukarambanur-uttamarkovil",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-3-tirukarambanur-uttamarkovil",
+      "title": "108 Divyadesam- 3) Tirukarambanur- Uttamarkovil",
+      "publishedAt": "2020-01-14T15:21:00.000Z",
+      "containment": 0.63,
+      "matches": [
+        {
+          "file": "divya-desams/tirukarambanur-uttamarkovil.json",
+          "kind": "divya-desams",
+          "title": "Tirukarambanur-Uttamarkovil",
+          "overlap": 0.63
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "363",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/14/108-divyadesam-3-tirukarambanur-uttamarkovil/",
@@ -188,6 +302,22 @@
           "kind": "divya-desams",
           "title": "Tirukarambanur-Uttamarkovil",
           "overlap": 0.54
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-4-tiruvellarai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-4-tiruvellarai",
+      "title": "108 Divyadesam- 4) Tiruvellarai",
+      "publishedAt": "2020-01-15T16:48:00.000Z",
+      "containment": 0.74,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvellarai.json",
+          "kind": "divya-desams",
+          "title": "Tiruvellarai",
+          "overlap": 0.74
         }
       ]
     },
@@ -208,6 +338,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-5-tiruvanbil",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-5-tiruvanbil",
+      "title": "108 Divyadesam- 5) Tiruvanbil",
+      "publishedAt": "2020-01-16T16:07:00.000Z",
+      "containment": 0.4,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvanbil.json",
+          "kind": "divya-desams",
+          "title": "Tiruvanbil",
+          "overlap": 0.4
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "357",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/16/108-divyadesam-5-tiruvanbil/",
@@ -220,6 +366,22 @@
           "kind": "divya-desams",
           "title": "Tiruvanbil",
           "overlap": 0.3
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-6-tiruperrnagar-koviladi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-6-tiruperrnagar-koviladi",
+      "title": "108 Divyadesam- 6) Tiruperrnagar- Koviladi",
+      "publishedAt": "2020-01-17T16:36:00.000Z",
+      "containment": 0.65,
+      "matches": [
+        {
+          "file": "divya-desams/tiruperrnagar-koviladi.json",
+          "kind": "divya-desams",
+          "title": "Tiruperrnagar - Koviladi",
+          "overlap": 0.65
         }
       ]
     },
@@ -240,6 +402,38 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-7-tirukkandiyur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-7-tirukkandiyur",
+      "title": "108 Divyadesam- 7) Tirukkandiyur",
+      "publishedAt": "2020-01-18T17:02:00.000Z",
+      "containment": 0.23,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkandiyur.json",
+          "kind": "divya-desams",
+          "title": "Tirukkandiyur",
+          "overlap": 0.23
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-8-tirukkoodaloor",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-8-tirukkoodaloor",
+      "title": "108 Divyadesam- 8) Tirukkoodaloor",
+      "publishedAt": "2020-01-19T15:56:00.000Z",
+      "containment": 0.34,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkoodaloor.json",
+          "kind": "divya-desams",
+          "title": "Tirukkoodaloor",
+          "overlap": 0.34
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "348",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/19/108-divyadesam-8-tirukkoodaloor/",
@@ -256,6 +450,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-9-kapisthalam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-9-kapisthalam",
+      "title": "108 Divyadesam-9) Kapisthalam",
+      "publishedAt": "2020-01-20T16:31:00.000Z",
+      "containment": 0.61,
+      "matches": [
+        {
+          "file": "divya-desams/kapisthalam.json",
+          "kind": "divya-desams",
+          "title": "Kapisthalam",
+          "overlap": 0.61
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "345",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/20/108-divyadesam-9-kapisthalam/",
@@ -268,6 +478,28 @@
           "kind": "divya-desams",
           "title": "Kapisthalam",
           "overlap": 0.54
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-10-tiruppullambhootangdi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-10-tiruppullambhootangdi",
+      "title": "108 Divyadesam-10) Tiruppullambhootangdi",
+      "publishedAt": "2020-01-21T16:22:00.000Z",
+      "containment": 0.7,
+      "matches": [
+        {
+          "file": "divya-desams/tiruppullambhootangdi.json",
+          "kind": "divya-desams",
+          "title": "Tiruppullambhootangdi",
+          "overlap": 0.7
+        },
+        {
+          "file": "divya-desams/tiruputkuzhi.json",
+          "kind": "divya-desams",
+          "title": "Tiruputkuzhi",
+          "overlap": 0.57
         }
       ]
     },
@@ -294,6 +526,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-11-tiruaadanoor",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-11-tiruaadanoor",
+      "title": "108 Divyadesam-11) Tiruaadanoor",
+      "publishedAt": "2020-01-22T17:09:00.000Z",
+      "containment": 0.71,
+      "matches": [
+        {
+          "file": "divya-desams/tiruaadanoor.json",
+          "kind": "divya-desams",
+          "title": "Tiruaadanoor",
+          "overlap": 0.71
+        },
+        {
+          "file": "divya-desams/tirumanimada-kovil.json",
+          "kind": "divya-desams",
+          "title": "Tirumanimada Kovil",
+          "overlap": 0.53
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "339",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/22/108-divyadesam-11-tiruaadanoor/",
@@ -312,6 +566,34 @@
           "kind": "divya-desams",
           "title": "Tirumanimada Kovil",
           "overlap": 0.45
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-12-tirukkudandai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-12-tirukkudandai",
+      "title": "108 Divyadesam-12) Tirukkudandai",
+      "publishedAt": "2020-01-23T16:51:00.000Z",
+      "containment": 0.59,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkudandai.json",
+          "kind": "divya-desams",
+          "title": "Tirukkudandai",
+          "overlap": 0.5
+        },
+        {
+          "file": "divya-desams/tiruvenkatam.json",
+          "kind": "divya-desams",
+          "title": "Tiruvenkatam",
+          "overlap": 0.21
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nathamunigal.json",
+          "kind": "chapter",
+          "title": "Nathamunigal",
+          "overlap": 0.14
         }
       ]
     },
@@ -344,6 +626,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-13-tiruvinnagaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-13-tiruvinnagaram",
+      "title": "108 Divyadesam-13) Tiruvinnagaram",
+      "publishedAt": "2020-01-24T16:08:00.000Z",
+      "containment": 0.53,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruvinnagaram",
+          "overlap": 0.53
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "333",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/24/108-divyadesam-13-tiruvinnagaram/",
@@ -356,6 +654,28 @@
           "kind": "divya-desams",
           "title": "Tiruvinnagaram",
           "overlap": 0.44
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-14-nachiyarkoil",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-14-nachiyarkoil",
+      "title": "108 Divyadesam-14) Nachiyarkoil",
+      "publishedAt": "2020-01-25T16:37:00.000Z",
+      "containment": 0.79,
+      "matches": [
+        {
+          "file": "divya-desams/nachiyarkoil.json",
+          "kind": "divya-desams",
+          "title": "Nachiyarkoil",
+          "overlap": 0.78
+        },
+        {
+          "file": "divya-desams/tiruvaali-tirunagari.json",
+          "kind": "divya-desams",
+          "title": "Tiruvaali Tirunagari",
+          "overlap": 0.07
         }
       ]
     },
@@ -382,6 +702,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-15-tirucherai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-15-tirucherai",
+      "title": "108 Divyadesam-15) Tirucherai",
+      "publishedAt": "2020-01-26T16:25:00.000Z",
+      "containment": 0.66,
+      "matches": [
+        {
+          "file": "divya-desams/tirucherai.json",
+          "kind": "divya-desams",
+          "title": "Tirucherai",
+          "overlap": 0.65
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "325",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/26/108-divyadesam-15-tirucherai/",
@@ -394,6 +730,22 @@
           "kind": "divya-desams",
           "title": "Tirucherai",
           "overlap": 0.57
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-16-tirukannamangai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-16-tirukannamangai",
+      "title": "108 Divyadesam-16) Tirukannamangai",
+      "publishedAt": "2020-01-27T16:08:00.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "divya-desams/tirukannamangai.json",
+          "kind": "divya-desams",
+          "title": "Tirukannamangai",
+          "overlap": 0.67
         }
       ]
     },
@@ -414,6 +766,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-17-tirukannapuram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-17-tirukannapuram",
+      "title": "108 Divyadesam-17) Tirukannapuram",
+      "publishedAt": "2020-01-28T16:43:00.000Z",
+      "containment": 0.7,
+      "matches": [
+        {
+          "file": "divya-desams/tirukannapuram.json",
+          "kind": "divya-desams",
+          "title": "Tirukannapuram",
+          "overlap": 0.69
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "319",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/28/108-divyadesam-17-tirukannapuram/",
@@ -426,6 +794,22 @@
           "kind": "divya-desams",
           "title": "Tirukannapuram",
           "overlap": 0.58
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-18-tirukannangudi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-18-tirukannangudi",
+      "title": "108 Divyadesam- 18) Tirukannangudi",
+      "publishedAt": "2020-01-29T16:11:00.000Z",
+      "containment": 0.4,
+      "matches": [
+        {
+          "file": "divya-desams/tirukannangudi.json",
+          "kind": "divya-desams",
+          "title": "Tirukannangudi",
+          "overlap": 0.39
         }
       ]
     },
@@ -446,6 +830,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-19-tirunaagai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-19-tirunaagai",
+      "title": "108 Divyadesam-19) Tirunaagai",
+      "publishedAt": "2020-01-30T15:50:00.000Z",
+      "containment": 0.64,
+      "matches": [
+        {
+          "file": "divya-desams/tirunaagai.json",
+          "kind": "divya-desams",
+          "title": "Tirunaagai",
+          "overlap": 0.63
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "313",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/30/108-divyadesam-19-tirunaagai/",
@@ -458,6 +858,22 @@
           "kind": "divya-desams",
           "title": "Tirunaagai",
           "overlap": 0.58
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-20-tanjai-mamanikoyil",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-20-tanjai-mamanikoyil",
+      "title": "108 Divyadesam-20) Tanjai Mamanikoyil",
+      "publishedAt": "2020-01-31T16:23:00.000Z",
+      "containment": 0.55,
+      "matches": [
+        {
+          "file": "divya-desams/tanjai-mamanikoyil.json",
+          "kind": "divya-desams",
+          "title": "Tanjai Mamanikoyil",
+          "overlap": 0.55
         }
       ]
     },
@@ -478,6 +894,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesams-21-tirunandipura-vinnagaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesams-21-tirunandipura-vinnagaram",
+      "title": "108 Divyadesams- 21) Tirunandipura Vinnagaram",
+      "publishedAt": "2020-02-01T14:46:00.000Z",
+      "containment": 0.67,
+      "matches": [
+        {
+          "file": "divya-desams/tirunandipura-vinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tirunandipura Vinnagaram",
+          "overlap": 0.67
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "303",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/01/108-divyadesams-21-tirunandipura-vinnagaram/",
@@ -490,6 +922,22 @@
           "kind": "divya-desams",
           "title": "Tirunandipura Vinnagaram",
           "overlap": 0.48
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-22-tiruvelliyangudi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-22-tiruvelliyangudi",
+      "title": "108 Divyadesam-22) Tiruvelliyangudi",
+      "publishedAt": "2020-02-02T16:26:00.000Z",
+      "containment": 0.78,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvelliyangudi.json",
+          "kind": "divya-desams",
+          "title": "Tiruvelliyangudi",
+          "overlap": 0.77
         }
       ]
     },
@@ -510,6 +958,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-23-tiruvazhundur-therazhundur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-23-tiruvazhundur-therazhundur",
+      "title": "108 Divyadesam-23) Tiruvazhundur(Therazhundur)",
+      "publishedAt": "2020-02-03T16:10:00.000Z",
+      "containment": 0.77,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvazhundur-therazhundur.json",
+          "kind": "divya-desams",
+          "title": "Tiruvazhundur(Therazhundur)",
+          "overlap": 0.77
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "297",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/03/108-divyadesam-23-tiruvazhundurtherazhundur/",
@@ -522,6 +986,28 @@
           "kind": "divya-desams",
           "title": "Tiruvazhundur(Therazhundur)",
           "overlap": 0.64
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-24-tiruchirupuliyur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-24-tiruchirupuliyur",
+      "title": "108 Divyadesam- 24) Tiruchirupuliyur",
+      "publishedAt": "2020-02-04T15:44:00.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "divya-desams/tiruchirupuliyur.json",
+          "kind": "divya-desams",
+          "title": "Tiruchirupuliyur",
+          "overlap": 0.68
+        },
+        {
+          "file": "divya-desams/tiruarimeya-vinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruarimeya Vinnagaram",
+          "overlap": 0.28
         }
       ]
     },
@@ -548,6 +1034,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-25-talaichchanga-naanmadiyam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-25-talaichchanga-naanmadiyam",
+      "title": "108 Divyadesam- 25) Talaichchanga Naanmadiyam",
+      "publishedAt": "2020-02-05T15:50:00.000Z",
+      "containment": 0.65,
+      "matches": [
+        {
+          "file": "divya-desams/talaichchanga-naanmadiyam.json",
+          "kind": "divya-desams",
+          "title": "Talaichchanga Naanmadiyam",
+          "overlap": 0.63
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "291",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/05/108-divyadesam-25-talaichchanga-naanmadiyam/",
@@ -560,6 +1062,22 @@
           "kind": "divya-desams",
           "title": "Talaichchanga Naanmadiyam",
           "overlap": 0.49
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divadesam-26-tiruindhalur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divadesam-26-tiruindhalur",
+      "title": "108 Divadesam-26) Tiruindhalur",
+      "publishedAt": "2020-02-06T15:13:00.000Z",
+      "containment": 0.69,
+      "matches": [
+        {
+          "file": "divya-desams/tiruindhalur.json",
+          "kind": "divya-desams",
+          "title": "Tiruindhalur",
+          "overlap": 0.69
         }
       ]
     },
@@ -580,6 +1098,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-27-tirunangur-tirukavalampadi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-27-tirunangur-tirukavalampadi",
+      "title": "108 Divyadesam-27) Tirunangur Tirukavalampadi",
+      "publishedAt": "2020-02-07T16:47:00.000Z",
+      "containment": 0.7,
+      "matches": [
+        {
+          "file": "divya-desams/tirunangur-tirukavalampadi.json",
+          "kind": "divya-desams",
+          "title": "Tirunangur Tirukavalampadi",
+          "overlap": 0.7
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "285",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/07/108-divyadesam-27-tirunangur-tirukavalampadi/",
@@ -596,6 +1130,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-28-tirukazhicheerama-vinnagaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-28-tirukazhicheerama-vinnagaram",
+      "title": "108 Divyadesam- 28) Tirukazhicheerama Vinnagaram",
+      "publishedAt": "2020-02-08T16:04:00.000Z",
+      "containment": 0.62,
+      "matches": [
+        {
+          "file": "divya-desams/tirukazhicheerama-vinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tirukazhicheerama Vinnagaram",
+          "overlap": 0.6
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "282",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/08/108-divyadesam-28-tirukazhicheerama-vinnagaram/",
@@ -608,6 +1158,28 @@
           "kind": "divya-desams",
           "title": "Tirukazhicheerama Vinnagaram",
           "overlap": 0.47
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-29-tiruarimeya-vinnagaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-29-tiruarimeya-vinnagaram",
+      "title": "108 Divyadesam-29) Tiruarimeya Vinnagaram",
+      "publishedAt": "2020-02-09T16:07:00.000Z",
+      "containment": 0.57,
+      "matches": [
+        {
+          "file": "divya-desams/tiruarimeya-vinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruarimeya Vinnagaram",
+          "overlap": 0.57
+        },
+        {
+          "file": "divya-desams/tiruchirupuliyur.json",
+          "kind": "divya-desams",
+          "title": "Tiruchirupuliyur",
+          "overlap": 0.39
         }
       ]
     },
@@ -634,6 +1206,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-30-tiruvanpurushottamam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-30-tiruvanpurushottamam",
+      "title": "108 Divyadesam-30) Tiruvanpurushottamam",
+      "publishedAt": "2020-02-10T16:22:00.000Z",
+      "containment": 0.42,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvanpurushottamam.json",
+          "kind": "divya-desams",
+          "title": "Tiruvanpurushottamam",
+          "overlap": 0.42
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "276",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/10/108-divyadesam-30-tiruvanpurushottamam/",
@@ -650,6 +1238,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-31-tirusemponsei-kovil",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-31-tirusemponsei-kovil",
+      "title": "108 Divyadesam-31) Tirusemponsei Kovil",
+      "publishedAt": "2020-02-11T15:10:00.000Z",
+      "containment": 0.49,
+      "matches": [
+        {
+          "file": "divya-desams/tirusemponsei-kovil.json",
+          "kind": "divya-desams",
+          "title": "Tirusemponsei Kovil",
+          "overlap": 0.49
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "273",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/11/108-divyadesam-31-tirusemponsei-kovil/",
@@ -662,6 +1266,28 @@
           "kind": "divya-desams",
           "title": "Tirusemponsei Kovil",
           "overlap": 0.4
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-32-tirumanimada-kovil",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-32-tirumanimada-kovil",
+      "title": "108 Divyadesam-32) Tirumanimada Kovil",
+      "publishedAt": "2020-02-12T15:59:00.000Z",
+      "containment": 0.69,
+      "matches": [
+        {
+          "file": "divya-desams/tirumanimada-kovil.json",
+          "kind": "divya-desams",
+          "title": "Tirumanimada Kovil",
+          "overlap": 0.68
+        },
+        {
+          "file": "divya-desams/tiruaadanoor.json",
+          "kind": "divya-desams",
+          "title": "Tiruaadanoor",
+          "overlap": 0.37
         }
       ]
     },
@@ -688,6 +1314,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-33-tiruvaikuntha-vinnagaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-33-tiruvaikuntha-vinnagaram",
+      "title": "108 Divyadesam-33) Tiruvaikuntha Vinnagaram",
+      "publishedAt": "2020-02-13T16:20:00.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvaikuntha-vinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruvaikuntha Vinnagaram",
+          "overlap": 0.76
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "265",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/13/108-divyadesam-33-tiruvaikuntha-vinnagaram/",
@@ -700,6 +1342,28 @@
           "kind": "divya-desams",
           "title": "Tiruvaikuntha Vinnagaram",
           "overlap": 0.67
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-34-tiruvaali-tirunagari",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-34-tiruvaali-tirunagari",
+      "title": "108 Divyadesam-34) Tiruvaali Tirunagari",
+      "publishedAt": "2020-02-14T17:23:00.000Z",
+      "containment": 0.65,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvaali-tirunagari.json",
+          "kind": "divya-desams",
+          "title": "Tiruvaali Tirunagari",
+          "overlap": 0.65
+        },
+        {
+          "file": "divya-desams/nachiyarkoil.json",
+          "kind": "divya-desams",
+          "title": "Nachiyarkoil",
+          "overlap": 0.07
         }
       ]
     },
@@ -726,6 +1390,38 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-35-tirudevanaar-togai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-35-tirudevanaar-togai",
+      "title": "108 Divyadesam-35) Tirudevanaar Togai",
+      "publishedAt": "2020-02-15T15:01:00.000Z",
+      "containment": 0.3,
+      "matches": [
+        {
+          "file": "divya-desams/tirudevanaar-togai.json",
+          "kind": "divya-desams",
+          "title": "Tirudevanaar Togai",
+          "overlap": 0.3
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-36-37-tiruttetriambalam-tirumanikoodam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-36-37-tiruttetriambalam-tirumanikoodam",
+      "title": "108 Divyadesam- 36,37) Tiruttetriambalam Tirumanikoodam",
+      "publishedAt": "2020-02-16T16:33:00.000Z",
+      "containment": 0.74,
+      "matches": [
+        {
+          "file": "divya-desams/tiruttetriambalam-tirumanikoodam.json",
+          "kind": "divya-desams",
+          "title": "Tiruttetriambalam Tirumanikoodam",
+          "overlap": 0.74
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "248",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/16/108-divyadesam-3637-tiruttetriambalam-tirumanikoodam/",
@@ -738,6 +1434,22 @@
           "kind": "divya-desams",
           "title": "Tiruttetriambalam Tirumanikoodam",
           "overlap": 0.56
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-38-tiruvellakkulam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-38-tiruvellakkulam",
+      "title": "108 Divyadesam-38) Tiruvellakkulam",
+      "publishedAt": "2020-02-17T16:42:00.000Z",
+      "containment": 0.63,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvellakkulam.json",
+          "kind": "divya-desams",
+          "title": "Tiruvellakkulam",
+          "overlap": 0.63
         }
       ]
     },
@@ -758,6 +1470,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-39-tiruppaartanpalli",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-39-tiruppaartanpalli",
+      "title": "108 Divyadesam-39) Tiruppaartanpalli",
+      "publishedAt": "2020-02-18T13:46:00.000Z",
+      "containment": 0.67,
+      "matches": [
+        {
+          "file": "divya-desams/tiruppaartanpalli.json",
+          "kind": "divya-desams",
+          "title": "Tiruppaartanpalli",
+          "overlap": 0.65
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "242",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/18/108-divyadesam-39-tiruppaartanpalli/",
@@ -774,6 +1502,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-40-tiruchitrakootam-chidambaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-40-tiruchitrakootam-chidambaram",
+      "title": "108 Divyadesam-40) Tiruchitrakootam (Chidambaram)",
+      "publishedAt": "2020-02-19T14:01:00.000Z",
+      "containment": 0.6,
+      "matches": [
+        {
+          "file": "divya-desams/tiruchitrakootam-chidambaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruchitrakootam (Chidambaram)",
+          "overlap": 0.6
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "237",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/19/108-divyadesam-40-tiruchitrakootam-chidambaram/",
@@ -785,6 +1529,22 @@
           "file": "divya-desams/tiruchitrakootam-chidambaram.json",
           "kind": "divya-desams",
           "title": "Tiruchitrakootam (Chidambaram)",
+          "overlap": 0.54
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-41-tiruvahindrapuram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-41-tiruvahindrapuram",
+      "title": "108 Divyadesam-41) Tiruvahindrapuram",
+      "publishedAt": "2020-02-20T15:01:00.000Z",
+      "containment": 0.55,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvahindrapuram.json",
+          "kind": "divya-desams",
+          "title": "Tiruvahindrapuram",
           "overlap": 0.54
         }
       ]
@@ -806,6 +1566,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-42-tirukkovilur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-42-tirukkovilur",
+      "title": "108 Divyadesam-42) Tirukkovilur",
+      "publishedAt": "2020-02-21T16:10:00.000Z",
+      "containment": 0.63,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkovilur.json",
+          "kind": "divya-desams",
+          "title": "Tirukkovilur",
+          "overlap": 0.62
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "227",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/21/108-divyadesam-42-tirukkovilur/",
@@ -818,6 +1594,22 @@
           "kind": "divya-desams",
           "title": "Tirukkovilur",
           "overlap": 0.55
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-43-tirukachchi-hasthigiri",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-43-tirukachchi-hasthigiri",
+      "title": "108 Divyadesam-43)Tirukachchi (Hasthigiri)",
+      "publishedAt": "2020-02-22T16:17:00.000Z",
+      "containment": 0.57,
+      "matches": [
+        {
+          "file": "divya-desams/tirukachchi-hasthigiri.json",
+          "kind": "divya-desams",
+          "title": "Tirukachchi (Hasthigiri)",
+          "overlap": 0.57
         }
       ]
     },
@@ -838,6 +1630,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-44-tiruashtabhujakaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-44-tiruashtabhujakaram",
+      "title": "108 Divyadesam- 44) Tiruashtabhujakaram",
+      "publishedAt": "2020-02-23T16:18:00.000Z",
+      "containment": 0.57,
+      "matches": [
+        {
+          "file": "divya-desams/tiruashtabhujakaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruashtabhujakaram",
+          "overlap": 0.57
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "219",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/23/108-divyadesam-44-tiruashtabhujakaram/",
@@ -850,6 +1658,34 @@
           "kind": "divya-desams",
           "title": "Tiruashtabhujakaram",
           "overlap": 0.49
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-45-tiruttankaa-tooppul",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-45-tiruttankaa-tooppul",
+      "title": "108 Divyadesam-45) Tiruttankaa(Tooppul)",
+      "publishedAt": "2020-02-24T13:00:00.000Z",
+      "containment": 0.77,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "kind": "chapter",
+          "title": "Artha Panchakam",
+          "overlap": 0.59
+        },
+        {
+          "file": "divya-desams/tiruttankaa-tooppul.json",
+          "kind": "divya-desams",
+          "title": "Tiruttankaa(Tooppul)",
+          "overlap": 0.54
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/childhood-and-education-of-swami-desikan.json",
+          "kind": "chapter",
+          "title": "Childhood and Education of Swami Deshikan",
+          "overlap": 0.25
         }
       ]
     },
@@ -882,6 +1718,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-46-tiruvelukkai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-46-tiruvelukkai",
+      "title": "108 Divyadesam-46) Tiruvelukkai",
+      "publishedAt": "2020-02-25T14:43:00.000Z",
+      "containment": 0.5,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvelukkai.json",
+          "kind": "divya-desams",
+          "title": "Tiruvelukkai",
+          "overlap": 0.49
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "211",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/25/108-divyadesam-46-tiruvelukkai/",
@@ -894,6 +1746,22 @@
           "kind": "divya-desams",
           "title": "Tiruvelukkai",
           "overlap": 0.4
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-47-tiruneeragam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-47-tiruneeragam",
+      "title": "108 Divyadesam- 47) Tiruneeragam",
+      "publishedAt": "2020-02-26T13:04:00.000Z",
+      "containment": 0.53,
+      "matches": [
+        {
+          "file": "divya-desams/tiruneeragam.json",
+          "kind": "divya-desams",
+          "title": "Tiruneeragam",
+          "overlap": 0.51
         }
       ]
     },
@@ -914,6 +1782,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-48-tirupadagam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-48-tirupadagam",
+      "title": "108 Divyadesam- 48) Tirupadagam",
+      "publishedAt": "2020-02-27T12:50:00.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "divya-desams/tirupadagam.json",
+          "kind": "divya-desams",
+          "title": "Tirupadagam",
+          "overlap": 0.76
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "205",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/27/108-divyadesam-48-tirupadagam/",
@@ -926,6 +1810,22 @@
           "kind": "divya-desams",
           "title": "Tirupadagam",
           "overlap": 0.65
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-49-tirunilatingal-tundam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-49-tirunilatingal-tundam",
+      "title": "108 Divyadesam-49) Tirunilatingal Tundam",
+      "publishedAt": "2020-02-28T15:10:00.000Z",
+      "containment": 0.62,
+      "matches": [
+        {
+          "file": "divya-desams/tirunilatingal-tundam.json",
+          "kind": "divya-desams",
+          "title": "Tirunilatingal Tundam",
+          "overlap": 0.62
         }
       ]
     },
@@ -946,6 +1846,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-50-tiruooragam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-50-tiruooragam",
+      "title": "108 Divyadesam-50) Tiruooragam",
+      "publishedAt": "2020-02-29T16:56:00.000Z",
+      "containment": 0.63,
+      "matches": [
+        {
+          "file": "divya-desams/tiruooragam.json",
+          "kind": "divya-desams",
+          "title": "Tiruooragam",
+          "overlap": 0.63
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "195",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/29/108-divyadesam-50-tiruooragam/",
@@ -958,6 +1874,22 @@
           "kind": "divya-desams",
           "title": "Tiruooragam",
           "overlap": 0.45
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-51-tiruvegka",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-51-tiruvegka",
+      "title": "108 Divyadesam-51) Tiruvegka",
+      "publishedAt": "2020-03-01T15:19:00.000Z",
+      "containment": 0.38,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvegka.json",
+          "kind": "divya-desams",
+          "title": "Tiruvegka",
+          "overlap": 0.38
         }
       ]
     },
@@ -978,6 +1910,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-52-tirukaaragam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-52-tirukaaragam",
+      "title": "108 Divyadesam-52) Tirukaaragam",
+      "publishedAt": "2020-03-02T13:26:00.000Z",
+      "containment": 0.52,
+      "matches": [
+        {
+          "file": "divya-desams/tirukaaragam.json",
+          "kind": "divya-desams",
+          "title": "Tirukaaragam",
+          "overlap": 0.52
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "189",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/02/108-divyadesam-52-tirukaaragam/",
@@ -990,6 +1938,22 @@
           "kind": "divya-desams",
           "title": "Tirukaaragam",
           "overlap": 0.46
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-53-tirukaarvanam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-53-tirukaarvanam",
+      "title": "108 Divyadesam- 53) Tirukaarvanam",
+      "publishedAt": "2020-03-03T16:15:00.000Z",
+      "containment": 0.64,
+      "matches": [
+        {
+          "file": "divya-desams/tirukaarvanam.json",
+          "kind": "divya-desams",
+          "title": "Tirukaarvanam",
+          "overlap": 0.64
         }
       ]
     },
@@ -1010,6 +1974,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-54-tirukalvanoor",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-54-tirukalvanoor",
+      "title": "108 Divyadesam- 54) Tirukalvanoor",
+      "publishedAt": "2020-03-04T14:39:00.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "divya-desams/tirukalvanoor.json",
+          "kind": "divya-desams",
+          "title": "Tirukalvanoor",
+          "overlap": 0.68
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "184",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/04/108-divyadesam-54-tirukalvanoor/",
@@ -1022,6 +2002,22 @@
           "kind": "divya-desams",
           "title": "Tirukalvanoor",
           "overlap": 0.45
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-55-tiruppavalvannam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-55-tiruppavalvannam",
+      "title": "108 Divyadesam- 55) Tiruppavalvannam",
+      "publishedAt": "2020-03-05T16:14:00.000Z",
+      "containment": 0.49,
+      "matches": [
+        {
+          "file": "divya-desams/tiruppavalvannam.json",
+          "kind": "divya-desams",
+          "title": "Tiruppavalvannam",
+          "overlap": 0.49
         }
       ]
     },
@@ -1042,6 +2038,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-56-tiruparameshwara-vinnagaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-56-tiruparameshwara-vinnagaram",
+      "title": "108 Divyadesam- 56) Tiruparameshwara Vinnagaram",
+      "publishedAt": "2020-03-06T16:57:00.000Z",
+      "containment": 0.46,
+      "matches": [
+        {
+          "file": "divya-desams/tiruparameshwara-vinnagaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruparameshwara Vinnagaram",
+          "overlap": 0.46
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "178",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/06/108-divyadesam-56-tiruparameshwara-vinnagaram/",
@@ -1054,6 +2066,28 @@
           "kind": "divya-desams",
           "title": "Tiruparameshwara Vinnagaram",
           "overlap": 0.32
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-57-tiruputkuzhi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-57-tiruputkuzhi",
+      "title": "108 Divyadesam- 57) Tiruputkuzhi",
+      "publishedAt": "2020-03-07T14:20:00.000Z",
+      "containment": 0.66,
+      "matches": [
+        {
+          "file": "divya-desams/tiruputkuzhi.json",
+          "kind": "divya-desams",
+          "title": "Tiruputkuzhi",
+          "overlap": 0.66
+        },
+        {
+          "file": "divya-desams/tiruppullambhootangdi.json",
+          "kind": "divya-desams",
+          "title": "Tiruppullambhootangdi",
+          "overlap": 0.34
         }
       ]
     },
@@ -1080,6 +2114,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-58-tirunindravur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-58-tirunindravur",
+      "title": "108 Divyadesam- 58) Tirunindravur",
+      "publishedAt": "2020-03-08T14:45:00.000Z",
+      "containment": 0.43,
+      "matches": [
+        {
+          "file": "divya-desams/tirunindravur.json",
+          "kind": "divya-desams",
+          "title": "Tirunindravur",
+          "overlap": 0.43
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "172",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/08/108-divyadesam-58-tirunindravur/",
@@ -1092,6 +2142,22 @@
           "kind": "divya-desams",
           "title": "Tirunindravur",
           "overlap": 0.29
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-59-tiru-evvellur-tiruvallur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-59-tiru-evvellur-tiruvallur",
+      "title": "108 Divyadesam- 59) Tiru Evvellur ( Tiruvallur )",
+      "publishedAt": "2020-03-09T16:19:00.000Z",
+      "containment": 0.65,
+      "matches": [
+        {
+          "file": "divya-desams/tiru-evvellur-tiruvallur.json",
+          "kind": "divya-desams",
+          "title": "Tiru Evvellur (Tiruvallūr)",
+          "overlap": 0.65
         }
       ]
     },
@@ -1112,6 +2178,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-60-tiruvallikkeni",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-60-tiruvallikkeni",
+      "title": "108 Divyadesam- 60) Tiruvallikkeni",
+      "publishedAt": "2020-03-10T15:29:00.000Z",
+      "containment": 0.6,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvallikkeni.json",
+          "kind": "divya-desams",
+          "title": "Tiruvallikkeni",
+          "overlap": 0.6
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "166",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/10/108-divyadesam-60-tiruvallikkeni/",
@@ -1124,6 +2206,22 @@
           "kind": "divya-desams",
           "title": "Tiruvallikkeni",
           "overlap": 0.49
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-61-tiruneermalai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-61-tiruneermalai",
+      "title": "108 Divyadesam- 61) Tiruneermalai",
+      "publishedAt": "2020-03-11T15:10:00.000Z",
+      "containment": 0.61,
+      "matches": [
+        {
+          "file": "divya-desams/tiruneermalai.json",
+          "kind": "divya-desams",
+          "title": "Tiruneermalai",
+          "overlap": 0.6
         }
       ]
     },
@@ -1144,6 +2242,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-62-tiruvidandai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-62-tiruvidandai",
+      "title": "108 Divyadesam- 62) Tiruvidandai",
+      "publishedAt": "2020-03-12T14:41:00.000Z",
+      "containment": 0.57,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvidandai.json",
+          "kind": "divya-desams",
+          "title": "Tiruvidandai",
+          "overlap": 0.57
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "160",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/12/108-divyadesam-62-tiruvidandai/",
@@ -1156,6 +2270,22 @@
           "kind": "divya-desams",
           "title": "Tiruvidandai",
           "overlap": 0.49
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-63-tirukadalmallai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-63-tirukadalmallai",
+      "title": "108 Divyadesam- 63) Tirukadalmallai",
+      "publishedAt": "2020-03-13T14:37:00.000Z",
+      "containment": 0.53,
+      "matches": [
+        {
+          "file": "divya-desams/tirukadalmallai.json",
+          "kind": "divya-desams",
+          "title": "Tirukadalmallai",
+          "overlap": 0.53
         }
       ]
     },
@@ -1176,6 +2306,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-64-tirukkadigai-sholingapuram---gadikachalam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-64-tirukkadigai-sholingapuram---gadikachalam",
+      "title": "108 Divyadesam- 64) Tirukkadigai ( Sholingapuram / Gadikachalam )",
+      "publishedAt": "2020-03-14T13:15:00.000Z",
+      "containment": 0.64,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkadigai-sholingapuram-gadikachalam.json",
+          "kind": "divya-desams",
+          "title": "Tirukkadigai (Sholingapuram / Gadikachalam)",
+          "overlap": 0.62
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "152",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/14/108-divyadesam-64-tirukkadigai-sholingapuram-gadikachalam/",
@@ -1188,6 +2334,22 @@
           "kind": "divya-desams",
           "title": "Tirukkadigai (Sholingapuram / Gadikachalam)",
           "overlap": 0.56
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-65-tirunaavai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-65-tirunaavai",
+      "title": "108 Divyadesam- 65) Tirunaavai",
+      "publishedAt": "2020-03-15T13:07:00.000Z",
+      "containment": 0.72,
+      "matches": [
+        {
+          "file": "divya-desams/tirunaavai.json",
+          "kind": "divya-desams",
+          "title": "Tirunaavai",
+          "overlap": 0.71
         }
       ]
     },
@@ -1208,6 +2370,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-66-tiruvithuvakodu",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-66-tiruvithuvakodu",
+      "title": "108 Divyadesam- 66) Tiruvithuvakodu",
+      "publishedAt": "2020-03-16T14:15:00.000Z",
+      "containment": 0.58,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvithuvakodu.json",
+          "kind": "divya-desams",
+          "title": "Tiruvithuvakodu",
+          "overlap": 0.58
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "146",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/16/108-divyadesam-66-tiruvithuvakodu/",
@@ -1220,6 +2398,22 @@
           "kind": "divya-desams",
           "title": "Tiruvithuvakodu",
           "overlap": 0.51
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-67-tirukakkarai-tirukatkarai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-67-tirukakkarai-tirukatkarai",
+      "title": "108 Divyadesam - 67) Tirukakkarai ( Tirukatkarai )",
+      "publishedAt": "2020-03-17T13:33:00.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "divya-desams/tirukakkarai-tirukatkarai.json",
+          "kind": "divya-desams",
+          "title": "Tirukakkarai (Tirukatkarai)",
+          "overlap": 0.68
         }
       ]
     },
@@ -1240,6 +2434,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-68-tirumoozhikkalam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-68-tirumoozhikkalam",
+      "title": "108 Divyadesam- 68) Tirumoozhikkalam",
+      "publishedAt": "2020-03-18T12:48:00.000Z",
+      "containment": 0.64,
+      "matches": [
+        {
+          "file": "divya-desams/tirumoozhikkalam.json",
+          "kind": "divya-desams",
+          "title": "Tirumoozhikkalam",
+          "overlap": 0.64
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "142",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/18/108-divyadesam-68-tirumoozhikkalam/",
@@ -1252,6 +2462,22 @@
           "kind": "divya-desams",
           "title": "Tirumoozhikkalam",
           "overlap": 0.51
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-69-tiruvallavazh",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-69-tiruvallavazh",
+      "title": "108 Divyadesam - 69) Tiruvallavazh",
+      "publishedAt": "2020-03-19T16:27:00.000Z",
+      "containment": 0.55,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvallavazh.json",
+          "kind": "divya-desams",
+          "title": "Tiruvallavazh",
+          "overlap": 0.52
         }
       ]
     },
@@ -1272,6 +2498,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-70-tirukodittanam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-70-tirukodittanam",
+      "title": "108 Divyadesam - 70) Tirukodittanam",
+      "publishedAt": "2020-03-20T14:43:00.000Z",
+      "containment": 0.56,
+      "matches": [
+        {
+          "file": "divya-desams/tirukodittanam.json",
+          "kind": "divya-desams",
+          "title": "Tirukodittanam",
+          "overlap": 0.55
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "136",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/20/108-divyadesam-70-tirukodittanam/",
@@ -1284,6 +2526,22 @@
           "kind": "divya-desams",
           "title": "Tirukodittanam",
           "overlap": 0.48
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-71-tiruchengannur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-71-tiruchengannur",
+      "title": "108 Divyadesam - 71) Tiruchengannur",
+      "publishedAt": "2020-03-21T13:51:00.000Z",
+      "containment": 0.51,
+      "matches": [
+        {
+          "file": "divya-desams/tiruchengannur.json",
+          "kind": "divya-desams",
+          "title": "Tiruchengannur",
+          "overlap": 0.51
         }
       ]
     },
@@ -1304,6 +2562,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-72-tirupuliyur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-72-tirupuliyur",
+      "title": "108 Divyadesam - 72) Tirupuliyur",
+      "publishedAt": "2020-03-22T12:37:00.000Z",
+      "containment": 0.49,
+      "matches": [
+        {
+          "file": "divya-desams/tirupuliyur.json",
+          "kind": "divya-desams",
+          "title": "Tirupuliyur",
+          "overlap": 0.49
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "128",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/22/108-divyadesam-72-tirupuliyur/",
@@ -1316,6 +2590,22 @@
           "kind": "divya-desams",
           "title": "Tirupuliyur",
           "overlap": 0.48
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-73-tiruvaaranvilai-aranmula",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-73-tiruvaaranvilai-aranmula",
+      "title": "108 Divyadesam - 73) Tiruvaaranvilai (Aranmula)",
+      "publishedAt": "2020-03-23T15:58:00.000Z",
+      "containment": 0.52,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvaaranvilai-aranmula.json",
+          "kind": "divya-desams",
+          "title": "Tiruvaaranvilai (Aranmula)",
+          "overlap": 0.52
         }
       ]
     },
@@ -1336,6 +2626,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-74-tiruvanvandoor",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-74-tiruvanvandoor",
+      "title": "108 Divyadesam - 74) Tiruvanvandoor",
+      "publishedAt": "2020-03-24T14:18:00.000Z",
+      "containment": 0.72,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvanvandoor.json",
+          "kind": "divya-desams",
+          "title": "Tiruvanvandoor",
+          "overlap": 0.7
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "122",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/24/108-divyadesam-74-tiruvanvandoor/",
@@ -1348,6 +2654,22 @@
           "kind": "divya-desams",
           "title": "Tiruvanvandoor",
           "overlap": 0.59
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-75-tiruvananthapuram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-75-tiruvananthapuram",
+      "title": "108 Divyadesam - 75) Tiruvananthapuram",
+      "publishedAt": "2020-03-25T15:24:00.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvananthapuram.json",
+          "kind": "divya-desams",
+          "title": "Tiruvanantapuram",
+          "overlap": 0.68
         }
       ]
     },
@@ -1368,6 +2690,38 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-76-tiruvattaaru",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-76-tiruvattaaru",
+      "title": "108 Divyadesam - 76) Tiruvattaaru",
+      "publishedAt": "2020-03-26T15:40:00.000Z",
+      "containment": 0.25,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvattaaru.json",
+          "kind": "divya-desams",
+          "title": "Tiruvattaaru",
+          "overlap": 0.21
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-77-tiruvanparisaram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-77-tiruvanparisaram",
+      "title": "108 Divyadesam- 77) Tiruvanparisaram",
+      "publishedAt": "2020-03-27T14:54:00.000Z",
+      "containment": 0.56,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvanparisaram.json",
+          "kind": "divya-desams",
+          "title": "Tiruvanparisaram",
+          "overlap": 0.56
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "113",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/27/108-divyadesam-77-tiruvanparisaram/",
@@ -1380,6 +2734,22 @@
           "kind": "divya-desams",
           "title": "Tiruvanparisaram",
           "overlap": 0.41
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-78-tirukurungudi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-78-tirukurungudi",
+      "title": "108 Divyadesam- 78) Tirukurungudi",
+      "publishedAt": "2020-03-28T15:05:00.000Z",
+      "containment": 0.53,
+      "matches": [
+        {
+          "file": "divya-desams/tirukurungudi.json",
+          "kind": "divya-desams",
+          "title": "Tirukurungudi",
+          "overlap": 0.5
         }
       ]
     },
@@ -1400,6 +2770,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-79-tiruchireevaramangai-vanamamalai---nanguneri",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-79-tiruchireevaramangai-vanamamalai---nanguneri",
+      "title": "108 Divyadesam - 79) Tiruchireevaramangai(Vanamamalai / Nanguneri)",
+      "publishedAt": "2020-03-29T15:23:00.000Z",
+      "containment": 0.74,
+      "matches": [
+        {
+          "file": "divya-desams/tiruchireevaramangai-vanamamalai-nanguneri.json",
+          "kind": "divya-desams",
+          "title": "Tiruchireevaramangai (Vanamamalai / Nāṅguṇēri)",
+          "overlap": 0.74
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "100",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/29/108-divyadesam-79-tiruchireevaramangaivanamamalai-nanguneri/",
@@ -1411,6 +2797,22 @@
           "file": "divya-desams/tiruchireevaramangai-vanamamalai-nanguneri.json",
           "kind": "divya-desams",
           "title": "Tiruchireevaramangai (Vanamamalai / Nāṅguṇēri)",
+          "overlap": 0.71
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-81-tiruvaragunamangai-nattham",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-81-tiruvaragunamangai-nattham",
+      "title": "108 Divyadesam- 81) Tiruvaragunamangai Nattham",
+      "publishedAt": "2020-03-31T14:18:00.000Z",
+      "containment": 0.72,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvaragunamangai-nattham.json",
+          "kind": "divya-desams",
+          "title": "Tiruvaragunamangai Nattham",
           "overlap": 0.71
         }
       ]
@@ -1432,6 +2834,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-82-tiruppulingudi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-82-tiruppulingudi",
+      "title": "108 Divyadesam - 82) Tiruppulingudi",
+      "publishedAt": "2020-04-01T14:26:00.000Z",
+      "containment": 0.48,
+      "matches": [
+        {
+          "file": "divya-desams/tiruppulingudi.json",
+          "kind": "divya-desams",
+          "title": "Tiruppulingudi",
+          "overlap": 0.48
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "91",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/01/108-divyadesam-82-tiruppulingudi/",
@@ -1444,6 +2862,22 @@
           "kind": "divya-desams",
           "title": "Tiruppulingudi",
           "overlap": 0.53
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-83-tirutholaivillimangalam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-83-tirutholaivillimangalam",
+      "title": "108 Divyadesam - 83) Tirutholaivillimangalam",
+      "publishedAt": "2020-04-02T13:29:00.000Z",
+      "containment": 0.45,
+      "matches": [
+        {
+          "file": "divya-desams/tirutholaivillimangalam.json",
+          "kind": "divya-desams",
+          "title": "Tirutholaivillimangalam",
+          "overlap": 0.43
         }
       ]
     },
@@ -1464,6 +2898,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-84-tirukkulandai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-84-tirukkulandai",
+      "title": "108 Divyadesam - 84) Tirukkulandai",
+      "publishedAt": "2020-04-03T15:23:00.000Z",
+      "containment": 0.52,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkulandai.json",
+          "kind": "divya-desams",
+          "title": "Tirukkulandai",
+          "overlap": 0.52
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "83",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/03/108-divyadesam-84-tirukkulandai/",
@@ -1476,6 +2926,22 @@
           "kind": "divya-desams",
           "title": "Tirukkulandai",
           "overlap": 0.44
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-85-tirukkolur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-85-tirukkolur",
+      "title": "108 Divyadesam - 85) Tirukkolur",
+      "publishedAt": "2020-04-04T15:43:00.000Z",
+      "containment": 0.56,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkolur.json",
+          "kind": "divya-desams",
+          "title": "Tirukkolur",
+          "overlap": 0.56
         }
       ]
     },
@@ -1496,6 +2962,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-86-tirupperai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-86-tirupperai",
+      "title": "108 Divyadesam - 86) Tirupperai",
+      "publishedAt": "2020-04-05T14:04:00.000Z",
+      "containment": 0.36,
+      "matches": [
+        {
+          "file": "divya-desams/tirupperai.json",
+          "kind": "divya-desams",
+          "title": "Tirupperai",
+          "overlap": 0.36
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "77",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/05/108-divyadesam-86-tirupperai/",
@@ -1508,6 +2990,28 @@
           "kind": "divya-desams",
           "title": "Tirupperai",
           "overlap": 0.46
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-87-tirukkurugur-azhwar-tirunagari",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-87-tirukkurugur-azhwar-tirunagari",
+      "title": "108 Divyadesam - 87) Tirukkurugur( Azhwar Tirunagari )",
+      "publishedAt": "2020-04-06T14:50:00.000Z",
+      "containment": 0.64,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkurugur-azhwar-tirunagari.json",
+          "kind": "divya-desams",
+          "title": "Tirukkurugur (Āzhwār Tirunagari)",
+          "overlap": 0.55
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+          "kind": "chapter",
+          "title": "Nam Āzhwār",
+          "overlap": 0.43
         }
       ]
     },
@@ -1534,6 +3038,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-88-srivilliputtur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-88-srivilliputtur",
+      "title": "108 Divyadesam - 88) Srivilliputtur",
+      "publishedAt": "2020-04-07T15:10:00.000Z",
+      "containment": 0.66,
+      "matches": [
+        {
+          "file": "divya-desams/srivilliputtur.json",
+          "kind": "divya-desams",
+          "title": "Srivilliputtur",
+          "overlap": 0.66
+        },
+        {
+          "file": "divya-desams/tirukoodal.json",
+          "kind": "divya-desams",
+          "title": "Tirukoodal",
+          "overlap": 0.33
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "62",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/07/108-divyadesam-88-srivilliputtur/",
@@ -1556,6 +3082,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-89-tirutthangal",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-89-tirutthangal",
+      "title": "108 Divyadesam - 89) Tirutthangal",
+      "publishedAt": "2020-04-08T08:00:00.000Z",
+      "containment": 0.79,
+      "matches": [
+        {
+          "file": "divya-desams/tirutthangal.json",
+          "kind": "divya-desams",
+          "title": "Tirutthangal",
+          "overlap": 0.79
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "59",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/08/108-divyadesam-89-tirutthangal/",
@@ -1568,6 +3110,28 @@
           "kind": "divya-desams",
           "title": "Tirutthangal",
           "overlap": 0.75
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-90-tirukoodal",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-90-tirukoodal",
+      "title": "108 Divyadesam - 90) Tirukoodal",
+      "publishedAt": "2020-04-09T07:50:00.000Z",
+      "containment": 0.73,
+      "matches": [
+        {
+          "file": "divya-desams/tirukoodal.json",
+          "kind": "divya-desams",
+          "title": "Tirukoodal",
+          "overlap": 0.73
+        },
+        {
+          "file": "divya-desams/srivilliputtur.json",
+          "kind": "divya-desams",
+          "title": "Srivilliputtur",
+          "overlap": 0.58
         }
       ]
     },
@@ -1594,6 +3158,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-91-tirumaaliruncholai",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-91-tirumaaliruncholai",
+      "title": "108 Divyadesam - 91) Tirumaaliruncholai",
+      "publishedAt": "2020-04-10T08:56:00.000Z",
+      "containment": 0.57,
+      "matches": [
+        {
+          "file": "divya-desams/tirumaaliruncholai.json",
+          "kind": "divya-desams",
+          "title": "Tirumaaliruncholai",
+          "overlap": 0.57
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "50",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/10/108-divyadesam-91-tirumaaliruncholai/",
@@ -1606,6 +3186,22 @@
           "kind": "divya-desams",
           "title": "Tirumaaliruncholai",
           "overlap": 0.54
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-92-tirumogur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-92-tirumogur",
+      "title": "108 Divyadesam - 92) Tirumogur",
+      "publishedAt": "2020-04-11T09:26:00.000Z",
+      "containment": 0.56,
+      "matches": [
+        {
+          "file": "divya-desams/tirumogur.json",
+          "kind": "divya-desams",
+          "title": "Tirumogur",
+          "overlap": 0.56
         }
       ]
     },
@@ -1626,6 +3222,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-93-tirukkottiyur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-93-tirukkottiyur",
+      "title": "108 Divyadesam - 93) Tirukkottiyur",
+      "publishedAt": "2020-04-12T09:22:00.000Z",
+      "containment": 0.4,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkottiyur.json",
+          "kind": "divya-desams",
+          "title": "Tirukkottiyur",
+          "overlap": 0.38
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+          "kind": "chapter",
+          "title": "Meeting with Tirukkotiyur Nambigal",
+          "overlap": 0.05
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "38",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/12/108-divyadesam-93-tirukkottiyur/",
@@ -1638,6 +3256,22 @@
           "kind": "divya-desams",
           "title": "Tirukkottiyur",
           "overlap": 0.42
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-94-tirupullani",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-94-tirupullani",
+      "title": "108 Divyadesam - 94) Tirupullani",
+      "publishedAt": "2020-04-12T09:45:00.000Z",
+      "containment": 0.51,
+      "matches": [
+        {
+          "file": "divya-desams/tirupullani.json",
+          "kind": "divya-desams",
+          "title": "Tirupullani",
+          "overlap": 0.51
         }
       ]
     },
@@ -1658,6 +3292,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-96-tiruayodhi-ayodhya",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-96-tiruayodhi-ayodhya",
+      "title": "108 Divyadesam - 96) Tiruayodhi ( Ayodhya )",
+      "publishedAt": "2020-04-14T12:59:05.000Z",
+      "containment": 0.4,
+      "matches": [
+        {
+          "file": "divya-desams/tiruayodhi-ayodhya.json",
+          "kind": "divya-desams",
+          "title": "Tiruayodhi (Ayodhyā)",
+          "overlap": 0.4
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "881",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/14/108-divyadesam-96-tiruayodhi-ayodhya/",
@@ -1670,6 +3320,22 @@
           "kind": "divya-desams",
           "title": "Tiruayodhi (Ayodhyā)",
           "overlap": 0.28
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-97-tiru-naimisharanayam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-97-tiru-naimisharanayam",
+      "title": "108 Divyadesam - 97) Tiru Naimisharanayam",
+      "publishedAt": "2020-04-14T13:51:11.000Z",
+      "containment": 0.56,
+      "matches": [
+        {
+          "file": "divya-desams/tiru-naimisharanayam.json",
+          "kind": "divya-desams",
+          "title": "Tiru Naimishāraṇyam",
+          "overlap": 0.55
         }
       ]
     },
@@ -1690,6 +3356,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-98-tiruppirudi-joshimath",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-98-tiruppirudi-joshimath",
+      "title": "108 Divyadesam - 98) Tiruppirudi ( Joshimath )",
+      "publishedAt": "2020-04-15T13:21:39.000Z",
+      "containment": 0.46,
+      "matches": [
+        {
+          "file": "divya-desams/tiruppirudi-joshimath.json",
+          "kind": "divya-desams",
+          "title": "Tiruppirudi (Joshimath)",
+          "overlap": 0.46
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1059",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/15/108-divyadesam-98-tiruppirudi-joshimath/",
@@ -1702,6 +3384,22 @@
           "kind": "divya-desams",
           "title": "Tiruppirudi (Joshimath)",
           "overlap": 0.36
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-99-tirukkandam-devaprayag",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-99-tirukkandam-devaprayag",
+      "title": "108 Divyadesam - 99) Tirukkandam ( Devaprayag )",
+      "publishedAt": "2020-04-15T13:50:57.000Z",
+      "containment": 0.58,
+      "matches": [
+        {
+          "file": "divya-desams/tirukkandam-devaprayag.json",
+          "kind": "divya-desams",
+          "title": "Tirukkandam (Devaprayag)",
+          "overlap": 0.58
         }
       ]
     },
@@ -1722,6 +3420,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-100-tiruvadariyaashramam-badrinath",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-100-tiruvadariyaashramam-badrinath",
+      "title": "108 Divyadesam - 100) Tiruvadariyaashramam ( Badrinath )",
+      "publishedAt": "2020-04-16T14:34:53.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvadariyaashramam-badrinath.json",
+          "kind": "divya-desams",
+          "title": "Tiruvadariyaashramam (Badrināth)",
+          "overlap": 0.76
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1142",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/16/108-divyadesam-100-tiruvadariyaashramam-badrinath/",
@@ -1734,6 +3448,22 @@
           "kind": "divya-desams",
           "title": "Tiruvadariyaashramam (Badrināth)",
           "overlap": 0.65
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-101-tiruchalagramam-mukthinath",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-101-tiruchalagramam-mukthinath",
+      "title": "108 Divyadesam - 101) Tiruchalagramam ( Mukthinath )",
+      "publishedAt": "2020-04-16T15:04:09.000Z",
+      "containment": 0.69,
+      "matches": [
+        {
+          "file": "divya-desams/tiruchalagramam-mukthinath.json",
+          "kind": "divya-desams",
+          "title": "Tiruchalagramam (Mukthinath)",
+          "overlap": 0.69
         }
       ]
     },
@@ -1754,6 +3484,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-102-tiruvadamadurai-mathura-and-vrindavan",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-102-tiruvadamadurai-mathura-and-vrindavan",
+      "title": "108 Divyadesam - 102) Tiruvadamadurai ( Mathura and Vrindavan )",
+      "publishedAt": "2020-04-17T15:09:58.000Z",
+      "containment": 0.49,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvadamadurai-mathura-and-vrindavan.json",
+          "kind": "divya-desams",
+          "title": "Tiruvadamadurai (Mathura and Vrindavan)",
+          "overlap": 0.49
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1164",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/17/108-divyadesam-102-tiruvadamadurai/",
@@ -1766,6 +3512,22 @@
           "kind": "divya-desams",
           "title": "Tiruvadamadurai (Mathura and Vrindavan)",
           "overlap": 0.32
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-103-tiruvaipadi-gokulam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-103-tiruvaipadi-gokulam",
+      "title": "108 Divyadesam - 103) Tiruvaipadi ( Gokulam )",
+      "publishedAt": "2020-04-18T15:20:27.000Z",
+      "containment": 0.58,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvaipadi-gokulam.json",
+          "kind": "divya-desams",
+          "title": "Tiruvaipadi (Gokulam)",
+          "overlap": 0.57
         }
       ]
     },
@@ -1786,6 +3548,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-104-tirudwarakai-dwaraka",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-104-tirudwarakai-dwaraka",
+      "title": "108 Divyadesam - 104) Tirudwarakai ( Dwaraka )",
+      "publishedAt": "2020-04-19T15:18:56.000Z",
+      "containment": 0.61,
+      "matches": [
+        {
+          "file": "divya-desams/tirudwarkai-dwarka.json",
+          "kind": "divya-desams",
+          "title": "TiruDwarkai (Dvārakā)",
+          "overlap": 0.61
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1189",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/19/108-divyadesam-104-tirudwarakai-dwaraka/",
@@ -1798,6 +3576,22 @@
           "kind": "divya-desams",
           "title": "TiruDwarkai (Dvārakā)",
           "overlap": 0.49
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-105-singavelkundram-ahobilam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-105-singavelkundram-ahobilam",
+      "title": "108 Divyadesam - 105) Singavelkundram ( Ahobilam )",
+      "publishedAt": "2020-04-20T13:04:41.000Z",
+      "containment": 0.91,
+      "matches": [
+        {
+          "file": "divya-desams/singavelkundram-ahobilam.json",
+          "kind": "divya-desams",
+          "title": "Singavelkundram (Ahobilam)",
+          "overlap": 0.91
         }
       ]
     },
@@ -1818,6 +3612,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-106-tiruvenkatam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-106-tiruvenkatam",
+      "title": "108 Divyadesam - 106) Tiruvenkatam",
+      "publishedAt": "2020-04-21T14:32:07.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "divya-desams/tiruvenkatam.json",
+          "kind": "divya-desams",
+          "title": "Tiruvenkatam",
+          "overlap": 0.75
+        },
+        {
+          "file": "divya-desams/tirukkudandai.json",
+          "kind": "divya-desams",
+          "title": "Tirukkudandai",
+          "overlap": 0.05
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1235",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/21/108-divyadesam-106-tiruvenkatam/",
@@ -1830,6 +3646,22 @@
           "kind": "divya-desams",
           "title": "Tiruvenkatam",
           "overlap": 0.74
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-107-tiruparkadal-ksheerabdi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-107-tiruparkadal-ksheerabdi",
+      "title": "108 Divyadesam - 107) Tiruparkadal ( Ksheerabdi )",
+      "publishedAt": "2020-04-22T14:23:07.000Z",
+      "containment": 0.63,
+      "matches": [
+        {
+          "file": "divya-desams/tiruparkadal-ksheerabdi.json",
+          "kind": "divya-desams",
+          "title": "Tiruparkadal (Ksheerabdi)",
+          "overlap": 0.63
         }
       ]
     },
@@ -1850,6 +3682,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-108-tiruparamapadam-sri-vaikuntham",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-108-tiruparamapadam-sri-vaikuntham",
+      "title": "108 Divyadesam - 108) Tiruparamapadam ( Sri Vaikuntham )",
+      "publishedAt": "2020-04-23T15:29:47.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "divya-desams/tiruparamapadam-sri-vaikuntham.json",
+          "kind": "divya-desams",
+          "title": "Tiruparamapadam (Sri Vaikuṇṭham)",
+          "overlap": 0.68
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1274",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/23/108-divyadesam-108-tiruparamapadam-sri-vaikuntham/",
@@ -1862,6 +3710,28 @@
           "kind": "divya-desams",
           "title": "Tiruparamapadam (Sri Vaikuṇṭham)",
           "overlap": 0.7
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-namazhwar",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-namazhwar",
+      "title": "Guru Parampara : Namazhwar",
+      "publishedAt": "2020-04-28T14:36:43.000Z",
+      "containment": 0.56,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+          "kind": "chapter",
+          "title": "Nam Āzhwār",
+          "overlap": 0.54
+        },
+        {
+          "file": "divya-desams/tirukkurugur-azhwar-tirunagari.json",
+          "kind": "divya-desams",
+          "title": "Tirukkurugur (Āzhwār Tirunagari)",
+          "overlap": 0.45
         }
       ]
     },
@@ -1888,6 +3758,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-nathamunigal",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-nathamunigal",
+      "title": "Guru Parampara: Nathamunigal",
+      "publishedAt": "2020-04-29T13:45:21.000Z",
+      "containment": 0.81,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nathamunigal.json",
+          "kind": "chapter",
+          "title": "Nathamunigal",
+          "overlap": 0.81
+        },
+        {
+          "file": "divya-desams/tirukkudandai.json",
+          "kind": "divya-desams",
+          "title": "Tirukkudandai",
+          "overlap": 0.17
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1307",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/29/guru-parampara-nathamunigal/",
@@ -1910,6 +3802,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-manakkaal-nambi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-manakkaal-nambi",
+      "title": "Guru Parampara : Manakkaal Nambi",
+      "publishedAt": "2020-04-30T14:57:47.000Z",
+      "containment": 0.72,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/manakkal-nambigal.json",
+          "kind": "chapter",
+          "title": "Manakkaal Nambigal",
+          "overlap": 0.72
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1314",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/30/guru-parampara-manakkaal-nambi/",
@@ -1922,6 +3830,22 @@
           "kind": "chapter",
           "title": "Manakkaal Nambigal",
           "overlap": 0.78
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-yamunacharyar-aalavandaar",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guru-parampara-yamunacharyar-aalavandaar",
+      "title": "Guru Parampara : Yamunacharyar ( Aalavandaar )",
+      "publishedAt": "2020-05-01T14:10:02.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/yamunacharyar.json",
+          "kind": "chapter",
+          "title": "Yamunacharyar",
+          "overlap": 0.76
         }
       ]
     },
@@ -1942,6 +3866,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-1-birth-of-swami-ramanujar",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-1-birth-of-swami-ramanujar",
+      "title": "Ramanuja Vaibhavam : 1: Birth of Swami Ramanujar",
+      "publishedAt": "2020-05-02T14:38:57.000Z",
+      "containment": 0.82,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-ramanujar.json",
+          "kind": "chapter",
+          "title": "Birth of Swami Ramanujar",
+          "overlap": 0.82
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1330",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/02/ramanuja-vaibhavam-1-birth-of-swami-ramanujar/",
@@ -1954,6 +3894,28 @@
           "kind": "chapter",
           "title": "Birth of Swami Ramanujar",
           "overlap": 0.82
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-2-education-under-yadava-prakashar",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-2-education-under-yadava-prakashar",
+      "title": "Ramanuja Vaibhavam : 2 : Education under Yadava Prakashar",
+      "publishedAt": "2020-05-03T15:18:39.000Z",
+      "containment": 0.84,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+          "kind": "chapter",
+          "title": "Education under Yādava Prakashar",
+          "overlap": 0.84
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar's Digvijaya Yātrā",
+          "overlap": 0.1
         }
       ]
     },
@@ -1980,6 +3942,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-3-swami-ramanujar-in-kanchipuram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-3-swami-ramanujar-in-kanchipuram",
+      "title": "Ramanuja Vaibhavam : 3 : Swami Ramanujar in Kanchipuram",
+      "publishedAt": "2020-05-04T15:10:29.000Z",
+      "containment": 0.7,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-kanchipuram.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar in Kanchipuram",
+          "overlap": 0.7
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1351",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/04/ramanuja-vaibhavam-3-swami-ramanujar-in-kanchipuram/",
@@ -1992,6 +3970,22 @@
           "kind": "chapter",
           "title": "Swami Ramanujar in Kanchipuram",
           "overlap": 0.7
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-4-ramanujar-s-journey-to-sri-rangam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-4-ramanujar-s-journey-to-sri-rangam",
+      "title": "Ramanuja Vaibhavam : 4 : Ramanujar’s Journey to Sri Rangam",
+      "publishedAt": "2020-05-05T14:10:42.000Z",
+      "containment": 0.74,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/ramanujar-s-journey-to-sri-rangam.json",
+          "kind": "chapter",
+          "title": "Ramanujar's Journey to Sri Rangam",
+          "overlap": 0.74
         }
       ]
     },
@@ -2012,6 +4006,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-5-encounter-with-tirukacchi-nambi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-5-encounter-with-tirukacchi-nambi",
+      "title": "Ramanuja Vaibhavam : 5 : Encounter with Tirukacchi Nambi",
+      "publishedAt": "2020-05-06T14:57:47.000Z",
+      "containment": 0.71,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/encounter-with-tirukacchi-nambigal.json",
+          "kind": "chapter",
+          "title": "Encounter with Tirukacchi Nambigal",
+          "overlap": 0.71
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1370",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/06/ramanuja-vaibhavam-5-encounter-with-tirukacchi-nambi/",
@@ -2024,6 +4034,22 @@
           "kind": "chapter",
           "title": "Encounter with Tirukacchi Nambigal",
           "overlap": 0.71
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-6-swami-ramanujar-s-takes-up-sanyasam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-6-swami-ramanujar-s-takes-up-sanyasam",
+      "title": "Ramanuja Vaibhavam : 6 :  Swami Ramanujar's takes up Sanyasam",
+      "publishedAt": "2020-05-07T14:57:01.000Z",
+      "containment": 0.84,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-takes-up-sanyasam.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar takes up Sanyasam",
+          "overlap": 0.83
         }
       ]
     },
@@ -2044,6 +4070,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-7-gaining-of-disciples",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-7-gaining-of-disciples",
+      "title": "Ramanuja Vaibhavam : 7 : Gaining of Disciples",
+      "publishedAt": "2020-05-08T14:55:00.000Z",
+      "containment": 0.66,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/gaining-of-disciples.json",
+          "kind": "chapter",
+          "title": "Gaining of Disciples",
+          "overlap": 0.65
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1388",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/08/ramanuja-vaibhavam-7/",
@@ -2056,6 +4098,22 @@
           "kind": "chapter",
           "title": "Gaining of Disciples",
           "overlap": 0.65
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-8-meeting-with-tirukkotiyur-nambigal",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-8-meeting-with-tirukkotiyur-nambigal",
+      "title": "Ramanuja Vaibhavam : 8 : Meeting with Tirukkotiyur Nambigal",
+      "publishedAt": "2020-05-09T14:14:28.000Z",
+      "containment": 0.68,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+          "kind": "chapter",
+          "title": "Meeting with Tirukkotiyur Nambigal",
+          "overlap": 0.68
         }
       ]
     },
@@ -2076,6 +4134,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-9-swami-ramanujar-in-sri-rangam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-9-swami-ramanujar-in-sri-rangam",
+      "title": "Ramanuja Vaibhavam : 9 : Swami Ramanujar in Sri Rangam",
+      "publishedAt": "2020-05-10T13:43:21.000Z",
+      "containment": 0.63,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-sri-rangam.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar in Sri Rangam",
+          "overlap": 0.63
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1410",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/10/ramanuja-vaibhavam-9-swami-ramanujar-in-sri-rangam/",
@@ -2088,6 +4162,22 @@
           "kind": "chapter",
           "title": "Swami Ramanujar in Sri Rangam",
           "overlap": 0.63
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-10-reforming-periya-kovil-nambi",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-10-reforming-periya-kovil-nambi",
+      "title": "Ramanuja Vaibhavam : 10 : Reforming Periya Kovil Nambi",
+      "publishedAt": "2020-05-11T14:26:46.000Z",
+      "containment": 0.65,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/reforming-periya-kovil-nambi.json",
+          "kind": "chapter",
+          "title": "Reforming Periya Kovil Nambi",
+          "overlap": 0.65
         }
       ]
     },
@@ -2108,6 +4198,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-11-ananthazhwan",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-11-ananthazhwan",
+      "title": "Ramanuja Vaibhavam : 11 : Ananthazhwan",
+      "publishedAt": "2020-05-12T14:17:30.000Z",
+      "containment": 0.72,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/ananthazhwan.json",
+          "kind": "chapter",
+          "title": "Ananthazhwan",
+          "overlap": 0.72
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1423",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/12/ramanuja-vaibhavam-11-ananthazhwan/",
@@ -2124,6 +4230,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-12-swami-ramanujar-reaches-tirupati",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-12-swami-ramanujar-reaches-tirupati",
+      "title": "Ramanuja Vaibhavam : 12 : Swami Ramanujar Reaches Tirupati",
+      "publishedAt": "2020-05-13T16:00:04.000Z",
+      "containment": 0.75,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-reaches-tirupati.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar Reaches Tirupati",
+          "overlap": 0.75
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1431",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/13/ramanuja-vaibhavam-12-swami-ramanujar-reaches-tirupati/",
@@ -2136,6 +4258,28 @@
           "kind": "chapter",
           "title": "Swami Ramanujar Reaches Tirupati",
           "overlap": 0.75
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-13-swami-ramanujar-s-digvijaya-yatra",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-13-swami-ramanujar-s-digvijaya-yatra",
+      "title": "Ramanuja Vaibhavam : 13 : Swami Ramanujar's Digvijaya Yatra",
+      "publishedAt": "2020-05-14T14:44:26.000Z",
+      "containment": 0.72,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar's Digvijaya Yātrā",
+          "overlap": 0.67
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+          "kind": "chapter",
+          "title": "Education under Yādava Prakashar",
+          "overlap": 0.18
         }
       ]
     },
@@ -2162,6 +4306,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-14-kulothunga-chola-and-the-migration-to-melukote",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-14-kulothunga-chola-and-the-migration-to-melukote",
+      "title": "Ramanuja Vaibhavam : 14 : Kulothunga Chola and the migration to Melukote",
+      "publishedAt": "2020-05-15T16:22:33.000Z",
+      "containment": 0.8,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
+          "kind": "chapter",
+          "title": "Kulothunga Chola and the migration to Melukote",
+          "overlap": 0.8
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1454",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/15/ramanuja-vaibhavam-14-kulothunga-chola-and-the-migration-to-melukote/",
@@ -2174,6 +4334,22 @@
           "kind": "chapter",
           "title": "Kulothunga Chola and the migration to Melukote",
           "overlap": 0.8
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-15-tirunarayanapuram-vaibhavam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-15-tirunarayanapuram-vaibhavam",
+      "title": "Ramanuja Vaibhavam : 15 : Tirunarayanapuram Vaibhavam",
+      "publishedAt": "2020-05-16T14:36:52.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/tirunarayanapuram-vaibhavam.json",
+          "kind": "chapter",
+          "title": "Tirunarayanapuram Vaibhavam",
+          "overlap": 0.76
         }
       ]
     },
@@ -2194,6 +4370,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-16-swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/ramanuja-vaibhavam-16-swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam",
+      "title": "Ramanuja Vaibhavam : 16 : Swami Ramanujar's return to Sri Rangam and attaining Paramapadam",
+      "publishedAt": "2020-05-17T13:08:11.000Z",
+      "containment": 0.81,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
+          "kind": "chapter",
+          "title": "Swami Ramanujar's return to Sri Rangam and attaining Paramapadam",
+          "overlap": 0.79
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1487",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/05/17/ramanuja-vaibhavam-16-swami-ramanujars-return-to-sri-rangam/",
@@ -2206,6 +4398,22 @@
           "kind": "chapter",
           "title": "Swami Ramanujar's return to Sri Rangam and attaining Paramapadam",
           "overlap": 0.79
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-05-narasimha-avataram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-05-narasimha-avataram",
+      "title": "Vishnu Puranam - 05 - Narasimha Avataram",
+      "publishedAt": "2020-06-21T13:57:05.000Z",
+      "containment": 0.57,
+      "matches": [
+        {
+          "file": "divya-desams/singavelkundram-ahobilam.json",
+          "kind": "divya-desams",
+          "title": "Singavelkundram (Ahobilam)",
+          "overlap": 0.57
         }
       ]
     },
@@ -2226,6 +4434,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-01-birth-of-swami-desikan",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-01-birth-of-swami-desikan",
+      "title": "Desika Vaibhavam - 01 - Birth of Swami Desikan",
+      "publishedAt": "2020-12-08T04:42:54.000Z",
+      "containment": 0.75,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-desikan.json",
+          "kind": "chapter",
+          "title": "Birth of Swami Deshikan",
+          "overlap": 0.75
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1682",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/12/08/desika-vaibhaam-01-birth-of-swami-desikan/",
@@ -2238,6 +4462,34 @@
           "kind": "chapter",
           "title": "Birth of Swami Deshikan",
           "overlap": 0.75
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-02-childhood-and-education-of-swami-desikan",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-02-childhood-and-education-of-swami-desikan",
+      "title": "Desika Vaibhavam - 02 - Childhood and Education of Swami Desikan",
+      "publishedAt": "2020-12-09T02:57:02.000Z",
+      "containment": 0.76,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/childhood-and-education-of-swami-desikan.json",
+          "kind": "chapter",
+          "title": "Childhood and Education of Swami Deshikan",
+          "overlap": 0.65
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "kind": "chapter",
+          "title": "Artha Panchakam",
+          "overlap": 0.48
+        },
+        {
+          "file": "divya-desams/tiruttankaa-tooppul.json",
+          "kind": "divya-desams",
+          "title": "Tiruttankaa(Tooppul)",
+          "overlap": 0.38
         }
       ]
     },
@@ -2270,6 +4522,28 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-04-swami-desikan-s-return-to-kanchipuram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-04-swami-desikan-s-return-to-kanchipuram",
+      "title": "Desika Vaibhavam - 04 - Swami Desikan's Return to Kanchipuram",
+      "publishedAt": "2020-12-11T04:19:31.000Z",
+      "containment": 0.79,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-kanchipuram.json",
+          "kind": "chapter",
+          "title": "Swami Deshikan's Return to Kanchipuram",
+          "overlap": 0.79
+        },
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "kind": "chapter",
+          "title": "Artha Panchakam",
+          "overlap": 0.16
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1710",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/12/11/desika-vaibhavam-04-swami-desikans-return-to-kanchipuram/",
@@ -2288,6 +4562,22 @@
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.16
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-05-swami-desikan-s-yatra-of-vadu-nadu-kshethrams",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-05-swami-desikan-s-yatra-of-vadu-nadu-kshethrams",
+      "title": "Desika Vaibhavam - 05 - Swami Desikan's yatra of Vadu Nadu kshethrams",
+      "publishedAt": "2020-12-12T01:34:12.000Z",
+      "containment": 0.79,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-yatra-of-vadu-nadu-kshethrams.json",
+          "kind": "chapter",
+          "title": "Swami Deshikan's Yātrā of Vadu Nadu Kshethrams",
+          "overlap": 0.79
         }
       ]
     },
@@ -2340,6 +4630,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-08-swami-desikan-s-move-to-sathyagala",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-08-swami-desikan-s-move-to-sathyagala",
+      "title": "Desika Vaibhavam - 08 - Swami Desikan's move to Sathyagala",
+      "publishedAt": "2020-12-15T04:41:50.000Z",
+      "containment": 0.73,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-move-to-sathyagala.json",
+          "kind": "chapter",
+          "title": "Swami Deshikan's Move to Sathyagala",
+          "overlap": 0.73
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1731",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/12/15/desika-vaibhavam-08-swami-desikans-move-to-satyagala/",
@@ -2356,6 +4662,22 @@
       ]
     },
     {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-09-swami-desikan-s-return-to-sri-rangam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-09-swami-desikan-s-return-to-sri-rangam",
+      "title": "Desika Vaibhavam - 09 - Swami Desikan's return to Sri Rangam",
+      "publishedAt": "2020-12-16T03:00:00.000Z",
+      "containment": 0.8,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-sri-rangam.json",
+          "kind": "chapter",
+          "title": "Swami Deshikan's Return to Sri Rangam",
+          "overlap": 0.8
+        }
+      ]
+    },
+    {
       "platform": "wordpress",
       "sourceId": "1745",
       "sourceUrl": "https://vedantayojana.wordpress.com/2020/12/16/desika-vaibhavam-09-swami-desikans-return-to-sri-rangam/",
@@ -2368,6 +4690,22 @@
           "kind": "chapter",
           "title": "Swami Deshikan's Return to Sri Rangam",
           "overlap": 0.8
+        }
+      ]
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-10-swami-desikan-s-attainment-of-paramapadam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-10-swami-desikan-s-attainment-of-paramapadam",
+      "title": "Desika Vaibhavam - 10 - Swami Desikan's Attainment of Paramapadam",
+      "publishedAt": "2020-12-17T04:33:02.000Z",
+      "containment": 0.85,
+      "matches": [
+        {
+          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-attainment-of-paramapadam.json",
+          "kind": "chapter",
+          "title": "Swami Deshikan's Attainment of Paramapadam",
+          "overlap": 0.85
         }
       ]
     },
