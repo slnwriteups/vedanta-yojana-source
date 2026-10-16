@@ -20,6 +20,8 @@ export interface ImportedPost {
   tags: string[];
   excerpt: string | null;
   coverImageUrl: string | null;
+  /** The blog's current address, when known -- used to find images uploaded under an old temporary host. */
+  siteUrl?: string | null;
   /** The post body exactly as the platform supplied it. */
   html: string;
 }

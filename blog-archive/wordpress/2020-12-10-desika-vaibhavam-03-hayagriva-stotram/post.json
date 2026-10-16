@@ -19,28 +19,23 @@
   "images": [
     {
       "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d8730-sri-vedanta-desikan.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-d8730-sri-vedanta-desikan.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/c5e16-hayagriva1-782x1024-1.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-c5e16-hayagriva1-782x1024-1.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/3ba92-hayagriva2-907x1024-1.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/03-3ba92-hayagriva2-907x1024-1.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/606d5-hayagriva3-845x1024-1.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/04-606d5-hayagriva3-845x1024-1.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/48f16-hayagriva4-864x1024-1.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/05-48f16-hayagriva4-864x1024-1.jpg"
     }
   ],
   "wordCount": 327,

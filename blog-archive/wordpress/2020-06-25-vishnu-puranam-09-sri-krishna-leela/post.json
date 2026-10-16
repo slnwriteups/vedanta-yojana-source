@@ -17,28 +17,23 @@
   "images": [
     {
       "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/6f24c-krishnababy.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-6f24c-krishnababy.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/e30d1-krishnayakshamoksham.jpg?w=300&h=273",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-e30d1-krishnayakshamoksham.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/3833a-krishnaleela.png?w=300&h=300",
-      "file": null,
-      "error": "download failed"
+      "file": "images/03-3833a-krishnaleela.png"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/2174f-krishnagovardhana.png?w=300&h=300",
-      "file": null,
-      "error": "download failed"
+      "file": "images/04-2174f-krishnagovardhana.png"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/3e2d8-kalinganarthanam.jpg?w=247&h=300",
-      "file": null,
-      "error": "download failed"
+      "file": "images/05-3e2d8-kalinganarthanam.jpg"
     }
   ],
   "wordCount": 2159,

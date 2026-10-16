@@ -8,7 +8,7 @@ categories: ["108 Divyadesam","Chola Nadu Kshethrams"]
 
 # 108 Divyadesam- 7) Tirukkandiyur
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/86bac-108-7.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/86bac-108-7.jpg)
+[![](images/01-86bac-108-7.jpg)](images/01-86bac-108-7.jpg)
 
  **Details of Kshethram:**  **Moolavar:** Hara Shapa Vimochana Perumal **Thayaar:** Kamalavalli Thayaar **Vimanam:** Kamalakrithi Vimanam **Pushkarani:** Kapalamoksha Pushkarani
 

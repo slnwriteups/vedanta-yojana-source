@@ -8,7 +8,7 @@ categories: ["Athi Varadar"]
 
 # Rising of Athi Varadar
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d6482-athivaradar.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d6482-athivaradar.jpg)
+[![](images/01-d6482-athivaradar.jpg)](images/01-d6482-athivaradar.jpg)
 
 A very warm welcome to all my readers. Today I'll be giving you an insight into the "Rising of Athi Varadaraja". Athi Varadaraja Swamy is a presiding deity of the Kanchipuram Varadaraja Swamy Temple. As per temple tradition, he rises once every forty years from the temple tank and can be seen by all his devotees. I'll now attempt to take you through a brief history of how this tradition came to be.
 
@@ -20,19 +20,19 @@ As per temple history, the Lord first came to be in the Satya Yuga. The first ac
 
 Around the 1520s The Vijayanagara empire were the rulers of South India. They contributed immensely to the temple. One such contribution is the "Noor-Kaal Mandapam" or a Hundred Pillared Mandapam that was built by Achyutha Deva Raya the brother of the great Krishna Deva Raya. Around the 1600s there was a change that was seen in the Delhi Sultanate when the Mughals took control of North India and began expanding down south. Towards the end of the Mughal Rule when Aurangzeb took over, he began to plunder the temples and loot their wealth. The Vaishnavas of Kanchipuram wanted to protect the Moola Vigraham as well as the Utsava Moorthy from the invasion. In order to protect the Utsava Moorthy, the idol was carried by palanquin to a remote place called Udayarpalayam where the local chief agreed to host and protect the Lord. Now to protect the Moola Moorthy was a herculean task as the idol was close to 9 feet in length. Thus a place had to be discovered where the Lord could be kept safe. The Vaishnavas at that point in time dug a huge pit within the temple tank ( Ananthasaras) and embalmed Athi Varada and placed him along with Adisesha in order to protect the Lord.
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/859c7-whatsapp2bimage2b2019-06-282bat2b9.32.582bpm.jpeg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/859c7-whatsapp2bimage2b2019-06-282bat2b9.32.582bpm.jpeg)
+[![](images/02-859c7-whatsapp2bimage2b2019-06-282bat2b9.jpg)](images/02-859c7-whatsapp2bimage2b2019-06-282bat2b9.jpg)
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/bb874-706287b0-d833-428d-bf7d-922e2c5b7a80.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/bb874-706287b0-d833-428d-bf7d-922e2c5b7a80.jpg)
+[![](images/03-bb874-706287b0-d833-428d-bf7d-922e2c5b7a.jpg)](images/03-bb874-706287b0-d833-428d-bf7d-922e2c5b7a.jpg)
 
 Over a period of time, the temple did not have a Moola Moorthy or an Utsava Moorthy. After Aurangzeb's invasion, the temple was in ruins with the Punyakoti Vimanam totally destroyed. Thus the temple was reconstructed but the daily rituals of the temple couldn't be performed in the absence of the Lord. Hence after major tussles with the chief of Udayarpalayam the Utsava Moorthy was brought back to the temple. But the Moola Moorthy was lost as the people who had dug the pit were either very old or had passed away. Thus the temple needed to install a Moola Moorthy in the temple. Thus an idol of the Lord known as Devaraja was found in a hamlet known as Pazhayasheevaram was brought to Kanchipuram and installed in the temple. Later sometime in the 18th Century when the temple tank was being cleaned, the idol of Athi Varada was found. At this time, the scholars came to the consensus that idol will be preserved and the idol of the Lord shall grace the devotees for a period of 48 days after which the idol shall be kept back in the temple tank to rise again after a period of 40 years.
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/49e28-whatsapp2bimage2b2019-06-282bat2b9.32.582bpm2b252812529.jpeg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/49e28-whatsapp2bimage2b2019-06-282bat2b9.32.582bpm2b252812529.jpeg)
+[![](images/04-49e28-whatsapp2bimage2b2019-06-282bat2b9.jpg)](images/04-49e28-whatsapp2bimage2b2019-06-282bat2b9.jpg)
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/67cba-7fe86a97-284e-4bac-94b8-ae36df90d5a4.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/67cba-7fe86a97-284e-4bac-94b8-ae36df90d5a4.jpg)
+[![](images/05-67cba-7fe86a97-284e-4bac-94b8-ae36df90d5.jpg)](images/05-67cba-7fe86a97-284e-4bac-94b8-ae36df90d5.jpg)
 
 As of 28/6/2019, the lord was removed from the temple tank. He will grace his devotees from the 1st of July till the 15th of August before he returns to the depths of the temple tank for another forty years. Those of my readers who are interested may make a trip to Kanchipuram and have a glimpse of the Lord.
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d5ab9-screenshot_20190731-112742.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d5ab9-screenshot_20190731-112742.jpg)
+[![](images/06-d5ab9-screenshot-20190731-112742.jpg)](images/06-d5ab9-screenshot-20190731-112742.jpg)
 
 [![](images/07-1564661462367.jpg)](images/07-1564661462367.jpg)
 

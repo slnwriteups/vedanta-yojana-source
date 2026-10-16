@@ -18,18 +18,15 @@
   "images": [
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/a0e8c-sriman-narayana-e1592398360943-300x194-1.png",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-a0e8c-sriman-narayana-e1592398360943-300.png"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/6010b-srimushnam.jpg?w=300&h=229",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-6010b-srimushnam.jpg"
     },
     {
       "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/3c2a5-nitya-pushkarani-srimushnam.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/03-3c2a5-nitya-pushkarani-srimushnam.jpg"
     }
   ],
   "wordCount": 781,

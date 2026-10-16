@@ -8,7 +8,7 @@ categories: ["Vishnu Puranam"]
 
 # Vishnu Puranam - 04 - Dhruva Charithram
 
-![](https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/c4490-dhruva.jpg)
+![](images/01-c4490-dhruva.jpg)
 
 Today we see Dhruva Charithram.
 

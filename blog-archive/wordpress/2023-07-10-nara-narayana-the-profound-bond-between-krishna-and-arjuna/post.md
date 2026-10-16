@@ -40,7 +40,7 @@ Their journey was not of this world. Arjuna observed that the chariot was soarin
 
 Their journey culminated at the Ksheera-Sagara, the milky ocean. Here, Arjuna beheld an awe-inspiring vision: Lord Vishnu, the supreme deity, was reclining on the thousand-headed serpent Adisesha, with Goddess Lakshmi by his side. At the sight of this divine spectacle, Arjuna fell to his knees, tears of reverence and awe streaming down his face.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2025/05/b16e0-img_1741.jpg)
+![](images/02-b16e0-img-1741.jpg)
 
 When he rose, he saw the Brahmin's missing children playing around Lord Vishnu. Krishna revealed to Arjuna the cosmic truth: they were the divine pair Nara and Narayana. Throughout the ages, they restored Dharma, maintaining the balance of righteousness. In their current form, they were Krishna, the divine wisdom, and Arjuna, the human action.
 

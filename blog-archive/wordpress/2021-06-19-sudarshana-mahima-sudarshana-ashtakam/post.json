@@ -17,23 +17,19 @@
   "images": [
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/02fb4-sudarshana-300x300-1.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-02fb4-sudarshana-300x300-1.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/331f8-kalachakram-1-300x29-1.png",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-331f8-kalachakram-1-300x29-1.png"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/ce04d-desika-stuti-300x77-1.png",
-      "file": null,
-      "error": "download failed"
+      "file": "images/03-ce04d-desika-stuti-300x77-1.png"
     },
     {
       "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/e3f56-sudarshana-asthtakam.png",
-      "file": null,
-      "error": "download failed"
+      "file": "images/04-e3f56-sudarshana-asthtakam.png"
     }
   ],
   "wordCount": 1230,

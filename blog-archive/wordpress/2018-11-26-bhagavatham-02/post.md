@@ -16,9 +16,9 @@ As discussed yesterday Parikshith had been cursed by the son of Maharishi Shamik
 
 Shuka Maharishi started his discourse and went about this in a very orderly fashion. He first establishes the different forms of yoga and dharma that one must follow in life. Then he explains the concepts of jeevaathma and paramaathma. In a simplified form, I take verses from the Vedas to describe what Shuka Maharishi has beautifully described Lord Sriman Narayana.
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/10b43-dc37b937-e008-4fe2-a652-b243f2a33b53.jpeg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/10b43-dc37b937-e008-4fe2-a652-b243f2a33b53.jpeg)
+[![](images/01-10b43-dc37b937-e008-4fe2-a652-b243f2a33b.jpg)](images/01-10b43-dc37b937-e008-4fe2-a652-b243f2a33b.jpg)
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/3c9ad-71680db4-160b-4fed-94b3-8551eb90a6f5.jpeg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/3c9ad-71680db4-160b-4fed-94b3-8551eb90a6f5.jpeg)
+[![](images/02-3c9ad-71680db4-160b-4fed-94b3-8551eb90a6.jpg)](images/02-3c9ad-71680db4-160b-4fed-94b3-8551eb90a6.jpg)
 
 The first verse translates to inside and outside everything in creation is Sriman Narayana himself.
 

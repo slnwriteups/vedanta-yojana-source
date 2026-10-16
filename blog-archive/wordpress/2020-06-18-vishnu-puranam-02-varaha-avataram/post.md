@@ -8,7 +8,7 @@ categories: ["Abhimana Sthalam and Purana Kshethrams","Vishnu Puranam"]
 
 # Vishnu Puranam- 02 - Varaha Avataram
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/a0e8c-sriman-narayana-e1592398360943-300x194-1.png)
+![](images/01-a0e8c-sriman-narayana-e1592398360943-300.png)
 
 Today we shall see the story of Varaha Avataram as stated in Sri Vishnu Puranam and also know the kshethra maahatmiyam of Srimushnam.
 
@@ -22,7 +22,7 @@ A kshethram synonymous with Varaha Avataram is Srimushnam. We shall now see the 
 
 **Moolavar:** Bhuvaraha Perumal
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/6010b-srimushnam.jpg?w=300&h=229)
+![](images/02-6010b-srimushnam.jpg)
 
 **Thayaar:** Ambujavalli Thayaar
 
@@ -40,6 +40,6 @@ Once during the Pralaya process of a Krita Yuga, Hiranyaksha kidnapped Bhoomi De
 
 The Lord is standing with His hands, on His hips where the devotee can see the Panchajanya Shankam and Sudarshana Chakram. Sridevi and Bhoomi Devi can be seen on either side of the Lord standing facing the west direction.
 
-[caption id="attachment_1527" align="aligncenter" width="503"]![](https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/3c2a5-nitya-pushkarani-srimushnam.jpg) Nitya Pushkarani[/caption]
+[caption id="attachment_1527" align="aligncenter" width="503"]![](images/03-3c2a5-nitya-pushkarani-srimushnam.jpg) Nitya Pushkarani[/caption]
 
 This kshethram is one of the eight swayam-vyaktha kshethrams. The Lord is said to be a swayambhu murthy made of shalagrama-shila. This is one of the few kshethrams wherein Nitya-Abhishekam is performed for the Lord. It is said that couples without children are blessed by the Lord here once they take a bath in the Nitya Pushkarani.

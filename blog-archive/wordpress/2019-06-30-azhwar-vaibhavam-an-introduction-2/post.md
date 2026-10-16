@@ -12,7 +12,7 @@ A warm welcome to all my readers over the next few days I'll attempt to take you
 
 An important and often forgotten part of Tamizh history is the story of the twelve Azhwar saints who spread the message of Bhakti among the masses of South India. The twelve azhwars are often seen as a Hamsam ( reincarnation) of Lord Sriman Narayana. They dedicated their lives towards the service of Empurmaan ( as Lord Vishnu is called dearly in the Tamizh Language). They praised the Lord in the local language which was better understood by the masses rather than to a target group that knew the Sanskrit language.
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d7bf3-alwars_stickers.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d7bf3-alwars_stickers.jpg)
+[![](images/01-d7bf3-alwars-stickers.jpg)](images/01-d7bf3-alwars-stickers.jpg)
 
 These Azhwars were born in various parts of our country but they were all united in a common subject, ie dedicating their lives and praising the Lord.
 

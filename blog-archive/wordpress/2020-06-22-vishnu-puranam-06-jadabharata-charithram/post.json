@@ -17,13 +17,11 @@
   "images": [
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/7c264-jadabharata.jpg?w=220&h=300",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-7c264-jadabharata.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/d0a3a-jadabharatacarries.jpg?w=214&h=300",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-d0a3a-jadabharatacarries.jpg"
     }
   ],
   "wordCount": 528,

@@ -8,13 +8,13 @@ categories: ["Desika Vaibhavam"]
 
 # Sudarshana Mahima: Sudarshana Ashtakam
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/02fb4-sudarshana-300x300-1.jpg)
+![](images/01-02fb4-sudarshana-300x300-1.jpg)
 
 Greetings to one and all! On the occasion of Sudarshana Jayanti, let us learn a little bit about Chakrathazhwan and His greatness.
 
 Swami Desikan in his Shodasha-Ayudha Stotram sheds light on the nature of Sudarshana as follows:
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/331f8-kalachakram-1-300x29-1.png)
+![](images/02-331f8-kalachakram-1-300x29-1.png)
 
 Swami Desikan first prays for the well-being of all and asks the sixteen-handed Chakrathazhwan to protect us. He describes the quality of time saying it is an aspect of nature that is eternally moving forward. Swami Desikan says that time is controlled by Sudarshana, the chief weapon of the Lord who is none other than the Lord Himself who has manifested in the form of the Chakram.
 
@@ -36,9 +36,9 @@ The Bhagavatam Mahapuranam tells the story of Ambareesha as one of the greatest 
 
 We now understand the power held by Sri Chakrathazhwan; to help gain the benefit of this energy, Swami Desikan composed the Sudarshana Ashtakam. It is said that the divyadesam of Tiruputkuzhi was once engulfed by an epidemic fever. When Swami Desikan composed the Sudarshana Asthtakam and the people recited this with all their heart and mind, Sri Chakrathazhwan graced the people with His blessings and relieved them of the epidemic. We are now faced with a similar global epidemic situation. Below you will find the Sudarshana Ashtakam Shloka both as a picture as well as links to PDFs in English, Tamizh, Kannada, and Sanskrit. It is my humble request to all my readers to please go through the same and recite it at least once for the improvement of the world's health and to gain the grace of the Lord.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/ce04d-desika-stuti-300x77-1.png)
+![](images/03-ce04d-desika-stuti-300x77-1.png)
 
-![](https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/e3f56-sudarshana-asthtakam.png)
+![](images/04-e3f56-sudarshana-asthtakam.png)
 
 Credits to Sundar Kidambi mama and prapatti.com
 

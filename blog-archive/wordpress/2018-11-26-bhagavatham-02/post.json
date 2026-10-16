@@ -17,13 +17,11 @@
   "images": [
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/10b43-dc37b937-e008-4fe2-a652-b243f2a33b53.jpeg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-10b43-dc37b937-e008-4fe2-a652-b243f2a33b.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/3c9ad-71680db4-160b-4fed-94b3-8551eb90a6f5.jpeg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-3c9ad-71680db4-160b-4fed-94b3-8551eb90a6.jpg"
     }
   ],
   "wordCount": 1183,

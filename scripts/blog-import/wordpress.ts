@@ -61,6 +61,7 @@ export function wpautop(content: string): string {
 
 export function parseWxr(xml: string, options: WordPressOptions = {}): ImportedPost[] {
   const items = xml.match(/<item>[\s\S]*?<\/item>/g) ?? [];
+  const siteUrl = field(xml.split("<item>")[0], "wp:base_blog_url");
   const attachments = new Map<string, string>();
   for (const item of items) {
     if (field(item, "wp:post_type") === "attachment") {
@@ -117,6 +118,7 @@ export function parseWxr(xml: string, options: WordPressOptions = {}): ImportedP
       tags: [...new Set(tags)],
       excerpt: excerpt || null,
       coverImageUrl: thumbnailId ? attachments.get(thumbnailId) ?? null : null,
+      siteUrl,
       html: wpautop(field(item, "content:encoded") ?? ""),
     });
   }

@@ -342,3 +342,11 @@ test("posts listed in removed.json are not brought back by a re-import", async (
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("images embedded under an old WordPress.com staging host are looked up on the blog's current address", () => {
+  assert.deepEqual(fullSizeCandidates("https://atomic-temporary-123.wpcomstaging.com/wp-content/uploads/2022/02/a.jpg", "https://example.wordpress.com"), [
+    "https://example.wordpress.com/wp-content/uploads/2022/02/a.jpg",
+    "https://atomic-temporary-123.wpcomstaging.com/wp-content/uploads/2022/02/a.jpg",
+  ]);
+  assert.equal(parseWxr(WXR.replace("<channel>", "<channel><wp:base_blog_url>https://example.wordpress.com</wp:base_blog_url>"))[0].siteUrl, "https://example.wordpress.com");
+});

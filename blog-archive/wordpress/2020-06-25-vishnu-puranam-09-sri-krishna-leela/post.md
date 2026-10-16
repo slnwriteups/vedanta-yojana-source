@@ -8,7 +8,7 @@ categories: ["Vishnu Puranam"]
 
 # Vishnu Puranam - 09 - Sri Krishna Leela
 
-![](https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/6f24c-krishnababy.jpg)
+![](images/01-6f24c-krishnababy.jpg)
 
 Upon birth, Lord Krishna instructed that he be taken to Gokul and, in his place, be brought back the daughter born to Yashoda and Nanda. As soon as he had given his instructions, all the chains binding Vasudev unlocked themselves. The doors of the prison also opened themselves. Vasudev put the baby in a basket, placed the basket on his head, and began his journey to Gokul.
 
@@ -26,11 +26,11 @@ Lord Krishna was very fond of stealing butter from the houses of the gopis who l
 
 One beautiful day the women had enough and decided to tell Yashodha that the stealing had to stop. Once they said Yashodha, she became furious, and as soon Krishna came home, she tied him up to a stone used to make butter from milk and went to finish some work in the house. Krishna dragged the stone into a nearby forest where he saw two intertwined trees with a small gap in between. Krishna slipped through the gap but couldn't get the stone to pass along with him. As he pulled the stone, the two trees got uprooted. From the uprooted trees emerged two Gandharvas, who were cursed by a sage to become trees. Lord Vishnu had promised them that he would relieve them of this curse when he took the form of Krishna, and in uprooting the trees had fulfilled his promise.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/e30d1-krishnayakshamoksham.jpg?w=300&h=273)
+![](images/02-e30d1-krishnayakshamoksham.jpg)
 
 A few years passed by. The people of Gokul had become weary of the multiple demon attacks that the village was facing and hence decided that they would move out of the village to another nearby village Vrindavan to live peacefully. In Vrindavan, Krishna becomes famous in no time at all for his charming looks and for his skills of playing the flute.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/3833a-krishnaleela.png?w=300&h=300)
+![](images/03-3833a-krishnaleela.png)
 
 Lord Krishna won the hearts of all the people of Vrindavan in a short period. He performed many miracles during his brief stay in Vrindavan. Kansa continued his attempt to find Krishna in Vrindavan by sending multiple demons to find and kill Krishna.
 
@@ -42,8 +42,8 @@ On another occasion, Krishna and his friends were playing, and Krishna was blind
 
 One day Krishna and Balarama were sitting at home when they heard that there was a grove of palm trees nearby, which was left untouched because of a demon who used to live near the grove. This demon was none other than Dhenukasura, who could transform himself into a rampageous donkey who kicks had the power to kill. Krishna and Balarama told their friends not to worry and took them to the grove. Soon Dhenukasura realized that someone had entered his forest and were eating the fruit. He transformed into his donkey form and went on a rampage. Balarama grabbed him by the tail and hurled against the face of a nearby hill killing him.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/2174f-krishnagovardhana.png?w=300&h=300)
+![](images/04-2174f-krishnagovardhana.png)
 Once Krishna saw that the villagers were offering prayers to Indra so that they could get good rains for the sake of reaping good produce. Krishna stopped them and advised them to worship the Govardhan Hill as it gave lush pastures for their cows to graze, and it also gave many different varieties of fruits. The villagers saw Krishna's point and ignored their prayers to Indra and started to worship Govardhan. Indra was enraged by this and flooded Vrindavan with incessant rains which spanned for seven days and nights. When he came to see the outcome of his wrath, he saw that all the people were unharmed and were standing under the shelter of Govardhan, which was being lifted by Krishna on his little finger of his right hand. Indra, upon seeing this, realized that nobody who was under the shelter of the Lord could be hurt in any way. He instantly stopped the rains and apologized to the Lord, saying his power had blinded him, but he has now realized his responsibility.
 
-![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/3e2d8-kalinganarthanam.jpg?w=247&h=300)
+![](images/05-3e2d8-kalinganarthanam.jpg)
 Once Lord Krishna was playing ball near the river Yamuna when the ball fell inside. The area was said to be the home Kaliya the Naga, who was dwelling in the waters of Vrindavan, where he would be safe from his sworn enemy Garuda. Kaliya had begun to spew his venom into the waters of the Yamuna, which was claiming the life of cattle and humans alike. Using the fallen ball as an excuse, Krishna jumped into the waters of the Yamuna and brought Kaliya to the surface. As soon as Kaliya reached the surface, Lord Krishna jumped onto Kaliya's hood and danced on his hood till he started to bleed and slowly started to die. They were seeing their husband's fate Kaliya's wives pleaded to Krishna that he spare their husband. Krishna agreed to spare Kaliya's life if he were to abandon the waters of the Yamuna and return to Ramanaka Dwip (Modern day Fiji). Thus, he saved the people of Vrindavan from an impending threat.

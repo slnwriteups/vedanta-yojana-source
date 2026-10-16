@@ -113,8 +113,16 @@ const CONTENT_TYPE_EXT: Record<string, string> = {
   "image/avif": "avif", "image/svg+xml": "svg",
 };
 
-/** Larger/original versions of a resized image URL to try first, then the URL itself. */
-export function fullSizeCandidates(url: string): string[] {
+/**
+ * Larger/original versions of a resized image URL to try first, then the URL itself. WordPress.com
+ * sites that were briefly on a temporary staging host (atomic-temporary-NNN.wpcomstaging.com) keep
+ * images embedded under that dead address; the same path on the blog's current address is tried too.
+ */
+export function fullSizeCandidates(url: string, siteUrl?: string | null): string[] {
+  if (siteUrl && /^https?:\/\/[^/]+\.wpcomstaging\.com\//.test(url)) {
+    const moved = url.replace(/^https?:\/\/[^/]+/, siteUrl.replace(/\/+$/, ""));
+    return [...new Set([...fullSizeCandidates(moved), ...fullSizeCandidates(url)])];
+  }
   const out: string[] = [];
   const wix = url.match(/^(https?:\/\/static\.wixstatic\.com\/media\/[^/]+)\/v1\//);
   if (wix) out.push(wix[1]);
@@ -263,7 +271,7 @@ export async function archivePosts(posts: ImportedPost[], options: ArchiveOption
     const urls = [...new Set([...(post.coverImageUrl ? [post.coverImageUrl] : []), ...markdownImageUrls(markdown)])];
     const images: ArchivedImage[] = [];
     for (const [i, url] of urls.entries()) {
-      const image = fetchBinary ? await downloadImage(url, i, dir, fetchBinary, previous) : { originalUrl: url, file: null };
+      const image = fetchBinary ? await downloadImage(url, i, dir, fetchBinary, previous, post.siteUrl) : { originalUrl: url, file: null };
       if (image.error) log(`  ! image ${url}: ${image.error}`);
       images.push(image);
     }
@@ -316,7 +324,8 @@ async function downloadImage(
   index: number,
   dir: string,
   fetchBinary: FetchBinary,
-  previous: ArchivedPost | null
+  previous: ArchivedPost | null,
+  siteUrl?: string | null
 ): Promise<ArchivedImage> {
   const already = previous?.images.find((im) => im.originalUrl === url && im.file);
   if (already?.file && fs.existsSync(path.join(dir, already.file))) return already;
@@ -326,7 +335,7 @@ async function downloadImage(
   } catch {
     return { originalUrl: url, file: null, error: "not an absolute URL" };
   }
-  for (const candidate of fullSizeCandidates(absolute)) {
+  for (const candidate of fullSizeCandidates(absolute, siteUrl)) {
     const res = await fetchBinary(candidate);
     if (!res || res.bytes.length === 0) continue;
     const file = `images/${imageFileName(absolute, index, res.contentType)}`;

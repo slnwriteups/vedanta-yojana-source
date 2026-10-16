@@ -8,7 +8,7 @@ categories: ["108 Divyadesam","Chola Nadu Kshethrams"]
 
 # 108 Divyadesam-35) Tirudevanaar Togai
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/1b036-108-35.png)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/1b036-108-35.png)
+[![](images/01-1b036-108-35.png)](images/01-1b036-108-35.png)
 
  **Details of Kshethram:**  **Moolavar:** Devinayakan **Thayaar:** Sridevi Bhoodevi **Pushkarani:** Shobana Pushkarani **Vimanam:** Sobhana Vimanam **Travel:** 6 kilometers from Sirkazhi
 

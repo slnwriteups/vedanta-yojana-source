@@ -8,7 +8,7 @@ categories: ["Abhimana Sthalam and Purana Kshethrams","Vishnu Puranam"]
 
 # Vishnu Puranam - 03 - Kurma Avataram
 
-![](https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d030a-samudramanthanam-1.jpg)
+![](images/01-d030a-samudramanthanam-1.jpg)
 
 Today we shall see the story of Kurma Avataram and the kshethra maahatmiyam of Srikurmam.
 
@@ -20,7 +20,7 @@ Then in no particular order came the Uchaishravas, Kalpa Vriksha, Kamadhenu, Cha
 
 **Moolavar:** Kurmanaatha Perumal
 
-![](https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d885b-srikurmam.jpg)
+![](images/02-d885b-srikurmam.jpg)
 
 **Thayaar:** Kurmanayaki Thayaar
 
@@ -40,4 +40,4 @@ Later, a tribal king visited the Swetha Pushkarani and was impressed with it. Af
 
 Over time, this kshethram became misconstrued as a kshethram dedicated to Lord Shiva. Swami Ramanujacharya is said to have reformed this temple during his visit to the kshethram and re-established Vaishnavite practices at this temple. An oddity of this temple is that it has two *dwajasthambams*.
 
-[caption id="attachment_1539" align="aligncenter" width="300"]![](https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/f8ffa-padmavimanam.jpg?w=300&h=210) Ashtadala Padma Vimanam with one of the dwajasthambhams[/caption]
+[caption id="attachment_1539" align="aligncenter" width="300"]![](images/03-f8ffa-padmavimanam.jpg) Ashtadala Padma Vimanam with one of the dwajasthambhams[/caption]

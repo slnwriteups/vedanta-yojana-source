@@ -8,7 +8,7 @@ categories: ["108 Divyadesam","Malai Nadu Kshethrams"]
 
 # 108 Divyadesam - 76) Tiruvattaaru
 
-[![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/16613-108-76.jpg)](https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/16613-108-76.jpg)
+[![](images/01-16613-108-76.jpg)](images/01-16613-108-76.jpg)
 
  **Details of Kshethram:**  **Moolavar:** Sri Aadikeshava Perumal **Thayaar:** Margathavalli Nachiyar **Vimanam:** Ashtanga Vimanam **Pushkarani:** Vattar Theertham **Travel:** This kshethram is located at Tiruvattar, Kanyakumari District in Tamil Nadu.
 

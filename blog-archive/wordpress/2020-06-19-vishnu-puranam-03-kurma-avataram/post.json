@@ -18,18 +18,15 @@
   "images": [
     {
       "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d030a-samudramanthanam-1.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/01-d030a-samudramanthanam-1.jpg"
     },
     {
       "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d885b-srikurmam.jpg",
-      "file": null,
-      "error": "download failed"
+      "file": "images/02-d885b-srikurmam.jpg"
     },
     {
       "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/f8ffa-padmavimanam.jpg?w=300&h=210",
-      "file": null,
-      "error": "download failed"
+      "file": "images/03-f8ffa-padmavimanam.jpg"
     }
   ],
   "wordCount": 1028,
