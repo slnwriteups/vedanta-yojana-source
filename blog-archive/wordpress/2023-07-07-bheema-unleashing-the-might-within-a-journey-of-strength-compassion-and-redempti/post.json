@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2185",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/06/bheema-unleashing-the-might-within-a-journey-of-strength-compassion-and-redemption/",
+  "title": "Bheema: Unleashing the Might Within, A Journey of Strength, Compassion, and Redemption",
+  "slug": "bheema-unleashing-the-might-within-a-journey-of-strength-compassion-and-redempti",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-07T04:27:45Z",
+  "modifiedAt": "2023-07-07T04:27:45Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 461,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

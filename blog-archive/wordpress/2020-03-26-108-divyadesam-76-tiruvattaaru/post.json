@@ -1,0 +1,47 @@
+{
+  "platform": "wordpress",
+  "sourceId": "116",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/26/108-divyadesam-76-tiruvattaaru/",
+  "title": "108 Divyadesam - 76) Tiruvattaaru",
+  "slug": "108-divyadesam-76-tiruvattaaru",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-03-26T15:40:00Z",
+  "modifiedAt": "2022-02-10T16:14:20Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam",
+    "Malai Nadu Kshethrams"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/16613-108-76.jpg",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 505,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.23,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tiruvattaaru.json",
+        "kind": "divya-desams",
+        "title": "Tiruvattaaru",
+        "overlap": 0.2
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

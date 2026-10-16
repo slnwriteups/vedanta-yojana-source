@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2172",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/03/bhishmas-divine-wisdom-unveiling-the-vishnu-sahasranama-stotram/",
+  "title": "Bhishma's Divine Wisdom: Unveiling the Vishnu Sahasranama Stotram",
+  "slug": "bhishmas-divine-wisdom-unveiling-the-vishnu-sahasranama-stotram",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-04T01:32:10Z",
+  "modifiedAt": "2023-07-04T01:32:10Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1382,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

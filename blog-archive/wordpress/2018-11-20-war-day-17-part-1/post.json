@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "431",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=431",
+  "title": "War- Day 17 Part 1",
+  "slug": "war-day-17-part-1",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-20T17:17:00Z",
+  "modifiedAt": "2022-02-10T16:12:18Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 489,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

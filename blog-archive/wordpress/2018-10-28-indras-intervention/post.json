@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "454",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=454",
+  "title": "Indra's Intervention",
+  "slug": "indras-intervention",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-28T16:29:00Z",
+  "modifiedAt": "2022-02-10T16:12:49Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 444,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

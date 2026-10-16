@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "395",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/04/azhwar-vaibhavam-4/",
+  "title": "Azhwar Vaibhavam - 4",
+  "slug": "azhwar-vaibhavam-4",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-04T11:16:00Z",
+  "modifiedAt": "2022-02-10T16:11:50Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 2061,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

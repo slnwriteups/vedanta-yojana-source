@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "450",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=450",
+  "title": "Bhagavad Gita-3",
+  "slug": "bhagavad-gita-3",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-01T17:57:00Z",
+  "modifiedAt": "2022-02-10T16:12:44Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 2047,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

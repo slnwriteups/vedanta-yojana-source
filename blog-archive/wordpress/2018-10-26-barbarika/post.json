@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "456",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=456",
+  "title": "Barbarika",
+  "slug": "barbarika",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-26T17:03:00Z",
+  "modifiedAt": "2022-02-10T16:12:52Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 516,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

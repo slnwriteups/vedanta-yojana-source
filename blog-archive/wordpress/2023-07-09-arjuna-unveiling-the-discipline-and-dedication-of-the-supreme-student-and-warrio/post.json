@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2190",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/08/arjuna-unveiling-the-discipline-and-dedication-of-the-supreme-student-and-warrior/",
+  "title": "Arjuna: Unveiling the Discipline and Dedication of the Supreme Student and Warrior",
+  "slug": "arjuna-unveiling-the-discipline-and-dedication-of-the-supreme-student-and-warrio",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-09T01:14:22Z",
+  "modifiedAt": "2023-07-09T01:14:22Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 602,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

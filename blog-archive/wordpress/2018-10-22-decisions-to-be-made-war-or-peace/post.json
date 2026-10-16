@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "460",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=460",
+  "title": "Decisions to be Made: War or Peace",
+  "slug": "decisions-to-be-made-war-or-peace",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-22T17:03:00Z",
+  "modifiedAt": "2022-02-10T16:12:58Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 380,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

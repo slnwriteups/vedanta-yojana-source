@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2188",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/07/arjuna-the-noble-archers-path-to-spiritual-growth-and-moral-reflection/",
+  "title": "Arjuna: The Noble Archer's Path to Spiritual Growth and Moral Reflection",
+  "slug": "arjuna-the-noble-archers-path-to-spiritual-growth-and-moral-reflection",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-08T02:36:52Z",
+  "modifiedAt": "2023-07-08T02:36:52Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 503,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

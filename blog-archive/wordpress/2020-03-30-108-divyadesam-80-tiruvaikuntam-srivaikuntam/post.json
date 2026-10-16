@@ -1,0 +1,47 @@
+{
+  "platform": "wordpress",
+  "sourceId": "97",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/30/108-divyadesam-80-tiruvaikuntam-srivaikuntam/",
+  "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
+  "slug": "108-divyadesam-80-tiruvaikuntam-srivaikuntam",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-03-30T15:06:00Z",
+  "modifiedAt": "2022-02-10T16:14:11Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam",
+    "Pandiya Nadu Kshethrams"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/5173a-108-80.jpg",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 169,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.28,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tiruvaikuntam-srivaikuntam.json",
+        "kind": "divya-desams",
+        "title": "Tiruvaikuntam / Shrīvaikuṇṭham",
+        "overlap": 0.26
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

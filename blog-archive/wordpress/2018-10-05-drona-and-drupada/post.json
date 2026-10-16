@@ -1,0 +1,40 @@
+{
+  "platform": "wordpress",
+  "sourceId": "477",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=477",
+  "title": "Drona and Drupada",
+  "slug": "drona-and-drupada",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-05T17:29:00Z",
+  "modifiedAt": "2022-02-10T16:13:21Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 626,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.01,
+    "titleMatch": true,
+    "matches": [
+      {
+        "file": "library/jaya/chapters/drona-and-drupada.json",
+        "kind": "chapter",
+        "title": "Droṇa and Drupada",
+        "overlap": 0
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "platform": "wordpress",
+  "sourceId": "398",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/01/azhwar-vaibhavam-1/",
+  "title": "Azhwar Vaibhavam-1",
+  "slug": "azhwar-vaibhavam-1",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-01T10:48:00Z",
+  "modifiedAt": "2022-02-10T16:11:56Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 981,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.15,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tirukkovilur.json",
+        "kind": "divya-desams",
+        "title": "Tirukkovilur",
+        "overlap": 0.15
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

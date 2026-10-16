@@ -1,0 +1,45 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1519",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/18/vishnu-puranam-02-varaha-avataram/",
+  "title": "Vishnu Puranam- 02 - Varaha Avataram",
+  "slug": "vishnu-puranam-02-varaha-avataram",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-18T14:14:06Z",
+  "modifiedAt": "2020-06-19T02:44:06Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Abhimana Sthalam and Purana Kshethrams",
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/a0e8c-sriman-narayana-e1592398360943-300x194-1.png",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/6010b-srimushnam.jpg?w=300&h=229",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/3c2a5-nitya-pushkarani-srimushnam.jpg",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 781,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

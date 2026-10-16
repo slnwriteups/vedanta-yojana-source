@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2207",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/13/karna-a-paradox-of-virtue-and-adharma/",
+  "title": "Karna: A Paradox of Virtue and Adharma",
+  "slug": "karna-a-paradox-of-virtue-and-adharma",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-14T05:09:47Z",
+  "modifiedAt": "2023-07-14T05:09:47Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 719,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

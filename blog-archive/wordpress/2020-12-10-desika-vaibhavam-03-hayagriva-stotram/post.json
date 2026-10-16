@@ -1,0 +1,56 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1697",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/12/10/desika-vaibhavam-03-hayagriva-stotram/",
+  "title": "Desika Vaibhavam - 03 - Hayagriva Stotram",
+  "slug": "desika-vaibhavam-03-hayagriva-stotram",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-12-10T04:29:41Z",
+  "modifiedAt": "2022-02-10T16:23:10Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Desika Vaibhavam",
+    "Guru Parampara",
+    "Nadu Nadu Kshethrams"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d8730-sri-vedanta-desikan.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/c5e16-hayagriva1-782x1024-1.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/3ba92-hayagriva2-907x1024-1.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/606d5-hayagriva3-845x1024-1.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/12/48f16-hayagriva4-864x1024-1.jpg",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 327,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

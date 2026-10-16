@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "452",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=452",
+  "title": "Bhagavad Gita- 1",
+  "slug": "bhagavad-gita-1",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-30T17:46:00Z",
+  "modifiedAt": "2022-02-10T16:12:47Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1657,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "487",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=487",
+  "title": "Bhishma",
+  "slug": "bhishma",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-09-26T16:00:00Z",
+  "modifiedAt": "2022-02-10T16:13:34Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 429,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

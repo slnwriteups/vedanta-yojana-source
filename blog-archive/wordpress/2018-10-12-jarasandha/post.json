@@ -1,0 +1,40 @@
+{
+  "platform": "wordpress",
+  "sourceId": "470",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=470",
+  "title": "Jarasandha",
+  "slug": "jarasandha",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-12T17:40:00Z",
+  "modifiedAt": "2022-02-10T16:13:11Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 736,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.03,
+    "titleMatch": true,
+    "matches": [
+      {
+        "file": "library/srimad-bhagavata-kathasagaram/chapters/jarasandha.json",
+        "kind": "chapter",
+        "title": "Jarāsandha",
+        "overlap": 0.03
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

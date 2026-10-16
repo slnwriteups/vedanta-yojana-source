@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2209",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/14/shakuni-the-architect-of-chaos-within-the-kuru-dynasty/",
+  "title": "Shakuni: The Architect of Chaos within the Kuru Dynasty",
+  "slug": "shakuni-the-architect-of-chaos-within-the-kuru-dynasty",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-15T03:33:54Z",
+  "modifiedAt": "2023-07-15T03:33:54Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 500,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "483",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=483",
+  "title": "Gandhar's Relationship with Hastinapur",
+  "slug": "gandhars-relationship-with-hastinapur",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-09-29T15:28:00Z",
+  "modifiedAt": "2022-02-10T16:13:29Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 283,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

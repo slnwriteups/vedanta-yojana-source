@@ -1,0 +1,54 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1589",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/26/vishnu-puranam-10-sri-krishna-in-mathura/",
+  "title": "Vishnu Puranam - 10 - Sri Krishna in Mathura",
+  "slug": "vishnu-puranam-10-sri-krishna-in-mathura",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-26T13:00:34Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/1ea4d-krishnaakroora-140x300-1.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/74667-krishnaparavasudeva.jpg?w=187&h=300",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/5bbda-krishnakoliyapeed.jpg?w=227&h=300",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/b93cb-krishnamallayudha.jpg?w=300&h=199",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/89793-krishnakansa-223x300-1.jpg",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 548,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

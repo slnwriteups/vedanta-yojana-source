@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "466",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=466",
+  "title": "Encounter with Jayadratha",
+  "slug": "encounter-with-jayadratha",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-16T16:28:00Z",
+  "modifiedAt": "2022-02-10T16:13:06Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 483,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

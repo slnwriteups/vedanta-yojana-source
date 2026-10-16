@@ -1,0 +1,39 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1509",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/17/vishnu-puranam-01-an-introduction-to-creation/",
+  "title": "Vishnu Puranam- 01- An Introduction to Creation",
+  "slug": "vishnu-puranam-01-an-introduction-to-creation",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-17T14:28:26Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/a0e8c-sriman-narayana-e1592398360943-300x194-1.png",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/a8dc4-avikaraya.png?w=300&h=53",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 863,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

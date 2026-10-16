@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "386",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/31/veda-parichayam-5/",
+  "title": "Veda Parichayam-5",
+  "slug": "veda-parichayam-5",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-31T10:42:00Z",
+  "modifiedAt": "2022-02-10T16:16:55Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Veda Parichayam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1324,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

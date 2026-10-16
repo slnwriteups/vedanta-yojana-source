@@ -1,0 +1,15 @@
+---
+title: "War- Day 17 Part 2"
+platform: wordpress
+source: "https://vedantayojana.wordpress.com/?p=430"
+published: "2018-11-21T16:45:00Z"
+categories: ["108 Divyadesam"]
+---
+
+# War- Day 17 Part 2
+
+**नारायणं नमस्कृत्य नरं चैव नरोत्तमम् ।
+
+देवीं सरस्वतीं व्यासं ततो जयमुदीरयेत् ।।**
+
+After the death of Karna on day seventeen, Shalya was chosen as the commander in chief of the Kaurava Army. On the seventeenth evening , Gandhari approaches Maharshi Vyasa and tells him that Duryodhana was the sole survivor of her hundred sons and she wanted a way to protect him from being killed by Bheema and the Pandavas. Vyasa then thinks for a while and tells Gandhari that as she has been loyal to her Grihastha-Ashrama Dharma by sharing the same fate as her husband by keeping her eyes covered, she had gained the power equivalent to a great tapasvi. Vyasa advices Gandhari to call Duryodhana and remove her blindfold and by the power of her tapas-shakti would turn Duryodhana into a diamond-like being, immune to any form of impact. But there was a catch to this situation that Duryodhana had to come in front of Gandhari naked in order for the solution to work as wherever Gandhari’s gaze fell on Duryodhana’s body was where he would be invincible. Gandhari sent a message through a maid to tell Duryodhana to meet her that night. Gandhari tells Duryodhana of how she could make him invincible and tells him to go take a bath and come back to her after he was done. On the way back Krishna intercepts Duryodhana and tells him that he has no shame going naked in front of a woman. Ashamed by what Krishna says, Duryodhana grabs a few leaves and covers his genitals and theighs and goes in front of Gandhari. As Gandhari opened her eyes, Duryodhana’s body turned impenetrable as diamond except for the areas that he had covered. Gandhari then questions Duryodhana’s decision of covering himself . He then tells his mother that he couldn’t go in front of a woman and that it was a matter of shame. Duryodhana then took leave of his mother and left to get prepared for what would soon be the final day of the Mahabharata war.

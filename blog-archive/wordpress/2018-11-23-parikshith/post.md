@@ -1,0 +1,15 @@
+---
+title: "Parikshith"
+platform: wordpress
+source: "https://vedantayojana.wordpress.com/?p=428"
+published: "2018-11-23T16:21:00Z"
+categories: ["108 Divyadesam"]
+---
+
+# Parikshith
+
+**नारायणं नमस्कृत्य नरं चैव नरोत्तमम् ।
+
+देवीं सरस्वतीं व्यासं ततो जयमुदीरयेत् ।।**
+
+The morning that followed the war was one that took the Pandavas by shock. As they arrived at the camp they saw that their children, brother in law and sister in law lay dead. They began to probe the situation and soon realized that Ashwatthama was behind the killing and that he was in hiding at Vyasa’s Ashrama. As soon as the Pandavas found out the location of Ashwatthama they raced towards Maharshi Vyasa's Ashrama. They cornered Ashvatthama who then threatened the Pandavas by saying he would use the Brahmashiras-Astra against them. Without any second thought, Ashwatthama summoned the Brahmashiras and commanded it to attack and kill the Pandavas. Krishna in quick thinking told Arjuna to release the Brahmashiras to counteract the one released by Ashvatthama. Arjuna did as instructed but just before both the Astras came in contact with each other, Maharshi Vyasa intervenes and tells Arjuna and Ashwatthama that if two weapons of that magnitude of power were to come in contact with each other, it would spell doom for all the three Lokas put together. Hence Vyasa tells both of them to withdraw their respective weapons back to their Astra-Bhandaar. Arjuna immediately withdraws his weapon but Ashwatthama shows signs of a struggle and then confesses that he doesn’t have the knowledge to withdraw the weapon. It is then that Krishna asks Lord Brahma to take the weapon back into his personal Astra-Bhandaar. Ashwatthama was then filled by rage that he couldn’t fulfill his promise to Duryodhana and then creates a weapon called the Apandaveya-Astra and directs it towards Uttara’s womb in which there was a foetus that was nearly ready to take birth. Uttara then prays to Lord Krishna to protect her unborn baby from the wrath of Ashwatthama’s weapon. Lord Krishna then takes on a minuscule form and enters Uttara’s womb and goes in rounds around the foetus and protects him from the impact of Ashwatthama’s weapon. To then teach Ashwatthama a lesson Lord Krishna instructs Bheema to pluck out a gem which was embedded in Ashwatthama’s forehead that protected him from all kinds of diseases, hunger, and any other worldly problems. After the gem is removed from his forehead Lord Krishna then curses Ashwatthama that his greed of being a Chiranjeevi (an immortal) shall plague until the end of time. He would feel hunger, pain and all forms of disease and worldly problems but nobody would be able to answer his calls for help. He would thus spend eternity wandering across the universe without any help.

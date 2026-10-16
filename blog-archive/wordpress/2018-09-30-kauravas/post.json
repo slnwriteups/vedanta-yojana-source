@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "482",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=482",
+  "title": "Kauravas",
+  "slug": "kauravas",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-09-30T14:26:00Z",
+  "modifiedAt": "2022-02-10T16:13:27Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 334,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

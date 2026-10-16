@@ -1,0 +1,54 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1579",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/25/vishnu-puranam-09-sri-krishna-leela/",
+  "title": "Vishnu Puranam - 09 - Sri Krishna Leela",
+  "slug": "vishnu-puranam-09-sri-krishna-leela",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-25T13:51:20Z",
+  "modifiedAt": "2020-06-26T02:21:20Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/6f24c-krishnababy.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/e30d1-krishnayakshamoksham.jpg?w=300&h=273",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/3833a-krishnaleela.png?w=300&h=300",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/2174f-krishnagovardhana.png?w=300&h=300",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/3e2d8-kalinganarthanam.jpg?w=247&h=300",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 2159,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

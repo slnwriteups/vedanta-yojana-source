@@ -1,0 +1,17 @@
+---
+title: "Vishnu Dharmam - 03 - Bhakti"
+platform: wordpress
+source: "https://vedantayojana.wordpress.com/2020/08/07/vishnu-dharmam-03-bhakti/"
+published: "2020-08-07T03:50:30Z"
+categories: ["Vishnu Dharmam"]
+---
+
+# Vishnu Dharmam - 03 - Bhakti
+
+![](https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg)
+
+In our previous entry, we saw the concepts of a Mantra, Matrakavacham, Mantrasiddhi, and Mantrabalam. Now we shall see one of the more abstract concepts of our *Sanathana Dharma,* which is Bhakti.
+
+Shounaka Maharishi tells Shathaneeka the story of a conversation between his ancestor Yudhishthira and Lord Shri Krishna. In this conversation, Yudhishtira had just become the ruler of Indraprastha and questions the Lord as to how one can find Bhakti and devotion in the Lord. It is this very question that has been posed by many pupils to various Acharyas across time immemorial. Throughout our many discussions on *Sanathana Dharma,* we see that there have always been questions that have been posed by many people, and the answers have always stood out with a particular providence. For example, Yudhishthira asked Bheeshma, who is the one Lord who should be praised and worshipped and thus came to being the Vishnu Sahasranaama Stotram. Valmiki asked Devarishi Narada, who was the man, that was a personification of all ideals that a man could possess and thus came to bring the Ramayana. These are two of but many examples that one can find. The point that I am trying to make here is that questioning is the first most basic requirement for Bhakti to exist and propagate. Lord Krishna tells Yudhishthira, to find Bhakti, one must study the Vedas, Ithihasas, the six Veda-Angas namely, 1) *Shiksha 2) Chandas 3) Vyaakarana 4) Niruktha* *5) Kalpa and 6) Jyothisha*, Manu-Dharma Shastram, and the Puranas. If one goes through these, Bhakti will start to grow. Lord Krishna then tells Yudhishthira the role of parents, especially the mother, in the upbringing of Bhakti in a child's life. The Lord says a father must propagate the shastras and perform *upanayanam* for the child. If the father does not possess the knowledge to teach the child the details of *nitya-karma* and *sandhyavandhanam,* it becomes the mother's duty to learn the mantras and teach the child to perform *sandhyavandhanam daily*. The Lord tells that Bhakti is something that is propagated from the mother's womb. As she has carried the child for nine months, given the child her milk, she is the primary authority to propagate teachings to the child.
+
+Speaking from a modern-day perspective, we live in a time, and era wherein adults and children are neglecting, questioning, and rejecting the cultures, as stated in *Sanathana Dharma**.* We visit temples on certain days of the year, for example, during brahmotsavam or pavitrothsavam or samprokshanam. Our Acharyas say it is well and good if one visits temples on such days. Still, it is equally important to perform Veda Parayanam, Divya-Prabandha Parayanam, and Ithihasa-Purana Shravanam. The positive vibrations present in all of the previously stated have the power to grant us more longevity and peace than if we take part in a Yagna-Purnahuti. Just as we have gatherings, we should try to encourage Veda Parayanam at least once every six months to propagate and enjoy the longterm benefits of the positive vibrations.

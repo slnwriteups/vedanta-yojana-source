@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "440",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=440",
+  "title": "War- Day 5",
+  "slug": "war-day-5",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-11T16:37:00Z",
+  "modifiedAt": "2022-02-10T16:12:30Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 136,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

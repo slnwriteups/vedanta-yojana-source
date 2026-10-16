@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2199",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/11/duryodhana-a-study-of-ambition-and-jealousy-in-leadership/",
+  "title": "Duryodhana: A Study of Ambition and Jealousy in Leadership",
+  "slug": "duryodhana-a-study-of-ambition-and-jealousy-in-leadership",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-12T02:37:11Z",
+  "modifiedAt": "2023-07-12T02:37:11Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 453,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1286",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/26/guruvayoor/",
+  "title": "Guruvayoor",
+  "slug": "guruvayoor",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-04-26T15:11:27Z",
+  "modifiedAt": "2020-04-26T15:11:27Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Abhimana Sthalam and Purana Kshethrams"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/64d2d-images.jpeg",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 1461,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

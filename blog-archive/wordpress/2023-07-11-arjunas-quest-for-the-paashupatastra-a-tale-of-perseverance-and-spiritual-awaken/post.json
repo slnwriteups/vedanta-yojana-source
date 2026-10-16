@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2197",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/10/arjunas-quest-for-the-paashupatastra-a-tale-of-perseverance-and-spiritual-awakening/",
+  "title": "Arjuna's Quest for the Paashupatastra: A Tale of Perseverance and Spiritual Awakening",
+  "slug": "arjunas-quest-for-the-paashupatastra-a-tale-of-perseverance-and-spiritual-awaken",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-11T05:32:05Z",
+  "modifiedAt": "2023-07-11T05:32:05Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 621,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

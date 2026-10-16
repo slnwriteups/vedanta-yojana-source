@@ -1,0 +1,67 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1817",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2021/06/19/sudarshana-mahima-sudarshana-ashtakam/",
+  "title": "Sudarshana Mahima: Sudarshana Ashtakam",
+  "slug": "sudarshana-mahima-sudarshana-ashtakam",
+  "sourceStatus": "publish",
+  "publishedAt": "2021-06-19T17:19:45Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Desika Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/02fb4-sudarshana-300x300-1.jpg",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/331f8-kalachakram-1-300x29-1.png",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2021/06/ce04d-desika-stuti-300x77-1.png",
+      "file": null,
+      "error": "download failed"
+    },
+    {
+      "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/e3f56-sudarshana-asthtakam.png",
+      "file": null,
+      "error": "download failed"
+    }
+  ],
+  "wordCount": 1230,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.28,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/kapisthalam.json",
+        "kind": "divya-desams",
+        "title": "Kapisthalam",
+        "overlap": 0.18
+      },
+      {
+        "file": "divya-desams/tirukkoodaloor.json",
+        "kind": "divya-desams",
+        "title": "Tirukkoodaloor",
+        "overlap": 0.08
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

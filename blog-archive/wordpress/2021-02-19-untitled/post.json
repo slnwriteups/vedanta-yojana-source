@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1773",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=1773",
+  "title": "(untitled)",
+  "slug": "untitled",
+  "sourceStatus": "draft",
+  "publishedAt": "2021-02-19T06:01:33",
+  "modifiedAt": "2021-02-19T06:01:33",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 262,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "427",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=427",
+  "title": "The End",
+  "slug": "the-end",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-24T16:58:00Z",
+  "modifiedAt": "2022-02-10T16:12:12Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 383,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

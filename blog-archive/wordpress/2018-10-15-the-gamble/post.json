@@ -1,0 +1,40 @@
+{
+  "platform": "wordpress",
+  "sourceId": "467",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=467",
+  "title": "The Gamble",
+  "slug": "the-gamble",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-15T17:17:00Z",
+  "modifiedAt": "2022-02-10T16:13:07Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 821,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0,
+    "titleMatch": true,
+    "matches": [
+      {
+        "file": "library/jaya/chapters/the-gamble.json",
+        "kind": "chapter",
+        "title": "The Gamble",
+        "overlap": 0
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

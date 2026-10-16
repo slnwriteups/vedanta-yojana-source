@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "436",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=436",
+  "title": "War- Day 12",
+  "slug": "war-day-12",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-15T17:11:00Z",
+  "modifiedAt": "2022-02-10T16:12:24Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 225,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

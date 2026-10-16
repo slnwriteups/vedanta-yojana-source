@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "438",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=438",
+  "title": "War- Days 9,10",
+  "slug": "war-days-9-10",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-13T16:46:00Z",
+  "modifiedAt": "2022-02-10T16:12:27Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 458,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}
