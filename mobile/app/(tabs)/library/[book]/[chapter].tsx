@@ -305,7 +305,7 @@ export default function LibraryChapterScreen() {
             <DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />
             {position !== -1 ? (
               <Text style={[styles.position, { color: theme.colors.muted }]}>
-                {chapterPositionLabel(language, position + 1, localizedChapters.length)}
+                {chapterPositionLabel(language, position + 1, localizedChapters.length, book?.kind ?? "book")}
                 {readingMinutes > 0 ? ` · ${minReadLabel(language, readingMinutes)}` : ""}
               </Text>
             ) : null}

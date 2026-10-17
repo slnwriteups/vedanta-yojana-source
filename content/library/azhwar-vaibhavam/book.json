@@ -1,0 +1,24 @@
+{
+  "slug": "azhwar-vaibhavam",
+  "title": "Āzhwār Vaibhavam",
+  "author": "Vishnu Sreenivas",
+  "description": "The lives of the twelve Āzhwārs, the saint-poets who carried devotion to Sriman Nārāyaṇa to the people in Tamizh.",
+  "kind": "blog",
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:azhwar-vaibhavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "parts": [],
+  "chapterOrder": [
+    "an-introduction-to-the-azhwars",
+    "the-mudal-azhwars",
+    "tirumazhisai-azhwar",
+    "tirumangai-azhwar",
+    "tondaradippodi-azhwar",
+    "periyazhwar-and-andal",
+    "nammazhwar-and-madhurakavi-azhwar",
+    "kulasekhara-azhwar"
+  ]
+}

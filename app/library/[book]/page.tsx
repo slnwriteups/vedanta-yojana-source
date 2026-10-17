@@ -74,7 +74,7 @@ export default async function LibraryBookPage({
         {chapters.length > 0 ? (
           <ol role="list" className="space-y-3">
             {chapters.map((chapter, index) => (
-              <ChapterListItem key={chapter.slug} bookSlug={book.slug} chapter={toPublicChapter(chapter)} position={index + 1} />
+              <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toPublicChapter(chapter)} position={index + 1} />
             ))}
           </ol>
         ) : (

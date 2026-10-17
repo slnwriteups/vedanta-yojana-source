@@ -88,7 +88,7 @@ export function LocalizedChapterBody({
             {badge}
             {position !== -1 ? (
               <p className="eyebrow text-[var(--muted)]">
-                {chapterPositionLabel(language, position + 1, total)}
+                {chapterPositionLabel(language, position + 1, total, book.kind)}
                 {readingMinutes > 0 ? ` · ${minReadLabel(language, readingMinutes)}` : ""}
               </p>
             ) : null}

@@ -1,0 +1,18 @@
+{
+  "slug": "temples-and-festivals",
+  "title": "Temples and Festivals",
+  "author": "Vishnu Sreenivas",
+  "description": "Kshethrams and the sacred festivals celebrated at them.",
+  "kind": "blog",
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:temples-and-festivals",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "parts": [],
+  "chapterOrder": [
+    "tirumala-navaratri-brahmotsavam",
+    "guruvayur"
+  ]
+}

@@ -7,7 +7,7 @@ import { sectionTint } from "../../../section-tints.ts";
 import { bookCoverAsset } from "../../../book-covers.ts";
 import { localizeBook } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
-import { chapterCountLabel, useT } from "../../../ui-strings.ts";
+import { libraryEntryCountLabel, useT } from "../../../ui-strings.ts";
 import { getLibraryCatalog, syncLibraryCatalog } from "../../../services/libraryCatalogService.ts";
 import type { CatalogEntry } from "../../../services/libraryCatalogCore.ts";
 
@@ -50,13 +50,29 @@ export default function LibraryIndexScreen() {
     };
   }, []);
 
-  function renderItem({ item }: { item: CatalogEntry }) {
+  // Books first, then the author's blog series (book.kind === "blog") under
+  // their own heading -- the same two shelves as the web Library. The Books
+  // heading only appears once there is a Blogs shelf to tell it apart from.
+  const books = catalog.filter((entry) => entry.book.kind !== "blog");
+  const blogs = catalog.filter((entry) => entry.book.kind === "blog");
+  const rows: LibraryRow[] = [
+    ...(blogs.length > 0 && books.length > 0 ? [{ heading: "libraryBooksHeading" as const }] : []),
+    ...books.map((entry) => ({ entry })),
+    ...(blogs.length > 0 ? [{ heading: "libraryBlogsHeading" as const }] : []),
+    ...blogs.map((entry) => ({ entry })),
+  ];
+
+  function renderRow({ item: row }: { item: LibraryRow }) {
+    if ("heading" in row) {
+      return <Text style={[styles.heading, { color: theme.colors.foreground }]}>{t(row.heading)}</Text>;
+    }
+    const item = row.entry;
     const book = localizeBook(item.book, language);
     const tint = sectionTint(book.slug, theme.scheme);
     return (
       <ContentCard
         title={book.title}
-        subtitle={chapterCountLabel(language, item.chapters.length)}
+        subtitle={libraryEntryCountLabel(language, item.book.kind, item.chapters.length)}
         status={book.status}
         needsReview={book.migration.needsReview}
         tintColor={tint}
@@ -73,9 +89,9 @@ export default function LibraryIndexScreen() {
       <Stack.Screen options={{ title: t("tabLibrary") }} />
       {catalog.length > 0 ? (
         <FlatList
-          data={catalog}
-          keyExtractor={(item) => item.book.slug}
-          renderItem={renderItem}
+          data={rows}
+          keyExtractor={(row) => ("heading" in row ? row.heading : row.entry.book.slug)}
+          renderItem={renderRow}
           contentContainerStyle={styles.list}
         />
       ) : (
@@ -85,11 +101,20 @@ export default function LibraryIndexScreen() {
   );
 }
 
+type LibraryRow = { heading: "libraryBooksHeading" | "libraryBlogsHeading" } | { entry: CatalogEntry };
+
 const styles = StyleSheet.create({
   container: { flex: 1 },
   list: {
     paddingTop: spacing.md,
     paddingBottom: layout.tabBarClearance,
+  },
+  heading: {
+    paddingHorizontal: layout.screenPadding,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.xs,
+    fontSize: typography.heading,
+    fontWeight: "700",
   },
   empty: {
     padding: layout.screenPadding,

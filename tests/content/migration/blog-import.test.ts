@@ -350,3 +350,53 @@ test("images embedded under an old WordPress.com staging host are looked up on t
   ]);
   assert.equal(parseWxr(WXR.replace("<channel>", "<channel><wp:base_blog_url>https://example.wordpress.com</wp:base_blog_url>"))[0].siteUrl, "https://example.wordpress.com");
 });
+
+// ---------------------------------------------------------------------------
+// Publishing archived posts into the Library as a blog series.
+// ---------------------------------------------------------------------------
+
+test("publishBlog writes a kind:blog book with the edited posts as chapters, copies images under stable UUIDs, and marks the posts migrated", async () => {
+  const { publishBlog, uuidV5 } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const { BookSchema: Book, ChapterSchema: Chapter } = await import("../../../content-lib/schemas/index.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-blog-"));
+  try {
+    const archiveRoot = path.join(root, "blog-archive");
+    const wp = parseWxr(WXR).slice(0, 1).map((p) => ({ ...p, html: p.html + FILLER }));
+    await archivePosts(wp, {
+      root: archiveRoot,
+      fetchBinary: async () => ({ bytes: new Uint8Array([7]), contentType: "image/jpeg" }),
+    });
+    const folder = "wordpress/2019-05-01-example-post";
+    fs.writeFileSync(path.join(root, "edited.txt"), "An Edited Title\nFirst paragraph.\n\n\n\nSecond paragraph.\n");
+    const spec = { slug: "example-blog", title: "Example Blog", posts: [{ archive: folder, text: "edited.txt" }] };
+
+    const { book, chapters } = publishBlog(spec, root, { repoRoot: root, archiveRoot });
+    assert.equal(book.kind, "blog");
+    assert.deepEqual(book.chapterOrder, ["an-edited-title"]);
+    const onDisk = JSON.parse(fs.readFileSync(path.join(root, "content/library/example-blog/chapters/an-edited-title.json"), "utf8"));
+    assert.equal(Chapter.parse(onDisk).body, "First paragraph.\n\nSecond paragraph.");
+    assert.equal(Book.parse(JSON.parse(fs.readFileSync(path.join(root, "content/library/example-blog/book.json"), "utf8"))).kind, "blog");
+
+    const [cover] = chapters[0].images;
+    assert.equal(cover.sourceAssetUuid, uuidV5("https://example.files.wordpress.com/2019/05/cover.jpg"));
+    assert.equal(cover.sourceOriginalName, "cover.jpg");
+    assert.equal(cover.alt, null);
+    assert.ok(fs.existsSync(path.join(root, "public/images", `${cover.sourceAssetUuid}.jpg`)));
+
+    const archived = JSON.parse(fs.readFileSync(path.join(archiveRoot, folder, "post.json"), "utf8"));
+    assert.equal(archived.migration.status, "migrated");
+    assert.match(archived.migration.notes, /content\/library\/example-blog\/chapters\/an-edited-title\.json/);
+
+    // Re-publishing is idempotent: same image UUIDs, same files.
+    const again = publishBlog(spec, root, { repoRoot: root, archiveRoot });
+    assert.equal(again.chapters[0].images[0].sourceAssetUuid, cover.sourceAssetUuid);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("uuidV5 matches the RFC 4122 reference value", async () => {
+  const { uuidV5 } = await import("../../../scripts/blog-import/publish-blog.ts");
+  // Python: uuid.uuid5(uuid.NAMESPACE_URL, "https://example.com/a.jpg")
+  assert.equal(uuidV5("https://example.com/a.jpg"), "0af39f86-695f-5b4f-8503-15ef9f8ea23c");
+});

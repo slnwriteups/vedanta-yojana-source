@@ -34,7 +34,7 @@
     ]
   },
   "migration": {
-    "status": "archived",
-    "notes": ""
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/azhwar-vaibhavam/chapters/the-mudal-azhwars.json, edited to book standard."
   }
 }

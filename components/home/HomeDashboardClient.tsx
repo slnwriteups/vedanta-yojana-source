@@ -93,6 +93,7 @@ export function HomeDashboardClient({
                 position={resolved.chapterPosition}
                 total={resolved.totalChapters}
                 minutesLeft={resolved.minutesLeft}
+                kind={resolved.kind}
                 href={`/library/${resolved.bookSlug}/${resolved.chapterSlug}`}
               />
             ))}

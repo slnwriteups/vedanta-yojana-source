@@ -79,7 +79,7 @@ test("exactly 1 held-back unresolved record exists (Page150)", () => {
   assert.equal(unresolvedFiles.length, 1);
 });
 
-test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+71(jaya: 1 book.json + 70 chapters) = 358", () => {
+test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+71(jaya: 1 book.json + 70 chapters)+9(azhwar-vaibhavam blog: 1 book.json + 8 posts)+3(temples-and-festivals blog: 1 book.json + 2 posts) = 370", () => {
   // Phase 6E added content/_provenance/ -- one small JSON file per Divya
   // Desam record that received a category-B text supplement and/or a
   // book-sourced image/shrine from "108 Divyadesam 2nd Edition.pdf" (101
@@ -139,8 +139,11 @@ test("no unexpected content records: total /content file count matches exactly 1
   // Chapter 1, not part of it), split out as its own chapter record per
   // content/library/jaya/book.json's chapterOrder: 357 -> 358 (net +1,
   // jaya: 69 -> 70 chapters).
+  // The first two blog series published from the old WordPress blog
+  // (scripts/blog-import/publish-blog.ts): azhwar-vaibhavam (1 book.json +
+  // 8 posts) and temples-and-festivals (1 book.json + 2 posts): 358 -> 370.
   const total = countFilesRecursive(path.join(REPO_ROOT, "content"));
-  assert.equal(total, 358);
+  assert.equal(total, 370);
 });
 
 function countFilesRecursive(dir: string): number {

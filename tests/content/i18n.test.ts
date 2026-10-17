@@ -124,6 +124,7 @@ test("I: localizeBook applies title/description, never touches author", () => {
     slug: "example-book",
     title: "Example Book",
     author: "Some Author",
+    kind: "book",
     status: "published",
     migration: { sourcePageId: "aggregate:x", extractionConfidence: "medium", needsReview: false },
     parts: [],

@@ -26,6 +26,9 @@ const UI_STRINGS = {
   tabHome: { en: "Home", ta: "முகப்பு", kn: "ಮುಖಪುಟ", hi: "होम", te: "హోమ్" },
   tabDivyaDesams: { en: "Divya Desams", ta: "திவ்ய தேசங்கள்", kn: "ದಿವ್ಯ ದೇಶಗಳು", hi: "दिव्य देशम", te: "దివ్య దేశాలు" },
   tabLibrary: { en: "Library", ta: "நூலகம்", kn: "ಗ್ರಂಥಾಲಯ", hi: "पुस्तकालय", te: "గ్రంథాలయం" },
+  /** Library shelf headings: published books, and the author's blog series (Book.kind === "blog"). */
+  libraryBooksHeading: { en: "Books", ta: "நூல்கள்", kn: "ಪುಸ್ತಕಗಳು", hi: "पुस्तकें", te: "పుస్తకాలు" },
+  libraryBlogsHeading: { en: "Blogs", ta: "வலைப்பதிவுகள்", kn: "ಬ್ಲಾಗ್‌ಗಳು", hi: "ब्लॉग", te: "బ్లాగులు" },
   tabSearch: { en: "Search", ta: "தேடல்", kn: "ಹುಡುಕಾಟ", hi: "खोज", te: "శోధన" },
   tabSettings: { en: "Settings", ta: "அமைப்புகள்", kn: "ಸೆಟ್ಟಿಂಗ್‌ಗಳು", hi: "सेटिंग्स", te: "సెట్టింగ్స్" },
 
@@ -514,6 +517,23 @@ function pick(language: LanguageCode | null, en: string, ta: string, kn: string,
   return en;
 }
 
+/** "8 posts" -- a blog series' entry count, the blog counterpart of chapterCountLabel. */
+export function postCountLabel(language: LanguageCode | null, count: number): string {
+  return pick(
+    language,
+    `${count} post${count === 1 ? "" : "s"}`,
+    `${count} ${count === 1 ? "பதிவு" : "பதிவுகள்"}`,
+    `${count} ${count === 1 ? "ಬರಹ" : "ಬರಹಗಳು"}`,
+    `${count} लेख`,
+    `${count} ${count === 1 ? "రచన" : "రచనలు"}`
+  );
+}
+
+/** A Library entry's count line: chapters for a book, posts for a blog. */
+export function libraryEntryCountLabel(language: LanguageCode | null, kind: "book" | "blog", count: number): string {
+  return kind === "blog" ? postCountLabel(language, count) : chapterCountLabel(language, count);
+}
+
 export function chapterCountLabel(language: LanguageCode | null, count: number): string {
   return pick(
     language,
@@ -537,22 +557,30 @@ export function timesInZoneLabel(language: LanguageCode | null, zone: string): s
   );
 }
 
-export function chapterOrdinalLabel(language: LanguageCode | null, position: number): string {
-  return pick(language, `Chapter ${position}`, `அத்தியாயம் ${position}`, `ಅಧ್ಯಾಯ ${position}`, `अध्याय ${position}`, `అధ్యాయం ${position}`);
+/** "Chapter" for a book, "Post" for a blog series (Book.kind), in each language -- the unit the labels below count in. */
+function entryWord(language: LanguageCode | null, kind: "book" | "blog"): string {
+  return kind === "blog"
+    ? pick(language, "Post", "பதிவு", "ಬರಹ", "लेख", "రచన")
+    : pick(language, "Chapter", "அத்தியாயம்", "ಅಧ್ಯಾಯ", "अध्याय", "అధ్యాయం");
+}
+
+export function chapterOrdinalLabel(language: LanguageCode | null, position: number, kind: "book" | "blog" = "book"): string {
+  return `${entryWord(language, kind)} ${position}`;
 }
 
 export function recordCountLabel(language: LanguageCode | null, count: number): string {
   return pick(language, `${count} records`, `${count} பதிவுகள்`, `${count} ದಾಖಲೆಗಳು`, `${count} अभिलेख`, `${count} వివరాలు`);
 }
 
-export function chapterPositionLabel(language: LanguageCode | null, position: number, total: number): string {
+export function chapterPositionLabel(language: LanguageCode | null, position: number, total: number, kind: "book" | "blog" = "book"): string {
+  const word = entryWord(language, kind);
   return pick(
     language,
-    `CHAPTER ${position} OF ${total}`,
-    `அத்தியாயம் ${position} / ${total}`,
-    `ಅಧ್ಯಾಯ ${position} / ${total}`,
-    `अध्याय ${position} / ${total}`,
-    `అధ్యాయం ${position} / ${total}`
+    `${word.toUpperCase()} ${position} OF ${total}`,
+    `${word} ${position} / ${total}`,
+    `${word} ${position} / ${total}`,
+    `${word} ${position} / ${total}`,
+    `${word} ${position} / ${total}`
   );
 }
 
@@ -561,15 +589,17 @@ export function continueReadingProgressLabel(
   position: number,
   total: number,
   percentComplete: number,
-  minutesLeft: number
+  minutesLeft: number,
+  kind: "book" | "blog" = "book"
 ): string {
+  const word = entryWord(language, kind);
   return pick(
     language,
-    `Chapter ${position} of ${total} • ${percentComplete}% completed • ${minutesLeft}m left`,
-    `அத்தியாயம் ${position} / ${total} • ${percentComplete}% முடிந்தது • ${minutesLeft} நிமிடம் மீதம்`,
-    `ಅಧ್ಯಾಯ ${position} / ${total} • ${percentComplete}% ಪೂರ್ಣಗೊಂಡಿದೆ • ${minutesLeft} ನಿಮಿಷ ಬಾಕಿ`,
-    `अध्याय ${position} / ${total} • ${percentComplete}% पूर्ण • ${minutesLeft} मिनट शेष`,
-    `అధ్యాయం ${position} / ${total} • ${percentComplete}% పూర్తయింది • ${minutesLeft} నిమిషాలు మిగిలి ఉన్నాయి`
+    `${word} ${position} of ${total} • ${percentComplete}% completed • ${minutesLeft}m left`,
+    `${word} ${position} / ${total} • ${percentComplete}% முடிந்தது • ${minutesLeft} நிமிடம் மீதம்`,
+    `${word} ${position} / ${total} • ${percentComplete}% ಪೂರ್ಣಗೊಂಡಿದೆ • ${minutesLeft} ನಿಮಿಷ ಬಾಕಿ`,
+    `${word} ${position} / ${total} • ${percentComplete}% पूर्ण • ${minutesLeft} मिनट शेष`,
+    `${word} ${position} / ${total} • ${percentComplete}% పూర్తయింది • ${minutesLeft} నిమిషాలు మిగిలి ఉన్నాయి`
   );
 }
 

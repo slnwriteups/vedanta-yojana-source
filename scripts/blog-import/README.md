@@ -100,3 +100,43 @@ The app does not yet have a section for blog posts (`content/knowledge/`
 is currently tied to the original SAP migration and its tests), so the
 step that turns an archived post into an app record is deliberately left
 for when that section is designed.
+
+## 5. Publishing posts into the app's Library
+
+Archived posts are published as **blogs**: a Library entry with
+`"kind": "blog"` in its `book.json`, whose chapters are the posts. Blogs
+appear under their own **Blogs** heading in the Library (web and app),
+are counted in posts rather than chapters, and otherwise use everything
+books do: the reader, search, bookmarks, Continue Reading, offline
+download and the app's over-the-air content updates.
+
+Posts are not copied across as they were written for the blog. Edit each
+one to the standard of the books first (no "in today's post…", fixed
+grammar, consistent spellings such as Āzhwār, Nārāyaṇa, Perumāl), saved as
+a text file whose first line is the title and whose body is plain
+paragraphs separated by blank lines. Then describe the blog in a small
+spec file and publish it:
+
+```
+node scripts/blog-import/publish-blog.ts path/to/spec.json
+node mobile/scripts/generate-content-manifest.ts
+```
+
+```json
+{
+  "slug": "azhwar-vaibhavam",
+  "title": "Āzhwār Vaibhavam",
+  "author": "Vishnu Sreenivas",
+  "description": "One sentence shown under the title.",
+  "posts": [
+    { "archive": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction", "text": "intro.txt" }
+  ]
+}
+```
+
+This writes `content/library/<slug>/` (book.json + one chapter per post,
+in the order listed), copies each post's archived images into
+`public/images/` under a UUID derived from the image's original URL, and
+marks the posts `migrated` in `blog-archive/` with a note pointing at the
+published chapter. Re-running a spec rewrites that blog. Image alt text is
+left for a person to write, as for every other image in the app.

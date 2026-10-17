@@ -173,3 +173,23 @@ test("Search filters: every advertised filter option is a real SearchResultType 
     assert.ok(typesPresent.has(filter.value), `expected at least one "${filter.value}" result for a broad query`);
   }
 });
+
+test("Library: a blog's count line reads in posts, a book's in chapters, in every language", async () => {
+  const { libraryEntryCountLabel } = await import("../ui-strings.ts");
+  assert.equal(libraryEntryCountLabel(null, "book", 8), "8 chapters");
+  assert.equal(libraryEntryCountLabel(null, "blog", 8), "8 posts");
+  assert.equal(libraryEntryCountLabel(null, "blog", 1), "1 post");
+  for (const lang of ["ta", "kn", "hi", "te"] as const) {
+    assert.notEqual(libraryEntryCountLabel(lang, "blog", 2), libraryEntryCountLabel(lang, "book", 2), lang);
+  }
+});
+
+test("Library: a blog's entries are numbered as posts, a book's as chapters", async () => {
+  const { chapterOrdinalLabel, chapterPositionLabel, continueReadingProgressLabel } = await import("../ui-strings.ts");
+  assert.equal(chapterOrdinalLabel(null, 2), "Chapter 2");
+  assert.equal(chapterOrdinalLabel(null, 2, "blog"), "Post 2");
+  assert.equal(chapterPositionLabel(null, 6, 8), "CHAPTER 6 OF 8");
+  assert.equal(chapterPositionLabel(null, 6, 8, "blog"), "POST 6 OF 8");
+  assert.equal(chapterPositionLabel("ta", 6, 8, "blog"), "பதிவு 6 / 8");
+  assert.match(continueReadingProgressLabel(null, 3, 8, 38, 5, "blog"), /^Post 3 of 8 /);
+});

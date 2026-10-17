@@ -105,7 +105,7 @@ export default function LibraryBookScreen() {
     return (
       <ContentCard
         title={item.title}
-        subtitle={openingSlug === item.slug ? t("bookDownloading") : chapterOrdinalLabel(language, index + 1)}
+        subtitle={openingSlug === item.slug ? t("bookDownloading") : chapterOrdinalLabel(language, index + 1, book?.kind ?? "book")}
         status={item.status}
         needsReview={item.migration.needsReview}
         tintColor={tint}

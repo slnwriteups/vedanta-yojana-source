@@ -32,3 +32,16 @@ export const BookPartSchema = z.object({
   order: z.number().int(),
 });
 export type BookPart = z.infer<typeof BookPartSchema>;
+
+/**
+ * What a Library entry is: a "book" (a published book, read chapter by
+ * chapter) or a "blog" (a series of the author's blog posts, migrated
+ * from the old WordPress/Wix blogs and edited to book standard, each
+ * post stored as a chapter). Both share the whole reading pipeline --
+ * reader, search, bookmarks, offline download -- and differ only in
+ * which shelf of the Library they appear on and how their entries are
+ * counted ("chapters" vs "posts"). Omitted means "book", so every
+ * existing book.json and every older app build reads unchanged.
+ */
+export const LibraryKindSchema = z.enum(["book", "blog"]);
+export type LibraryKind = z.infer<typeof LibraryKindSchema>;
