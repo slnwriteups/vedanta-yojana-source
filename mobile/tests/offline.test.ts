@@ -11,6 +11,7 @@ import { findAdjacentChapters } from "../content-lib/chapter-navigation.ts";
 import {
   DEFAULT_READING_PREFERENCES,
   FONT_SCALE_STEPS,
+  normalizeReadingPreferences,
   isValidLastReadPosition,
   isValidReadingPreferences,
   isValidThemeOverride,
@@ -80,6 +81,24 @@ test("Reading preferences: the default and every offered font-scale step validat
   assert.ok(isValidReadingPreferences(DEFAULT_READING_PREFERENCES));
   for (const step of FONT_SCALE_STEPS) {
     assert.ok(isValidReadingPreferences({ fontScale: step.value }), `${step.label} (${step.value}) should validate`);
+  }
+});
+
+test("Reading preferences: each text-size step is clearly larger than the one before", () => {
+  for (let i = 1; i < FONT_SCALE_STEPS.length; i++) {
+    const gain = FONT_SCALE_STEPS[i].value - FONT_SCALE_STEPS[i - 1].value;
+    assert.ok(gain >= 0.15, `${FONT_SCALE_STEPS[i - 1].label} -> ${FONT_SCALE_STEPS[i].label} grows by only ${gain}`);
+  }
+});
+
+test("Reading preferences: a size saved under the earlier steps carries over to the same-named step", () => {
+  const byLabel = Object.fromEntries(FONT_SCALE_STEPS.map((s) => [s.label, s.value]));
+  for (const [old, label] of [[0.9, "Small"], [1, "Medium"], [1.15, "Large"], [1.3, "Extra Large"]] as const) {
+    assert.ok(isValidReadingPreferences({ fontScale: old }), `${old} should still load`);
+    assert.equal(normalizeReadingPreferences({ fontScale: old }).fontScale, byLabel[label], `${old} -> ${label}`);
+  }
+  for (const step of FONT_SCALE_STEPS) {
+    assert.equal(normalizeReadingPreferences({ fontScale: step.value }).fontScale, step.value);
   }
 });
 
