@@ -23,3 +23,14 @@ Applied the documented Library rules (`scripts/apply-transliteration*.ts`, round
 ## Phase B: translations (ta / kn / hi / te)
 
 Status per book is recorded below as batches are merged.
+
+| Language | temples-and-festivals (15) | nityasuri-vaibhavam (11) | azhwar-vaibhavam (34) | Book and part titles |
+|---|---|---|---|---|
+| Tamil (ta) | done | done | to do | done (all 3 books) |
+| Kannada (kn) | to do | to do | to do | to do |
+| Hindi (hi) | to do | to do | to do | to do |
+| Telugu (te) | to do | to do | to do | to do |
+
+Phase C: all 30 photos are placed inline in English. Each merged translation gets `placementAnchorTranslations`, derived from the matching paragraph and checked to place the photo inline.
+
+Term glossaries for reuse across batches: `docs/translation-glossaries/<lang>.md`.

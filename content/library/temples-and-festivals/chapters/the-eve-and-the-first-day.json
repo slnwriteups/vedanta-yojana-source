@@ -16,7 +16,10 @@
       "sourceOriginalName": "31731-golden-tiruchi.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "the tone for the grandeur of the days to come."
+      "placementAnchor": "the tone for the grandeur of the days to come.",
+      "placementAnchorTranslations": {
+        "ta": "நாட்களின் பெருமிதத்திற்குத் தொனி அமைக்கிறது."
+      }
     },
     {
       "assetId": "the-eve-and-the-first-day-2",
@@ -24,7 +27,10 @@
       "sourceOriginalName": "be37c-dwajarohanam.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "that the divine celebrations have begun."
+      "placementAnchor": "that the divine celebrations have begun.",
+      "placementAnchorTranslations": {
+        "ta": "தொடங்கிவிட்டன என்றும் அறிவிக்கிறது."
+      }
     },
     {
       "assetId": "the-eve-and-the-first-day-3",
@@ -32,7 +38,16 @@
       "sourceOriginalName": "ea55b-psv.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "believed to be a manifestation of Ādishesha."
+      "placementAnchor": "believed to be a manifestation of Ādishesha.",
+      "placementAnchorTranslations": {
+        "ta": "ஆதிசேஷனின் வெளிப்பாடு என்று நம்பப்படுகிறது."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "முந்தைய இரவும் முதல் நாளும்",
+      "body": "திருவிழா இரவில் அங்குரார்ப்பணத்துடன் தொடங்குகிறது; அதில் ஒன்பது வகைத் தானியங்கள் சடங்கு முறைப்படி விதைக்கப்படுகின்றன. இச்செயல் மங்களகரமான தொடக்கத்தையும், பின்தொடரவிருக்கும் அருளின் பெருக்கத்தையும் குறிக்கிறது. பெருமானின் சேனைகளின் தலைவரான விஷ்வக்சேனரை வழிபடும் விஷ்வக்சேன ஆராதனத்துடன் சேர்ந்து, இது பூமியின் தூய்மைப்படுத்தலையும் பிரம்மோற்சவத்தின் தொடக்கத்தையும் குறிக்கிறது.\n\nமுதல் நாள் மதியம், பெருமான் பங்காரு திருச்சி எனப்படும் பொன்னாலான சடங்குப் பீடத்தில் திருமலையின் வீதிகளில் எழுந்தருளுகிறார்; இத்திருவீதியுலா வரவிருக்கும் நாட்களின் பெருமிதத்திற்குத் தொனி அமைக்கிறது.\n\nமாலையில் பிரம்மோற்சவத்தின் முறையான தொடக்கமான த்வஜாரோகணம் நடைபெறுகிறது; அப்போது கருடக் கொடி த்வஜஸ்தம்பத்தில் ஏற்றப்படுகிறது. அக்கொடி தேவர்களை விழாக்கொண்டாட்டங்களில் கலந்துகொள்ள அழைப்பதோடு, திவ்வியக் கொண்டாட்டங்கள் தொடங்கிவிட்டன என்றும் அறிவிக்கிறது.\n\nஅன்றிரவு பெருமான் பெத்த சேஷ வாகனத்தில் எழுந்தருளுகிறார்; இது வைகுண்டத்தில் ஸ்ரீமன் நாராயணன் சயனித்திருக்கும் ஆதிசேஷனைக் குறிக்கும் பெரிய நாக வாகனம் ஆகும். ஆதிசேஷன் கைங்கர்யத்தின் திருவுருவமே; இத்திருவீதியுலா தம் அடியார்களுக்குச் சேவை செய்யப் பெருமான் கொண்டுள்ள தயார்நிலையைப் பிரதிபலிக்கிறது. திருமலை மலைகளே ஆதிசேஷனின் வெளிப்பாடு என்று நம்பப்படுகிறது."
+    }
+  }
 }

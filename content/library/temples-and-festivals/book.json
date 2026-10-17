@@ -26,7 +26,12 @@
         "the-seventh-day",
         "the-eighth-day-rathotsavam",
         "the-ninth-day-chakrasnanam"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "திருமலை நவராத்திரி பிரம்மோற்சவம்"
+        }
+      }
     },
     {
       "title": "Guruvāyūr",
@@ -36,7 +41,12 @@
         "from-dvaraka-to-guru-and-vayu",
         "the-land-at-mammiyur",
         "the-naming-of-guruvayur"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "குருவாயூர்"
+        }
+      }
     }
   ],
   "chapterOrder": [
@@ -55,5 +65,11 @@
     "from-dvaraka-to-guru-and-vayu",
     "the-land-at-mammiyur",
     "the-naming-of-guruvayur"
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "திருக்கோயில்களும் திருவிழாக்களும்",
+      "description": "க்ஷேத்திரங்களும் அவற்றில் கொண்டாடப்படும் புனிதத் திருவிழாக்களும்."
+    }
+  }
 }

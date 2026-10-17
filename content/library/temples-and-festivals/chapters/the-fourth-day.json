@@ -16,7 +16,10 @@
       "sourceOriginalName": "8b68d-kvv.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "and to fulfil the desires of His devotees."
+      "placementAnchor": "and to fulfil the desires of His devotees.",
+      "placementAnchorTranslations": {
+        "ta": "பெருமான் கொண்டுள்ள ஆற்றலைக் கொண்டாடுகிறது."
+      }
     },
     {
       "assetId": "the-fourth-day-2",
@@ -24,7 +27,10 @@
       "sourceOriginalName": "48f7e-snapana3.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "and refreshes the Lord after the procession."
+      "placementAnchor": "and refreshes the Lord after the procession.",
+      "placementAnchorTranslations": {
+        "ta": "தூய்மைப்படுத்திப் புத்துணர்ச்சி அளிக்கிறது."
+      }
     },
     {
       "assetId": "the-fourth-day-3",
@@ -32,7 +38,16 @@
       "sourceOriginalName": "4355d-sbv-300x200-1.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "ruler and His role as the protector of dharma."
+      "placementAnchor": "ruler and His role as the protector of dharma.",
+      "placementAnchorTranslations": {
+        "ta": "அவர் ஆற்றும் பங்கையும் பறைசாற்றுகிறது."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "நான்காம் நாள்",
+      "body": "காலையில் பெருமான் வானுலகின் விரும்பியதை அருளும் மரமான கல்பவிருக்ஷ வாகனத்தில் எழுந்தருளுகிறார். இவ்வாகனம் வரங்களை அருளவும் தம் அடியார்களின் விருப்பங்களை நிறைவேற்றவும் பெருமான் கொண்டுள்ள ஆற்றலைக் கொண்டாடுகிறது.\n\nமதியம் ஸ்னபன திருமஞ்சனம் மீண்டும் ஒருமுறை திருவீதியுலாவுக்குப் பின் பெருமானைத் தூய்மைப்படுத்திப் புத்துணர்ச்சி அளிக்கிறது.\n\nமாலையில் பெருமான் சர்வபூபால வாகனத்தில் எழுந்தருளுகிறார்; பூமியின் அரசர்கள் அனைவரும் அவருடைய திவ்விய ஆட்சிக்குப் பணிகின்றனர் என்பதை அது குறிக்கிறது. இத்திருவீதியுலா பூவுலக ஆட்சியாளர்கள் ஒவ்வொருவர் மீதும் பெருமான் கொண்டுள்ள மேலாட்சியையும், தர்மத்தைக் காப்பவராக அவர் ஆற்றும் பங்கையும் பறைசாற்றுகிறது."
+    }
+  }
 }

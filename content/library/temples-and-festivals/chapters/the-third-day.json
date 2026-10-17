@@ -16,7 +16,10 @@
       "sourceOriginalName": "51275-simha.png",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "who protects the righteous and destroys evil."
+      "placementAnchor": "who protects the righteous and destroys evil.",
+      "placementAnchorTranslations": {
+        "ta": "அவதாரமான நரசிம்மரையும் நினைவூட்டுகிறது."
+      }
     },
     {
       "assetId": "the-third-day-2",
@@ -24,7 +27,10 @@
       "sourceOriginalName": "4546a-snapana2.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "His journey through the streets of Tirumala."
+      "placementAnchor": "His journey through the streets of Tirumala.",
+      "placementAnchorTranslations": {
+        "ta": "பயணத்திற்குப் பின் அவரைத் தூய்மைப்படுத்துகிறது."
+      }
     },
     {
       "assetId": "the-third-day-3",
@@ -32,7 +38,16 @@
       "sourceOriginalName": "03178-mpv.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "significant processions of the festival."
+      "placementAnchor": "significant processions of the festival.",
+      "placementAnchorTranslations": {
+        "ta": "வாய்ந்த திருவீதியுலாக்களில் ஒன்றாகும்."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "மூன்றாம் நாள்",
+      "body": "காலையில் பெருமான் சிங்கமான ஸிம்ஹ வாகனத்தில் எழுந்தருளுகிறார்; அது வலிமை, ஆற்றல், அரசாட்சி ஆகியவற்றின் அடையாளம். அச்சிங்கம், நல்லோரைக் காத்துத் தீமையை அழிக்கும் ஸ்ரீமன் நாராயணனின் அவதாரமான நரசிம்மரையும் நினைவூட்டுகிறது.\n\nமதியம் மீண்டும் ஸ்னபன திருமஞ்சனம் நடைபெற்று, திருமலையின் வீதிகளில் பெருமான் மேற்கொண்ட பயணத்திற்குப் பின் அவரைத் தூய்மைப்படுத்துகிறது.\n\nஇரவில் பெருமான் முத்துக்களால் அலங்கரிக்கப்பட்ட பல்லக்கான முத்யால பல்லக்கியில் எழுந்தருளுகிறார். முத்துக்கள் தூய்மை, அரசப்பெருமை, திவ்விய அருள் ஆகியவற்றைக் குறிக்கின்றன; இது திருவிழாவின் மிக அழகிய, ஆன்மிக முக்கியத்துவம் வாய்ந்த திருவீதியுலாக்களில் ஒன்றாகும்."
+    }
+  }
 }

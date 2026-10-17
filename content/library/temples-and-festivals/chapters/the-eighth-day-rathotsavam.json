@@ -16,7 +16,10 @@
       "sourceOriginalName": "f463e-brahmaratham.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "liberation from the cycle of birth and death."
+      "placementAnchor": "liberation from the cycle of birth and death.",
+      "placementAnchorTranslations": {
+        "ta": "விடுதலை அளிக்கும் என்று நம்பப்படுகிறது."
+      }
     },
     {
       "assetId": "the-eighth-day-rathotsavam-2",
@@ -24,7 +27,16 @@
       "sourceOriginalName": "7e3f5-av.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "speed, energy and readiness to protect dharma."
+      "placementAnchor": "speed, energy and readiness to protect dharma.",
+      "placementAnchorTranslations": {
+        "ta": "காக்கும் தயார்நிலை ஆகியவற்றைக் குறிக்கிறது."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "எட்டாம் நாள்: ரதோற்சவம்",
+      "body": "காலையில் பிரம்மோற்சவத்தின் மிக முக்கியமான திருவீதியுலாக்களில் ஒன்றான ரதோற்சவம் நடைபெறுகிறது; அதில் பெருமானின் அடியார்களால் இழுக்கப்படும் பெரிய தேரில் அவர் திருமலையின் வீதிகளில் எழுந்தருளுகிறார். இத்திருவீதியுலாவைக் காண்பது பிறப்பு-இறப்புச் சுழற்சியிலிருந்து விடுதலை அளிக்கும் என்று நம்பப்படுகிறது.\n\nமாலையில் பெருமான் குதிரையான அஶ்வ வாகனத்தில் எழுந்தருளுகிறார்; அது வேகம், ஆற்றல், தர்மத்தைக் காக்கும் தயார்நிலை ஆகியவற்றைக் குறிக்கிறது."
+    }
+  }
 }

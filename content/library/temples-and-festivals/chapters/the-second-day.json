@@ -16,7 +16,10 @@
       "sourceOriginalName": "de64c-csv.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "is the embodiment of divine protection."
+      "placementAnchor": "is the embodiment of divine protection.",
+      "placementAnchorTranslations": {
+        "ta": "காக்கும், பேணும் இயல்பை எடுத்துரைக்கிறது."
+      }
     },
     {
       "assetId": "the-second-day-2",
@@ -24,7 +27,10 @@
       "sourceOriginalName": "7b48b-snapana.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "bath signifies purification and refreshment."
+      "placementAnchor": "bath signifies purification and refreshment.",
+      "placementAnchorTranslations": {
+        "ta": "புத்துணர்ச்சியையும் குறிக்கிறது."
+      }
     },
     {
       "assetId": "the-second-day-3",
@@ -32,7 +38,16 @@
       "sourceOriginalName": "5c904-hamsa.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "the Lord's power to distinguish good from evil."
+      "placementAnchor": "the Lord's power to distinguish good from evil.",
+      "placementAnchorTranslations": {
+        "ta": "பகுத்தறியும் பெருமானின் ஆற்றலைக் குறிக்கிறது."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "இரண்டாம் நாள்",
+      "body": "காலையில் பெருமான் சிறிய நாக வாகனமான சின்ன சேஷ வாகனத்தில் எழுந்தருளி, முந்தைய இரவின் கருப்பொருளைத் தொடர்கிறார். ஆதிசேஷன் திவ்விய பாதுகாப்பின் திருவுருவம் என்பதால், இத்திருவீதியுலா பெருமானின் காக்கும், பேணும் இயல்பை எடுத்துரைக்கிறது.\n\nமதியம் ஸ்னபன திருமஞ்சனம் நடைபெறுகிறது; காலைத் திருவீதியுலாவால் ஏற்பட்ட எந்தச் சிரமத்தையும் போக்க, மூலிகைகள் கலந்த நீரால் பெருமான் நீராட்டப்படுகிறார். இப்புனித நீராட்டம் தூய்மைப்படுத்தலையும் புத்துணர்ச்சியையும் குறிக்கிறது.\n\nஇரவில் பெருமான் அன்னப்பறவையான ஹம்ஸ வாகனத்தில் எழுந்தருளுகிறார்; அது தூய்மை, ஞானம், பகுத்தறிவு ஆகியவற்றைக் குறிக்கிறது. சம்பிரதாயத்தின்படி, அன்னம் நீரிலிருந்து பாலைப் பிரித்தெடுக்க வல்லது; ஆகவே அது நன்மையையும் தீமையையும் பகுத்தறியும் பெருமானின் ஆற்றலைக் குறிக்கிறது."
+    }
+  }
 }

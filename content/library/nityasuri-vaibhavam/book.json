@@ -21,7 +21,12 @@
         "the-tirunangur-garuda-sevai",
         "kal-garudan-of-nachiyar-kovil",
         "garuda-the-embodiment-of-the-vedas"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "கருட வைபவம்"
+        }
+      }
     },
     {
       "title": "Sudarshana Vaibhavam",
@@ -32,7 +37,12 @@
         "gajendra-moksham",
         "ambarisha",
         "the-sudarsana-ashtakam"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "சுதர்சன வைபவம்"
+        }
+      }
     }
   ],
   "chapterOrder": [
@@ -47,5 +57,11 @@
     "gajendra-moksham",
     "ambarisha",
     "the-sudarsana-ashtakam"
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "நித்யசூரி வைபவம்",
+      "description": "ஸ்ரீமன் நாராயணனின் நித்திய அடியார்களான நித்யசூரிகளின் மகிமை: அவருடைய வாகனமான கருடனும், அவருடைய திவ்விய சக்கரமான சுதர்சனமும்."
+    }
+  }
 }

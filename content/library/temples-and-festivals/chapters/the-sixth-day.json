@@ -16,7 +16,10 @@
       "sourceOriginalName": "6cc47-hv.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "of the value of loyalty and selfless service."
+      "placementAnchor": "of the value of loyalty and selfless service.",
+      "placementAnchorTranslations": {
+        "ta": "ஒவ்வொரு பக்தருக்கும் நினைவூட்டுகிறது."
+      }
     },
     {
       "assetId": "the-sixth-day-2",
@@ -24,7 +27,10 @@
       "sourceOriginalName": "ffc72-swarna.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "majesty, and drawing great crowds of devotees."
+      "placementAnchor": "majesty, and drawing great crowds of devotees.",
+      "placementAnchorTranslations": {
+        "ta": "பக்தர்களின் பெருந்திரளையும் ஈர்க்கிறது."
+      }
     },
     {
       "assetId": "the-sixth-day-3",
@@ -32,7 +38,16 @@
       "sourceOriginalName": "7d82d-gajav.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "to remove obstacles and bestow good fortune."
+      "placementAnchor": "to remove obstacles and bestow good fortune.",
+      "placementAnchorTranslations": {
+        "ta": "அருளும் பெருமானின் ஆற்றலுடன் தொடர்புடையது."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "ஆறாம் நாள்",
+      "body": "காலையில் பெருமான் ஹனுமந்த வாகனத்தில் எழுந்தருளுகிறார்; அது பக்திக்கும் கைங்கர்யத்திற்கும் திருவுருவமான ஹனுமானைக் குறிக்கிறது. ஸ்ரீ ராமன் மீது ஹனுமான் கொண்டிருந்த அர்ப்பணிப்பு, விசுவாசத்தின் மதிப்பையும் தன்னலமற்ற சேவையின் மதிப்பையும் ஒவ்வொரு பக்தருக்கும் நினைவூட்டுகிறது.\n\nமாலையில் ஸ்வர்ண ரதோற்சவம் நடைபெறுகிறது; அதில் நுணுக்கமாக அலங்கரிக்கப்பட்ட பொற்தேரில் பெருமான் திருவீதியுலா எழுந்தருளுகிறார். அது செழிப்பையும் திவ்விய மாட்சியையும் குறிப்பதோடு, பக்தர்களின் பெருந்திரளையும் ஈர்க்கிறது.\n\nஇரவில் பெருமான் யானையான கஜ வாகனத்தில் எழுந்தருளுகிறார்; அது அரசப்பெருமைக்கும் செழிப்புக்கும் அடையாளம்; தடைகளை நீக்கி நற்பேற்றை அருளும் பெருமானின் ஆற்றலுடன் தொடர்புடையது."
+    }
+  }
 }

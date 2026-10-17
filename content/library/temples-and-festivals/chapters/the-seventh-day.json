@@ -16,7 +16,10 @@
       "sourceOriginalName": "111ab-surya.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "the sun and the Lord's power over the cosmos."
+      "placementAnchor": "the sun and the Lord's power over the cosmos.",
+      "placementAnchorTranslations": {
+        "ta": "மீது பெருமான் கொண்டுள்ள ஆற்றலையும் குறிக்கிறது."
+      }
     },
     {
       "assetId": "the-seventh-day-2",
@@ -24,7 +27,16 @@
       "sourceOriginalName": "b2df0-chandra.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placementAnchor": "and the comfort the Lord gives His devotees."
+      "placementAnchor": "and the comfort the Lord gives His devotees.",
+      "placementAnchorTranslations": {
+        "ta": "அளிக்கும் ஆறுதலையும் குறிக்கிறது."
+      }
     }
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "ஏழாம் நாள்",
+      "body": "காலையில் பெருமான் சூரியத் தேரான சூர்ய ப்ரபா வாகனத்தில் எழுந்தருளுகிறார்; அது சூரியனின் உயிரளிக்கும் ஆற்றலையும், அண்டத்தின் மீது பெருமான் கொண்டுள்ள ஆற்றலையும் குறிக்கிறது.\n\nஇரவில், காலையின் சூரியத் தேருக்கு மாறாக, பெருமான் சந்திரத் தேரான சந்திர ப்ரபா வாகனத்தில் எழுந்தருளுகிறார்; அது சந்திரனின் இதமான, அமைதியூட்டும் ஒளியைக் குறிக்கிறது. அது அமைதியையும் சாந்தத்தையும், பெருமான் தம் அடியார்களுக்கு அளிக்கும் ஆறுதலையும் குறிக்கிறது."
+    }
+  }
 }
