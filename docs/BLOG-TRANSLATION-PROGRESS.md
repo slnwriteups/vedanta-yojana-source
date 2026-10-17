@@ -26,7 +26,7 @@ Status per book is recorded below as batches are merged.
 
 | Language | temples-and-festivals (15) | nityasuri-vaibhavam (11) | azhwar-vaibhavam (34) | Book and part titles |
 |---|---|---|---|---|
-| Tamil (ta) | done | done | to do | done (all 3 books) |
+| Tamil (ta) | done | done | done | done (all 3 books) |
 | Kannada (kn) | to do | to do | to do | to do |
 | Hindi (hi) | to do | to do | to do | to do |
 | Telugu (te) | to do | to do | to do | to do |
@@ -34,3 +34,7 @@ Status per book is recorded below as batches are merged.
 Phase C: all 30 photos are placed inline in English. Each merged translation gets `placementAnchorTranslations`, derived from the matching paragraph and checked to place the photo inline.
 
 Term glossaries for reuse across batches: `docs/translation-glossaries/<lang>.md`.
+
+Open questions for the author (Tamil Āzhwār batch):
+- Two quotations could not be checked against a Prabandham edition: the Perumpuliyūr verse (இக்குறும்பை) and the Bhaktisārar phrase (பேணிலும் வரம் தர மிடுக்கில்லாத தேவர்).
+- Three English verse transliterations were corrected to the standard text, matching the Tamil: thuṇivuḍaiya in the first Kaṇikaṇṇan verse, "Orumagaḷ thannai uḍaiyēn", and "koḍuvinaiyēn".

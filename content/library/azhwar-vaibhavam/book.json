@@ -19,7 +19,12 @@
         "bhuthath-azhwar",
         "pey-azhwar",
         "the-night-at-tirukkovalur"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "முதலாழ்வார்கள்"
+        }
+      }
     },
     {
       "title": "Tirumazhisai Āzhwār",
@@ -31,7 +36,12 @@
         "bhaktisarar",
         "the-grain-of-paddy-at-perumpuliyur",
         "at-tirukkudanthai"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "திருமழிசை ஆழ்வார்"
+        }
+      }
     },
     {
       "title": "Tirumangai Āzhwār",
@@ -41,7 +51,12 @@
         "the-curse-of-sumangali",
         "kumudavallis-conditions",
         "the-wedding-party-in-the-forest"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "திருமங்கை ஆழ்வார்"
+        }
+      }
     },
     {
       "title": "Tondaraḍippoḍi Āzhwār",
@@ -51,7 +66,12 @@
         "the-garden-at-srirangam",
         "devadevi",
         "the-temple-vessel"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "தொண்டரடிப்பொடி ஆழ்வார்"
+        }
+      }
     },
     {
       "title": "Periyāzhwār and Āṇḍāl",
@@ -64,7 +84,12 @@
         "kodhai",
         "the-garland-worn-first",
         "andal-at-srirangam"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "பெரியாழ்வாரும் ஆண்டாளும்"
+        }
+      }
     },
     {
       "title": "Nam Āzhwār and Madhurakavi Āzhwār",
@@ -74,7 +99,12 @@
         "madhurakavi-azhwar",
         "kanninun-siruttambu",
         "the-four-works-of-nammazhwar"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "நம்மாழ்வாரும் மதுரகவி ஆழ்வாரும்"
+        }
+      }
     },
     {
       "title": "Kulasekhara Āzhwār",
@@ -84,7 +114,12 @@
         "the-turning",
         "the-king-who-went-to-war-for-rama",
         "the-pot-of-snakes"
-      ]
+      ],
+      "translations": {
+        "ta": {
+          "title": "குலசேகர ஆழ்வார்"
+        }
+      }
     }
   ],
   "chapterOrder": [
@@ -122,5 +157,11 @@
     "the-turning",
     "the-king-who-went-to-war-for-rama",
     "the-pot-of-snakes"
-  ]
+  ],
+  "translations": {
+    "ta": {
+      "title": "ஆழ்வார் வைபவம்",
+      "description": "ஸ்ரீமன் நாராயணனிடம் கொள்ளும் பக்தியைத் தமிழில் மக்களிடம் கொண்டு சேர்த்த அருளாளர்-கவிஞர்களான பன்னிரு ஆழ்வார்களின் வாழ்க்கை வரலாறு."
+    }
+  }
 }
