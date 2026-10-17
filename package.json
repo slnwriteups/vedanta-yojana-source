@@ -13,9 +13,11 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
+    "typecheck:mobile": "cd mobile && npx --no-install tsc --noEmit",
     "import:blogs": "node scripts/blog-import/import-blogs.ts",
     "test:content": "node --test tests/content/*.test.ts tests/content/migration/*.test.ts",
     "test:app": "node --test tests/app/*.test.ts",
+    "test:mobile": "node --test mobile/tests/*.test.ts",
     "ci": "npm run test:content && npm run test:app && npm run typecheck && npm run build"
   },
   "dependencies": {

@@ -6,6 +6,11 @@ name: CI
 # "ci" script, which reproduces this exact sequence locally). No
 # deployment step of any kind -- that is explicitly out of scope for this
 # phase (Phase 5P).
+#
+# The mobile app's tests and type check follow the build: locally, run
+# `npm ci` inside mobile/ once, then `npm run test:mobile` and
+# `npm run typecheck:mobile` (after a build, which generates the book
+# payloads those tests read).
 on:
   push:
   pull_request:
@@ -18,7 +23,7 @@ permissions:
 
 jobs:
   test:
-    name: Test, typecheck, build
+    name: Test, typecheck, build (web and mobile)
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -36,6 +41,9 @@ jobs:
           # bound guess.
           node-version-file: ".nvmrc"
           cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            mobile/package-lock.json
 
       - name: Install dependencies (reproducible)
         run: npm ci
@@ -51,3 +59,16 @@ jobs:
 
       - name: Production build
         run: npm run build
+
+      # The Android/iOS app (mobile/) has its own dependencies and test
+      # suite. Its tests read the book payloads that the build's prebuild
+      # step just generated in public/books/, so they run after it.
+      - name: Install mobile dependencies (reproducible)
+        working-directory: mobile
+        run: npm ci
+
+      - name: Mobile tests
+        run: npm run test:mobile
+
+      - name: Mobile TypeScript
+        run: npm run typecheck:mobile
