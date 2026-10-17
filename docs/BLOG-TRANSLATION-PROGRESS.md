@@ -27,7 +27,7 @@ Status per book is recorded below as batches are merged.
 | Language | temples-and-festivals (15) | nityasuri-vaibhavam (11) | azhwar-vaibhavam (34) | Book and part titles |
 |---|---|---|---|---|
 | Tamil (ta) | done | done | done | done (all 3 books) |
-| Kannada (kn) | done | done | to do | done for 2 books; Āzhwār titles merge with its chapters |
+| Kannada (kn) | done | done | done | done (all 3 books) |
 | Hindi (hi) | to do | to do | to do | to do |
 | Telugu (te) | to do | to do | to do | to do |
 
