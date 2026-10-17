@@ -4,7 +4,7 @@ import { loadBook, loadBooks, loadChapter, loadChapters } from "@/content-lib/lo
 import { findAdjacentChapters } from "@/content-lib/chapter-navigation.ts";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
-import { RecordImages } from "@/components/shared/RecordImages";
+import { resolveImageHref } from "@/lib/image-file";
 import { LocalizedChapterBody } from "@/components/library/LocalizedChapterBody";
 import { ReadingPositionTracker } from "@/components/library/ReadingPositionTracker";
 import { BookmarkButton } from "@/components/library/BookmarkButton";
@@ -96,7 +96,14 @@ export default async function LibraryChapterPage({
         next={next ? toPublicChapter(next) : null}
         badge={<DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />}
         bookmarkButton={<BookmarkButton bookSlug={book.slug} chapterSlug={chapter.slug} />}
-        images={<RecordImages images={chapter.images} />}
+        images={chapter.images.flatMap((image) => {
+          // Resolved here, during the static pre-render (node:fs); an image
+          // whose file is missing is dropped rather than shown broken.
+          const href = resolveImageHref(image.sourceAssetUuid);
+          return href
+            ? [{ id: image.assetId, href, alt: image.alt ?? "", altStatus: image.altStatus, ...(image.placementAnchor ? { placementAnchor: image.placementAnchor } : {}), ...(image.placementAnchorTranslations ? { placementAnchorTranslations: image.placementAnchorTranslations } : {}) }]
+            : [];
+        })}
       />
     </div>
   );

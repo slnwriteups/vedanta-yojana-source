@@ -24,7 +24,7 @@
  * every Library chapter uses). A body with "## Title" lines is split into
  * sub-chapters, one per "##" section, grouped as a part titled with the
  * post's title; "@image N" lines place the post's Nth image in that
- * sub-chapter (see splitSections and the README). Paths are relative to the spec file. The
+ * sub-chapter, shown directly after the paragraph above the marker (see splitSections and the README). Paths are relative to the spec file. The
  * text is published exactly as written: posts are expected to have been
  * edited to book standard first, not copied from the blog as-is.
  *
@@ -43,6 +43,8 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { BookSchema, ChapterSchema } from "../../content-lib/schemas/index.ts";
+import { anchorForParagraph, placeInlineImages } from "../../content-lib/inline-images.ts";
+import { paragraphsForReading } from "../../content-lib/text-format.ts";
 import { rebuildIndex } from "./archive.ts";
 import { slugify } from "./slug.ts";
 import type { ArchivedPost } from "./types.ts";
@@ -119,6 +121,22 @@ export function splitSections(title: string, body: string): { partTitle: string 
 
 const IMAGE_MARKER = /^@image (\d+)$/;
 
+/**
+ * The closing words of `paragraph`, long enough to occur only once in the
+ * chapter's text, and checked to land the image after that paragraph.
+ */
+function anchorFor(paragraph: string, text: string, sectionTitle: string): string {
+  const squashed = text.replace(/\s+/g, " ");
+  for (const length of [48, 96, 192, Infinity]) {
+    const anchor = anchorForParagraph(paragraph, length);
+    if (squashed.split(anchor).length !== 2) continue;
+    const blocks = paragraphsForReading(text);
+    const { after } = placeInlineImages(blocks, [{ placementAnchor: anchor }]);
+    if (after.size === 1) return anchor;
+  }
+  throw new Error(`"${sectionTitle}": the paragraph above an @image line occurs more than once, so the image can't be placed after it`);
+}
+
 export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths) {
   const contentRoot = paths.contentRoot ?? path.join(paths.repoRoot, "content");
   const archiveRoot = paths.archiveRoot ?? path.join(paths.repoRoot, "blog-archive");
@@ -145,19 +163,25 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
     const slugsForPost: string[] = [];
     sections.forEach((section, s) => {
       const slug = slugify(section.title);
-      const wanted: number[] = [];
-      const text = section.body
-        .split("\n")
-        .filter((line) => {
-          const m = line.trim().match(IMAGE_MARKER);
-          if (m) wanted.push(Number(m[1]));
-          return !m;
-        })
-        .join("\n")
-        .replace(/\n{3,}/g, "\n\n")
-        .trim();
-      const picked = usesMarkers ? wanted : s === 0 ? postImages.map((_, n) => n + 1) : [];
-      const images = picked.map((number, n) => {
+      // Each marker remembers the paragraph above it: the image is shown
+      // right after that paragraph (content-lib/inline-images.ts). A marker
+      // with no paragraph above it puts the image above the text.
+      const wanted: { number: number; after: string | null }[] = [];
+      const kept: string[] = [];
+      for (const line of section.body.split("\n")) {
+        const m = line.trim().match(IMAGE_MARKER);
+        if (!m) {
+          kept.push(line);
+          continue;
+        }
+        const lastBlank = kept.map((l) => l.trim() === "").lastIndexOf(true);
+        const paragraph = kept.slice(lastBlank + 1).join("\n").trim()
+          || kept.slice(0, lastBlank).join("\n").trim().split(/\n\s*\n/).pop()!.trim();
+        wanted.push({ number: Number(m[1]), after: paragraph || null });
+      }
+      const text = kept.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+      const picked = usesMarkers ? wanted : s === 0 ? postImages.map((_, n) => ({ number: n + 1, after: null })) : [];
+      const images = picked.map(({ number, after }, n) => {
         const image = postImages[number - 1];
         if (!image) throw new Error(`"${section.title}": @image ${number} -- the post has only ${postImages.length} image(s)`);
         const uuid = uuidV5(image.originalUrl);
@@ -170,6 +194,7 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
           sourceOriginalName: originalName(image.originalUrl),
           alt: null,
           altStatus: "needs-review" as const,
+          ...(after ? { placementAnchor: anchorFor(after, text, section.title) } : {}),
         };
       });
       const chapter = ChapterSchema.parse({

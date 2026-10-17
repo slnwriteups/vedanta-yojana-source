@@ -36,6 +36,8 @@ export const BookPartSchema = z.object({
    * no part (an introduction, say) are simply not listed in any part.
    */
   chapters: z.array(SlugSchema).default([]),
+  /** The part's title in other languages; content-lib/i18n.ts's localizeBook applies it. */
+  translations: translationsSchemaFor(z.object({ title: z.string().min(1) })).optional(),
 });
 export type BookPart = z.infer<typeof BookPartSchema>;
 

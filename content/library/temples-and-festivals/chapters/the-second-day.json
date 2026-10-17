@@ -1,0 +1,38 @@
+{
+  "title": "The Second Day",
+  "slug": "the-second-day",
+  "order": 4,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning the Lord rides the Chinna Śēsha Vāhanam, the smaller serpent vehicle, continuing the theme of the previous night. This procession dwells on the Lord's protective and nurturing nature, for Ādiśēsha is the embodiment of divine protection.\n\nIn the afternoon the Snapana Tirumanjanam is performed, and the Lord is bathed in water infused with herbs, to relieve Him of any strain from the morning's procession. The sacred bath signifies purification and refreshment.\n\nAt night the Lord is carried on the Hamsa Vāhanam, the swan, which represents purity, wisdom and discernment. According to tradition, the swan can separate milk from water, and so it signifies the Lord's power to distinguish good from evil.",
+  "images": [
+    {
+      "assetId": "the-second-day-1",
+      "sourceAssetUuid": "fd4184f8-a177-5748-ac03-e5d7223c562f",
+      "sourceOriginalName": "de64c-csv.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "is the embodiment of divine protection."
+    },
+    {
+      "assetId": "the-second-day-2",
+      "sourceAssetUuid": "5c569167-77ae-54ba-991d-87e8db2dfbb1",
+      "sourceOriginalName": "7b48b-snapana.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "bath signifies purification and refreshment."
+    },
+    {
+      "assetId": "the-second-day-3",
+      "sourceAssetUuid": "787a702a-abde-5dcc-994a-5ac821979105",
+      "sourceOriginalName": "5c904-hamsa.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "the Lord's power to distinguish good from evil."
+    }
+  ]
+}

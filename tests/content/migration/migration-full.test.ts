@@ -66,9 +66,9 @@ test("exactly 107 Divya Desam records exist in content/divya-desams/ (108 source
   assert.equal(ddOutputFiles.length, 107);
 });
 
-test("the original recovered book still exists, with exactly 51 chapters", () => {
+test("the original recovered book still exists, with exactly 61 chapters (51 migrated; Artha Panchakam and Swami Deshikan's Return to Sri Rangam since split into sub-chapters)", () => {
   assert.ok(bookDir, `${ORIGINAL_BOOK_SLUG} directory missing from content/library/`);
-  assert.equal(chapterFiles.length, 51);
+  assert.equal(chapterFiles.length, 61);
 });
 
 test("exactly 1 Knowledge record exists", () => {
@@ -79,7 +79,7 @@ test("exactly 1 held-back unresolved record exists (Page150)", () => {
   assert.equal(unresolvedFiles.length, 1);
 });
 
-test("no unexpected content records: total /content file count matches exactly 107+51+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+32(srimad-bhagavata-kathasagaram: 1 book.json + 31 chapters)+71(jaya: 1 book.json + 70 chapters)+35(azhwar-vaibhavam blog: 1 book.json + 34 posts)+3(temples-and-festivals blog: 1 book.json + 2 posts)+12(nityasuri-vaibhavam blog: 1 book.json + 11 posts) = 408", () => {
+test("no unexpected content records: total /content file count matches exactly 107+61+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+34(srimad-bhagavata-kathasagaram: 1 book.json + 33 chapters)+71(jaya: 1 book.json + 70 chapters)+35(azhwar-vaibhavam blog: 1 book.json + 34 posts)+16(temples-and-festivals blog: 1 book.json + 15 posts)+12(nityasuri-vaibhavam blog: 1 book.json + 11 posts) = 433", () => {
   // Phase 6E added content/_provenance/ -- one small JSON file per Divya
   // Desam record that received a category-B text supplement and/or a
   // book-sourced image/shrine from "108 Divyadesam 2nd Edition.pdf" (101
@@ -144,8 +144,12 @@ test("no unexpected content records: total /content file count matches exactly 1
   // 8 posts) and temples-and-festivals (1 book.json + 2 posts): 358 -> 370.
   // Āzhwār Vaibhavam was then split into short sub-chapters (8 -> 34 posts)
   // and nityasuri-vaibhavam added (1 book.json + 11 posts): 370 -> 408.
+  // No chapter shows a table of contents any more: the sectioned ones were
+  // split into sub-chapters -- Tirumala Brahmotsavam and Guruvāyūr (2 -> 15
+  // posts), Artha Panchakam and Swami Deshikan's Return to Sri Rangam
+  // (+10) and Narasimha Avataram (+2): 408 -> 433.
   const total = countFilesRecursive(path.join(REPO_ROOT, "content"));
-  assert.equal(total, 408);
+  assert.equal(total, 433);
 });
 
 function countFilesRecursive(dir: string): number {
@@ -378,8 +382,11 @@ test("F: every SAP-migrated image reference resolves to a real image-map.json as
     for (const image of record.images ?? []) {
       if (image.assetId.includes("-book-")) continue;
       assert.ok(knownUuids.has(image.sourceAssetUuid), `unresolvable image UUID ${image.sourceAssetUuid} in ${record.slug}`);
-      assert.equal(image.altStatus, "needs-review");
-      assert.equal(image.alt, null);
+      // Alt text is never invented: an image is either awaiting review, or
+      // has alt text a person confirmed (Tirunarayanapuram's photos carry the
+      // captions printed under them in the source).
+      if (image.alt === null) assert.equal(image.altStatus, "needs-review");
+      else assert.equal(image.altStatus, "confirmed-meaningful");
       checked++;
     }
   }
@@ -536,8 +543,8 @@ test("H: chapter order values are all unique within the one book", () => {
   assert.equal(new Set(orders).size, orders.length);
 });
 
-test("H: book.chapterOrder lists exactly the 51 chapter slugs, in ascending order value", () => {
-  assert.equal(bookRecord.chapterOrder.length, 51);
+test("H: book.chapterOrder lists exactly the 61 chapter slugs, in ascending order value", () => {
+  assert.equal(bookRecord.chapterOrder.length, 61);
   const sortedBySlugOrder = [...chapterRecords].sort((a, b) => a.order - b.order).map((c) => c.slug);
   assert.deepEqual(bookRecord.chapterOrder, sortedBySlugOrder);
 });
@@ -551,7 +558,7 @@ test("I: no duplicate slugs among the 107 Divya Desam records", () => {
   assert.equal(new Set(slugs).size, slugs.length);
 });
 
-test("I: no duplicate slugs among the 51 chapters", () => {
+test("I: no duplicate slugs among the 61 chapters", () => {
   const slugs = chapterRecords.map((c) => c.slug);
   assert.equal(new Set(slugs).size, slugs.length);
 });

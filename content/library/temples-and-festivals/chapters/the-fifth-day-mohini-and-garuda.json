@@ -1,0 +1,30 @@
+{
+  "title": "The Fifth Day: Mōhini and Garuḍa",
+  "slug": "the-fifth-day-mohini-and-garuda",
+  "order": 7,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning the Lord appears as Mōhini, the enchanting form Sriman Nārāyaṇa took to distribute the amṛtam, the nectar of immortality, to the Dēvas at the churning of the Ocean of Milk. Dressed as Mōhini, the Lord is carried in a palanquin, recalling His divine intervention to restore the balance of the cosmos.\n\nAt night comes the Garuḍa Vāhanam, the most important and eagerly awaited procession of the Brahmotsavam. Garuḍa, the mighty eagle, is not only the vehicle of Sriman Nārāyaṇa but also the embodiment of the Vedas, the foundation of all sacred knowledge, while Lord Venkaṭeśvara is the One whom the Vedas describe and proclaim, the ultimate embodiment of truth, dharma and the cosmic order.\n\nIn the Garuḍa Vāhanam, then, the Lord of the Vedas is carried upon the very vehicle that represents the Vedas themselves. It is a reminder that Sriman Nārāyaṇa, in all His avatārams, is the essence of what the Vedas reveal, the protector of righteousness and the sustainer of the universe. Because of this profound meaning, the Garuḍa Vāhanam is held to be the greatest of all the processions of the Brahmotsavam, and it draws vast crowds of devotees who gather to witness it and receive the Lord's blessings.",
+  "images": [
+    {
+      "assetId": "the-fifth-day-mohini-and-garuda-1",
+      "sourceAssetUuid": "a909bd04-de90-5a79-8493-ca648257803d",
+      "sourceOriginalName": "4657c-ma.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "to restore the balance of the cosmos."
+    },
+    {
+      "assetId": "the-fifth-day-mohini-and-garuda-2",
+      "sourceAssetUuid": "8ba68d99-4bdf-514f-8e96-093f24286780",
+      "sourceOriginalName": "0d2bb-gv.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "to witness it and receive the Lord's blessings."
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "title": "The Third Day",
+  "slug": "the-third-day",
+  "order": 5,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning the Lord rides the Simha Vāhanam, the lion, a symbol of strength, power and sovereignty. The lion also recalls Narasimha, the avatāram of Sriman Nārāyaṇa who protects the righteous and destroys evil.\n\nIn the afternoon the Snapana Tirumanjanam is performed again, purifying the Lord after His journey through the streets of Tirumala.\n\nAt night the Lord is carried in the Muthyāla Pallaki, a palanquin adorned with pearls. Pearls signify purity, royalty and divine grace, and this is among the most beautiful and spiritually significant processions of the festival.",
+  "images": [
+    {
+      "assetId": "the-third-day-1",
+      "sourceAssetUuid": "29c0a56f-dfa9-5d87-be44-c73bd9321aa6",
+      "sourceOriginalName": "51275-simha.png",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "who protects the righteous and destroys evil."
+    },
+    {
+      "assetId": "the-third-day-2",
+      "sourceAssetUuid": "c676c1d7-0091-58fa-91af-532507b63305",
+      "sourceOriginalName": "4546a-snapana2.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "His journey through the streets of Tirumala."
+    },
+    {
+      "assetId": "the-third-day-3",
+      "sourceAssetUuid": "8cc53f35-6b03-5eb2-a6e0-22e7eff1cc9c",
+      "sourceOriginalName": "03178-mpv.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "significant processions of the festival."
+    }
+  ]
+}

@@ -80,10 +80,10 @@ test("Divya Desams: Sri Rangam still resolves for the detail screen", () => {
   assert.ok(loadDivyaDesam("sri-rangam"));
 });
 
-test("Library: the book still has all 51 chapters after the UI rewrite", () => {
+test("Library: the book still has all 61 chapters after the UI rewrite", () => {
   const book = loadBook(BOOK_SLUG);
   assert.ok(book);
-  assert.equal(loadChapters(BOOK_SLUG).length, 51);
+  assert.equal(loadChapters(BOOK_SLUG).length, 61);
 });
 
 test("Search: the offline corpus still surfaces a real record for a matching query", () => {

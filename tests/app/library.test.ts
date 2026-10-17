@@ -103,8 +103,8 @@ test("7: the Book detail page calls notFound() when loadBook() returns null", ()
   assert.equal(loadBook("does-not-exist"), null);
 });
 
-test("8: all 51 real chapters are returned by loadChapters() for the real book", () => {
-  assert.equal(loadChapters(BOOK_SLUG).length, 51);
+test("8: all 61 real chapters (51 migrated, two of them since split into sub-chapters) are returned by loadChapters() for the real book", () => {
+  assert.equal(loadChapters(BOOK_SLUG).length, 61);
 });
 
 test("9: chapter ordering from loadChapters() is strictly ascending by `order` (source/provenance ordering, not alphabetical)", () => {

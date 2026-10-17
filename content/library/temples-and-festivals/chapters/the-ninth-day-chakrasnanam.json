@@ -1,0 +1,38 @@
+{
+  "title": "The Ninth Day: Chakrasnānam",
+  "slug": "the-ninth-day-chakrasnanam",
+  "order": 11,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "The final day begins in the early hours of the morning with the Pallaki Utsavam and the Tiruchi Utsavam, processions that offer a last blessing before the concluding rituals of the day.\n\nIn the morning comes the Chakrasnānam, the sacred bath of the Lord and the Sudarśana Chakram in the holy waters of the Swāmi Pushkariṇī. Devotees too bathe in the tank, which is believed to purify them and bestow divine blessings.\n\nIn the evening the festival concludes with the Dhvajāvarōhaṇam, when the Garuḍa flag raised on the first day is ceremonially lowered, marking the end of the Brahmotsavam. The celestial beings return to their realms, and the devotees depart with the blessings of Lord Venkaṭeśvara.\n\nThe Brahmotsavam is more than a festival: it is a sacred journey that draws devotees into the presence of the divine. Each day offers its own experience of devotion, ritual and celebration, and a chance to witness the majestic grace of Lord Venkaṭeśvara. From the grand processions of the vāhanams to the final sacred bath of the Sudarśana Chakram, the festival allows every devotee to be immersed in spiritual joy and the Lord's blessings.",
+  "images": [
+    {
+      "assetId": "the-ninth-day-chakrasnanam-1",
+      "sourceAssetUuid": "0ab5d979-8b5a-57b0-9dd0-1b9f8ad23f1b",
+      "sourceOriginalName": "f5d38-pallaki.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "before the concluding rituals of the day."
+    },
+    {
+      "assetId": "the-ninth-day-chakrasnanam-2",
+      "sourceAssetUuid": "3467f40c-77eb-527d-bd35-ec5de0994147",
+      "sourceOriginalName": "fffcf-chakra.jpeg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "to purify them and bestow divine blessings."
+    },
+    {
+      "assetId": "the-ninth-day-chakrasnanam-3",
+      "sourceAssetUuid": "30b1c9b3-6b37-5ee8-84cb-367265740cb5",
+      "sourceOriginalName": "22954-dwajavarohanam.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "depart with the blessings of Lord Venkaṭeśvara."
+    }
+  ]
+}

@@ -64,9 +64,9 @@ test("Offline: the Home screen never calls a content loader function (no unneces
   assert.doesNotMatch(homeSource, /\bload(DivyaDesam|Book|Chapter|Knowledge)s?\(/);
 });
 
-test("Offline: all content is still reachable after the Phase 6D changes -- 107 Divya Desams, the book's 51 chapters, 1 Knowledge record", () => {
+test("Offline: all content is still reachable after the Phase 6D changes -- 107 Divya Desams, the book's 61 chapters, 1 Knowledge record", () => {
   assert.equal(loadDivyaDesams().length, 107);
-  assert.equal(loadChapters(BOOK_SLUG).length, 51);
+  assert.equal(loadChapters(BOOK_SLUG).length, 61);
   assert.equal(loadKnowledge().length, 1);
   assert.ok(loadBook(BOOK_SLUG));
 });

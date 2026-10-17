@@ -5,6 +5,7 @@ import {
   RelatedContentRefSchema,
   SlugSchema,
   StatusSchema,
+  translationsSchemaFor,
 } from "./schemas/shared-safe.ts";
 import { DivyaDesamRegionSchema } from "./schemas/divya-desam-region.ts";
 import { DivyaDesamTranslationsSchema, ResourceEntrySchema, ShrineSchema, TempleInformationSchema } from "./schemas/divya-desam-parts.ts";
@@ -95,6 +96,7 @@ export const MobileImageEntrySchema = z.object({
   altStatus: ImageAltStatusSchema.default("needs-review"),
   placement: ImagePlacementSchema.optional(),
   placementAnchor: z.string().min(1).optional(),
+  placementAnchorTranslations: translationsSchemaFor(z.string().min(1)).optional(),
 });
 export type MobileImageEntry = z.infer<typeof MobileImageEntrySchema>;
 

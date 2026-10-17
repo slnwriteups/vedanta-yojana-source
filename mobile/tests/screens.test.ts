@@ -115,9 +115,9 @@ test("Library: the recovered Book resolves for the book screen", () => {
   assert.equal(book?.title, "A Brief Insight to Visishtadvaita Philosophy");
 });
 
-test("Library: 51 chapters are available for the book screen, in ascending order", () => {
+test("Library: 61 chapters are available for the book screen, in ascending order", () => {
   const chapters = loadChapters(BOOK_SLUG);
-  assert.equal(chapters.length, 51);
+  assert.equal(chapters.length, 61);
   for (let i = 1; i < chapters.length; i++) {
     assert.ok(chapters[i].order > chapters[i - 1].order);
   }

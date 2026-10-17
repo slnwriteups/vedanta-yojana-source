@@ -10,9 +10,50 @@
     "extractionConfidence": "high",
     "needsReview": false
   },
-  "parts": [],
+  "parts": [
+    {
+      "title": "Tirumala Navarātri Brahmotsavam",
+      "order": 1,
+      "chapters": [
+        "the-festival-of-brahma",
+        "the-rituals-at-the-heart-of-the-festival",
+        "the-eve-and-the-first-day",
+        "the-second-day",
+        "the-third-day",
+        "the-fourth-day",
+        "the-fifth-day-mohini-and-garuda",
+        "the-sixth-day",
+        "the-seventh-day",
+        "the-eighth-day-rathotsavam",
+        "the-ninth-day-chakrasnanam"
+      ]
+    },
+    {
+      "title": "Guruvāyūr",
+      "order": 2,
+      "chapters": [
+        "the-vow-of-prsni",
+        "from-dvaraka-to-guru-and-vayu",
+        "the-land-at-mammiyur",
+        "the-naming-of-guruvayur"
+      ]
+    }
+  ],
   "chapterOrder": [
-    "tirumala-navaratri-brahmotsavam",
-    "guruvayur"
+    "the-festival-of-brahma",
+    "the-rituals-at-the-heart-of-the-festival",
+    "the-eve-and-the-first-day",
+    "the-second-day",
+    "the-third-day",
+    "the-fourth-day",
+    "the-fifth-day-mohini-and-garuda",
+    "the-sixth-day",
+    "the-seventh-day",
+    "the-eighth-day-rathotsavam",
+    "the-ninth-day-chakrasnanam",
+    "the-vow-of-prsni",
+    "from-dvaraka-to-guru-and-vayu",
+    "the-land-at-mammiyur",
+    "the-naming-of-guruvayur"
   ]
 }

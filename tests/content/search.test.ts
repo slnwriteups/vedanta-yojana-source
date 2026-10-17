@@ -52,6 +52,9 @@ test("2: the Book is searchable", () => {
   // 4 misplaced Srimad Bhagavatham fragment chapters (one containing
   // 58 unresolved "Lorem ipsum" placeholder blocks) were later removed,
   // leaving 51 chapters, and the book's status flipped to published.
+  // Two of them (Artha Panchakam, Swami Deshikan's Return to Sri Rangam)
+  // were later split into sub-chapters (51 -> 61), as was the Bhagavatam's
+  // Narasimha Avataram (31 -> 33), instead of showing a table of contents.
   // loadBooks() sorts alphabetically by slug, so books are found by
   // title rather than assumed to be at a fixed index.
   assert.ok(books.some((b) => b.title === "A Brief Insight to Visishtadvaita Philosophy"));
@@ -62,7 +65,7 @@ test("2: the Book is searchable", () => {
 
 test("3: all chapters across every book are searchable", () => {
   // Books' chapters, then the blogs' posts (34 Āzhwār Vaibhavam + 2 Temples and Festivals + 11 Nityasūri Vaibhavam).
-  assert.equal(corpus.filter((d) => d.type === "chapter").length, 51 + 75 + 31 + 70 + (34 + 2 + 11));
+  assert.equal(corpus.filter((d) => d.type === "chapter").length, 61 + 75 + 33 + 70 + (34 + 15 + 11));
 });
 
 test("4: the Knowledge record is searchable", () => {
@@ -72,7 +75,7 @@ test("4: the Knowledge record is searchable", () => {
 });
 
 test("5: Page150 is not included -- exact corpus size, no href/title referencing it", () => {
-  assert.equal(corpus.length, 107 + (4 + 3) + (51 + 75 + 31 + 70 + (34 + 2 + 11)) + 1);
+  assert.equal(corpus.length, 107 + (4 + 3) + (61 + 75 + 33 + 70 + (34 + 15 + 11)) + 1);
   for (const doc of corpus) {
     assert.ok(!doc.href.includes("Page150"));
     assert.ok(!doc.title.includes("Hayagriva"));

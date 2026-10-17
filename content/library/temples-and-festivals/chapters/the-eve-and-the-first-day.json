@@ -1,0 +1,38 @@
+{
+  "title": "The Eve and the First Day",
+  "slug": "the-eve-and-the-first-day",
+  "order": 3,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "The festival begins at night with the Ankurārpaṇam, in which nine kinds of grain are ceremonially sown. This act signifies an auspicious beginning and the abundance of blessings to follow. Together with the Vishvaksēna Ārādhanam, the worship of Vishvaksēna, commander of the Lord's hosts, it marks the purification of the earth and the start of the Brahmotsavam.\n\nOn the afternoon of the first day, the Lord is carried through the streets of Tirumala on the Bangāru Tiruchi, a golden ceremonial platform, in a procession that sets the tone for the grandeur of the days to come.\n\nIn the evening comes the Dhvajārohaṇam, the formal beginning of the Brahmotsavam, when the Garuḍa flag is raised on the dhvajastambham. The flag invites the gods to join the festivities and announces that the divine celebrations have begun.\n\nThat night the Lord is carried on the Pedda Śēsha Vāhanam, the great serpent vehicle representing Ādiśēsha, upon whom Sriman Nārāyaṇa rests in Vaikuṇṭham. Ādiśēsha is the very embodiment of service, and this procession reflects the Lord's own readiness to serve His devotees. The Tirumala hills themselves are believed to be a manifestation of Ādiśēsha.",
+  "images": [
+    {
+      "assetId": "the-eve-and-the-first-day-1",
+      "sourceAssetUuid": "b50a289f-d55f-57ae-a18b-91f355c68c4b",
+      "sourceOriginalName": "31731-golden-tiruchi.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "the tone for the grandeur of the days to come."
+    },
+    {
+      "assetId": "the-eve-and-the-first-day-2",
+      "sourceAssetUuid": "28e5e081-ef79-5534-9d42-3b6f40cd45f7",
+      "sourceOriginalName": "be37c-dwajarohanam.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "that the divine celebrations have begun."
+    },
+    {
+      "assetId": "the-eve-and-the-first-day-3",
+      "sourceAssetUuid": "baa7c3b6-3830-5af8-a059-575c09cb4a14",
+      "sourceOriginalName": "ea55b-psv.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "are believed to be a manifestation of Ādiśēsha."
+    }
+  ]
+}

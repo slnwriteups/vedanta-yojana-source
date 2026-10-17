@@ -401,6 +401,21 @@ test("uuidV5 matches the RFC 4122 reference value", async () => {
   assert.equal(uuidV5("https://example.com/a.jpg"), "0af39f86-695f-5b4f-8503-15ef9f8ea23c");
 });
 
+test("placeInlineImages puts an anchored image after the paragraph it ends, and anything unmatched above the text", async () => {
+  const { placeInlineImages, anchorForParagraph } = await import("../../../content-lib/inline-images.ts");
+  const paragraphs = ["The first paragraph.", "The second paragraph,\nreflowed onto two lines.", "The third."];
+  const images = [
+    { id: "a", placementAnchor: anchorForParagraph(paragraphs[1].replace("\n", " "), 20) },
+    { id: "b" },
+    { id: "c", placementAnchor: "words that are not in the text" },
+  ];
+  const { top, after } = placeInlineImages(paragraphs, images);
+  assert.deepEqual(top.map((i) => i.id), ["b", "c"]);
+  assert.deepEqual([...after.entries()].map(([index, list]) => [index, list.map((i) => i.id)]), [[1, ["a"]]]);
+  const long = "word ".repeat(30).trim() + " and the closing words.";
+  assert.ok(long.endsWith(anchorForParagraph(long)) && !anchorForParagraph(long).startsWith(" "));
+});
+
 test("publishBlog turns a post with '## ' headings into a part of sub-chapters, placing '@image N' where marked", async () => {
   const { publishBlog, splitSections } = await import("../../../scripts/blog-import/publish-blog.ts");
   assert.throws(() => splitSections("T", "stray text\n## A\nbody"), /before the first/);
@@ -410,7 +425,7 @@ test("publishBlog turns a post with '## ' headings into a part of sub-chapters, 
     const wp = parseWxr(WXR).slice(0, 1).map((p) => ({ ...p, html: p.html + FILLER }));
     await archivePosts(wp, { root: archiveRoot, fetchBinary: async () => ({ bytes: new Uint8Array([7]), contentType: "image/jpeg" }) });
     fs.writeFileSync(path.join(root, "intro.txt"), "Introduction\nA short opening.\n");
-    fs.writeFileSync(path.join(root, "parts.txt"), "The Story\n## The Beginning\nFirst part.\n\n## The End\n@image 2\nSecond part.\n");
+    fs.writeFileSync(path.join(root, "parts.txt"), "The Story\n## The Beginning\nFirst part.\n\n## The End\n@image 2\nSecond part.\n\nThird part, about the photo.\n\n@image 1\n\nFourth part.\n");
     const folder = "wordpress/2019-05-01-example-post";
     const spec = { slug: "parted", title: "Parted", posts: [{ archive: folder, text: "intro.txt" }, { archive: folder, text: "parts.txt" }] };
     const { book, chapters } = publishBlog(spec, root, { repoRoot: root, archiveRoot });
@@ -418,9 +433,11 @@ test("publishBlog turns a post with '## ' headings into a part of sub-chapters, 
     assert.deepEqual(book.parts, [{ title: "The Story", order: 1, chapters: ["the-beginning", "the-end"] }]);
     assert.equal(chapters[0].images.length, 2, "a post without markers keeps all its images on its first chapter");
     assert.equal(chapters[1].images.length, 0);
-    assert.equal(chapters[2].images.length, 1);
+    assert.equal(chapters[2].images.length, 2);
     assert.equal(chapters[2].images[0].sourceOriginalName, "photo-300x200.jpg");
-    assert.equal(chapters[2].body, "Second part.");
+    assert.equal(chapters[2].images[0].placementAnchor, undefined, "a marker with no paragraph above it goes above the text");
+    assert.equal(chapters[2].images[1].placementAnchor, "Third part, about the photo.", "a marker after a paragraph is anchored to it");
+    assert.equal(chapters[2].body, "Second part.\n\nThird part, about the photo.\n\nFourth part.");
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }

@@ -1,0 +1,30 @@
+{
+  "title": "The Eighth Day: Rathōtsavam",
+  "slug": "the-eighth-day-rathotsavam",
+  "order": 10,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning comes the Rathōtsavam, one of the most significant processions of the Brahmotsavam, in which the Lord is drawn through the streets of Tirumala in a great chariot pulled by His devotees. To witness this procession is believed to bring liberation from the cycle of birth and death.\n\nIn the evening the Lord rides the Aśva Vāhanam, the horse, which signifies speed, energy and readiness to protect dharma.",
+  "images": [
+    {
+      "assetId": "the-eighth-day-rathotsavam-1",
+      "sourceAssetUuid": "8fcb87a3-98e0-5302-b91e-ac0364b4b192",
+      "sourceOriginalName": "f463e-brahmaratham.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "liberation from the cycle of birth and death."
+    },
+    {
+      "assetId": "the-eighth-day-rathotsavam-2",
+      "sourceAssetUuid": "47d4ad72-0742-5a06-98f7-f32baed7173a",
+      "sourceOriginalName": "7e3f5-av.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "speed, energy and readiness to protect dharma."
+    }
+  ]
+}

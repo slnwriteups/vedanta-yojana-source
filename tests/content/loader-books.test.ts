@@ -314,3 +314,27 @@ test("groupByPart groups consecutive chapters under their part and keeps overall
   assert.equal(partTitleFor(book, "a"), null);
   assert.deepEqual(groupByPart({ parts: [] }, items).length, 1);
 });
+
+test("localizeBook translates part titles, falling back to English for a part with no translation", async () => {
+  const { localizeBook } = await import("../../content-lib/i18n.ts");
+  const book = {
+    slug: "b",
+    title: "Book",
+    parts: [
+      { title: "Part A", order: 1, chapters: ["a"], translations: { ta: { title: "பகுதி அ" } } },
+      { title: "Part B", order: 2, chapters: ["b"] },
+    ],
+  };
+  const localized = localizeBook(book as never, "ta") as unknown as typeof book;
+  assert.deepEqual(localized.parts.map((p) => p.title), ["பகுதி அ", "Part B"]);
+  assert.equal(localized.title, "Book");
+  assert.equal(localizeBook(book as never, "kn"), book, "nothing to translate returns the record itself");
+});
+
+test("partLabelFor hides a part named after the chapter itself", async () => {
+  const { partLabelFor } = await import("../../content-lib/library-parts.ts");
+  const book = { parts: [{ title: "Narasimha Avataram", order: 1, chapters: ["narasimha-avataram", "sudarshana-ashtakam"] }] };
+  assert.equal(partLabelFor(book, "narasimha-avataram", "Narasimha Avataram"), null);
+  assert.equal(partLabelFor(book, "sudarshana-ashtakam", "Sudarshana Ashtakam"), "Narasimha Avataram");
+  assert.equal(partLabelFor(book, "other", "Other"), null);
+});

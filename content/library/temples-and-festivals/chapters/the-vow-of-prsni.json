@@ -1,0 +1,21 @@
+{
+  "title": "The Vow of Pṛśni",
+  "slug": "the-vow-of-prsni",
+  "order": 12,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2020-04-26-guruvayoor",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the town of Guruvāyūr, in Kerala, stands the kshethram of Lord Guruvāyūrappan, whose temple tank is the Nārāyaṇa Saras.\n\nAccording to tradition, Lord Guruvāyūrappan's story begins even before the dawn of the Kṛta Yuga. There was once a couple, Pṛśni and Sutapas, who longed for children. To be blessed with them, Pṛśni undertook a vratam of twelve days, in which she offered milk to the Lord and took nothing but that milk herself. Having taken it, she would sit in meditation upon the Lord, chanting the mantram \"Om Namo Bhagavate Vāsudevāya.\"\n\nOn the thirteenth day, Lord Mahāvishṇu appeared before Pṛśni, bearing the śankham, chakram, gadā and padmam. Seeing the Lord before her, Pṛśni was struck speechless. The Lord touched His conch, the Pāñcajanya, to her cheek and then to her throat, and the first words that came from her lips were \"Sriman Nārāyaṇa.\" The Lord told her that she could speak again, and asked her to seek the children she desired.\n\nGazing upon the Lord's beauty, she asked that He Himself become her child. So overwhelmed was she by His form that she asked it three times, and before she could open her lips a fourth time, the Lord gently closed her mouth. He told Pṛśni that her request had placed Him in a difficult position: because she had asked Him three times, and had performed her vratam with the utmost bhakti, He was now bound to be born to her three times.\n\nPṛśni then asked the Lord not to give her children, but simply to remain with her as He had appeared. The Lord told her that He could not remain in bodily form. Instead, He would fashion a vigraham bearing all His features, a foot and a half tall. She was to regard it as the Lord Himself, keep it safe, and perform the daily pūjā to it. He would be born three times, He said, with Pṛśni as His mother and Sutapas as His father, and in each of those births He too would worship the vigraham.\n\nIn the first birth, the Lord was born to Pṛśni and Sutapas as Pṛśnigarbhan. In the second, Pṛśni and Sutapas were reborn as Aditi and Kaśyapa, and the Lord was born to them as Vāmana. In the third, they were reborn as Dēvaki and Vasudēva, and the Lord was born to them as Sri Kṛshṇa. After His birth to Dēvaki, the Lord reminded them of their earlier lives and told them that His debt to them was now fulfilled.",
+  "images": [
+    {
+      "assetId": "the-vow-of-prsni-1",
+      "sourceAssetUuid": "fadb3a8b-1e7c-5211-a959-e70554694efd",
+      "sourceOriginalName": "64d2d-images.jpeg",
+      "alt": null,
+      "altStatus": "needs-review"
+    }
+  ]
+}

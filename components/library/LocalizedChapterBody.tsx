@@ -7,11 +7,17 @@ import { localizeBook, localizeChapter } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useReadingPreferences } from "@/lib/reading-preferences-context";
 import { chapterPositionLabel, minReadLabel, useT } from "@/lib/ui-strings";
-import { estimateReadingMinutes, getTableOfContents, stripLeadingDuplicateTitle } from "@/content-lib/text-format.ts";
+import { estimateReadingMinutes, paragraphsForReading, stripLeadingDuplicateTitle } from "@/content-lib/text-format.ts";
 import { LongFormSection } from "@/components/shared/LongFormSection";
-import { partTitleFor } from "@/content-lib/library-parts.ts";
+import { ImageLightboxGrid, type LightboxImage } from "@/components/shared/ImageLightboxGrid";
+import { partLabelFor } from "@/content-lib/library-parts.ts";
+import { placeInlineImages } from "@/content-lib/inline-images.ts";
 
-const TOC_ID_PREFIX = "chapter-para";
+/** A chapter image with its public URL already resolved by the server page, and where in the text it goes. */
+export interface ChapterImageItem extends LightboxImage {
+  placementAnchor?: string;
+  placementAnchorTranslations?: Partial<Record<string, string>>;
+}
 
 /**
  * The client boundary for a chapter page's localizable content: title +
@@ -21,16 +27,21 @@ const TOC_ID_PREFIX = "chapter-para";
  * localization and Phase 3's font-scale wrapper share this one client
  * leaf since both only ever render together.
  *
- * `badge`, `bookmarkButton`, and `images` are rendered nodes passed in
- * from the server-rendered page.tsx (DraftBadge/BookmarkButton are
- * their own client components already; RecordImages needs node:fs and
- * must stay server-side) so the visual order matches the English-only
- * page exactly, same pattern as LocalizedDivyaDesamContent.tsx.
+ * `badge` and `bookmarkButton` are rendered nodes passed in from the
+ * server-rendered page.tsx (DraftBadge/BookmarkButton are their own
+ * client components already), same pattern as
+ * LocalizedDivyaDesamContent.tsx. `images` arrive with their URLs already
+ * resolved server-side (that lookup needs node:fs); each is drawn either
+ * above the text or, when it has a placementAnchor, directly after the
+ * paragraph it belongs to (content-lib/inline-images.ts).
  *
  * Parity pass with mobile's [chapter].tsx: the "CHAPTER X OF Y · N MIN
- * READ" label, the book title line above the chapter title, the
- * in-chapter table of contents (getTableOfContents, content-lib/
- * text-format.ts), and the Previous/Next pager (findAdjacentChapters,
+ * READ" label, the book title line above the chapter title, and the
+ * Previous/Next pager. There is deliberately no in-chapter table of
+ * contents: a chapter with named sections is split into short chapters
+ * grouped under a part (BookPart) instead, so each section is its own
+ * page in the chapter list rather than a jump-link inside a long one.
+ * The pager (findAdjacentChapters,
  * content-lib/chapter-navigation.ts) -- all previously entirely absent
  * on web. `book`/`previous`/`next` arrive unlocalized (loader output)
  * from the server page, since which language to render in is only known
@@ -63,7 +74,7 @@ export function LocalizedChapterBody({
   next: PublicChapter | null;
   badge: ReactNode;
   bookmarkButton: ReactNode;
-  images: ReactNode;
+  images: ChapterImageItem[];
 }) {
   const { language } = useLanguage();
   const { preferences } = useReadingPreferences();
@@ -79,7 +90,8 @@ export function LocalizedChapterBody({
   // stored body itself untouched. Exact-match only, never fuzzy.
   const displayBody = localized.body ? stripLeadingDuplicateTitle(localized.body, localized.title) : localized.body;
   const readingMinutes = displayBody ? estimateReadingMinutes(displayBody) : 0;
-  const toc = displayBody ? getTableOfContents(displayBody, localized.title) : [];
+  const paragraphs = useMemo(() => (displayBody ? paragraphsForReading(displayBody) : []), [displayBody]);
+  const placement = useMemo(() => placeInlineImages(paragraphs, images, language), [paragraphs, images, language]);
 
   return (
     <>
@@ -96,33 +108,24 @@ export function LocalizedChapterBody({
           </div>
           <p className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
             {localizedBook.title}
-            {partTitleFor(book, chapter.slug) ? ` · ${partTitleFor(book, chapter.slug)}` : ""}
+            {partLabelFor(localizedBook, chapter.slug, localized.title) ? ` · ${partLabelFor(localizedBook, chapter.slug, localized.title)}` : ""}
           </p>
           <h1 className="page-title">{localized.title}</h1>
         </div>
         {bookmarkButton}
       </div>
 
-      {toc.length > 0 ? (
-        <nav aria-label={t("tableOfContentsLabel")} className="max-w-2xl space-y-2 rounded-md border border-[var(--border)] p-4">
-          <p className="eyebrow text-[var(--muted)]">{t("tableOfContentsLabel")}</p>
-          <ul role="list" className="space-y-2">
-            {toc.map((entry) => (
-              <li key={entry.paragraphIndex}>
-                <a href={`#${TOC_ID_PREFIX}-${entry.paragraphIndex}`} className="font-semibold text-[var(--accent)] hover:underline">
-                  {entry.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ) : null}
-
-      {images}
+      {placement.top.length > 0 ? <ImageLightboxGrid images={placement.top} /> : null}
 
       <div style={{ "--reading-font-scale": preferences.fontScale } as React.CSSProperties}>
         {displayBody ? (
-          <LongFormSection text={displayBody} paragraphIdPrefix={TOC_ID_PREFIX} />
+          <LongFormSection
+            text={displayBody}
+            renderAfter={(index) => {
+              const inline = placement.after.get(index);
+              return inline ? <ImageLightboxGrid key={`images-${index}`} images={inline} className="grid grid-cols-2 gap-3 py-1 sm:grid-cols-3" /> : null;
+            }}
+          />
         ) : (
           <p className="prose-body text-[var(--muted)]">{t("noChapterContentYet")}</p>
         )}

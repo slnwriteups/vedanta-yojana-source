@@ -7,7 +7,31 @@
     "extractionConfidence": "high",
     "needsReview": false
   },
-  "parts": [],
+  "parts": [
+    {
+      "title": "Narasimha Avataram",
+      "order": 1,
+      "chapters": [
+        "narasimha-avataram",
+        "how-sudarshana-is-manifest-in-every-avataram",
+        "sudarshana-ashtakam"
+      ],
+      "translations": {
+        "ta": {
+          "title": "நரசிம்ம அவதாரம்"
+        },
+        "kn": {
+          "title": "ನರಸಿಂಹ ಅವತಾರ"
+        },
+        "hi": {
+          "title": "नरसिंह अवतार"
+        },
+        "te": {
+          "title": "నరసింహ అవతారం"
+        }
+      }
+    }
+  ],
   "chapterOrder": [
     "invocation",
     "parikshith",
@@ -20,6 +44,8 @@
     "gajendra-moksham",
     "kurma-avataram",
     "narasimha-avataram",
+    "how-sudarshana-is-manifest-in-every-avataram",
+    "sudarshana-ashtakam",
     "jadabharatha-charitram",
     "ambareesha-charitram",
     "vamana-avataram",

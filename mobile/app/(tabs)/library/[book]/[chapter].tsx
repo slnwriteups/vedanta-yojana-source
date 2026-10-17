@@ -15,7 +15,8 @@ import {
 } from "react-native";
 import { loadBook } from "../../../../content-lib/loader.ts";
 import { findAdjacentChapters } from "../../../../content-lib/chapter-navigation.ts";
-import { partTitleFor } from "../../../../../content-lib/library-parts.ts";
+import { partLabelFor } from "../../../../../content-lib/library-parts.ts";
+import { placeInlineImages } from "../../../../../content-lib/inline-images.ts";
 import { DraftBadge } from "../../../../components/DraftBadge";
 import { ContentImage } from "../../../../components/ContentImage";
 import { Section } from "../../../../components/Section";
@@ -24,9 +25,8 @@ import { sectionTint } from "../../../../section-tints.ts";
 import { localizeBook, localizeChapter } from "../../../../../content-lib/i18n.ts";
 import {
   estimateReadingMinutes,
-  getTableOfContents,
+  paragraphsForReading,
   stripLeadingDuplicateTitle,
-  type TableOfContentsEntry,
 } from "../../../../../content-lib/text-format.ts";
 import { useLanguage } from "../../../../language-context.ts";
 import { useReadingPosition } from "../../../../reading-position-context.ts";
@@ -82,21 +82,11 @@ import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile
  * useRef, never closes over stale chapter-adjacency data as the reader
  * pages through the book.
  *
- * Table-of-contents pass: requested directly -- "if there are sub
- * chapters, break them into standalone listings, seeing subchapters not
- * have a listing isnt looking good" -- but implemented as an in-chapter
- * jump-list, not as separate Library entries. Splitting a chapter into
- * real standalone chapters would mean editing chapterOrder and, far more
- * riskily, finding the equivalent split points in three already-
- * translated Tamil/Kannada/Hindi bodies that are not reliably paragraph-
- * aligned to the English source -- reviewed directly with the project
- * owner, who chose this lower-risk, purely presentational path instead.
- * getTableOfContents() (content-lib/text-format.ts) only renders when a
- * chapter actually has qualifying sections (about a fifth of the Library
- * corpus); tapping an entry scrolls to that paragraph via
- * paragraphRefs + measureLayout, entirely within the same chapter --
- * nothing about the content model, chapter count, or navigation
- * structure changes.
+ * Sub-chapters, not a table of contents: a chapter with sections is
+ * split into real chapters grouped under a part (BookPart.chapters,
+ * content-lib/library-parts.ts), so there is no in-chapter jump-list.
+ * Images with a placementAnchor sit directly after the paragraph they
+ * illustrate (content-lib/inline-images.ts); the rest stay above the text.
  *
  * Bookmark toggle: a header-right button (BookmarksProvider.tsx,
  * bookmarks-context.ts) explicitly saves/unsaves the WHOLE chapter --
@@ -139,31 +129,6 @@ export default function LibraryChapterScreen() {
   const tint = sectionTint(bookSlug, theme.scheme);
   const adjacentRef = useRef<{ previous: Chapter | null; next: Chapter | null }>({ previous: null, next: null });
   const scrollViewRef = useRef<ScrollView>(null);
-  const paragraphRefs = useRef<Record<number, Text | null>>({});
-
-  function jumpToSection(entry: TableOfContentsEntry) {
-    void Haptics.selectionAsync();
-    const node = paragraphRefs.current[entry.paragraphIndex];
-    const scrollView = scrollViewRef.current;
-    if (!node || !scrollView) return;
-    // measureLayout's first argument must be a ref to the actual native
-    // component it measures relative to -- findNodeHandle(scrollView)
-    // fails under this app's New Architecture (newArchEnabled=true,
-    // theme.ts/gradle.properties) with "ref.measureLayout must be called
-    // with a ref to a native component", confirmed live on a physical
-    // device. Passing the ScrollView ref itself (not a node-handle
-    // number) is what actually works.
-    node.measureLayout(
-      scrollView as unknown as import("react-native").NativeMethods,
-      (_x, y) => scrollView.scrollTo({ y: Math.max(0, y - spacing.lg), animated: true }),
-      () => {
-        // Best-effort: if the native measurement fails (e.g. the target
-        // paragraph hasn't laid out yet), do nothing rather than throw --
-        // the reader can still scroll manually.
-      }
-    );
-  }
-
   function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
     const scrollable = contentSize.height - layoutMeasurement.height;
@@ -261,7 +226,8 @@ export default function LibraryChapterScreen() {
   const position = localizedChapters.findIndex((c) => c.slug === chapterSlug);
   const displayBody = chapter.body ? stripLeadingDuplicateTitle(chapter.body, chapter.title) : chapter.body;
   const readingMinutes = displayBody ? estimateReadingMinutes(displayBody) : 0;
-  const toc = displayBody ? getTableOfContents(displayBody, chapter.title) : [];
+  const imagePlacement = placeInlineImages(displayBody ? paragraphsForReading(displayBody) : [], chapter.images, language);
+  const resolveImageUri = (uuid: string) => getOfflineBookImageUri(bookSlug, uuid);
   const bookmarked = isBookmarked(bookSlug, chapterSlug);
 
   return (
@@ -318,33 +284,22 @@ export default function LibraryChapterScreen() {
               accessibilityRole="text"
             >
               {book.title}
-              {partTitleFor(book, chapter.slug) ? ` · ${partTitleFor(book, chapter.slug)}` : ""}
+              {partLabelFor(book, chapter.slug, chapter.title) ? ` · ${partLabelFor(book, chapter.slug, chapter.title)}` : ""}
             </Text>
           ) : null}
           <Text style={[styles.title, { color: theme.colors.foreground }]}>{chapter.title}</Text>
         </View>
 
-        {toc.length > 0 ? (
-          <View style={[styles.toc, { borderColor: theme.colors.border }]}>
-            <Text style={[styles.tocLabel, { color: theme.colors.muted }]}>{t("tableOfContentsLabel")}</Text>
-            {toc.map((entry) => (
-              <Pressable
-                key={entry.paragraphIndex}
-                onPress={() => jumpToSection(entry)}
-                accessibilityRole="button"
-                accessibilityLabel={entry.label}
-                style={styles.tocRow}
-              >
-                <Text style={[styles.tocEntry, { color: theme.colors.accent }]}>{entry.label}</Text>
-              </Pressable>
-            ))}
-          </View>
-        ) : null}
-
-        <ContentImage images={chapter.images} resolveLocalUri={(uuid) => getOfflineBookImageUri(bookSlug, uuid)} />
+        <ContentImage images={imagePlacement.top} resolveLocalUri={resolveImageUri} />
 
         {displayBody ? (
-          <Section text={displayBody} paragraphRefs={paragraphRefs} />
+          <Section
+            text={displayBody}
+            renderAfter={(index) => {
+              const inline = imagePlacement.after.get(index);
+              return inline ? <ContentImage images={inline} resolveLocalUri={resolveImageUri} /> : null;
+            }}
+          />
         ) : (
           <Text style={[styles.empty, { color: theme.colors.muted }]}>
             {t("noChapterContentYet")}
@@ -461,27 +416,6 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: typography.body,
     fontWeight: "700",
-  },
-  toc: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderRadius: radius.md,
-    padding: spacing.md,
-    gap: spacing.xs,
-  },
-  tocLabel: {
-    fontSize: typography.eyebrow,
-    fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    marginBottom: spacing.xs,
-  },
-  tocRow: {
-    minHeight: layout.minTouchTarget,
-    justifyContent: "center",
-  },
-  tocEntry: {
-    fontSize: typography.body,
-    fontWeight: "600",
   },
   pager: {
     flexDirection: "row",

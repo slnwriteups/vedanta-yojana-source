@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { ChapterListItem } from "@/components/library/ChapterListItem";
 import { LocalizedBookHeader } from "@/components/library/LocalizedBookHeader";
+import { LocalizedPartHeading } from "@/components/library/LocalizedPartHeading";
 import { LocalizedText } from "@/components/shared/LocalizedText";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { truncateForDescription } from "@/lib/metadata";
@@ -77,7 +78,7 @@ export default async function LibraryBookPage({
           // heading, then its chapters); numbering continues across parts.
           groupByPart(book, chapters).map((group) => (
             <section key={group.items[0].item.slug} className="space-y-3">
-              {group.title ? <h2 className="section-heading pt-3">{group.title}</h2> : null}
+              {group.part ? <LocalizedPartHeading part={group.part} /> : null}
               <ol role="list" className="space-y-3" start={group.items[0].index + 1}>
                 {group.items.map(({ item: chapter, index }) => (
                   <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toPublicChapter(chapter)} position={index + 1} />

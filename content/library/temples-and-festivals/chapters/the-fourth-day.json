@@ -1,0 +1,38 @@
+{
+  "title": "The Fourth Day",
+  "slug": "the-fourth-day",
+  "order": 6,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning the Lord is carried on the Kalpa Vṛksha Vāhanam, the wish-fulfilling tree of the celestial world. This vāhanam celebrates the Lord's power to grant boons and to fulfil the desires of His devotees.\n\nIn the afternoon the Snapana Tirumanjanam once again purifies and refreshes the Lord after the procession.\n\nIn the evening the Lord rides the Sarva Bhūpāla Vāhanam, which signifies that all the kings of the earth submit to His divine rule. The procession proclaims the Lord's sovereignty over every earthly ruler and His role as the protector of dharma.",
+  "images": [
+    {
+      "assetId": "the-fourth-day-1",
+      "sourceAssetUuid": "93371f11-109d-52f3-8595-e75c1b6706d9",
+      "sourceOriginalName": "8b68d-kvv.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "and to fulfil the desires of His devotees."
+    },
+    {
+      "assetId": "the-fourth-day-2",
+      "sourceAssetUuid": "6ce6e03f-9edf-5158-84d8-e325aa2ebe69",
+      "sourceOriginalName": "48f7e-snapana3.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "and refreshes the Lord after the procession."
+    },
+    {
+      "assetId": "the-fourth-day-3",
+      "sourceAssetUuid": "6ce2140f-c937-58da-9ba7-fc819e167d76",
+      "sourceOriginalName": "4355d-sbv-300x200-1.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "ruler and His role as the protector of dharma."
+    }
+  ]
+}

@@ -127,9 +127,9 @@ export function looksLikeSubheading(paragraph: string): boolean {
   return !TERMINAL_PUNCTUATION.test(trimmed);
 }
 
-export interface TableOfContentsEntry {
+export interface NamedSection {
   label: string;
-  /** This entry's position in paragraphsForReading(text)'s own output -- the index a renderer needs to scroll/jump to, not a separate concept. */
+  /** This section heading's position in paragraphsForReading(text)'s own output. */
   paragraphIndex: number;
 }
 
@@ -142,12 +142,12 @@ const DEVANAGARI_SCRIPT = /[ऀ-ॿ]/;
  * three charama shlokas). Both lines of the transliteration pass
  * looksLikeSubheading() by accident: short, no terminal punctuation (the
  * transliteration convention drops the daṇḍa) -- this is NOT what makes
- * them worth calling out here, since getTableOfContents() below still
+ * them worth calling out here, since findNamedSections() below still
  * needs to know they're not a genuine heading regardless. Detected
  * structurally: if the paragraph TWO positions back contains Devanagari
  * script, this one is part of that same verse block -- Devanagari
  * appears nowhere else in the corpus today. Exported so isVerseLine()
- * below (and getTableOfContents()) can both build on the same detection.
+ * below (and findNamedSections()) can both build on the same detection.
  */
 export function isVerseTransliterationLine(paragraphs: string[], index: number): boolean {
   return index >= 2 && DEVANAGARI_SCRIPT.test(paragraphs[index - 2]);
@@ -232,6 +232,13 @@ export function iastVerseParagraphIndexes(text: string, targetLength: number = D
 }
 
 /**
+ * Not rendered anywhere: the readers show no table of contents. A
+ * chapter with two or more named sections is split into sub-chapters
+ * under a part instead (BookPart.chapters), and
+ * tests/content/text-format.test.ts runs this over every chapter, in
+ * every language, to keep it that way -- this is how a chapter that
+ * still needs splitting is found.
+ *
  * A stricter sibling of looksLikeSubheading(), for a genuinely different
  * job: looksLikeSubheading() decides what to draw in bold (cheap to get
  * occasionally wrong -- a bolded verse line is still readable), but a
@@ -289,7 +296,7 @@ const MIN_FOLLOWING_LENGTH = 150;
  * appear in the corpus; e.g. artha-panchakam's own doctrine list inside
  * swami-desikan-s-return-to-kanchipuram uses "1. ... 2. ... 3. ...").
  * Exported for the same reason as isVerseTransliterationLine() above:
- * getTableOfContents() below already excludes these from becoming a
+ * findNamedSections() below already excludes these from becoming a
  * table-of-contents entry (a numbered list item is never a section
  * heading on its own), but a per-paragraph renderer calling
  * looksLikeSubheading() directly has no way to know that -- reported
@@ -362,11 +369,11 @@ export function specialNoteListItemSpan(paragraphs: string[], noteIndex: number)
   return paragraphs.length - noteIndex - 1;
 }
 
-export function getTableOfContents(text: string, title: string): TableOfContentsEntry[] {
+export function findNamedSections(text: string, title: string): NamedSection[] {
   const paragraphs = paragraphsForReading(text);
   const normalizedTitle = title.trim().toLowerCase();
   const seen = new Set<string>();
-  const entries: TableOfContentsEntry[] = [];
+  const entries: NamedSection[] = [];
 
   paragraphs.forEach((paragraph, index) => {
     if (index === 0 && paragraph.trim().toLowerCase() === normalizedTitle) return;

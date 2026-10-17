@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject } from "react";
+import type { ReactNode } from "react";
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { radius, spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
@@ -50,26 +50,23 @@ import {
  * exactly the same text, just visually set apart from the surrounding
  * prose the way a real subsection break should read.
  *
- * Table-of-contents pass: `paragraphRefs`, if supplied, is populated
- * with a native ref for every rendered paragraph, keyed by that
- * paragraph's own index in paragraphsForReading(text) -- the same index
- * getTableOfContents() (content-lib/text-format.ts) reports for each
- * entry. The chapter screen owns the actual scroll (it owns the
- * ScrollView; Section deliberately doesn't), and uses
- * paragraphRefs.current[entry.paragraphIndex].measureLayout(...) to find
- * where to scroll to. Optional and additive -- a caller that never
- * passes it (e.g. any other Section usage) is completely unaffected.
+ * Inline-images pass: `renderAfter`, if supplied, is called with each
+ * rendered paragraph's index in paragraphsForReading(text) and whatever
+ * it returns is drawn directly after that paragraph -- the chapter
+ * screen uses it to put a photo right below the paragraph describing it
+ * (content-lib/inline-images.ts), not in a gallery above the text. A
+ * special note's callout counts as its first paragraph's index.
  */
 export function Section({
   heading,
   text,
   children,
-  paragraphRefs,
+  renderAfter,
 }: {
   heading?: string;
   text?: string;
   children?: ReactNode;
-  paragraphRefs?: RefObject<Record<number, Text | null>>;
+  renderAfter?: (index: number) => ReactNode;
 }) {
   const theme = useTheme();
   const { preferences } = useReadingPreferences();
@@ -101,10 +98,6 @@ export function Section({
                 // -- see specialNoteListItemSpan()'s doc comment.
                 const span = specialNoteListItemSpan(paragraphs, index);
                 const items = paragraphs.slice(index + 1, index + 1 + span);
-                // No paragraphRefs entry here (unlike the plain-paragraph
-                // branch below) -- a special note is always excluded from
-                // getTableOfContents() (content-lib/text-format.ts), so
-                // it's never a jump-scroll target that needs one.
                 nodes.push(
                   <View
                     key={index}
@@ -132,6 +125,10 @@ export function Section({
                     ))}
                   </View>
                 );
+                for (let covered = index; covered <= index + span; covered++) {
+                  const after = renderAfter?.(covered);
+                  if (after) nodes.push(<View key={`after-${covered}`}>{after}</View>);
+                }
                 index += span;
                 continue;
               }
@@ -141,7 +138,6 @@ export function Section({
               nodes.push(
                 <Text
                   key={index}
-                  ref={paragraphRefs ? (node) => { paragraphRefs.current[index] = node; } : undefined}
                   style={[
                     styles.paragraph,
                     subheading && styles.subheading,
@@ -156,6 +152,8 @@ export function Section({
                   {paragraph}
                 </Text>
               );
+              const after = renderAfter?.(index);
+              if (after) nodes.push(<View key={`after-${index}`}>{after}</View>);
             }
             return nodes;
           })()

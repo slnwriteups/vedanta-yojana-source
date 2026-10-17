@@ -90,10 +90,14 @@ export function localizeBook<T extends Omit<Book, "migration" | "coverImage">>(
   language: LanguageCode | null
 ): T {
   const t = language ? record.translations?.[language] : undefined;
-  if (!t) return record;
+  const parts = language && record.parts?.some((part) => part.translations?.[language])
+    ? record.parts.map((part) => ({ ...part, title: part.translations?.[language]?.title ?? part.title }))
+    : record.parts;
+  if (!t && parts === record.parts) return record;
   return {
     ...record,
-    title: t.title ?? record.title,
-    description: t.description ?? record.description,
+    title: t?.title ?? record.title,
+    description: t?.description ?? record.description,
+    parts,
   } as T;
 }

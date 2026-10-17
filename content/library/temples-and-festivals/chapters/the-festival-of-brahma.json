@@ -1,0 +1,21 @@
+{
+  "title": "The Festival of Brahmā",
+  "slug": "the-festival-of-brahma",
+  "order": 1,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "Venkaṭādri samaṁ sthānaṁ brahmāṇḍe nāsti kiñcana।\nVenkaṭeśa samo devo na bhūto na bhaviṣyati॥\n\n\"There is no place in all the universe equal to Venkaṭādri, and there has never been, nor will there ever be, a deity equal to Lord Venkaṭeśa.\"\n\nThe Brahmotsavam at Tirumala is a majestic nine-day festival celebrated at the temple of Lord Venkaṭeśvara, and it draws millions of devotees to its sacred rituals and splendid processions. Held in the Tamizh month of Purattāsi, it coincides with Navarātri. According to tradition, Lord Brahmā Himself descends to earth to preside over the festival, inviting the celestial beings to witness and take part in the celebrations, and it is from him that the festival takes its name.\n\nEach day of the Brahmotsavam is filled with sacred ceremonies, the utsavams, each revealing a different aspect of Lord Venkaṭeśvara. The exact dates and hours are announced afresh each year; what follows is the order of the festival and the meaning of each of its rituals.",
+  "images": [
+    {
+      "assetId": "the-festival-of-brahma-1",
+      "sourceAssetUuid": "0dbdbcee-1348-5c6b-af44-d1c8e75dc0da",
+      "sourceOriginalName": "8ab93-img_4488.jpg",
+      "alt": null,
+      "altStatus": "needs-review"
+    }
+  ]
+}

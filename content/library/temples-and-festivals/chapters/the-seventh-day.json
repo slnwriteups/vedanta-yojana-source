@@ -1,0 +1,30 @@
+{
+  "title": "The Seventh Day",
+  "slug": "the-seventh-day",
+  "order": 9,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning the Lord rides the Sūrya Prabhā Vāhanam, the sun chariot, signifying the life-giving energy of the sun and the Lord's power over the cosmos.\n\nAt night, in contrast to the morning's sun chariot, the Lord rides the Chandra Prabhā Vāhanam, the moon chariot, representing the soothing, calming light of the moon. It signifies peace and serenity, and the comfort the Lord gives His devotees.",
+  "images": [
+    {
+      "assetId": "the-seventh-day-1",
+      "sourceAssetUuid": "66c83e34-9289-56c9-b9a6-950637632548",
+      "sourceOriginalName": "111ab-surya.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "the sun and the Lord's power over the cosmos."
+    },
+    {
+      "assetId": "the-seventh-day-2",
+      "sourceAssetUuid": "ccfa382d-141b-56b9-9eda-8c81e4ecc658",
+      "sourceOriginalName": "b2df0-chandra.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "and the comfort the Lord gives His devotees."
+    }
+  ]
+}
