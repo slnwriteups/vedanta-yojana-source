@@ -7,10 +7,10 @@ name: CI
 # deployment step of any kind -- that is explicitly out of scope for this
 # phase (Phase 5P).
 #
-# The mobile app's tests and type check follow the build: locally, run
-# `npm ci` inside mobile/ once, then `npm run test:mobile` and
-# `npm run typecheck:mobile` (after a build, which generates the book
-# payloads those tests read).
+# The mobile app's tests and type check follow the build, whose prebuild
+# step generates the book payloads those tests read. Locally: install
+# mobile/'s dependencies once, build, then run the test:mobile and
+# typecheck:mobile scripts.
 on:
   push:
   pull_request:
