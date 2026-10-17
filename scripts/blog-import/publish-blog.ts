@@ -21,7 +21,10 @@
  *
  * Each text file's first line is the chapter title and the rest is the
  * body, paragraphs separated by blank lines (the same plain-text format
- * every Library chapter uses). Paths are relative to the spec file. The
+ * every Library chapter uses). A body with "## Title" lines is split into
+ * sub-chapters, one per "##" section, grouped as a part titled with the
+ * post's title; "@image N" lines place the post's Nth image in that
+ * sub-chapter (see splitSections and the README). Paths are relative to the spec file. The
  * text is published exactly as written: posts are expected to have been
  * edited to book standard first, not copied from the blog as-is.
  *
@@ -90,6 +93,32 @@ function originalName(url: string): string {
   }
 }
 
+/**
+ * Splits an edited post into sections. A post whose body has "## Title"
+ * lines becomes a part: each "##" line starts a sub-chapter, and the post's
+ * own title becomes the part title. A post without them is one chapter.
+ */
+export function splitSections(title: string, body: string): { partTitle: string | null; sections: { title: string; body: string }[] } {
+  const lines = body.split("\n");
+  if (!lines.some((line) => line.startsWith("## "))) return { partTitle: null, sections: [{ title, body }] };
+  const sections: { title: string; lines: string[] }[] = [];
+  for (const line of lines) {
+    if (line.startsWith("## ")) sections.push({ title: line.slice(3).trim(), lines: [] });
+    else if (sections.length) sections[sections.length - 1].lines.push(line);
+    else if (line.trim()) throw new Error(`"${title}": text before the first "## " heading would belong to no sub-chapter`);
+  }
+  return {
+    partTitle: title,
+    sections: sections.map((sec) => {
+      const text = sec.lines.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+      if (!sec.title || !text) throw new Error(`"${title}": every "## " sub-chapter needs a title and some text`);
+      return { title: sec.title, body: text };
+    }),
+  };
+}
+
+const IMAGE_MARKER = /^@image (\d+)$/;
+
 export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths) {
   const contentRoot = paths.contentRoot ?? path.join(paths.repoRoot, "content");
   const archiveRoot = paths.archiveRoot ?? path.join(paths.repoRoot, "blog-archive");
@@ -97,15 +126,40 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
   const bookDir = path.join(contentRoot, "library", spec.slug);
   const chaptersDir = path.join(bookDir, "chapters");
 
-  const chapters = spec.posts.map((post, i) => {
+  const chapters: { chapter: ReturnType<typeof ChapterSchema.parse>; archive: string }[] = [];
+  const parts: { title: string; order: number; chapters: string[] }[] = [];
+  const archivedPosts: { archived: ArchivedPost; archive: string; firstSlug: string }[] = [];
+
+  for (const post of spec.posts) {
     const archivedPath = path.join(archiveRoot, post.archive, "post.json");
     const archived = JSON.parse(fs.readFileSync(archivedPath, "utf8")) as ArchivedPost;
     const { title, body } = parseEditedText(fs.readFileSync(path.resolve(specDir, post.text), "utf8"));
-    const slug = slugify(title);
+    const { partTitle, sections } = splitSections(title, body);
 
-    const images = archived.images
-      .filter((image) => image.file)
-      .map((image, n) => {
+    // The post's downloaded images, each original only once (a cover image is
+    // often repeated in the body), numbered from 1 for "@image N" markers.
+    const seen = new Set<string>();
+    const postImages = archived.images.filter((image) => image.file && !seen.has(image.originalUrl) && seen.add(image.originalUrl));
+    const usesMarkers = sections.some((sec) => sec.body.split("\n").some((line) => IMAGE_MARKER.test(line.trim())));
+
+    const slugsForPost: string[] = [];
+    sections.forEach((section, s) => {
+      const slug = slugify(section.title);
+      const wanted: number[] = [];
+      const text = section.body
+        .split("\n")
+        .filter((line) => {
+          const m = line.trim().match(IMAGE_MARKER);
+          if (m) wanted.push(Number(m[1]));
+          return !m;
+        })
+        .join("\n")
+        .replace(/\n{3,}/g, "\n\n")
+        .trim();
+      const picked = usesMarkers ? wanted : s === 0 ? postImages.map((_, n) => n + 1) : [];
+      const images = picked.map((number, n) => {
+        const image = postImages[number - 1];
+        if (!image) throw new Error(`"${section.title}": @image ${number} -- the post has only ${postImages.length} image(s)`);
         const uuid = uuidV5(image.originalUrl);
         const ext = path.extname(image.file!).toLowerCase();
         fs.mkdirSync(imagesRoot, { recursive: true });
@@ -118,22 +172,25 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
           altStatus: "needs-review" as const,
         };
       });
-
-    const chapter = ChapterSchema.parse({
-      title,
-      slug,
-      order: i + 1,
-      status: "published",
-      migration: { sourcePageId: `blog-archive:${post.archive}`, extractionConfidence: "high", needsReview: false },
-      body,
-      images,
+      const chapter = ChapterSchema.parse({
+        title: section.title,
+        slug,
+        order: chapters.length + 1,
+        status: "published",
+        migration: { sourcePageId: `blog-archive:${post.archive}`, extractionConfidence: "high", needsReview: false },
+        body: text,
+        images,
+      });
+      chapters.push({ chapter, archive: post.archive });
+      slugsForPost.push(slug);
     });
-    return { chapter, archived, archive: post.archive };
-  });
+    if (partTitle) parts.push({ title: partTitle, order: parts.length + 1, chapters: slugsForPost });
+    archivedPosts.push({ archived, archive: post.archive, firstSlug: slugsForPost[0] });
+  }
 
   const slugs = chapters.map((c) => c.chapter.slug);
   const duplicate = slugs.find((s, i) => slugs.indexOf(s) !== i);
-  if (duplicate) throw new Error(`two posts would share the chapter slug "${duplicate}" -- give them different titles`);
+  if (duplicate) throw new Error(`two chapters would share the slug "${duplicate}" -- give them different titles`);
 
   const book = BookSchema.parse({
     slug: spec.slug,
@@ -143,16 +200,18 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
     kind: "blog",
     status: "published",
     migration: { sourcePageId: `blog-archive:${spec.slug}`, extractionConfidence: "high", needsReview: false },
-    parts: [],
+    parts,
     chapterOrder: slugs,
   });
 
   fs.rmSync(chaptersDir, { recursive: true, force: true });
   fs.mkdirSync(chaptersDir, { recursive: true });
   fs.writeFileSync(path.join(bookDir, "book.json"), `${JSON.stringify(book, null, 2)}\n`);
-  for (const { chapter, archived, archive } of chapters) {
-    const file = path.join(chaptersDir, `${chapter.slug}.json`);
-    fs.writeFileSync(file, `${JSON.stringify(chapter, null, 2)}\n`);
+  for (const { chapter } of chapters) {
+    fs.writeFileSync(path.join(chaptersDir, `${chapter.slug}.json`), `${JSON.stringify(chapter, null, 2)}\n`);
+  }
+  for (const { archived, archive, firstSlug } of archivedPosts) {
+    const file = path.join(chaptersDir, `${firstSlug}.json`);
     const updated: ArchivedPost = {
       ...archived,
       migration: {

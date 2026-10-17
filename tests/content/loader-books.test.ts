@@ -282,3 +282,35 @@ test("Y: a book's directory name may differ from its validated slug without erro
   // The directory name itself must never work as a lookup key.
   assert.equal(loader.loadBook("some-organizational-folder-name"), null);
 });
+
+test("every book's parts list real chapters, each in at most one part, as contiguous runs of chapterOrder", async () => {
+  const { loadBooks: loadRealBooks } = await import("../../content-lib/loader/index.ts");
+  for (const book of loadRealBooks()) {
+    const seen = new Set<string>();
+    for (const part of book.parts) {
+      assert.ok(part.chapters.length > 0, `${book.slug}: part "${part.title}" has no chapters`);
+      const positions = part.chapters.map((slug) => book.chapterOrder.indexOf(slug));
+      for (const [i, slug] of part.chapters.entries()) {
+        assert.ok(positions[i] !== -1, `${book.slug}: part "${part.title}" lists unknown chapter ${slug}`);
+        assert.ok(!seen.has(slug), `${book.slug}: ${slug} is in more than one part`);
+        seen.add(slug);
+        if (i > 0) assert.equal(positions[i], positions[i - 1] + 1, `${book.slug}: part "${part.title}" is not a contiguous run`);
+      }
+    }
+  }
+});
+
+test("groupByPart groups consecutive chapters under their part and keeps overall numbering", async () => {
+  const { groupByPart, partTitleFor } = await import("../../content-lib/library-parts.ts");
+  const book = { parts: [{ title: "Part A", order: 1, chapters: ["b", "c"] }] };
+  const items = ["a", "b", "c", "d"].map((slug) => ({ slug }));
+  const groups = groupByPart(book, items);
+  assert.deepEqual(groups.map((g) => [g.title, g.items.map((x) => `${x.item.slug}${x.index}`)]), [
+    [null, ["a0"]],
+    ["Part A", ["b1", "c2"]],
+    [null, ["d3"]],
+  ]);
+  assert.equal(partTitleFor(book, "c"), "Part A");
+  assert.equal(partTitleFor(book, "a"), null);
+  assert.deepEqual(groupByPart({ parts: [] }, items).length, 1);
+});

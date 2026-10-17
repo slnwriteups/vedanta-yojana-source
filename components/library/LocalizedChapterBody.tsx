@@ -9,6 +9,7 @@ import { useReadingPreferences } from "@/lib/reading-preferences-context";
 import { chapterPositionLabel, minReadLabel, useT } from "@/lib/ui-strings";
 import { estimateReadingMinutes, getTableOfContents, stripLeadingDuplicateTitle } from "@/content-lib/text-format.ts";
 import { LongFormSection } from "@/components/shared/LongFormSection";
+import { partTitleFor } from "@/content-lib/library-parts.ts";
 
 const TOC_ID_PREFIX = "chapter-para";
 
@@ -83,7 +84,7 @@ export function LocalizedChapterBody({
   return (
     <>
       <div className="flex items-start justify-between gap-3">
-        <div className="space-y-2">
+        <div className="min-w-0 space-y-2">
           <div className="flex flex-wrap items-center gap-2">
             {badge}
             {position !== -1 ? (
@@ -93,8 +94,9 @@ export function LocalizedChapterBody({
               </p>
             ) : null}
           </div>
-          <p className="truncate text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+          <p className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
             {localizedBook.title}
+            {partTitleFor(book, chapter.slug) ? ` · ${partTitleFor(book, chapter.slug)}` : ""}
           </p>
           <h1 className="page-title">{localized.title}</h1>
         </div>

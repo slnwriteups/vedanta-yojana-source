@@ -1305,7 +1305,7 @@
       "sourceStatus": "publish",
       "wordCount": 1230,
       "imageCount": 4,
-      "migrationStatus": "archived",
+      "migrationStatus": "migrated",
       "possibleDuplicates": [],
       "possiblyInApp": [
         "divya-desams/kapisthalam.json",
@@ -1605,7 +1605,7 @@
       "sourceStatus": "publish",
       "wordCount": 2613,
       "imageCount": 3,
-      "migrationStatus": "archived",
+      "migrationStatus": "migrated",
       "possibleDuplicates": [],
       "possiblyInApp": [],
       "categories": []

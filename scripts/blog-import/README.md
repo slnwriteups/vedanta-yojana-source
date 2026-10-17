@@ -134,6 +134,16 @@ node mobile/scripts/generate-content-manifest.ts
 }
 ```
 
+**Sub-chapters.** A long post reads better as a few short chapters than as
+one long one. To split a post, start each section of its edited text with
+a `## Section title` line (nothing may come before the first one). The post
+then becomes a *part* of the blog, titled with the post's title, and each
+section becomes its own chapter; the blog's page lists the chapters under
+the part's heading, and each chapter shows "Blog · Part" above its title.
+A line `@image 2` inside a section places the post's second image (in the
+order archived, duplicates removed) in that chapter; without any `@image`
+lines, all the post's images go on its first chapter.
+
 This writes `content/library/<slug>/` (book.json + one chapter per post,
 in the order listed), copies each post's archived images into
 `public/images/` under a UUID derived from the image's original URL, and

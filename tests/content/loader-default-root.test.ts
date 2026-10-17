@@ -36,9 +36,9 @@ test("A: the default content loader resolves the real repository /content direct
   // as it was before this fix), every one of these would be empty/null
   // instead of matching the real, already-migrated Phase 5H/5I baseline.
   assert.equal(loadDivyaDesams().length, 107);
-  // 4 books plus the 2 blog series (kind "blog") published from the old blogs.
+  // 4 books plus the 3 blog series (kind "blog") published from the old blogs.
   assert.equal(loadBooks().filter((b) => b.kind === "book").length, 4);
-  assert.equal(loadBooks().filter((b) => b.kind === "blog").length, 2);
+  assert.equal(loadBooks().filter((b) => b.kind === "blog").length, 3);
   assert.equal(loadKnowledge().length, 1);
 });
 

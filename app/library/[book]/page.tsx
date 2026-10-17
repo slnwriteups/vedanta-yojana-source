@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { groupByPart } from "@/content-lib/library-parts.ts";
 import { notFound } from "next/navigation";
 import { loadBook, loadBooks, loadChapters } from "@/content-lib/loader";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
@@ -72,11 +73,18 @@ export default async function LibraryBookPage({
 
       <div className="space-y-3">
         {chapters.length > 0 ? (
-          <ol role="list" className="space-y-3">
-            {chapters.map((chapter, index) => (
-              <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toPublicChapter(chapter)} position={index + 1} />
-            ))}
-          </ol>
+          // Chapters grouped under the book's parts, if it has any (a part's
+          // heading, then its chapters); numbering continues across parts.
+          groupByPart(book, chapters).map((group) => (
+            <section key={group.items[0].item.slug} className="space-y-3">
+              {group.title ? <h2 className="section-heading pt-3">{group.title}</h2> : null}
+              <ol role="list" className="space-y-3" start={group.items[0].index + 1}>
+                {group.items.map(({ item: chapter, index }) => (
+                  <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toPublicChapter(chapter)} position={index + 1} />
+                ))}
+              </ol>
+            </section>
+          ))
         ) : (
           <LocalizedText stringKey="noChaptersYet" className="prose-body text-[var(--muted)]" />
         )}

@@ -1,0 +1,51 @@
+{
+  "slug": "nityasuri-vaibhavam",
+  "title": "Nityasūri Vaibhavam",
+  "author": "Vishnu Sreenivas",
+  "description": "The glories of the Nityasūris, the eternal servants of Sriman Nārāyaṇa: Garuḍa, His vāhanam, and Sudarśana, His divine discus.",
+  "kind": "blog",
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:nityasuri-vaibhavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "parts": [
+    {
+      "title": "Garuḍa Vaibhavam",
+      "order": 1,
+      "chapters": [
+        "the-sons-of-vinata",
+        "the-wager",
+        "the-quest-for-the-amrtam",
+        "the-tirunangur-garuda-sevai",
+        "kal-garudan-of-nachiyar-kovil",
+        "garuda-the-embodiment-of-the-vedas"
+      ]
+    },
+    {
+      "title": "Sudarśana Vaibhavam",
+      "order": 2,
+      "chapters": [
+        "sudarsana-the-lord-of-time",
+        "sudarsana-in-the-avatarams",
+        "gajendra-moksham",
+        "ambarisha",
+        "the-sudarsana-ashtakam"
+      ]
+    }
+  ],
+  "chapterOrder": [
+    "the-sons-of-vinata",
+    "the-wager",
+    "the-quest-for-the-amrtam",
+    "the-tirunangur-garuda-sevai",
+    "kal-garudan-of-nachiyar-kovil",
+    "garuda-the-embodiment-of-the-vedas",
+    "sudarsana-the-lord-of-time",
+    "sudarsana-in-the-avatarams",
+    "gajendra-moksham",
+    "ambarisha",
+    "the-sudarsana-ashtakam"
+  ]
+}

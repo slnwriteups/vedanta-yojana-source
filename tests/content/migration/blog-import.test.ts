@@ -400,3 +400,28 @@ test("uuidV5 matches the RFC 4122 reference value", async () => {
   // Python: uuid.uuid5(uuid.NAMESPACE_URL, "https://example.com/a.jpg")
   assert.equal(uuidV5("https://example.com/a.jpg"), "0af39f86-695f-5b4f-8503-15ef9f8ea23c");
 });
+
+test("publishBlog turns a post with '## ' headings into a part of sub-chapters, placing '@image N' where marked", async () => {
+  const { publishBlog, splitSections } = await import("../../../scripts/blog-import/publish-blog.ts");
+  assert.throws(() => splitSections("T", "stray text\n## A\nbody"), /before the first/);
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-parts-"));
+  try {
+    const archiveRoot = path.join(root, "blog-archive");
+    const wp = parseWxr(WXR).slice(0, 1).map((p) => ({ ...p, html: p.html + FILLER }));
+    await archivePosts(wp, { root: archiveRoot, fetchBinary: async () => ({ bytes: new Uint8Array([7]), contentType: "image/jpeg" }) });
+    fs.writeFileSync(path.join(root, "intro.txt"), "Introduction\nA short opening.\n");
+    fs.writeFileSync(path.join(root, "parts.txt"), "The Story\n## The Beginning\nFirst part.\n\n## The End\n@image 2\nSecond part.\n");
+    const folder = "wordpress/2019-05-01-example-post";
+    const spec = { slug: "parted", title: "Parted", posts: [{ archive: folder, text: "intro.txt" }, { archive: folder, text: "parts.txt" }] };
+    const { book, chapters } = publishBlog(spec, root, { repoRoot: root, archiveRoot });
+    assert.deepEqual(book.chapterOrder, ["introduction", "the-beginning", "the-end"]);
+    assert.deepEqual(book.parts, [{ title: "The Story", order: 1, chapters: ["the-beginning", "the-end"] }]);
+    assert.equal(chapters[0].images.length, 2, "a post without markers keeps all its images on its first chapter");
+    assert.equal(chapters[1].images.length, 0);
+    assert.equal(chapters[2].images.length, 1);
+    assert.equal(chapters[2].images[0].sourceOriginalName, "photo-300x200.jpg");
+    assert.equal(chapters[2].body, "Second part.");
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});

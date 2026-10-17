@@ -214,7 +214,7 @@ test("the Library index groups entries into a Books shelf and a Blogs shelf by B
   assert.ok(source.includes('entry.kind === "blog"'));
   assert.ok(source.includes("libraryBooksHeading") && source.includes("libraryBlogsHeading"));
   const blogs = loadBooks().filter((b) => b.kind === "blog");
-  assert.deepEqual(blogs.map((b) => b.slug).sort(), ["azhwar-vaibhavam", "temples-and-festivals"]);
+  assert.deepEqual(blogs.map((b) => b.slug).sort(), ["azhwar-vaibhavam", "nityasuri-vaibhavam", "temples-and-festivals"]);
   for (const blog of blogs) {
     assert.equal(blog.status, "published");
     assert.equal(loadChapters(blog.slug).length, blog.chapterOrder.length);
@@ -222,7 +222,7 @@ test("the Library index groups entries into a Books shelf and a Blogs shelf by B
 });
 
 test("a book.json without a kind is a book", () => {
-  for (const book of loadBooks().filter((b) => !["azhwar-vaibhavam", "temples-and-festivals"].includes(b.slug))) {
+  for (const book of loadBooks().filter((b) => !["azhwar-vaibhavam", "nityasuri-vaibhavam", "temples-and-festivals"].includes(b.slug))) {
     assert.equal(book.kind, "book", book.slug);
   }
 });

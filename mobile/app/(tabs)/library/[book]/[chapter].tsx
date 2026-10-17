@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { loadBook } from "../../../../content-lib/loader.ts";
 import { findAdjacentChapters } from "../../../../content-lib/chapter-navigation.ts";
+import { partTitleFor } from "../../../../../content-lib/library-parts.ts";
 import { DraftBadge } from "../../../../components/DraftBadge";
 import { ContentImage } from "../../../../components/ContentImage";
 import { Section } from "../../../../components/Section";
@@ -313,10 +314,11 @@ export default function LibraryChapterScreen() {
           {book ? (
             <Text
               style={[styles.bookLabel, { color: theme.colors.muted }]}
-              numberOfLines={1}
+              numberOfLines={2}
               accessibilityRole="text"
             >
               {book.title}
+              {partTitleFor(book, chapter.slug) ? ` · ${partTitleFor(book, chapter.slug)}` : ""}
             </Text>
           ) : null}
           <Text style={[styles.title, { color: theme.colors.foreground }]}>{chapter.title}</Text>

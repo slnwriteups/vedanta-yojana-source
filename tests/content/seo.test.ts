@@ -19,9 +19,9 @@ import { loadDivyaDesam } from "../../content-lib/loader/index.ts";
 // Sitemap
 // ---------------------------------------------------------------------------
 
-test("sitemap includes exactly the expected public-route counts: 5 static + 107 Divya Desams + 4 books and 2 blogs + 237 chapters and posts + 1 Knowledge", () => {
+test("sitemap includes exactly the expected public-route counts: 5 static + 107 Divya Desams + 4 books and 3 blogs + 274 chapters and posts + 1 Knowledge", () => {
   const entries = buildSitemapEntries();
-  assert.equal(entries.length, 5 + 107 + (4 + 2) + (51 + 75 + 31 + 70 + (8 + 2)) + 1);
+  assert.equal(entries.length, 5 + 107 + (4 + 3) + (51 + 75 + 31 + 70 + (34 + 2 + 11)) + 1);
 });
 
 test("sitemap excludes Page150, known gaps, and arbitrary search-query URLs", () => {

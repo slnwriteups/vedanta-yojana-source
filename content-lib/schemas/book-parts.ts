@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { translationsSchemaFor } from "./shared-safe.ts";
+import { SlugSchema, translationsSchemaFor } from "./shared-safe.ts";
 
 /**
  * Book's public sub-schemas, split out of book.ts for the same reason
@@ -30,6 +30,12 @@ export const BookTranslationsSchema = translationsSchemaFor(BookTranslationSchem
 export const BookPartSchema = z.object({
   title: z.string().min(1),
   order: z.number().int(),
+  /**
+   * The slugs of the chapters in this part, in reading order -- a
+   * contiguous run of the book's own chapterOrder. Chapters that belong to
+   * no part (an introduction, say) are simply not listed in any part.
+   */
+  chapters: z.array(SlugSchema).default([]),
 });
 export type BookPart = z.infer<typeof BookPartSchema>;
 

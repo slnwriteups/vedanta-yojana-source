@@ -10,15 +10,117 @@
     "extractionConfidence": "high",
     "needsReview": false
   },
-  "parts": [],
+  "parts": [
+    {
+      "title": "The Mudal Āzhwārs",
+      "order": 1,
+      "chapters": [
+        "poigai-azhwar",
+        "bhuthath-azhwar",
+        "pey-azhwar",
+        "the-night-at-tirukkovalur"
+      ]
+    },
+    {
+      "title": "Tirumazhisai Āzhwār",
+      "order": 2,
+      "chapters": [
+        "the-birth-of-tirumazhisai-azhwar",
+        "sivavakyar",
+        "the-lord-who-did-as-he-was-told",
+        "bhaktisarar",
+        "the-grain-of-paddy-at-perumpuliyur",
+        "at-tirukkudanthai"
+      ]
+    },
+    {
+      "title": "Tirumangai Āzhwār",
+      "order": 3,
+      "chapters": [
+        "nilan-commander-of-the-cholas",
+        "the-curse-of-sumangali",
+        "kumudavallis-conditions",
+        "the-wedding-party-in-the-forest"
+      ]
+    },
+    {
+      "title": "Tondaraḍippoḍi Āzhwār",
+      "order": 4,
+      "chapters": [
+        "vipra-narayana",
+        "the-garden-at-srirangam",
+        "devadevi",
+        "the-temple-vessel"
+      ]
+    },
+    {
+      "title": "Periyāzhwār and Āṇḍāḷ",
+      "order": 5,
+      "chapters": [
+        "srivilliputtur",
+        "vishnuchittar",
+        "before-the-kings-court",
+        "pallandu",
+        "kodhai",
+        "the-garland-worn-first",
+        "andal-at-srirangam"
+      ]
+    },
+    {
+      "title": "Nammāzhwār and Madhurakavi Āzhwār",
+      "order": 6,
+      "chapters": [
+        "maran-of-tirukkurugur",
+        "madhurakavi-azhwar",
+        "kanninun-siruttambu",
+        "the-four-works-of-nammazhwar"
+      ]
+    },
+    {
+      "title": "Kulasekhara Āzhwār",
+      "order": 7,
+      "chapters": [
+        "the-chera-prince",
+        "the-turning",
+        "the-king-who-went-to-war-for-rama",
+        "the-pot-of-snakes"
+      ]
+    }
+  ],
   "chapterOrder": [
     "an-introduction-to-the-azhwars",
-    "the-mudal-azhwars",
-    "tirumazhisai-azhwar",
-    "tirumangai-azhwar",
-    "tondaradippodi-azhwar",
-    "periyazhwar-and-andal",
-    "nammazhwar-and-madhurakavi-azhwar",
-    "kulasekhara-azhwar"
+    "poigai-azhwar",
+    "bhuthath-azhwar",
+    "pey-azhwar",
+    "the-night-at-tirukkovalur",
+    "the-birth-of-tirumazhisai-azhwar",
+    "sivavakyar",
+    "the-lord-who-did-as-he-was-told",
+    "bhaktisarar",
+    "the-grain-of-paddy-at-perumpuliyur",
+    "at-tirukkudanthai",
+    "nilan-commander-of-the-cholas",
+    "the-curse-of-sumangali",
+    "kumudavallis-conditions",
+    "the-wedding-party-in-the-forest",
+    "vipra-narayana",
+    "the-garden-at-srirangam",
+    "devadevi",
+    "the-temple-vessel",
+    "srivilliputtur",
+    "vishnuchittar",
+    "before-the-kings-court",
+    "pallandu",
+    "kodhai",
+    "the-garland-worn-first",
+    "andal-at-srirangam",
+    "maran-of-tirukkurugur",
+    "madhurakavi-azhwar",
+    "kanninun-siruttambu",
+    "the-four-works-of-nammazhwar",
+    "the-chera-prince",
+    "the-turning",
+    "the-king-who-went-to-war-for-rama",
+    "the-pot-of-snakes"
   ]
 }
