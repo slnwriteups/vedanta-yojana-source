@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { ContentCard } from "../../../components/ContentCard";
 import { DraftBadge } from "../../../components/DraftBadge";
 import { BookDownloadControl } from "../../../components/BookDownloadControl";
 import { layout, spacing, typography, useTheme } from "../../../theme";
 import { sectionTint } from "../../../section-tints.ts";
+import { bookCoverAsset } from "../../../book-covers.ts";
 import { localizeBook, localizeChapterSummary } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
 import { downloadBook, isBookAvailable } from "../../../services/bookOfflineService.ts";
@@ -127,32 +128,45 @@ export default function LibraryBookScreen() {
     );
   }
 
+  const cover = bookCoverAsset(book.slug);
+  // Scrolls with the chapter list (ListHeaderComponent) rather than staying
+  // fixed above it, so the full-size cover never crowds out the chapters.
+  const header = (
+    <View style={styles.header}>
+      <DraftBadge status={book.status} needsReview={book.migration.needsReview} />
+      <Text style={[styles.title, { color: tint }]}>{book.title}</Text>
+      {cover !== null ? (
+        <Image source={cover} style={styles.cover} resizeMode="contain" accessibilityIgnoresInvertColors />
+      ) : null}
+      {book.description ? (
+        <Text style={[styles.description, { color: theme.colors.muted }]}>{book.description}</Text>
+      ) : null}
+      <BookDownloadControl bookSlug={book.slug} onAvailabilityChange={setDownloaded} />
+      {openError ? (
+        <Text style={[styles.openError, { color: theme.colors.foreground }]} numberOfLines={2}>
+          {t("bookDownloadFailed")}
+          {openError ? `: ${openError}` : ""}
+        </Text>
+      ) : null}
+    </View>
+  );
+
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen options={{ title: book.title }} />
-      <View style={styles.header}>
-        <DraftBadge status={book.status} needsReview={book.migration.needsReview} />
-        <Text style={[styles.title, { color: tint }]}>{book.title}</Text>
-        {book.description ? (
-          <Text style={[styles.description, { color: theme.colors.muted }]}>{book.description}</Text>
-        ) : null}
-        <BookDownloadControl bookSlug={book.slug} onAvailabilityChange={setDownloaded} />
-        {openError ? (
-          <Text style={[styles.openError, { color: theme.colors.foreground }]} numberOfLines={2}>
-            {t("bookDownloadFailed")}
-            {openError ? `: ${openError}` : ""}
-          </Text>
-        ) : null}
-      </View>
       {chapters.length > 0 ? (
         <FlatList
+          ListHeaderComponent={header}
           data={rows}
           keyExtractor={(row) => ("heading" in row ? `part:${row.heading}` : row.item.slug)}
           renderItem={renderRow}
           contentContainerStyle={styles.list}
         />
       ) : (
-        <Text style={[styles.empty, { color: theme.colors.muted }]}>{t("noChaptersYet")}</Text>
+        <>
+          {header}
+          <Text style={[styles.empty, { color: theme.colors.muted }]}>{t("noChaptersYet")}</Text>
+        </>
       )}
     </View>
   );
@@ -174,12 +188,18 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   list: {
-    paddingTop: spacing.md,
     paddingBottom: layout.tabBarClearance,
   },
   title: {
     fontSize: typography.title,
     fontWeight: "700",
+  },
+  cover: {
+    width: 180,
+    height: 270,
+    borderRadius: 6,
+    alignSelf: "center",
+    marginVertical: spacing.sm,
   },
   description: {
     fontSize: typography.body,
