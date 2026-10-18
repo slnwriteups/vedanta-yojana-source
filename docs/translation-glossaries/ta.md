@@ -419,4 +419,5 @@ Perumāl Tirumozhi = பெருமாள் திருமொழி
 Hanumān = அனுமன் (book form; not ஹனுமான்)
 Vinatā = வினதை
 rākshasas = அரக்கர்கள்
-brāhmaṇa(s) = பிராமணர் / பிராமணர்கள் (book form; not அந்தணர்)
+brāhmaṇa(s) = அந்தணர் / அந்தணர்கள் (true Tamil root; the Vedic Brāhmaṇa texts stay பிராமணங்கள்)
+Principle (author's direction): Tamil follows the Tamil roots (அனுமன், வினதை, அரக்கர், அந்தணர்).

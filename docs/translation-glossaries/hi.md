@@ -366,3 +366,4 @@ Purāṇas / Rāmāyaṇa = पुराण / रामायण
 Lakshmaṇa / Sītā / Shūrpaṇakhā = लक्ष्मण / सीता / शूर्पणखा
 rākshasas = राक्षस
 Perumāl Tirumozhi = पेरुमाल तिरुमोऴि
+Principle (author's direction): Hindi keeps the Sanskrit-rooted forms (गरुड, वैकुण्ठम्, मंत्रम्, विग्रहम्, कैंकर्यम्, प्रलयम्, सुदर्शन चक्रम्) and ऴ for Tamil ழ (तिरुमऴिसै), not the Hindi-book forms.

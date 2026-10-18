@@ -304,3 +304,4 @@ tīrtham = తీర్థం
 Purāṇas / Rāmāyaṇa = పురాణాలు / రామాయణం
 Sri Rāma / Lakshmaṇa / Sītā = శ్రీరాముడు / లక్ష్మణుడు / సీతాదేవి
 Shūrpaṇakhā / rākshasas = శూర్పణఖ / రాక్షసులు
+Principle (author's direction): Telugu follows the Sanskrit roots.
