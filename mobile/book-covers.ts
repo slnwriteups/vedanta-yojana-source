@@ -12,6 +12,7 @@ const bookCovers: Record<string, number> = {
   "untitled-recovered-book-pending-editorial-title": require("./assets/book-covers/untitled-recovered-book-pending-editorial-title.jpg"),
   "azhwar-vaibhavam": require("./assets/book-covers/azhwar-vaibhavam.jpg"),
   "nityasuri-vaibhavam": require("./assets/book-covers/nityasuri-vaibhavam.jpg"),
+  "temples-and-festivals": require("./assets/book-covers/temples-and-festivals.jpg"),
 };
 
 export function bookCoverAsset(slug: string): number | null {

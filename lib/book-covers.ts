@@ -19,6 +19,7 @@ const bookCovers: Record<string, string> = {
   "untitled-recovered-book-pending-editorial-title": `${BASE_PATH}/book-covers/untitled-recovered-book-pending-editorial-title.jpg`,
   "azhwar-vaibhavam": `${BASE_PATH}/book-covers/azhwar-vaibhavam.jpg`,
   "nityasuri-vaibhavam": `${BASE_PATH}/book-covers/nityasuri-vaibhavam.jpg`,
+  "temples-and-festivals": `${BASE_PATH}/book-covers/temples-and-festivals.jpg`,
 };
 
 export function bookCoverAsset(slug: string): string | null {
