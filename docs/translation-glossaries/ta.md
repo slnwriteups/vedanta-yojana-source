@@ -421,3 +421,16 @@ Vinatā = வினதை
 rākshasas = அரக்கர்கள்
 brāhmaṇa(s) = அந்தணர் / அந்தணர்கள் (true Tamil root; the Vedic Brāhmaṇa texts stay பிராமணங்கள்)
 Principle (author's direction): Tamil follows the Tamil roots (அனுமன், வினதை, அரக்கர், அந்தணர்).
+# --- Tiruppāṇ Āzhwār part
+Rohiṇī (nakshatram) = ரோகிணி
+Srivatsa = ஸ்ரீவத்ஸம் (திருமறு)
+yāzh = யாழ்
+Loka Sāranga Muni = லோகசாரங்க முனிவர்
+Munivāhanar = முனிவாகனர்
+Amalanādipirān = அமலனாதிபிரான்
+Munivāhana Bhogam = முனிவாகன போகம்
+Vēngaḍam = வேங்கடம்
+Arangam / Arangan = அரங்கம் / அரங்கன்
+Āchāryas = ஆசாரியர்கள்
+commentary = உரை
+Kāveri = காவேரி

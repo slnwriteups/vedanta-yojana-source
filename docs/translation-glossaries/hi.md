@@ -367,3 +367,18 @@ Lakshmaṇa / Sītā / Shūrpaṇakhā = लक्ष्मण / सीता / 
 rākshasas = राक्षस
 Perumāl Tirumozhi = पेरुमाल तिरुमोऴि
 Principle (author's direction): Hindi keeps the Sanskrit-rooted forms (गरुड, वैकुण्ठम्, मंत्रम्, विग्रहम्, कैंकर्यम्, प्रलयम्, सुदर्शन चक्रम्) and ऴ for Tamil ழ (तिरुमऴिसै), not the Hindi-book forms.
+# --- Tiruppāṇ Āzhwār part
+Rohiṇī (nakshatram) = रोहिणी
+Kārthigai = कार्तिगै
+Srivatsa = श्रीवत्स
+yāzh = याऴ्
+Loka Sāranga Muni = लोकसारंग मुनि
+Munivāhanar = मुनिवाहनर्
+Amalanādipirān = अमलनादिपिरान्
+Munivāhana Bhogam = मुनिवाहन भोगम्
+Vēngaḍam (meaning text) = वेंकटाद्रि
+Arangam / Arangan = अरंगम् / अरंगन्
+Āchāryas = आचार्य
+commentary = टीका
+Kāveri = कावेरी
+Tamil verse final full stop = । (as in pallandu)
