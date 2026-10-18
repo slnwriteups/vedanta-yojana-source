@@ -416,3 +416,7 @@ Sītā = சீதை
 Shūrpaṇakhā = சூர்ப்பணகை
 rākshasas = ராக்ஷசர்கள்
 Perumāl Tirumozhi = பெருமாள் திருமொழி
+Hanumān = அனுமன் (book form; not ஹனுமான்)
+Vinatā = வினதை
+rākshasas = அரக்கர்கள்
+brāhmaṇa(s) = பிராமணர் / பிராமணர்கள் (book form; not அந்தணர்)
