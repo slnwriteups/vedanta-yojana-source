@@ -36,9 +36,13 @@ Phase C: all 30 photos are placed inline in English. Each merged translation get
 Term glossaries for reuse across batches: `docs/translation-glossaries/<lang>.md`.
 
 Open questions for the author (Tamil Āzhwār batch):
-- Two quotations could not be checked against a Prabandham edition: the Perumpuliyūr verse (இக்குறும்பை) and the Bhaktisārar phrase (பேணிலும் வரம் தர மிடுக்கில்லாத தேவர்).
-- Three English verse transliterations were corrected to the standard text, matching the Tamil: thuṇivuḍaiya in the first Kaṇikaṇṇan verse, "Orumagaḷ thannai uḍaiyēn", and "koḍuvinaiyēn".
-- Shivavākyar's verse (`sivavakyar`): the English reads "venkaṭkariyānai"; the Tamil, Kannada and Hindi follow the reading செங்கட் கரியானை ("sengaṭ kariyānai"). Confirm which reading is intended.
+- Checked against the prapatti.com texts (Sunder Kidāmbi editions):
+  - Bhaktisārar: the phrase is Tiruchchanda Viruttam 69, "pēṇilum varam tara miḍukkilāda tēvarai". Corrected to மிடுக்கிலாத தேவரை in every language.
+  - Kulashekhara's verse in `the-turning` is Perumāḷ Tirumozhi 7.6. The last line reads "ennai en śeyya ppeṭradem mōyē" (என் செய்யப் பெற்றது). Corrected "seya" to "seyya" in every language.
+  - Amalanādipirān 1 and 10 match the text.
+  - The Perumpuliyūr verse (இக்குறும்பை) and Shivavākyar's verse (சாக்கியம் கற்றோம்) are not in the Nālāyiram texts on prapatti.com. Both are verses from the Āzhwār's life, so they were checked against other published sources:
+    - Perumpuliyūr: our text matches the published transliteration ("Akkarangal Akkarangal Enrum Aavadhu En Kolo / Ik Kurumbai Neekki…").
+    - Shivavākyar: every source that prints the full veṇbā reads செங்கட் கரியானை (Dinakaran, Maalaimalar, and others). "Venkaṭ" appears only in shortened quotations, which also misspell the word. The English transliteration is now "sengaṭ kariyānaich", matching the other four languages and the English meaning ("eyes like red lotuses").
 
 ## Status: all 240 chapter translations merged
 
@@ -52,4 +56,4 @@ Next, one step at a time:
 
 - Step 1, spelling, applied per the author's rule for each language: Tamil follows the Tamil roots, Kannada the Sanskrit forms, Hindi the Sanskrit-rooted forms (the Hindi-book alignment was reverted), and Telugu the Sanskrit roots.
 - Step 2, side-by-side reviews, done: Tamil Āzhwār Vaibhavam (26 of 34 chapters fixed), Hindi Temples and Festivals + Nityasūri (7 fixed) and Telugu Temples and Festivals + Nityasūri (13 fixed). Every other batch was re-read side by side by its translator.
-- Still for the author to check against a Prabandham text: the Perumpuliyūr verse (இக்குறும்பை), the Bhaktisārar phrase, Shivavākyar's "sengaṭ / venkaṭ kariyānai", and "என் செயப் பெற்றது" in Kulasekhara's verse.
+- All the verse questions are now resolved.
