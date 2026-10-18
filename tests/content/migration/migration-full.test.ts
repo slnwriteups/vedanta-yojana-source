@@ -79,7 +79,7 @@ test("exactly 1 held-back unresolved record exists (Page150)", () => {
   assert.equal(unresolvedFiles.length, 1);
 });
 
-test("no unexpected content records: total /content file count matches exactly 107+61+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+34(srimad-bhagavata-kathasagaram: 1 book.json + 33 chapters)+71(jaya: 1 book.json + 70 chapters)+35(azhwar-vaibhavam blog: 1 book.json + 34 posts)+16(temples-and-festivals blog: 1 book.json + 15 posts)+12(nityasuri-vaibhavam blog: 1 book.json + 11 posts) = 433", () => {
+test("no unexpected content records: total /content file count matches exactly 107+61+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+34(srimad-bhagavata-kathasagaram: 1 book.json + 33 chapters)+71(jaya: 1 book.json + 70 chapters)+39(azhwar-vaibhavam blog: 1 book.json + 38 posts)+16(temples-and-festivals blog: 1 book.json + 15 posts)+12(nityasuri-vaibhavam blog: 1 book.json + 11 posts) = 437", () => {
   // Phase 6E added content/_provenance/ -- one small JSON file per Divya
   // Desam record that received a category-B text supplement and/or a
   // book-sourced image/shrine from "108 Divyadesam 2nd Edition.pdf" (101
@@ -149,7 +149,8 @@ test("no unexpected content records: total /content file count matches exactly 1
   // posts), Artha Panchakam and Swami Deshikan's Return to Sri Rangam
   // (+10) and Narasimha Avataram (+2): 408 -> 433.
   const total = countFilesRecursive(path.join(REPO_ROOT, "content"));
-  assert.equal(total, 433);
+  // Tiruppāṇ Āzhwār's story, approved by the author, added as four posts: 433 -> 437.
+  assert.equal(total, 437);
 });
 
 function countFilesRecursive(dir: string): number {

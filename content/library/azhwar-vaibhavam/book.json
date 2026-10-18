@@ -110,8 +110,18 @@
       }
     },
     {
-      "title": "Periyāzhwār and Āṇḍāl",
+      "title": "Tiruppāṇ Āzhwār",
       "order": 5,
+      "chapters": [
+        "the-child-of-the-paddy-fields",
+        "on-the-banks-of-the-kaveri",
+        "carried-by-a-sage",
+        "amalanadipiran"
+      ]
+    },
+    {
+      "title": "Periyāzhwār and Āṇḍāl",
+      "order": 6,
       "chapters": [
         "srivilliputtur",
         "vishnuchittar",
@@ -138,7 +148,7 @@
     },
     {
       "title": "Nam Āzhwār and Madhurakavi Āzhwār",
-      "order": 6,
+      "order": 7,
       "chapters": [
         "maran-of-tirukkurugur",
         "madhurakavi-azhwar",
@@ -162,7 +172,7 @@
     },
     {
       "title": "Kulasekhara Āzhwār",
-      "order": 7,
+      "order": 8,
       "chapters": [
         "the-chera-prince",
         "the-turning",
@@ -205,6 +215,10 @@
     "the-garden-at-srirangam",
     "devadevi",
     "the-temple-vessel",
+    "the-child-of-the-paddy-fields",
+    "on-the-banks-of-the-kaveri",
+    "carried-by-a-sage",
+    "amalanadipiran",
     "srivilliputtur",
     "vishnuchittar",
     "before-the-kings-court",
