@@ -6,6 +6,7 @@ import { localizeBook } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
 import { sectionTint } from "@/lib/section-tints";
+import { bookCoverAsset } from "@/lib/book-covers";
 
 /**
  * Localizes a Book detail page's own title/description (content-lib/
@@ -19,12 +20,23 @@ export function LocalizedBookHeader({ book }: { book: PublicBook }) {
   const { language } = useLanguage();
   const theme = useTheme();
   const localized = useMemo(() => localizeBook(book, language), [book, language]);
+  const cover = bookCoverAsset(book.slug);
 
   return (
     <>
       <h1 className="page-title" style={{ color: sectionTint(book.slug, theme) }}>
         {localized.title}
       </h1>
+      {cover ? (
+        // The book's cover artwork, directly under its title.
+        <img
+          src={cover}
+          alt=""
+          className="w-44 rounded-md border border-[var(--border)] bg-[var(--border)] shadow-sm sm:w-52"
+          width={400}
+          height={600}
+        />
+      ) : null}
       {localized.description ? (
         <p className="prose-body max-w-2xl text-[var(--muted)]">{localized.description}</p>
       ) : null}
