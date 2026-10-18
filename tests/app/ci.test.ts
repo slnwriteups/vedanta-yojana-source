@@ -102,3 +102,14 @@ test(".gitignore still excludes generated artifacts and still does NOT exclude c
   assert.ok(!/^\/?content-extraction\/?\s*$/m.test(source));
   assert.ok(!/^\/?images\/?\s*$/m.test(source));
 });
+
+test("the OTA update workflow publishes to iOS and Android on every push to main, never one platform only", () => {
+  // The author's standing requirement: over-the-air updates must always be
+  // on for both apps. Android-only publishing once left iPhones without
+  // the Blogs shelf and every later change.
+  const ota = read(".github/workflows/publish-ota-update.yml");
+  assert.match(ota, /--platform all\b/);
+  assert.doesNotMatch(ota, /--platform (android|ios)\b/);
+  assert.match(ota, /push:\s*\n\s*branches: \[main\]/);
+  assert.match(ota, /--branch production/);
+});
