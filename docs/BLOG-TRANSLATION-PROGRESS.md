@@ -40,7 +40,9 @@ Open questions for the author (Tamil Āzhwār batch):
   - Bhaktisārar: the phrase is Tiruchchanda Viruttam 69, "pēṇilum varam tara miḍukkilāda tēvarai". Corrected to மிடுக்கிலாத தேவரை in every language.
   - Kulashekhara's verse in `the-turning` is Perumāḷ Tirumozhi 7.6. The last line reads "ennai en śeyya ppeṭradem mōyē" (என் செய்யப் பெற்றது). Corrected "seya" to "seyya" in every language.
   - Amalanādipirān 1 and 10 match the text.
-  - The Perumpuliyūr verse (இக்குறும்பை) and Shivavākyar's verse (சாக்கியம் கற்றோம்) are not in the Nālāyiram texts on prapatti.com, so they could not be checked there. The "sengaṭ / venkaṭ kariyānai" reading in `sivavakyar` is still open.
+  - The Perumpuliyūr verse (இக்குறும்பை) and Shivavākyar's verse (சாக்கியம் கற்றோம்) are not in the Nālāyiram texts on prapatti.com. Both are verses from the Āzhwār's life, so they were checked against other published sources:
+    - Perumpuliyūr: our text matches the published transliteration ("Akkarangal Akkarangal Enrum Aavadhu En Kolo / Ik Kurumbai Neekki…").
+    - Shivavākyar: every source that prints the full veṇbā reads செங்கட் கரியானை (Dinakaran, Maalaimalar, and others). "Venkaṭ" appears only in shortened quotations, which also misspell the word. The English transliteration is now "sengaṭ kariyānaich", matching the other four languages and the English meaning ("eyes like red lotuses").
 
 ## Status: all 240 chapter translations merged
 
@@ -54,4 +56,4 @@ Next, one step at a time:
 
 - Step 1, spelling, applied per the author's rule for each language: Tamil follows the Tamil roots, Kannada the Sanskrit forms, Hindi the Sanskrit-rooted forms (the Hindi-book alignment was reverted), and Telugu the Sanskrit roots.
 - Step 2, side-by-side reviews, done: Tamil Āzhwār Vaibhavam (26 of 34 chapters fixed), Hindi Temples and Festivals + Nityasūri (7 fixed) and Telugu Temples and Festivals + Nityasūri (13 fixed). Every other batch was re-read side by side by its translator.
-- Still for the author to check: the Perumpuliyūr verse (இக்குறும்பை) and Shivavākyar's "sengaṭ / venkaṭ kariyānai". Neither is in the Nālāyiram on prapatti.com.
+- All the verse questions are now resolved.
