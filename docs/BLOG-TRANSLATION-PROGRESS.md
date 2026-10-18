@@ -29,7 +29,7 @@ Status per book is recorded below as batches are merged.
 | Tamil (ta) | done | done | done | done (all 3 books) |
 | Kannada (kn) | done | done | done | done (all 3 books) |
 | Hindi (hi) | done | done | done | done (all 3 books) |
-| Telugu (te) | done | done | to do | done for 2 books; Āzhwār titles merge with its chapters |
+| Telugu (te) | done | done | done | done (all 3 books) |
 
 Phase C: all 30 photos are placed inline in English. Each merged translation gets `placementAnchorTranslations`, derived from the matching paragraph and checked to place the photo inline.
 
@@ -39,3 +39,11 @@ Open questions for the author (Tamil Āzhwār batch):
 - Two quotations could not be checked against a Prabandham edition: the Perumpuliyūr verse (இக்குறும்பை) and the Bhaktisārar phrase (பேணிலும் வரம் தர மிடுக்கில்லாத தேவர்).
 - Three English verse transliterations were corrected to the standard text, matching the Tamil: thuṇivuḍaiya in the first Kaṇikaṇṇan verse, "Orumagaḷ thannai uḍaiyēn", and "koḍuvinaiyēn".
 - Shivavākyar's verse (`sivavakyar`): the English reads "venkaṭkariyānai"; the Tamil, Kannada and Hindi follow the reading செங்கட் கரியானை ("sengaṭ kariyānai"). Confirm which reading is intended.
+
+## Status: all 240 chapter translations merged
+
+60 chapters × 4 languages, plus 12 book titles/descriptions and 44 part titles. All 30 photos have anchors in all five languages.
+
+Next, one step at a time:
+1. Align spellings with the existing books and Divya Desams, one language at a time.
+2. Side-by-side review of the three batches without a full re-read: Tamil Āzhwār (34), Hindi Temples and Festivals + Nityasūri (26), Telugu Temples and Festivals + Nityasūri (21).
