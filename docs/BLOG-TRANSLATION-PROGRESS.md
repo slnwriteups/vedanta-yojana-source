@@ -29,7 +29,7 @@ Status per book is recorded below as batches are merged.
 | Tamil (ta) | done | done | done | done (all 3 books) |
 | Kannada (kn) | done | done | done | done (all 3 books) |
 | Hindi (hi) | done | done | done | done (all 3 books) |
-| Telugu (te) | to do | to do | to do | to do |
+| Telugu (te) | done | done | to do | done for 2 books; Āzhwār titles merge with its chapters |
 
 Phase C: all 30 photos are placed inline in English. Each merged translation gets `placementAnchorTranslations`, derived from the matching paragraph and checked to place the photo inline.
 
