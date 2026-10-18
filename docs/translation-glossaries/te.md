@@ -1,6 +1,6 @@
 # Telugu (te) glossary — English form = Telugu form
 # Tamil verse transliteration (as in the-moksha-virodhi.json te): ழ = ళ, ள = ళ, ற = ఱ (ற்ற = ట్ర), ன = న, ச = శ, final ம் = మ్
-# Lord = స్వామి (singular verbs, as in existing te content); Āzhwārs, Āchāryas, Chakrattāzhwār = honorific plural verbs
+# Lord = స్వామి (singular verbs, as in existing te content); Āzhwārs, Āchāryas, Garuḍa (ఆయన, -ారు), Chakrattāzhwār / Sudarshana / the Chakram as agent = honorific plural verbs
 Sriman Nārāyaṇa = శ్రీమన్నారాయణుడు (gen. శ్రీమన్నారాయణుని)
 Lord (Bhagavān) = స్వామి / పరమాత్మ
 Thāyār = తాయార్

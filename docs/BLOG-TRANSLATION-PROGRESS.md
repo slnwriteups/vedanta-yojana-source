@@ -47,3 +47,9 @@ Open questions for the author (Tamil Āzhwār batch):
 Next, one step at a time:
 1. Align spellings with the existing books and Divya Desams, one language at a time.
 2. Side-by-side review of the three batches without a full re-read: Tamil Āzhwār (34), Hindi Temples and Festivals + Nityasūri (26), Telugu Temples and Festivals + Nityasūri (21).
+
+## Status: complete
+
+- Step 1, spelling, applied per the author's rule for each language: Tamil follows the Tamil roots, Kannada the Sanskrit forms, Hindi the Sanskrit-rooted forms (the Hindi-book alignment was reverted), and Telugu the Sanskrit roots.
+- Step 2, side-by-side reviews, done: Tamil Āzhwār Vaibhavam (26 of 34 chapters fixed), Hindi Temples and Festivals + Nityasūri (7 fixed) and Telugu Temples and Festivals + Nityasūri (13 fixed). Every other batch was re-read side by side by its translator.
+- Still for the author to check against a Prabandham text: the Perumpuliyūr verse (இக்குறும்பை), the Bhaktisārar phrase, Shivavākyar's "sengaṭ / venkaṭ kariyānai", and "என் செயப் பெற்றது" in Kulasekhara's verse.
