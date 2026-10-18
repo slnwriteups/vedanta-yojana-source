@@ -306,3 +306,16 @@ Sri Rāma / Lakshmaṇa / Sītā = శ్రీరాముడు / లక్ష
 Shūrpaṇakhā / rākshasas = శూర్పణఖ / రాక్షసులు
 Principle (author's direction): Telugu follows the Sanskrit roots.
 Hanumān = హనుమాన్ (హనుమానును, హనుమానుకు); the vāhanam keeps its name హనుమంత వాహనం
+# --- Tiruppāṇ Āzhwār part
+Rohiṇī (nakshatram) = రోహిణి
+Kārthigai = కార్తిగై
+Srivatsa = శ్రీవత్సం
+yāzh = యాళ్
+Loka Sāranga Muni = లోకసారంగ ముని (honorific plural verbs)
+Munivāhanar = మునివాహనర్
+Amalanādipirān = అమలనాదిపిరాన్
+Munivāhana Bhogam = మునివాహన భోగం
+Vēngaḍam (meaning text) = వేంకటాద్రి
+Arangam / Arangan = అరంగం / అరంగన్
+Āchāryas = ఆచార్యులు
+Kāveri = కావేరి

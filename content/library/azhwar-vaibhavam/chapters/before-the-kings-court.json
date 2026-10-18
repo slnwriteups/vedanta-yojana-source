@@ -1,7 +1,7 @@
 {
   "title": "Before the King's Court",
   "slug": "before-the-kings-court",
-  "order": 22,
+  "order": 26,
   "status": "published",
   "migration": {
     "sourcePageId": "blog-archive:wordpress/2019-07-05-azhwar-vaibhavam-5",

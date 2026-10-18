@@ -382,3 +382,16 @@ Shūrpaṇakhā = ಶೂರ್ಪಣಖಾ
 rākshasas = ರಾಕ್ಷಸರು
 Perumāl Tirumozhi = ಪೆರುಮಾಳ್ ತಿರುಮೊೞಿ
 Principle (author's direction): Kannada keeps the Sanskrit-rooted forms (ವೇಂಕಟೇಶ್ವರ, ಹನುಮಾನ್, ಶೂರ್ಪಣಖಾ) and ೞ for Tamil ழ (ತಿರುಮೞಿಸೈ), even where older Kannada book text differs.
+# --- Tiruppāṇ Āzhwār part
+Rohiṇī (nakshatram) = ರೋಹಿಣಿ
+Kārthigai = ಕಾರ್ತಿಗೈ
+Srivatsa = ಶ್ರೀವತ್ಸ
+yāzh = ಯಾೞ್
+Loka Sāranga Muni = ಲೋಕಸಾರಂಗ ಮುನಿ (hon. ಲೋಕಸಾರಂಗ ಮುನಿಗಳು)
+Munivāhanar = ಮುನಿವಾಹನರ್
+Amalanādipirān = ಅಮಲನಾದಿಪಿರಾನ್
+Munivāhana Bhogam = ಮುನಿವಾಹನ ಭೋಗ
+Vēngaḍam (meaning text) = ವೇಂಕಟಾದ್ರಿ
+Arangam / Arangan = ಅರಂಗ (ಅರಂಗದ) / ಅರಂಗನ್
+Āchāryas = ಆಚಾರ್ಯರು
+Kāveri = ಕಾವೇರಿ
