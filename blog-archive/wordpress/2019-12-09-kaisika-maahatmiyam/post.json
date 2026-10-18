@@ -1,0 +1,45 @@
+{
+  "platform": "wordpress",
+  "sourceId": "382",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=382",
+  "title": "Kaisika Maahatmiyam",
+  "slug": "kaisika-maahatmiyam",
+  "sourceStatus": "draft",
+  "publishedAt": "2019-12-09T09:43:00Z",
+  "modifiedAt": "2022-02-10T16:11:44Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/b64af-fb_img_1576045979986.jpg",
+      "file": "images/01-b64af-fb-img-1576045979986.jpg"
+    }
+  ],
+  "wordCount": 561,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.43,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tirukurungudi.json",
+        "kind": "divya-desams",
+        "title": "Tirukurungudi",
+        "overlap": 0.42
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

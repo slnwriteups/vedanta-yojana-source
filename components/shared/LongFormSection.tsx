@@ -36,8 +36,8 @@ export function LongFormSection({
   heading,
   headingId: explicitHeadingId,
   text,
-  paragraphIdPrefix,
   language = null,
+  renderAfter,
 }: {
   heading?: string;
   /**
@@ -50,18 +50,10 @@ export function LongFormSection({
    */
   headingId?: string;
   text: string;
-  /**
-   * When set, every paragraph gets `id={`${paragraphIdPrefix}-${index}`}`
-   * -- `index` is this paragraph's position in paragraphsForReading(text)'s
-   * own output, the exact index getTableOfContents() (content-lib/
-   * text-format.ts) uses as `paragraphIndex`. This is the web equivalent
-   * of mobile's jumpToSection()/paragraphRefs+measureLayout: a chapter's
-   * table-of-contents entry links straight to `#${paragraphIdPrefix}-N`
-   * rather than needing any imperative scroll code.
-   */
-  paragraphIdPrefix?: string;
   /** Only needed for the "Special Note" callout's own label -- omitted callers (none currently have one) fall back to English. */
   language?: LanguageCode | null;
+  /** Anything to draw directly after block `index` (paragraphsForReading(text)'s own indexes) -- a chapter's inline images. */
+  renderAfter?: (index: number) => React.ReactNode;
 }) {
   const paragraphs = paragraphsForReading(text);
   const headingId =
@@ -84,6 +76,10 @@ export function LongFormSection({
               const span = specialNoteListItemSpan(paragraphs, index);
               const items = paragraphs.slice(index + 1, index + 1 + span);
               nodes.push(<SpecialNote key={index} text={specialNote} items={items} language={language} />);
+              for (let covered = index; covered <= index + span; covered++) {
+                const after = renderAfter?.(covered);
+                if (after) nodes.push(after);
+              }
               index += span;
               continue;
             }
@@ -91,19 +87,19 @@ export function LongFormSection({
               (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index, text)
                 ? "mt-2 font-bold"
                 : null,
-              paragraphIdPrefix ? "scroll-mt-6" : null,
             ]
               .filter(Boolean)
               .join(" ");
             nodes.push(
               <p
                 key={index}
-                id={paragraphIdPrefix ? `${paragraphIdPrefix}-${index}` : undefined}
                 className={classNames || undefined}
               >
                 {paragraph}
               </p>
             );
+            const after = renderAfter?.(index);
+            if (after) nodes.push(after);
           }
           return nodes;
         })()}

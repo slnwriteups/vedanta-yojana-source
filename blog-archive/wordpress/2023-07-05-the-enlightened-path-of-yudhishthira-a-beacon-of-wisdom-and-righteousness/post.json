@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2175",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/04/the-enlightened-path-of-yudhishthira-a-beacon-of-wisdom-and-righteousness/",
+  "title": "The Enlightened Path of Yudhishthira: A Beacon of Wisdom and Righteousness",
+  "slug": "the-enlightened-path-of-yudhishthira-a-beacon-of-wisdom-and-righteousness",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-05T03:14:57Z",
+  "modifiedAt": "2023-07-05T03:14:57Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 807,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

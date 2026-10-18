@@ -1,0 +1,97 @@
+{
+  "slug": "nityasuri-vaibhavam",
+  "title": "Nityasūri Vaibhavam",
+  "author": "Vishnu Sreenivas",
+  "description": "The glories of the Nityasūris, the eternal servants of Sriman Nārāyaṇa: Garuḍa, His vāhanam, and Sudarshana, His divine discus.",
+  "kind": "blog",
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:nityasuri-vaibhavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "parts": [
+    {
+      "title": "Garuḍa Vaibhavam",
+      "order": 1,
+      "chapters": [
+        "the-sons-of-vinata",
+        "the-wager",
+        "the-quest-for-the-amrtam",
+        "the-tirunangur-garuda-sevai",
+        "kal-garudan-of-nachiyar-kovil",
+        "garuda-the-embodiment-of-the-vedas"
+      ],
+      "translations": {
+        "ta": {
+          "title": "கருட வைபவம்"
+        },
+        "kn": {
+          "title": "ಗರುಡ ವೈಭವಂ"
+        },
+        "hi": {
+          "title": "गरुड़ वैभवम्"
+        },
+        "te": {
+          "title": "గరుడ వైభవం"
+        }
+      }
+    },
+    {
+      "title": "Sudarshana Vaibhavam",
+      "order": 2,
+      "chapters": [
+        "sudarsana-the-lord-of-time",
+        "sudarsana-in-the-avatarams",
+        "gajendra-moksham",
+        "ambarisha",
+        "the-sudarsana-ashtakam"
+      ],
+      "translations": {
+        "ta": {
+          "title": "சுதர்சன வைபவம்"
+        },
+        "kn": {
+          "title": "ಸುದರ್ಶನ ವೈಭವಂ"
+        },
+        "hi": {
+          "title": "सुदर्शन वैभवम्"
+        },
+        "te": {
+          "title": "సుదర్శన వైభవం"
+        }
+      }
+    }
+  ],
+  "chapterOrder": [
+    "the-sons-of-vinata",
+    "the-wager",
+    "the-quest-for-the-amrtam",
+    "the-tirunangur-garuda-sevai",
+    "kal-garudan-of-nachiyar-kovil",
+    "garuda-the-embodiment-of-the-vedas",
+    "sudarsana-the-lord-of-time",
+    "sudarsana-in-the-avatarams",
+    "gajendra-moksham",
+    "ambarisha",
+    "the-sudarsana-ashtakam"
+  ],
+  "translations": {
+    "ta": {
+      "title": "நித்யசூரி வைபவம்",
+      "description": "ஸ்ரீமன் நாராயணனின் நித்திய அடியார்களான நித்யசூரிகளின் மகிமை: அவருடைய வாகனமான கருடனும், அவருடைய திவ்விய சக்கரமான சுதர்சனமும்."
+    },
+    "kn": {
+      "title": "ನಿತ್ಯಸೂರಿ ವೈಭವಂ",
+      "description": "ಶ್ರೀಮನ್ ನಾರಾಯಣನ ಶಾಶ್ವತ ಸೇವಕರಾದ ನಿತ್ಯಸೂರಿಗಳ ಮಹಿಮೆಗಳು: ಅವನ ವಾಹನವಾದ ಗರುಡ ಮತ್ತು ಅವನ ದಿವ್ಯ ಚಕ್ರವಾದ ಸುದರ್ಶನ."
+    },
+    "hi": {
+      "title": "नित्यसूरि वैभवम्",
+      "description": "श्रीमन्नारायण के शाश्वत सेवक नित्यसूरियों की महिमा: उनके वाहनम् गरुड़, और उनके दिव्य चक्र सुदर्शन।"
+    },
+    "te": {
+      "title": "నిత్యసూరి వైభవం",
+      "description": "శ్రీమన్నారాయణుని శాశ్వత సేవకులైన నిత్యసూరుల వైభవం: ఆయన వాహనమైన గరుడుడు, ఆయన దివ్య చక్రమైన సుదర్శనుడు."
+    }
+  }
+}

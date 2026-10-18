@@ -82,6 +82,7 @@ export function makeBookPart(overrides: Partial<BookPart> = {}): BookPart {
   return {
     title: "Example Part",
     order: 1,
+    chapters: [],
     ...overrides,
   };
 }

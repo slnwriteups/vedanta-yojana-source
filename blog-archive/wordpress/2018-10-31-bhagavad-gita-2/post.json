@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "451",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=451",
+  "title": "Bhagavad Gita- 2",
+  "slug": "bhagavad-gita-2",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-31T14:47:00Z",
+  "modifiedAt": "2022-02-10T16:12:45Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1908,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

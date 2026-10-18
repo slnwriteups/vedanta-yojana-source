@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "392",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/07/azhwar-vaibhavam-7/",
+  "title": "Azhwar Vaibhavam-7",
+  "slug": "azhwar-vaibhavam-7",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-07T11:27:00Z",
+  "modifiedAt": "2022-02-10T03:47:04Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1280,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/azhwar-vaibhavam/chapters/the-chera-prince.json, edited to book standard."
+  }
+}

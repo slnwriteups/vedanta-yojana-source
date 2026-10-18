@@ -21,6 +21,8 @@ export interface ResolvedLastRead {
   bookSlug: string;
   chapterSlug: string;
   bookTitle: string;
+  /** "book" or "blog" -- Home's progress line counts chapters for a book, posts for a blog. */
+  kind: "book" | "blog";
   chapterTitle: string;
   /** This chapter's 1-indexed position in the book's own chapterOrder. */
   chapterPosition: number;
@@ -50,6 +52,7 @@ function resolveLastRead(
   return {
     bookSlug: position.bookSlug,
     chapterSlug: position.chapterSlug,
+    kind: entry.book.kind,
     bookTitle: localizeBook(entry.book, language).title,
     chapterTitle: localizedChapter.title,
     chapterPosition,

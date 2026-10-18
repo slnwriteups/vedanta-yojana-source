@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1574",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/24/vishnu-puranam-08-birth-of-sri-krishna/",
+  "title": "Vishnu Puranam - 08 - Birth of Sri Krishna",
+  "slug": "vishnu-puranam-08-birth-of-sri-krishna",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-24T13:07:09Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/e6a21-krishnabirth-226x300-1.jpg",
+      "file": "images/01-aec967-b813bfbf5c7b4c1599f1a83c484d6bd9.jpg",
+      "copiedFrom": "wix/2020-06-24-vishnu-puranam-08-birth-of-sri-krishna/images/01-aec967-b813bfbf5c7b4c1599f1a83c484d6bd9.jpg"
+    }
+  ],
+  "wordCount": 561,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

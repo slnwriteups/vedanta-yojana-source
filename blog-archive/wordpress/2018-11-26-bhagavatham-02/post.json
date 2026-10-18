@@ -1,0 +1,37 @@
+{
+  "platform": "wordpress",
+  "sourceId": "421",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=421",
+  "title": "Bhagavatham-02",
+  "slug": "bhagavatham-02",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-26T14:49:00Z",
+  "modifiedAt": "2022-02-10T16:12:10Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/10b43-dc37b937-e008-4fe2-a652-b243f2a33b53.jpeg",
+      "file": "images/01-10b43-dc37b937-e008-4fe2-a652-b243f2a33b.jpg"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/3c9ad-71680db4-160b-4fed-94b3-8551eb90a6f5.jpeg",
+      "file": "images/02-3c9ad-71680db4-160b-4fed-94b3-8551eb90a6.jpg"
+    }
+  ],
+  "wordCount": 1183,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

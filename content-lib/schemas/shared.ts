@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { ImageAltStatusSchema, ImagePlacementSchema } from "./shared-safe.ts";
+import { ImageAltStatusSchema, ImagePlacementSchema, translationsSchemaFor } from "./shared-safe.ts";
 
 export * from "./shared-safe.ts";
 
@@ -95,5 +95,12 @@ export const ImageEntrySchema = z.object({
    * Always a real substring of `sthalaPuranam` itself, never invented.
    */
   placementAnchor: z.string().min(1).optional(),
+  /**
+   * A Library chapter image's placementAnchor in each translation of the
+   * chapter (the closing words of the same paragraph, in that language),
+   * so the image sits after that paragraph in every language. A language
+   * without one shows the image above the text.
+   */
+  placementAnchorTranslations: translationsSchemaFor(z.string().min(1)).optional(),
 });
 export type ImageEntry = z.infer<typeof ImageEntrySchema>;

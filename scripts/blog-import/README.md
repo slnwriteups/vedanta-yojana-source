@@ -1,0 +1,156 @@
+# Blog importer (WordPress + Wix → `blog-archive/`)
+
+Pulls every old blog post into the repo in one go, so they can be moved
+into the app gradually. Nothing here touches `content/` or the app: the
+archive is a staging area, the same way `content-extraction/` was for the
+SAP export.
+
+## 1. Get the inputs
+
+**WordPress** — one export file holds every post (published, drafts,
+scheduled, private):
+
+- Self-hosted / WordPress.com: *Admin → Tools → Export → All content →
+  Download Export File*. WordPress.com emails a `.zip`; unzip it (large
+  sites are split into several `.xml` files — pass the folder).
+- If the WordPress site is gone but you still have the account, the same
+  export is under *wordpress.com → Settings → Export*.
+
+**Wix** — Wix has no "export all" button, so the importer reads the
+site's automatically generated blog sitemap (lists every published post)
+plus its RSS feed, then fetches each post page. All you need is the site
+address. Drafts that were never published on Wix can't be reached this
+way — publish them first, or copy them by hand.
+
+If the site blocks automated requests, open each post in a browser and
+*Save Page As → Webpage, HTML only* into one folder, then use
+`--wix-html-dir` instead.
+
+## 2. Run it
+
+```
+npm run import:blogs -- --wordpress ~/Downloads/wordpress-export.xml
+npm run import:blogs -- --wix-site https://www.example.com
+npm run import:blogs -- --wix-html-dir ~/Downloads/wix-posts      # offline alternative
+```
+
+Flags: `--include-pages` (also WordPress static pages), `--no-images`
+(keep images remote), `--delay <ms>` (pause between Wix requests),
+`--include-duplicates`, `--no-app-check`, `--out <dir>`, `--reindex`.
+
+## Posts already in the app are not imported
+
+Before archiving, every post is compared with what the app already has
+in `content/` — book chapters, Divya Desam records and Knowledge records
+(not translations, and not `_provenance/` / `_unresolved/`). The
+comparison is on the writing itself, so a post that was later revised
+into a book chapter under a new title is still recognised:
+
+- **Duplicate** — half or more of the post's text is already in the app
+  (in one record or spread across several). The post is **not imported**;
+  it is listed in `blog-archive/duplicates.json` and in an "Already in the
+  app" section of `INDEX.md`, with the matching app records and how much
+  of the post each one covers. If an earlier import had already archived
+  it, that folder is left alone and the run warns about it.
+- **Possible match** — 15–50% of the text overlaps, or the title is
+  exactly an app record's title. The post *is* imported, but its
+  `post.json` carries an `appCheck` block and `INDEX.md` marks it with ⚠
+  so you can decide.
+
+`--include-duplicates` archives duplicates anyway (still flagged);
+`--no-app-check` turns the comparison off. As the app gains content,
+re-running the import re-checks every post against it.
+
+Re-running is safe: posts are matched to their existing folders, files
+are refreshed, already-downloaded images are kept, and your migration
+progress (below) is preserved.
+
+## 3. What you get
+
+```
+blog-archive/
+├── INDEX.md            checklist of every post, oldest first
+├── index.json          the same, machine-readable
+├── duplicates.json     posts left out because they're already in the app
+├── wordpress/2019-05-01-some-post/
+│   ├── post.md         readable Markdown (front matter + body, local image links)
+│   ├── original.html   the body exactly as the platform stored it — never edited
+│   ├── post.json       metadata: dates, categories, tags, source URL, images, migration status
+│   └── images/         downloaded images, full size where the platform allows
+└── wix/2021-03-04-some-post/ ...
+```
+
+A post that exists on both platforms (moved from WordPress to Wix) is
+flagged in `INDEX.md` / `index.json` as `possibleDuplicates`, matched by
+title.
+
+## 4. Moving posts into the app, a few at a time
+
+Each `post.json` has a `migration` block:
+
+```json
+"migration": { "status": "archived", "notes": "" }
+```
+
+Change `status` as you go — `archived` → `in-review` → `migrated` (or
+`skipped` for posts you don't want to bring over) — add a note if useful,
+then `npm run import:blogs -- --reindex` to refresh the checklist.
+
+The app does not yet have a section for blog posts (`content/knowledge/`
+is currently tied to the original SAP migration and its tests), so the
+step that turns an archived post into an app record is deliberately left
+for when that section is designed.
+
+## 5. Publishing posts into the app's Library
+
+Archived posts are published as **blogs**: a Library entry with
+`"kind": "blog"` in its `book.json`, whose chapters are the posts. Blogs
+appear under their own **Blogs** heading in the Library (web and app),
+are counted in posts rather than chapters, and otherwise use everything
+books do: the reader, search, bookmarks, Continue Reading, offline
+download and the app's over-the-air content updates.
+
+Posts are not copied across as they were written for the blog. Edit each
+one to the standard of the books first (no "in today's post…", fixed
+grammar, consistent spellings such as Āzhwār, Nārāyaṇa, Perumāl), saved as
+a text file whose first line is the title and whose body is plain
+paragraphs separated by blank lines. Then describe the blog in a small
+spec file and publish it:
+
+```
+node scripts/blog-import/publish-blog.ts path/to/spec.json
+node mobile/scripts/generate-content-manifest.ts
+```
+
+```json
+{
+  "slug": "azhwar-vaibhavam",
+  "title": "Āzhwār Vaibhavam",
+  "author": "Vishnu Sreenivas",
+  "description": "One sentence shown under the title.",
+  "posts": [
+    { "archive": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction", "text": "intro.txt" }
+  ]
+}
+```
+
+**Sub-chapters.** A long post reads better as a few short chapters than as
+one long one. To split a post, start each section of its edited text with
+a `## Section title` line (nothing may come before the first one). The post
+then becomes a *part* of the blog, titled with the post's title, and each
+section becomes its own chapter; the blog's page lists the chapters under
+the part's heading, and each chapter shows "Blog · Part" above its title.
+A line `@image 2` inside a section places the post's second image (in the
+order archived, duplicates removed) in that chapter, directly below the
+paragraph above the marker (an `@image` line with no paragraph above it
+puts the image above the text). The script stores the closing words of
+that paragraph as the image's `placementAnchor` and checks they occur only
+once. Without any `@image` lines, all the post's images go above the text
+of its first chapter.
+
+This writes `content/library/<slug>/` (book.json + one chapter per post,
+in the order listed), copies each post's archived images into
+`public/images/` under a UUID derived from the image's original URL, and
+marks the posts `migrated` in `blog-archive/` with a note pointing at the
+published chapter. Re-running a spec rewrites that blog. Image alt text is
+left for a person to write, as for every other image in the app.

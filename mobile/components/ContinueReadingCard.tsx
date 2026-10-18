@@ -25,6 +25,7 @@ export function ContinueReadingCard({
   position,
   total,
   minutesLeft,
+  kind = "book",
   onPress,
 }: {
   chapterTitle: string;
@@ -35,13 +36,15 @@ export function ContinueReadingCard({
   position: number;
   total: number;
   minutesLeft: number;
+  /** Whether position/total count chapters of a book or posts of a blog. */
+  kind?: "book" | "blog";
   onPress: () => void;
 }) {
   const theme = useTheme();
   const t = useT();
   const { language } = useLanguage();
   const percentComplete = total > 0 ? Math.round((position / total) * 100) : 0;
-  const progressLabel = continueReadingProgressLabel(language, position, total, percentComplete, minutesLeft);
+  const progressLabel = continueReadingProgressLabel(language, position, total, percentComplete, minutesLeft, kind);
 
   return (
     <Pressable

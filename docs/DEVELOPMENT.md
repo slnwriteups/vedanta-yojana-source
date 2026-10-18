@@ -174,12 +174,16 @@ this differs from Library content's update model.
 
 ## Over-the-air (OTA) updates
 
-From v16 (versionName 1.0.3, versionCode 16), the Android app receives
-JavaScript and bundled-content changes through EAS Update
-(`expo-updates`), with no APK reinstall:
+From v16 (versionName 1.0.3, versionCode 16) on Android, and from the
+App Store build (1.1.0) on iOS, the apps receive JavaScript and
+bundled-content changes through EAS Update (`expo-updates`), with no
+reinstall and no App Store review. Publishing is always for both
+platforms (`--platform all`); a test in `tests/app/ci.test.ts` fails if
+the workflow is ever narrowed to one:
 
 - **Configuration** (`mobile/app.json`): runtime version policy
-  `appVersion`, so the runtime is `1.0.3`; update URL
+  `appVersion`, so the runtime is `1.0.3` on Android and `1.1.0` on iOS
+  (`expo.ios.version`); update URL
   `https://u.expo.dev/fd9baa2d-92be-4e6f-88d4-9c9830516db1`; channel
   `production` (`mobile/eas.json`); the app checks for an update on
   every launch and applies a downloaded update on the next restart.

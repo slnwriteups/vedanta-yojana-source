@@ -80,10 +80,10 @@ test("Divya Desams: Sri Rangam still resolves for the detail screen", () => {
   assert.ok(loadDivyaDesam("sri-rangam"));
 });
 
-test("Library: the book still has all 51 chapters after the UI rewrite", () => {
+test("Library: the book still has all 61 chapters after the UI rewrite", () => {
   const book = loadBook(BOOK_SLUG);
   assert.ok(book);
-  assert.equal(loadChapters(BOOK_SLUG).length, 51);
+  assert.equal(loadChapters(BOOK_SLUG).length, 61);
 });
 
 test("Search: the offline corpus still surfaces a real record for a matching query", () => {
@@ -99,7 +99,7 @@ test("Images: Sri Rangam's sourceAssetUuid still matches a real file under publi
   assert.ok(withImage, "expected sri-rangam to have at least one image with a matching file on disk");
 });
 
-test("Images: public/images/ still has 227 real files for the manifest generator to enumerate", () => {
+test("Images: public/images/ still has 257 real files for the manifest generator to enumerate", () => {
   // 217 from the original migration + 174 added by Phase 6E from "108
   // Divyadesam 2nd Edition.pdf" (see content/_provenance/divya-desams/),
   // minus 149 removed as post-Phase-6E-C near-duplicates (same photo,
@@ -110,6 +110,9 @@ test("Images: public/images/ still has 227 real files for the manifest generator
   // minus 3 more removed once their charama-shlokam chapters had the
   // real verse transcribed as text (extracted from these exact images)
   // instead of only ever showing it as a photo of the shloka:
-  // 391 - 149 - 12 - 3 = 227.
-  assert.equal(fs.readdirSync(IMAGES_ROOT).length, 227);
+  // 391 - 149 - 12 - 3 = 227. The first blog series published from the old
+  // WordPress blog then added 27 (1 Āzhwār Vaibhavam, 25 Tirumala
+  // Brahmotsavam, 1 Guruvāyūr): 227 + 27 = 254. Nityasūri Vaibhavam added 3
+  // (2 Garuḍa, 1 Sudarśana; its other verse images were transcribed as text): 257.
+  assert.equal(fs.readdirSync(IMAGES_ROOT).length, 257);
 });

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "437",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=437",
+  "title": "War- Day 11",
+  "slug": "war-day-11",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-14T17:22:00Z",
+  "modifiedAt": "2022-02-10T16:12:26Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 516,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1622",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/08/06/vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam/",
+  "title": "Vishnu Dharmam - 02 - Mantrakavacham, Mantrasiddhi and Mantrabalam",
+  "slug": "vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-08-06T03:58:10Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Dharmam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg",
+      "file": "images/01-aec967-374f7d6f4736416b86d0124693ab6303.jpg",
+      "copiedFrom": "wix/2020-08-06-vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam/images/01-aec967-374f7d6f4736416b86d0124693ab6303.jpg"
+    }
+  ],
+  "wordCount": 635,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

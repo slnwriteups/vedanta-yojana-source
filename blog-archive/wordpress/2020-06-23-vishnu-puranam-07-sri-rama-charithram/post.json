@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1565",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/23/vishnu-puranam-07-sri-rama-charithram/",
+  "title": "Vishnu Puranam - 07 - Sri Rama Charithram",
+  "slug": "vishnu-puranam-07-sri-rama-charithram",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-23T13:18:25Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/06/48a69-sriramapattabhishekam-222x300-1.jpg",
+      "file": "images/01-aec967-a0c737964e564e079eb1340eae3faf9a.jpg",
+      "copiedFrom": "wix/2020-06-23-vishnu-puranam-07-sri-rama-charithram/images/01-aec967-a0c737964e564e079eb1340eae3faf9a.jpg"
+    }
+  ],
+  "wordCount": 337,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

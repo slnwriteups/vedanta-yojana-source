@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "473",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=473",
+  "title": "Ekachakri Nagar",
+  "slug": "ekachakri-nagar",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-09T16:44:00Z",
+  "modifiedAt": "2022-02-10T16:13:15Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 545,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

@@ -1,18 +1,24 @@
-name: Publish OTA update (Android app)
+name: Publish OTA update (iOS and Android apps)
 
 # Publishes the mobile app's JavaScript bundle to EAS Update on every push
-# to main that can change it, so installed apps (v16 / runtime 1.0.3 and
-# later, production channel) pick up new features and content on their
-# next launch -- no APK reinstall, and no one having to remember to run
-# `npm run update` by hand after a merge. See docs/DEVELOPMENT.md
+# to main that can change it, for BOTH platforms, so installed apps on the
+# production channel pick up new features and content on their next
+# launch -- no reinstall, no App Store review, and no one having to
+# remember to run `npm run update` by hand after a merge. Must always cover
+# iOS as well as Android: it was Android-only until the iOS app existed,
+# which left iPhones without the Blogs shelf and every later change.
+#
+# Runtimes (runtimeVersion policy "appVersion", resolved per platform by
+# eas-cli): Android from expo.version (1.0.3, v16 and later), iOS from
+# expo.ios.version (1.1.0, the App Store build). See docs/DEVELOPMENT.md
 # ("Over-the-air (OTA) updates") for what an update can and cannot carry.
 #
 # Scoped by path to what the bundle is built from: mobile/ itself, plus
 # the repo-root content/ and content-lib/ that mobile imports directly
 # (see mobile/metro.config.js watchFolders).
 #
-# An update only reaches installs whose runtime version matches
-# mobile/app.json "version" (runtimeVersion policy "appVersion"). A
+# An update only reaches installs whose runtime version matches their
+# platform's version in mobile/app.json (runtimeVersion policy "appVersion"). A
 # change to native code or to that version needs a new APK first; this
 # workflow does not guard against that, exactly as `npm run update` does
 # not.
@@ -65,7 +71,7 @@ jobs:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           COMMIT_SUBJECT: ${{ github.event.head_commit.message || 'Manual OTA publish' }}
         run: |
-          RUNTIME=$(node -p "require('./app.json').expo.version")
+          RUNTIME="android $(node -p "require('./app.json').expo.version"), ios $(node -p "require('./app.json').expo.ios.version || require('./app.json').expo.version")"
           # Skips rather than fails when the credential is absent, the same
           # convention as deploy-request-analytics.yml: a visible warning,
           # not a red X on every merge until the secret exists.
@@ -76,7 +82,7 @@ jobs:
           MESSAGE=$(printf '%s' "$COMMIT_SUBJECT" | head -n 1)
           npx --yes eas-cli@latest update \
             --branch production \
-            --platform android \
+            --platform all \
             --message "$MESSAGE (${GITHUB_SHA::7})" \
             --non-interactive
           echo "Published OTA update for runtime $RUNTIME from ${GITHUB_SHA::7}: $MESSAGE" >> "$GITHUB_STEP_SUMMARY"

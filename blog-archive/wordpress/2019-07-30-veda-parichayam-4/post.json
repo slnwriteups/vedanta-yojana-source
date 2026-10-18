@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "387",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/30/veda-parichayam-4/",
+  "title": "Veda Parichayam-4",
+  "slug": "veda-parichayam-4",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-30T11:19:00Z",
+  "modifiedAt": "2022-02-10T16:16:56Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Veda Parichayam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 597,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

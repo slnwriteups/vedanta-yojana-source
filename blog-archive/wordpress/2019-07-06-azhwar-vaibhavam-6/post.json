@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "393",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/06/azhwar-vaibhavam-6/",
+  "title": "Azhwar Vaibhavam-6",
+  "slug": "azhwar-vaibhavam-6",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-06T05:43:00Z",
+  "modifiedAt": "2022-02-10T03:41:46Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 760,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/azhwar-vaibhavam/chapters/maran-of-tirukkurugur.json, edited to book standard."
+  }
+}

@@ -1,0 +1,635 @@
+{
+  "count": 70,
+  "posts": [
+    {
+      "platform": "wordpress",
+      "sourceId": "489",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=489",
+      "title": "Shantanu and Ganga",
+      "publishedAt": "2018-09-24T16:30:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/shantanu-and-ganga.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "488",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=488",
+      "title": "Satyavati",
+      "publishedAt": "2018-09-25T16:03:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/satyavati.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "485",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=485",
+      "title": "Pandu and Dhritharashtra",
+      "publishedAt": "2018-09-28T17:06:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/pandu-and-dhritarashtra.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "484",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=484",
+      "title": "Kunti",
+      "publishedAt": "2018-09-29T14:13:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/kunti.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "483",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=483",
+      "title": "Gandhar's Relationship with Hastinapur",
+      "publishedAt": "2018-09-29T15:28:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/gandharas-relationship-with-hastinapur.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "482",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=482",
+      "title": "Kauravas",
+      "publishedAt": "2018-09-30T14:26:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/kauravas.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "481",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=481",
+      "title": "Birth of Shri Krishna",
+      "publishedAt": "2018-10-01T17:42:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/srimad-bhagavata-kathasagaram/chapters/birth-of-shree-krishna.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "480",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=480",
+      "title": "Krishna Leela - 1",
+      "publishedAt": "2018-10-02T11:17:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "479",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=479",
+      "title": "Krishna Leela -2",
+      "publishedAt": "2018-10-03T16:56:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "478",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=478",
+      "title": "Krishna in Mathura",
+      "publishedAt": "2018-10-04T17:20:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-26-vishnu-puranam-10-sri-krishna-in-mathura"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "477",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=477",
+      "title": "Drona and Drupada",
+      "publishedAt": "2018-10-05T17:29:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/drona-and-drupada.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "476",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=476",
+      "title": "Karna",
+      "publishedAt": "2018-10-06T17:03:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/karna.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "472",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=472",
+      "title": "Draupadi",
+      "publishedAt": "2018-10-10T17:46:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/draupadi.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "470",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=470",
+      "title": "Jarasandha",
+      "publishedAt": "2018-10-12T17:40:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/srimad-bhagavata-kathasagaram/chapters/jarasandha.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "467",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=467",
+      "title": "The Gamble",
+      "publishedAt": "2018-10-15T17:17:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/the-gamble.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "464",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=464",
+      "title": "Virata Nagari",
+      "publishedAt": "2018-10-18T14:07:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/virata-nagari.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "453",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=453",
+      "title": "An Introduction to the Bhagavad Gita",
+      "publishedAt": "2018-10-29T17:05:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/jaya/chapters/an-introduction-to-the-bhagavad-gita.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "428",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=428",
+      "title": "Parikshith",
+      "publishedAt": "2018-11-23T16:21:00Z",
+      "reason": "early 2018 draft of the book chapter with the same title",
+      "keptCopy": "content/library/srimad-bhagavata-kathasagaram/chapters/parikshith.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "426",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=426",
+      "title": "Bhagavatham-01",
+      "publishedAt": "2018-11-25T12:32:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-08-05-vishnu-dharmam-01-introduction"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "415",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=415",
+      "title": "Bhagavatham-08",
+      "publishedAt": "2018-12-03T17:33:00Z",
+      "reason": "early draft of a later published post",
+      "keptCopy": "wordpress/2020-06-19-vishnu-puranam-03-kurma-avataram"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rising-of-athi-varadar",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rising-of-athi-varadar",
+      "title": "Rising of Athi Varadar",
+      "publishedAt": "2019-06-29T09:57:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-06-29-rising-of-athi-varadar"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-an-introduction",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-an-introduction",
+      "title": "Azhwar Vaibhavam - An Introduction",
+      "publishedAt": "2019-06-30T10:14:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2596",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/06/30/azhwar-vaibhavam-an-introduction-2/",
+      "title": "Azhwar Vaibhavam - An Introduction",
+      "publishedAt": "2019-06-30T10:14:00Z",
+      "reason": "word-for-word copy of another archived post",
+      "keptCopy": "wordpress/2019-06-30-azhwar-vaibhavam-an-introduction"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-1",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-1",
+      "title": "Azhwar Vaibhavam-1",
+      "publishedAt": "2019-07-01T10:48:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-01-azhwar-vaibhavam-1"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-2",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-2",
+      "title": "Azhwar Vaibhavam-2",
+      "publishedAt": "2019-07-02T11:01:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-02-azhwar-vaibhavam-2-2"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2594",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/02/azhwar-vaibhavam-2-2/",
+      "title": "Azhwar Vaibhavam-2",
+      "publishedAt": "2019-07-02T11:01:00Z",
+      "reason": "older, shorter version of another archived post",
+      "keptCopy": "wordpress/2019-07-02-azhwar-vaibhavam-2"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azwar-vaibhavam-3",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azwar-vaibhavam-3",
+      "title": "Azwar Vaibhavam-3",
+      "publishedAt": "2019-07-03T11:19:00.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-03-azwar-vaibhavam-3"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-4",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-4",
+      "title": "Azhwar Vaibhavam - 4",
+      "publishedAt": "2019-07-04T11:16:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-04-azhwar-vaibhavam-4"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-5",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-5",
+      "title": "Azhwar Vaibhavam-5",
+      "publishedAt": "2019-07-05T11:04:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-05-azhwar-vaibhavam-5"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-6",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-6",
+      "title": "Azhwar Vaibhavam-6",
+      "publishedAt": "2019-07-06T05:43:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-06-azhwar-vaibhavam-6"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2590",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/05/azhwar-vaibhavam-6-2/",
+      "title": "Azhwar Vaibhavam-6",
+      "publishedAt": "2019-07-06T05:43:00Z",
+      "reason": "word-for-word copy of another archived post",
+      "keptCopy": "wordpress/2019-07-06-azhwar-vaibhavam-6"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-7",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/azhwar-vaibhavam-7",
+      "title": "Azhwar Vaibhavam-7",
+      "publishedAt": "2019-07-07T11:27:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-07-azhwar-vaibhavam-7"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2589",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/07/azhwar-vaibhavam-7-2/",
+      "title": "Azhwar Vaibhavam-7",
+      "publishedAt": "2019-07-07T11:27:00Z",
+      "reason": "word-for-word copy of another archived post",
+      "keptCopy": "wordpress/2019-07-07-azhwar-vaibhavam-7"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-1",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-1",
+      "title": "Veda Parichayam - 1",
+      "publishedAt": "2019-07-27T09:52:00.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-27-veda-parichayam-1"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-2",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-2",
+      "title": "Veda Parichayam- 2",
+      "publishedAt": "2019-07-28T08:18:00.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-28-veda-parichayam-2"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-3",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-3",
+      "title": "Veda Parichayam-3",
+      "publishedAt": "2019-07-29T11:44:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-29-veda-parichayam-3"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-4",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-4",
+      "title": "Veda Parichayam-4",
+      "publishedAt": "2019-07-30T11:19:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-30-veda-parichayam-4"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-5",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-5",
+      "title": "Veda Parichayam-5",
+      "publishedAt": "2019-07-31T10:42:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-07-31-veda-parichayam-5"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-6",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/veda-parichayam-6",
+      "title": "Veda Parichayam-6",
+      "publishedAt": "2019-08-02T10:35:00.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2019-08-02-veda-parichayam-6"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "351",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/01/18/108-divyadesam-7-tirukkandiyur/",
+      "title": "108 Divyadesam- 7) Tirukkandiyur",
+      "publishedAt": "2020-01-18T17:02:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tirukkandiyur.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "253",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/02/15/108-divyadesam-35-tirudevanaar-togai/",
+      "title": "108 Divyadesam-35) Tirudevanaar Togai",
+      "publishedAt": "2020-02-15T15:01:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tirudevanaar-togai.json"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "116",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/26/108-divyadesam-76-tiruvattaaru/",
+      "title": "108 Divyadesam - 76) Tiruvattaaru",
+      "publishedAt": "2020-03-26T15:40:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tiruvattaaru.json"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-80-tiruvaikuntam---srivaikuntam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-80-tiruvaikuntam---srivaikuntam",
+      "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
+      "publishedAt": "2020-03-30T15:06:00.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-03-30-108-divyadesam-80-tiruvaikuntam-srivaikuntam"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "97",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/03/30/108-divyadesam-80-tiruvaikuntam-srivaikuntam/",
+      "title": "108 Divyadesam - 80) Tiruvaikuntam / Srivaikuntam",
+      "publishedAt": "2020-03-30T15:06:00Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tiruvaikuntam-srivaikuntam.json"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-95-tirumayam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/108-divyadesam-95-tirumayam",
+      "title": "108 Divyadesam - 95) Tirumayam",
+      "publishedAt": "2020-04-13T12:33:20.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-04-13-108-divyadesam-95-tirumayam"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "841",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/13/108-divyadesam-95-tirumayam/",
+      "title": "108 Divyadesam - 95) Tirumayam",
+      "publishedAt": "2020-04-13T12:33:20Z",
+      "reason": "older version of the app's temple page (since revised)",
+      "keptCopy": "content/divya-desams/tirumayam.json"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guruvayoor",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/guruvayoor",
+      "title": "Guruvayoor",
+      "publishedAt": "2020-04-26T15:11:27.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-04-26-guruvayoor"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "2773",
+      "sourceUrl": "https://vedantayojana.wordpress.com/2020/04/26/guruvayoor-2/",
+      "title": "Guruvayoor",
+      "publishedAt": "2020-04-26T15:11:27Z",
+      "reason": "word-for-word copy of another archived post",
+      "keptCopy": "wordpress/2020-04-26-guruvayoor"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-01-an-introduction-to-creation",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-01-an-introduction-to-creation",
+      "title": "Vishnu Puranam- 01- An Introduction to Creation",
+      "publishedAt": "2020-06-17T14:28:26.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-17-vishnu-puranam-01-an-introduction-to-creation"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-02-varaha-avataram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-02-varaha-avataram",
+      "title": "Vishnu Puranam- 02 - Varaha Avataram",
+      "publishedAt": "2020-06-18T14:14:06.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-18-vishnu-puranam-02-varaha-avataram"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-03-kurma-avataram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-03-kurma-avataram",
+      "title": "Vishnu Puranam - 03 - Kurma Avataram",
+      "publishedAt": "2020-06-19T15:21:59.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-19-vishnu-puranam-03-kurma-avataram"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-04-dhruva-charithram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-04-dhruva-charithram",
+      "title": "Vishnu Puranam - 04 - Dhruva Charithram",
+      "publishedAt": "2020-06-20T11:47:14.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-20-vishnu-puranam-04-dhruva-charithram"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-06-jadabharata-charithram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-06-jadabharata-charithram",
+      "title": "Vishnu Puranam - 06 - Jadabharata Charithram",
+      "publishedAt": "2020-06-22T12:10:16.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-22-vishnu-puranam-06-jadabharata-charithram"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-07-sri-rama-charithram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-07-sri-rama-charithram",
+      "title": "Vishnu Puranam - 07 - Sri Rama Charithram",
+      "publishedAt": "2020-06-23T13:18:25.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-23-vishnu-puranam-07-sri-rama-charithram"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-08-birth-of-sri-krishna",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-08-birth-of-sri-krishna",
+      "title": "Vishnu Puranam - 08 - Birth of Sri Krishna",
+      "publishedAt": "2020-06-24T13:07:09.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-24-vishnu-puranam-08-birth-of-sri-krishna"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-09-sri-krishna-leela",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-09-sri-krishna-leela",
+      "title": "Vishnu Puranam - 09 - Sri Krishna Leela",
+      "publishedAt": "2020-06-25T13:51:20.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-25-vishnu-puranam-09-sri-krishna-leela"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-10-sri-krishna-in-mathura",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-puranam-10-sri-krishna-in-mathura",
+      "title": "Vishnu Puranam - 10 - Sri Krishna in Mathura",
+      "publishedAt": "2020-06-26T13:00:34.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-06-26-vishnu-puranam-10-sri-krishna-in-mathura"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-01-introduction",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-01-introduction",
+      "title": "Vishnu Dharmam - 01 - Introduction",
+      "publishedAt": "2020-08-05T04:21:09.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-08-05-vishnu-dharmam-01-introduction"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam",
+      "title": "Vishnu Dharmam - 02 - Mantrakavacham, Mantrasiddhi and Mantrabalam",
+      "publishedAt": "2020-08-06T03:58:10.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-08-06-vishnu-dharmam-02-mantrakavacham-mantrasiddhi-and-mantrabalam"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-03-bhakti",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-03-bhakti",
+      "title": "Vishnu Dharmam - 03 - Bhakti",
+      "publishedAt": "2020-08-07T03:50:30.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-08-07-vishnu-dharmam-03-bhakti"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-04-dhaanam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-04-dhaanam",
+      "title": "Vishnu Dharmam - 04 - Dhaanam",
+      "publishedAt": "2020-08-08T02:40:13.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-08-08-vishnu-dharmam-04-dhaanam"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-05-tapas",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-05-tapas",
+      "title": "Vishnu Dharmam - 05 - Tapas",
+      "publishedAt": "2020-08-09T01:46:03.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-08-09-vishnu-dharmam-05-tapas"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-06-yudhishthira-chandala-samwaadam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/vishnu-dharmam-06-yudhishthira-chandala-samwaadam",
+      "title": "Vishnu Dharmam - 06 - Yudhishthira Chandala Samwaadam",
+      "publishedAt": "2020-08-10T02:59:30.000Z",
+      "reason": "older, shorter copy of the WordPress post",
+      "keptCopy": "wordpress/2020-08-10-vishnu-dharmam-06-yudhishthira-chandala-samwaadam"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-03-hayagriva-stotram",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/desika-vaibhavam-03-hayagriva-stotram",
+      "title": "Desika Vaibhavam - 03 - Hayagriva Stotram",
+      "publishedAt": "2020-12-10T04:29:41.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2020-12-10-desika-vaibhavam-03-hayagriva-stotram"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "1773",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=1773",
+      "title": "(untitled)",
+      "publishedAt": "2021-02-19T06:01:33",
+      "reason": "older, shorter version of another archived post",
+      "keptCopy": "wordpress/2021-03-05-untitled"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/sudarshana-mahima-sudarshana-ashtakam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/sudarshana-mahima-sudarshana-ashtakam",
+      "title": "Sudarshana Mahima: Sudarshana Ashtakam",
+      "publishedAt": "2021-06-19T17:19:45.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2021-06-19-sudarshana-mahima-sudarshana-ashtakam"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls",
+      "title": "Krishna as the Ultimate Teacher: Illuminating Wisdom and Guiding Souls",
+      "publishedAt": "2023-06-30T04:14:14.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2023-06-30-krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/nara-narayana-the-profound-bond-between-krishna-and-arjuna",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/nara-narayana-the-profound-bond-between-krishna-and-arjuna",
+      "title": "Nara-Narayana: The Profound Bond Between Krishna and Arjuna",
+      "publishedAt": "2023-07-10T02:23:53.000Z",
+      "reason": "truncated copy of the WordPress post",
+      "keptCopy": "wordpress/2023-07-10-nara-narayana-the-profound-bond-between-krishna-and-arjuna"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/tirumala-navaratri-brahmotsavam",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/tirumala-navaratri-brahmotsavam",
+      "title": "Tirumala Navaratri Brahmotsavam",
+      "publishedAt": "2024-10-04T18:25:10.000Z",
+      "reason": "word-for-word copy of the WordPress post",
+      "keptCopy": "wordpress/2024-10-04-tirumala-navaratri-brahmotsavam"
+    },
+    {
+      "platform": "wix",
+      "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/%C4%81sh%C4%81%E1%B8%8Dha-ek%C4%81dashi-ch%C4%81turm%C4%81sya-and-pandharpur",
+      "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/%C4%81sh%C4%81%E1%B8%8Dha-ek%C4%81dashi-ch%C4%81turm%C4%81sya-and-pandharpur",
+      "title": "Āshāḍha Ekādashi, Chāturmāsya, and Pandharpur",
+      "publishedAt": "2025-07-06T04:53:27.045Z",
+      "reason": "word-for-word copy of another Wix post",
+      "keptCopy": "wix/2025-07-06-ashadha-ekadashi-chaturmasya-and-pandharpur"
+    }
+  ]
+}

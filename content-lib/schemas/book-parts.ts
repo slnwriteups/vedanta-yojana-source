@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { translationsSchemaFor } from "./shared-safe.ts";
+import { SlugSchema, translationsSchemaFor } from "./shared-safe.ts";
 
 /**
  * Book's public sub-schemas, split out of book.ts for the same reason
@@ -30,5 +30,26 @@ export const BookTranslationsSchema = translationsSchemaFor(BookTranslationSchem
 export const BookPartSchema = z.object({
   title: z.string().min(1),
   order: z.number().int(),
+  /**
+   * The slugs of the chapters in this part, in reading order -- a
+   * contiguous run of the book's own chapterOrder. Chapters that belong to
+   * no part (an introduction, say) are simply not listed in any part.
+   */
+  chapters: z.array(SlugSchema).default([]),
+  /** The part's title in other languages; content-lib/i18n.ts's localizeBook applies it. */
+  translations: translationsSchemaFor(z.object({ title: z.string().min(1) })).optional(),
 });
 export type BookPart = z.infer<typeof BookPartSchema>;
+
+/**
+ * What a Library entry is: a "book" (a published book, read chapter by
+ * chapter) or a "blog" (a series of the author's blog posts, migrated
+ * from the old WordPress/Wix blogs and edited to book standard, each
+ * post stored as a chapter). Both share the whole reading pipeline --
+ * reader, search, bookmarks, offline download -- and differ only in
+ * which shelf of the Library they appear on and how their entries are
+ * counted ("chapters" vs "posts"). Omitted means "book", so every
+ * existing book.json and every older app build reads unchanged.
+ */
+export const LibraryKindSchema = z.enum(["book", "blog"]);
+export type LibraryKind = z.infer<typeof LibraryKindSchema>;

@@ -1,0 +1,60 @@
+{
+  "title": "The Eighth Day: Rathotsavam",
+  "slug": "the-eighth-day-rathotsavam",
+  "order": 10,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wordpress/2024-10-04-tirumala-navaratri-brahmotsavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "In the morning comes the Rathotsavam, one of the most significant processions of the Brahmotsavam, in which the Lord is drawn through the streets of Tirumala in a great chariot pulled by His devotees. To witness this procession is believed to bring liberation from the cycle of birth and death.\n\nIn the evening the Lord rides the Ashva Vāhanam, the horse, which signifies speed, energy and readiness to protect dharma.",
+  "images": [
+    {
+      "assetId": "the-eighth-day-rathotsavam-1",
+      "sourceAssetUuid": "8fcb87a3-98e0-5302-b91e-ac0364b4b192",
+      "sourceOriginalName": "f463e-brahmaratham.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "liberation from the cycle of birth and death.",
+      "placementAnchorTranslations": {
+        "ta": "விடுதலை அளிக்கும் என்று நம்பப்படுகிறது.",
+        "kn": "ಚಕ್ರದಿಂದ ಮುಕ್ತಿಯನ್ನು ನೀಡುತ್ತದೆ ಎಂದು ನಂಬಲಾಗಿದೆ.",
+        "hi": "से जन्म-मृत्यु के चक्र से मुक्ति मिलती है।",
+        "te": "నుండి విముక్తిని ప్రసాదిస్తుందని విశ్వసిస్తారు."
+      }
+    },
+    {
+      "assetId": "the-eighth-day-rathotsavam-2",
+      "sourceAssetUuid": "47d4ad72-0742-5a06-98f7-f32baed7173a",
+      "sourceOriginalName": "7e3f5-av.jpg",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "speed, energy and readiness to protect dharma.",
+      "placementAnchorTranslations": {
+        "ta": "காக்கும் தயார்நிலை ஆகியவற்றைக் குறிக்கிறது.",
+        "kn": "ರಕ್ಷಿಸಲು ಇರುವ ಸಿದ್ಧತೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ.",
+        "hi": "और धर्म की रक्षा हेतु तत्परता का प्रतीक है।",
+        "te": "ధర్మాన్ని రక్షించడానికి సంసిద్ధతకు ప్రతీక."
+      }
+    }
+  ],
+  "translations": {
+    "ta": {
+      "title": "எட்டாம் நாள்: ரதோற்சவம்",
+      "body": "காலையில் பிரம்மோற்சவத்தின் மிக முக்கியமான திருவீதியுலாக்களில் ஒன்றான ரதோற்சவம் நடைபெறுகிறது; அதில் பெருமானின் அடியார்களால் இழுக்கப்படும் பெரிய தேரில் அவர் திருமலையின் வீதிகளில் எழுந்தருளுகிறார். இத்திருவீதியுலாவைக் காண்பது பிறப்பு-இறப்புச் சுழற்சியிலிருந்து விடுதலை அளிக்கும் என்று நம்பப்படுகிறது.\n\nமாலையில் பெருமான் குதிரையான அஶ்வ வாகனத்தில் எழுந்தருளுகிறார்; அது வேகம், ஆற்றல், தர்மத்தைக் காக்கும் தயார்நிலை ஆகியவற்றைக் குறிக்கிறது."
+    },
+    "kn": {
+      "title": "ಎಂಟನೆಯ ದಿನ: ರಥೋತ್ಸವ",
+      "body": "ಬೆಳಿಗ್ಗೆ ಬ್ರಹ್ಮೋತ್ಸವದ ಅತ್ಯಂತ ಮಹತ್ವದ ಮೆರವಣಿಗೆಗಳಲ್ಲಿ ಒಂದಾದ ರಥೋತ್ಸವ ನಡೆಯುತ್ತದೆ; ಇದರಲ್ಲಿ ಭಗವಂತನನ್ನು ಅವನ ಭಕ್ತರು ಎಳೆಯುವ ಮಹಾ ರಥದಲ್ಲಿ ತಿರುಮಲೆಯ ಬೀದಿಗಳಲ್ಲಿ ಕೊಂಡೊಯ್ಯಲಾಗುತ್ತದೆ. ಈ ಮೆರವಣಿಗೆಯನ್ನು ಕಾಣುವುದು ಜನನ-ಮರಣ ಚಕ್ರದಿಂದ ಮುಕ್ತಿಯನ್ನು ನೀಡುತ್ತದೆ ಎಂದು ನಂಬಲಾಗಿದೆ.\n\nಸಂಜೆ ಭಗವಂತನು ಅಶ್ವ ವಾಹನದ ಮೇಲೆ ವಿಹರಿಸುತ್ತಾನೆ; ಕುದುರೆಯು ವೇಗ, ಚೈತನ್ಯ ಮತ್ತು ಧರ್ಮವನ್ನು ರಕ್ಷಿಸಲು ಇರುವ ಸಿದ್ಧತೆಯನ್ನು ಸೂಚಿಸುತ್ತದೆ."
+    },
+    "hi": {
+      "title": "आठवाँ दिन: रथोत्सवम्",
+      "body": "प्रातःकाल रथोत्सवम् होता है, जो ब्रह्मोत्सवम् की सबसे महत्त्वपूर्ण शोभायात्राओं में से एक है, जिसमें भगवान को एक विशाल रथ में तिरुमला की गलियों से ले जाया जाता है, जिसे उनके भक्त खींचते हैं। माना जाता है कि इस शोभायात्रा के दर्शन से जन्म-मृत्यु के चक्र से मुक्ति मिलती है।\n\nसंध्या को भगवान अश्व वाहनम्, अर्थात् घोड़े, पर विराजते हैं, जो गति, ऊर्जा और धर्म की रक्षा हेतु तत्परता का प्रतीक है।"
+    },
+    "te": {
+      "title": "ఎనిమిదవ రోజు: రథోత్సవం",
+      "body": "ఉదయం రథోత్సవం జరుగుతుంది; బ్రహ్మోత్సవంలోని అత్యంత విశిష్టమైన ఊరేగింపులలో ఇది ఒకటి; ఇందులో భక్తులు లాగే మహా రథంలో స్వామిని తిరుమల వీధుల గుండా ఊరేగిస్తారు. ఈ ఊరేగింపును దర్శించడం జనన మరణ చక్రం నుండి విముక్తిని ప్రసాదిస్తుందని విశ్వసిస్తారు.\n\nసాయంత్రం స్వామి అశ్వ వాహనంపై, అంటే గుర్రంపై, విహరిస్తాడు; ఇది వేగానికి, శక్తికి, ధర్మాన్ని రక్షించడానికి సంసిద్ధతకు ప్రతీక."
+    }
+  }
+}

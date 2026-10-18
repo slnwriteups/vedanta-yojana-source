@@ -48,6 +48,18 @@ test("the CI workflow runs content tests, app tests, TypeScript, and the product
   assert.ok(contentIdx < appIdx && appIdx < typecheckIdx && typecheckIdx < buildIdx);
 });
 
+test("the CI workflow runs the mobile app's tests and type check after the build that generates their book payloads", () => {
+  const source = read(WORKFLOW_PATH);
+  const buildIdx = source.indexOf("npm run build");
+  const mobileInstallIdx = source.indexOf("working-directory: mobile");
+  const mobileTestIdx = source.indexOf("npm run test:mobile");
+  const mobileTypecheckIdx = source.indexOf("npm run typecheck:mobile");
+  for (const idx of [mobileInstallIdx, mobileTestIdx, mobileTypecheckIdx]) {
+    assert.ok(idx !== -1, "expected the mobile install, test and typecheck steps to be present");
+  }
+  assert.ok(buildIdx < mobileInstallIdx && mobileInstallIdx < mobileTestIdx && mobileTestIdx < mobileTypecheckIdx);
+});
+
 test("the CI workflow pins Node via .nvmrc rather than a hard-coded version number", () => {
   const source = read(WORKFLOW_PATH);
   assert.ok(source.includes("node-version-file"));
@@ -89,4 +101,15 @@ test(".gitignore still excludes generated artifacts and still does NOT exclude c
   assert.ok(!/^\/?content\/?\s*$/m.test(source));
   assert.ok(!/^\/?content-extraction\/?\s*$/m.test(source));
   assert.ok(!/^\/?images\/?\s*$/m.test(source));
+});
+
+test("the OTA update workflow publishes to iOS and Android on every push to main, never one platform only", () => {
+  // The author's standing requirement: over-the-air updates must always be
+  // on for both apps. Android-only publishing once left iPhones without
+  // the Blogs shelf and every later change.
+  const ota = read(".github/workflows/publish-ota-update.yml");
+  assert.match(ota, /--platform all\b/);
+  assert.doesNotMatch(ota, /--platform (android|ios)\b/);
+  assert.match(ota, /push:\s*\n\s*branches: \[main\]/);
+  assert.match(ota, /--branch production/);
 });

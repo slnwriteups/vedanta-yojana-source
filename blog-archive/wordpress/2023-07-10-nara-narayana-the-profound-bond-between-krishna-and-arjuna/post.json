@@ -1,0 +1,37 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2192",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/09/nara-narayana-the-profound-bond-between-krishna-and-arjuna/",
+  "title": "Nara-Narayana: The Profound Bond Between Krishna and Arjuna",
+  "slug": "nara-narayana-the-profound-bond-between-krishna-and-arjuna",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-10T02:23:53Z",
+  "modifiedAt": "2023-07-10T07:27:31Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://anandsp1.files.wordpress.com/2010/12/bg-krishna-vishwaroopa.jpg",
+      "file": "images/01-bg-krishna-vishwaroopa.jpg"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2025/05/b16e0-img_1741.jpg",
+      "file": "images/02-b16e0-img-1741.jpg"
+    }
+  ],
+  "wordCount": 1394,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

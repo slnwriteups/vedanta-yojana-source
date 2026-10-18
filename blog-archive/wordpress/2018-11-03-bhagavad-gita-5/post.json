@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "448",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=448",
+  "title": "Bhagavad Gita- 5",
+  "slug": "bhagavad-gita-5",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-03T17:04:00Z",
+  "modifiedAt": "2022-02-10T16:12:41Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1805,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

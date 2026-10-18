@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2159",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/01/krishna-the-architect-of-triumph-the-ultimate-strategist-and-tactician/",
+  "title": "Krishna: The Architect of Triumph - The Ultimate Strategist and Tactician",
+  "slug": "krishna-the-architect-of-triumph-the-ultimate-strategist-and-tactician",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-02T01:19:22Z",
+  "modifiedAt": "2023-07-02T01:24:59Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 3015,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

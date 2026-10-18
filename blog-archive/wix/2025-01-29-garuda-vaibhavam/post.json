@@ -1,0 +1,42 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/garuda-vaibhavam",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/garuda-vaibhavam",
+  "title": "Garuda Vaibhavam",
+  "slug": "garuda-vaibhavam",
+  "sourceStatus": "publish",
+  "publishedAt": "2025-01-29T23:11:38.598Z",
+  "modifiedAt": "2025-01-29T23:11:38.598Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "Today is Thai Amavasya, which is marked as Garuda Jayanthi according to the Tamil Calendar. Let us see the story of Garuda, the divine vehicle of Lord Vishnu.The tale of Garuda, found within the Adi Parva of the Mahabharata, is not merely the story of a celestial eagle’s immense power. It is a saga of bondage and liberation, rivalry and redemption, duty and devotion. It serves as a precursor to the great war of Kurukshetra, where the Pandavas and Kauravas, though of the same family, fight a batt",
+  "coverImage": {
+    "originalUrl": "https://static.wixstatic.com/media/aec967_ea92f13489c645c29795d7b064da0fb0~mv2.jpg/v1/fill/w_720,h_960,al_c,q_85/aec967_ea92f13489c645c29795d7b064da0fb0~mv2.jpg",
+    "file": "images/01-aec967-ea92f13489c645c29795d7b064da0fb0.jpg"
+  },
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_ea92f13489c645c29795d7b064da0fb0~mv2.jpg/v1/fill/w_720,h_960,al_c,q_85/aec967_ea92f13489c645c29795d7b064da0fb0~mv2.jpg",
+      "file": "images/01-aec967-ea92f13489c645c29795d7b064da0fb0.jpg"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_c136851b158c4e63be8763dead354a5a~mv2.png/v1/fill/w_46,h_61,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_c136851b158c4e63be8763dead354a5a~mv2.png",
+      "file": "images/02-aec967-c136851b158c4e63be8763dead354a5a.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_ea92f13489c645c29795d7b064da0fb0~mv2.jpg/v1/fill/w_130,h_173,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_ea92f13489c645c29795d7b064da0fb0~mv2.jpg",
+      "file": "images/03-aec967-ea92f13489c645c29795d7b064da0fb0.jpg"
+    }
+  ],
+  "wordCount": 2613,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/nityasuri-vaibhavam/chapters/the-sons-of-vinata.json, edited to book standard."
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "442",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=442",
+  "title": "War- Day 3",
+  "slug": "war-day-3",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-09T17:22:00Z",
+  "modifiedAt": "2022-02-10T16:12:33Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 379,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

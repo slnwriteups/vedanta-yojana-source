@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 import {
   estimateReadingMinutes,
   extractSpecialNote,
-  getTableOfContents,
+  findNamedSections,
   isListItemLine,
   isVerseLine,
   iastVerseParagraphIndexes,
@@ -163,19 +163,19 @@ test("L: matches the real corpus -- a full Sri Rangam chapter body estimates a p
 });
 
 // ---------------------------------------------------------------------------
-// getTableOfContents
+// findNamedSections (no chapter may need a table of contents)
 // ---------------------------------------------------------------------------
 
 test("M: flowing narrative with no named sections gets no table of contents", () => {
   const sentence = "Every devotee who visits this kshethram is said to receive the Lord's blessing and grace.";
   const text = Array(6).fill(sentence).join(" ");
-  assert.deepEqual(getTableOfContents(text, "A Narrative Chapter"), []);
+  assert.deepEqual(findNamedSections(text, "A Narrative Chapter"), []);
 });
 
 test("M: a chapter with two or more genuine named sections gets a table of contents entry for each", () => {
   const longParagraph = Array(6).fill("This section explains the doctrine in careful, extended detail for the reader.").join(" ");
   const text = `Introduction\n\n${longParagraph}\n\nThe Moksha Virodhi\n\n${longParagraph}\n\nPhala Stuti\n\n${longParagraph}`;
-  const toc = getTableOfContents(text, "Artha Panchakam");
+  const toc = findNamedSections(text, "Artha Panchakam");
   assert.deepEqual(
     toc.map((e) => e.label),
     ["Introduction", "The Moksha Virodhi", "Phala Stuti"]
@@ -191,29 +191,36 @@ test("M: a single would-be entry that is a near-duplicate of the chapter's own t
   // chapter's own opening line.
   const longParagraph = Array(6).fill("The shloka's meaning is explained here in careful, extended detail for the reader.").join(" ");
   const text = `Rāma Charama Shlokam\n\n${longParagraph}`;
-  assert.deepEqual(getTableOfContents(text, "Rama Charama Shlokam"), []);
+  assert.deepEqual(findNamedSections(text, "Rama Charama Shlokam"), []);
 });
 
 test("M: an exact-match title repeated as the first line is still excluded, while the real sections after it still form a table of contents", () => {
   const longParagraph = Array(6).fill("This section explains the doctrine in careful, extended detail for the reader.").join(" ");
   const text = `Artha Panchakam\n\n${longParagraph}\n\nThe Moksha Virodhi\n\n${longParagraph}\n\nPhala Stuti\n\n${longParagraph}`;
-  const toc = getTableOfContents(text, "Artha Panchakam");
+  const toc = findNamedSections(text, "Artha Panchakam");
   assert.deepEqual(
     toc.map((e) => e.label),
     ["The Moksha Virodhi", "Phala Stuti"]
   );
 });
 
-test("M: matches the real corpus -- no chapter across the Library ever produces a single-entry table of contents", async () => {
+test("M: no chapter, in any language, has two or more named sections -- such a chapter is split into sub-chapters instead of shown with a table of contents", async () => {
   const { loadBooks, loadChapters } = await import("../../content-lib/loader/index.ts");
-  const singleEntryChapters: string[] = [];
+  const { localizeChapter } = await import("../../content-lib/i18n.ts");
+  const needsSplitting: string[] = [];
   for (const book of loadBooks()) {
     for (const chapter of loadChapters(book.slug)) {
-      const toc = getTableOfContents(chapter.body, chapter.title);
-      if (toc.length === 1) singleEntryChapters.push(`${book.slug}/${chapter.slug}`);
+      for (const language of [null, "ta", "kn", "hi", "te"] as const) {
+        const localized = localizeChapter(chapter, language);
+        if (language && localized.body === chapter.body) continue;
+        // The text as the reader shows it (LocalizedChapterBody, the app's chapter screen).
+        const shown = stripLeadingDuplicateTitle(localized.body, localized.title);
+        const sections = findNamedSections(shown, localized.title);
+        if (sections.length > 0) needsSplitting.push(`${book.slug}/${chapter.slug} (${language ?? "en"}): ${sections.map((s) => s.label).join(" | ")}`);
+      }
     }
   }
-  assert.deepEqual(singleEntryChapters, []);
+  assert.deepEqual(needsSplitting, []);
 });
 
 // ---------------------------------------------------------------------------
@@ -321,7 +328,7 @@ test("O: IAST verse indexes stay aligned with paragraphsForReading when a long p
   assert.deepEqual([...iastVerseParagraphIndexes(text)], [paragraphs.length - 2, paragraphs.length - 1]);
 });
 
-test("O: a numbered list item is recognized so a renderer can keep it plain, matching getTableOfContents' own exclusion", () => {
+test("O: a numbered list item is recognized so a renderer can keep it plain, matching findNamedSections' own exclusion", () => {
   // Real, reported case: Artha Panchakam's "1) Hayagrīva Stotram" ...
   // "10) Kamasikashatakam" -- 8 of 10 items short enough, with no
   // terminal punctuation, to pass looksLikeSubheading() and render

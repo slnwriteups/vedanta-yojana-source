@@ -36,7 +36,9 @@ test("A: the default content loader resolves the real repository /content direct
   // as it was before this fix), every one of these would be empty/null
   // instead of matching the real, already-migrated Phase 5H/5I baseline.
   assert.equal(loadDivyaDesams().length, 107);
-  assert.equal(loadBooks().length, 4);
+  // 4 books plus the 3 blog series (kind "blog") published from the old blogs.
+  assert.equal(loadBooks().filter((b) => b.kind === "book").length, 4);
+  assert.equal(loadBooks().filter((b) => b.kind === "blog").length, 3);
   assert.equal(loadKnowledge().length, 1);
 });
 
@@ -66,7 +68,7 @@ test("B: loadDivyaDesams() returns 107 and loadDivyaDesam() resolves real known 
 });
 
 test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book", () => {
-  const books = loadBooks();
+  const books = loadBooks().filter((b) => b.kind === "book");
   assert.equal(books.length, 4);
 
   const book = loadBook("untitled-recovered-book-pending-editorial-title");
@@ -77,7 +79,7 @@ test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book",
   assert.equal(book?.title, "A Brief Insight to Visishtadvaita Philosophy");
 
   const chapters = loadChapters("untitled-recovered-book-pending-editorial-title");
-  assert.equal(chapters.length, 51);
+  assert.equal(chapters.length, 61);
 
   const ramaBook = loadBook("sri-rama-charithram");
   assert.ok(ramaBook);
@@ -92,7 +94,7 @@ test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book",
   assert.ok(bhagavatamBook);
   assert.equal(bhagavatamBook?.title, "Srimad Bhagavata Kathasagaram");
   const bhagavatamChapters = loadChapters("srimad-bhagavata-kathasagaram");
-  assert.equal(bhagavatamChapters.length, 31);
+  assert.equal(bhagavatamChapters.length, 33);
 
   const jayaBook = loadBook("jaya");
   assert.ok(jayaBook);

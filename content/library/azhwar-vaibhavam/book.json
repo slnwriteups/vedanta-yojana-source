@@ -1,0 +1,242 @@
+{
+  "slug": "azhwar-vaibhavam",
+  "title": "Āzhwār Vaibhavam",
+  "author": "Vishnu Sreenivas",
+  "description": "The lives of the twelve Āzhwārs, the saint-poets who carried devotion to Sriman Nārāyaṇa to the people in Tamizh.",
+  "kind": "blog",
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:azhwar-vaibhavam",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "parts": [
+    {
+      "title": "The Mudal Āzhwārs",
+      "order": 1,
+      "chapters": [
+        "poigai-azhwar",
+        "bhuthath-azhwar",
+        "pey-azhwar",
+        "the-night-at-tirukkovalur"
+      ],
+      "translations": {
+        "ta": {
+          "title": "முதலாழ்வார்கள்"
+        },
+        "kn": {
+          "title": "ಮುದಲಾಳ್ವಾರರು"
+        },
+        "hi": {
+          "title": "मुदल् आळ्वार्"
+        },
+        "te": {
+          "title": "ముదల్ ఆళ్వార్లు"
+        }
+      }
+    },
+    {
+      "title": "Tirumazhisai Āzhwār",
+      "order": 2,
+      "chapters": [
+        "the-birth-of-tirumazhisai-azhwar",
+        "sivavakyar",
+        "the-lord-who-did-as-he-was-told",
+        "bhaktisarar",
+        "the-grain-of-paddy-at-perumpuliyur",
+        "at-tirukkudanthai"
+      ],
+      "translations": {
+        "ta": {
+          "title": "திருமழிசை ஆழ்வார்"
+        },
+        "kn": {
+          "title": "ತಿರುಮಳಿಶೈ ಆಳ್ವಾರ್"
+        },
+        "hi": {
+          "title": "तिरुमऴिसै आळ्वार्"
+        },
+        "te": {
+          "title": "తిరుమళిశై ఆళ్వార్"
+        }
+      }
+    },
+    {
+      "title": "Tirumangai Āzhwār",
+      "order": 3,
+      "chapters": [
+        "nilan-commander-of-the-cholas",
+        "the-curse-of-sumangali",
+        "kumudavallis-conditions",
+        "the-wedding-party-in-the-forest"
+      ],
+      "translations": {
+        "ta": {
+          "title": "திருமங்கை ஆழ்வார்"
+        },
+        "kn": {
+          "title": "ತಿರುಮಂಗೈ ಆಳ್ವಾರ್"
+        },
+        "hi": {
+          "title": "तिरुमंगै आळ्वार्"
+        },
+        "te": {
+          "title": "తిరుమంగై ఆళ్వార్"
+        }
+      }
+    },
+    {
+      "title": "Tondaraḍippoḍi Āzhwār",
+      "order": 4,
+      "chapters": [
+        "vipra-narayana",
+        "the-garden-at-srirangam",
+        "devadevi",
+        "the-temple-vessel"
+      ],
+      "translations": {
+        "ta": {
+          "title": "தொண்டரடிப்பொடி ஆழ்வார்"
+        },
+        "kn": {
+          "title": "ತೊಂಡರಡಿಪ್ಪೊಡಿ ಆಳ್ವಾರ್"
+        },
+        "hi": {
+          "title": "तोण्डरडिप्पोडि आळ्वार्"
+        },
+        "te": {
+          "title": "తొండరడిప్పొడి ఆళ్వార్"
+        }
+      }
+    },
+    {
+      "title": "Periyāzhwār and Āṇḍāl",
+      "order": 5,
+      "chapters": [
+        "srivilliputtur",
+        "vishnuchittar",
+        "before-the-kings-court",
+        "pallandu",
+        "kodhai",
+        "the-garland-worn-first",
+        "andal-at-srirangam"
+      ],
+      "translations": {
+        "ta": {
+          "title": "பெரியாழ்வாரும் ஆண்டாளும்"
+        },
+        "kn": {
+          "title": "ಪೆರಿಯಾಳ್ವಾರ್ ಮತ್ತು ಆಂಡಾಳ್"
+        },
+        "hi": {
+          "title": "पेरियाळ्वार् और आण्डाळ्"
+        },
+        "te": {
+          "title": "పెరియాళ్వార్ మరియు ఆండాళ్"
+        }
+      }
+    },
+    {
+      "title": "Nam Āzhwār and Madhurakavi Āzhwār",
+      "order": 6,
+      "chapters": [
+        "maran-of-tirukkurugur",
+        "madhurakavi-azhwar",
+        "kanninun-siruttambu",
+        "the-four-works-of-nammazhwar"
+      ],
+      "translations": {
+        "ta": {
+          "title": "நம்மாழ்வாரும் மதுரகவி ஆழ்வாரும்"
+        },
+        "kn": {
+          "title": "ನಮ್ಮಾಳ್ವಾರ್ ಮತ್ತು ಮಧುರಕವಿ ಆಳ್ವಾರ್"
+        },
+        "hi": {
+          "title": "नम्माळ्वार् और मधुरकवि आळ्वार्"
+        },
+        "te": {
+          "title": "నమ్ ఆళ్వార్ మరియు మధురకవి ఆళ్వార్"
+        }
+      }
+    },
+    {
+      "title": "Kulasekhara Āzhwār",
+      "order": 7,
+      "chapters": [
+        "the-chera-prince",
+        "the-turning",
+        "the-king-who-went-to-war-for-rama",
+        "the-pot-of-snakes"
+      ],
+      "translations": {
+        "ta": {
+          "title": "குலசேகர ஆழ்வார்"
+        },
+        "kn": {
+          "title": "ಕುಲಶೇಖರ ಆಳ್ವಾರ್"
+        },
+        "hi": {
+          "title": "कुलशेखर आळ्वार्"
+        },
+        "te": {
+          "title": "కులశేఖర ఆళ్వార్"
+        }
+      }
+    }
+  ],
+  "chapterOrder": [
+    "an-introduction-to-the-azhwars",
+    "poigai-azhwar",
+    "bhuthath-azhwar",
+    "pey-azhwar",
+    "the-night-at-tirukkovalur",
+    "the-birth-of-tirumazhisai-azhwar",
+    "sivavakyar",
+    "the-lord-who-did-as-he-was-told",
+    "bhaktisarar",
+    "the-grain-of-paddy-at-perumpuliyur",
+    "at-tirukkudanthai",
+    "nilan-commander-of-the-cholas",
+    "the-curse-of-sumangali",
+    "kumudavallis-conditions",
+    "the-wedding-party-in-the-forest",
+    "vipra-narayana",
+    "the-garden-at-srirangam",
+    "devadevi",
+    "the-temple-vessel",
+    "srivilliputtur",
+    "vishnuchittar",
+    "before-the-kings-court",
+    "pallandu",
+    "kodhai",
+    "the-garland-worn-first",
+    "andal-at-srirangam",
+    "maran-of-tirukkurugur",
+    "madhurakavi-azhwar",
+    "kanninun-siruttambu",
+    "the-four-works-of-nammazhwar",
+    "the-chera-prince",
+    "the-turning",
+    "the-king-who-went-to-war-for-rama",
+    "the-pot-of-snakes"
+  ],
+  "translations": {
+    "ta": {
+      "title": "ஆழ்வார் வைபவம்",
+      "description": "ஸ்ரீமன் நாராயணனிடம் கொள்ளும் பக்தியைத் தமிழில் மக்களிடம் கொண்டு சேர்த்த அருளாளர்-கவிஞர்களான பன்னிரு ஆழ்வார்களின் வாழ்க்கை வரலாறு."
+    },
+    "kn": {
+      "title": "ಆಳ್ವಾರ್ ವೈಭವಂ",
+      "description": "ಶ್ರೀಮನ್ ನಾರಾಯಣನಲ್ಲಿನ ಭಕ್ತಿಯನ್ನು ತಮಿಳಿನಲ್ಲಿ ಜನಸಾಮಾನ್ಯರಿಗೆ ತಲುಪಿಸಿದ ಸಂತಕವಿಗಳಾದ ಹನ್ನೆರಡು ಆಳ್ವಾರರ ಜೀವನಚರಿತ್ರೆಗಳು."
+    },
+    "hi": {
+      "title": "आळ्वार् वैभवम्",
+      "description": "बारह आळ्वारों का जीवन, वे संत-कवि जिन्होंने तमिऴ् में श्रीमन्नारायण की भक्ति को जन-जन तक पहुँचाया।"
+    },
+    "te": {
+      "title": "ఆళ్వార్ వైభవం",
+      "description": "శ్రీమన్నారాయణుని పట్ల భక్తిని తమిళంలో ప్రజల వద్దకు చేర్చిన భక్త కవులైన పన్నెండు మంది ఆళ్వార్ల జీవిత చరిత్రలు."
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1531",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/19/vishnu-puranam-03-kurma-avataram/",
+  "title": "Vishnu Puranam - 03 - Kurma Avataram",
+  "slug": "vishnu-puranam-03-kurma-avataram",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-19T15:21:59Z",
+  "modifiedAt": "2020-06-20T03:51:59Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Abhimana Sthalam and Purana Kshethrams",
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d030a-samudramanthanam-1.jpg",
+      "file": "images/01-d030a-samudramanthanam-1.jpg"
+    },
+    {
+      "originalUrl": "https://atomic-temporary-175746789.wpcomstaging.com/wp-content/uploads/2022/02/d885b-srikurmam.jpg",
+      "file": "images/02-d885b-srikurmam.jpg"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/f8ffa-padmavimanam.jpg?w=300&h=210",
+      "file": "images/03-f8ffa-padmavimanam.jpg"
+    }
+  ],
+  "wordCount": 1028,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": {
+    "verdict": "possible",
+    "containment": 0.25,
+    "titleMatch": false,
+    "matches": [
+      {
+        "file": "divya-desams/tirumanimada-kovil.json",
+        "kind": "divya-desams",
+        "title": "Tirumanimada Kovil",
+        "overlap": 0.16
+      },
+      {
+        "file": "divya-desams/tiruaadanoor.json",
+        "kind": "divya-desams",
+        "title": "Tiruaadanoor",
+        "overlap": 0.15
+      },
+      {
+        "file": "divya-desams/tiruttetriambalam-tirumanikoodam.json",
+        "kind": "divya-desams",
+        "title": "Tiruttetriambalam Tirumanikoodam",
+        "overlap": 0.08
+      }
+    ]
+  },
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

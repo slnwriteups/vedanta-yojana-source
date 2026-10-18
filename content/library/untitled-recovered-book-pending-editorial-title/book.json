@@ -7,7 +7,60 @@
     "extractionConfidence": "medium",
     "needsReview": false
   },
-  "parts": [],
+  "parts": [
+    {
+      "title": "Artha Panchakam",
+      "order": 1,
+      "chapters": [
+        "artha-panchakam",
+        "svarupam-of-parabramham",
+        "the-moksha-virodhi",
+        "the-bondages-of-samsaaram-and-karma",
+        "bhakti-and-prapatti-upayam",
+        "elaboration-on-prapatti",
+        "elaboration-on-moksha-svarupam",
+        "gaining-of-sarva-kainkaryam-during-moksham",
+        "phala-stuti"
+      ],
+      "translations": {
+        "ta": {
+          "title": "அர்த்த பஞ்சகம்"
+        },
+        "kn": {
+          "title": "ಅರ್ಥ ಪಂಚಕಂ"
+        },
+        "hi": {
+          "title": "अर्थ पञ्चकम्"
+        },
+        "te": {
+          "title": "అర్థ పంచకము"
+        }
+      }
+    },
+    {
+      "title": "Swami Deshikan's Return to Sri Rangam",
+      "order": 2,
+      "chapters": [
+        "swami-desikan-s-return-to-sri-rangam",
+        "reestablishing-the-adhyayana-utsavam",
+        "composition-of-the-paduka-sahasram"
+      ],
+      "translations": {
+        "ta": {
+          "title": "ஸ்வாமி தேசிகன் ஸ்ரீரங்கம் திரும்புதல்"
+        },
+        "kn": {
+          "title": "ಸ್ವಾಮಿ ದೇಶಿಕನ್ ಶ್ರೀರಂಗಕ್ಕೆ ಹಿಂದಿರುಗಿದ್ದು"
+        },
+        "hi": {
+          "title": "स्वामी देशिकन् की श्रीरंगम् वापसी"
+        },
+        "te": {
+          "title": "స్వామి దేశికన్ శ్రీరంగానికి తిరిగి రావడం"
+        }
+      }
+    }
+  ],
   "chapterOrder": [
     "foreword",
     "tattvas",
@@ -15,6 +68,14 @@
     "eternal-bliss-in-sri-vaikuntham",
     "the-aathma-as-mentioned-and-described-by-the-bhagavad-gita",
     "artha-panchakam",
+    "svarupam-of-parabramham",
+    "the-moksha-virodhi",
+    "the-bondages-of-samsaaram-and-karma",
+    "bhakti-and-prapatti-upayam",
+    "elaboration-on-prapatti",
+    "elaboration-on-moksha-svarupam",
+    "gaining-of-sarva-kainkaryam-during-moksham",
+    "phala-stuti",
     "the-vital-crucial-role-of-an-acharya",
     "sriman-narayana-is-the-first-acharya",
     "the-need-for-an-acharya-in-one-s-spiritual-life",
@@ -49,6 +110,8 @@
     "getting-the-title-of-vedanta-desikan-and-brahma-tantra-swatantra",
     "swami-desikan-s-move-to-sathyagala",
     "swami-desikan-s-return-to-sri-rangam",
+    "reestablishing-the-adhyayana-utsavam",
+    "composition-of-the-paduka-sahasram",
     "swami-desikan-s-attainment-of-paramapadam",
     "guru-parampara-from-lord-sriman-narayana-till-swami-ramanujar",
     "guru-parampara-from-ramanjacharya-to-swami-desikan-vadakalai-sampradayam",

@@ -7,7 +7,7 @@ import { localizeBook } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
 import { sectionTint } from "@/lib/section-tints";
-import { chapterCountLabel } from "@/lib/ui-strings";
+import { libraryEntryCountLabel } from "@/lib/ui-strings";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 import { bookCoverAsset } from "@/lib/book-covers";
 
@@ -67,7 +67,7 @@ export function BookCard({ book, chapterCount }: { book: PublicBook; chapterCoun
         <div className="min-w-0">
           <DraftBadge status={book.status} needsReview={book.migration.needsReview} />
           <span className="font-medium">{localized.title}</span>
-          <p className="mt-1 text-sm text-[var(--muted)]">{chapterCountLabel(language, chapterCount)}</p>
+          <p className="mt-1 text-sm text-[var(--muted)]">{libraryEntryCountLabel(language, book.kind, chapterCount)}</p>
         </div>
       </Link>
     </li>

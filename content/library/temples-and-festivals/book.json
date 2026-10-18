@@ -1,0 +1,105 @@
+{
+  "slug": "temples-and-festivals",
+  "title": "Temples and Festivals",
+  "author": "Vishnu Sreenivas",
+  "description": "Kshethrams and the sacred festivals celebrated at them.",
+  "kind": "blog",
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:temples-and-festivals",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "parts": [
+    {
+      "title": "Tirumala Navarātri Brahmotsavam",
+      "order": 1,
+      "chapters": [
+        "the-festival-of-brahma",
+        "the-rituals-at-the-heart-of-the-festival",
+        "the-eve-and-the-first-day",
+        "the-second-day",
+        "the-third-day",
+        "the-fourth-day",
+        "the-fifth-day-mohini-and-garuda",
+        "the-sixth-day",
+        "the-seventh-day",
+        "the-eighth-day-rathotsavam",
+        "the-ninth-day-chakrasnanam"
+      ],
+      "translations": {
+        "ta": {
+          "title": "திருமலை நவராத்திரி பிரம்மோற்சவம்"
+        },
+        "kn": {
+          "title": "ತಿರುಮಲೆ ನವರಾತ್ರಿ ಬ್ರಹ್ಮೋತ್ಸವ"
+        },
+        "hi": {
+          "title": "तिरुमला नवरात्रि ब्रह्मोत्सवम्"
+        },
+        "te": {
+          "title": "తిరుమల నవరాత్రి బ్రహ్మోత్సవం"
+        }
+      }
+    },
+    {
+      "title": "Guruvāyūr",
+      "order": 2,
+      "chapters": [
+        "the-vow-of-prsni",
+        "from-dvaraka-to-guru-and-vayu",
+        "the-land-at-mammiyur",
+        "the-naming-of-guruvayur"
+      ],
+      "translations": {
+        "ta": {
+          "title": "குருவாயூர்"
+        },
+        "kn": {
+          "title": "ಗುರುವಾಯೂರ್"
+        },
+        "hi": {
+          "title": "गुरुवायूर"
+        },
+        "te": {
+          "title": "గురువాయూర్"
+        }
+      }
+    }
+  ],
+  "chapterOrder": [
+    "the-festival-of-brahma",
+    "the-rituals-at-the-heart-of-the-festival",
+    "the-eve-and-the-first-day",
+    "the-second-day",
+    "the-third-day",
+    "the-fourth-day",
+    "the-fifth-day-mohini-and-garuda",
+    "the-sixth-day",
+    "the-seventh-day",
+    "the-eighth-day-rathotsavam",
+    "the-ninth-day-chakrasnanam",
+    "the-vow-of-prsni",
+    "from-dvaraka-to-guru-and-vayu",
+    "the-land-at-mammiyur",
+    "the-naming-of-guruvayur"
+  ],
+  "translations": {
+    "ta": {
+      "title": "திருக்கோயில்களும் திருவிழாக்களும்",
+      "description": "க்ஷேத்திரங்களும் அவற்றில் கொண்டாடப்படும் புனிதத் திருவிழாக்களும்."
+    },
+    "kn": {
+      "title": "ದೇವಾಲಯಗಳು ಮತ್ತು ಉತ್ಸವಗಳು",
+      "description": "ಕ್ಷೇತ್ರಗಳು ಮತ್ತು ಅಲ್ಲಿ ಆಚರಿಸಲಾಗುವ ಪವಿತ್ರ ಉತ್ಸವಗಳು."
+    },
+    "hi": {
+      "title": "मंदिर और उत्सव",
+      "description": "क्षेत्रम् और उनमें मनाए जाने वाले पावन उत्सव।"
+    },
+    "te": {
+      "title": "ఆలయాలు మరియు ఉత్సవాలు",
+      "description": "క్షేత్రాలు, వాటిలో జరుపుకునే పవిత్ర ఉత్సవాలు."
+    }
+  }
+}

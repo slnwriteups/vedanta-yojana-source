@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1648",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/08/10/vishnu-dharmam-06-yudhishthira-chandala-samwaadam/",
+  "title": "Vishnu Dharmam - 06 - Yudhishthira Chandala Samwaadam",
+  "slug": "vishnu-dharmam-06-yudhishthira-chandala-samwaadam",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-08-10T02:59:30Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Dharmam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg",
+      "file": "images/01-aec967-2a7ebb49335e4a868d521052556e237a.jpg",
+      "copiedFrom": "wix/2020-08-10-vishnu-dharmam-06-yudhishthira-chandala-samwaadam/images/01-aec967-2a7ebb49335e4a868d521052556e237a.jpg"
+    }
+  ],
+  "wordCount": 284,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

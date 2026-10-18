@@ -1,0 +1,58 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rath-yatra-the-sacred-journey-of-lord-jagannath",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/rath-yatra-the-sacred-journey-of-lord-jagannath",
+  "title": "Rath Yatra: The Sacred Journey of Lord Jagannath",
+  "slug": "rath-yatra-the-sacred-journey-of-lord-jagannath",
+  "sourceStatus": "publish",
+  "publishedAt": "2025-06-27T15:45:38.153Z",
+  "modifiedAt": "2025-06-27T16:09:50.016Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "IntroductionRath Yatra, or the Festival of Chariots, is one of the most iconic Hindu festivals celebrated predominantly in Puri, Odisha. This grand event marks the annual journey of Lord Jagannath, along with his elder brother Balabhadra and sister Subhadra, from the sanctum of the Jagannath Temple to the Gundicha Temple. It is a festival that unites myth, devotion, culture, and social values into a majestic celebration, drawing millions of devotees from across the world.Origins and Mythological",
+  "coverImage": {
+    "originalUrl": "https://static.wixstatic.com/media/aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png/v1/fill/w_900,h_516,al_c,lg_1,q_90/aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png",
+    "file": "images/01-aec967-dbd4b1b2826e4199926a95fa1955c3f2.png"
+  },
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png/v1/fill/w_900,h_516,al_c,lg_1,q_90/aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png",
+      "file": "images/01-aec967-dbd4b1b2826e4199926a95fa1955c3f2.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png/v1/fill/w_750,h_430,al_c,q_85,enc_avif,quality_auto/aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png",
+      "file": "images/02-aec967-dbd4b1b2826e4199926a95fa1955c3f2.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_85e1adfad2004e58bea0dd00d77801d0~mv2.png/v1/fill/w_49,h_64,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_85e1adfad2004e58bea0dd00d77801d0~mv2.png",
+      "file": "images/03-aec967-85e1adfad2004e58bea0dd00d77801d0.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_844c551d9fab4b6a8cf9d9fc8a03e6c8~mv2.png/v1/fill/w_49,h_28,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_844c551d9fab4b6a8cf9d9fc8a03e6c8~mv2.png",
+      "file": "images/04-aec967-844c551d9fab4b6a8cf9d9fc8a03e6c8.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_a5ce1153c21948bea2fc3fd9e0e1a9c1~mv2.png/v1/fill/w_51,h_73,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_a5ce1153c21948bea2fc3fd9e0e1a9c1~mv2.png",
+      "file": "images/05-aec967-a5ce1153c21948bea2fc3fd9e0e1a9c1.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_811afa21d0334d70adc7e7223dd8e0d7~mv2.png/v1/fill/w_51,h_79,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_811afa21d0334d70adc7e7223dd8e0d7~mv2.png",
+      "file": "images/06-aec967-811afa21d0334d70adc7e7223dd8e0d7.png"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_de429f84b6ae41e59a66455a35a2eb48~mv2.png/v1/fill/w_49,h_28,al_c,q_85,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_de429f84b6ae41e59a66455a35a2eb48~mv2.png",
+      "file": "images/07-aec967-de429f84b6ae41e59a66455a35a2eb48.png"
+    }
+  ],
+  "wordCount": 1503,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

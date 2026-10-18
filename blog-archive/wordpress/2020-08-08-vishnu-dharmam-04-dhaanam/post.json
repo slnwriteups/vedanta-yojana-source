@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1636",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/08/08/vishnu-dharmam-04-dhaanam/",
+  "title": "Vishnu Dharmam - 04 - Dhaanam",
+  "slug": "vishnu-dharmam-04-dhaanam",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-08-08T02:40:13Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Dharmam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg",
+      "file": "images/01-aec967-f3f843d984d3407e9e294e72406cda26.jpg",
+      "copiedFrom": "wix/2020-08-08-vishnu-dharmam-04-dhaanam/images/01-aec967-f3f843d984d3407e9e294e72406cda26.jpg"
+    }
+  ],
+  "wordCount": 301,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

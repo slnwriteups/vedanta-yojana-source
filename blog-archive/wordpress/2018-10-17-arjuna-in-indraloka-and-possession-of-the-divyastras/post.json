@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "465",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=465",
+  "title": "Arjuna in Indraloka and possession of the Divyastras",
+  "slug": "arjuna-in-indraloka-and-possession-of-the-divyastras",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-17T13:47:00Z",
+  "modifiedAt": "2022-02-10T16:13:04Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 342,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

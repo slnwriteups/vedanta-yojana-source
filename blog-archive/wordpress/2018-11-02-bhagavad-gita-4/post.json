@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "449",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=449",
+  "title": "Bhagavad Gita -4",
+  "slug": "bhagavad-gita-4",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-02T17:20:00Z",
+  "modifiedAt": "2022-02-10T16:12:42Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1425,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

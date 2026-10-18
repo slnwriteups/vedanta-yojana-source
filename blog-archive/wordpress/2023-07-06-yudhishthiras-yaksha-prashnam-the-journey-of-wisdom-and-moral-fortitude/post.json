@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2180",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/05/yudhishthiras-yaksha-prashnam-the-journey-of-wisdom-and-moral-fortitude/",
+  "title": "Yudhishthira's Yaksha Prashnam: The Journey of Wisdom and Moral Fortitude",
+  "slug": "yudhishthiras-yaksha-prashnam-the-journey-of-wisdom-and-moral-fortitude",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-06T06:05:00Z",
+  "modifiedAt": "2023-07-06T06:05:00Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1925,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

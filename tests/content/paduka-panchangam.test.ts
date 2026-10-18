@@ -38,7 +38,18 @@ test("padukaPanchangamFor returns a tarpanam-only entry for the day before the t
 
 test("padukaPanchangamFor returns null for dates no transcribed issue covers", () => {
   assert.equal(padukaPanchangamFor(new Date(2026, 8, 16)), null);
-  assert.equal(padukaPanchangamFor(new Date(2026, 9, 25)), null);
+  assert.equal(padukaPanchangamFor(new Date(2026, 10, 25)), null);
+});
+
+test("the Aippasi issue continues the calendar from 25 October to 24 November", () => {
+  const first = padukaPanchangamFor(new Date(2026, 9, 25))?.day;
+  assert.equal(first?.tithi, "Chaturdasi");
+  assert.equal(first?.nakshatram, "Revathi");
+  const deepavali = padukaPanchangamFor(new Date(2026, 10, 8))?.day;
+  assert.equal(deepavali?.festival, "Naraka Chaturdasi Snanam, Deepavali, Sarva Amavasya");
+  assert.equal(padukaPanchangamFor(new Date(2026, 10, 24))?.day?.tithi, "Pournami");
+  // 18-24 October appear in both issues; the earlier transcription is the one returned.
+  assert.equal(padukaPanchangamFor(new Date(2026, 9, 24))?.day?.festival, "Srimad Tirutturaippundi Andavan Srinivasa Ramanuja Mahadesikan Tirunakshatram");
 });
 
 test("every day uses the computed calendar's paksha/tithi/nakshatram vocabulary, so it localizes identically", () => {

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "432",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=432",
+  "title": "War-Day 16",
+  "slug": "war-day-16",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-19T17:20:00Z",
+  "modifiedAt": "2022-02-10T16:12:19Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 331,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

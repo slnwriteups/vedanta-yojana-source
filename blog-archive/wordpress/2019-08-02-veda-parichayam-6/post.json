@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "385",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/08/02/veda-parichayam-6/",
+  "title": "Veda Parichayam-6",
+  "slug": "veda-parichayam-6",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-08-02T10:35:00Z",
+  "modifiedAt": "2022-02-10T16:16:52Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Veda Parichayam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 1234,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

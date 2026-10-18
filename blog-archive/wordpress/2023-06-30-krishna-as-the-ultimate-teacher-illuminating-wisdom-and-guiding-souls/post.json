@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2119",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/06/30/krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls/",
+  "title": "Krishna as the Ultimate Teacher: Illuminating Wisdom and Guiding Souls",
+  "slug": "krishna-as-the-ultimate-teacher-illuminating-wisdom-and-guiding-souls",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-06-30T04:14:14Z",
+  "modifiedAt": "2023-06-30T16:44:14Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 764,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

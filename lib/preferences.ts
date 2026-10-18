@@ -56,18 +56,35 @@ export const DEFAULT_READING_PREFERENCES: ReadingPreferences = { fontScale: 1 };
 
 /** The only font scale steps the UI offers -- Small/Medium/Large/Extra Large. */
 export const FONT_SCALE_STEPS: { label: string; value: number }[] = [
-  { label: "Small", value: 0.9 },
+  { label: "Small", value: 0.85 },
   { label: "Medium", value: 1 },
-  { label: "Large", value: 1.15 },
-  { label: "Extra Large", value: 1.3 },
+  { label: "Large", value: 1.25 },
+  { label: "Extra Large", value: 1.5 },
 ];
 
-const VALID_FONT_SCALES = new Set(FONT_SCALE_STEPS.map((step) => step.value));
+/**
+ * The Small/Large/Extra Large values offered before the steps were spread
+ * further apart (0.9/1.15/1.3 differed by only ~2px at body size), mapped to
+ * the same-named step now, so a reader's saved choice carries over instead
+ * of being rejected and reset to Medium.
+ */
+const LEGACY_FONT_SCALES = new Map<number, number>([
+  [0.9, 0.85],
+  [1.15, 1.25],
+  [1.3, 1.5],
+]);
+
+const VALID_FONT_SCALES = new Set([...FONT_SCALE_STEPS.map((step) => step.value), ...LEGACY_FONT_SCALES.keys()]);
 
 export function isValidReadingPreferences(value: unknown): value is ReadingPreferences {
   if (typeof value !== "object" || value === null) return false;
   const candidate = value as Record<string, unknown>;
   return typeof candidate.fontScale === "number" && VALID_FONT_SCALES.has(candidate.fontScale);
+}
+
+/** A validated stored preference with any earlier step value moved to its current equivalent. */
+export function normalizeReadingPreferences(preferences: ReadingPreferences): ReadingPreferences {
+  return { fontScale: LEGACY_FONT_SCALES.get(preferences.fontScale) ?? preferences.fontScale };
 }
 
 /** Only the coordinates needed to look the chapter back up -- title/book-title are resolved fresh at render time, never cached, so a later content edit is always reflected. */

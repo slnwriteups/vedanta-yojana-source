@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ImageEntrySchema, MigrationMetadataSchema } from "./shared.ts";
 import { SlugSchema, StatusSchema } from "./shared-safe.ts";
-import { BookPartSchema, BookTranslationsSchema } from "./book-parts.ts";
+import { BookPartSchema, BookTranslationsSchema, LibraryKindSchema } from "./book-parts.ts";
 
 export * from "./book-parts.ts";
 
@@ -25,6 +25,8 @@ export const BookSchema = z.object({
   description: z.string().min(1).nullable().optional(),
   /** Reuses the shared image model rather than a bespoke "just a URL" field. */
   coverImage: ImageEntrySchema.nullable().optional(),
+  /** Which Library shelf this belongs on -- see LibraryKindSchema. */
+  kind: LibraryKindSchema.default("book"),
   status: StatusSchema,
   migration: MigrationMetadataSchema,
   parts: z.array(BookPartSchema).default([]),

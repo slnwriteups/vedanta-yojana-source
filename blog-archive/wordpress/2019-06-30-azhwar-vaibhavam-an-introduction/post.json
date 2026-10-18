@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "399",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/06/30/azhwar-vaibhavam-an-introduction/",
+  "title": "Azhwar Vaibhavam - An Introduction",
+  "slug": "azhwar-vaibhavam-an-introduction",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-06-30T10:14:00Z",
+  "modifiedAt": "2022-02-10T03:41:57Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/04/d7bf3-alwars_stickers.jpg",
+      "file": "images/01-aec967-75624feb2232442caef1264d98763ec3.jpg",
+      "copiedFrom": "wix/2019-06-30-azhwar-vaibhavam-an-introduction/images/01-aec967-75624feb2232442caef1264d98763ec3.jpg"
+    }
+  ],
+  "wordCount": 380,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/azhwar-vaibhavam/chapters/an-introduction-to-the-azhwars.json, edited to book standard."
+  }
+}

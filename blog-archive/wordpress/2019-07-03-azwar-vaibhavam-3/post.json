@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "396",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/03/azwar-vaibhavam-3/",
+  "title": "Azwar Vaibhavam-3",
+  "slug": "azwar-vaibhavam-3",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-03T11:19:00Z",
+  "modifiedAt": "2022-02-10T16:11:52Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 2006,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/azhwar-vaibhavam/chapters/nilan-commander-of-the-cholas.json, edited to book standard."
+  }
+}

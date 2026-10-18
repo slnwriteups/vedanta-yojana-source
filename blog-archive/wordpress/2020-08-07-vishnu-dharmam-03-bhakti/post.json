@@ -1,0 +1,34 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1630",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/08/07/vishnu-dharmam-03-bhakti/",
+  "title": "Vishnu Dharmam - 03 - Bhakti",
+  "slug": "vishnu-dharmam-03-bhakti",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-08-07T03:50:30Z",
+  "modifiedAt": "2022-02-10T16:23:09Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Dharmam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2020/08/587a7-1-196x300-1.jpg",
+      "file": "images/01-aec967-ffa2f1d8659e45dda921fc575179245a.jpg",
+      "copiedFrom": "wix/2020-08-07-vishnu-dharmam-03-bhakti/images/01-aec967-ffa2f1d8659e45dda921fc575179245a.jpg"
+    }
+  ],
+  "wordCount": 507,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

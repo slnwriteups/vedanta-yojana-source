@@ -1,0 +1,15 @@
+---
+title: "War- Day 17 Part 1"
+platform: wordpress
+source: "https://vedantayojana.wordpress.com/?p=431"
+published: "2018-11-20T17:17:00Z"
+categories: ["108 Divyadesam"]
+---
+
+# War- Day 17 Part 1
+
+**नारायणं नमस्कृत्य नरं चैव नरोत्तमम् ।
+
+देवीं सरस्वतीं व्यासं ततो जयमुदीरयेत् ।।**
+
+After the sixteenth day of war was concluded, Karna went on to offer his evening prayers. On his way back to his camp, he encountered with a snake Ashwasena who was the sole survivor of the burning of the Khandava Prasta. He had lost all of his kith and kin in the burning of the forest. He held Arjuna responsible for losing his family and wanted revenge for the same. He approached Karna and told him that he could assist him in the killing of Arjuna. Ashwasena's justification was an enemy's enemy is a friend. Karna promptly refuses saying he would attack Arjuna solely with his own skill and wouldn't rely on any external agent to assist him in that matter and asked him to leave. Ashwasena pretended to slither away but when Karna diverted his attention from his quiver, Ashwasena slithered into it and encased one of his arrows with his deadly poison converting a normal arrow into a Sarpastra. The following day as the war broke out, Arjuna and Karna once again had a great confrontation with each other. Both of them used many divine weapons against each other. Finally, Karna took out the arrow that had turned into the Sarpastra and shot it directed towards Arjuna. Shree Krishna recognized the weapon and kicked the chariot in such a way that the chariot was shaken for a bit and descended to the ground. The Sarpastra merely grazed Arjuna, taking off his crown. The crown turned black and withered away into dust. Out of that dust, Ashwasena emerged and went back to Karna asking him to shoot him again at Arjuna and that he would not miss him this time. Karna promptly refused again. Lord Krishna recognized that the snake was the sole survivor of the Khandava Prasta incident and told Arjuna to first dispose of the snake. Arjuna followed the instructions of Krishna and killed the snake. The battle between Arjuna and Karna continued once again and Karna was left with only the Brahmastra in his Astra-bhandaar as per his other promise to Kunti of not using a weapon against the Pandavas more than once. As Karna started to invoke the Brahmastra, his chariot's wheel got stuck in the Earth. He was then faced with another problem where he started to forget the mantras required to summon the Brahmastra. He descended from his chariot, asked for a pause, leaving his bow Vijaya aboard his chariot, Lord Krishna prompted Arjuna to strike right at that moment as these were the two curses that he was destined to face at his end moment, reminding Arjuna that he had participated in the killing of Abhimanyu when he was left of his chariot and weapons. Arjuna immediately attacked without any second thought and killed Karna.

@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "394",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/05/azhwar-vaibhavam-5/",
+  "title": "Azhwar Vaibhavam-5",
+  "slug": "azhwar-vaibhavam-5",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-05T11:04:00Z",
+  "modifiedAt": "2022-02-10T16:11:48Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Azhwar Vaibhavam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 3233,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "migrated",
+    "notes": "Published in the Library as content/library/azhwar-vaibhavam/chapters/srivilliputtur.json, edited to book standard."
+  }
+}

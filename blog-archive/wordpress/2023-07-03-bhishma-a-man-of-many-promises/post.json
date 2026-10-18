@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2170",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/02/bhishma-a-man-of-many-promises/",
+  "title": "Bhishma: A Man of Many Promises",
+  "slug": "bhishma-a-man-of-many-promises",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-03T02:25:00Z",
+  "modifiedAt": "2023-07-03T02:25:00Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 865,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

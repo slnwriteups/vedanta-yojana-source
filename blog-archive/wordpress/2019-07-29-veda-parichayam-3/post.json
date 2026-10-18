@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "388",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2019/07/29/veda-parichayam-3/",
+  "title": "Veda Parichayam-3",
+  "slug": "veda-parichayam-3",
+  "sourceStatus": "publish",
+  "publishedAt": "2019-07-29T11:44:00Z",
+  "modifiedAt": "2022-02-10T16:16:58Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Veda Parichayam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 549,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

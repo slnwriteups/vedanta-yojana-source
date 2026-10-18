@@ -10,6 +10,7 @@ import { localizeBook, localizeChapterSummary } from "../../../../content-lib/i1
 import { useLanguage } from "../../../language-context.ts";
 import { downloadBook, isBookAvailable } from "../../../services/bookOfflineService.ts";
 import { chapterOrdinalLabel, useT } from "../../../ui-strings.ts";
+import { groupByPart } from "../../../../content-lib/library-parts.ts";
 import { getLibraryCatalogEntry, syncLibraryCatalog } from "../../../services/libraryCatalogService.ts";
 import type { CatalogEntry } from "../../../services/libraryCatalogCore.ts";
 import type { ChapterSummary } from "../../../content-lib/loader.ts";
@@ -101,11 +102,22 @@ export default function LibraryBookScreen() {
     router.push(`/library/${book!.slug}/${chapterSlug}` as never);
   }
 
-  function renderItem({ item, index }: { item: ChapterSummary; index: number }) {
+  // Chapters grouped under the book's parts, if it has any: a heading row
+  // for each part, then its chapters; numbering continues across parts.
+  const rows: ChapterRow[] = groupByPart(book, chapters).flatMap((group) => [
+    ...(group.title ? [{ heading: group.title }] : []),
+    ...group.items.map(({ item, index }) => ({ item, index })),
+  ]);
+
+  function renderRow({ item: row }: { item: ChapterRow }) {
+    if ("heading" in row) {
+      return <Text style={[styles.partHeading, { color: theme.colors.foreground }]}>{row.heading}</Text>;
+    }
+    const { item, index } = row;
     return (
       <ContentCard
         title={item.title}
-        subtitle={openingSlug === item.slug ? t("bookDownloading") : chapterOrdinalLabel(language, index + 1)}
+        subtitle={openingSlug === item.slug ? t("bookDownloading") : chapterOrdinalLabel(language, index + 1, book?.kind ?? "book")}
         status={item.status}
         needsReview={item.migration.needsReview}
         tintColor={tint}
@@ -134,9 +146,9 @@ export default function LibraryBookScreen() {
       </View>
       {chapters.length > 0 ? (
         <FlatList
-          data={chapters}
-          keyExtractor={(item) => item.slug}
-          renderItem={renderItem}
+          data={rows}
+          keyExtractor={(row) => ("heading" in row ? `part:${row.heading}` : row.item.slug)}
+          renderItem={renderRow}
           contentContainerStyle={styles.list}
         />
       ) : (
@@ -146,8 +158,17 @@ export default function LibraryBookScreen() {
   );
 }
 
+type ChapterRow = { heading: string } | { item: ChapterSummary; index: number };
+
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  partHeading: {
+    paddingHorizontal: layout.screenPadding,
+    paddingTop: spacing.md,
+    paddingBottom: spacing.xs,
+    fontSize: typography.heading,
+    fontWeight: "700",
+  },
   header: {
     padding: layout.screenPadding,
     gap: spacing.xs,

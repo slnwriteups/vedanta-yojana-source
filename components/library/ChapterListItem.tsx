@@ -22,10 +22,13 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
  */
 export function ChapterListItem({
   bookSlug,
+  kind = "book",
   chapter,
   position,
 }: {
   bookSlug: string;
+  /** "book" or "blog" -- labels the entry "Chapter N" or "Post N". */
+  kind?: "book" | "blog";
   chapter: PublicChapter;
   /** This chapter's 1-indexed position in the book's own chapter order -- mobile's `index + 1`. */
   position: number;
@@ -44,7 +47,7 @@ export function ChapterListItem({
         <span aria-hidden className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: tint }} />
         <DraftBadge status={chapter.status} needsReview={chapter.migration.needsReview} />
         <span className="font-medium">{localized.title}</span>
-        <p className="mt-1 text-sm text-[var(--muted)]">{chapterOrdinalLabel(language, position)}</p>
+        <p className="mt-1 text-sm text-[var(--muted)]">{chapterOrdinalLabel(language, position, kind)}</p>
       </Link>
     </li>
   );

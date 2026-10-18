@@ -126,6 +126,7 @@ export default function HomeScreen() {
               position={resolved.chapterPosition}
               total={resolved.totalChapters}
               minutesLeft={resolved.minutesLeft}
+              kind={resolved.kind}
               onPress={() => router.push(`/library/${resolved.bookSlug}/${resolved.chapterSlug}` as never)}
             />
           ))}

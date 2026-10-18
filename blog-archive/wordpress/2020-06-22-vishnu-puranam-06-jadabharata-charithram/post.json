@@ -1,0 +1,37 @@
+{
+  "platform": "wordpress",
+  "sourceId": "1559",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2020/06/22/vishnu-puranam-06-jadabharata-charithram/",
+  "title": "Vishnu Puranam - 06 - Jadabharata Charithram",
+  "slug": "vishnu-puranam-06-jadabharata-charithram",
+  "sourceStatus": "publish",
+  "publishedAt": "2020-06-22T12:10:16Z",
+  "modifiedAt": "2020-06-23T00:40:16Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Vishnu Puranam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/7c264-jadabharata.jpg?w=220&h=300",
+      "file": "images/01-7c264-jadabharata.jpg"
+    },
+    {
+      "originalUrl": "https://vedantayojana.wordpress.com/wp-content/uploads/2022/02/d0a3a-jadabharatacarries.jpg?w=214&h=300",
+      "file": "images/02-d0a3a-jadabharatacarries.jpg"
+    }
+  ],
+  "wordCount": 528,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

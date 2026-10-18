@@ -1,0 +1,16 @@
+---
+title: "War-Day 15"
+platform: wordpress
+source: "https://vedantayojana.wordpress.com/?p=433"
+published: "2018-11-18T17:08:00Z"
+categories: ["108 Divyadesam"]
+---
+
+# War-Day 15
+
+**नारायणं नमस्कृत्य नरं चैव नरोत्तमम् ।
+
+देवीं सरस्वतीं व्यासं ततो** **जयमुदीरयेत् ।।**
+
+After the killing of Drupada and Virata the previous night, Bheema and Drishtadyumna attacked Dronacharya in full fury but it had no avail. Drona still had many divine weapons left in his Astra-bhandaar and this Krishna came up with a plan wherein Drona would drop his weapons voluntarily thereby presenting the opportunity to the Pandavas to kill Drona. Krishna told Bheema to kill an elephant named Ashvatthama and then told everyone on the battlefield to announce that Ashvatthama is dead. As instructed, Bheema immediately killed Ashvatthama the elephant and all the warriors on the Pandava army started screaming saying Ashvatthama is dead. When these words were heard by Drona, he was in disbelief. He immediately went to Yudhisthira and asked if what all the warriors were saying was true or not. Yudhisthira was put in a spot at that moment. He went into deep thought as for how to relay the information. He says अश्वत्थामा हत: which translates to Ashvatthama is dead. As soon as he had lied, the chariot which always used to hover four inches above the ground immediately fell to the ground. Drona was heartbroken and laid down his arms and renounced war. He took to a yogic stance and prayed to Lord Vishnu and told Karna to take charge of the army and protect Duryodhana.
+As soon as Drona had laid down his arms, Drishtadyumna came and beheaded Drona. Duryodhana arrived at the scene and started to shed tears seeing that his guru is no more. Soon Ashvatthama also arrived and saw Duryodhana in tears and questioned him as to what happened. As he learned that his father was slain by the Pandavas, in absolute anger and retaliation Ashvatthama summoned the Narayana-Astra and let it loose against the Pandava army. Krishna told the entire army to drop their weapons and pray to Lord Sriman Narayana as a showcase of Bhakti to the Astra. Bheema ignored Krishna and went to try and attack Ashvatthama but the power of the Narayana-Astra started to engulf Bheema. Soon Bheema dropped his mace and showed Bhakti to the Astra and the entire army escaped the wrath of the Narayana-Astra. Seeing that the Narayana-Astra didn't do anything Ashvatthama invoked the Agneya-Astra and this time around directed towards Arjuna and Krishna. As the weapon made its course, Krishna stood in front of the Astra and instead of spewing deadly flames, the weapon turned into a garland and presented itself to the Lord. Ashvatthama was insulted and in shame fled the battlefield this bringing a close to war on day fifteen.

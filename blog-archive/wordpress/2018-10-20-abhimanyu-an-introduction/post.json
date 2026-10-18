@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "462",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=462",
+  "title": "Abhimanyu an introduction",
+  "slug": "abhimanyu-an-introduction",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-10-20T16:34:00Z",
+  "modifiedAt": "2022-02-10T16:13:00Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 297,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

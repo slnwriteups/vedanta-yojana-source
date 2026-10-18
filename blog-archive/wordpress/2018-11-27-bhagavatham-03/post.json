@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "420",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=420",
+  "title": "Bhagavatham-03",
+  "slug": "bhagavatham-03",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-27T17:26:00Z",
+  "modifiedAt": "2022-02-10T16:12:08Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 743,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

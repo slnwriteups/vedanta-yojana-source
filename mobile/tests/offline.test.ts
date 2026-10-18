@@ -11,6 +11,7 @@ import { findAdjacentChapters } from "../content-lib/chapter-navigation.ts";
 import {
   DEFAULT_READING_PREFERENCES,
   FONT_SCALE_STEPS,
+  normalizeReadingPreferences,
   isValidLastReadPosition,
   isValidReadingPreferences,
   isValidThemeOverride,
@@ -63,9 +64,9 @@ test("Offline: the Home screen never calls a content loader function (no unneces
   assert.doesNotMatch(homeSource, /\bload(DivyaDesam|Book|Chapter|Knowledge)s?\(/);
 });
 
-test("Offline: all content is still reachable after the Phase 6D changes -- 107 Divya Desams, the book's 51 chapters, 1 Knowledge record", () => {
+test("Offline: all content is still reachable after the Phase 6D changes -- 107 Divya Desams, the book's 61 chapters, 1 Knowledge record", () => {
   assert.equal(loadDivyaDesams().length, 107);
-  assert.equal(loadChapters(BOOK_SLUG).length, 51);
+  assert.equal(loadChapters(BOOK_SLUG).length, 61);
   assert.equal(loadKnowledge().length, 1);
   assert.ok(loadBook(BOOK_SLUG));
 });
@@ -80,6 +81,24 @@ test("Reading preferences: the default and every offered font-scale step validat
   assert.ok(isValidReadingPreferences(DEFAULT_READING_PREFERENCES));
   for (const step of FONT_SCALE_STEPS) {
     assert.ok(isValidReadingPreferences({ fontScale: step.value }), `${step.label} (${step.value}) should validate`);
+  }
+});
+
+test("Reading preferences: each text-size step is clearly larger than the one before", () => {
+  for (let i = 1; i < FONT_SCALE_STEPS.length; i++) {
+    const gain = FONT_SCALE_STEPS[i].value - FONT_SCALE_STEPS[i - 1].value;
+    assert.ok(gain >= 0.15, `${FONT_SCALE_STEPS[i - 1].label} -> ${FONT_SCALE_STEPS[i].label} grows by only ${gain}`);
+  }
+});
+
+test("Reading preferences: a size saved under the earlier steps carries over to the same-named step", () => {
+  const byLabel = Object.fromEntries(FONT_SCALE_STEPS.map((s) => [s.label, s.value]));
+  for (const [old, label] of [[0.9, "Small"], [1, "Medium"], [1.15, "Large"], [1.3, "Extra Large"]] as const) {
+    assert.ok(isValidReadingPreferences({ fontScale: old }), `${old} should still load`);
+    assert.equal(normalizeReadingPreferences({ fontScale: old }).fontScale, byLabel[label], `${old} -> ${label}`);
+  }
+  for (const step of FONT_SCALE_STEPS) {
+    assert.equal(normalizeReadingPreferences({ fontScale: step.value }).fontScale, step.value);
   }
 });
 
@@ -153,4 +172,24 @@ test("Search filters: every advertised filter option is a real SearchResultType 
   for (const filter of CONTENT_TYPE_FILTERS) {
     assert.ok(typesPresent.has(filter.value), `expected at least one "${filter.value}" result for a broad query`);
   }
+});
+
+test("Library: a blog's count line reads in posts, a book's in chapters, in every language", async () => {
+  const { libraryEntryCountLabel } = await import("../ui-strings.ts");
+  assert.equal(libraryEntryCountLabel(null, "book", 8), "8 chapters");
+  assert.equal(libraryEntryCountLabel(null, "blog", 8), "8 posts");
+  assert.equal(libraryEntryCountLabel(null, "blog", 1), "1 post");
+  for (const lang of ["ta", "kn", "hi", "te"] as const) {
+    assert.notEqual(libraryEntryCountLabel(lang, "blog", 2), libraryEntryCountLabel(lang, "book", 2), lang);
+  }
+});
+
+test("Library: a blog's entries are numbered as posts, a book's as chapters", async () => {
+  const { chapterOrdinalLabel, chapterPositionLabel, continueReadingProgressLabel } = await import("../ui-strings.ts");
+  assert.equal(chapterOrdinalLabel(null, 2), "Chapter 2");
+  assert.equal(chapterOrdinalLabel(null, 2, "blog"), "Post 2");
+  assert.equal(chapterPositionLabel(null, 6, 8), "CHAPTER 6 OF 8");
+  assert.equal(chapterPositionLabel(null, 6, 8, "blog"), "POST 6 OF 8");
+  assert.equal(chapterPositionLabel("ta", 6, 8, "blog"), "பதிவு 6 / 8");
+  assert.match(continueReadingProgressLabel(null, 3, 8, 38, 5, "blog"), /^Post 3 of 8 /);
 });

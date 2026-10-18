@@ -5,6 +5,7 @@ import {
   DEFAULT_READING_PREFERENCES,
   READING_STORAGE_KEY,
   isValidReadingPreferences,
+  normalizeReadingPreferences,
   type ReadingPreferences,
 } from "@/lib/preferences";
 import { ReadingPreferencesContext, type ReadingPreferencesContextValue } from "@/lib/reading-preferences-context";
@@ -24,7 +25,7 @@ export function ReadingPreferencesProvider({ children }: { children: ReactNode }
   useEffect(() => {
     let cancelled = false;
     readJSON(READING_STORAGE_KEY, isValidReadingPreferences).then((stored) => {
-      if (!cancelled && stored) setPreferences(stored);
+      if (!cancelled && stored) setPreferences(normalizeReadingPreferences(stored));
     });
     return () => {
       cancelled = true;

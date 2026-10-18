@@ -50,7 +50,8 @@ test("1: the Library index page imports and calls loadBooks()", () => {
 });
 
 test("2: the current recovered book's title appears exactly, verbatim, in the real migrated data loadBooks() returns", () => {
-  const books = loadBooks();
+  // Blog series (kind "blog") share loadBooks(); only the 4 books are counted here.
+  const books = loadBooks().filter((b) => b.kind === "book");
   assert.equal(books.length, 4);
   // Phase 6E confirmed "A Brief Insight to Visishtadvaita Philosophy.pdf"
   // as the source for 17 of this book's chapters and supplemented the
@@ -102,8 +103,8 @@ test("7: the Book detail page calls notFound() when loadBook() returns null", ()
   assert.equal(loadBook("does-not-exist"), null);
 });
 
-test("8: all 51 real chapters are returned by loadChapters() for the real book", () => {
-  assert.equal(loadChapters(BOOK_SLUG).length, 51);
+test("8: all 61 real chapters (51 migrated, two of them since split into sub-chapters) are returned by loadChapters() for the real book", () => {
+  assert.equal(loadChapters(BOOK_SLUG).length, 61);
 });
 
 test("9: chapter ordering from loadChapters() is strictly ascending by `order` (source/provenance ordering, not alphabetical)", () => {
@@ -206,4 +207,22 @@ test("18: no migration metadata appears in the Chapter detail page source", () =
   const source = read("app/library/[book]/[chapter]/page.tsx");
   assert.ok(!source.includes("sourcePageId"));
   assert.ok(!source.includes("extractionConfidence"));
+});
+
+test("the Library index groups entries into a Books shelf and a Blogs shelf by Book.kind", () => {
+  const source = read("app/library/page.tsx");
+  assert.ok(source.includes('entry.kind === "blog"'));
+  assert.ok(source.includes("libraryBooksHeading") && source.includes("libraryBlogsHeading"));
+  const blogs = loadBooks().filter((b) => b.kind === "blog");
+  assert.deepEqual(blogs.map((b) => b.slug).sort(), ["azhwar-vaibhavam", "nityasuri-vaibhavam", "temples-and-festivals"]);
+  for (const blog of blogs) {
+    assert.equal(blog.status, "published");
+    assert.equal(loadChapters(blog.slug).length, blog.chapterOrder.length);
+  }
+});
+
+test("a book.json without a kind is a book", () => {
+  for (const book of loadBooks().filter((b) => !["azhwar-vaibhavam", "nityasuri-vaibhavam", "temples-and-festivals"].includes(b.slug))) {
+    assert.equal(book.kind, "book", book.slug);
+  }
 });

@@ -1,0 +1,42 @@
+{
+  "platform": "wix",
+  "sourceId": "https://slnwriteups.wixsite.com/vedanta-yojana/post/snana-yatra-the-sacred-bathing-festival-of-lord-jagannatha",
+  "sourceUrl": "https://slnwriteups.wixsite.com/vedanta-yojana/post/snana-yatra-the-sacred-bathing-festival-of-lord-jagannatha",
+  "title": "Snana Yatra: The Sacred Bathing Festival of Lord Jagannatha",
+  "slug": "snana-yatra-the-sacred-bathing-festival-of-lord-jagannatha",
+  "sourceStatus": "publish",
+  "publishedAt": "2025-06-11T12:54:08.594Z",
+  "modifiedAt": "2025-06-11T12:54:08.594Z",
+  "author": "Vishnu Sreenivas",
+  "categories": [],
+  "tags": [],
+  "excerpt": "Snana Yatra, also known as Deva Snana Purnima, is one of the most spiritually vibrant and visually magnificent festivals in the Jagannatha tradition. Celebrated on the full moon day (Purnima) of the Jyestha month, this festival marks the ceremonial bathing (abhisheka) of Lord Jagannatha, accompanied by Lord Balabhadra and Devi Subhadra.A Divine Public DarshanOn this auspicious day, the deities are brought out of the sanctum sanctorum of the 12th-century Shree Jagannatha Temple in Puri and placed",
+  "coverImage": {
+    "originalUrl": "https://static.wixstatic.com/media/aec967_fb041bea20d7496ab7becde4d6773952~mv2.webp/v1/fill/w_560,h_315,al_c,lg_1,q_80/aec967_fb041bea20d7496ab7becde4d6773952~mv2.webp",
+    "file": "images/01-aec967-fb041bea20d7496ab7becde4d6773952.webp"
+  },
+  "images": [
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_fb041bea20d7496ab7becde4d6773952~mv2.webp/v1/fill/w_560,h_315,al_c,lg_1,q_80/aec967_fb041bea20d7496ab7becde4d6773952~mv2.webp",
+      "file": "images/01-aec967-fb041bea20d7496ab7becde4d6773952.webp"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_fb041bea20d7496ab7becde4d6773952~mv2.webp/v1/fill/w_400,h_225,al_c,q_80,enc_avif,quality_auto/aec967_fb041bea20d7496ab7becde4d6773952~mv2.webp",
+      "file": "images/02-aec967-fb041bea20d7496ab7becde4d6773952.webp"
+    },
+    {
+      "originalUrl": "https://static.wixstatic.com/media/aec967_7eb836caddcb4f93b1f429d43347e816~mv2.jpg/v1/fill/w_88,h_105,al_c,q_80,usm_0.66_1.00_0.01,blur_2,enc_avif,quality_auto/aec967_7eb836caddcb4f93b1f429d43347e816~mv2.jpg",
+      "file": "images/03-aec967-7eb836caddcb4f93b1f429d43347e816.jpg"
+    }
+  ],
+  "wordCount": 594,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

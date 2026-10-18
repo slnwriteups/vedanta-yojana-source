@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "2204",
+  "sourceUrl": "https://vedantayojana.wordpress.com/2023/07/12/duryodhana-dissecting-his-character-through-his-alliances/",
+  "title": "Duryodhana: Dissecting his Character Through His Alliances",
+  "slug": "duryodhana-dissecting-his-character-through-his-alliances",
+  "sourceStatus": "publish",
+  "publishedAt": "2023-07-13T02:19:01Z",
+  "modifiedAt": "2023-07-13T02:19:01Z",
+  "author": "slnwriteups",
+  "categories": [
+    "Characters of the Mahabharata"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 384,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}

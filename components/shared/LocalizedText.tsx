@@ -15,7 +15,7 @@ export function LocalizedText({
 }: {
   stringKey: UiStringKey;
   className?: string;
-  as?: "p" | "span";
+  as?: "p" | "span" | "h2";
 }) {
   const t = useT();
   return <Tag className={className}>{t(stringKey)}</Tag>;

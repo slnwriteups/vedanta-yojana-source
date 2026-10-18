@@ -1,0 +1,28 @@
+{
+  "platform": "wordpress",
+  "sourceId": "439",
+  "sourceUrl": "https://vedantayojana.wordpress.com/?p=439",
+  "title": "War- Days 6,7,8",
+  "slug": "war-days-6-7-8",
+  "sourceStatus": "draft",
+  "publishedAt": "2018-11-12T16:45:00Z",
+  "modifiedAt": "2022-02-10T16:12:28Z",
+  "author": "slnwriteups",
+  "categories": [
+    "108 Divyadesam"
+  ],
+  "tags": [],
+  "excerpt": null,
+  "coverImage": null,
+  "images": [],
+  "wordCount": 195,
+  "files": {
+    "markdown": "post.md",
+    "html": "original.html"
+  },
+  "appCheck": null,
+  "migration": {
+    "status": "archived",
+    "notes": ""
+  }
+}
