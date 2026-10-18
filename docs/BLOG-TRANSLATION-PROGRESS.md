@@ -28,7 +28,7 @@ Status per book is recorded below as batches are merged.
 |---|---|---|---|---|
 | Tamil (ta) | done | done | done | done (all 3 books) |
 | Kannada (kn) | done | done | done | done (all 3 books) |
-| Hindi (hi) | done | done | to do | done for 2 books; Āzhwār titles merge with its chapters |
+| Hindi (hi) | done | done | done | done (all 3 books) |
 | Telugu (te) | to do | to do | to do | to do |
 
 Phase C: all 30 photos are placed inline in English. Each merged translation gets `placementAnchorTranslations`, derived from the matching paragraph and checked to place the photo inline.
@@ -38,3 +38,4 @@ Term glossaries for reuse across batches: `docs/translation-glossaries/<lang>.md
 Open questions for the author (Tamil Āzhwār batch):
 - Two quotations could not be checked against a Prabandham edition: the Perumpuliyūr verse (இக்குறும்பை) and the Bhaktisārar phrase (பேணிலும் வரம் தர மிடுக்கில்லாத தேவர்).
 - Three English verse transliterations were corrected to the standard text, matching the Tamil: thuṇivuḍaiya in the first Kaṇikaṇṇan verse, "Orumagaḷ thannai uḍaiyēn", and "koḍuvinaiyēn".
+- Shivavākyar's verse (`sivavakyar`): the English reads "venkaṭkariyānai"; the Tamil, Kannada and Hindi follow the reading செங்கட் கரியானை ("sengaṭ kariyānai"). Confirm which reading is intended.
