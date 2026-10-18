@@ -366,4 +366,3 @@ Purāṇas / Rāmāyaṇa = पुराण / रामायण
 Lakshmaṇa / Sītā / Shūrpaṇakhā = लक्ष्मण / सीता / शूर्पणखा
 rākshasas = राक्षस
 Perumāl Tirumozhi = पेरुमाल तिरुमोऴि
-Book-aligned forms: तिरुमळिशै (Tirumazhisai), गरुड़, आण्डाळ, तमिऴ, वैकुंठ, मंत्र, विग्रह, कैंकर्य, प्रलय, सुदर्शन चक्र (no -म् endings in Hindi prose)
