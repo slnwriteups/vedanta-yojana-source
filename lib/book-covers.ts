@@ -1,6 +1,6 @@
 /**
  * Web port of mobile/book-covers.ts. Static book-cover artwork, keyed by
- * book slug -- only 4 Library books have real cover art, so a plain
+ * book slug -- only a handful of Library entries have real cover art, so a plain
  * hand-written map is simpler than a generated manifest. A book with no
  * entry here falls back to BookCard's no-cover rendering -- never a
  * fabricated cover. Source jpgs copied verbatim from
@@ -17,6 +17,7 @@ const bookCovers: Record<string, string> = {
   jaya: `${BASE_PATH}/book-covers/jaya.jpg`,
   "srimad-bhagavata-kathasagaram": `${BASE_PATH}/book-covers/srimad-bhagavata-kathasagaram.jpg`,
   "untitled-recovered-book-pending-editorial-title": `${BASE_PATH}/book-covers/untitled-recovered-book-pending-editorial-title.jpg`,
+  "azhwar-vaibhavam": `${BASE_PATH}/book-covers/azhwar-vaibhavam.jpg`,
 };
 
 export function bookCoverAsset(slug: string): string | null {
