@@ -18,6 +18,7 @@ const bookCovers: Record<string, string> = {
   "srimad-bhagavata-kathasagaram": `${BASE_PATH}/book-covers/srimad-bhagavata-kathasagaram.jpg`,
   "untitled-recovered-book-pending-editorial-title": `${BASE_PATH}/book-covers/untitled-recovered-book-pending-editorial-title.jpg`,
   "azhwar-vaibhavam": `${BASE_PATH}/book-covers/azhwar-vaibhavam.jpg`,
+  "nityasuri-vaibhavam": `${BASE_PATH}/book-covers/nityasuri-vaibhavam.jpg`,
 };
 
 export function bookCoverAsset(slug: string): string | null {
