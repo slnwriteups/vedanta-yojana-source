@@ -305,3 +305,4 @@ Purāṇas / Rāmāyaṇa = పురాణాలు / రామాయణం
 Sri Rāma / Lakshmaṇa / Sītā = శ్రీరాముడు / లక్ష్మణుడు / సీతాదేవి
 Shūrpaṇakhā / rākshasas = శూర్పణఖ / రాక్షసులు
 Principle (author's direction): Telugu follows the Sanskrit roots.
+Hanumān = హనుమాన్ (హనుమానును, హనుమానుకు); the vāhanam keeps its name హనుమంత వాహనం
