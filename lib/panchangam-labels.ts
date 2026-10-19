@@ -107,14 +107,23 @@ export function nakshatramLabel(nakshatram: string, language: LanguageCode | nul
   return NAKSHATRAM_LABELS[nakshatram]?.[language] ?? nakshatram;
 }
 
-const TITHI_TILL: Record<LanguageCode | "en", (tithi: string, time: string) => string> = {
-  en: (tithi, time) => `${tithi} till ${time}`,
-  ta: (tithi, time) => `${tithi} ${time} வரை`,
-  kn: (tithi, time) => `${tithi} ${time} ರವರೆಗೆ`,
-  hi: (tithi, time) => `${tithi} ${time} तक`,
-  te: (tithi, time) => `${tithi} ${time} వరకు`,
+const CHANGE_TILL: Record<LanguageCode | "en", (name: string, time: string) => string> = {
+  en: (name, time) => `${name} till ${time}`,
+  ta: (name, time) => `${name} ${time} வரை`,
+  kn: (name, time) => `${name} ${time} ರವರೆಗೆ`,
+  hi: (name, time) => `${name} ${time} तक`,
+  te: (name, time) => `${name} ${time} వరకు`,
 };
-const TITHI_THEN: Record<LanguageCode | "en", string> = { en: "then", ta: "பிறகு", kn: "ನಂತರ", hi: "फिर", te: "తర్వాత" };
+const CHANGE_THEN: Record<LanguageCode | "en", string> = { en: "then", ta: "பிறகு", kn: "ನಂತರ", hi: "फिर", te: "తర్వాత" };
+
+/** "A till 9:09 AM, B till 4:09 AM (+1), then C": `names[i]` holds until `startsAt[i]`. */
+function withChanges(names: string[], startsAt: string[], language: LanguageCode | null): string {
+  if (names.length < 2) return names[0] ?? "";
+  const key = language ?? "en";
+  const locale = language || "en-US";
+  const until = startsAt.map((time, i) => CHANGE_TILL[key](names[i], formatPanchangamTime(time, locale)));
+  return `${until.join(", ")}, ${CHANGE_THEN[key]} ${names[names.length - 1]}`;
+}
 
 export interface TithiOfDay {
   paksha: string;
@@ -133,9 +142,7 @@ export interface TithiOfDay {
 export function tithiOfDayLabel(day: TithiOfDay, language: LanguageCode | null): string {
   const first = [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ");
   const changes = day.tithiChanges ?? [];
-  if (!first || changes.length === 0) return first;
-  const key = language ?? "en";
-  const locale = language || "en-US";
+  if (!first) return first;
   const names = [first];
   let paksha = day.paksha;
   for (const change of changes) {
@@ -143,8 +150,22 @@ export function tithiOfDayLabel(day: TithiOfDay, language: LanguageCode | null):
     names.push(change.paksha === paksha ? name : `${pakshaLabel(change.paksha, language)} ${name}`);
     paksha = change.paksha;
   }
-  const until = changes.map((change, i) => TITHI_TILL[key](names[i], formatPanchangamTime(change.startsAt, locale)));
-  return `${until.join(", ")}, ${TITHI_THEN[key]} ${names[names.length - 1]}`;
+  return withChanges(names, changes.map((change) => change.startsAt), language);
+}
+
+/** The day's nakshatram line, with each change before the next sunrise, as tithiOfDayLabel. */
+export function nakshatramOfDayLabel(
+  day: { nakshatram: string; nakshatramChanges?: Array<{ nakshatram: string; startsAt: string }> },
+  language: LanguageCode | null
+): string {
+  const first = nakshatramLabel(day.nakshatram, language);
+  const changes = day.nakshatramChanges ?? [];
+  if (!first) return first;
+  return withChanges(
+    [first, ...changes.map((change) => nakshatramLabel(change.nakshatram, language))],
+    changes.map((change) => change.startsAt),
+    language
+  );
 }
 
 /**

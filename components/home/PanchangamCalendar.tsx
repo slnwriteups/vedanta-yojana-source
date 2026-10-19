@@ -8,6 +8,7 @@ import {
   localizeSankalpamText,
   localizeUpcomingEkadashi,
   nakshatramLabel,
+  nakshatramOfDayLabel,
   pakshaLabel,
   tithiLabel,
   tithiOfDayLabel,
@@ -144,7 +145,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   }, [selectedDate, language]);
 
   const pakshaTithi = data ? tithiOfDayLabel(data, language) : "";
-  const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
+  const nakshatram = data ? nakshatramOfDayLabel(data, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showComputed = !isLoading && hasData;

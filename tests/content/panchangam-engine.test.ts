@@ -12,7 +12,7 @@ import {
 import { sunLongitude } from "../../content-lib/panchangam-astronomy.ts";
 import { formatPanchangamTime } from "../../lib/panchangam-timings.ts";
 import { PADUKA_PANCHANGAM_ISSUES } from "../../content-lib/paduka-panchangam.ts";
-import { localizeSankalpamText, nakshatramLabel, pakshaLabel, tithiLabel, tithiOfDayLabel } from "../../lib/panchangam-labels.ts";
+import { localizeSankalpamText, nakshatramLabel, nakshatramOfDayLabel, pakshaLabel, tithiLabel, tithiOfDayLabel } from "../../lib/panchangam-labels.ts";
 
 /**
  * The reference values below are the published ones, never this engine's
@@ -112,13 +112,26 @@ test("a tithi that begins before the next sunrise is listed with its start time"
   assert.deepEqual(kshaya.tithiChanges.map((c) => c.tithi), ["Shashthi", "Saptami"]);
   assert.match(kshaya.tithiChanges[1].startsAt, /\(\+1\)$/);
 
-  // Across a year, the last tithi listed is always the next sunrise's.
+  // Across a year, the last tithi and nakshatram listed are always the next sunrise's.
   for (let d = dayNumberOf(2026, 4, 14); d < dayNumberOf(2027, 4, 14); d += 1) {
     const p = computePanchangam(d, CHENNAI, { placeName: "Chennai" });
     const next = computePanchangam(d + 1, CHENNAI, { placeName: "Chennai" });
     const last = p.tithiChanges.at(-1) ?? p;
     assert.deepEqual([last.paksha, last.tithi], [next.paksha, next.tithi], String(d));
+    assert.equal((p.nakshatramChanges.at(-1) ?? p).nakshatram, next.nakshatram, String(d));
   }
+});
+
+test("a nakshatram that begins before the next sunrise is listed with its start time", () => {
+  // Published for Chennai, 8 Oct 2026: p.phalguni 22:31 -- Uttara Phalguni from then.
+  const p = day(CHENNAI, "2026-10-08");
+  assert.deepEqual(p.nakshatramChanges.map((c) => c.nakshatram), ["Uttara Phalguni"]);
+  assert.equal(p.nakshatramChanges[0].startsAt, p.nakshatramEnds);
+  const at = formatPanchangamTime(p.nakshatramEnds, "en-US");
+  assert.equal(nakshatramOfDayLabel(p, null), `Purva Phalguni till ${at}, then Uttara Phalguni`);
+  assert.equal(nakshatramOfDayLabel(p, "ta"), `பூரம் ${formatPanchangamTime(p.nakshatramEnds, "ta")} வரை, பிறகு உத்திரம்`);
+  // Older cached data without the field still shows the sunrise nakshatram.
+  assert.equal(nakshatramOfDayLabel({ nakshatram: "Rohini" }, null), "Rohini");
 });
 
 test("the tithi line names the paksha again only when it turns, in every language", () => {

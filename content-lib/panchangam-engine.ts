@@ -16,8 +16,8 @@
  *    applied to the reader's local sunrise and clock, so the calendar is
  *    correct anywhere in the world, not only in India.
  *  - The day runs sunrise to sunrise; its tithi and nakshatram are the
- *    ones in force at its sunrise, and a tithi that begins before the
- *    next sunrise is listed with the time it begins. Kaalams are eighths
+ *    ones in force at its sunrise, and a tithi or nakshatram that begins
+ *    before the next sunrise is listed with the time it begins. Kaalams are eighths
  *    of the daylight in whole minutes.
  *  - Lunar months are amanta, named from the Sun's sign at the opening new
  *    moon; a month without a sankranti is adhika. Tamil months begin on
@@ -1078,6 +1078,12 @@ export interface TithiChange {
   startsAt: string;
 }
 
+export interface NakshatramChange {
+  nakshatram: string;
+  /** "14:50", or "02:10 (+1)" past midnight. */
+  startsAt: string;
+}
+
 export interface ComputedPanchangam {
   /** Tithi at sunrise, spelled as lib/panchangam-labels.ts keys it. */
   tithi: string;
@@ -1107,6 +1113,8 @@ export interface ComputedPanchangam {
    */
   tithiChanges: TithiChange[];
   nakshatramEnds: string;
+  /** The nakshatrams that begin before the next sunrise, likewise. */
+  nakshatramChanges: NakshatramChange[];
   /** Tamil month and day ("Purattasi 22"). */
   tamilDate: string;
 }
@@ -1143,18 +1151,17 @@ function endsLabel(cal: SunCalendar, d: number, ms: number): string {
   return `${clock24(ms, timeZone)}${daysLater > 0 ? ` (+${daysLater})` : ""}`;
 }
 
-/** Every tithi that begins after day `d`'s sunrise tithi and before the next sunrise. */
-function tithiChangesOn(cal: SunCalendar, d: number, sunriseTithi: Segment): TithiChange[] {
+/**
+ * Every occurrence that begins after day `d`'s sunrise one (`atSunrise`)
+ * and before the next sunrise, each with the time it begins.
+ */
+function changesOn<T>(cal: SunCalendar, d: number, atSunrise: Segment, at: (ms: number) => Segment, describe: (index: number) => T) {
   const nextSunrise = cal.day(d + 1).sunrise;
-  const changes: TithiChange[] = [];
-  let segment = sunriseTithi;
+  const changes: Array<T & { startsAt: string }> = [];
+  let segment = atSunrise;
   for (let guard = 0; guard < 3 && segment.end < nextSunrise; guard += 1) {
-    segment = tithiAt(segment.end + MS_PER_MINUTE);
-    changes.push({
-      tithi: tithiName(segment.index),
-      paksha: pakshaName(segment.index),
-      startsAt: endsLabel(cal, d, segment.start),
-    });
+    segment = at(segment.end + MS_PER_MINUTE);
+    changes.push({ ...describe(segment.index), startsAt: endsLabel(cal, d, segment.start) });
   }
   return changes;
 }
@@ -1202,7 +1209,8 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
     yamagandam: kaalam(day, YAMAGANDAM_PART[weekday], timeZone),
     gulikaKaalam: kaalam(day, GULIKA_PART[weekday], timeZone),
     tithiEnds: endsLabel(cal, dayNumber, tithi.end),
-    tithiChanges: tithiChangesOn(cal, dayNumber, tithi),
+    tithiChanges: changesOn(cal, dayNumber, tithi, tithiAt, (index) => ({ tithi: tithiName(index), paksha: pakshaName(index) })),
+    nakshatramChanges: changesOn(cal, dayNumber, nakshatra, nakshatraAt, (index) => ({ nakshatram: NAKSHATRA_NAMES[index] })),
     nakshatramEnds: endsLabel(cal, dayNumber, nakshatra.end),
     tamilDate: `${TAMIL_MONTH_NAMES[cal.tamilMonth(dayNumber)]} ${tamilDayOfMonth(cal, dayNumber)}`,
   };
