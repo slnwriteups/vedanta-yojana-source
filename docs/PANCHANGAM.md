@@ -11,13 +11,20 @@ which tradition it follows, how it was verified, and how to keep it current.
   is called, so it works offline once the device knows where it is. The only
   network request is the optional place-name lookup (see
   [privacy-policy.html](privacy-policy.html)).
-- **Traditional Sri Vaishnava reckoning.** It follows the traditional
-  (siddhantic) reckoning that both Srirangam Srimad Andavan Ashramam's
-  Sri Ranganātha Pādukā Panchangam and Sri Ahobila Mutt's calendar use, not
-  modern positional astronomy. The two can differ by minutes to hours at a
-  tithi or nakshatram ending; the Ashramam's own printed times agree with the
-  traditional reckoning and not with a modern ephemeris (see
-  [PANCHANGAM-COMPARISON.md](PANCHANGAM-COMPARISON.md)).
+- **Traditional Sri Vaishnava reckoning.** It follows a traditional
+  (siddhantic) model of the Sun and Moon, not modern positional astronomy;
+  the two can differ by minutes to hours at a tithi or nakshatram ending.
+  Neither maṭha documents its method in any source found: the model was
+  fitted to Sri Ahobila Mutt's published times, and the Ashramam's own
+  printed times agree with it and not with a modern ephemeris. That both
+  use a traditional reckoning is shown by the numbers; which traditional
+  system is inferred, not documented (see
+  [PANCHANGAM-COMPARISON.md](PANCHANGAM-COMPARISON.md#two-questions-of-method)).
+- **The Ashramam is the authority for observances.** Every observance
+  Srirangam Srimad Andavan Ashramam publishes in its Sri Ranganātha Pādukā
+  Panchangam is shown on its published date, merged with the engine's own
+  list with each observance's source shown (see
+  [Observances and their sources](#observances-and-their-sources)).
 - **Worldwide.** Every rule is applied to the reader's own sunrise, location and
   clock, so the calendar is correct wherever the reader is, not only in India.
 - **Any city.** Instead of their own location, a reader can choose a city
@@ -78,8 +85,10 @@ Siddhanta value, which confirms the system.
 
 - **Yoga and karana:** the yoga is the Sun's and Moon's longitudes added,
   in 27 parts; the karana is half a tithi, halved in time (the midpoint
-  between its start and end), as both published calendars divide it. The
-  names follow the Pādukā's spellings (Mahendra, Taitula, Bhadra, Nagava).
+  between its start and end). Sri Ahobila Mutt's calendar demonstrably
+  divides it so (all 68 of its karana ends checked); the Ashramam's one
+  printed karana end that can tell the methods apart agrees. The names
+  follow the Pādukā's spellings (Mahendra, Taitula, Bhadra, Nagava).
 - **The day:** runs sunrise to sunrise. Its tithi and nakshatram are those in
   force at its sunrise. When the tithi or nakshatram changes before the next
   sunrise, it is shown with each change and its time ("Krishna Paksha
@@ -140,6 +149,36 @@ The observances shown are:
   Margazhi/Thai days (Koodarai Vellum, Vanga Kadal, Bhogi, Kanu).
 
 The full list is the `FESTIVAL_NAMES` vocabulary in `panchangam-engine.ts`.
+
+### Observances and their sources
+
+The engine's list (its rules, computed from the astronomy) and the
+Ashramam's published Pādukā observances are kept apart and merged for
+display by `content-lib/panchangam-observances.ts`:
+
+- **Both carry it:** shown once, under the Ashramam's name ("Sarva
+  Ekadasi", "Mahapradosham"), with both sources, and with any detail only
+  the engine has (a sankramanam's time). `EQUIVALENTS` pairs the names.
+- **Only the Ashramam publishes it** (Chandra Darsanam, Mahavyatipatam,
+  the Mahalayams, the Tula Snanam days, its acharyas' tirunakshatrams, …):
+  shown on its published date, and only on dates a transcribed issue
+  covers. Nothing is carried to years the Ashramam hasn't published.
+- **The Ashramam's date decides** (`PUBLISHED_DATE_GOVERNS`): Navaratri
+  begins and Sravana Vratam, whose published 2026 days differ from the
+  engine's rule (Sri Ahobila Mutt's). On covered dates the engine's own
+  day is not shown; other years keep the engine's rule until the
+  Ashramam's is established.
+- **Only the engine computes it** (Azhagiyasingar tirunakshatrams,
+  Dvadasi Paranai, the monthly star days, lunar month starts, …): shown,
+  marked as calculated. So is an Ekadasi the transcribed Pādukā doesn't
+  list (22 Oct 2026), until the printed page settles it.
+- **Away from Indian time** the Pādukā's dates are not the place's: the
+  engine, computing for the place's own sunrise, decides the observances
+  both carry, and only the Ashramam's own are added from the Pādukā.
+
+Beneath the observances the calendar says where they come from: "Sri
+Ranganātha Pādukā", "Calculated", or both, with "*" marking the calculated
+ones.
 
 ### Sankalpam
 
@@ -236,9 +275,14 @@ To add an issue:
    fails if one is missing.
 3. Run `npm run test:content`. It checks the new days against the engine as well.
 
-Observances both calendars carry (Ekadasi, Pradosham, the Āzhvārs, Swami
-Desikan, …) are shown once. Only the Ashramam's own (names containing
-"Andavan" or "Mahadesikan") are added from the journal.
+Every observance in the issue is shown on its date (see
+[Observances and their sources](#observances-and-their-sources)). A new
+observance name must also be classified in
+`content-lib/panchangam-observances.ts`: paired in `EQUIVALENTS` with the
+engine's name for the same observance, or added to
+`ASHRAMAM_ONLY_OBSERVANCES`. A test fails until it is, so a new name can
+never be shown twice under two names. Then re-run
+`node scripts/panchangam-comparison.ts` to update the comparison.
 
 ## Choosing a city
 

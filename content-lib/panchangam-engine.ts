@@ -386,10 +386,10 @@ export function yogaAt(ms: number): Segment {
 
 /**
  * The karana in force at `ms`: the first or second half of the tithi,
- * halved in time -- as both the Ashramam's Pādukā Panchangam and Sri
- * Ahobila Mutt's calendar divide it (their karana ends fall at the
- * tithi's midpoint in time, minutes from where the elongation reaches
- * the 6° midpoint).
+ * halved in time. Sri Ahobila Mutt's calendar divides it so (each karana
+ * end it prints is the midpoint of its own printed tithi, minutes from
+ * where the elongation reaches 6°), and the one Pādukā karana end that
+ * tells the two apart agrees; see docs/PANCHANGAM-COMPARISON.md.
  */
 export function karanaAt(ms: number): Segment {
   const tithi = tithiAt(ms);
