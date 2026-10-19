@@ -18,7 +18,6 @@ import {
 } from "../panchangam-labels.ts";
 import { fetchPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 import {
-  calendarFestivalLine,
   localizePadukaFestival,
   localizePadukaTarpanam,
   padukaPanchangamFor,
@@ -26,6 +25,7 @@ import {
   type PadukaTarpanam,
 } from "../../content-lib/paduka-panchangam.ts";
 import { formatPanchangamTime } from "../services/panchangamTimings.ts";
+import { dayObservances, observanceLine } from "../../content-lib/panchangam-observances.ts";
 import { setPanchangamPlace, usePanchangamPlace } from "../services/panchangamPlaceStore.ts";
 import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
 import { PanchangamDatePicker } from "./PanchangamDatePicker";
@@ -132,7 +132,10 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showComputed = !isLoading && hasData;
-  const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
+  // The engine's observances merged with the Ashramam's published ones, each with its source.
+  const observances = data
+    ? observanceLine(dayObservances(data.festival, paduka?.day ?? null, data.timeZone ?? place?.timeZone), language)
+    : { text: "", source: null };
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
   const timingRows = data
@@ -305,7 +308,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </View>
         ) : hasData && data ? (
           <View style={styles.contentRows}>
-            {festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{festival}</Text> : null}
+            {observances.text ? (
+              <View style={styles.observances}>
+                <Text style={[styles.festival, { color: theme.colors.accent }]}>{observances.text}</Text>
+                <ObservanceSourceNote source={observances.source} />
+              </View>
+            ) : null}
             {pakshaTithi ? (
               <Row
                 label={t("homeCalendarTithiLabel")}
@@ -424,6 +432,22 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   );
 }
 
+/**
+ * Where the day's observances come from: the Ashramam's Sri Ranganātha
+ * Pādukā, the engine's calculation, or both -- then "*" marks the
+ * calculated ones (panchangam-observances.ts observanceLine).
+ */
+function ObservanceSourceNote({ source }: { source: "paduka" | "calculated" | "both" | null }) {
+  const theme = useTheme();
+  const t = useT();
+  if (!source) return null;
+  const text =
+    source === "both"
+      ? `${t("observanceSourcePaduka")} · * ${t("observanceSourceCalculated")}`
+      : t(source === "paduka" ? "observanceSourcePaduka" : "observanceSourceCalculated");
+  return <Text style={[styles.observanceSource, { color: theme.colors.muted }]}>{text}</Text>;
+}
+
 function Row({ label, value, muted, fg }: { label: string; value: string; muted: string; fg: string }) {
   return (
     <View style={styles.row}>
@@ -449,7 +473,10 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
   return (
     <View style={styles.contentRows}>
       {day.festival ? (
-        <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text>
+        <View style={styles.observances}>
+          <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text>
+          <ObservanceSourceNote source="paduka" />
+        </View>
       ) : null}
       {pakshaTithi ? (
         <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />
@@ -644,10 +671,16 @@ const styles = StyleSheet.create({
   contentRows: {
     gap: spacing.xs,
   },
+  observances: {
+    marginBottom: spacing.xs,
+  },
   festival: {
     fontSize: typography.body,
     fontWeight: "700",
-    marginBottom: spacing.xs,
+  },
+  observanceSource: {
+    fontSize: typography.eyebrow,
+    marginTop: 2,
   },
   row: {
     flexDirection: "row",

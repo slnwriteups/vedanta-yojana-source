@@ -83,6 +83,8 @@ export interface PanchangamData {
   rahuKaalam?: string;
   yamagandam?: string;
   gulikaKaalam?: string;
+  /** The IANA time zone of the place it was computed for ("Asia/Kolkata"). */
+  timeZone?: string;
   /** True when this is for a city the reader chose rather than the phone's location. */
   isChosenPlace?: boolean;
   /**
@@ -232,6 +234,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       // "" rather than the placeholder itself: an unresolved name is
       // shown as no location row at all, never as a fake city.
       location: location.city === UNNAMED_LOCATION ? "" : location.city,
+      timeZone: location.timezone,
       isChosenPlace: Boolean(chosen),
       timeZoneNote: sameClock ? undefined : timeZoneLabel(now, location.timezone),
     };

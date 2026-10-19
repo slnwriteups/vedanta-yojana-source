@@ -17,7 +17,6 @@ import {
 } from "@/lib/panchangam-labels";
 import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import {
-  calendarFestivalLine,
   localizePadukaFestival,
   localizePadukaTarpanam,
   padukaPanchangamFor,
@@ -25,6 +24,7 @@ import {
   type PadukaTarpanam,
 } from "@/content-lib/paduka-panchangam.ts";
 import { formatPanchangamTime } from "@/lib/panchangam-timings";
+import { dayObservances, observanceLine } from "@/content-lib/panchangam-observances.ts";
 import { setPanchangamPlace, usePanchangamPlace } from "@/lib/panchangam-place-store";
 import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
 
@@ -162,7 +162,10 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showComputed = !isLoading && hasData;
-  const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
+  // The engine's observances merged with the Ashramam's published ones, each with its source.
+  const observances = data
+    ? observanceLine(dayObservances(data.festival, paduka?.day ?? null, data.timeZone ?? place?.timeZone), language)
+    : { text: "", source: null };
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
   const timingRows = data
@@ -291,7 +294,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </div>
         ) : hasData && data ? (
           <div className="space-y-2 pt-1">
-            {festival ? <p className="text-sm font-bold text-[var(--accent)]">{festival}</p> : null}
+            {observances.text ? (
+              <div>
+                <p className="text-sm font-bold text-[var(--accent)]">{observances.text}</p>
+                <ObservanceSourceNote source={observances.source} />
+              </div>
+            ) : null}
 
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
@@ -362,6 +370,21 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   );
 }
 
+/**
+ * Where the day's observances come from: the Ashramam's Sri Ranganātha
+ * Pādukā, the engine's calculation, or both -- then "*" marks the
+ * calculated ones (panchangam-observances.ts observanceLine).
+ */
+function ObservanceSourceNote({ source }: { source: "paduka" | "calculated" | "both" | null }) {
+  const t = useT();
+  if (!source) return null;
+  const text =
+    source === "both"
+      ? `${t("observanceSourcePaduka")} · * ${t("observanceSourceCalculated")}`
+      : t(source === "paduka" ? "observanceSourcePaduka" : "observanceSourceCalculated");
+  return <p className="text-[11px] text-[var(--muted)]">{text}</p>;
+}
+
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4">
@@ -386,7 +409,12 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
 
   return (
     <div className="space-y-2 pt-1">
-      {day.festival ? <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p> : null}
+      {day.festival ? (
+        <div>
+          <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p>
+          <ObservanceSourceNote source="paduka" />
+        </div>
+      ) : null}
       {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
       {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
     </div>
