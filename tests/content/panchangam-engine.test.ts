@@ -10,8 +10,9 @@ import {
   type PanchangamPlace,
 } from "../../content-lib/panchangam-engine.ts";
 import { sunLongitude } from "../../content-lib/panchangam-astronomy.ts";
+import { formatPanchangamTime } from "../../lib/panchangam-timings.ts";
 import { PADUKA_PANCHANGAM_ISSUES } from "../../content-lib/paduka-panchangam.ts";
-import { localizeSankalpamText, nakshatramLabel, tithiLabel } from "../../lib/panchangam-labels.ts";
+import { localizeSankalpamText, nakshatramLabel, pakshaLabel, tithiLabel, tithiOfDayLabel } from "../../lib/panchangam-labels.ts";
 
 /**
  * The reference values below are the published ones, never this engine's
@@ -89,6 +90,53 @@ test("traditional tithi and nakshatram ends hold across the year", () => {
       `${date} nakshatram ${p.nakshatramEnds} vs ${nakshatramEnd}`
     );
   }
+});
+
+test("a tithi that begins before the next sunrise is listed with its start time", () => {
+  // Published for Chennai, 8 Oct 2026: k.trayodasi 22:41 -- Chaturdasi from then.
+  const changing = day(CHENNAI, "2026-10-08");
+  assert.deepEqual(
+    changing.tithiChanges.map((c) => [c.paksha, c.tithi]),
+    [["Krishna Paksha", "Chaturdasi"]]
+  );
+  assert.equal(changing.tithiChanges[0].startsAt, changing.tithiEnds);
+  assert.equal(tithiOfDayLabel(changing, null), `Krishna Paksha Trayodasi till ${formatPanchangamTime(changing.tithiEnds, "en-US")}, then Chaturdasi`);
+
+  // Krishna Chaturthi holds the next sunrise too: no change that day.
+  const whole = day(CHENNAI, "2026-05-05");
+  assert.deepEqual(whole.tithiChanges, []);
+  assert.equal(tithiOfDayLabel(whole, null), "Krishna Paksha Chaturthi");
+
+  // Shukla Shashthi sees no sunrise (kshaya): it begins and ends within the day.
+  const kshaya = day(CHENNAI, "2026-04-22");
+  assert.deepEqual(kshaya.tithiChanges.map((c) => c.tithi), ["Shashthi", "Saptami"]);
+  assert.match(kshaya.tithiChanges[1].startsAt, /\(\+1\)$/);
+
+  // Across a year, the last tithi listed is always the next sunrise's.
+  for (let d = dayNumberOf(2026, 4, 14); d < dayNumberOf(2027, 4, 14); d += 1) {
+    const p = computePanchangam(d, CHENNAI, { placeName: "Chennai" });
+    const next = computePanchangam(d + 1, CHENNAI, { placeName: "Chennai" });
+    const last = p.tithiChanges.at(-1) ?? p;
+    assert.deepEqual([last.paksha, last.tithi], [next.paksha, next.tithi], String(d));
+  }
+});
+
+test("the tithi line names the paksha again only when it turns, in every language", () => {
+  const pournami = {
+    paksha: "Shukla Paksha",
+    tithi: "Pournami",
+    tithiChanges: [{ paksha: "Krishna Paksha", tithi: "Prathama", startsAt: "15:20" }],
+  };
+  const at = formatPanchangamTime("15:20", "en-US");
+  assert.equal(tithiOfDayLabel(pournami, null), `Shukla Paksha Pournami till ${at}, then Krishna Paksha Prathama`);
+  assert.ok(tithiOfDayLabel(pournami, "ta").endsWith("பிறகு கிருஷ்ண பக்ஷம் பிரதமை"));
+  for (const language of ["ta", "kn", "hi", "te"] as const) {
+    const label = tithiOfDayLabel(pournami, language);
+    assert.ok(label.startsWith(`${pakshaLabel("Shukla Paksha", language)} ${tithiLabel("Pournami", language)} `), label);
+    assert.ok(label.endsWith(` ${pakshaLabel("Krishna Paksha", language)} ${tithiLabel("Prathama", language)}`), label);
+  }
+  // Older cached data without the field still shows the sunrise tithi.
+  assert.equal(tithiOfDayLabel({ paksha: "Shukla Paksha", tithi: "Dasami" }, null), "Shukla Paksha Dasami");
 });
 
 test("agrees with every day of the Paduka journal's printed panchangam", () => {

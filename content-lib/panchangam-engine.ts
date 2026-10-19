@@ -16,8 +16,9 @@
  *    applied to the reader's local sunrise and clock, so the calendar is
  *    correct anywhere in the world, not only in India.
  *  - The day runs sunrise to sunrise; its tithi and nakshatram are the
- *    ones in force at its sunrise. Kaalams are eighths of the daylight in
- *    whole minutes.
+ *    ones in force at its sunrise, and a tithi that begins before the
+ *    next sunrise is listed with the time it begins. Kaalams are eighths
+ *    of the daylight in whole minutes.
  *  - Lunar months are amanta, named from the Sun's sign at the opening new
  *    moon; a month without a sankranti is adhika. Tamil months begin on
  *    the day whose sunset follows the sankranti. The samvatsara turns at
@@ -1070,6 +1071,13 @@ function sankalpamText(cal: SunCalendar, ms: number, placeName: string): string 
 // Public API
 // ---------------------------------------------------------------------------
 
+export interface TithiChange {
+  tithi: string;
+  paksha: string;
+  /** "22:41", or "02:10 (+1)" past midnight. */
+  startsAt: string;
+}
+
 export interface ComputedPanchangam {
   /** Tithi at sunrise, spelled as lib/panchangam-labels.ts keys it. */
   tithi: string;
@@ -1090,6 +1098,14 @@ export interface ComputedPanchangam {
   gulikaKaalam: string;
   /** End time of the sunrise tithi / nakshatram ("22:41", or "22:41 (+1)" past midnight). */
   tithiEnds: string;
+  /**
+   * The tithis that begin after the sunrise one and before the next
+   * sunrise, in order, each with the time it begins (as `tithiEnds`):
+   * one when the tithi changes during the day, two when a tithi begins
+   * and ends within it (kshaya), none when the sunrise tithi holds the
+   * whole day.
+   */
+  tithiChanges: TithiChange[];
   nakshatramEnds: string;
   /** Tamil month and day ("Purattasi 22"). */
   tamilDate: string;
@@ -1125,6 +1141,22 @@ function endsLabel(cal: SunCalendar, d: number, ms: number): string {
   const { timeZone } = cal.place;
   const daysLater = localTime(ms, timeZone).dayNumber - d;
   return `${clock24(ms, timeZone)}${daysLater > 0 ? ` (+${daysLater})` : ""}`;
+}
+
+/** Every tithi that begins after day `d`'s sunrise tithi and before the next sunrise. */
+function tithiChangesOn(cal: SunCalendar, d: number, sunriseTithi: Segment): TithiChange[] {
+  const nextSunrise = cal.day(d + 1).sunrise;
+  const changes: TithiChange[] = [];
+  let segment = sunriseTithi;
+  for (let guard = 0; guard < 3 && segment.end < nextSunrise; guard += 1) {
+    segment = tithiAt(segment.end + MS_PER_MINUTE);
+    changes.push({
+      tithi: tithiName(segment.index),
+      paksha: pakshaName(segment.index),
+      startsAt: endsLabel(cal, d, segment.start),
+    });
+  }
+  return changes;
 }
 
 function tamilDayOfMonth(cal: SunCalendar, d: number): number {
@@ -1170,6 +1202,7 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
     yamagandam: kaalam(day, YAMAGANDAM_PART[weekday], timeZone),
     gulikaKaalam: kaalam(day, GULIKA_PART[weekday], timeZone),
     tithiEnds: endsLabel(cal, dayNumber, tithi.end),
+    tithiChanges: tithiChangesOn(cal, dayNumber, tithi),
     nakshatramEnds: endsLabel(cal, dayNumber, nakshatra.end),
     tamilDate: `${TAMIL_MONTH_NAMES[cal.tamilMonth(dayNumber)]} ${tamilDayOfMonth(cal, dayNumber)}`,
   };

@@ -3,7 +3,7 @@ import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { shadows } from "../shadows";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
-import { localizeUpcomingEkadashi, nakshatramLabel, pakshaLabel, tithiLabel } from "../panchangam-labels.ts";
+import { localizeUpcomingEkadashi, nakshatramLabel, tithiOfDayLabel } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
 
 /**
@@ -30,9 +30,7 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
   if (!panchangam) return null;
 
   const hasData = panchangam.tithi || panchangam.nakshatram || panchangam.festival;
-  const pakshaTithi = [pakshaLabel(panchangam.paksha, language), tithiLabel(panchangam.tithi, language)]
-    .filter(Boolean)
-    .join(" ");
+  const pakshaTithi = tithiOfDayLabel(panchangam, language);
   const nakshatram = nakshatramLabel(panchangam.nakshatram, language);
 
   return (

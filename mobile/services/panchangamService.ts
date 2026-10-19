@@ -1,5 +1,5 @@
 import * as Location from "expo-location";
-import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes } from "../../content-lib/panchangam-engine.ts";
+import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type TithiChange } from "../../content-lib/panchangam-engine.ts";
 import type { ChosenPlace } from "../../content-lib/panchangam-place.ts";
 
 /**
@@ -47,6 +47,8 @@ interface ResolvedLocation {
 export interface PanchangamData {
   tithi: string;
   paksha: string;
+  /** The tithis that begin before the next sunrise, with their start times (see ComputedPanchangam). */
+  tithiChanges?: TithiChange[];
   nakshatram: string;
   festival: string;
   upcomingEkadashiText: string;
@@ -185,6 +187,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
     const data: PanchangamData = {
       tithi: computed.tithi,
       paksha: computed.paksha,
+      tithiChanges: computed.tithiChanges,
       nakshatram: computed.nakshatram,
       festival: computed.festival,
       upcomingEkadashiText: computed.upcomingEkadashiText,

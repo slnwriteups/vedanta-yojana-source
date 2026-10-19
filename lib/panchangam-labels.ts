@@ -1,6 +1,7 @@
 import type { LanguageCode } from "./preferences";
 import { iastToScript } from "../content-lib/sanskrit-script.ts";
 import { localizeEnglishDates } from "../content-lib/panchangam-dates.ts";
+import { formatPanchangamTime } from "./panchangam-timings.ts";
 
 /**
  * Web port of mobile/panchangam-labels.ts, verbatim (content unchanged,
@@ -104,6 +105,46 @@ export function tithiLabel(tithi: string, language: LanguageCode | null): string
 export function nakshatramLabel(nakshatram: string, language: LanguageCode | null): string {
   if (!language || !nakshatram) return nakshatram;
   return NAKSHATRAM_LABELS[nakshatram]?.[language] ?? nakshatram;
+}
+
+const TITHI_TILL: Record<LanguageCode | "en", (tithi: string, time: string) => string> = {
+  en: (tithi, time) => `${tithi} till ${time}`,
+  ta: (tithi, time) => `${tithi} ${time} வரை`,
+  kn: (tithi, time) => `${tithi} ${time} ರವರೆಗೆ`,
+  hi: (tithi, time) => `${tithi} ${time} तक`,
+  te: (tithi, time) => `${tithi} ${time} వరకు`,
+};
+const TITHI_THEN: Record<LanguageCode | "en", string> = { en: "then", ta: "பிறகு", kn: "ನಂತರ", hi: "फिर", te: "తర్వాత" };
+
+export interface TithiOfDay {
+  paksha: string;
+  tithi: string;
+  tithiChanges?: Array<{ paksha: string; tithi: string; startsAt: string }>;
+}
+
+/**
+ * The day's tithi line: "Krishna Paksha Trayodasi" when the sunrise
+ * tithi holds the whole day, otherwise with each tithi that begins before
+ * the next sunrise -- "Krishna Paksha Trayodasi till 10:41 PM, then
+ * Chaturdasi" (two changes on a kshaya day). The paksha is named again
+ * only when it turns, after Pournami or Amavasya. Times are the engine's
+ * "HH:MM" in the reader's locale, keeping any "(+1)".
+ */
+export function tithiOfDayLabel(day: TithiOfDay, language: LanguageCode | null): string {
+  const first = [pakshaLabel(day.paksha, language), tithiLabel(day.tithi, language)].filter(Boolean).join(" ");
+  const changes = day.tithiChanges ?? [];
+  if (!first || changes.length === 0) return first;
+  const key = language ?? "en";
+  const locale = language || "en-US";
+  const names = [first];
+  let paksha = day.paksha;
+  for (const change of changes) {
+    const name = tithiLabel(change.tithi, language);
+    names.push(change.paksha === paksha ? name : `${pakshaLabel(change.paksha, language)} ${name}`);
+    paksha = change.paksha;
+  }
+  const until = changes.map((change, i) => TITHI_TILL[key](names[i], formatPanchangamTime(change.startsAt, locale)));
+  return `${until.join(", ")}, ${TITHI_THEN[key]} ${names[names.length - 1]}`;
 }
 
 /**

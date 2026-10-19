@@ -10,6 +10,7 @@ import {
   nakshatramLabel,
   pakshaLabel,
   tithiLabel,
+  tithiOfDayLabel,
 } from "@/lib/panchangam-labels";
 import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import {
@@ -142,11 +143,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
     });
   }, [selectedDate, language]);
 
-  const pakshaTithi = data
-    ? [pakshaLabel(data.paksha, language), tithiLabel(data.tithi, language)]
-        .filter(Boolean)
-        .join(" ")
-    : "";
+  const pakshaTithi = data ? tithiOfDayLabel(data, language) : "";
   const nakshatram = data ? nakshatramLabel(data.nakshatram, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
