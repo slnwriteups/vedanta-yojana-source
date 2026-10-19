@@ -73,7 +73,10 @@ Siddhanta value, which confirms the system.
 ### Days and months
 
 - **The day:** runs sunrise to sunrise. Its tithi and nakshatram are those in
-  force at its sunrise.
+  force at its sunrise. When the tithi or nakshatram changes before the next
+  sunrise, it is shown with each change and its time ("Krishna Paksha
+  Trayodasi till 10:41 PM, then Chaturdasi"); on a kshaya day, when one
+  begins and ends between two sunrises, both changes are shown.
 - **Lunar months:** amanta, named from the Sun's sign at the new moon that opens
   them. A month with no sankranti is *adhika*, and the month that follows it is
   *nija*.

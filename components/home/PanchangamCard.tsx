@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context";
 import { useT } from "@/lib/ui-strings";
-import { localizeUpcomingEkadashi, nakshatramLabel, pakshaLabel, tithiLabel } from "@/lib/panchangam-labels";
+import { localizeUpcomingEkadashi, nakshatramOfDayLabel, tithiOfDayLabel } from "@/lib/panchangam-labels";
 import type { PanchangamData } from "@/lib/panchangam-service";
 
 /**
@@ -27,10 +27,8 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
   if (!panchangam) return null;
 
   const hasData = panchangam.tithi || panchangam.nakshatram || panchangam.festival;
-  const pakshaTithi = [pakshaLabel(panchangam.paksha, language), tithiLabel(panchangam.tithi, language)]
-    .filter(Boolean)
-    .join(" ");
-  const nakshatram = nakshatramLabel(panchangam.nakshatram, language);
+  const pakshaTithi = tithiOfDayLabel(panchangam, language);
+  const nakshatram = nakshatramOfDayLabel(panchangam, language);
 
   return (
     <div className="space-y-2">
