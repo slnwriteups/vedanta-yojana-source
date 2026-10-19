@@ -33,7 +33,7 @@
  *    they carry to any year and any place.
  */
 
-import { normalizeDegrees, sunEvent } from "./panchangam-astronomy.ts";
+import { normalizeDegrees, sunEvent, sunTransitAnchor } from "./panchangam-astronomy.ts";
 import {
   traditionalElongation as lunarElongation,
   traditionalMoonLongitude as siderealMoonLongitude,
@@ -104,6 +104,32 @@ export const NAKSHATRA_NAMES = [
   "Uttara Badra",
   "Revathi",
 ];
+
+/**
+ * The 27 yogas, in order from 0 at (Sun + Moon) = 0°. Spelled as the
+ * Ashramam's Sri Ranganātha Pādukā Panchangam spells them where it has
+ * printed one ("Mahendra" for the 26th, often written Indra).
+ */
+export const YOGA_NAMES = [
+  "Vishkambha", "Priti", "Ayushman", "Saubhagya", "Shobhana", "Atiganda", "Sukarma", "Dhriti", "Shula",
+  "Ganda", "Vriddhi", "Dhruva", "Vyaghata", "Harshana", "Vajra", "Siddhi", "Vyatipata", "Variyan",
+  "Parigha", "Shiva", "Siddha", "Sadhya", "Shubha", "Shukla", "Brahma", "Mahendra", "Vaidhriti",
+];
+
+/** The seven movable karanas, repeating eight times from the second half of Shukla Prathama. */
+const MOVABLE_KARANAS = ["Bava", "Balava", "Kaulava", "Taitula", "Garaja", "Vanija", "Bhadra"];
+
+/**
+ * Karana index (0–59, each half a tithi) → its name: Kimstughna first,
+ * then the movable seven eight times over, and Shakuni, Chatushpada and
+ * Nagava closing the month. Spelled as the Pādukā Panchangam does
+ * ("Taitula", "Bhadra" for Vishti, "Nagava" for Naga).
+ */
+export function karanaName(index: number): string {
+  if (index === 0) return "Kimstughna";
+  if (index >= 57) return ["Shakuni", "Chatushpada", "Nagava"][index - 57];
+  return MOVABLE_KARANAS[(index - 1) % 7];
+}
 
 export const TAMIL_MONTH_NAMES = [
   "Chithirai",
@@ -338,6 +364,7 @@ function segmentAt(fn: AngleFn, span: number, degreesPerDay: number, ms: number)
 const TITHI_RATE = 12.19;
 const NAKSHATRA_RATE = 13.18;
 const SUN_RATE = 0.9856;
+const YOGA_RATE = NAKSHATRA_RATE + SUN_RATE;
 
 /** Tithi index (0–29) in force at `ms`, without solving for its start and end. */
 function tithiIndexAt(ms: number): number {
@@ -346,6 +373,30 @@ function tithiIndexAt(ms: number): number {
 
 export function tithiAt(ms: number): Segment {
   return segmentAt(lunarElongation, 12, TITHI_RATE, ms);
+}
+
+/** Sun + Moon (traditional sidereal longitudes), whose 27 parts are the yogas. */
+function yogaLongitude(ms: number): number {
+  return normalizeDegrees(siderealSunLongitude(ms) + siderealMoonLongitude(ms));
+}
+
+export function yogaAt(ms: number): Segment {
+  return segmentAt(yogaLongitude, NAKSHATRA_SPAN, YOGA_RATE, ms);
+}
+
+/**
+ * The karana in force at `ms`: the first or second half of the tithi,
+ * halved in time. Sri Ahobila Mutt's calendar divides it so (each karana
+ * end it prints is the midpoint of its own printed tithi, minutes from
+ * where the elongation reaches 6°), and the one Pādukā karana end that
+ * tells the two apart agrees; see docs/PANCHANGAM-COMPARISON.md.
+ */
+export function karanaAt(ms: number): Segment {
+  const tithi = tithiAt(ms);
+  const middle = (tithi.start + tithi.end) / 2;
+  return ms < middle
+    ? { index: tithi.index * 2, start: tithi.start, end: middle }
+    : { index: tithi.index * 2 + 1, start: middle, end: tithi.end };
 }
 
 export function nakshatraAt(ms: number): Segment {
@@ -379,7 +430,7 @@ interface SunDay {
   start: number;
   sunrise: number;
   sunset: number;
-  /** False when the Sun doesn't rise or set (polar latitudes) and 06:00/18:00 stand in. */
+  /** False when the Sun doesn't rise or set (polar latitudes) and its transit stands in for both (see sunTransitAnchor). */
   hasSunEvents: boolean;
 }
 
@@ -402,11 +453,15 @@ class SunCalendar {
       const rise = sunEvent(start, latitude, longitude, "rise");
       const set = sunEvent(start, latitude, longitude, "set");
       const hasSunEvents = rise !== null && set !== null && set > rise;
+      // With no sunrise or sunset, the Sun's transits stand in, as Sri Ahobila Mutt's
+      // calendar takes them (see sunTransitAnchor); 06:00 and 18:00 only if even that
+      // can't be had (a rise without a set on a season's turning day).
+      const anchor = hasSunEvents ? null : sunTransitAnchor(start, latitude, longitude);
       cached = {
         dayNumber,
         start,
-        sunrise: hasSunEvents ? (rise as number) : start + 6 * MS_PER_HOUR,
-        sunset: hasSunEvents ? (set as number) : start + 18 * MS_PER_HOUR,
+        sunrise: hasSunEvents ? (rise as number) : (anchor?.rise ?? start + 6 * MS_PER_HOUR),
+        sunset: hasSunEvents ? (set as number) : (anchor?.set ?? start + 18 * MS_PER_HOUR),
         hasSunEvents,
       };
       this.days.set(dayNumber, cached);
@@ -620,8 +675,21 @@ type TithiRule = {
   name: string;
   month: number | null;
   tithi: number;
-  at?: DayPoint | "aparahna-coverage" | "last-sunset" | "last-arunodaya" | "6-nazhigai" | "12-nazhigai";
+  at?: DayPoint | "aparahna-coverage" | "pradosham" | "last-arunodaya" | "6-nazhigai" | "12-nazhigai";
 };
+
+/**
+ * How long Trayodasi must run past a sunset for that evening to be the
+ * Pradosham: half a nāzhigai. Inferred from Sri Ahobila Mutt's published
+ * days, not a stated rule. Measured with the Mutt's own printed times,
+ * it keeps the later of two Trayodasi sunsets when Trayodasi runs on 30
+ * vināzhigai past it (Auckland, 24 Oct 2026) or more (19.2 min, Chennai,
+ * 4 Feb 2027; 6 more cases from 39 min), and the earlier when it runs on
+ * 26 (Srirangam, 4 Feb 2027) or 24 (Los Angeles, 30 Mar 2026): the
+ * threshold lies in (26, 30] vināzhigai, and 30 is half a nāzhigai
+ * (docs/PANCHANGAM-VALIDATION.md).
+ */
+const PRADOSHAM_MINUTES = 12;
 
 /** Lunar months: 0 Chaitra … 11 Phalguna (amanta, nija months only). Tithis: 0 Shukla Prathama … 29 Amavasya. */
 const TITHI_FESTIVALS: TithiRule[] = [
@@ -641,9 +709,10 @@ const TITHI_FESTIVALS: TithiRule[] = [
   { name: "Anvashtaka", month: 10, tithi: 23, at: "aparahna-coverage" },
   // The first evening in Ashvina Shukla Dvitiya.
   { name: "Navaratri Pooja Begins", month: 6, tithi: 1, at: "sunset" },
-  // Trayodasi at sunset; when it spans two sunsets, the second.
-  { name: "Pradosham", month: null, tithi: 12, at: "last-sunset" },
-  { name: "Pradosham", month: null, tithi: 27, at: "last-sunset" },
+  // Trayodasi at sunset; when it spans two sunsets, the second -- if it lasts
+  // PRADOSHAM_MINUTES past it; if no sunset qualifies, the evening it begins.
+  { name: "Pradosham", month: null, tithi: 12, at: "pradosham" },
+  { name: "Pradosham", month: null, tithi: 27, at: "pradosham" },
   { name: "Amavasya Tarpanam", month: null, tithi: 29, at: "aparahna-coverage" },
 ];
 
@@ -916,8 +985,8 @@ function tithiFestivalsOn(cal: SunCalendar, d: number): string[] {
     const keptOn = (at: TithiRule["at"]) =>
       at === "aparahna-coverage"
         ? dayOfMostCoverage(cal, segment, 0.6, 0.8)
-        : at === "last-sunset"
-          ? dayAtPoint(cal, segment, "sunset", true)
+        : at === "pradosham"
+          ? dayAtPoint(cal, { ...segment, end: segment.end - PRADOSHAM_MINUTES * MS_PER_MINUTE }, "sunset", true)
           : at === "last-arunodaya"
             ? dayAtPoint(cal, segment, "arunodaya", true)
             : at === "6-nazhigai" || at === "12-nazhigai"
@@ -1055,10 +1124,15 @@ function sankalpamDeclaration(cal: SunCalendar, ms: number): string {
  * for the moment `ms`, and how long it stays true: until the tithi,
  * nakshatram, solar month or (at sunrise) weekday it names next changes.
  */
+/** The moment the Sankalpam declared at `ms` stops being true (see sankalpamText). */
+function sankalpamValidUntil(cal: SunCalendar, ms: number): number {
+  const nextSunrise = cal.day(cal.hinduDayOf(ms) + 1).sunrise;
+  return Math.min(tithiAt(ms).end, nakshatraAt(ms).end, rasiAt(ms).end, nextSunrise);
+}
+
 function sankalpamText(cal: SunCalendar, ms: number, placeName: string): string {
   const { timeZone } = cal.place;
-  const nextSunrise = cal.day(cal.hinduDayOf(ms) + 1).sunrise;
-  const validUntil = Math.min(tithiAt(ms).end, nakshatraAt(ms).end, rasiAt(ms).end, nextSunrise);
+  const validUntil = sankalpamValidUntil(cal, ms);
   const today = localTime(ms, timeZone).dayNumber;
   const followingDay = localTime(validUntil, timeZone).dayNumber !== today ? " of following day" : "";
   return (
@@ -1084,12 +1158,27 @@ export interface NakshatramChange {
   startsAt: string;
 }
 
+export interface YogaChange {
+  yoga: string;
+  startsAt: string;
+}
+
+export interface KaranaChange {
+  karana: string;
+  startsAt: string;
+}
+
 export interface ComputedPanchangam {
   /** Tithi at sunrise, spelled as lib/panchangam-labels.ts keys it. */
   tithi: string;
   paksha: string;
   /** Nakshatram at sunrise. */
   nakshatram: string;
+  /** Yoga and karana at sunrise (YOGA_NAMES, karanaName), and each that begins before the next sunrise. */
+  yoga: string;
+  yogaChanges: YogaChange[];
+  karana: string;
+  karanaChanges: KaranaChange[];
   /** The day's observances, comma-separated, or "". */
   festival: string;
   /** "Next Ekadasi: Thursday, 22nd Oct 2026." */
@@ -1117,6 +1206,13 @@ export interface ComputedPanchangam {
   nakshatramChanges: NakshatramChange[];
   /** Tamil month and day ("Purattasi 22"). */
   tamilDate: string;
+  /**
+   * For the Panchangam of the present moment (computePanchangamForDate
+   * on today): when it stops being current -- its Sankalpam's validity
+   * ends, or the civil day turns at midnight -- as epoch ms, so a screen
+   * left open recomputes then. Absent for any other day.
+   */
+  currentUntil?: number;
 }
 
 // The part of the day each kaalam takes (daylight in eighths), by weekday from Sunday.
@@ -1159,7 +1255,7 @@ function changesOn<T>(cal: SunCalendar, d: number, atSunrise: Segment, at: (ms: 
   const nextSunrise = cal.day(d + 1).sunrise;
   const changes: Array<T & { startsAt: string }> = [];
   let segment = atSunrise;
-  for (let guard = 0; guard < 3 && segment.end < nextSunrise; guard += 1) {
+  for (let guard = 0; guard < 4 && segment.end < nextSunrise; guard += 1) {
     segment = at(segment.end + MS_PER_MINUTE);
     changes.push({ ...describe(segment.index), startsAt: endsLabel(cal, d, segment.start) });
   }
@@ -1191,6 +1287,8 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
   const weekday = weekdayOf(dayNumber);
   const tithi = tithiAt(day.sunrise);
   const nakshatra = nakshatraAt(day.sunrise);
+  const yoga = yogaAt(day.sunrise);
+  const karana = karanaAt(day.sunrise);
 
   const ekadasiDay = nextEkadasiDay(cal, dayNumber);
   const upcomingEkadashiText =
@@ -1200,6 +1298,10 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
     tithi: tithiName(tithi.index),
     paksha: pakshaName(tithi.index),
     nakshatram: NAKSHATRA_NAMES[nakshatra.index],
+    yoga: YOGA_NAMES[yoga.index],
+    yogaChanges: changesOn(cal, dayNumber, yoga, yogaAt, (index) => ({ yoga: YOGA_NAMES[index] })),
+    karana: karanaName(karana.index),
+    karanaChanges: changesOn(cal, dayNumber, karana, karanaAt, (index) => ({ karana: karanaName(index) })),
     festival: festivalsOn(cal, dayNumber).join(", "),
     upcomingEkadashiText,
     sankalpamText: sankalpamText(cal, options.sankalpamAt ?? day.sunrise, options.placeName),
@@ -1229,5 +1331,9 @@ export function computePanchangamForDate(
 ): ComputedPanchangam {
   const dayNumber = localTime(date.getTime(), place.timeZone).dayNumber;
   const isToday = dayNumber === localTime(now.getTime(), place.timeZone).dayNumber;
-  return computePanchangam(dayNumber, place, { placeName, sankalpamAt: isToday ? now.getTime() : undefined });
+  const computed = computePanchangam(dayNumber, place, { placeName, sankalpamAt: isToday ? now.getTime() : undefined });
+  if (!isToday) return computed;
+  const cal = new SunCalendar(place);
+  const currentUntil = Math.min(sankalpamValidUntil(cal, now.getTime()), dayStart(dayNumber + 1, place.timeZone));
+  return { ...computed, currentUntil };
 }

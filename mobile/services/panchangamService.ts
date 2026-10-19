@@ -1,5 +1,5 @@
 import * as Location from "expo-location";
-import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type NakshatramChange, type TithiChange } from "../../content-lib/panchangam-engine.ts";
+import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type TithiChange, type YogaChange } from "../../content-lib/panchangam-engine.ts";
 import type { ChosenPlace } from "../../content-lib/panchangam-place.ts";
 
 /**
@@ -52,10 +52,21 @@ export interface PanchangamData {
   nakshatram: string;
   /** The nakshatrams that begin before the next sunrise, with their start times. */
   nakshatramChanges?: NakshatramChange[];
+  /** Yoga and karana at sunrise, and those that begin before the next sunrise (absent in older cached data). */
+  yoga?: string;
+  yogaChanges?: YogaChange[];
+  karana?: string;
+  karanaChanges?: KaranaChange[];
   festival: string;
   upcomingEkadashiText: string;
   /** The full Sankalpam declaration sentence for the current moment, or "" if unavailable. */
   sankalpamText: string;
+  /**
+   * When this Panchangam of the present moment stops being current (its
+   * Sankalpam's validity ends, or midnight), as epoch ms; the screen
+   * showing it recomputes then. Absent for any other day.
+   */
+  currentUntil?: number;
   /**
    * The resolved name of the place this Panchangam/Sankalpam was
    * computed for ("Chennai"), or "" when reverse geocoding produced no
@@ -72,6 +83,8 @@ export interface PanchangamData {
   rahuKaalam?: string;
   yamagandam?: string;
   gulikaKaalam?: string;
+  /** The IANA time zone of the place it was computed for ("Asia/Kolkata"). */
+  timeZone?: string;
   /** True when this is for a city the reader chose rather than the phone's location. */
   isChosenPlace?: boolean;
   /**
@@ -119,11 +132,24 @@ const LOCATION_UNAVAILABLE_FALLBACK: PanchangamData = {
  * "Sankalpam for {city}" declaration sentence (the calculation itself
  * only ever uses latitude/longitude/timezone, so a name that can't be
  * resolved changes the label alone).
- * Timezone is the DEVICE's own configured zone (Intl), so every time
- * shown reads on the reader's own clock.
+ * Timezone is the zone at those coordinates, worked out on the phone
+ * from the bundled places (content-lib/panchangam-places.ts timeZoneAt):
+ * the phone's own zone unless no place near the fix keeps that clock, as
+ * for a traveller whose phone is still on home time.
  * Returns null (never a guessed city) if permission is denied or no fix
  * can be obtained.
  */
+/** The time zone at a location fix (see resolveLocation); the phone's own zone if the places can't be loaded. */
+async function resolveTimeZone(latitude: number, longitude: number): Promise<string> {
+  const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  try {
+    const { timeZoneAt } = await import("../../content-lib/panchangam-places.ts");
+    return timeZoneAt(latitude, longitude, deviceZone);
+  } catch {
+    return deviceZone;
+  }
+}
+
 async function resolveLocation(): Promise<ResolvedLocation | null> {
   try {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -154,7 +180,7 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
       city,
       latitude,
       longitude,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezone: await resolveTimeZone(latitude, longitude),
     };
   } catch {
     return null;
@@ -192,9 +218,14 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       tithiChanges: computed.tithiChanges,
       nakshatram: computed.nakshatram,
       nakshatramChanges: computed.nakshatramChanges,
+      yoga: computed.yoga,
+      yogaChanges: computed.yogaChanges,
+      karana: computed.karana,
+      karanaChanges: computed.karanaChanges,
       festival: computed.festival,
       upcomingEkadashiText: computed.upcomingEkadashiText,
       sankalpamText: computed.sankalpamText,
+      currentUntil: computed.currentUntil,
       sunrise: computed.sunrise,
       sunset: computed.sunset,
       rahuKaalam: computed.rahuKaalam,
@@ -203,6 +234,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       // "" rather than the placeholder itself: an unresolved name is
       // shown as no location row at all, never as a fake city.
       location: location.city === UNNAMED_LOCATION ? "" : location.city,
+      timeZone: location.timezone,
       isChosenPlace: Boolean(chosen),
       timeZoneNote: sameClock ? undefined : timeZoneLabel(now, location.timezone),
     };

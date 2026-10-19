@@ -1,9 +1,10 @@
 /**
  * The monthly "Pañcāṅga Saṅgraham" printed in Sri Ranganātha Pādukā
  * (English e-Edition), the journal of Srirangam Srimad Andavan Ashramam,
- * transcribed day by day. The Home calendar features the Ashramam's own
- * special days (calendarFestivalLine) in the location-based festival
- * line computed by content-lib/panchangam-engine.ts, shows its Tarpaṇa
+ * transcribed day by day. The Ashramam is the calendar's primary
+ * authority for observances: every observance it publishes is shown on
+ * its published date, merged with the engine's own list by
+ * panchangam-observances.ts. The Home calendar also shows its Tarpaṇa
  * Saṅkalpam in the Sankalpam box, and falls back to its
  * tithi/nakshatram while the computed figures are loading or
  * unavailable.
@@ -358,35 +359,6 @@ export function localizePadukaFestival(festival: string, language: LanguageCode 
     .split(", ")
     .map((name) => OBSERVANCE_LABELS[name]?.[language] ?? name)
     .join(", ");
-}
-
-/**
- * The Ashramam's own observances in a day's `festival` -- its Andavans'
- * and ācāryas' tirunakshatrams -- which the computed calendar doesn't
- * carry. The journal's general observances (Ekadasi, Pradosham, Mahalaya,
- * the Āzhvārs, Svami Desikan...) are not featured: the computed calendar
- * already lists them under its own names, and repeating them would print
- * the same day twice.
- */
-const ASHRAMAM_OBSERVANCE = /\b(Andavan|Mahadesikan)\b/;
-
-export function padukaFeaturedObservances(festival: string): string[] {
-  return festival ? festival.split(", ").filter((name) => ASHRAMAM_OBSERVANCE.test(name)) : [];
-}
-
-/**
- * The Home calendar's festival line for a day: the computed text
- * ("Ekadasi, Swami Desikan Tirunakshatram") followed by the journal's
- * featured observances in `language`, so the Ashramam's special days read
- * the same way the computed ones do rather than under a separate heading.
- */
-export function calendarFestivalLine(
-  computedFestival: string,
-  day: PadukaPanchangamDay | null,
-  language: LanguageCode | null
-): string {
-  const featured = day ? padukaFeaturedObservances(day.festival).join(", ") : "";
-  return [computedFestival, localizePadukaFestival(featured, language)].filter(Boolean).join(", ");
 }
 
 /** The tarpaṇam as the sankalpam box shows it ("title: sankalpam"), in `language`'s script. */

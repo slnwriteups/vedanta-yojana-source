@@ -1,0 +1,2278 @@
+{
+ "source": "Sri Ahobila Mutt online calendar (https://ahobilamutt.org/online-calendar/), daily view, retrieved 2026-10-19 for development-time comparison only",
+ "place": {
+  "name": "Srirangam",
+  "latitude": 10.8625,
+  "longitude": 78.6896,
+  "timeZone": "Asia/Kolkata"
+ },
+ "notes": "Times are the calendar's own local clock times; ends \"HH:MM (+1)\" is after midnight, null means the element holds past the next sunrise (printed \"Full\"). Names are mapped to the engine's spellings. Karanas listed are those from sunrise to the next sunrise.",
+ "days": [
+  {
+   "date": "2026-09-18",
+   "sunrise": "06:08",
+   "sunset": "18:10",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Saptami",
+     "ends": "14:00"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Jyeshta",
+     "ends": "00:24 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "14:00"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "02:59 (+1)"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-09-19",
+   "sunrise": "06:07",
+   "sunset": "18:10",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Ashtami",
+     "ends": "15:59"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Moola",
+     "ends": "02:57 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "15:59"
+    },
+    {
+     "karana": "Balava",
+     "ends": "04:58 (+1)"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-09-20",
+   "sunrise": "06:07",
+   "sunset": "18:09",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Navami",
+     "ends": "17:57"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Ashadha",
+     "ends": "05:26 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "17:57"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-09-21",
+   "sunrise": "06:07",
+   "sunset": "18:08",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dasami",
+     "ends": "19:47"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Ashadha",
+     "ends": "06:07 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "06:52"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "19:47"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-09-22",
+   "sunrise": "06:07",
+   "sunset": "18:08",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Ekadasi",
+     "ends": "21:20"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Ashadha",
+     "ends": "07:43"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "08:33"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "21:20"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": "Sri Vedanta Desikan, Sri Kamalavasar, Srinivasar Ekadasi Vratam"
+  },
+  {
+   "date": "2026-09-23",
+   "sunrise": "06:07",
+   "sunset": "18:07",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dvadasi",
+     "ends": "22:28"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Shravana",
+     "ends": "09:38"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "09:54"
+    },
+    {
+     "karana": "Balava",
+     "ends": "22:28"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Dvadasi Paranai 06:07-08:31 Sravana"
+  },
+  {
+   "date": "2026-09-24",
+   "sunrise": "06:07",
+   "sunset": "18:06",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Trayodasi",
+     "ends": "23:06"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Dhanishta",
+     "ends": "11:08"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "10:47"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "23:06"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": "Pradosham"
+  },
+  {
+   "date": "2026-09-25",
+   "sunrise": "06:07",
+   "sunset": "18:06",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Chaturdasi",
+     "ends": "23:14"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Satabhisha",
+     "ends": "12:08"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "11:10"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "23:14"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": "HH 17"
+  },
+  {
+   "date": "2026-09-26",
+   "sunrise": "06:07",
+   "sunset": "18:05",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Pournami",
+     "ends": "22:51"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Badra",
+     "ends": "12:38"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "11:02"
+    },
+    {
+     "karana": "Bava",
+     "ends": "22:51"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-09-27",
+   "sunrise": "06:07",
+   "sunset": "18:05",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Prathama",
+     "ends": "22:01"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Badra",
+     "ends": "12:41"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "10:26"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "22:01"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": "Mahalaya Paksham Begins"
+  },
+  {
+   "date": "2026-09-28",
+   "sunrise": "06:07",
+   "sunset": "18:04",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Dvithiya",
+     "ends": "20:42"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Revathi",
+     "ends": "12:15"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "09:22"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "20:42"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-09-29",
+   "sunrise": "06:07",
+   "sunset": "18:03",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Trithiya",
+     "ends": "19:04"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Aswini",
+     "ends": "11:27"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "07:53"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "19:04"
+    },
+    {
+     "karana": "Bava",
+     "ends": "06:05 (+1)"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": "Maha Bharani"
+  },
+  {
+   "date": "2026-09-30",
+   "sunrise": "06:07",
+   "sunset": "18:03",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Chaturthi",
+     "ends": "17:07"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Bharani",
+     "ends": "10:21"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "17:07"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "04:02 (+1)"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-01",
+   "sunrise": "06:07",
+   "sunset": "18:02",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Panchami",
+     "ends": "14:57"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Krittika",
+     "ends": "08:59"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "14:57"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "01:48 (+1)"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": "Rohini"
+  },
+  {
+   "date": "2026-10-02",
+   "sunrise": "06:07",
+   "sunset": "18:01",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Shashthi",
+     "ends": "12:39"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Rohini",
+     "ends": "07:27"
+    },
+    {
+     "nakshatram": "Mrigasira",
+     "ends": "05:50 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "12:39"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "23:28"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-03",
+   "sunrise": "06:07",
+   "sunset": "18:01",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Saptami",
+     "ends": "10:17"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Ardra",
+     "ends": "04:11 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "10:17"
+    },
+    {
+     "karana": "Balava",
+     "ends": "21:05"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Madhyashtami"
+  },
+  {
+   "date": "2026-10-04",
+   "sunrise": "06:07",
+   "sunset": "18:00",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Ashtami",
+     "ends": "07:53"
+    },
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Navami",
+     "ends": "05:33 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Punarvasu",
+     "ends": "02:35 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "07:53"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "18:43"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "05:33 (+1)"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-05",
+   "sunrise": "06:07",
+   "sunset": "18:00",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Dasami",
+     "ends": "03:24 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Pushyami",
+     "ends": "01:09 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "16:28"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "03:24 (+1)"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-06",
+   "sunrise": "06:07",
+   "sunset": "17:59",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Ekadasi",
+     "ends": "01:31 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Aslesha",
+     "ends": "23:58"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "14:28"
+    },
+    {
+     "karana": "Balava",
+     "ends": "01:31 (+1)"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "HH 18, Ekadasi Vratam"
+  },
+  {
+   "date": "2026-10-07",
+   "sunrise": "06:07",
+   "sunset": "17:58",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Dvadasi",
+     "ends": "23:56"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Makha",
+     "ends": "23:04"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "12:44"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "23:56"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": "Dvadasi Paranai 07:07-08:29"
+  },
+  {
+   "date": "2026-10-08",
+   "sunrise": "06:07",
+   "sunset": "17:58",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Trayodasi",
+     "ends": "22:41"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Phalguni",
+     "ends": "22:31"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "11:19"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "22:41"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": "HH 12, Pradosham"
+  },
+  {
+   "date": "2026-10-09",
+   "sunrise": "06:07",
+   "sunset": "17:57",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Chaturdasi",
+     "ends": "21:54"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Phalguni",
+     "ends": "22:24"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "10:18"
+    },
+    {
+     "karana": "Shakuni",
+     "ends": "21:54"
+    },
+    {
+     "karana": "Chatushpada",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-10",
+   "sunrise": "06:07",
+   "sunset": "17:57",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Amavasya",
+     "ends": "21:36"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Hasta",
+     "ends": "22:46"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Chatushpada",
+     "ends": "09:45"
+    },
+    {
+     "karana": "Nagava",
+     "ends": "21:36"
+    },
+    {
+     "karana": "Kimstughna",
+     "ends": null
+    }
+   ],
+   "observances": "Mahalaya Amavasya"
+  },
+  {
+   "date": "2026-10-11",
+   "sunrise": "06:07",
+   "sunset": "17:56",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Prathama",
+     "ends": "21:47"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Chitra",
+     "ends": "23:37"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kimstughna",
+     "ends": "09:41"
+    },
+    {
+     "karana": "Bava",
+     "ends": "21:47"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": "Aashvayujam"
+  },
+  {
+   "date": "2026-10-12",
+   "sunrise": "06:07",
+   "sunset": "17:56",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dvithiya",
+     "ends": "22:30"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Swathi",
+     "ends": "00:57 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "10:08"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "22:30"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": "Navaratri Pooja Begins Svathi"
+  },
+  {
+   "date": "2026-10-13",
+   "sunrise": "06:07",
+   "sunset": "17:55",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Trithiya",
+     "ends": "23:42"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Visakha",
+     "ends": "02:46 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "11:06"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "23:42"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": "HH 33"
+  },
+  {
+   "date": "2026-10-14",
+   "sunrise": "06:07",
+   "sunset": "17:54",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Chaturthi",
+     "ends": "01:18 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Anuradha",
+     "ends": "04:56 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "12:30"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "01:18 (+1)"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-15",
+   "sunrise": "06:07",
+   "sunset": "17:54",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Panchami",
+     "ends": "03:12 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Jyeshta",
+     "ends": null
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "14:15"
+    },
+    {
+     "karana": "Balava",
+     "ends": "03:12 (+1)"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Sri Adivan Satagopan, Sri Kesavachariar"
+  },
+  {
+   "date": "2026-10-16",
+   "sunrise": "06:07",
+   "sunset": "17:53",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Shashthi",
+     "ends": "05:14 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Jyeshta",
+     "ends": "07:23"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "16:13"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "05:14 (+1)"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": "HH 20"
+  },
+  {
+   "date": "2026-10-17",
+   "sunrise": "06:07",
+   "sunset": "17:53",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Saptami",
+     "ends": null
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Moola",
+     "ends": "09:57"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "18:15"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-18",
+   "sunrise": "06:07",
+   "sunset": "17:52",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Saptami",
+     "ends": "07:17"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Ashadha",
+     "ends": "12:29"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "07:17"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "20:13"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": "Thula Ravi 06:21, Punyakalam"
+  },
+  {
+   "date": "2026-10-19",
+   "sunrise": "06:08",
+   "sunset": "17:52",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Ashtami",
+     "ends": "09:09"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Ashadha",
+     "ends": "14:49"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "09:09"
+    },
+    {
+     "karana": "Balava",
+     "ends": "21:56"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-20",
+   "sunrise": "06:08",
+   "sunset": "17:52",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Navami",
+     "ends": "10:43"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Shravana",
+     "ends": "16:51"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "10:43"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "23:18"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": "Maha Navami Sravana"
+  },
+  {
+   "date": "2026-10-21",
+   "sunrise": "06:08",
+   "sunset": "17:51",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dasami",
+     "ends": "11:53"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Dhanishta",
+     "ends": "18:28"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "11:53"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "00:13 (+1)"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": "Boothath Azhwar Vijaya Dasami"
+  },
+  {
+   "date": "2026-10-22",
+   "sunrise": "06:08",
+   "sunset": "17:51",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Ekadasi",
+     "ends": "12:33"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Satabhisha",
+     "ends": "19:35"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "12:33"
+    },
+    {
+     "karana": "Bava",
+     "ends": "00:37 (+1)"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": "Pey Azhwar Ekadasi Vratam"
+  },
+  {
+   "date": "2026-10-23",
+   "sunrise": "06:08",
+   "sunset": "17:50",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dvadasi",
+     "ends": "12:42"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Badra",
+     "ends": "20:12"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "12:42"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "00:32 (+1)"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": "Dvadasi Paranai 06:08-08:28 Pradosham"
+  },
+  {
+   "date": "2026-10-24",
+   "sunrise": "06:08",
+   "sunset": "17:50",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Trayodasi",
+     "ends": "12:23"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Badra",
+     "ends": "20:21"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "12:23"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "23:58"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": "HH45 Ashrama Sweekaaram"
+  },
+  {
+   "date": "2026-10-25",
+   "sunrise": "06:08",
+   "sunset": "17:49",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Chaturdasi",
+     "ends": "11:33"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Revathi",
+     "ends": "20:02"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "11:33"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "22:55"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-26",
+   "sunrise": "06:08",
+   "sunset": "17:49",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Pournami",
+     "ends": "10:18"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Aswini",
+     "ends": "19:19"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "10:18"
+    },
+    {
+     "karana": "Balava",
+     "ends": "21:30"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-27",
+   "sunrise": "06:09",
+   "sunset": "17:49",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Prathama",
+     "ends": "08:42"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Bharani",
+     "ends": "18:17"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "08:42"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "19:45"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-28",
+   "sunrise": "06:09",
+   "sunset": "17:48",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Dvithiya",
+     "ends": "06:48"
+    },
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Trithiya",
+     "ends": "04:40 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Krittika",
+     "ends": "16:59"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "06:48"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "17:44"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "04:40 (+1)"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-29",
+   "sunrise": "06:09",
+   "sunset": "17:48",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Chaturthi",
+     "ends": "02:20 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Rohini",
+     "ends": "15:28"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "15:30"
+    },
+    {
+     "karana": "Balava",
+     "ends": "02:20 (+1)"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Rohini"
+  },
+  {
+   "date": "2026-10-30",
+   "sunrise": "06:09",
+   "sunset": "17:48",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Panchami",
+     "ends": "23:58"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Mrigasira",
+     "ends": "13:51"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "13:09"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "23:58"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-10-31",
+   "sunrise": "06:09",
+   "sunset": "17:47",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Shashthi",
+     "ends": "21:37"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Ardra",
+     "ends": "12:13"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "10:48"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "21:37"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-01",
+   "sunrise": "06:10",
+   "sunset": "17:47",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Saptami",
+     "ends": "19:23"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Punarvasu",
+     "ends": "10:38"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "08:30"
+    },
+    {
+     "karana": "Bava",
+     "ends": "19:23"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-02",
+   "sunrise": "06:10",
+   "sunset": "17:47",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Ashtami",
+     "ends": "17:18"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Pushyami",
+     "ends": "09:11"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "06:20"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "17:18"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "04:22 (+1)"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-03",
+   "sunrise": "06:10",
+   "sunset": "17:46",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Navami",
+     "ends": "15:27"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Aslesha",
+     "ends": "07:55"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "15:27"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "02:40 (+1)"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-04",
+   "sunrise": "06:10",
+   "sunset": "17:46",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Dasami",
+     "ends": "13:54"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Makha",
+     "ends": "06:57"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "13:54"
+    },
+    {
+     "karana": "Bava",
+     "ends": "01:18 (+1)"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-05",
+   "sunrise": "06:11",
+   "sunset": "17:46",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Ekadasi",
+     "ends": "12:43"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Phalguni",
+     "ends": "06:18"
+    },
+    {
+     "nakshatram": "Uttara Phalguni",
+     "ends": "06:04 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "12:43"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "00:21 (+1)"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": "Ekadasi Vratam"
+  },
+  {
+   "date": "2026-11-06",
+   "sunrise": "06:11",
+   "sunset": "17:46",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Dvadasi",
+     "ends": "12:00"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Hasta",
+     "ends": null
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "12:00"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "23:52"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": "Dvadasi Paranai 06:11-08:30 Pradosham"
+  },
+  {
+   "date": "2026-11-07",
+   "sunrise": "06:11",
+   "sunset": "17:46",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Trayodasi",
+     "ends": "11:45"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Hasta",
+     "ends": "06:22"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "11:45"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "23:52"
+    },
+    {
+     "karana": "Shakuni",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-08",
+   "sunrise": "06:12",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Chaturdasi",
+     "ends": "12:00"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Chitra",
+     "ends": "07:07"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Shakuni",
+     "ends": "12:00"
+    },
+    {
+     "karana": "Chatushpada",
+     "ends": "00:23 (+1)"
+    },
+    {
+     "karana": "Nagava",
+     "ends": null
+    }
+   ],
+   "observances": "Amavasya Tarpanam Deepavali Svathi"
+  },
+  {
+   "date": "2026-11-09",
+   "sunrise": "06:12",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Krishna Paksha",
+     "tithi": "Amavasya",
+     "ends": "12:46"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Swathi",
+     "ends": "08:21"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Nagava",
+     "ends": "12:46"
+    },
+    {
+     "karana": "Kimstughna",
+     "ends": "01:24 (+1)"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-10",
+   "sunrise": "06:12",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Prathama",
+     "ends": "14:02"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Visakha",
+     "ends": "10:05"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "14:02"
+    },
+    {
+     "karana": "Balava",
+     "ends": "02:52 (+1)"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Kaartikam"
+  },
+  {
+   "date": "2026-11-11",
+   "sunrise": "06:13",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dvithiya",
+     "ends": "15:42"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Anuradha",
+     "ends": "12:12"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "15:42"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "04:40 (+1)"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-12",
+   "sunrise": "06:13",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Trithiya",
+     "ends": "17:38"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Jyeshta",
+     "ends": "14:36"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "17:38"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-13",
+   "sunrise": "06:13",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Chaturthi",
+     "ends": "19:43"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Moola",
+     "ends": "17:09"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "06:40"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "19:43"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": "HH 11"
+  },
+  {
+   "date": "2026-11-14",
+   "sunrise": "06:14",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Panchami",
+     "ends": "21:47"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Ashadha",
+     "ends": "19:41"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "08:45"
+    },
+    {
+     "karana": "Balava",
+     "ends": "21:47"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Sri Vishwaksenar, Thirukurugaipiranpillan"
+  },
+  {
+   "date": "2026-11-15",
+   "sunrise": "06:14",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Shashthi",
+     "ends": "23:42"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Ashadha",
+     "ends": "22:06"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "10:45"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "23:42"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-16",
+   "sunrise": "06:14",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Saptami",
+     "ends": "01:18 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Shravana",
+     "ends": "00:14 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "12:30"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "01:18 (+1)"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": "Poigai Azhwar Vruschika Ravi 04:07* Sravana"
+  },
+  {
+   "date": "2026-11-17",
+   "sunrise": "06:15",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Ashtami",
+     "ends": "02:29 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Dhanishta",
+     "ends": "01:57 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "13:54"
+    },
+    {
+     "karana": "Bava",
+     "ends": "02:29 (+1)"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": "Vruschika Masa Punyakalam"
+  },
+  {
+   "date": "2026-11-18",
+   "sunrise": "06:15",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Navami",
+     "ends": "03:11 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Satabhisha",
+     "ends": "03:13 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Balava",
+     "ends": "14:50"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": "03:11 (+1)"
+    },
+    {
+     "karana": "Taitula",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-19",
+   "sunrise": "06:16",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dasami",
+     "ends": "03:21 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Purva Badra",
+     "ends": "03:58 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Taitula",
+     "ends": "15:16"
+    },
+    {
+     "karana": "Garaja",
+     "ends": "03:21 (+1)"
+    },
+    {
+     "karana": "Vanija",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-20",
+   "sunrise": "06:16",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Ekadasi",
+     "ends": "03:00 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Uttara Badra",
+     "ends": "04:12 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Vanija",
+     "ends": "15:10"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": "03:00 (+1)"
+    },
+    {
+     "karana": "Bava",
+     "ends": null
+    }
+   ],
+   "observances": "HH 45 Kaisika Ekadasi"
+  },
+  {
+   "date": "2026-11-21",
+   "sunrise": "06:16",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Dvadasi",
+     "ends": "02:10 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Revathi",
+     "ends": "04:00 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bava",
+     "ends": "14:35"
+    },
+    {
+     "karana": "Balava",
+     "ends": "02:10 (+1)"
+    },
+    {
+     "karana": "Kaulava",
+     "ends": null
+    }
+   ],
+   "observances": "Dvadasi Paranai after 08:47"
+  },
+  {
+   "date": "2026-11-22",
+   "sunrise": "06:17",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Trayodasi",
+     "ends": "00:55 (+1)"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Aswini",
+     "ends": "03:21 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Kaulava",
+     "ends": "13:32"
+    },
+    {
+     "karana": "Taitula",
+     "ends": "00:55 (+1)"
+    },
+    {
+     "karana": "Garaja",
+     "ends": null
+    }
+   ],
+   "observances": "Pradosham"
+  },
+  {
+   "date": "2026-11-23",
+   "sunrise": "06:17",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Chaturdasi",
+     "ends": "23:18"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Bharani",
+     "ends": "02:23 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Garaja",
+     "ends": "12:06"
+    },
+    {
+     "karana": "Vanija",
+     "ends": "23:18"
+    },
+    {
+     "karana": "Bhadra",
+     "ends": null
+    }
+   ],
+   "observances": ""
+  },
+  {
+   "date": "2026-11-24",
+   "sunrise": "06:18",
+   "sunset": "17:45",
+   "tithis": [
+    {
+     "paksha": "Shukla Paksha",
+     "tithi": "Pournami",
+     "ends": "21:24"
+    }
+   ],
+   "nakshatrams": [
+    {
+     "nakshatram": "Krittika",
+     "ends": "01:08 (+1)"
+    }
+   ],
+   "karanas": [
+    {
+     "karana": "Bhadra",
+     "ends": "10:21"
+    },
+    {
+     "karana": "Bava",
+     "ends": "21:24"
+    },
+    {
+     "karana": "Balava",
+     "ends": null
+    }
+   ],
+   "observances": "Thirumangai Azhwar, HH 5, Nampillai Karthigai Pandigai"
+  }
+ ]
+}

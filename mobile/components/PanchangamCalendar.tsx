@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { calendarDay, todayIn } from "../../content-lib/panchangam-place.ts";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
@@ -9,14 +9,15 @@ import {
   localizeSankalpamText,
   localizeUpcomingEkadashi,
   nakshatramLabel,
+  karanaOfDayLabel,
   nakshatramOfDayLabel,
   pakshaLabel,
   tithiLabel,
   tithiOfDayLabel,
+  yogaOfDayLabel,
 } from "../panchangam-labels.ts";
 import { fetchPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 import {
-  calendarFestivalLine,
   localizePadukaFestival,
   localizePadukaTarpanam,
   padukaPanchangamFor,
@@ -24,6 +25,7 @@ import {
   type PadukaTarpanam,
 } from "../../content-lib/paduka-panchangam.ts";
 import { formatPanchangamTime } from "../services/panchangamTimings.ts";
+import { dayObservances, observanceLine } from "../../content-lib/panchangam-observances.ts";
 import { setPanchangamPlace, usePanchangamPlace } from "../services/panchangamPlaceStore.ts";
 import { PanchangamPlacePicker } from "./PanchangamPlacePicker";
 import { PanchangamDatePicker } from "./PanchangamDatePicker";
@@ -51,10 +53,19 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const { place, ready: placeReady } = usePanchangamPlace();
   // "Today" is today at the place the Panchangam is for: with a city chosen
   // in another time zone, that city's date, which can differ from the device's.
-  const today = useMemo(() => todayIn(place?.timeZone), [place]);
+  // Re-read whenever Home recomputes today's Panchangam (at the latest at
+  // midnight), so a screen left open overnight moves on to the new day.
+  const today = useMemo(() => todayIn(place?.timeZone), [place, initialPanchangam]);
   useEffect(() => {
     if (placeReady) setSelectedDate(todayIn(place?.timeZone));
   }, [place, placeReady]);
+  // Following today: a reader looking at today when the day turns sees the new today.
+  const previousToday = useRef(today);
+  useEffect(() => {
+    const before = previousToday.current;
+    previousToday.current = today;
+    if (!isSameDay(before, today)) setSelectedDate((selected) => (isSameDay(selected, before) ? today : selected));
+  }, [today]);
 
   useEffect(() => {
     // Wait for the saved city (if any) rather than computing for the phone's location first.
@@ -116,10 +127,15 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
   const pakshaTithi = data ? tithiOfDayLabel(data, language) : "";
   const nakshatram = data ? nakshatramOfDayLabel(data, language) : "";
+  const yoga = data ? yogaOfDayLabel(data, language) : "";
+  const karana = data ? karanaOfDayLabel(data, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showComputed = !isLoading && hasData;
-  const festival = data ? calendarFestivalLine(data.festival, paduka?.day ?? null, language) : "";
+  // The engine's observances merged with the Ashramam's published ones, each with its source.
+  const observances = data
+    ? observanceLine(dayObservances(data.festival, paduka?.day ?? null, data.timeZone ?? place?.timeZone), language)
+    : { text: "", source: null, srirangamDates: false };
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
   const timingRows = data
@@ -292,7 +308,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </View>
         ) : hasData && data ? (
           <View style={styles.contentRows}>
-            {festival ? <Text style={[styles.festival, { color: theme.colors.accent }]}>{festival}</Text> : null}
+            {observances.text ? (
+              <View style={styles.observances}>
+                <Text style={[styles.festival, { color: theme.colors.accent }]}>{observances.text}</Text>
+                <ObservanceSourceNote source={observances.source} srirangamDates={observances.srirangamDates} />
+              </View>
+            ) : null}
             {pakshaTithi ? (
               <Row
                 label={t("homeCalendarTithiLabel")}
@@ -308,6 +329,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 muted={theme.colors.muted}
                 fg={theme.colors.foreground}
               />
+            ) : null}
+            {yoga ? (
+              <Row label={t("homeCalendarYogaLabel")} value={yoga} muted={theme.colors.muted} fg={theme.colors.foreground} />
+            ) : null}
+            {karana ? (
+              <Row label={t("homeCalendarKaranamLabel")} value={karana} muted={theme.colors.muted} fg={theme.colors.foreground} />
             ) : null}
             {data.upcomingEkadashiText ? (
               <Row
@@ -405,6 +432,32 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   );
 }
 
+/**
+ * Where the day's observances come from: the Ashramam's Sri Ranganātha
+ * Pādukā, the engine's calculation, or both -- then "*" marks the
+ * calculated ones (panchangam-observances.ts observanceLine).
+ */
+function ObservanceSourceNote({
+  source,
+  srirangamDates = false,
+}: {
+  source: "paduka" | "calculated" | "both" | null;
+  srirangamDates?: boolean;
+}) {
+  const theme = useTheme();
+  const t = useT();
+  if (!source) return null;
+  // Away from Indian time, the Pādukā's dates are said to be Srirangam's, not the place's own.
+  const paduka = srirangamDates ? `${t("observanceSourcePaduka")} ${t("observanceSrirangamDates")}` : t("observanceSourcePaduka");
+  const text =
+    source === "both"
+      ? `${paduka} · * ${t("observanceSourceCalculated")}`
+      : source === "paduka"
+        ? paduka
+        : t("observanceSourceCalculated");
+  return <Text style={[styles.observanceSource, { color: theme.colors.muted }]}>{text}</Text>;
+}
+
 function Row({ label, value, muted, fg }: { label: string; value: string; muted: string; fg: string }) {
   return (
     <View style={styles.row}>
@@ -430,7 +483,11 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
   return (
     <View style={styles.contentRows}>
       {day.festival ? (
-        <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text>
+        <View style={styles.observances}>
+          <Text style={[styles.festival, { color: theme.colors.accent }]}>{localizePadukaFestival(day.festival, language)}</Text>
+          {/* Shown before the place is known, so its dates are said to be Srirangam's. */}
+          <ObservanceSourceNote source="paduka" srirangamDates />
+        </View>
       ) : null}
       {pakshaTithi ? (
         <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} muted={theme.colors.muted} fg={theme.colors.foreground} />
@@ -625,10 +682,16 @@ const styles = StyleSheet.create({
   contentRows: {
     gap: spacing.xs,
   },
+  observances: {
+    marginBottom: spacing.xs,
+  },
   festival: {
     fontSize: typography.body,
     fontWeight: "700",
-    marginBottom: spacing.xs,
+  },
+  observanceSource: {
+    fontSize: typography.eyebrow,
+    marginTop: 2,
   },
   row: {
     flexDirection: "row",

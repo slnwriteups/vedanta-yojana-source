@@ -7,7 +7,7 @@ import { formatPanchangamTime } from "./panchangam-timings.ts";
  * Web port of mobile/panchangam-labels.ts, verbatim (content unchanged,
  * only the import path differs). Native-script transliterations for the
  * Panchangam vocabulary lib/panchangam-service.ts returns (paksha,
- * tithi, nakshatram) -- same convention as
+ * tithi, nakshatram, yoga, karana) -- same convention as
  * content-lib/divya-desam-region-labels.ts: real Sanskrit/Tamil calendar
  * terms are transliterated into Tamil/Kannada/Devanagari script, not
  * translated into different words. English (language === null) keeps
@@ -107,6 +107,60 @@ export function nakshatramLabel(nakshatram: string, language: LanguageCode | nul
   return NAKSHATRAM_LABELS[nakshatram]?.[language] ?? nakshatram;
 }
 
+const YOGA_LABELS: Record<string, Record<LanguageCode, string>> = {
+  Vishkambha: { ta: "விஷ்கம்பம்", kn: "ವಿಷ್ಕಂಭ", hi: "विष्कम्भ", te: "విష్కంభం" },
+  Priti: { ta: "ப்ரீதி", kn: "ಪ್ರೀತಿ", hi: "प्रीति", te: "ప్రీతి" },
+  Ayushman: { ta: "ஆயுஷ்மான்", kn: "ಆಯುಷ್ಮಾನ್", hi: "आयुष्मान्", te: "ఆయుష్మాన్" },
+  Saubhagya: { ta: "சௌபாக்யம்", kn: "ಸೌಭಾಗ್ಯ", hi: "सौभाग्य", te: "సౌభాగ్యం" },
+  Shobhana: { ta: "சோபனம்", kn: "ಶೋಭನ", hi: "शोभन", te: "శోభనం" },
+  Atiganda: { ta: "அதிகண்டம்", kn: "ಅತಿಗಂಡ", hi: "अतिगण्ड", te: "అతిగండం" },
+  Sukarma: { ta: "சுகர்மம்", kn: "ಸುಕರ್ಮ", hi: "सुकर्मा", te: "సుకర్మ" },
+  Dhriti: { ta: "த்ருதி", kn: "ಧೃತಿ", hi: "धृति", te: "ధృతి" },
+  Shula: { ta: "சூலம்", kn: "ಶೂಲ", hi: "शूल", te: "శూలం" },
+  Ganda: { ta: "கண்டம்", kn: "ಗಂಡ", hi: "गण्ड", te: "గండం" },
+  Vriddhi: { ta: "வ்ருத்தி", kn: "ವೃದ್ಧಿ", hi: "वृद्धि", te: "వృద్ధి" },
+  Dhruva: { ta: "த்ருவம்", kn: "ಧ್ರುವ", hi: "ध्रुव", te: "ధ్రువం" },
+  Vyaghata: { ta: "வ்யாகாதம்", kn: "ವ್ಯಾಘಾತ", hi: "व्याघात", te: "వ్యాఘాతం" },
+  Harshana: { ta: "ஹர்ஷணம்", kn: "ಹರ್ಷಣ", hi: "हर्षण", te: "హర్షణం" },
+  Vajra: { ta: "வஜ்ரம்", kn: "ವಜ್ರ", hi: "वज्र", te: "వజ్రం" },
+  Siddhi: { ta: "ஸித்தி", kn: "ಸಿದ್ಧಿ", hi: "सिद्धि", te: "సిద్ధి" },
+  Vyatipata: { ta: "வ்யதீபாதம்", kn: "ವ್ಯತೀಪಾತ", hi: "व्यतीपात", te: "వ్యతీపాతం" },
+  Variyan: { ta: "வரீயான்", kn: "ವರೀಯಾನ್", hi: "वरीयान्", te: "వరీయాన్" },
+  Parigha: { ta: "பரிகம்", kn: "ಪರಿಘ", hi: "परिघ", te: "పరిఘం" },
+  Shiva: { ta: "சிவம்", kn: "ಶಿವ", hi: "शिव", te: "శివం" },
+  Siddha: { ta: "ஸித்தம்", kn: "ಸಿದ್ಧ", hi: "सिद्ध", te: "సిద్ధం" },
+  Sadhya: { ta: "ஸாத்யம்", kn: "ಸಾಧ್ಯ", hi: "साध्य", te: "సాధ్యం" },
+  Shubha: { ta: "சுபம்", kn: "ಶುಭ", hi: "शुभ", te: "శుభం" },
+  Shukla: { ta: "சுக்லம்", kn: "ಶುಕ್ಲ", hi: "शुक्ल", te: "శుక్లం" },
+  Brahma: { ta: "ப்ரம்மம்", kn: "ಬ್ರಹ್ಮ", hi: "ब्रह्म", te: "బ్రహ్మం" },
+  Mahendra: { ta: "மாஹேந்திரம்", kn: "ಮಾಹೇಂದ್ರ", hi: "माहेन्द्र", te: "మాహేంద్రం" },
+  Vaidhriti: { ta: "வைத்ருதி", kn: "ವೈಧೃತಿ", hi: "वैधृति", te: "వైధృతి" },
+};
+
+const KARANA_LABELS: Record<string, Record<LanguageCode, string>> = {
+  Kimstughna: { ta: "கிம்ஸ்துக்னம்", kn: "ಕಿಂಸ್ತುಘ್ನ", hi: "किंस्तुघ्न", te: "కింస్తుఘ్నం" },
+  Bava: { ta: "பவம்", kn: "ಬವ", hi: "बव", te: "బవ" },
+  Balava: { ta: "பாலவம்", kn: "ಬಾಲವ", hi: "बालव", te: "బాలవ" },
+  Kaulava: { ta: "கௌலவம்", kn: "ಕೌಲವ", hi: "कौलव", te: "కౌలవ" },
+  Taitula: { ta: "தைதுலம்", kn: "ತೈತುಲ", hi: "तैतुल", te: "తైతుల" },
+  Garaja: { ta: "கரசை", kn: "ಗರಜ", hi: "गरज", te: "గరజ" },
+  Vanija: { ta: "வணிசை", kn: "ವಣಿಜ", hi: "वणिज", te: "వణిజ" },
+  Bhadra: { ta: "பத்திரை", kn: "ಭದ್ರ", hi: "भद्रा", te: "భద్ర" },
+  Shakuni: { ta: "சகுனி", kn: "ಶಕುನಿ", hi: "शकुनि", te: "శకుని" },
+  Chatushpada: { ta: "சதுஷ்பாதம்", kn: "ಚತುಷ್ಪಾದ", hi: "चतुष्पाद", te: "చతుష్పాదం" },
+  Nagava: { ta: "நாகவம்", kn: "ನಾಗವ", hi: "नागव", te: "నాగవం" },
+};
+
+export function yogaLabel(yoga: string, language: LanguageCode | null): string {
+  if (!language || !yoga) return yoga;
+  return YOGA_LABELS[yoga]?.[language] ?? yoga;
+}
+
+export function karanaLabel(karana: string, language: LanguageCode | null): string {
+  if (!language || !karana) return karana;
+  return KARANA_LABELS[karana]?.[language] ?? karana;
+}
+
 const CHANGE_TILL: Record<LanguageCode | "en", (name: string, time: string) => string> = {
   en: (name, time) => `${name} till ${time}`,
   ta: (name, time) => `${name} ${time} வரை`,
@@ -163,6 +217,34 @@ export function nakshatramOfDayLabel(
   if (!first) return first;
   return withChanges(
     [first, ...changes.map((change) => nakshatramLabel(change.nakshatram, language))],
+    changes.map((change) => change.startsAt),
+    language
+  );
+}
+
+/** The day's yoga line, with each change before the next sunrise, as tithiOfDayLabel; "" in older cached data. */
+export function yogaOfDayLabel(
+  day: { yoga?: string; yogaChanges?: Array<{ yoga: string; startsAt: string }> },
+  language: LanguageCode | null
+): string {
+  if (!day.yoga) return "";
+  const changes = day.yogaChanges ?? [];
+  return withChanges(
+    [day.yoga, ...changes.map((change) => change.yoga)].map((yoga) => yogaLabel(yoga, language)),
+    changes.map((change) => change.startsAt),
+    language
+  );
+}
+
+/** The day's karana line, likewise. */
+export function karanaOfDayLabel(
+  day: { karana?: string; karanaChanges?: Array<{ karana: string; startsAt: string }> },
+  language: LanguageCode | null
+): string {
+  if (!day.karana) return "";
+  const changes = day.karanaChanges ?? [];
+  return withChanges(
+    [day.karana, ...changes.map((change) => change.karana)].map((karana) => karanaLabel(karana, language)),
     changes.map((change) => change.startsAt),
     language
   );

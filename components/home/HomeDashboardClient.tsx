@@ -56,23 +56,44 @@ export function HomeDashboardClient({
   const resolvedList = resolveAllLastRead(lastReadByBook, catalog, language);
 
   // Today's Panchangam for the chosen city, or the browser's location when
-  // none is chosen; recomputed when the reader changes the city.
+  // none is chosen; recomputed when the reader changes the city, and when
+  // it stops being current (its Sankalpam's validity ends, or midnight) --
+  // so a tab left open never shows a stale Sankalpam as the present one.
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
+  const [refreshes, setRefreshes] = useState(0);
   const { place, ready: placeReady } = usePanchangamPlace();
   useEffect(() => {
     void loadPanchangamPlace();
   }, []);
   useEffect(() => {
+    setPanchangam(null);
+  }, [place]);
+  useEffect(() => {
     if (!placeReady) return;
     let cancelled = false;
-    setPanchangam(null);
     fetchPanchangam(undefined, place).then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {
       cancelled = true;
     };
-  }, [place, placeReady]);
+  }, [place, placeReady, refreshes]);
+  const currentUntil = panchangam?.currentUntil;
+  useEffect(() => {
+    if (currentUntil === undefined) return;
+    const refresh = () => setRefreshes((n) => n + 1);
+    // Coming back to the tab recomputes: its timers are throttled in the background,
+    // and the reader may have moved since (the location is read again).
+    const onVisible = () => {
+      if (document.visibilityState === "visible") refresh();
+    };
+    const timer = setTimeout(refresh, Math.max(0, currentUntil - Date.now()) + 1000);
+    document.addEventListener("visibilitychange", onVisible);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
+  }, [currentUntil]);
 
   return (
     <div className="space-y-8">

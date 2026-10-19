@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppState, ScrollView, StyleSheet, Text, View } from "react-native";
 import { resolveAllLastRead } from "../../content-lib/reading-position.ts";
 import { ContentCard } from "../../components/ContentCard";
 import { HomeHeader } from "../../components/HomeHeader";
@@ -53,23 +53,43 @@ export default function HomeScreen() {
   const resolvedList = resolveAllLastRead(lastReadByBook, language, loadOfflineBook);
 
   // Today's Panchangam for the chosen city, or the phone's location when
-  // none is chosen; recomputed when the reader changes the city.
+  // none is chosen; recomputed when the reader changes the city, and when
+  // it stops being current (its Sankalpam's validity ends, or midnight) --
+  // so a screen left open never shows a stale Sankalpam as the present one.
   const [panchangam, setPanchangam] = useState<PanchangamData | null>(null);
+  const [refreshes, setRefreshes] = useState(0);
   const { place, ready: placeReady } = usePanchangamPlace();
   useEffect(() => {
     void loadPanchangamPlace();
   }, []);
   useEffect(() => {
+    setPanchangam(null);
+  }, [place]);
+  useEffect(() => {
     if (!placeReady) return;
     let cancelled = false;
-    setPanchangam(null);
     fetchPanchangam(undefined, place).then((data) => {
       if (!cancelled) setPanchangam(data);
     });
     return () => {
       cancelled = true;
     };
-  }, [place, placeReady]);
+  }, [place, placeReady, refreshes]);
+  const currentUntil = panchangam?.currentUntil;
+  useEffect(() => {
+    if (currentUntil === undefined) return;
+    const refresh = () => setRefreshes((n) => n + 1);
+    // Coming back to the app recomputes: timers don't run in the background, and the
+    // reader may have moved since (the location is read again).
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") refresh();
+    });
+    const timer = setTimeout(refresh, Math.max(0, currentUntil - Date.now()) + 1000);
+    return () => {
+      clearTimeout(timer);
+      subscription.remove();
+    };
+  }, [currentUntil]);
 
   // This app is distributed as a direct-download APK, not through
   // Google Play, so there's no OS-level background update -- checked

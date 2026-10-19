@@ -1,4 +1,5 @@
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import {
   FESTIVAL_NAMES,
@@ -6,6 +7,10 @@ import {
   computePanchangam,
   computePanchangamForDate,
   dayNumberOf,
+  karanaAt,
+  karanaName,
+  nakshatraAt,
+  tithiAt,
   tithiName,
   type PanchangamPlace,
 } from "../../content-lib/panchangam-engine.ts";
@@ -150,6 +155,157 @@ test("the tithi line names the paksha again only when it turns, in every languag
   }
   // Older cached data without the field still shows the sunrise tithi.
   assert.equal(tithiOfDayLabel({ paksha: "Shukla Paksha", tithi: "Dasami" }, null), "Shukla Paksha Dasami");
+});
+
+test("the present moment's Panchangam says when it stops being current", () => {
+  const BENGALURU: PanchangamPlace = { latitude: 12.97, longitude: 77.59, timeZone: "Asia/Kolkata" };
+  const ist = (h: number, m: number, d = 19) => new Date(Date.UTC(2026, 9, d, h, m) - 330 * 60_000);
+  // 19 Oct 2026, 12:27 PM IST: valid until Uttara Ashadha ends at 2:50:57 PM.
+  const noon = computePanchangamForDate(ist(12, 27), BENGALURU, "Bengaluru", ist(12, 27));
+  assert.match(noon.sankalpamText, /valid through 02:50:57 PM: .*uttarāṣāḍhā nakṣatra/);
+  assert.ok(Math.abs(noon.currentUntil! - (ist(14, 50).getTime() + 57_000)) < 1000, String(new Date(noon.currentUntil!)));
+  // Recomputed then, the Sankalpam names the new nakshatram.
+  const after = computePanchangamForDate(new Date(noon.currentUntil! + 1000), BENGALURU, "Bengaluru", new Date(noon.currentUntil! + 1000));
+  assert.match(after.sankalpamText, /śravaṇa nakṣatra/);
+  // Late in the evening nothing changes before midnight, which ends it.
+  const late = computePanchangamForDate(ist(23, 30), BENGALURU, "Bengaluru", ist(23, 30));
+  assert.equal(late.currentUntil, ist(0, 0, 20).getTime());
+  // Any other day is not "current" at all.
+  assert.equal(computePanchangamForDate(ist(12, 0, 20), BENGALURU, "Bengaluru", ist(12, 27)).currentUntil, undefined);
+});
+
+test("the present moment's Panchangam expires at each change the Sankalpam names", () => {
+  const ist = (d: number, h: number, m: number) => new Date(Date.UTC(2026, 9, d, h, m) - 330 * 60_000);
+  const at = (place: PanchangamPlace, now: Date) => computePanchangamForDate(now, place, "x", now);
+  // Tithi: 18 Oct, 06:30 IST -- Saptami ends at 07:17 (published), first of all.
+  const tithi = at(SRIRANGAM, ist(18, 6, 30));
+  assert.ok(Math.abs(tithi.currentUntil! - ist(18, 7, 17).getTime()) < 90_000, String(new Date(tithi.currentUntil!)));
+  // Solar month: 18 Oct, 06:10 IST -- the Sun enters Tula at 06:21 (published), before the tithi ends.
+  const month = at(SRIRANGAM, ist(18, 6, 10));
+  assert.ok(Math.abs(month.currentUntil! - ist(18, 6, 21).getTime()) < 90_000, String(new Date(month.currentUntil!)));
+  assert.match(month.sankalpamText, /kanyā māse/);
+  assert.match(at(SRIRANGAM, new Date(month.currentUntil! + 1000)).sankalpamText, /tulā māse/);
+  // Local date: New York's own midnight (EDT), not India's.
+  const ny = new Date(Date.UTC(2026, 9, 20, 3, 30)); // 23:30 EDT on 19 Oct
+  const late = at(NEW_YORK, ny);
+  assert.ok(late.currentUntil! <= Date.UTC(2026, 9, 20, 4, 0), String(new Date(late.currentUntil!)));
+  assert.match(late.sankalpamText, / EDT /);
+});
+
+test("Pradosham: the later sunset counts only if Trayodasi runs half a nazhigai past it", () => {
+  // Sri Ahobila Mutt's published days, with Trayodasi's run past the later sunset in its own figures.
+  const LA: PanchangamPlace = { latitude: 34.05, longitude: -118.24, timeZone: "America/Los_Angeles" };
+  const AUCKLAND: PanchangamPlace = { latitude: -36.85, longitude: 174.76, timeZone: "Pacific/Auckland" };
+  const pradosham = (place: PanchangamPlace, iso: string) => observances(place, iso).includes("Pradosham");
+  // 24 vinazhigai (Los Angeles): the evening it begins instead.
+  assert.ok(pradosham(LA, "2026-03-29") && !pradosham(LA, "2026-03-30"));
+  // 26 vinazhigai (Srirangam): the earlier sunset.
+  assert.ok(pradosham(SRIRANGAM, "2027-02-03") && !pradosham(SRIRANGAM, "2027-02-04"));
+  // 30 vinazhigai (Auckland) and 48 (Chennai): the later.
+  assert.ok(!pradosham(AUCKLAND, "2026-10-23") && pradosham(AUCKLAND, "2026-10-24"));
+  assert.ok(!pradosham(CHENNAI, "2027-02-03") && pradosham(CHENNAI, "2027-02-04"));
+});
+
+test("a day without sunrise is reckoned from the Sun's transits, as the Mutt's calendar takes it", () => {
+  const TROMSO: PanchangamPlace = { latitude: 69.65, longitude: 18.96, timeZone: "Europe/Oslo" };
+  // Midnight sun: sunrise at the lowest point (00:47), sunset at the next -- so Trayodasi, from
+  // 21:00, holds the 26th's "sunset" and its Pradosham is kept that day, as published.
+  assert.ok(observances(TROMSO, "2026-06-26").includes("Pradosham"));
+  assert.ok(!observances(TROMSO, "2026-06-27").includes("Pradosham"));
+  assert.match(observances(TROMSO, "2026-06-26").join(", "), /Dvadasi Paranai 01:5\d-/);
+  // Nothing is displayed: the Sun doesn't rise.
+  const p = day(TROMSO, "2026-06-26");
+  assert.deepEqual([p.sunrise, p.sunset, p.rahuKaalam], ["", "", ""]);
+});
+
+test("yoga and karana agree with the Ashramam's Tarpana Sankalpams", () => {
+  // Sri Ranganātha Pādukā, Sep 2026 issue (content-lib/paduka-panchangam.ts),
+  // for Srirangam. A karana's printed end ("catuṣpāda till 09.05") is in
+  // nāzhigai.vināzhigai after sunrise (1 nāzhigai = 24 min, 1 vināzhigai =
+  // 24 s): read as a clock time, "vaṇija till 2.55" could not be right.
+  const nazhigai = (printed: string) => {
+    const [n, v] = printed.split(".").map(Number);
+    return n * 24 + v * 0.4;
+  };
+  const sunriseMs = (iso: string, sunrise: string) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    const [h, min] = sunrise.split(":").map(Number);
+    return Date.UTC(y, m - 1, d, h, min) - 330 * 60_000;
+  };
+  const cases: Array<[string, string, string, string?, string?, string?]> = [
+    // [date, yoga, karana at sunrise, next karana, printed end of the sunrise karana]
+    ["2026-09-17", "Vishkambha", "Taitula"],
+    ["2026-10-10", "Mahendra", "Chatushpada", "Nagava", "09.05"],
+    ["2026-10-18", "Sukarma", "Vanija", "Bhadra", "2.55"],
+  ];
+  for (const [iso, yoga, karana, next, printed] of cases) {
+    const p = day(SRIRANGAM, iso);
+    assert.equal(p.yoga, yoga, iso);
+    assert.equal(p.karana, karana, iso);
+    if (!next || !printed) continue;
+    assert.equal(p.karanaChanges[0].karana, next, iso);
+    const ends = karanaAt(sunriseMs(iso, p.sunrise)).end;
+    const after = (ends - sunriseMs(iso, p.sunrise)) / 60_000;
+    assert.ok(Math.abs(after - nazhigai(printed)) <= 2, `${iso}: ${after.toFixed(1)} min after sunrise vs ${printed} nāzhigai`);
+  }
+});
+
+test("karanas run Kimstughna, the movable seven eight times, then Shakuni, Chatushpada, Nagava", () => {
+  const names = Array.from({ length: 60 }, (_, i) => karanaName(i));
+  assert.deepEqual(names.slice(0, 9), ["Kimstughna", "Bava", "Balava", "Kaulava", "Taitula", "Garaja", "Vanija", "Bhadra", "Bava"]);
+  assert.deepEqual(names.slice(55), ["Vanija", "Bhadra", "Shakuni", "Chatushpada", "Nagava"]);
+  assert.equal(names.filter((n) => n === "Bhadra").length, 8);
+  // Across a year, the last yoga and karana listed are the next sunrise's.
+  for (let d = dayNumberOf(2026, 4, 14); d < dayNumberOf(2027, 4, 14); d += 1) {
+    const p = computePanchangam(d, CHENNAI, { placeName: "Chennai" });
+    const next = computePanchangam(d + 1, CHENNAI, { placeName: "Chennai" });
+    assert.equal((p.yogaChanges.at(-1) ?? p).yoga, next.yoga, String(d));
+    assert.equal((p.karanaChanges.at(-1) ?? p).karana, next.karana, String(d));
+  }
+});
+
+test("agrees with Sri Ahobila Mutt's published days for Srirangam, 18 Sep - 24 Nov 2026", () => {
+  // tests/content/fixtures: the Mutt's daily view for the days the Pādukā
+  // journal covers; docs/PANCHANGAM-COMPARISON.md sets them side by side.
+  const fixture = JSON.parse(
+    readFileSync(new URL("./fixtures/ahobila-srirangam-2026-09-18_11-24.json", import.meta.url), "utf8")
+  ) as {
+    days: Array<{
+      date: string;
+      sunrise: string;
+      tithis: Array<{ paksha: string; tithi: string; ends: string | null }>;
+      nakshatrams: Array<{ nakshatram: string; ends: string | null }>;
+      karanas: Array<{ karana: string; ends: string | null }>;
+    }>;
+  };
+  const at = (iso: string, clock: string) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    const [h, min] = clock.slice(0, 5).split(":").map(Number);
+    return Date.UTC(y, m - 1, d + (clock.endsWith("(+1)") ? 1 : 0), h, min) - 330 * 60_000;
+  };
+  const within = (engine: number, published: number, what: string) =>
+    assert.ok(Math.abs(engine - published) <= 5 * 60_000, `${what}: ${((engine - published) / 60_000).toFixed(1)} min`);
+  fixture.days.forEach((pub, i) => {
+    const p = day(SRIRANGAM, pub.date);
+    const next = fixture.days[i + 1];
+    assert.deepEqual([p.paksha, p.tithi, p.nakshatram], [pub.tithis[0].paksha, pub.tithis[0].tithi, pub.nakshatrams[0].nakshatram], pub.date);
+    assert.ok(Math.abs(minutes(p.sunrise) - minutes(pub.sunrise)) <= 1, `${pub.date} sunrise`);
+    pub.tithis.forEach((t, j) => {
+      // The daily view caps an element still running at the next sunrise; the next day shows its real end.
+      const capped = j === pub.tithis.length - 1 && next?.tithis[0].tithi === t.tithi;
+      if (t.ends && !capped) within(tithiAt(at(pub.date, t.ends) - 1_800_000).end, at(pub.date, t.ends), `${pub.date} ${t.tithi}`);
+    });
+    pub.nakshatrams.forEach((n, j) => {
+      const capped = j === pub.nakshatrams.length - 1 && next?.nakshatrams[0].nakshatram === n.nakshatram;
+      if (n.ends && !capped) within(nakshatraAt(at(pub.date, n.ends) - 1_800_000).end, at(pub.date, n.ends), `${pub.date} ${n.nakshatram}`);
+    });
+    for (const k of pub.karanas) {
+      if (!k.ends) continue;
+      const karana = karanaAt(at(pub.date, k.ends) - 1_800_000);
+      assert.equal(karanaName(karana.index), k.karana, `${pub.date} karana`);
+      within(karana.end, at(pub.date, k.ends), `${pub.date} ${k.karana}`);
+    }
+  });
 });
 
 test("agrees with every day of the Paduka journal's printed panchangam", () => {

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { searchPlaces, normalizePlaceText } from "../../content-lib/panchangam-places.ts";
+import { searchPlaces, normalizePlaceText, timeZoneAt } from "../../content-lib/panchangam-places.ts";
 import { calendarDay, isChosenPlace, placeLabel, todayIn } from "../../content-lib/panchangam-place.ts";
 import { PLACE_ROWS, PLACE_TIME_ZONES } from "../../content-lib/panchangam-places-data.ts";
 import { computePanchangamForDate, timeZoneLabel } from "../../content-lib/panchangam-engine.ts";
@@ -103,4 +103,18 @@ test("the times' zone is named even where the phone has no abbreviation for it",
   assert.equal(timeZoneLabel(ms, "Asia/Kathmandu"), "GMT+5:45");
   assert.equal(timeZoneLabel(ms, "Atlantic/Reykjavik"), "GMT");
   assert.equal(timeZoneLabel(ms, "America/New_York"), "EDT");
+});
+
+test("the time zone at a location fix: the device's own unless no place near it keeps that clock", () => {
+  // At home, the device's own zone (an alias of it too).
+  assert.equal(timeZoneAt(12.97, 77.59, "Asia/Kolkata"), "Asia/Kolkata");
+  assert.equal(timeZoneAt(12.97, 77.59, "Asia/Calcutta"), "Asia/Calcutta");
+  // Either side of the India-Nepal border, whose clocks differ by 15 minutes.
+  assert.equal(timeZoneAt(27.01, 84.88, "Asia/Kathmandu"), "Asia/Kathmandu"); // Birgunj
+  assert.equal(timeZoneAt(26.98, 84.85, "Asia/Kolkata"), "Asia/Kolkata"); // Raxaul
+  // A traveller whose phone is still on home time.
+  assert.equal(timeZoneAt(12.97, 77.59, "America/New_York"), "Asia/Kolkata");
+  assert.equal(timeZoneAt(40.71, -74.0, "Asia/Kolkata"), "America/New_York");
+  // Nowhere near a place: the device's zone.
+  assert.equal(timeZoneAt(35, -40, "Europe/London"), "Europe/London");
 });
