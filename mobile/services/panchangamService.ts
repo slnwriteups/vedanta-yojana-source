@@ -57,6 +57,12 @@ export interface PanchangamData {
   /** The full Sankalpam declaration sentence for the current moment, or "" if unavailable. */
   sankalpamText: string;
   /**
+   * When this Panchangam of the present moment stops being current (its
+   * Sankalpam's validity ends, or midnight), as epoch ms; the screen
+   * showing it recomputes then. Absent for any other day.
+   */
+  currentUntil?: number;
+  /**
    * The resolved name of the place this Panchangam/Sankalpam was
    * computed for ("Chennai"), or "" when reverse geocoding produced no
    * name -- the whole point being that a reader can see WHERE the day's
@@ -195,6 +201,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       festival: computed.festival,
       upcomingEkadashiText: computed.upcomingEkadashiText,
       sankalpamText: computed.sankalpamText,
+      currentUntil: computed.currentUntil,
       sunrise: computed.sunrise,
       sunset: computed.sunset,
       rahuKaalam: computed.rahuKaalam,

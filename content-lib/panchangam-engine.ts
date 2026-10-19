@@ -1055,10 +1055,15 @@ function sankalpamDeclaration(cal: SunCalendar, ms: number): string {
  * for the moment `ms`, and how long it stays true: until the tithi,
  * nakshatram, solar month or (at sunrise) weekday it names next changes.
  */
+/** The moment the Sankalpam declared at `ms` stops being true (see sankalpamText). */
+function sankalpamValidUntil(cal: SunCalendar, ms: number): number {
+  const nextSunrise = cal.day(cal.hinduDayOf(ms) + 1).sunrise;
+  return Math.min(tithiAt(ms).end, nakshatraAt(ms).end, rasiAt(ms).end, nextSunrise);
+}
+
 function sankalpamText(cal: SunCalendar, ms: number, placeName: string): string {
   const { timeZone } = cal.place;
-  const nextSunrise = cal.day(cal.hinduDayOf(ms) + 1).sunrise;
-  const validUntil = Math.min(tithiAt(ms).end, nakshatraAt(ms).end, rasiAt(ms).end, nextSunrise);
+  const validUntil = sankalpamValidUntil(cal, ms);
   const today = localTime(ms, timeZone).dayNumber;
   const followingDay = localTime(validUntil, timeZone).dayNumber !== today ? " of following day" : "";
   return (
@@ -1117,6 +1122,13 @@ export interface ComputedPanchangam {
   nakshatramChanges: NakshatramChange[];
   /** Tamil month and day ("Purattasi 22"). */
   tamilDate: string;
+  /**
+   * For the Panchangam of the present moment (computePanchangamForDate
+   * on today): when it stops being current -- its Sankalpam's validity
+   * ends, or the civil day turns at midnight -- as epoch ms, so a screen
+   * left open recomputes then. Absent for any other day.
+   */
+  currentUntil?: number;
 }
 
 // The part of the day each kaalam takes (daylight in eighths), by weekday from Sunday.
@@ -1229,5 +1241,9 @@ export function computePanchangamForDate(
 ): ComputedPanchangam {
   const dayNumber = localTime(date.getTime(), place.timeZone).dayNumber;
   const isToday = dayNumber === localTime(now.getTime(), place.timeZone).dayNumber;
-  return computePanchangam(dayNumber, place, { placeName, sankalpamAt: isToday ? now.getTime() : undefined });
+  const computed = computePanchangam(dayNumber, place, { placeName, sankalpamAt: isToday ? now.getTime() : undefined });
+  if (!isToday) return computed;
+  const cal = new SunCalendar(place);
+  const currentUntil = Math.min(sankalpamValidUntil(cal, now.getTime()), dayStart(dayNumber + 1, place.timeZone));
+  return { ...computed, currentUntil };
 }

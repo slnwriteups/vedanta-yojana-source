@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { calendarDay, todayIn } from "@/content-lib/panchangam-place.ts";
 import { useLanguage } from "@/lib/language-context";
 import { timesInZoneLabel, useT } from "@/lib/ui-strings";
@@ -58,10 +58,19 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   const { place, ready: placeReady } = usePanchangamPlace();
   // "Today" is today at the place the Panchangam is for: with a city chosen
   // in another time zone, that city's date, which can differ from the device's.
-  const today = useMemo(() => todayIn(place?.timeZone), [place]);
+  // Re-read whenever Home recomputes today's Panchangam (at the latest at
+  // midnight), so a screen left open overnight moves on to the new day.
+  const today = useMemo(() => todayIn(place?.timeZone), [place, initialPanchangam]);
   useEffect(() => {
     if (placeReady) setSelectedDate(todayIn(place?.timeZone));
   }, [place, placeReady]);
+  // Following today: a reader looking at today when the day turns sees the new today.
+  const previousToday = useRef(today);
+  useEffect(() => {
+    const before = previousToday.current;
+    previousToday.current = today;
+    if (!isSameDay(before, today)) setSelectedDate((selected) => (isSameDay(selected, before) ? today : selected));
+  }, [today]);
 
   useEffect(() => {
     // Wait for the saved city (if any) rather than computing for the browser's location first.

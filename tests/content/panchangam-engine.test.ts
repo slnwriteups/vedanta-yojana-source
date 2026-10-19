@@ -152,6 +152,23 @@ test("the tithi line names the paksha again only when it turns, in every languag
   assert.equal(tithiOfDayLabel({ paksha: "Shukla Paksha", tithi: "Dasami" }, null), "Shukla Paksha Dasami");
 });
 
+test("the present moment's Panchangam says when it stops being current", () => {
+  const BENGALURU: PanchangamPlace = { latitude: 12.97, longitude: 77.59, timeZone: "Asia/Kolkata" };
+  const ist = (h: number, m: number, d = 19) => new Date(Date.UTC(2026, 9, d, h, m) - 330 * 60_000);
+  // 19 Oct 2026, 12:27 PM IST: valid until Uttara Ashadha ends at 2:50:57 PM.
+  const noon = computePanchangamForDate(ist(12, 27), BENGALURU, "Bengaluru", ist(12, 27));
+  assert.match(noon.sankalpamText, /valid through 02:50:57 PM: .*uttarāṣāḍhā nakṣatra/);
+  assert.ok(Math.abs(noon.currentUntil! - (ist(14, 50).getTime() + 57_000)) < 1000, String(new Date(noon.currentUntil!)));
+  // Recomputed then, the Sankalpam names the new nakshatram.
+  const after = computePanchangamForDate(new Date(noon.currentUntil! + 1000), BENGALURU, "Bengaluru", new Date(noon.currentUntil! + 1000));
+  assert.match(after.sankalpamText, /śravaṇa nakṣatra/);
+  // Late in the evening nothing changes before midnight, which ends it.
+  const late = computePanchangamForDate(ist(23, 30), BENGALURU, "Bengaluru", ist(23, 30));
+  assert.equal(late.currentUntil, ist(0, 0, 20).getTime());
+  // Any other day is not "current" at all.
+  assert.equal(computePanchangamForDate(ist(12, 0, 20), BENGALURU, "Bengaluru", ist(12, 27)).currentUntil, undefined);
+});
+
 test("agrees with every day of the Paduka journal's printed panchangam", () => {
   for (const d of PADUKA_PANCHANGAM_ISSUES.flatMap((issue) => issue.days)) {
     const p = day(SRIRANGAM, d.date);
