@@ -82,9 +82,10 @@ export function HomeDashboardClient({
   useEffect(() => {
     if (currentUntil === undefined) return;
     const refresh = () => setRefreshes((n) => n + 1);
-    // A background tab's timers are throttled, so coming back to it checks too.
+    // Coming back to the tab recomputes: its timers are throttled in the background,
+    // and the reader may have moved since (the location is read again).
     const onVisible = () => {
-      if (document.visibilityState === "visible" && Date.now() >= currentUntil) refresh();
+      if (document.visibilityState === "visible") refresh();
     };
     const timer = setTimeout(refresh, Math.max(0, currentUntil - Date.now()) + 1000);
     document.addEventListener("visibilitychange", onVisible);

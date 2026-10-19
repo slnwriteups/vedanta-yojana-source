@@ -23,10 +23,13 @@
  *    the transcribed Pādukā doesn't list (22 Oct 2026), kept until the
  *    printed page settles it.
  *
- * The Pādukā's dates are Srirangam's (Indian Standard Time). For a place
- * on another clock, the engine -- computing for that place's own sunrise
- * -- decides the observances both carry, and only the Ashramam's own
- * observances are added from the Pādukā, on their published dates.
+ * The Pādukā's dates are Srirangam's (Indian Standard Time); the
+ * Ashramam publishes the one calendar for India, so places on Indian time
+ * take its dates as their own. For a place on another clock, the engine
+ * -- computing for that place's own sunrise -- decides the observances
+ * both carry, and the Ashramam's own observances are added on their
+ * published dates marked as Srirangam's (`referencePlace`): whether they
+ * fall on the same local date there is not known.
  */
 
 import type { LanguageCode } from "./schemas/language.ts";
@@ -35,12 +38,33 @@ import { localizePadukaFestival, type PadukaPanchangamDay } from "./paduka-panch
 
 export type ObservanceSource = "paduka" | "calculated";
 
+/**
+ * Why an observance falls on its day:
+ *  - "published": printed in the Pādukā for that date;
+ *  - "ashramam-rule": calculated by a rule the Ashramam has stated;
+ *  - "provisional-rule": calculated by a documented rule inferred from
+ *    the Ashramam's published dates but not yet established;
+ *  - "general-rule": calculated by the engine's general Sri Vaishnava
+ *    rules (verified against Sri Ahobila Mutt's calendar).
+ * No observance is "ashramam-rule" or "provisional-rule" yet: the
+ * Pādukā publishes dates, not rules, and the one candidate rule found
+ * (Sravana Vratam at sunset) fits too few published days to adopt.
+ */
+export type ObservanceBasis = "published" | "ashramam-rule" | "provisional-rule" | "general-rule";
+
 export interface Observance {
   /** The name shown: the Pādukā's for a published observance, else the engine's. */
   name: string;
   /** A detail the engine adds to a published name ("06:21" after "Tula Ravi"). */
   detail?: string;
   sources: ObservanceSource[];
+  basis: ObservanceBasis;
+  /**
+   * Set when the day shown is another place's: a Pādukā date (Srirangam,
+   * Indian time) shown for a place on another clock, where the engine
+   * can't say whether the observance falls on the same local date.
+   */
+  referencePlace?: "Srirangam";
 }
 
 /**
@@ -160,7 +184,12 @@ export function dayObservances(
   const sameClock = keepsIndianTime(timeZone);
   const shown: Observance[] = published
     .filter((name) => sameClock || ASHRAMAM_ONLY_OBSERVANCES.has(name))
-    .map((name) => ({ name, sources: ["paduka"] }));
+    .map((name): Observance => ({
+      name,
+      sources: ["paduka"],
+      basis: "published",
+      ...(sameClock ? {} : { referencePlace: "Srirangam" as const }),
+    }));
 
   const publishedNameOf = (name: string): string => {
     const sameDay = SAME_DAY_EQUIVALENTS.find((e) => e.name === name && published.includes(e.when));
@@ -176,7 +205,7 @@ export function dayObservances(
     }
     // On a covered date, the Ashramam decides these observances' day.
     if (sameClock && paduka && PUBLISHED_DATE_GOVERNS.has(publishedName)) continue;
-    shown.push({ name: detail ? `${name} ${detail}` : name, sources: ["calculated"] });
+    shown.push({ name: detail ? `${name} ${detail}` : name, sources: ["calculated"], basis: "general-rule" });
   }
   return shown;
 }
@@ -197,10 +226,15 @@ export function observanceLabel(observance: Observance, language: LanguageCode |
 export function observanceLine(
   observances: Observance[],
   language: LanguageCode | null
-): { text: string; source: ObservanceSource | "both" | null } {
-  if (observances.length === 0) return { text: "", source: null };
+): { text: string; source: ObservanceSource | "both" | null; srirangamDates: boolean } {
+  if (observances.length === 0) return { text: "", source: null, srirangamDates: false };
   const published = (o: Observance) => o.sources.includes("paduka");
   const mixed = observances.some(published) && !observances.every(published);
   const text = observances.map((o) => `${observanceLabel(o, language)}${mixed && !published(o) ? " *" : ""}`).join(", ");
-  return { text, source: mixed ? "both" : published(observances[0]) ? "paduka" : "calculated" };
+  return {
+    text,
+    source: mixed ? "both" : published(observances[0]) ? "paduka" : "calculated",
+    // The attribution then says the published dates are Srirangam's, not the place's own.
+    srirangamDates: observances.some((o) => o.referencePlace === "Srirangam"),
+  };
 }

@@ -174,6 +174,24 @@ test("the present moment's Panchangam says when it stops being current", () => {
   assert.equal(computePanchangamForDate(ist(12, 0, 20), BENGALURU, "Bengaluru", ist(12, 27)).currentUntil, undefined);
 });
 
+test("the present moment's Panchangam expires at each change the Sankalpam names", () => {
+  const ist = (d: number, h: number, m: number) => new Date(Date.UTC(2026, 9, d, h, m) - 330 * 60_000);
+  const at = (place: PanchangamPlace, now: Date) => computePanchangamForDate(now, place, "x", now);
+  // Tithi: 18 Oct, 06:30 IST -- Saptami ends at 07:17 (published), first of all.
+  const tithi = at(SRIRANGAM, ist(18, 6, 30));
+  assert.ok(Math.abs(tithi.currentUntil! - ist(18, 7, 17).getTime()) < 90_000, String(new Date(tithi.currentUntil!)));
+  // Solar month: 18 Oct, 06:10 IST -- the Sun enters Tula at 06:21 (published), before the tithi ends.
+  const month = at(SRIRANGAM, ist(18, 6, 10));
+  assert.ok(Math.abs(month.currentUntil! - ist(18, 6, 21).getTime()) < 90_000, String(new Date(month.currentUntil!)));
+  assert.match(month.sankalpamText, /kanyā māse/);
+  assert.match(at(SRIRANGAM, new Date(month.currentUntil! + 1000)).sankalpamText, /tulā māse/);
+  // Local date: New York's own midnight (EDT), not India's.
+  const ny = new Date(Date.UTC(2026, 9, 20, 3, 30)); // 23:30 EDT on 19 Oct
+  const late = at(NEW_YORK, ny);
+  assert.ok(late.currentUntil! <= Date.UTC(2026, 9, 20, 4, 0), String(new Date(late.currentUntil!)));
+  assert.match(late.sankalpamText, / EDT /);
+});
+
 test("yoga and karana agree with the Ashramam's Tarpana Sankalpams", () => {
   // Sri Ranganātha Pādukā, Sep 2026 issue (content-lib/paduka-panchangam.ts),
   // for Srirangam. A karana's printed end ("catuṣpāda till 09.05") is in

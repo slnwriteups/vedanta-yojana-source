@@ -165,7 +165,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   // The engine's observances merged with the Ashramam's published ones, each with its source.
   const observances = data
     ? observanceLine(dayObservances(data.festival, paduka?.day ?? null, data.timeZone ?? place?.timeZone), language)
-    : { text: "", source: null };
+    : { text: "", source: null, srirangamDates: false };
   const locale = language || "en-US";
   // Only the timings the endpoint actually returned for this day are shown.
   const timingRows = data
@@ -297,7 +297,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {observances.text ? (
               <div>
                 <p className="text-sm font-bold text-[var(--accent)]">{observances.text}</p>
-                <ObservanceSourceNote source={observances.source} />
+                <ObservanceSourceNote source={observances.source} srirangamDates={observances.srirangamDates} />
               </div>
             ) : null}
 
@@ -375,13 +375,23 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
  * Pādukā, the engine's calculation, or both -- then "*" marks the
  * calculated ones (panchangam-observances.ts observanceLine).
  */
-function ObservanceSourceNote({ source }: { source: "paduka" | "calculated" | "both" | null }) {
+function ObservanceSourceNote({
+  source,
+  srirangamDates = false,
+}: {
+  source: "paduka" | "calculated" | "both" | null;
+  srirangamDates?: boolean;
+}) {
   const t = useT();
   if (!source) return null;
+  // Away from Indian time, the Pādukā's dates are said to be Srirangam's, not the place's own.
+  const paduka = srirangamDates ? `${t("observanceSourcePaduka")} ${t("observanceSrirangamDates")}` : t("observanceSourcePaduka");
   const text =
     source === "both"
-      ? `${t("observanceSourcePaduka")} · * ${t("observanceSourceCalculated")}`
-      : t(source === "paduka" ? "observanceSourcePaduka" : "observanceSourceCalculated");
+      ? `${paduka} · * ${t("observanceSourceCalculated")}`
+      : source === "paduka"
+        ? paduka
+        : t("observanceSourceCalculated");
   return <p className="text-[11px] text-[var(--muted)]">{text}</p>;
 }
 
@@ -412,7 +422,8 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
       {day.festival ? (
         <div>
           <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p>
-          <ObservanceSourceNote source="paduka" />
+          {/* Shown before the place is known, so its dates are said to be Srirangam's. */}
+          <ObservanceSourceNote source="paduka" srirangamDates />
         </div>
       ) : null}
       {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}

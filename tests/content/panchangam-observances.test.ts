@@ -95,15 +95,41 @@ test("away from Indian time, the engine decides shared observances; the Ashramam
 });
 
 test("the observance line marks calculated ones only when sources mix", () => {
-  const p = (name: string): Observance => ({ name, sources: ["paduka"] });
-  const c = (name: string): Observance => ({ name, sources: ["calculated"] });
-  assert.deepEqual(observanceLine([], null), { text: "", source: null });
-  assert.deepEqual(observanceLine([p("Mahavyatipatam")], null), { text: "Mahavyatipatam", source: "paduka" });
-  assert.deepEqual(observanceLine([c("Rohini")], null), { text: "Rohini", source: "calculated" });
-  assert.deepEqual(observanceLine([{ name: "Mahapradosham", sources: ["paduka", "calculated"] }, c("Rohini")], null), {
-    text: "Mahapradosham, Rohini *",
-    source: "both",
-  });
+  const p = (name: string): Observance => ({ name, sources: ["paduka"], basis: "published" });
+  const c = (name: string): Observance => ({ name, sources: ["calculated"], basis: "general-rule" });
+  assert.deepEqual(observanceLine([], null), { text: "", source: null, srirangamDates: false });
+  assert.deepEqual(observanceLine([p("Mahavyatipatam")], null), { text: "Mahavyatipatam", source: "paduka", srirangamDates: false });
+  assert.deepEqual(observanceLine([c("Rohini")], null), { text: "Rohini", source: "calculated", srirangamDates: false });
+  assert.deepEqual(
+    observanceLine([{ name: "Mahapradosham", sources: ["paduka", "calculated"], basis: "published" }, c("Rohini")], null),
+    { text: "Mahapradosham, Rohini *", source: "both", srirangamDates: false }
+  );
+  // A Srirangam date shown for a place on another clock is said to be one.
+  assert.equal(observanceLine([{ ...p("Mahavyatipatam"), referencePlace: "Srirangam" }], null).srirangamDates, true);
   // Published names are localized; the engine's stay in English.
   assert.match(observanceLine([p("Chandra Darsanam"), c("Rohini")], "ta").text, /^சந்த்ர தர்சனம், Rohini \*$/);
+});
+
+test("each observance says why it falls on its day, and whose date it is", () => {
+  const [y, m, d] = [2026, 10, 2];
+  const at = (place: PanchangamPlace) =>
+    dayObservances(
+      computePanchangam(dayNumberOf(y, m, d), place, { placeName: "x" }).festival,
+      padukaPanchangamFor(new Date(y, m - 1, d))?.day ?? null,
+      place.timeZone
+    );
+  // In India the Pādukā's date is the place's own.
+  assert.deepEqual(at(SRIRANGAM), [{ name: "Mahavyatipatam", sources: ["paduka"], basis: "published" }]);
+  // In New York the same published observance is marked as Srirangam's date, not New York's.
+  assert.deepEqual(at(NEW_YORK), [{ name: "Mahavyatipatam", sources: ["paduka"], basis: "published", referencePlace: "Srirangam" }]);
+  // Every observance on every covered day is published or calculated by the general rules;
+  // none is attributed to an Ashramam rule, since the Pādukā states none.
+  for (const day of DAYS) {
+    const [yy, mm, dd] = day.date.split("-").map(Number);
+    const p = computePanchangam(dayNumberOf(yy, mm, dd), SRIRANGAM, { placeName: "x" });
+    for (const o of dayObservances(p.festival, day, SRIRANGAM.timeZone)) {
+      assert.equal(o.basis, o.sources.includes("paduka") ? "published" : "general-rule", `${day.date} ${o.name}`);
+      assert.equal(o.referencePlace, undefined, `${day.date} ${o.name}`);
+    }
+  }
 });

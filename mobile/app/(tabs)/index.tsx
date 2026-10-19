@@ -79,9 +79,10 @@ export default function HomeScreen() {
   useEffect(() => {
     if (currentUntil === undefined) return;
     const refresh = () => setRefreshes((n) => n + 1);
-    // Timers don't run while the app is in the background, so coming back to it checks too.
+    // Coming back to the app recomputes: timers don't run in the background, and the
+    // reader may have moved since (the location is read again).
     const subscription = AppState.addEventListener("change", (state) => {
-      if (state === "active" && Date.now() >= currentUntil) refresh();
+      if (state === "active") refresh();
     });
     const timer = setTimeout(refresh, Math.max(0, currentUntil - Date.now()) + 1000);
     return () => {

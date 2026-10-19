@@ -136,6 +136,13 @@ const UI_STRINGS = {
     hi: "श्री रङ्गनाथ पादुका",
     te: "శ్రీ రంగనాథ పాదుకా",
   },
+  observanceSrirangamDates: {
+    en: "(dates as published for Srirangam)",
+    ta: "(ஸ்ரீரங்கத்திற்காக வெளியிடப்பட்ட தேதிகள்)",
+    kn: "(ಶ್ರೀರಂಗಕ್ಕಾಗಿ ಪ್ರಕಟಿಸಿದ ದಿನಾಂಕಗಳು)",
+    hi: "(श्रीरंगम के लिए प्रकाशित दिनांक)",
+    te: "(శ్రీరంగం కోసం ప్రచురించిన తేదీలు)",
+  },
   observanceSourceCalculated: { en: "Calculated", ta: "கணக்கிடப்பட்டது", kn: "ಲೆಕ್ಕಹಾಕಲಾಗಿದೆ", hi: "गणना से", te: "లెక్కించబడింది" },
   homeCalendarFestivalLabel: { en: "Festival", ta: "விழா", kn: "ಹಬ್ಬ", hi: "पर्व", te: "పండుగ / ఉత్సవం" },
   homeCalendarEkadashiLabel: {
