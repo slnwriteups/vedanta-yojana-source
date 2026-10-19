@@ -384,9 +384,19 @@ export function yogaAt(ms: number): Segment {
   return segmentAt(yogaLongitude, NAKSHATRA_SPAN, YOGA_RATE, ms);
 }
 
-/** The karana (half a tithi) in force at `ms`. */
+/**
+ * The karana in force at `ms`: the first or second half of the tithi,
+ * halved in time -- as both the Ashramam's Pādukā Panchangam and Sri
+ * Ahobila Mutt's calendar divide it (their karana ends fall at the
+ * tithi's midpoint in time, minutes from where the elongation reaches
+ * the 6° midpoint).
+ */
 export function karanaAt(ms: number): Segment {
-  return segmentAt(lunarElongation, 6, TITHI_RATE, ms);
+  const tithi = tithiAt(ms);
+  const middle = (tithi.start + tithi.end) / 2;
+  return ms < middle
+    ? { index: tithi.index * 2, start: tithi.start, end: middle }
+    : { index: tithi.index * 2 + 1, start: middle, end: tithi.end };
 }
 
 export function nakshatraAt(ms: number): Segment {

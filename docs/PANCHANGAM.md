@@ -5,16 +5,19 @@ which tradition it follows, how it was verified, and how to keep it current.
 
 ## Summary
 
-- **Computed on the device.** Tithi, nakshatram, sunrise/sunset, Rahu Kaalam,
-  Yamagandam, Gulika Kaalam, the day's observances, the next Ekadasi and the
-  Sankalpam are all calculated in the browser or the app. No calendar service
+- **Computed on the device.** Tithi, nakshatram, yoga, karana, sunrise/sunset,
+  Rahu Kaalam, Yamagandam, Gulika Kaalam, the day's observances, the next
+  Ekadasi and the Sankalpam are all calculated in the browser or the app. No calendar service
   is called, so it works offline once the device knows where it is. The only
   network request is the optional place-name lookup (see
   [privacy-policy.html](privacy-policy.html)).
-- **Traditional Sri Vaishnava reckoning.** It follows the reckoning of the
-  calendar Sri Ahobila Mutt publishes, not modern positional astronomy. The two
-  can differ by a few hours at a tithi or nakshatram ending, and the app
-  deliberately follows the tradition.
+- **Traditional Sri Vaishnava reckoning.** It follows the traditional
+  (siddhantic) reckoning that both Srirangam Srimad Andavan Ashramam's
+  Sri Ranganātha Pādukā Panchangam and Sri Ahobila Mutt's calendar use, not
+  modern positional astronomy. The two can differ by minutes to hours at a
+  tithi or nakshatram ending; the Ashramam's own printed times agree with the
+  traditional reckoning and not with a modern ephemeris (see
+  [PANCHANGAM-COMPARISON.md](PANCHANGAM-COMPARISON.md)).
 - **Worldwide.** Every rule is applied to the reader's own sunrise, location and
   clock, so the calendar is correct wherever the reader is, not only in India.
 - **Any city.** Instead of their own location, a reader can choose a city
@@ -29,14 +32,15 @@ which tradition it follows, how it was verified, and how to keep it current.
 |---|---|
 | `content-lib/panchangam-siddhanta.ts` | The traditional Sun and Moon that tithi, nakshatram and the solar months are reckoned from |
 | `content-lib/panchangam-astronomy.ts` | The observed Sun at the reader's place: sunrise and sunset |
-| `content-lib/panchangam-engine.ts` | Days, tithi/nakshatram and their end times, months, kaalams, Ekadasi, observances, the Sankalpam |
+| `content-lib/panchangam-engine.ts` | Days, tithi/nakshatram/yoga/karana and their end times, months, kaalams, Ekadasi, observances, the Sankalpam |
 | `content-lib/panchangam-place.ts` | A chosen city: its type, label and the check on a saved value |
-| `content-lib/panchangam-places.ts`, `content-lib/panchangam-places-data.ts` | The bundled city list (generated) and the search over it |
+| `content-lib/panchangam-places.ts`, `content-lib/panchangam-places-data.ts` | The bundled city list (generated), the search over it, and the time zone at a location fix |
 | `mobile/services/panchangamPlaceStore.ts`, `lib/panchangam-place-store.ts` | The saved choice, shared by the Home header and the calendar card |
 | `content-lib/paduka-panchangam.ts` | The Sri Ranganātha Pādukā journal's monthly Pañcāṅgam, transcribed (see [Monthly update](#monthly-update-sri-ranganatha-paduka)) |
 | `lib/panchangam-service.ts`, `mobile/services/panchangamService.ts` | Get the reader's location (web / Android) and call the engine |
 | `lib/panchangam-labels.ts`, `mobile/panchangam-labels.ts` | Tamil, Kannada, Hindi and Telugu labels |
-| `tests/content/panchangam-engine.test.ts` | Checks against the published calendar, and the worldwide checks |
+| `tests/content/panchangam-engine.test.ts` | Checks against the published calendars, and the worldwide checks |
+| `scripts/panchangam-comparison.ts`, `tests/content/fixtures/ahobila-srirangam-*.json` | The three-way comparison for Srirangam ([PANCHANGAM-COMPARISON.md](PANCHANGAM-COMPARISON.md)) and the published values it uses |
 
 ## The reckoning
 
@@ -72,6 +76,10 @@ Siddhanta value, which confirms the system.
 
 ### Days and months
 
+- **Yoga and karana:** the yoga is the Sun's and Moon's longitudes added,
+  in 27 parts; the karana is half a tithi, halved in time (the midpoint
+  between its start and end), as both published calendars divide it. The
+  names follow the Pādukā's spellings (Mahendra, Taitula, Bhadra, Nagava).
 - **The day:** runs sunrise to sunrise. Its tithi and nakshatram are those in
   force at its sunrise. When the tithi or nakshatram changes before the next
   sunrise, it is shown with each change and its time ("Krishna Paksha
@@ -138,7 +146,13 @@ The full list is the `FESTIVAL_NAMES` vocabulary in `panchangam-engine.ts`.
 The Sankalpam sentence names the reader's place, the present moment and the
 reader's own time zone ("IST", "EDT", …). It runs: samvatsara, ayana, ritu,
 solar māsa, paksha, tithi, vāsara, nakshatram. It holds until the tithi,
-nakshatram, solar month or (at sunrise) weekday next changes.
+nakshatram, solar month or (at sunrise) weekday next changes, and the Home
+screen recomputes it then (and at midnight), so a screen left open never
+shows an expired Sankalpam as the present one.
+
+It does not name the yoga and karana. The Ashramam's Tarpaṇa Saṅkalpams
+do ("viṣkambha yoga, taitula karaṇa"), but its daily wording has not been
+established, and a Tarpaṇa form is not taken as the wording for every rite.
 
 ## Verification
 
@@ -170,7 +184,12 @@ The remaining differences fall into four groups:
 
 ### Against the Sri Ranganātha Pādukā journal
 
-All 37 transcribed days agree: paksha, tithi and nakshatram.
+All 68 transcribed days (18 Sep - 24 Nov 2026) agree: paksha, tithi and
+nakshatram at sunrise. The yoga and karana named in its three Tarpaṇa
+Saṅkalpams agree, and its two printed karana ends -- nāzhigai after
+sunrise, not clock times -- agree to the minute. Observance by observance,
+with Sri Ahobila Mutt's calendar for the same days, see
+[PANCHANGAM-COMPARISON.md](PANCHANGAM-COMPARISON.md).
 
 ### Worldwide
 
@@ -238,6 +257,12 @@ offline and sends nothing anywhere.
   narrows by region or country.
 - **Size:** the list is about 570 KB and is loaded only when the picker
   opens: a separate chunk on the website, a dynamic import in the app.
+- **Your own location's time zone:** the same list decides the time zone for
+  a location fix. The device's own zone is kept when a place within 150 km
+  keeps that clock (right on both sides of a border such as India-Nepal);
+  otherwise the nearest place's zone is used, as for a traveller whose phone
+  is still on home time. On the website the answer is cached by coarse
+  location, so the list loads once per place.
 - **Regenerating:** download `cities15000.zip`, `cities5000.zip`, `IN.zip`,
   `admin1CodesASCII.txt` and `countryInfo.txt` from
   https://download.geonames.org/export/dump/, unzip them into one folder,

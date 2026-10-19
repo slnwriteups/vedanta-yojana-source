@@ -1,4 +1,5 @@
 import test from "node:test";
+import { readFileSync } from "node:fs";
 import assert from "node:assert/strict";
 import {
   FESTIVAL_NAMES,
@@ -8,6 +9,8 @@ import {
   dayNumberOf,
   karanaAt,
   karanaName,
+  nakshatraAt,
+  tithiAt,
   tithiName,
   type PanchangamPlace,
 } from "../../content-lib/panchangam-engine.ts";
@@ -199,7 +202,7 @@ test("yoga and karana agree with the Ashramam's Tarpana Sankalpams", () => {
     assert.equal(p.karanaChanges[0].karana, next, iso);
     const ends = karanaAt(sunriseMs(iso, p.sunrise)).end;
     const after = (ends - sunriseMs(iso, p.sunrise)) / 60_000;
-    assert.ok(Math.abs(after - nazhigai(printed)) <= 5, `${iso}: ${after.toFixed(1)} min after sunrise vs ${printed} nāzhigai`);
+    assert.ok(Math.abs(after - nazhigai(printed)) <= 2, `${iso}: ${after.toFixed(1)} min after sunrise vs ${printed} nāzhigai`);
   }
 });
 
@@ -215,6 +218,50 @@ test("karanas run Kimstughna, the movable seven eight times, then Shakuni, Chatu
     assert.equal((p.yogaChanges.at(-1) ?? p).yoga, next.yoga, String(d));
     assert.equal((p.karanaChanges.at(-1) ?? p).karana, next.karana, String(d));
   }
+});
+
+test("agrees with Sri Ahobila Mutt's published days for Srirangam, 18 Sep - 24 Nov 2026", () => {
+  // tests/content/fixtures: the Mutt's daily view for the days the Pādukā
+  // journal covers; docs/PANCHANGAM-COMPARISON.md sets them side by side.
+  const fixture = JSON.parse(
+    readFileSync(new URL("./fixtures/ahobila-srirangam-2026-09-18_11-24.json", import.meta.url), "utf8")
+  ) as {
+    days: Array<{
+      date: string;
+      sunrise: string;
+      tithis: Array<{ paksha: string; tithi: string; ends: string | null }>;
+      nakshatrams: Array<{ nakshatram: string; ends: string | null }>;
+      karanas: Array<{ karana: string; ends: string | null }>;
+    }>;
+  };
+  const at = (iso: string, clock: string) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    const [h, min] = clock.slice(0, 5).split(":").map(Number);
+    return Date.UTC(y, m - 1, d + (clock.endsWith("(+1)") ? 1 : 0), h, min) - 330 * 60_000;
+  };
+  const within = (engine: number, published: number, what: string) =>
+    assert.ok(Math.abs(engine - published) <= 5 * 60_000, `${what}: ${((engine - published) / 60_000).toFixed(1)} min`);
+  fixture.days.forEach((pub, i) => {
+    const p = day(SRIRANGAM, pub.date);
+    const next = fixture.days[i + 1];
+    assert.deepEqual([p.paksha, p.tithi, p.nakshatram], [pub.tithis[0].paksha, pub.tithis[0].tithi, pub.nakshatrams[0].nakshatram], pub.date);
+    assert.ok(Math.abs(minutes(p.sunrise) - minutes(pub.sunrise)) <= 1, `${pub.date} sunrise`);
+    pub.tithis.forEach((t, j) => {
+      // The daily view caps an element still running at the next sunrise; the next day shows its real end.
+      const capped = j === pub.tithis.length - 1 && next?.tithis[0].tithi === t.tithi;
+      if (t.ends && !capped) within(tithiAt(at(pub.date, t.ends) - 1_800_000).end, at(pub.date, t.ends), `${pub.date} ${t.tithi}`);
+    });
+    pub.nakshatrams.forEach((n, j) => {
+      const capped = j === pub.nakshatrams.length - 1 && next?.nakshatrams[0].nakshatram === n.nakshatram;
+      if (n.ends && !capped) within(nakshatraAt(at(pub.date, n.ends) - 1_800_000).end, at(pub.date, n.ends), `${pub.date} ${n.nakshatram}`);
+    });
+    for (const k of pub.karanas) {
+      if (!k.ends) continue;
+      const karana = karanaAt(at(pub.date, k.ends) - 1_800_000);
+      assert.equal(karanaName(karana.index), k.karana, `${pub.date} karana`);
+      within(karana.end, at(pub.date, k.ends), `${pub.date} ${k.karana}`);
+    }
+  });
 });
 
 test("agrees with every day of the Paduka journal's printed panchangam", () => {
