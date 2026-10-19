@@ -105,6 +105,32 @@ export const NAKSHATRA_NAMES = [
   "Revathi",
 ];
 
+/**
+ * The 27 yogas, in order from 0 at (Sun + Moon) = 0°. Spelled as the
+ * Ashramam's Sri Ranganātha Pādukā Panchangam spells them where it has
+ * printed one ("Mahendra" for the 26th, often written Indra).
+ */
+export const YOGA_NAMES = [
+  "Vishkambha", "Priti", "Ayushman", "Saubhagya", "Shobhana", "Atiganda", "Sukarma", "Dhriti", "Shula",
+  "Ganda", "Vriddhi", "Dhruva", "Vyaghata", "Harshana", "Vajra", "Siddhi", "Vyatipata", "Variyan",
+  "Parigha", "Shiva", "Siddha", "Sadhya", "Shubha", "Shukla", "Brahma", "Mahendra", "Vaidhriti",
+];
+
+/** The seven movable karanas, repeating eight times from the second half of Shukla Prathama. */
+const MOVABLE_KARANAS = ["Bava", "Balava", "Kaulava", "Taitula", "Garaja", "Vanija", "Bhadra"];
+
+/**
+ * Karana index (0–59, each half a tithi) → its name: Kimstughna first,
+ * then the movable seven eight times over, and Shakuni, Chatushpada and
+ * Nagava closing the month. Spelled as the Pādukā Panchangam does
+ * ("Taitula", "Bhadra" for Vishti, "Nagava" for Naga).
+ */
+export function karanaName(index: number): string {
+  if (index === 0) return "Kimstughna";
+  if (index >= 57) return ["Shakuni", "Chatushpada", "Nagava"][index - 57];
+  return MOVABLE_KARANAS[(index - 1) % 7];
+}
+
 export const TAMIL_MONTH_NAMES = [
   "Chithirai",
   "Vaikasi",
@@ -338,6 +364,7 @@ function segmentAt(fn: AngleFn, span: number, degreesPerDay: number, ms: number)
 const TITHI_RATE = 12.19;
 const NAKSHATRA_RATE = 13.18;
 const SUN_RATE = 0.9856;
+const YOGA_RATE = NAKSHATRA_RATE + SUN_RATE;
 
 /** Tithi index (0–29) in force at `ms`, without solving for its start and end. */
 function tithiIndexAt(ms: number): number {
@@ -346,6 +373,20 @@ function tithiIndexAt(ms: number): number {
 
 export function tithiAt(ms: number): Segment {
   return segmentAt(lunarElongation, 12, TITHI_RATE, ms);
+}
+
+/** Sun + Moon (traditional sidereal longitudes), whose 27 parts are the yogas. */
+function yogaLongitude(ms: number): number {
+  return normalizeDegrees(siderealSunLongitude(ms) + siderealMoonLongitude(ms));
+}
+
+export function yogaAt(ms: number): Segment {
+  return segmentAt(yogaLongitude, NAKSHATRA_SPAN, YOGA_RATE, ms);
+}
+
+/** The karana (half a tithi) in force at `ms`. */
+export function karanaAt(ms: number): Segment {
+  return segmentAt(lunarElongation, 6, TITHI_RATE, ms);
 }
 
 export function nakshatraAt(ms: number): Segment {
@@ -1089,12 +1130,27 @@ export interface NakshatramChange {
   startsAt: string;
 }
 
+export interface YogaChange {
+  yoga: string;
+  startsAt: string;
+}
+
+export interface KaranaChange {
+  karana: string;
+  startsAt: string;
+}
+
 export interface ComputedPanchangam {
   /** Tithi at sunrise, spelled as lib/panchangam-labels.ts keys it. */
   tithi: string;
   paksha: string;
   /** Nakshatram at sunrise. */
   nakshatram: string;
+  /** Yoga and karana at sunrise (YOGA_NAMES, karanaName), and each that begins before the next sunrise. */
+  yoga: string;
+  yogaChanges: YogaChange[];
+  karana: string;
+  karanaChanges: KaranaChange[];
   /** The day's observances, comma-separated, or "". */
   festival: string;
   /** "Next Ekadasi: Thursday, 22nd Oct 2026." */
@@ -1171,7 +1227,7 @@ function changesOn<T>(cal: SunCalendar, d: number, atSunrise: Segment, at: (ms: 
   const nextSunrise = cal.day(d + 1).sunrise;
   const changes: Array<T & { startsAt: string }> = [];
   let segment = atSunrise;
-  for (let guard = 0; guard < 3 && segment.end < nextSunrise; guard += 1) {
+  for (let guard = 0; guard < 4 && segment.end < nextSunrise; guard += 1) {
     segment = at(segment.end + MS_PER_MINUTE);
     changes.push({ ...describe(segment.index), startsAt: endsLabel(cal, d, segment.start) });
   }
@@ -1203,6 +1259,8 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
   const weekday = weekdayOf(dayNumber);
   const tithi = tithiAt(day.sunrise);
   const nakshatra = nakshatraAt(day.sunrise);
+  const yoga = yogaAt(day.sunrise);
+  const karana = karanaAt(day.sunrise);
 
   const ekadasiDay = nextEkadasiDay(cal, dayNumber);
   const upcomingEkadashiText =
@@ -1212,6 +1270,10 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
     tithi: tithiName(tithi.index),
     paksha: pakshaName(tithi.index),
     nakshatram: NAKSHATRA_NAMES[nakshatra.index],
+    yoga: YOGA_NAMES[yoga.index],
+    yogaChanges: changesOn(cal, dayNumber, yoga, yogaAt, (index) => ({ yoga: YOGA_NAMES[index] })),
+    karana: karanaName(karana.index),
+    karanaChanges: changesOn(cal, dayNumber, karana, karanaAt, (index) => ({ karana: karanaName(index) })),
     festival: festivalsOn(cal, dayNumber).join(", "),
     upcomingEkadashiText,
     sankalpamText: sankalpamText(cal, options.sankalpamAt ?? day.sunrise, options.placeName),

@@ -6,6 +6,8 @@ import {
   computePanchangam,
   computePanchangamForDate,
   dayNumberOf,
+  karanaAt,
+  karanaName,
   tithiName,
   type PanchangamPlace,
 } from "../../content-lib/panchangam-engine.ts";
@@ -167,6 +169,52 @@ test("the present moment's Panchangam says when it stops being current", () => {
   assert.equal(late.currentUntil, ist(0, 0, 20).getTime());
   // Any other day is not "current" at all.
   assert.equal(computePanchangamForDate(ist(12, 0, 20), BENGALURU, "Bengaluru", ist(12, 27)).currentUntil, undefined);
+});
+
+test("yoga and karana agree with the Ashramam's Tarpana Sankalpams", () => {
+  // Sri Ranganātha Pādukā, Sep 2026 issue (content-lib/paduka-panchangam.ts),
+  // for Srirangam. A karana's printed end ("catuṣpāda till 09.05") is in
+  // nāzhigai.vināzhigai after sunrise (1 nāzhigai = 24 min, 1 vināzhigai =
+  // 24 s): read as a clock time, "vaṇija till 2.55" could not be right.
+  const nazhigai = (printed: string) => {
+    const [n, v] = printed.split(".").map(Number);
+    return n * 24 + v * 0.4;
+  };
+  const sunriseMs = (iso: string, sunrise: string) => {
+    const [y, m, d] = iso.split("-").map(Number);
+    const [h, min] = sunrise.split(":").map(Number);
+    return Date.UTC(y, m - 1, d, h, min) - 330 * 60_000;
+  };
+  const cases: Array<[string, string, string, string?, string?, string?]> = [
+    // [date, yoga, karana at sunrise, next karana, printed end of the sunrise karana]
+    ["2026-09-17", "Vishkambha", "Taitula"],
+    ["2026-10-10", "Mahendra", "Chatushpada", "Nagava", "09.05"],
+    ["2026-10-18", "Sukarma", "Vanija", "Bhadra", "2.55"],
+  ];
+  for (const [iso, yoga, karana, next, printed] of cases) {
+    const p = day(SRIRANGAM, iso);
+    assert.equal(p.yoga, yoga, iso);
+    assert.equal(p.karana, karana, iso);
+    if (!next || !printed) continue;
+    assert.equal(p.karanaChanges[0].karana, next, iso);
+    const ends = karanaAt(sunriseMs(iso, p.sunrise)).end;
+    const after = (ends - sunriseMs(iso, p.sunrise)) / 60_000;
+    assert.ok(Math.abs(after - nazhigai(printed)) <= 5, `${iso}: ${after.toFixed(1)} min after sunrise vs ${printed} nāzhigai`);
+  }
+});
+
+test("karanas run Kimstughna, the movable seven eight times, then Shakuni, Chatushpada, Nagava", () => {
+  const names = Array.from({ length: 60 }, (_, i) => karanaName(i));
+  assert.deepEqual(names.slice(0, 9), ["Kimstughna", "Bava", "Balava", "Kaulava", "Taitula", "Garaja", "Vanija", "Bhadra", "Bava"]);
+  assert.deepEqual(names.slice(55), ["Vanija", "Bhadra", "Shakuni", "Chatushpada", "Nagava"]);
+  assert.equal(names.filter((n) => n === "Bhadra").length, 8);
+  // Across a year, the last yoga and karana listed are the next sunrise's.
+  for (let d = dayNumberOf(2026, 4, 14); d < dayNumberOf(2027, 4, 14); d += 1) {
+    const p = computePanchangam(d, CHENNAI, { placeName: "Chennai" });
+    const next = computePanchangam(d + 1, CHENNAI, { placeName: "Chennai" });
+    assert.equal((p.yogaChanges.at(-1) ?? p).yoga, next.yoga, String(d));
+    assert.equal((p.karanaChanges.at(-1) ?? p).karana, next.karana, String(d));
+  }
 });
 
 test("agrees with every day of the Paduka journal's printed panchangam", () => {

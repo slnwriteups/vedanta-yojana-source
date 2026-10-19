@@ -127,6 +127,8 @@ const UI_STRINGS = {
   homeCalendarGulikaKaalamLabel: { en: "Gulika Kaalam", ta: "குளிகை காலம்", kn: "ಗುಳಿಕ ಕಾಲ", hi: "गुलिक काल", te: "గుళిక కాలం" },
   homeCalendarTithiLabel: { en: "Tithi", ta: "திதி", kn: "ತಿಥಿ", hi: "तिथि", te: "తిథి" },
   homeCalendarNakshatramLabel: { en: "Nakshatram", ta: "நட்சத்திரம்", kn: "ನಕ್ಷತ್ರ", hi: "नक्षत्र", te: "నక్షత్రం" },
+  homeCalendarYogaLabel: { en: "Yoga", ta: "யோகம்", kn: "ಯೋಗ", hi: "योग", te: "యోగం" },
+  homeCalendarKaranamLabel: { en: "Karanam", ta: "கரணம்", kn: "ಕರಣ", hi: "करण", te: "కరణం" },
   homeCalendarFestivalLabel: { en: "Festival", ta: "விழா", kn: "ಹಬ್ಬ", hi: "पर्व", te: "పండుగ / ఉత్సవం" },
   homeCalendarEkadashiLabel: {
     en: "Upcoming Ekadashi",

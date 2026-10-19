@@ -1,5 +1,5 @@
 import { readJSON, writeJSON } from "./storage.ts";
-import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type NakshatramChange, type TithiChange } from "../content-lib/panchangam-engine.ts";
+import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type TithiChange, type YogaChange } from "../content-lib/panchangam-engine.ts";
 import type { ChosenPlace } from "../content-lib/panchangam-place.ts";
 
 /**
@@ -73,6 +73,11 @@ export interface PanchangamData {
   nakshatram: string;
   /** The nakshatrams that begin before the next sunrise, with their start times. */
   nakshatramChanges?: NakshatramChange[];
+  /** Yoga and karana at sunrise, and those that begin before the next sunrise (absent in older cached data). */
+  yoga?: string;
+  yogaChanges?: YogaChange[];
+  karana?: string;
+  karanaChanges?: KaranaChange[];
   festival: string;
   upcomingEkadashiText: string;
   /** The full Sankalpam declaration sentence for the current moment, or "" if unavailable. */
@@ -278,6 +283,10 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       tithiChanges: computed.tithiChanges,
       nakshatram: computed.nakshatram,
       nakshatramChanges: computed.nakshatramChanges,
+      yoga: computed.yoga,
+      yogaChanges: computed.yogaChanges,
+      karana: computed.karana,
+      karanaChanges: computed.karanaChanges,
       festival: computed.festival,
       upcomingEkadashiText: computed.upcomingEkadashiText,
       sankalpamText: computed.sankalpamText,

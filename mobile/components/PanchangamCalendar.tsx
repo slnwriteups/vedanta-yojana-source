@@ -9,10 +9,12 @@ import {
   localizeSankalpamText,
   localizeUpcomingEkadashi,
   nakshatramLabel,
+  karanaOfDayLabel,
   nakshatramOfDayLabel,
   pakshaLabel,
   tithiLabel,
   tithiOfDayLabel,
+  yogaOfDayLabel,
 } from "../panchangam-labels.ts";
 import { fetchPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 import {
@@ -125,6 +127,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
   const pakshaTithi = data ? tithiOfDayLabel(data, language) : "";
   const nakshatram = data ? nakshatramOfDayLabel(data, language) : "";
+  const yoga = data ? yogaOfDayLabel(data, language) : "";
+  const karana = data ? karanaOfDayLabel(data, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showComputed = !isLoading && hasData;
@@ -317,6 +321,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 muted={theme.colors.muted}
                 fg={theme.colors.foreground}
               />
+            ) : null}
+            {yoga ? (
+              <Row label={t("homeCalendarYogaLabel")} value={yoga} muted={theme.colors.muted} fg={theme.colors.foreground} />
+            ) : null}
+            {karana ? (
+              <Row label={t("homeCalendarKaranamLabel")} value={karana} muted={theme.colors.muted} fg={theme.colors.foreground} />
             ) : null}
             {data.upcomingEkadashiText ? (
               <Row
