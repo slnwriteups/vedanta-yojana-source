@@ -113,7 +113,15 @@ const SUNRISE_ALTITUDE = 0;
  * at 15° an hour of apparent solar time.
  */
 export function sunEvent(dayStartMs: number, latitude: number, longitude: number, kind: "rise" | "set"): number | null {
-  // Transit: start from 12:00 local mean solar time and iterate on the hour angle.
+  const cosH0 = cosSemiDiurnalArc(dayStartMs, latitude);
+  if (cosH0 < -1 || cosH0 > 1) return null;
+  const H0 = Math.acos(cosH0) / DEG;
+  return sunTransit(dayStartMs, longitude) + ((kind === "rise" ? -H0 : H0) / 360) * MS_PER_DAY;
+}
+
+/** The Sun's upper transit (local apparent noon) on the civil day starting at `dayStartMs`. */
+function sunTransit(dayStartMs: number, longitude: number): number {
+  // Start from 12:00 local mean solar time and iterate on the hour angle.
   const utcMidnight = Math.floor(dayStartMs / MS_PER_DAY) * MS_PER_DAY;
   let transit = utcMidnight + MS_PER_DAY / 2 - (longitude / 360) * MS_PER_DAY;
   while (transit < dayStartMs) transit += MS_PER_DAY;
@@ -124,11 +132,31 @@ export function sunEvent(dayStartMs: number, latitude: number, longitude: number
     transit -= (hourAngle / 360.98564736629) * MS_PER_DAY;
     if (Math.abs(hourAngle) < 1e-6) break;
   }
+  return transit;
+}
 
+/** cos of the Sun's semi-diurnal arc at local noon: below -1 it never sets that day, above 1 it never rises. */
+function cosSemiDiurnalArc(dayStartMs: number, latitude: number): number {
   const { declination } = sunEquatorial(dayStartMs + MS_PER_DAY / 2);
-  const cosH0 =
-    (sinDeg(SUNRISE_ALTITUDE) - sinDeg(latitude) * sinDeg(declination)) / (cosDeg(latitude) * cosDeg(declination));
-  if (cosH0 < -1 || cosH0 > 1) return null;
-  const H0 = Math.acos(cosH0) / DEG;
-  return transit + ((kind === "rise" ? -H0 : H0) / 360) * MS_PER_DAY;
+  return (sinDeg(SUNRISE_ALTITUDE) - sinDeg(latitude) * sinDeg(declination)) / (cosDeg(latitude) * cosDeg(declination));
+}
+
+/**
+ * Where the Sun neither rises nor sets on the civil day (`dayStartMs`),
+ * the moments that stand for its sunrise and sunset, as Sri Ahobila
+ * Mutt's calendar takes them: under the midnight sun, its lowest point
+ * (local apparent midnight) for sunrise and the next lowest point for
+ * sunset, a day all daylight (Tromsø, 26 Jun 2026: "Sunrise 00:47 Sunset
+ * 00:47/60-0", sixty nāzhigai later); in polar night, its highest point
+ * (local apparent noon) for both, no daylight (21 Dec 2026: "11:42/0-0").
+ * Null on a day the Sun does rise and set.
+ */
+export function sunTransitAnchor(dayStartMs: number, latitude: number, longitude: number): { rise: number; set: number } | null {
+  const cosH0 = cosSemiDiurnalArc(dayStartMs, latitude);
+  if (cosH0 >= -1 && cosH0 <= 1) return null;
+  const noon = sunTransit(dayStartMs, longitude);
+  if (cosH0 > 1) return { rise: noon, set: noon };
+  // The lower transit within the civil day, and the next one.
+  const midnight = noon - MS_PER_DAY / 2 >= dayStartMs ? noon - MS_PER_DAY / 2 : noon + MS_PER_DAY / 2;
+  return { rise: midnight, set: midnight + MS_PER_DAY };
 }

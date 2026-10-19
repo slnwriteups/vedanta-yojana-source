@@ -24,7 +24,7 @@ test("the web and mobile Panchangam labels are the same code", () => {
 function uiStrings(path: string): Map<string, string> {
   const text = readFileSync(new URL(path, import.meta.url), "utf8");
   const entries = new Map<string, string>();
-  for (const match of text.matchAll(/^  (\w+): (\{[^}]*\}),$/gms)) entries.set(match[1], match[2].replace(/\s+/g, " "));
+  for (const match of text.matchAll(/^  (\w+): (\{[^}]*\}),$/gm)) entries.set(match[1], match[2].replace(/\s+/g, " "));
   return entries;
 }
 

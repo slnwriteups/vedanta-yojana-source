@@ -33,7 +33,7 @@
  *    they carry to any year and any place.
  */
 
-import { normalizeDegrees, sunEvent } from "./panchangam-astronomy.ts";
+import { normalizeDegrees, sunEvent, sunTransitAnchor } from "./panchangam-astronomy.ts";
 import {
   traditionalElongation as lunarElongation,
   traditionalMoonLongitude as siderealMoonLongitude,
@@ -430,7 +430,7 @@ interface SunDay {
   start: number;
   sunrise: number;
   sunset: number;
-  /** False when the Sun doesn't rise or set (polar latitudes) and 06:00/18:00 stand in. */
+  /** False when the Sun doesn't rise or set (polar latitudes) and its transit stands in for both (see sunTransitAnchor). */
   hasSunEvents: boolean;
 }
 
@@ -453,11 +453,15 @@ class SunCalendar {
       const rise = sunEvent(start, latitude, longitude, "rise");
       const set = sunEvent(start, latitude, longitude, "set");
       const hasSunEvents = rise !== null && set !== null && set > rise;
+      // With no sunrise or sunset, the Sun's transits stand in, as Sri Ahobila Mutt's
+      // calendar takes them (see sunTransitAnchor); 06:00 and 18:00 only if even that
+      // can't be had (a rise without a set on a season's turning day).
+      const anchor = hasSunEvents ? null : sunTransitAnchor(start, latitude, longitude);
       cached = {
         dayNumber,
         start,
-        sunrise: hasSunEvents ? (rise as number) : start + 6 * MS_PER_HOUR,
-        sunset: hasSunEvents ? (set as number) : start + 18 * MS_PER_HOUR,
+        sunrise: hasSunEvents ? (rise as number) : (anchor?.rise ?? start + 6 * MS_PER_HOUR),
+        sunset: hasSunEvents ? (set as number) : (anchor?.set ?? start + 18 * MS_PER_HOUR),
         hasSunEvents,
       };
       this.days.set(dayNumber, cached);
