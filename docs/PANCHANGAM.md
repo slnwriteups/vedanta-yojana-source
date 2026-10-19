@@ -123,7 +123,7 @@ local sunrise, sunset and clock.
 | Rule | Used for |
 |---|---|
 | Tithi at sunrise (if the tithi sees no sunrise, the day it begins) | most tithi festivals, lunar month starts |
-| Tithi at sunset (the later day if two) | Pradosham |
+| Tithi at sunset (the later day if two, if it runs half a nāzhigai past it; else the evening it begins) | Pradosham |
 | Tithi at arunodaya (the later day if two) | Deepavali |
 | Tithi covering the most of aparahna (the 4th fifth of the day) | Amavasya Tarpanam, Mahalaya Paksham/Amavasya, Madhyashtami, Gayatri Japam, Ashtaka, Anvashtaka, Aradhanams |
 | Holds sunrise for 12 *nazhigai* (4h48m), else the day before | tirunakshatrams, Yajur Upakarma, Chitra Pournami |
@@ -254,7 +254,10 @@ Checked offline (`tests/content/panchangam-engine.test.ts`, plus a wider
   uses the tradition's own mean motions, so it carries to later years, but each
   new year's published calendar should be compared when it appears.
 - **Above about 65° latitude:** sunrise times are less exact in summer. With no
-  sunrise at all, sun-based rows are blank.
+  sunrise at all, sun-based rows are blank, and the day is reckoned from the
+  Sun's transits, as Sri Ahobila Mutt's calendar does.
+- **Worldwide validation:** 18 places, 2,206 place-days, against the Mutt's
+  calendar; see [PANCHANGAM-VALIDATION.md](PANCHANGAM-VALIDATION.md).
 
 ## Monthly update (Sri Ranganātha Pādukā)
 

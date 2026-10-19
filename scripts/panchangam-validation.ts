@@ -32,6 +32,8 @@ interface PublishedDay {
   why: string;
   sunrise: string;
   sunset: string;
+  /** The sunset's nāzhigai after sunrise ("29-34"); "60-0" or "0-0" when the Sun neither rises nor sets. */
+  sunsetNazhigai: string;
   tithis: Array<{ paksha: string; tithi: string; ends: string | null }>;
   nakshatrams: Array<{ nakshatram: string; ends: string | null }>;
   karanas: Array<{ karana: string; ends: string | null }>;
@@ -101,6 +103,10 @@ export interface PlaceResult {
   paranai: number[];
   sankranti: number[];
   unmatched: number;
+  /** Days the Sun neither rises nor sets, where the engine shows no sunrise and the Mutt prints its transit. */
+  noSunrise: number;
+  /** Every element more than 5 minutes from the published one. */
+  outliers: Mismatch[];
   mismatches: Mismatch[];
 }
 
@@ -116,22 +122,30 @@ export function validatePlace(place: PublishedPlace): PlaceResult {
     paranai: [],
     sankranti: [],
     unmatched: 0,
+    noSunrise: 0,
+    outliers: [],
     mismatches: [],
   };
   const byDate = new Map(place.days.map((d) => [d.date, d]));
   const add = (date: string, what: string, detail: string) => result.mismatches.push({ place: place.name, date, what, detail });
-  const record = (list: number[], value: number) => {
+  let current = "";
+  const record = (list: number[], value: number, what = "") => {
     if (Number.isNaN(value)) result.unmatched += 1;
     else list.push(value);
+    if (Math.abs(value) > 5) result.outliers.push({ place: place.name, date: current, what, detail: `${value.toFixed(1)} min` });
   };
 
   for (const pub of place.days) {
     const [y, m, d] = pub.date.split("-").map(Number);
     const p = computePanchangam(dayNumberOf(y, m, d), place, { placeName: place.name });
+    current = pub.date;
     const nextDay = byDate.get(new Date(Date.UTC(y, m - 1, d + 1)).toISOString().slice(0, 10));
 
     // Sunrise and sunset, local clock minutes (both on the place's clock).
     if (p.sunrise && /^\d\d:\d\d/.test(pub.sunrise)) result.sunrise.push(clockMinutes(p.sunrise) - clockMinutes(pub.sunrise));
+    // Where the Sun neither rises nor sets, the Mutt prints its transit as sunrise (its sunset
+    // 60-0 or 0-0 nāzhigai after it); the engine reckons from the same transit but shows none.
+    else if (!p.sunrise && /^(60|0)-0$/.test(pub.sunsetNazhigai)) result.noSunrise += 1;
     else if (Boolean(p.sunrise) !== /^\d\d:\d\d/.test(pub.sunrise)) add(pub.date, "sunrise", `engine "${p.sunrise}" vs published "${pub.sunrise}"`);
     if (p.sunset && /^\d\d:\d\d/.test(pub.sunset)) result.sunset.push(clockMinutes(p.sunset) - clockMinutes(pub.sunset));
 
@@ -155,7 +169,7 @@ export function validatePlace(place: PublishedPlace): PlaceResult {
       if (capped) return;
       const k = tithiIndex(t.paksha, t.tithi);
       const at = localToUtc(pub.date, t.ends, place.timeZone);
-      record(result.tithi, minutes(engineEnd(tithiAt, at, (x) => x === k, (x) => x === (k + 1) % 30), at));
+      record(result.tithi, minutes(engineEnd(tithiAt, at, (x) => x === k, (x) => x === (k + 1) % 30), at), `${t.tithi} end ${t.ends}`);
     });
     pub.nakshatrams.forEach((n, i) => {
       if (!n.ends) return;
@@ -163,7 +177,7 @@ export function validatePlace(place: PublishedPlace): PlaceResult {
       if (capped) return;
       const k = NAKSHATRA_NAMES.indexOf(n.nakshatram);
       const at = localToUtc(pub.date, n.ends, place.timeZone);
-      record(result.nakshatram, minutes(engineEnd(nakshatraAt, at, (x) => x === k, (x) => x === (k + 1) % 27), at));
+      record(result.nakshatram, minutes(engineEnd(nakshatraAt, at, (x) => x === k, (x) => x === (k + 1) % 27), at), `${n.nakshatram} end ${n.ends}`);
     });
     for (const k of pub.karanas) {
       if (!k.ends) continue;
@@ -171,7 +185,7 @@ export function validatePlace(place: PublishedPlace): PlaceResult {
       const segment = karanaAt(at);
       const end =
         karanaName(segment.index) === k.karana ? segment.end : karanaName((segment.index + 59) % 60) === k.karana ? segment.start : NaN;
-      record(result.karana, minutes(end, at));
+      record(result.karana, minutes(end, at), `${k.karana} end ${k.ends}`);
     }
 
     // Observances by what they decide.
@@ -184,13 +198,15 @@ export function validatePlace(place: PublishedPlace): PlaceResult {
     const engParanai = p.festival.match(/Dvadasi Paranai (?:after )?(\d\d:\d\d)(?:-(\d\d:\d\d))?/);
     if (Boolean(pubParanai) !== Boolean(engParanai)) add(pub.date, "Paranai day", `engine "${engParanai?.[0] ?? "none"}" vs published "${pubParanai?.[0] ?? "none"}"`);
     else if (pubParanai && engParanai) {
-      result.paranai.push(clockMinutes(engParanai[1]) - clockMinutes(pubParanai[1]));
-      if (pubParanai[2] && engParanai[2]) result.paranai.push(clockMinutes(engParanai[2]) - clockMinutes(pubParanai[2]));
+      record(result.paranai, clockMinutes(engParanai[1]) - clockMinutes(pubParanai[1]), `Paranai start (${pubParanai[0]} / ${engParanai[0]})`);
+      if (pubParanai[2] && engParanai[2]) {
+        record(result.paranai, clockMinutes(engParanai[2]) - clockMinutes(pubParanai[2]), `Paranai end (${pubParanai[0]} / ${engParanai[0]})`);
+      }
     }
     const pubRavi = pub.observances.match(/(\w+) Ravi (\d\d:\d\d\*?)/);
     const engRavi = p.festival.match(/(\w+) Ravi (\d\d:\d\d(?: \(\+1\))?)/);
     if (Boolean(pubRavi) !== Boolean(engRavi)) add(pub.date, "sankramanam day", `engine "${engRavi?.[0] ?? "none"}" vs published "${pubRavi?.[0] ?? "none"}"`);
-    else if (pubRavi && engRavi) result.sankranti.push(clockMinutes(engRavi[2]) - clockMinutes(pubRavi[2]));
+    else if (pubRavi && engRavi) record(result.sankranti, clockMinutes(engRavi[2]) - clockMinutes(pubRavi[2]), `${pubRavi[0]}`);
   }
   return result;
 }
@@ -218,7 +234,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const fixture = JSON.parse(readFileSync(FIXTURE, "utf8")) as { source: string; places: PublishedPlace[] };
   const results = fixture.places.map(validatePlace);
   const row = (r: PlaceResult) =>
-    `| ${r.place.name} | ${r.place.group} | ${r.days} | ${cell(r.sunrise)} | ${cell(r.tithi)} | ${cell(r.nakshatram)} | ${cell(r.karana)} | ${cell(r.paranai)} | ${cell(r.sankranti)} | ${r.unmatched} | ${r.mismatches.length} |`;
+    `| ${r.place.name} | ${r.place.group} | ${r.days} | ${cell(r.sunrise)} | ${cell(r.tithi)} | ${cell(r.nakshatram)} | ${cell(r.karana)} | ${cell(r.paranai)} | ${cell(r.sankranti)} | ${r.unmatched} | ${r.noSunrise} | ${r.mismatches.length} |`;
   const pool = (pick: (r: PlaceResult) => number[], filter: (r: PlaceResult) => boolean) => results.filter(filter).flatMap(pick);
   const validation = (r: PlaceResult) => r.place.group !== "calibration";
   const summary = (name: string, pick: (r: PlaceResult) => number[]) => {
@@ -226,6 +242,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     return `| ${name} | ${d.n} | ${d.exact} | ${d.within1} | ${d.within2} | ${d.within5} | ${d.max} |`;
   };
   const mismatches = results.flatMap((r) => r.mismatches);
+  const outliers = results.flatMap((r) => r.outliers);
   const doc = `## Worldwide matrix
 
 GENERATED by \`scripts/panchangam-validation.ts\` from \`${FIXTURE}\`
@@ -250,9 +267,15 @@ ${summary("Sankramanam time", (r) => r.sankranti)}
 
 Each cell: how many were compared, the share within 1 and 2 minutes, and the largest difference.
 
-| Place | Group | Days | Sunrise | Tithi end | Nakshatram end | Karana end | Paranai | Sankramanam | Unmatched | Disagreements |
-|---|---|---|---|---|---|---|---|---|---|---|
+| Place | Group | Days | Sunrise | Tithi end | Nakshatram end | Karana end | Paranai | Sankramanam | Unmatched | No sunrise | Disagreements |
+|---|---|---|---|---|---|---|---|---|---|---|---|
 ${results.map(row).join("\n")}
+
+### Every difference over 5 minutes
+
+| Place | Date | Element | Engine − published |
+|---|---|---|---|
+${outliers.map((m) => `| ${m.place} | ${m.date} | ${m.what.replace(/\|/g, "/")} | ${m.detail} |`).join("\n") || "| – | – | – | none |"}
 
 ### Every disagreement
 

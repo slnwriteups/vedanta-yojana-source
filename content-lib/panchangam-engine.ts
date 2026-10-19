@@ -675,8 +675,21 @@ type TithiRule = {
   name: string;
   month: number | null;
   tithi: number;
-  at?: DayPoint | "aparahna-coverage" | "last-sunset" | "last-arunodaya" | "6-nazhigai" | "12-nazhigai";
+  at?: DayPoint | "aparahna-coverage" | "pradosham" | "last-arunodaya" | "6-nazhigai" | "12-nazhigai";
 };
+
+/**
+ * How long Trayodasi must run past a sunset for that evening to be the
+ * Pradosham: half a nāzhigai. Inferred from Sri Ahobila Mutt's published
+ * days, not a stated rule. Measured with the Mutt's own printed times,
+ * it keeps the later of two Trayodasi sunsets when Trayodasi runs on 30
+ * vināzhigai past it (Auckland, 24 Oct 2026) or more (19.2 min, Chennai,
+ * 4 Feb 2027; 6 more cases from 39 min), and the earlier when it runs on
+ * 26 (Srirangam, 4 Feb 2027) or 24 (Los Angeles, 30 Mar 2026): the
+ * threshold lies in (26, 30] vināzhigai, and 30 is half a nāzhigai
+ * (docs/PANCHANGAM-VALIDATION.md).
+ */
+const PRADOSHAM_MINUTES = 12;
 
 /** Lunar months: 0 Chaitra … 11 Phalguna (amanta, nija months only). Tithis: 0 Shukla Prathama … 29 Amavasya. */
 const TITHI_FESTIVALS: TithiRule[] = [
@@ -696,9 +709,10 @@ const TITHI_FESTIVALS: TithiRule[] = [
   { name: "Anvashtaka", month: 10, tithi: 23, at: "aparahna-coverage" },
   // The first evening in Ashvina Shukla Dvitiya.
   { name: "Navaratri Pooja Begins", month: 6, tithi: 1, at: "sunset" },
-  // Trayodasi at sunset; when it spans two sunsets, the second.
-  { name: "Pradosham", month: null, tithi: 12, at: "last-sunset" },
-  { name: "Pradosham", month: null, tithi: 27, at: "last-sunset" },
+  // Trayodasi at sunset; when it spans two sunsets, the second -- if it lasts
+  // PRADOSHAM_MINUTES past it; if no sunset qualifies, the evening it begins.
+  { name: "Pradosham", month: null, tithi: 12, at: "pradosham" },
+  { name: "Pradosham", month: null, tithi: 27, at: "pradosham" },
   { name: "Amavasya Tarpanam", month: null, tithi: 29, at: "aparahna-coverage" },
 ];
 
@@ -971,8 +985,8 @@ function tithiFestivalsOn(cal: SunCalendar, d: number): string[] {
     const keptOn = (at: TithiRule["at"]) =>
       at === "aparahna-coverage"
         ? dayOfMostCoverage(cal, segment, 0.6, 0.8)
-        : at === "last-sunset"
-          ? dayAtPoint(cal, segment, "sunset", true)
+        : at === "pradosham"
+          ? dayAtPoint(cal, { ...segment, end: segment.end - PRADOSHAM_MINUTES * MS_PER_MINUTE }, "sunset", true)
           : at === "last-arunodaya"
             ? dayAtPoint(cal, segment, "arunodaya", true)
             : at === "6-nazhigai" || at === "12-nazhigai"

@@ -84,13 +84,14 @@ clock is applied only to read them out.
 | **Nakshatram** | The Moon's sidereal longitude, 13°20′ each. |
 | **Yoga** | Sun + Moon (sidereal), 13°20′ each, 27 names. |
 | **Karana** | Each tithi halved in time: the first karana from its start to its midpoint, the second from its midpoint to its end; Kimstughna first, the seven movable karanas eight times, then Shakuni, Chatushpada, Nagava. See [Karana](#karana). |
-| **Sunrise, sunset** | The *observed* Sun (Meeus ch. 25, apparent longitude with nutation and aberration; ΔT from Espenak–Meeus): the centre of the disc on the true horizon, no refraction; the transit found by iteration, the semi-diurnal arc from the declination at local noon. Within a minute of Swiss Ephemeris up to about 50° latitude. Where the Sun doesn't rise or set, 06:00 and 18:00 stand in. |
+| **Sunrise, sunset** | The *observed* Sun (Meeus ch. 25, apparent longitude with nutation and aberration; ΔT from Espenak–Meeus): the centre of the disc on the true horizon, no refraction; the transit found by iteration, the semi-diurnal arc from the declination at local noon. Within a minute of Swiss Ephemeris up to about 50° latitude, and of the Mutt's printed times at all 18 places. Where the Sun neither rises nor sets, its transits stand in, as the Mutt takes them: under the midnight sun, sunrise at its lowest point and sunset at the next (a day all daylight); in polar night, both at its highest point. None is displayed. |
 | **Solar ingress** | The traditional Sun reaching a multiple of 30°, solved like a tithi. |
 | **Tamil month** | The Sun's sign at the civil day's sunset (a month begins on the day whose sunset follows the sankramanam). Tirunakshatrams are reckoned in the month of the sankramanam's punyakalam day. |
 | **Lunar month** | Amanta: named from the Sun's sign at the new moon that opens it, plus one; a month with no sankramanam is adhika. |
 | **Samvatsara** | (solar year − 1987) mod 60, the solar year turning at Mesha sankramanam. |
 | **Day** | Sunrise to sunrise; a day's tithi and nakshatram are those at its sunrise. |
 | **Ekadasi** | The Ekadasi first seen at sunrise is kept that day, unless Dasami is still running at arunodaya (96 min before sunrise; viddha), the Ekadasi also holds the next sunrise, or the following Dvadasi holds two sunrises (vyañjulī mahādvādaśī) -- then the next day. An Ekadasi seeing no sunrise (kshaya) is kept on the Dasami-to-Dvadasi day. |
+| **Pradosham** | Trayodasi at sunset; when it holds two sunsets, the later -- if it runs on at least half a nāzhigai (12 min) past it; when no sunset qualifies, the evening it begins. The half-nāzhigai is inferred from the Mutt's published days, not stated (see [Worldwide](#worldwide)). |
 | **Dvadasi Paranai** | From sunrise, or the end of Ekadasi, or the end of Hari Vasara (the first quarter of Dvadasi), whichever is latest, to the end of the first fifth of the daylight; "Alpa" when Dvadasi ends sooner. |
 
 ### Karana
@@ -234,3 +235,115 @@ daily Sankalpam.
   coordinates and time zone, and the city list is bundled.
 - **Own location's time zone:** taken from the coordinates (see
   [PANCHANGAM.md](PANCHANGAM.md#choosing-a-city)), not only the device clock.
+
+## Worldwide
+
+The engine against Sri Ahobila Mutt's calendar at 18 places
+(`scripts/panchangam-validation.ts`; every table in
+[PANCHANGAM-VALIDATION-MATRIX.md](PANCHANGAM-VALIDATION-MATRIX.md), and
+held by `tests/content/panchangam-worldwide.test.ts`).
+
+### Places and dates
+
+- **Places:** Bengaluru, Srirangam, Chennai (calibration), Mumbai; Raxaul
+  and Birgunj, either side of the India–Nepal border (+5:30 / +5:45);
+  Kathmandu; Singapore and Quito (equator); Tokyo; London; New York; Los
+  Angeles; Sydney; Auckland; Reykjavik and Anchorage (above 60°); Tromsø
+  (inside the Arctic Circle: midnight sun and polar night).
+- **Dates:** 109 for every place, chosen to test what is hard: every
+  Ekadasi of the year and the next day, each sankramanam, every day with
+  a tithi or nakshatram change within 40 minutes of sunrise, each
+  daylight-saving change in both hemispheres (Europe, the US, Australia,
+  New Zealand) and the solstices; plus, at six places across the
+  longitudes (Chennai, London, New York, Los Angeles, Sydney, Tokyo),
+  every Pradosham with the days either side. 2,206 place-days in all,
+  with 429 Ekadasi days, 479 Paranai days and 402 Pradosham days
+  published.
+- **Not covered:** leap years and other years. The Mutt publishes 15 Mar
+  2026 – 1 May 2027 only; 29 Feb is handled by the calendar arithmetic
+  (`dayNumberOf`) and not checked against any publication.
+
+### Results, independent places (17)
+
+| Element | Compared | Within 1 min | Within 2 min | Within 5 min | Largest |
+|---|---|---|---|---|---|
+| Sunrise | 2,027 | 100% | 100% | 100% | 1 min |
+| Sunset | 2,027 | 100% | 100% | 100% | 1 min |
+| Tithi end | 2,134 | 56% | 82% | 100% | 5 min |
+| Nakshatram end | 2,062 | 69% | 91% | 100% | 4 min |
+| Karana end | 4,248 | 57% | 84% | 99.9% | 61 min (see below) |
+| Dvadasi Paranai bounds | 864 | 94% | 97% | 99.8% | 288 min (see below) |
+| Sankramanam time | 181 | 85% | 100% | 100% | 2 min |
+
+Every published end names the same element as the engine's (no
+"unmatched"); every instant is compared in UTC. The calibration place,
+Chennai, sits in the same ranges: its fit does not stand out, so the
+constants were not tuned to it at the others' expense.
+
+Of the observances decided per place, at every place and date compared:
+
+- **Ekadasi day, Paranai day:** all agree, except the Mutt's first day
+  (15–16 Mar 2026, where its calendar can't see the day before), one
+  Śravaṇa Dvādaśī (below) and one transition a minute from the midnight-sun
+  "sunrise" at Tromsø.
+- **Pradosham:** all 1,360 judged days agree, after the change below.
+- **Sankramanam:** every day and time within 2 minutes.
+- **Elements at sunrise:** all agree except three transitions 0, 1 and 3
+  minutes from sunrise (Bengaluru, Kathmandu, Tokyo).
+
+### What the matrix changed
+
+- **Pradosham.** At Chennai, "Trayodasi at sunset, the later of two"
+  always agreed. Elsewhere it didn't: at Los Angeles on 29–30 Mar 2026 the
+  Mutt keeps the evening Trayodasi *begins* (50 min after sunset), not the
+  next, whose sunset Trayodasi holds for only 9.6 minutes. Measured in the
+  Mutt's own printed times, it keeps the later sunset when Trayodasi runs
+  on 30 vināzhigai (12 min, Auckland 24 Oct 2026) or more, and the earlier
+  at 26 (Srirangam, 4 Feb 2027) or 24 (Los Angeles): the threshold lies in
+  (26, 30] vināzhigai, and the engine takes half a nāzhigai. Before:
+  1,355 of 1,360 Pradosham judgements agreed; after: 1,360.
+- **Polar days.** The engine took 06:00 and 18:00 for a day without sunrise;
+  the Mutt takes the Sun's transits (above), which moved Tromsø's
+  Pradosham of 26 Jun 2026 to the right day.
+
+### Differences that are the published calendar's
+
+- **Karana on the US daylight-saving day** (14 Mar 2027; New York, Los
+  Angeles, Anchorage): the Mutt's karana ends are an hour from the
+  midpoints of its own tithis, and fall on round hours: wall-clock
+  arithmetic across the clock change. Its tithi ends that day agree with
+  the engine.
+- **Paranai under the midnight sun** (Tromsø, 28 May and 12 Jun 2026): the
+  Mutt prints a zero-length window ("00:41-00:41"), though its own day is
+  all daylight; the engine gives the first fifth of that day. The starts
+  agree.
+- **Sunrise under the midnight sun and in polar night:** the Mutt prints
+  the transit as "Sunrise"; the engine reckons from the same moment but
+  shows no sunrise, as the Sun does not rise (30 days at Tromsø).
+- **Its first day,** 15 Mar 2026 (above).
+
+### Earlier reports: London, Sydney, New York
+
+The year-long comparison recorded in [PANCHANGAM.md](PANCHANGAM.md)
+(London 409/412 days, Sydney 411, New York's observance list 402/412)
+attributed its differences to the range's first day, transitions within
+a minute of sunrise, Sri Jayanthi at Sydney and US-only notices. That data
+was not kept. In this matrix, London, Sydney and New York show only the
+first-day differences and none near sunrise; their Pradosham days,
+which the old rule decided differently at some longitudes, now all agree.
+Sri Jayanthi at Sydney is not among the dates chosen and remains as
+reported.
+
+### Remaining uncertainty
+
+- **Śravaṇa Dvādaśī.** At Auckland on 23 Sep 2026 the Mutt keeps
+  "Sravana Dvadasi Vratam" and no Paranai; at the other 17 places, the
+  same day has a Paranai. Śravaṇam ran 24 nāzhigai 48 vināzhigai past
+  sunrise there, 20-52 at Sydney (Paranai kept). One case: the rule (a
+  Vijayā Mahādvādaśī) is not established, and the engine keeps the Paranai.
+- **The Pradosham threshold** rests on five cases near it; another year's
+  calendar should be checked against it.
+- **Precision.** About half of all transition times agree to the minute and
+  all within 5; a transition within that of sunrise can put a day's tithi
+  or nakshatram, and so an observance, a day apart from the published one
+  (3 of 2,206 place-days here).

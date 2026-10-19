@@ -192,6 +192,32 @@ test("the present moment's Panchangam expires at each change the Sankalpam names
   assert.match(late.sankalpamText, / EDT /);
 });
 
+test("Pradosham: the later sunset counts only if Trayodasi runs half a nazhigai past it", () => {
+  // Sri Ahobila Mutt's published days, with Trayodasi's run past the later sunset in its own figures.
+  const LA: PanchangamPlace = { latitude: 34.05, longitude: -118.24, timeZone: "America/Los_Angeles" };
+  const AUCKLAND: PanchangamPlace = { latitude: -36.85, longitude: 174.76, timeZone: "Pacific/Auckland" };
+  const pradosham = (place: PanchangamPlace, iso: string) => observances(place, iso).includes("Pradosham");
+  // 24 vinazhigai (Los Angeles): the evening it begins instead.
+  assert.ok(pradosham(LA, "2026-03-29") && !pradosham(LA, "2026-03-30"));
+  // 26 vinazhigai (Srirangam): the earlier sunset.
+  assert.ok(pradosham(SRIRANGAM, "2027-02-03") && !pradosham(SRIRANGAM, "2027-02-04"));
+  // 30 vinazhigai (Auckland) and 48 (Chennai): the later.
+  assert.ok(!pradosham(AUCKLAND, "2026-10-23") && pradosham(AUCKLAND, "2026-10-24"));
+  assert.ok(!pradosham(CHENNAI, "2027-02-03") && pradosham(CHENNAI, "2027-02-04"));
+});
+
+test("a day without sunrise is reckoned from the Sun's transits, as the Mutt's calendar takes it", () => {
+  const TROMSO: PanchangamPlace = { latitude: 69.65, longitude: 18.96, timeZone: "Europe/Oslo" };
+  // Midnight sun: sunrise at the lowest point (00:47), sunset at the next -- so Trayodasi, from
+  // 21:00, holds the 26th's "sunset" and its Pradosham is kept that day, as published.
+  assert.ok(observances(TROMSO, "2026-06-26").includes("Pradosham"));
+  assert.ok(!observances(TROMSO, "2026-06-27").includes("Pradosham"));
+  assert.match(observances(TROMSO, "2026-06-26").join(", "), /Dvadasi Paranai 01:5\d-/);
+  // Nothing is displayed: the Sun doesn't rise.
+  const p = day(TROMSO, "2026-06-26");
+  assert.deepEqual([p.sunrise, p.sunset, p.rahuKaalam], ["", "", ""]);
+});
+
 test("yoga and karana agree with the Ashramam's Tarpana Sankalpams", () => {
   // Sri Ranganātha Pādukā, Sep 2026 issue (content-lib/paduka-panchangam.ts),
   // for Srirangam. A karana's printed end ("catuṣpāda till 09.05") is in
