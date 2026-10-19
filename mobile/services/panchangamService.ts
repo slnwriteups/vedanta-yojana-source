@@ -130,11 +130,24 @@ const LOCATION_UNAVAILABLE_FALLBACK: PanchangamData = {
  * "Sankalpam for {city}" declaration sentence (the calculation itself
  * only ever uses latitude/longitude/timezone, so a name that can't be
  * resolved changes the label alone).
- * Timezone is the DEVICE's own configured zone (Intl), so every time
- * shown reads on the reader's own clock.
+ * Timezone is the zone at those coordinates, worked out on the phone
+ * from the bundled places (content-lib/panchangam-places.ts timeZoneAt):
+ * the phone's own zone unless no place near the fix keeps that clock, as
+ * for a traveller whose phone is still on home time.
  * Returns null (never a guessed city) if permission is denied or no fix
  * can be obtained.
  */
+/** The time zone at a location fix (see resolveLocation); the phone's own zone if the places can't be loaded. */
+async function resolveTimeZone(latitude: number, longitude: number): Promise<string> {
+  const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  try {
+    const { timeZoneAt } = await import("../../content-lib/panchangam-places.ts");
+    return timeZoneAt(latitude, longitude, deviceZone);
+  } catch {
+    return deviceZone;
+  }
+}
+
 async function resolveLocation(): Promise<ResolvedLocation | null> {
   try {
     const { status } = await Location.requestForegroundPermissionsAsync();
@@ -165,7 +178,7 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
       city,
       latitude,
       longitude,
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+      timezone: await resolveTimeZone(latitude, longitude),
     };
   } catch {
     return null;

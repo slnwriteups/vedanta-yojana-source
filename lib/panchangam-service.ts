@@ -233,8 +233,8 @@ async function resolvePlaceName(latitude: number, longitude: number): Promise<st
 
 /**
  * Resolves the browser's own real location: its coordinates, the place
- * name they resolve to, and the browser's own configured timezone
- * (Intl), mobile's identical choice. Returns null (never a guessed
+ * name they resolve to, and the time zone of that place (resolveTimeZone),
+ * mobile's identical choice. Returns null (never a guessed
  * location) when no fix is available -- a place name that can't be
  * resolved is NOT such a case: the Panchangam is still exactly
  * computable from the coordinates, so it falls back to UNNAMED_LOCATION
@@ -248,8 +248,33 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
     city: await resolvePlaceName(coordinates.latitude, coordinates.longitude),
     latitude: coordinates.latitude,
     longitude: coordinates.longitude,
-    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    timezone: await resolveTimeZone(coordinates.latitude, coordinates.longitude),
   };
+}
+
+const ZONE_CACHE_KEY_PREFIX = "vy.calendar.zone.";
+
+/**
+ * The time zone at the browser's location, worked out in the browser from
+ * the bundled places (content-lib/panchangam-places.ts timeZoneAt): the
+ * browser's own zone unless no place near the coordinates keeps that
+ * clock. The places list is large, so the answer is cached by coarse
+ * coordinates and browser zone, and the list loaded only on a miss; if
+ * it can't be loaded, the browser's own zone.
+ */
+async function resolveTimeZone(latitude: number, longitude: number): Promise<string> {
+  const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const cacheKey = `${ZONE_CACHE_KEY_PREFIX}${latitude.toFixed(2)},${longitude.toFixed(2)},${deviceZone}`;
+  const cached = await readJSON(cacheKey, isNonEmptyString);
+  if (cached) return cached;
+  try {
+    const { timeZoneAt } = await import("../content-lib/panchangam-places.ts");
+    const zone = timeZoneAt(latitude, longitude, deviceZone);
+    void writeJSON(cacheKey, zone);
+    return zone;
+  } catch {
+    return deviceZone;
+  }
 }
 
 /**
