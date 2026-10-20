@@ -109,13 +109,15 @@ function makeFakeFileSystem(): BookFileSystem & { remoteResponses: Map<string, s
 
 const BOOK_JSON_URL = "https://example.com/books/test-book.json";
 const IMAGE_BASE_URL = "https://example.com/images";
+/** Failed downloads are retried; without this each failure test would wait out the real backoff. */
+const NO_RETRY_DELAY = { retryDelayMs: 0 };
 
 test("downloadBook: a successful download becomes available afterward, with the real body readable", async () => {
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
 
   assert.equal(isBookAvailable("test-book", fs), false);
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, true);
   assert.equal(isBookAvailable("test-book", fs), true);
 
@@ -143,7 +145,7 @@ test("downloadBook: also downloads every referenced image and makes it resolvabl
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(payload));
   fs.remoteResponses.set(`${IMAGE_BASE_URL}/abcd1234.jpg`, "<fake image bytes>");
 
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, true);
   assert.equal(getOfflineBookImageUri("test-book", "ABCD1234", fs), "file:///document/books/test-book/images/abcd1234.jpg");
 });
@@ -152,7 +154,7 @@ test("downloadBook: a malformed JSON response is rejected and never becomes avai
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, "<html>404 Not Found</html>");
 
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, false);
   assert.ok(result.error);
   assert.equal(isBookAvailable("test-book", fs), false);
@@ -162,7 +164,7 @@ test("downloadBook: a payload for the wrong book slug is rejected", async () => 
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload({ book: { ...validPayload().book, slug: "other-book" } })));
 
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, false);
   assert.equal(isBookAvailable("test-book", fs), false);
 });
@@ -172,7 +174,7 @@ test("downloadBook: an incompatible contentSchemaVersion is rejected", async () 
   const payload = validPayload();
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify({ ...payload, contentSchemaVersion: 999 }));
 
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, false);
   assert.equal(isBookAvailable("test-book", fs), false);
 });
@@ -181,7 +183,7 @@ test("downloadBook: a network failure on the book JSON itself leaves the book un
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, new Error("network request failed"));
 
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, false);
   assert.equal(isBookAvailable("test-book", fs), false);
 });
@@ -205,7 +207,7 @@ test("downloadBook: a failure downloading one referenced image fails the whole b
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(payload));
   fs.remoteResponses.set(`${IMAGE_BASE_URL}/abcd1234.jpg`, new Error("connection reset"));
 
-  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(result.success, false);
   assert.equal(isBookAvailable("test-book", fs), false, "a book with a failed image must not be marked available");
 });
@@ -214,13 +216,13 @@ test("downloadBook: a failed REPLACEMENT download preserves the existing valid o
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
 
-  const first = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const first = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(first.success, true);
   const bodyAfterFirst = loadOfflineBook("test-book", fs)!.chapters[0].body;
 
   // Simulate a later re-download attempt getting a broken response.
   fs.remoteResponses.set(BOOK_JSON_URL, "not json at all");
-  const second = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  const second = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(second.success, false);
 
   assert.equal(isBookAvailable("test-book", fs), true, "the original valid copy must still be there");
@@ -233,7 +235,7 @@ test("getLocalBookContentHash: matches sha256Hex of the exact downloaded body, a
 
   const json = JSON.stringify(validPayload());
   fs.remoteResponses.set(BOOK_JSON_URL, json);
-  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
 
   assert.equal(getLocalBookContentHash("test-book", fs), sha256Hex(json));
 });
@@ -242,14 +244,14 @@ test("getLocalBookContentHash: changes after a genuine content re-sync, and dele
   const fs = makeFakeFileSystem();
   const firstJson = JSON.stringify(validPayload());
   fs.remoteResponses.set(BOOK_JSON_URL, firstJson);
-  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   const firstHash = getLocalBookContentHash("test-book", fs);
 
   const secondJson = JSON.stringify(
     validPayload({ chapters: [{ ...validPayload().chapters[0], body: "A genuinely different body." }] })
   );
   fs.remoteResponses.set(BOOK_JSON_URL, secondJson);
-  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
 
   assert.notEqual(getLocalBookContentHash("test-book", fs), firstHash);
   assert.equal(getLocalBookContentHash("test-book", fs), sha256Hex(secondJson));
@@ -261,7 +263,7 @@ test("getLocalBookContentHash: changes after a genuine content re-sync, and dele
 test("deleteBook: removes the local copy and availability becomes false", async () => {
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
-  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
   assert.equal(isBookAvailable("test-book", fs), true);
 
   deleteBook("test-book", fs);
@@ -281,7 +283,7 @@ test("loadOfflineBook: returns null (not a crash) when nothing has been download
 test("getOfflineBookImageUri: returns null for an image the book doesn't reference", async () => {
   const fs = makeFakeFileSystem();
   fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
-  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+  await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
 
   assert.equal(getOfflineBookImageUri("test-book", "not-a-real-uuid", fs), null);
 });
@@ -302,4 +304,60 @@ test("Two books download and coexist independently", async () => {
   deleteBook("book-a", fs);
   assert.equal(isBookAvailable("book-a", fs), false);
   assert.equal(isBookAvailable("book-b", fs), true, "deleting one book must not affect another");
+});
+
+test("downloadBook: a transient image failure is retried, and the book still becomes available", async () => {
+  const fs = makeFakeFileSystem();
+  const payload = validPayload({ imageFiles: { abcd1234: "abcd1234.jpg" } });
+  const imageUrl = `${IMAGE_BASE_URL}/abcd1234.jpg`;
+  fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(payload));
+  let imageAttempts = 0;
+  const realDownload = fs.downloadBinaryFile;
+  fs.downloadBinaryFile = async (url, destinationPath) => {
+    if (url === imageUrl && ++imageAttempts === 1) {
+      // A failed attempt can leave a partial file behind; the retry must not trip over it.
+      fs.writeTextFile(destinationPath, "partial");
+      throw new Error("response has status 503");
+    }
+    if (fs.fileExists(destinationPath)) throw new Error(`destination already exists: ${destinationPath}`);
+    return realDownload.call(fs, url, destinationPath);
+  };
+  fs.remoteResponses.set(imageUrl, "image-bytes");
+
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
+  assert.equal(result.success, true, result.error);
+  assert.equal(imageAttempts, 2);
+  const uri = getOfflineBookImageUri("test-book", "ABCD1234", fs);
+  assert.ok(uri);
+  assert.equal(fs.readTextFile(uri), "image-bytes");
+});
+
+test("downloadBook: a transient failure on the book JSON is retried", async () => {
+  const fs = makeFakeFileSystem();
+  let attempts = 0;
+  const realDownload = fs.downloadTextFile;
+  fs.downloadTextFile = async (url, destinationPath) => {
+    if (++attempts < 3) throw new Error("connection reset");
+    return realDownload.call(fs, url, destinationPath);
+  };
+  fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload()));
+
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
+  assert.equal(result.success, true, result.error);
+  assert.equal(attempts, 3);
+});
+
+test("downloadBook: a file that keeps failing is given up after three attempts", async () => {
+  const fs = makeFakeFileSystem();
+  let attempts = 0;
+  fs.downloadTextFile = async () => {
+    attempts++;
+    throw new Error("offline");
+  };
+
+  const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs, NO_RETRY_DELAY);
+  assert.equal(result.success, false);
+  assert.equal(result.error, "offline");
+  assert.equal(attempts, 3);
+  assert.equal(isBookAvailable("test-book", fs), false);
 });

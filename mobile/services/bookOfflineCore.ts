@@ -43,6 +43,46 @@ const BOOKS_DIRECTORY_NAME = "books";
  */
 const IMAGE_DOWNLOAD_CONCURRENCY = 6;
 
+/**
+ * Each file (the book JSON, and every image) gets this many attempts
+ * before the whole book download is given up. The Pages CDN does return
+ * the odd transient 503 under a burst of parallel requests, and a phone
+ * on mobile data drops connections; since one failed file discards the
+ * whole book (see downloadBook()), a single blip used to fail a 26-image
+ * book outright. The delay doubles after each failed attempt.
+ */
+const DOWNLOAD_ATTEMPTS = 3;
+const DEFAULT_RETRY_DELAY_MS = 1000;
+
+export interface BookDownloadOptions {
+  /** Delay before the first retry (doubled for each later one). Tests pass 0. */
+  retryDelayMs?: number;
+}
+
+/**
+ * Downloads one file, retrying on failure. Any partial file a failed
+ * attempt left behind is deleted first: expo-file-system's
+ * File.downloadFileAsync refuses to overwrite an existing destination.
+ */
+async function downloadWithRetry(
+  download: () => Promise<void>,
+  destinationPath: string,
+  fs: BookFileSystem,
+  retryDelayMs: number
+): Promise<void> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      await download();
+      return;
+    } catch (error) {
+      if (attempt >= DOWNLOAD_ATTEMPTS) throw error;
+      fs.deleteFile(destinationPath);
+      const delay = retryDelayMs * 2 ** (attempt - 1);
+      if (delay > 0) await new Promise((resolve) => setTimeout(resolve, delay));
+    }
+  }
+}
+
 function localBookDir(bookSlug: string, fs: BookFileSystem): string {
   return `${fs.documentDirectoryPath}${BOOKS_DIRECTORY_NAME}/${bookSlug}`;
 }
@@ -141,7 +181,16 @@ export function loadOfflineBook(bookSlug: string, fs: BookFileSystem): BookPaylo
  * available, but still handled defensively).
  */
 export function getOfflineBookImageUri(bookSlug: string, imageUuid: string, fs: BookFileSystem): string | null {
-  const payload = loadOfflineBook(bookSlug, fs);
+  return offlineBookImageUri(bookSlug, loadOfflineBook(bookSlug, fs), imageUuid, fs);
+}
+
+/** getOfflineBookImageUri() for a payload the caller has already loaded (bookOfflineService.ts keeps them in memory). */
+export function offlineBookImageUri(
+  bookSlug: string,
+  payload: BookPayload | null,
+  imageUuid: string,
+  fs: BookFileSystem
+): string | null {
   const filename = payload?.imageFiles[imageUuid.toLowerCase()];
   if (!filename) return null;
   const imagePath = `${localBookImageDir(bookSlug, fs)}/${filename}`;
@@ -164,6 +213,7 @@ export interface BookDownloadResult {
  * discarded and any existing valid offline copy of this book is left
  * completely untouched. A book is therefore always either fully
  * available offline or not available at all -- never partially.
+ * Each file is retried (DOWNLOAD_ATTEMPTS) before it counts as failed.
  * Images download up to IMAGE_DOWNLOAD_CONCURRENCY at once (see that
  * constant); if any fail, the ones already in flight are still allowed
  * to finish before the whole attempt is discarded, rather than trying
@@ -173,8 +223,10 @@ export async function downloadBook(
   bookSlug: string,
   bookJsonUrl: string,
   imageBaseUrl: string,
-  fs: BookFileSystem
+  fs: BookFileSystem,
+  options: BookDownloadOptions = {}
 ): Promise<BookDownloadResult> {
+  const retryDelayMs = options.retryDelayMs ?? DEFAULT_RETRY_DELAY_MS;
   const tempDir = tempBookDir(bookSlug, fs);
   fs.deleteDirectory(tempDir);
   fs.ensureDirectoryExists(tempDir);
@@ -182,7 +234,7 @@ export async function downloadBook(
 
   const tempJsonPath = `${tempDir}/book.json`;
   try {
-    await fs.downloadTextFile(bookJsonUrl, tempJsonPath);
+    await downloadWithRetry(() => fs.downloadTextFile(bookJsonUrl, tempJsonPath), tempJsonPath, fs, retryDelayMs);
   } catch (error) {
     fs.deleteDirectory(tempDir);
     return { success: false, error: describeError(error) };
@@ -204,7 +256,8 @@ export async function downloadBook(
     IMAGE_DOWNLOAD_CONCURRENCY,
     async ([uuid, filename]) => {
       try {
-        await fs.downloadBinaryFile(`${imageBaseUrl}/${filename}`, `${tempDir}/images/${filename}`);
+        const imagePath = `${tempDir}/images/${filename}`;
+        await downloadWithRetry(() => fs.downloadBinaryFile(`${imageBaseUrl}/${filename}`, imagePath), imagePath, fs, retryDelayMs);
         return { uuid, error: null as string | null };
       } catch (error) {
         return { uuid, error: describeError(error) };

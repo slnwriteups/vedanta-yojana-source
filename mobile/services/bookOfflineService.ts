@@ -1,6 +1,7 @@
 import { Directory, File, Paths } from "expo-file-system";
 import * as core from "./bookOfflineCore.ts";
 import type { BookDownloadResult, BookFileSystem } from "./bookOfflineCore.ts";
+import type { BookPayload } from "../../content-lib/mobile-content.ts";
 
 /**
  * Makes Library books available offline: download once into app-private
@@ -87,16 +88,62 @@ const realFileSystem: BookFileSystem = {
 export type { BookDownloadResult, BookFileSystem } from "./bookOfflineCore.ts";
 export type { BookPayload } from "../../content-lib/mobile-content.ts";
 
-export function isBookAvailable(bookSlug: string): boolean {
-  return core.isBookAvailable(bookSlug, realFileSystem);
+/**
+ * The parsed, validated local copy of each downloaded book, kept in
+ * memory. core.loadOfflineBook() reads the whole book.json from disk and
+ * zod-validates it -- for the larger books several megabytes, and
+ * hundreds of milliseconds on Hermes -- and isBookAvailable() and
+ * getOfflineBookImageUri() used to do that on every call. The chapter
+ * screen re-renders on every scroll event (its progress bar), and
+ * resolved each of a chapter's images through getOfflineBookImageUri(),
+ * so a blog post with photos re-read and re-validated its whole book
+ * several times per scroll frame. Only valid copies are cached; a book
+ * with no local copy is a cheap file-exists check each time. Every
+ * write to a book's directory goes through downloadBook()/deleteBook()
+ * below, which drop its entry.
+ */
+const loadedBooks = new Map<string, BookPayload>();
+
+/**
+ * Listeners told whenever a book's local state changes: a download
+ * starts, finishes (either way), or its copy is removed. The book
+ * screen's download control and its chapter list both follow this, so a
+ * download started by one of them -- or by the background re-sync in
+ * libraryCatalogService.ts -- shows in the other, rather than the
+ * Download button still being offered for a book already saved.
+ */
+const listeners = new Set<(bookSlug: string) => void>();
+
+function notify(bookSlug: string): void {
+  for (const listener of listeners) listener(bookSlug);
 }
 
-export function loadOfflineBook(bookSlug: string) {
-  return core.loadOfflineBook(bookSlug, realFileSystem);
+export function subscribeToBookChanges(listener: (bookSlug: string) => void): () => void {
+  listeners.add(listener);
+  return () => {
+    listeners.delete(listener);
+  };
+}
+
+export function loadOfflineBook(bookSlug: string): BookPayload | null {
+  const cached = loadedBooks.get(bookSlug);
+  if (cached) return cached;
+  const payload = core.loadOfflineBook(bookSlug, realFileSystem);
+  if (payload) loadedBooks.set(bookSlug, payload);
+  return payload;
+}
+
+export function isBookAvailable(bookSlug: string): boolean {
+  return loadOfflineBook(bookSlug) !== null;
+}
+
+/** Whether this book's local copy has this chapter -- false for a copy saved before the chapter was published. */
+export function isChapterAvailable(bookSlug: string, chapterSlug: string): boolean {
+  return loadOfflineBook(bookSlug)?.chapters.some((chapter) => chapter.slug === chapterSlug) ?? false;
 }
 
 export function getOfflineBookImageUri(bookSlug: string, imageUuid: string): string | null {
-  return core.getOfflineBookImageUri(bookSlug, imageUuid, realFileSystem);
+  return core.offlineBookImageUri(bookSlug, loadOfflineBook(bookSlug), imageUuid, realFileSystem);
 }
 
 /**
@@ -115,19 +162,28 @@ export function getOfflineBookImageUri(bookSlug: string, imageUuid: string): str
  */
 const inFlightDownloads = new Map<string, Promise<BookDownloadResult>>();
 
+export function isBookDownloading(bookSlug: string): boolean {
+  return inFlightDownloads.has(bookSlug);
+}
+
 export function downloadBook(bookSlug: string): Promise<BookDownloadResult> {
   const existing = inFlightDownloads.get(bookSlug);
   if (existing) return existing;
 
   const promise = core.downloadBook(bookSlug, bookJsonUrl(bookSlug), IMAGE_BASE_URL, realFileSystem).finally(() => {
     inFlightDownloads.delete(bookSlug);
+    loadedBooks.delete(bookSlug);
+    notify(bookSlug);
   });
   inFlightDownloads.set(bookSlug, promise);
+  notify(bookSlug);
   return promise;
 }
 
 export function deleteBook(bookSlug: string): void {
   core.deleteBook(bookSlug, realFileSystem);
+  loadedBooks.delete(bookSlug);
+  notify(bookSlug);
 }
 
 /** The locally-recorded content hash for a downloaded book, or null if it isn't downloaded. Used by libraryCatalogService.ts to detect a stale copy against contentManifest.json. */

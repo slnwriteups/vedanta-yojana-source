@@ -1,11 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { useLanguage } from "../language-context.ts";
 import { translateUi, useT } from "../ui-strings.ts";
-import { deleteBook, downloadBook, isBookAvailable } from "../services/bookOfflineService.ts";
+import {
+  deleteBook,
+  downloadBook,
+  isBookAvailable,
+  isBookDownloading,
+  subscribeToBookChanges,
+} from "../services/bookOfflineService.ts";
 
 type BookDownloadStatus = "not-downloaded" | "downloading" | "available" | "error";
+
+/** A saved copy wins over an in-flight download: a background re-sync of a saved book keeps it readable throughout. */
+function currentStatus(bookSlug: string): BookDownloadStatus {
+  if (isBookAvailable(bookSlug)) return "available";
+  return isBookDownloading(bookSlug) ? "downloading" : "not-downloaded";
+}
 
 /**
  * A single book's download state and controls, shown at the top of the
@@ -25,26 +37,27 @@ type BookDownloadStatus = "not-downloaded" | "downloading" | "available" | "erro
  * Remove Offline Copy is the one way to delete a local copy -- nothing
  * on this screen ever downloads merely because it was opened.
  *
- * `onAvailabilityChange` reports every status transition up to the
- * screen, which uses it to know whether a chapter tap can skip straight
- * to opening or must fetch first -- this component owns the download
- * machinery, the screen owns what "available" unlocks.
+ * The screen needs nothing back from it: a chapter tap checks
+ * bookOfflineService itself for whether that chapter is saved.
  */
-export function BookDownloadControl({
-  bookSlug,
-  onAvailabilityChange,
-}: {
-  bookSlug: string;
-  onAvailabilityChange: (available: boolean) => void;
-}) {
+export function BookDownloadControl({ bookSlug }: { bookSlug: string }) {
   const theme = useTheme();
   const { language } = useLanguage();
   const t = useT();
-  const [status, setStatus] = useState<BookDownloadStatus>(() => {
-    const available = isBookAvailable(bookSlug);
-    return available ? "available" : "not-downloaded";
-  });
+  const [status, setStatus] = useState<BookDownloadStatus>(() => currentStatus(bookSlug));
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  // Follows downloads this control didn't start itself -- a chapter tap
+  // on the screen below, or the background re-sync -- so it never offers
+  // Download for a book that is already saved, or sits idle while one is
+  // in progress. A failure of its own download is set by handleDownload()
+  // after this has run, so the error and Try Again still show.
+  useEffect(() => {
+    setStatus(currentStatus(bookSlug));
+    return subscribeToBookChanges((changedSlug) => {
+      if (changedSlug === bookSlug) setStatus(currentStatus(bookSlug));
+    });
+  }, [bookSlug]);
 
   async function handleDownload() {
     setStatus("downloading");
@@ -52,7 +65,6 @@ export function BookDownloadControl({
     const result = await downloadBook(bookSlug);
     if (result.success) {
       setStatus("available");
-      onAvailabilityChange(true);
     } else {
       setStatus("error");
       setErrorMessage(result.error ?? null);
@@ -62,7 +74,6 @@ export function BookDownloadControl({
   function handleRemove() {
     deleteBook(bookSlug);
     setStatus("not-downloaded");
-    onAvailabilityChange(false);
   }
 
   if (status === "available") {

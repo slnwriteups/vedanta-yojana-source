@@ -9,7 +9,7 @@ import { sectionTint } from "../../../section-tints.ts";
 import { bookCoverAsset } from "../../../book-covers.ts";
 import { localizeBook, localizeChapterSummary } from "../../../../content-lib/i18n.ts";
 import { useLanguage } from "../../../language-context.ts";
-import { downloadBook, isBookAvailable } from "../../../services/bookOfflineService.ts";
+import { downloadBook, isChapterAvailable } from "../../../services/bookOfflineService.ts";
 import { chapterOrdinalLabel, useT } from "../../../ui-strings.ts";
 import { groupByPart } from "../../../../content-lib/library-parts.ts";
 import { getLibraryCatalogEntry, syncLibraryCatalog } from "../../../services/libraryCatalogService.ts";
@@ -59,7 +59,6 @@ export default function LibraryBookScreen() {
   // Hook calls must stay unconditional (before the `if (!entry)` early
   // return below), even though bookSlug can't meaningfully change
   // without this whole screen remounting via expo-router.
-  const [downloaded, setDownloaded] = useState(() => isBookAvailable(bookSlug));
   const [entry, setEntry] = useState<CatalogEntry | null>(() => getLibraryCatalogEntry(bookSlug));
   const [openingSlug, setOpeningSlug] = useState<string | null>(null);
   const [openError, setOpenError] = useState<string | null>(null);
@@ -89,7 +88,9 @@ export default function LibraryBookScreen() {
   const tint = sectionTint(book.slug, theme.scheme);
 
   async function openChapter(chapterSlug: string) {
-    if (!downloaded) {
+    // Fetches the book when it isn't saved, and also when the saved copy
+    // predates this chapter -- rather than opening onto "Chapter not found".
+    if (!isChapterAvailable(book!.slug, chapterSlug)) {
       setOpenError(null);
       setOpeningSlug(chapterSlug);
       const result = await downloadBook(book!.slug);
@@ -98,7 +99,6 @@ export default function LibraryBookScreen() {
         setOpenError(result.error ?? null);
         return;
       }
-      setDownloaded(true);
     }
     router.push(`/library/${book!.slug}/${chapterSlug}` as never);
   }
@@ -141,7 +141,7 @@ export default function LibraryBookScreen() {
       {book.description ? (
         <Text style={[styles.description, { color: theme.colors.muted }]}>{book.description}</Text>
       ) : null}
-      <BookDownloadControl bookSlug={book.slug} onAvailabilityChange={setDownloaded} />
+      <BookDownloadControl bookSlug={book.slug} />
       {openError ? (
         <Text style={[styles.openError, { color: theme.colors.foreground }]} numberOfLines={2}>
           {t("bookDownloadFailed")}

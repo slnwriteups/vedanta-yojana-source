@@ -1,7 +1,7 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   PanResponder,
@@ -33,7 +33,7 @@ import { useReadingPosition } from "../../../../reading-position-context.ts";
 import { reportDepth } from "../../../../services/readingPingService.ts";
 import { useBookmarks } from "../../../../bookmarks-context.ts";
 import { chapterPositionLabel, minReadLabel, nowReadingAnnouncement, useT } from "../../../../ui-strings.ts";
-import { getOfflineBookImageUri, isBookAvailable, loadOfflineBook } from "../../../../services/bookOfflineService.ts";
+import { getOfflineBookImageUri, loadOfflineBook } from "../../../../services/bookOfflineService.ts";
 import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile-content.ts";
 
 /**
@@ -114,16 +114,11 @@ export default function LibraryChapterScreen() {
   const deepest = useRef(0);
   const loadedBook = loadBook(bookSlug);
   const book = loadedBook ? localizeBook(loadedBook, language) : null;
-  // Memoized on bookSlug alone (not re-run on every scroll-driven
-  // re-render, which setProgress below causes constantly): reads and
-  // zod-validates the book's whole downloaded JSON file, which is wasted
-  // work to repeat every frame. isBookAvailable() itself is a cheap
-  // filesystem check and is not memoized -- see BookDownloadControl.tsx,
-  // this screen's own downloaded state can also change without a
-  // bookSlug change if the reader deletes the book while this exact
-  // chapter is open (an edge case handled by offlineBook simply becoming
-  // null on the next chapter switch, not by watching for it live here).
-  const offlineBook = useMemo(() => (isBookAvailable(bookSlug) ? loadOfflineBook(bookSlug) : null), [bookSlug]);
+  // bookOfflineService keeps each downloaded book parsed in memory, so
+  // this is a map lookup on every render (setProgress re-renders this
+  // screen on every scroll event) and returns the same object until the
+  // book is re-synced or removed -- which this then picks up.
+  const offlineBook = loadOfflineBook(bookSlug);
   const loadedChapter = offlineBook?.chapters.find((c) => c.slug === chapterSlug) ?? null;
   const chapter = loadedChapter ? localizeChapter(loadedChapter, language) : null;
   const tint = sectionTint(bookSlug, theme.scheme);
