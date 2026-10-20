@@ -176,9 +176,10 @@ display by `content-lib/panchangam-observances.ts`:
   engine, computing for the place's own sunrise, decides the observances
   both carry, and only the Ashramam's own are added from the Pādukā.
 
-Beneath the observances the calendar says where they come from: "Sri
-Ranganātha Pādukā", "Calculated", or both, with "*" marking the calculated
-ones.
+The Ashramam's published observances carry no source line. Beneath
+observances the engine calculated, the calendar says "Calculated"; when both
+kinds are shown, "*" marks the calculated ones and the note reads
+"* Calculated".
 
 ### Sankalpam
 

@@ -297,7 +297,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {observances.text ? (
               <div>
                 <p className="text-sm font-bold text-[var(--accent)]">{observances.text}</p>
-                <ObservanceSourceNote source={observances.source} srirangamDates={observances.srirangamDates} />
+                <ObservanceSourceNote source={observances.source} />
               </div>
             ) : null}
 
@@ -371,27 +371,14 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 }
 
 /**
- * Where the day's observances come from: the Ashramam's Sri Ranganātha
- * Pādukā, the engine's calculation, or both -- then "*" marks the
- * calculated ones (panchangam-observances.ts observanceLine).
+ * Notes the observances the engine calculated -- "*" marks them when they
+ * sit alongside the Ashramam's published ones (panchangam-observances.ts
+ * observanceLine). The published ones carry no source line.
  */
-function ObservanceSourceNote({
-  source,
-  srirangamDates = false,
-}: {
-  source: "paduka" | "calculated" | "both" | null;
-  srirangamDates?: boolean;
-}) {
+function ObservanceSourceNote({ source }: { source: "paduka" | "calculated" | "both" | null }) {
   const t = useT();
-  if (!source) return null;
-  // Away from Indian time, the Pādukā's dates are said to be Srirangam's, not the place's own.
-  const paduka = srirangamDates ? `${t("observanceSourcePaduka")} ${t("observanceSrirangamDates")}` : t("observanceSourcePaduka");
-  const text =
-    source === "both"
-      ? `${paduka} · * ${t("observanceSourceCalculated")}`
-      : source === "paduka"
-        ? paduka
-        : t("observanceSourceCalculated");
+  if (source !== "both" && source !== "calculated") return null;
+  const text = source === "both" ? `* ${t("observanceSourceCalculated")}` : t("observanceSourceCalculated");
   return <p className="text-[11px] text-[var(--muted)]">{text}</p>;
 }
 
@@ -422,8 +409,6 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
       {day.festival ? (
         <div>
           <p className="text-sm font-bold text-[var(--accent)]">{localizePadukaFestival(day.festival, language)}</p>
-          {/* Shown before the place is known, so its dates are said to be Srirangam's. */}
-          <ObservanceSourceNote source="paduka" srirangamDates />
         </div>
       ) : null}
       {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}

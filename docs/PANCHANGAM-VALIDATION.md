@@ -198,9 +198,9 @@ On Indian time the Pādukā's dates are the place's own. On any other clock:
 - the engine decides every observance it computes, for the place's own
   sunrise -- the Pādukā's dates do not move them;
 - the Ashramam's own published observances are still shown on their
-  published dates, and the calendar says so: "Sri Ranganātha Pādukā
-  (dates as published for Srirangam)". A reader in New York is never
-  shown a Srirangam date as though it were calculated for New York.
+  published (Srirangam) dates. The calendar no longer names their source
+  -- the "Sri Ranganātha Pādukā (dates as published for Srirangam)" note
+  was removed -- so only the calculated ones are marked ("* Calculated").
 
 ## Sankalpam
 
