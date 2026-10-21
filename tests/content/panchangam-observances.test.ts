@@ -94,20 +94,20 @@ test("away from Indian time, the engine decides shared observances; the Ashramam
   assert.ok(!shown(NEW_YORK, "2026-09-22").some((n) => /Sarva Ekadasi/.test(n)));
 });
 
-test("the observance line marks calculated ones only when sources mix", () => {
+test("the observance line is the names alone, with no source marker", () => {
   const p = (name: string): Observance => ({ name, sources: ["paduka"], basis: "published" });
   const c = (name: string): Observance => ({ name, sources: ["calculated"], basis: "general-rule" });
-  assert.deepEqual(observanceLine([], null), { text: "", source: null, srirangamDates: false });
-  assert.deepEqual(observanceLine([p("Mahavyatipatam")], null), { text: "Mahavyatipatam", source: "paduka", srirangamDates: false });
-  assert.deepEqual(observanceLine([c("Rohini")], null), { text: "Rohini", source: "calculated", srirangamDates: false });
-  assert.deepEqual(
+  assert.equal(observanceLine([], null), "");
+  assert.equal(observanceLine([p("Mahavyatipatam")], null), "Mahavyatipatam");
+  assert.equal(observanceLine([c("Rohini")], null), "Rohini");
+  // Mixed sources are not marked: no "*" after the calculated ones.
+  assert.equal(
     observanceLine([{ name: "Mahapradosham", sources: ["paduka", "calculated"], basis: "published" }, c("Rohini")], null),
-    { text: "Mahapradosham, Rohini *", source: "both", srirangamDates: false }
+    "Mahapradosham, Rohini"
   );
-  // A Srirangam date shown for a place on another clock is said to be one.
-  assert.equal(observanceLine([{ ...p("Mahavyatipatam"), referencePlace: "Srirangam" }], null).srirangamDates, true);
+  assert.equal(observanceLine([{ ...p("Mahavyatipatam"), referencePlace: "Srirangam" }], null), "Mahavyatipatam");
   // Published names are localized; the engine's stay in English.
-  assert.match(observanceLine([p("Chandra Darsanam"), c("Rohini")], "ta").text, /^சந்த்ர தர்சனம், Rohini \*$/);
+  assert.equal(observanceLine([p("Chandra Darsanam"), c("Rohini")], "ta"), "சந்த்ர தர்சனம், Rohini");
 });
 
 test("each observance says why it falls on its day, and whose date it is", () => {

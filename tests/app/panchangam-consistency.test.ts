@@ -35,3 +35,31 @@ test("every Panchangam UI string reads the same on web and mobile, in every lang
   assert.ok(keys.length >= 15, `${keys.length} keys`);
   for (const key of keys) assert.equal(mobile.get(key), web.get(key), key);
 });
+
+/**
+ * The Panchangam shows the day's observances by name only. A source line
+ * under them ("Sri Ranganātha Pādukā · * Calculated") and a "*" after the
+ * calculated ones were removed as redundant; this keeps them from coming
+ * back on either app, in any language.
+ */
+test("the Panchangam shows no observance source labels or \"*\" markers", () => {
+  const files = [
+    "../../components/home/PanchangamCalendar.tsx",
+    "../../mobile/components/PanchangamCalendar.tsx",
+    "../../lib/ui-strings.ts",
+    "../../mobile/ui-strings.ts",
+    "../../content-lib/panchangam-observances.ts",
+  ];
+  const labels = [
+    /observanceSource/,
+    /ObservanceSourceNote/,
+    /observanceSrirangamDates/,
+    /Ranganātha Pādukā|Ranganatha Paduka|ரங்கநாத பாதுகா|ರಂಗನಾಥ ಪಾದುಕಾ|रङ्गनाथ पादुका|రంగనాథ పాదుకా/,
+    /"Calculated"|கணக்கிடப்பட்டது|ಲೆಕ್ಕಹಾಕಲಾಗಿದೆ|गणना से|లెక్కించబడింది/,
+    /["'`] \*["'`]/,
+  ];
+  for (const file of files) {
+    const source = code(file);
+    for (const label of labels) assert.doesNotMatch(source, label, `${file} shows ${label}`);
+  }
+});

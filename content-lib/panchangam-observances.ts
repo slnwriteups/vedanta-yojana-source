@@ -217,24 +217,12 @@ export function observanceLabel(observance: Observance, language: LanguageCode |
 }
 
 /**
- * The observance line as the calendar shows it, and where it comes from:
- * "paduka" or "calculated" when every observance shares that source (one
- * the Pādukā publishes counts as published, even when the engine agrees),
- * "both" when they mix -- and then each observance only the engine gives
- * is marked "*", so the attribution line can say which is which.
+ * The observance line as the calendar shows it: the names alone. Where
+ * each comes from stays on the Observance (`sources`, `basis`,
+ * `referencePlace`) for the code that needs it; the calendar shows no
+ * source label and no "*" marker -- tests/app/panchangam-consistency.test.ts
+ * keeps them from coming back.
  */
-export function observanceLine(
-  observances: Observance[],
-  language: LanguageCode | null
-): { text: string; source: ObservanceSource | "both" | null; srirangamDates: boolean } {
-  if (observances.length === 0) return { text: "", source: null, srirangamDates: false };
-  const published = (o: Observance) => o.sources.includes("paduka");
-  const mixed = observances.some(published) && !observances.every(published);
-  const text = observances.map((o) => `${observanceLabel(o, language)}${mixed && !published(o) ? " *" : ""}`).join(", ");
-  return {
-    text,
-    source: mixed ? "both" : published(observances[0]) ? "paduka" : "calculated",
-    // The attribution then says the published dates are Srirangam's, not the place's own.
-    srirangamDates: observances.some((o) => o.referencePlace === "Srirangam"),
-  };
+export function observanceLine(observances: Observance[], language: LanguageCode | null): string {
+  return observances.map((o) => observanceLabel(o, language)).join(", ");
 }
