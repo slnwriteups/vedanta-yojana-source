@@ -4,11 +4,9 @@ import { shadows } from "../shadows";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import {
-  karanaOfDayLabel,
   localizeUpcomingEkadashi,
   nakshatramOfDayLabel,
   tithiOfDayLabel,
-  yogaOfDayLabel,
 } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
 
@@ -38,8 +36,6 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
   const hasData = panchangam.tithi || panchangam.nakshatram || panchangam.festival;
   const pakshaTithi = tithiOfDayLabel(panchangam, language);
   const nakshatram = nakshatramOfDayLabel(panchangam, language);
-  const yoga = yogaOfDayLabel(panchangam, language);
-  const karana = karanaOfDayLabel(panchangam, language);
 
   return (
     <View style={styles.section}>
@@ -70,12 +66,6 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
                 muted={theme.colors.muted}
                 fg={theme.colors.foreground}
               />
-            ) : null}
-            {yoga ? (
-              <Row label={t("homeCalendarYogaLabel")} value={yoga} muted={theme.colors.muted} fg={theme.colors.foreground} />
-            ) : null}
-            {karana ? (
-              <Row label={t("homeCalendarKaranamLabel")} value={karana} muted={theme.colors.muted} fg={theme.colors.foreground} />
             ) : null}
             {panchangam.upcomingEkadashiText ? (
               <Row

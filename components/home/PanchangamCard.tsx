@@ -3,11 +3,9 @@
 import { useLanguage } from "@/lib/language-context";
 import { useT } from "@/lib/ui-strings";
 import {
-  karanaOfDayLabel,
   localizeUpcomingEkadashi,
   nakshatramOfDayLabel,
   tithiOfDayLabel,
-  yogaOfDayLabel,
 } from "@/lib/panchangam-labels";
 import type { PanchangamData } from "@/lib/panchangam-service";
 
@@ -35,8 +33,6 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
   const hasData = panchangam.tithi || panchangam.nakshatram || panchangam.festival;
   const pakshaTithi = tithiOfDayLabel(panchangam, language);
   const nakshatram = nakshatramOfDayLabel(panchangam, language);
-  const yoga = yogaOfDayLabel(panchangam, language);
-  const karana = karanaOfDayLabel(panchangam, language);
 
   return (
     <div className="space-y-2">
@@ -52,8 +48,6 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
             ) : null}
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
-            {yoga ? <Row label={t("homeCalendarYogaLabel")} value={yoga} /> : null}
-            {karana ? <Row label={t("homeCalendarKaranamLabel")} value={karana} /> : null}
             {panchangam.upcomingEkadashiText ? (
               <Row
                 label={t("homeCalendarEkadashiLabel")}
