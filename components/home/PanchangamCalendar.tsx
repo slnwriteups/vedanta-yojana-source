@@ -8,12 +8,10 @@ import {
   localizeSankalpamText,
   localizeUpcomingEkadashi,
   nakshatramLabel,
-  karanaOfDayLabel,
   nakshatramOfDayLabel,
   pakshaLabel,
   tithiLabel,
   tithiOfDayLabel,
-  yogaOfDayLabel,
 } from "@/lib/panchangam-labels";
 import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import {
@@ -157,8 +155,6 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
   const pakshaTithi = data ? tithiOfDayLabel(data, language) : "";
   const nakshatram = data ? nakshatramOfDayLabel(data, language) : "";
-  const yoga = data ? yogaOfDayLabel(data, language) : "";
-  const karana = data ? karanaOfDayLabel(data, language) : "";
   const hasData = Boolean(data && (data.tithi || data.nakshatram || data.festival));
   const paduka = useMemo(() => padukaPanchangamFor(selectedDate), [selectedDate]);
   const showComputed = !isLoading && hasData;
@@ -302,8 +298,6 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
-            {yoga ? <Row label={t("homeCalendarYogaLabel")} value={yoga} /> : null}
-            {karana ? <Row label={t("homeCalendarKaranamLabel")} value={karana} /> : null}
             {data.upcomingEkadashiText ? (
               <Row
                 label={t("homeCalendarEkadashiLabel")}

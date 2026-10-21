@@ -88,7 +88,8 @@ Siddhanta value, which confirms the system.
   between its start and end). Sri Ahobila Mutt's calendar demonstrably
   divides it so (all 68 of its karana ends checked); the Ashramam's one
   printed karana end that can tell the methods apart agrees. The names
-  follow the Pādukā's spellings (Mahendra, Taitula, Bhadra, Nagava).
+  follow the Pādukā's spellings (Mahendra, Taitula, Bhadra, Nagava). They
+  are computed for validation only: neither app shows a Yoga or Karanam row.
 - **The day:** runs sunrise to sunrise. Its tithi and nakshatram are those in
   force at its sunrise. When the tithi or nakshatram changes before the next
   sunrise, it is shown with each change and its time ("Krishna Paksha

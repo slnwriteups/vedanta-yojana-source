@@ -63,3 +63,23 @@ test("the Panchangam shows no observance source labels or \"*\" markers", () => 
     for (const label of labels) assert.doesNotMatch(source, label, `${file} shows ${label}`);
   }
 });
+
+/** The Panchangam leaves out the yoga and karana rows: neither app shows them. */
+test("the Panchangam shows no Yoga or Karanam rows", () => {
+  const files = [
+    "../../components/home/PanchangamCalendar.tsx",
+    "../../components/home/PanchangamCard.tsx",
+    "../../mobile/components/PanchangamCalendar.tsx",
+    "../../mobile/components/PanchangamCard.tsx",
+    "../../lib/ui-strings.ts",
+    "../../mobile/ui-strings.ts",
+    "../../lib/panchangam-labels.ts",
+    "../../mobile/panchangam-labels.ts",
+  ];
+  for (const file of files) {
+    const source = code(file);
+    for (const label of [/homeCalendarYogaLabel/, /homeCalendarKaranamLabel/, /yogaOfDayLabel/, /karanaOfDayLabel/]) {
+      assert.doesNotMatch(source, label, `${file} shows ${label}`);
+    }
+  }
+});
