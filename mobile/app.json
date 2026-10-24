@@ -54,6 +54,12 @@
       "expo-asset",
       "expo-font",
       [
+        "expo-notifications",
+        {
+          "color": "#172A1F"
+        }
+      ],
+      [
         "expo-location",
         {
           "locationWhenInUsePermission": "Vedanta Yojana uses your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are."

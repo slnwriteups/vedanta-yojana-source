@@ -19,6 +19,7 @@ import { TourProvider, useTour } from "../tour/Tour";
 import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/preferences.ts";
 import { readJSON, writeJSON } from "../storage.ts";
 import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
+import { useEkadasiReminders } from "../services/ekadasiReminderService.ts";
 
 /**
  * Phase 6C -- the root layout hosts the ThemeProvider and a single Stack
@@ -109,10 +110,24 @@ function RootStack() {
   }
 
   return (
-    <Stack screenOptions={{ contentStyle: { backgroundColor: theme.colors.background } }}>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <>
+      <EkadasiReminders />
+      <Stack screenOptions={{ contentStyle: { backgroundColor: theme.colors.background } }}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack>
+    </>
   );
+}
+
+/**
+ * Keeps the Dasami-eve "Tomorrow is Ekadasi" notifications scheduled
+ * (services/ekadasiReminderService.ts). Only mounted once onboarding is
+ * done, so its notification-permission prompt never lands on the
+ * first-launch screens.
+ */
+function EkadasiReminders() {
+  useEkadasiReminders();
+  return null;
 }
 
 /**

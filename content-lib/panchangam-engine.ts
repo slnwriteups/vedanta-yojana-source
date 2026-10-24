@@ -1050,6 +1050,14 @@ function starFestivalsOn(cal: SunCalendar, d: number): string[] {
   return names;
 }
 
+/** The name the Ekadasi (paksha index `e`) fasted on day `d` is kept under. */
+function ekadasiName(cal: SunCalendar, d: number, e: number, tamilMonth: number = cal.tamilMonth(d)): string {
+  if (e === 10 && lunarMonthAt(cal.day(d).sunrise).index === 10) return "Bhishma Ekadasi";
+  if (e === 10 && tamilMonth === 8) return "Vaikunta Ekadasi";
+  if (e === 10 && tamilMonth === 7) return "Kaisika Ekadasi";
+  return "Ekadasi Vratam";
+}
+
 function festivalsOn(cal: SunCalendar, d: number): string[] {
   const names: string[] = [];
   const tamilMonth = cal.tamilMonth(d);
@@ -1059,13 +1067,7 @@ function festivalsOn(cal: SunCalendar, d: number): string[] {
 
   // Ekadasi, and the next morning's Paranai.
   const ekadasi = ekadasiObservedOn(cal, d);
-  if (ekadasi !== null) {
-    let name = "Ekadasi Vratam";
-    if (ekadasi === 10 && tamilMonth === 7) name = "Kaisika Ekadasi";
-    if (ekadasi === 10 && tamilMonth === 8) name = "Vaikunta Ekadasi";
-    if (ekadasi === 10 && lunarMonthAt(cal.day(d).sunrise).index === 10) name = "Bhishma Ekadasi";
-    names.push(name);
-  }
+  if (ekadasi !== null) names.push(ekadasiName(cal, d, ekadasi, tamilMonth));
   const ekadasiYesterday = ekadasiObservedOn(cal, d - 1);
   if (ekadasiYesterday !== null) names.push(paranaText(cal, d, ekadasiYesterday));
 
@@ -1316,6 +1318,45 @@ export function computePanchangam(dayNumber: number, place: PanchangamPlace, opt
     nakshatramEnds: endsLabel(cal, dayNumber, nakshatra.end),
     tamilDate: `${TAMIL_MONTH_NAMES[cal.tamilMonth(dayNumber)]} ${tamilDayOfMonth(cal, dayNumber)}`,
   };
+}
+
+export interface UpcomingEkadasi {
+  /** The civil day it is fasted (see dayNumberOf). */
+  dayNumber: number;
+  /** As the day's observances name it: "Ekadasi Vratam", "Kaisika Ekadasi", ... */
+  name: string;
+  /** "Thursday, 22nd Oct 2026", as upcomingEkadashiText writes it. */
+  dateText: string;
+  /** Epoch ms of local midnight that starts the day before it (the Dasami eve) at the place. */
+  eveStartsAt: number;
+}
+
+/**
+ * Every Ekadasi fasted at `place` from civil day `fromDayNumber` through
+ * the `days` days after it, by the same Vaishnava rules as the day's
+ * observances -- so a reminder for "tomorrow" names the day the calendar
+ * itself shows, even when the fast moves past the day Ekadasi first holds
+ * a sunrise.
+ */
+export function upcomingEkadasis(place: PanchangamPlace, fromDayNumber: number, days: number): UpcomingEkadasi[] {
+  const cal = new SunCalendar(place);
+  const found: UpcomingEkadasi[] = [];
+  for (let d = fromDayNumber; d <= fromDayNumber + days; d += 1) {
+    const e = ekadasiObservedOn(cal, d);
+    if (e === null) continue;
+    found.push({
+      dayNumber: d,
+      name: ekadasiName(cal, d, e),
+      dateText: `${WEEKDAY_NAMES[weekdayOf(d)]}, ${longDate(d)}`,
+      eveStartsAt: dayStart(d - 1, place.timeZone),
+    });
+  }
+  return found;
+}
+
+/** The civil day number (see dayNumberOf) at `place` containing instant `ms`. */
+export function dayNumberAt(ms: number, timeZone: string): number {
+  return localTime(ms, timeZone).dayNumber;
 }
 
 /**

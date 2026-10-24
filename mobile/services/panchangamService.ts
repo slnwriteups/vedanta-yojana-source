@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
-import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type TithiChange, type YogaChange } from "../../content-lib/panchangam-engine.ts";
+import { useSyncExternalStore } from "react";
+import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type PanchangamPlace, type TithiChange, type YogaChange } from "../../content-lib/panchangam-engine.ts";
 import type { ChosenPlace } from "../../content-lib/panchangam-place.ts";
 
 /**
@@ -188,6 +189,35 @@ async function resolveLocation(): Promise<ResolvedLocation | null> {
 }
 
 /**
+ * The phone's own location as the last Panchangam computed for it found
+ * it, or null until one has been (or when location is unavailable).
+ * Lets the Ekadasi reminders (ekadasiReminderService.ts) follow the
+ * place the Home Panchangam is computed for without asking for the
+ * location a second time.
+ */
+let lastDevicePlace: PanchangamPlace | null = null;
+const devicePlaceListeners = new Set<() => void>();
+
+function rememberDevicePlace(location: ResolvedLocation) {
+  const { latitude, longitude, timezone } = location;
+  if (lastDevicePlace?.latitude === latitude && lastDevicePlace.longitude === longitude && lastDevicePlace.timeZone === timezone) return;
+  lastDevicePlace = { latitude, longitude, timeZone: timezone };
+  for (const listener of devicePlaceListeners) listener();
+}
+
+function subscribeDevicePlace(listener: () => void) {
+  devicePlaceListeners.add(listener);
+  return () => {
+    devicePlaceListeners.delete(listener);
+  };
+}
+
+/** The phone's location as last resolved for the Panchangam (see lastDevicePlace). */
+export function useDevicePanchangamPlace(): PanchangamPlace | null {
+  return useSyncExternalStore(subscribeDevicePlace, () => lastDevicePlace);
+}
+
+/**
  * The Panchangam for calendar date `day` -- the place's own today when
  * omitted (the Sankalpam for the present moment on today) at the chosen city, or at the device's own real
  * location when `chosen` is null. Falls back to
@@ -199,6 +229,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
     ? { city: chosen.name, latitude: chosen.latitude, longitude: chosen.longitude, timezone: chosen.timeZone }
     : await resolveLocation();
   if (!location) return LOCATION_UNAVAILABLE_FALLBACK;
+  if (!chosen) rememberDevicePlace(location);
 
   try {
     // `day` is a calendar date (its year/month/date); it means that date at the

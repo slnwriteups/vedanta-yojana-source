@@ -510,6 +510,16 @@ const UI_STRINGS = {
   settingsLanguageLabel: { en: "Language", ta: "மொழி", kn: "ಭಾಷೆ", hi: "भाषा", te: "భాష" },
   settingsAppearanceLabel: { en: "Appearance", ta: "தோற்றம்", kn: "ನೋಟ", hi: "रूप", te: "స్వరూపం" },
   settingsTextSizeLabel: { en: "Text size", ta: "எழுத்து அளவு", kn: "ಅಕ್ಷರ ಗಾತ್ರ", hi: "अक्षर आकार", te: "అక్షర పరిమాణం" },
+  /** The Dasami-eve notification that tomorrow is Ekadasi (services/ekadasiReminderService.ts). */
+  settingsEkadasiReminderLabel: {
+    en: "Ekadasi reminder (day before)",
+    ta: "ஏகாதசி நினைவூட்டல் (முந்தைய நாள்)",
+    kn: "ಏಕಾದಶಿ ಜ್ಞಾಪನೆ (ಹಿಂದಿನ ದಿನ)",
+    hi: "एकादशी अनुस्मारक (एक दिन पहले)",
+    te: "ఏకాదశి గుర్తింపు (ముందు రోజు)",
+  },
+  settingsOn: { en: "On", ta: "ஆன்", kn: "ಆನ್", hi: "चालू", te: "ఆన్" },
+  settingsOff: { en: "Off", ta: "ஆஃப்", kn: "ಆಫ್", hi: "बंद", te: "ఆఫ్" },
   themeSystem: { en: "System", ta: "சிஸ்டம்", kn: "ಸಿಸ್ಟಂ", hi: "सिस्टम", te: "సిస్టమ్" },
   themeLight: { en: "Light", ta: "லைட்", kn: "ಲೈಟ್", hi: "लाइट", te: "లైట్" },
   themeDark: { en: "Dark", ta: "டார்க்", kn: "ಡಾರ್ಕ್", hi: "डार्क", te: "డార్క్" },
