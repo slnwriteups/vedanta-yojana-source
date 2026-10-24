@@ -206,6 +206,12 @@ the workflow is ever narrowed to one:
   whose runtime matches, so it must not change native code, and
   `version` in `mobile/app.json` must stay `1.0.3` for v16 installs to
   receive it.
+  The one exception is native code that the JavaScript loads only when
+  the build carries it: the Ekadasi reminders
+  (`mobile/services/ekadasiReminderService.ts`) use
+  `expo-notifications`, which v16 lacks, so they check for its native
+  module first and stay off (the Settings toggle hidden) until an app
+  build that includes it is installed.
 - **Baseline:** v16 is the first OTA-enabled build (EAS build
   `1f5e3c13-39f7-4766-82ba-57712d373153`, production-signed). v15 and
   earlier have OTA disabled and must be upgraded to v16 by installing
