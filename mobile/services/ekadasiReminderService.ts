@@ -18,8 +18,11 @@ import { useDevicePanchangamPlace } from "./panchangamService.ts";
  * location as Home last resolved it -- so it needs no server, account or
  * network, and fires even when the app is closed.
  *
- * The coming reminders are replaced whenever the app comes to the
- * foreground, the place or language changes, or the reader turns them
+ * Each reminder is written in the language the reader chose for the app
+ * (Settings > Language; English until they choose one), at the moment it
+ * is scheduled -- so a language change reschedules every coming
+ * reminder in the new language. The coming reminders are replaced
+ * whenever the app comes to the foreground, the place or language changes, or the reader turns them
  * on or off in Settings; each run schedules the next
  * EKADASI_REMINDER_HORIZON_DAYS, so reminders keep coming between uses.
  *
@@ -174,19 +177,20 @@ function queueRefresh(place: PanchangamPlace | null, language: LanguageCode | nu
 export function useEkadasiReminders(): void {
   const { place: chosen, ready } = usePanchangamPlace();
   const devicePlace = useDevicePanchangamPlace();
-  const { language } = useLanguage();
+  const { language, ready: languageReady } = useLanguage();
   const on = useEkadasiRemindersEnabled();
   const place: PanchangamPlace | null = chosen
     ? { latitude: chosen.latitude, longitude: chosen.longitude, timeZone: chosen.timeZone }
     : devicePlace;
 
   useEffect(() => {
-    // Until the saved city is read, the phone's location may not be the place to use.
-    if (!ready) return;
+    // Until the saved city and language are read, the phone's location may
+    // not be the place to use, nor English the language to write in.
+    if (!ready || !languageReady) return;
     queueRefresh(place, language);
     const subscription = AppState.addEventListener("change", (state) => {
       if (state === "active") queueRefresh(place, language);
     });
     return () => subscription.remove();
-  }, [ready, place?.latitude, place?.longitude, place?.timeZone, language, on]);
+  }, [ready, languageReady, place?.latitude, place?.longitude, place?.timeZone, language, on]);
 }
