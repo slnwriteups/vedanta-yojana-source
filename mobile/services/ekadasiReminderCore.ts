@@ -37,30 +37,65 @@ export interface EkadasiReminder {
 
 const MS_PER_HOUR = 60 * 60 * 1000;
 
+/**
+ * Each wording below is a Record over every language the app offers (plus
+ * English), so adding a language to LanguageCode fails the typecheck until
+ * the reminder is written in it too; tests/ekadasi-reminders.test.ts checks
+ * each one is in its own script.
+ */
+type Wording<T> = { en: T } & Record<LanguageCode, T>;
+
+function inLanguage<T>(wording: Wording<T>, language: LanguageCode | null): T {
+  return language ? wording[language] : wording.en;
+}
+
 /** The engine's Ekadasi names, in each script (transliterated, as panchangam-labels.ts does). */
-const EKADASI_NAMES: Record<string, { en: string } & Record<LanguageCode, string>> = {
+const EKADASI_NAMES: Record<string, Wording<string>> = {
   "Ekadasi Vratam": { en: "Ekadasi", ta: "ஏகாதசி", kn: "ಏಕಾದಶಿ", hi: "एकादशी", te: "ఏకాదశి" },
   "Kaisika Ekadasi": { en: "Kaisika Ekadasi", ta: "கைசிக ஏகாதசி", kn: "ಕೈಶಿಕ ಏಕಾದಶಿ", hi: "कैशिक एकादशी", te: "కైశిక ఏకాదశి" },
   "Vaikunta Ekadasi": { en: "Vaikunta Ekadasi", ta: "வைகுண்ட ஏகாதசி", kn: "ವೈಕುಂಠ ಏಕಾದಶಿ", hi: "वैकुण्ठ एकादशी", te: "వైకుంఠ ఏకాదశి" },
   "Bhishma Ekadasi": { en: "Bhishma Ekadasi", ta: "பீஷ்ம ஏகாதசி", kn: "ಭೀಷ್ಮ ಏಕಾದಶಿ", hi: "भीष्म एकादशी", te: "భీష్మ ఏకాదశి" },
 };
 
-function title(name: string, language: LanguageCode | null): string {
-  const labels = EKADASI_NAMES[name] ?? EKADASI_NAMES["Ekadasi Vratam"];
-  if (language === "ta") return `நாளை ${labels.ta}`;
-  if (language === "kn") return `ನಾಳೆ ${labels.kn}`;
-  if (language === "hi") return `कल ${labels.hi} है`;
-  if (language === "te") return `రేపు ${labels.te}`;
-  return `Tomorrow is ${labels.en}`;
+/** The engine names a reminder can carry (every name upcomingEkadasis returns). */
+export const EKADASI_REMINDER_NAMES: readonly string[] = Object.keys(EKADASI_NAMES);
+
+const TITLES: Wording<(name: string) => string> = {
+  en: (name) => `Tomorrow is ${name}`,
+  ta: (name) => `நாளை ${name}`,
+  kn: (name) => `ನಾಳೆ ${name}`,
+  hi: (name) => `कल ${name} है`,
+  te: (name) => `రేపు ${name}`,
+};
+
+const BODIES: Wording<(date: string) => string> = {
+  en: (date) => `Fast on ${date}.`,
+  ta: (date) => `விரதம்: ${date}`,
+  kn: (date) => `ವ್ರತ: ${date}`,
+  hi: (date) => `व्रत: ${date}`,
+  te: (date) => `వ్రతం: ${date}`,
+};
+
+/** The name of the Android notification channel the reminders arrive on, as the phone's settings list it. */
+const CHANNEL_NAMES: Wording<string> = {
+  en: "Ekadasi reminders",
+  ta: "ஏகாதசி நினைவூட்டல்கள்",
+  kn: "ಏಕಾದಶಿ ಜ್ಞಾಪನೆಗಳು",
+  hi: "एकादशी अनुस्मारक",
+  te: "ఏకాదశి గుర్తింపులు",
+};
+
+export function ekadasiReminderTitle(name: string, language: LanguageCode | null): string {
+  return inLanguage(TITLES, language)(inLanguage(EKADASI_NAMES[name] ?? EKADASI_NAMES["Ekadasi Vratam"], language));
 }
 
-function body(dateText: string, language: LanguageCode | null): string {
-  const date = localizeEnglishDates(dateText, language);
-  if (language === "ta") return `விரதம்: ${date}`;
-  if (language === "kn") return `ವ್ರತ: ${date}`;
-  if (language === "hi") return `व्रत: ${date}`;
-  if (language === "te") return `వ్రతం: ${date}`;
-  return `Fast on ${date}.`;
+/** `dateText` is the engine's English date ("Thursday, 5th Nov 2026"), rewritten in `language`. */
+export function ekadasiReminderBody(dateText: string, language: LanguageCode | null): string {
+  return inLanguage(BODIES, language)(localizeEnglishDates(dateText, language));
+}
+
+export function ekadasiReminderChannelName(language: LanguageCode | null): string {
+  return inLanguage(CHANNEL_NAMES, language);
 }
 
 /** The reminders still to come after `now` for the Ekadasis at `place`, in `language`. */
@@ -71,8 +106,8 @@ export function planEkadasiReminders(place: PanchangamPlace, now: number, langua
     .map((ekadasi) => ({
       id: `${EKADASI_REMINDER_ID_PREFIX}${ekadasi.dayNumber}`,
       fireAt: ekadasi.eveStartsAt + EKADASI_REMINDER_HOUR * MS_PER_HOUR,
-      title: title(ekadasi.name, language),
-      body: body(ekadasi.dateText, language),
+      title: ekadasiReminderTitle(ekadasi.name, language),
+      body: ekadasiReminderBody(ekadasi.dateText, language),
     }))
     .filter((reminder) => reminder.fireAt > now);
 }

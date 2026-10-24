@@ -5,7 +5,7 @@ import type { PanchangamPlace } from "../../content-lib/panchangam-engine.ts";
 import type { LanguageCode } from "../content-lib/preferences.ts";
 import { useLanguage } from "../language-context.ts";
 import { readJSON, writeJSON } from "../storage.ts";
-import { EKADASI_REMINDER_ID_PREFIX, planEkadasiReminders } from "./ekadasiReminderCore.ts";
+import { EKADASI_REMINDER_ID_PREFIX, ekadasiReminderChannelName, planEkadasiReminders } from "./ekadasiReminderCore.ts";
 import { usePanchangamPlace } from "./panchangamPlaceStore.ts";
 import { useDevicePanchangamPlace } from "./panchangamService.ts";
 
@@ -95,12 +95,6 @@ function loadNotifications(): Promise<NotificationsModule | null> {
           shouldSetBadge: false,
         }),
       });
-      if (Platform.OS === "android") {
-        await Notifications.setNotificationChannelAsync(ANDROID_CHANNEL_ID, {
-          name: "Ekadasi reminders",
-          importance: Notifications.AndroidImportance.DEFAULT,
-        });
-      }
       return Notifications;
     } catch {
       return null;
@@ -141,6 +135,13 @@ export async function refreshEkadasiReminders(place: PanchangamPlace | null, lan
     if (on && !place) return;
     await cancelScheduled(Notifications);
     if (!on || !place) return;
+    if (Platform.OS === "android") {
+      // Created on the first run, renamed into the reader's language on later ones.
+      await Notifications.setNotificationChannelAsync(ANDROID_CHANNEL_ID, {
+        name: ekadasiReminderChannelName(language),
+        importance: Notifications.AndroidImportance.DEFAULT,
+      });
+    }
     if (!(await ensurePermission(Notifications))) return;
     for (const reminder of planEkadasiReminders(place, Date.now(), language)) {
       await Notifications.scheduleNotificationAsync({
