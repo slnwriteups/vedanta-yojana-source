@@ -3,6 +3,6 @@
     "versionCode": 17,
     "version": "1.1.0",
     "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v17/vedanta-yojana.apk",
-    "notes": "Built on the latest Expo and React Native for better speed and stability, with What's New, a smoother first-launch tour and split-screen support. Installs over v16 as a normal update."
+    "notes": "A one-time install is needed for this update: it moves the app to the latest Expo and React Native, for better speed and stability, and adds split-screen support. Your bookmarks and settings are kept. Future updates arrive automatically again."
   }
 }
