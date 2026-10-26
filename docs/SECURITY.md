@@ -38,7 +38,7 @@ rather than assumed.
 | Compromised GitHub Actions workflow | All third-party Actions pinned to a full commit SHA (not a floating tag) in `.github/workflows/*.yml`; workflows use least-privilege `permissions: contents: read` unless a step specifically needs more | A compromised upstream Action release that predates the pinned SHA is not something a SHA pin can catch by itself |
 | Compromised EAS build | EAS is Expo's managed build infrastructure — the project depends on Expo's own account security and build isolation | Outside this project's direct control; see [Security Limitations](#security-limitations) |
 | Signing-credential compromise | Android production signing credentials are held remotely by EAS ("Using remote Android credentials (Expo server)"), not stored in this repository or on any local developer machine | Credential custody ultimately depends on Expo account security |
-| Malicious or vulnerable dependency | `package-lock.json` committed for both web and mobile; Dependabot configured (`.github/dependabot.yml`) for npm (root, `mobile/`) and GitHub Actions; `npm audit` reviewed; two dependencies patched via `patch-package` (see [Dependency security](#dependency-security)) | New vulnerabilities can be disclosed after release; Dependabot/audit tooling only knows about publicly disclosed advisories |
+| Malicious or vulnerable dependency | `package-lock.json` committed for both web and mobile; Dependabot configured (`.github/dependabot.yml`) for npm (root, `mobile/`) and GitHub Actions; `npm audit` reviewed; the formerly patched packages guarded against returning (see [Dependency security](#dependency-security)) | New vulnerabilities can be disclosed after release; Dependabot/audit tooling only knows about publicly disclosed advisories |
 | Malicious content payload (Library remote update) | Content is schema-validated at build time (`content-lib/schemas/`) before publication; the app enforces a schema-version literal check and fails closed on any shape it doesn't recognize | The remote content manifest is served over HTTPS from GitHub Pages with no additional content-signing beyond TLS + schema validation — see [Content integrity](#content-integrity) |
 | Stale or incorrect content build | `contentHash` per book in `content-manifest.json`, generated from the same build pipeline that produces the payload; hash mismatch triggers re-download | Does not detect a build that is internally consistent but was generated from wrong/incorrect source content |
 | Network interception (MITM) | All remote endpoints used by the app are HTTPS (`https://vedantayojana.org/...`); release-build cleartext traffic is not enabled (see [Network security](#network-security)) | Standard TLS trust-chain assumptions apply; no certificate pinning is implemented |
@@ -71,25 +71,36 @@ not `npm install`).
 `uuid` are pinned via `overrides` to versions that close specific
 Dependabot alerts, applied 2026-09-18 (`a2b82cf`).
 
-**patch-package patches (`mobile/patches/`):**
+**patch-package patches (`mobile/patches/`):** none at present. Until
+the Expo SDK 58 upgrade (app v1.1.0 / iOS 1.2.0) two dependencies were
+patched for denial-of-service bugs:
 
-| Patch | Target | Fixes |
-|---|---|---|
-| `decode-uri-component+0.2.2.patch` | `decode-uri-component@0.2.2` (transitive, via `query-string`/`@react-navigation/core`/`expo-router`) | Denial-of-service via exponential decoding of malformed percent-encoded input |
-| `metro++image-size+1.2.1.patch` | `metro`'s nested `image-size@1.2.1` | Infinite-loop denial-of-service in the ICNS and JPEG XL parsers — see below |
+| Former patch | Target | Fixed | Status |
+|---|---|---|---|
+| `decode-uri-component+0.2.2.patch` | `decode-uri-component@0.2.2` (transitive, via `query-string`/`@react-navigation/core`/`expo-router`) | Exponential decoding of malformed percent-encoded input | Package no longer in the dependency tree |
+| `metro++image-size+1.2.1.patch` | `metro`'s nested `image-size@1.2.1` | Infinite loop in the ICNS and JPEG XL parsers (see below) | Package no longer in the dependency tree |
 
-`npm audit --omit=dev` in `mobile/` currently reports 12 advisories (4
-moderate, 8 high) against the `metro`/`@expo/metro-config`/`@expo/cli`
-dependency chain and `image-size` itself. This is expected and does
-not indicate an unpatched runtime vulnerability: `npm audit` matches
-against published package *versions*, and has no way to know that a
-locally applied `patch-package` patch already fixes the specific
-vulnerable code path inside an installed version it still considers
-vulnerable by version number. The `image-size` entry specifically
-covers the exact ICNS/JXL infinite-loop issue described below, which
-is patched — see [Security testing](#security-testing) for how that
-patch is verified to actually be in effect, rather than trusted on
-the strength of the patch file existing.
+Both were removed rather than ported, and
+[`mobile/tests/patched-dependencies.test.ts`](../mobile/tests/patched-dependencies.test.ts)
+fails if either package comes back through any dependency, so the fix
+has to be re-established before a release.
+
+`npm audit --omit=dev` in `mobile/` currently reports 6 high advisories,
+all from two packages, and both only in build-time tooling:
+
+- **`node-forge` 1.4.0** (GHSA-86w9-cpqp-85rv, RSA signature verification),
+  used by `@expo/cli` and by `@expo/code-signing-certificates` under
+  `expo-updates`. The latter is the Node helper for generating and checking
+  update code-signing certificates; this app does not configure update code
+  signing (`app.json` has no `codeSigningCertificate`), and the shipped app
+  verifies nothing with it. No fixed `node-forge` release exists yet.
+- **`zod` 3.25.76** (GHSA-mrhx-c7xc-m3w5, memory exhaustion on oversized
+  collections), nested inside `@expo/cli`, which uses it to validate its
+  own configuration. The app itself ships `zod` 4.6.7, which is outside the
+  affected range.
+
+npm counts `expo` and `expo-updates` as affected only because they depend
+on those tools; its suggested "fix" (downgrading to Expo 54) is not one.
 
 Separately: `metro` and its dependency chain are **build-time tooling**
 — they run on the developer/CI machine while bundling the app, and are
@@ -100,6 +111,8 @@ developer's machine), but it is not a runtime risk to an end user's
 installed app.
 
 ## The image-size vulnerability
+
+_Historical: resolved by the Expo SDK 58 upgrade, which removed `image-size` from the dependency tree. Kept as a record of what the patch fixed._
 
 **Package:** `image-size@1.2.1`, resolved as a nested dependency of
 `metro` at `mobile/node_modules/metro/node_modules/image-size` (not a
@@ -150,39 +163,17 @@ asset-handling pipeline.
 
 ## Security testing
 
-**Regression test:**
-[`mobile/tests/image-size-zero-size-box.test.ts`](../mobile/tests/image-size-zero-size-box.test.ts),
-driving a fixture at
-[`mobile/tests/fixtures/image-size-zero-box-check.cjs`](../mobile/tests/fixtures/image-size-zero-box-check.cjs).
+**Dependency guard:**
+[`mobile/tests/patched-dependencies.test.ts`](../mobile/tests/patched-dependencies.test.ts)
+checks `mobile/package-lock.json` and fails if `image-size` or
+`decode-uri-component` reappears anywhere in the dependency tree.
 
-The fixture imports the *actual installed* nested package
-(`mobile/node_modules/metro/node_modules/image-size`) — the same copy
-Metro resolves at build time and the same copy the patch targets — not
-a separately installed or newer copy. It constructs a minimal crafted
-ICNS file (zero-length entry) and a minimal crafted JPEG XL container
-(zero-size `jxlp` box) and calls the package's `imageSize()` on each.
-
-**Why a child process with a hard timeout is used:** the vulnerability
-is a fully synchronous infinite loop. Nothing that runs *in the same
-process* — a `Promise` timeout, `node:test`'s own per-test timeout —
-can preempt a synchronous busy loop running on the same thread the
-test itself occupies. The only reliable way to bound it is to run the
-check in a separate process and kill that process from the outside if
-it overruns. The test does this via `child_process.spawnSync(...,
-{ timeout: 5000 })`: if the fixture hangs, the OS kills it after 5
-seconds (surfaced as `result.signal === 'SIGTERM'`), and the test fails
-with a diagnostic message rather than hanging the suite indefinitely.
-
-**Verified to actually detect a regression, not just to exist:** while
-writing this test, the patch was temporarily reverted in the installed
-package, the test was re-run, and it failed exactly as expected — the
-fixture process was killed by `SIGTERM` after timing out
-(`error.code === 'ETIMEDOUT'`). The patch was then restored and
-confirmed byte-identical to the shipped version via `diff` before the
-test was committed. This step is not something the test re-performs on
-every run (that would require shipping a deliberately vulnerable copy
-of a real dependency); it was a one-time manual verification during
-development, recorded in the test's own doc comment.
+Until the Expo SDK 58 upgrade, a regression test
+(`mobile/tests/image-size-zero-size-box.test.ts`, removed with the patch)
+fed crafted ICNS and JPEG XL files to the patched `image-size` in a child
+process with a 5-second timeout. That was the only way to bound a fully
+synchronous infinite loop, and it was verified to fail when the patch was
+reverted.
 
 This test runs as part of the mobile test suite (`node --test
 mobile/tests/*.test.ts`), which is part of the project's regular test
