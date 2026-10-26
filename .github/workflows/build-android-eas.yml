@@ -10,7 +10,8 @@ name: Build Android app (EAS)
 #
 # Run it from the GitHub app or website (Actions -> "Build Android app
 # (EAS)" -> Run workflow), choosing the branch to build. The download link
-# appears in the run summary and on expo.dev. Nothing is published: a
+# appears in the run summary and on expo.dev, and an APK is also attached
+# to the run (with its SHA-256). Nothing is published: a
 # release is still made by uploading the APK to the releases repository as
 # android-v<versionCode> (see public/app-version.json).
 #
@@ -79,6 +80,17 @@ jobs:
             echo "::error::EAS finished without a download URL; see the build on expo.dev"
             exit 1
           fi
+          echo "::notice title=Android build ready::$version -- $url"
+          # Also keep the file itself on this run, with its checksum, so a
+          # release can be made from exactly this build without visiting
+          # expo.dev (an .apk only; the .aab profile is for Google Play).
+          case "$url" in
+            *.apk)
+              curl -fsSL "$url" -o vedanta-yojana.apk
+              sha256sum vedanta-yojana.apk > vedanta-yojana.apk.sha256
+              cat vedanta-yojana.apk.sha256
+              ;;
+          esac
           {
             echo "### Android build ready: $version"
             echo
@@ -88,3 +100,13 @@ jobs:
             echo
             echo "All builds: https://expo.dev/accounts/slnwriteupss-team/projects/vedanta-yojana/builds"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Keep the APK on this run
+        if: hashFiles('mobile/vedanta-yojana.apk') != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: vedanta-yojana-apk
+          path: |
+            mobile/vedanta-yojana.apk
+            mobile/vedanta-yojana.apk.sha256
+          if-no-files-found: error
