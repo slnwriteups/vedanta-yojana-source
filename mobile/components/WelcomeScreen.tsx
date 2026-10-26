@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useAudioPlayer } from "expo-audio";
+import { setAudioModeAsync, useAudioPlayer, useAudioPlayerStatus } from "expo-audio";
 import * as Haptics from "expo-haptics";
 import { spacing, typography, useTheme } from "../theme";
 import welcomeImage from "../../public/images/a0635841-903d-4856-90a8-eca5becb3c5e.png";
@@ -23,10 +23,31 @@ export function WelcomeScreen({ onDone }: { onDone: () => void }) {
   // cleanup -> mount) and crashed with a native "object already
   // released" error. play() only needs to run once per mount.
   const player = useAudioPlayer(welcomeAudio);
+  const { isLoaded } = useAudioPlayerStatus(player);
 
+  // iOS: with no audio mode set, the session uses the default category,
+  // which the ring/silent switch mutes, and since Expo SDK 58 play()
+  // runs before the session is activated. Calling play() at mount, before
+  // the mode was set or the clip had loaded, left the taniyan silent on
+  // iPhone and iPad. So: set the mode first (play even in silent mode --
+  // the reader is on a screen whose point is this audio -- and only lower,
+  // not stop, other apps' audio), wait for the clip to load, then play,
+  // once.
+  const [audioModeSet, setAudioModeSet] = useState(false);
   useEffect(() => {
+    setAudioModeAsync({ playsInSilentMode: true, interruptionMode: "duckOthers" })
+      .catch(() => {
+        // Still try to play with the default mode rather than not at all.
+      })
+      .finally(() => setAudioModeSet(true));
+  }, []);
+
+  const started = useRef(false);
+  useEffect(() => {
+    if (!audioModeSet || !isLoaded || started.current) return;
+    started.current = true;
     player.play();
-  }, [player]);
+  }, [audioModeSet, isLoaded, player]);
 
   function begin() {
     try {
