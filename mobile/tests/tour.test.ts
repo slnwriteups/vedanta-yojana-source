@@ -73,3 +73,11 @@ test("on first launch the tour waits for Home's first Panchangam load, not a fix
   assert.ok(!/setActive\(true\)/.test(startSoon), "startSoon must not start the tour by itself");
   assert.match(tour, /AppState\.currentState !== "active"/);
 });
+
+test("first-launch setup asks for location before starting the tour, so the system prompt can't pop up over it", () => {
+  const layout = read("app/_layout.tsx");
+  const ask = layout.indexOf("await askForLocationUpFront()");
+  const start = layout.indexOf("tour.startSoon()");
+  assert.ok(ask !== -1 && start !== -1 && ask < start, "askForLocationUpFront() must be awaited before tour.startSoon()");
+  assert.match(read("services/panchangamService.ts"), /export async function askForLocationUpFront[\s\S]*?requestForegroundPermissionsAsync/);
+});
