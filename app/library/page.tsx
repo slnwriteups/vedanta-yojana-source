@@ -3,14 +3,14 @@ import { loadBooks, loadChapters } from "@/content-lib/loader";
 import { BookCard } from "@/components/library/BookCard";
 import { LocalizedPageHeading } from "@/components/shared/LocalizedPageHeading";
 import { LocalizedText } from "@/components/shared/LocalizedText";
-import { siteUrl } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
 import { toPublicBook } from "@/lib/public-content";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Library",
   description: "Sacred texts and teachings, presented chapter by chapter, and the author's blogs.",
-  alternates: { canonical: siteUrl("/library") },
-};
+  path: "/library",
+});
 
 /**
  * Library index -- matches mobile's Library tab exactly: a localized

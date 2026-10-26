@@ -57,6 +57,12 @@ jobs:
           # identical, so a fork building this repository never reports
           # into this project's account.
           NEXT_PUBLIC_CF_BEACON_TOKEN: ${{ vars.CF_BEACON_TOKEN }}
+          # Search-engine ownership tokens (app/layout.tsx), also
+          # repository VARIABLES for the same reason: each is printed in
+          # every page's HTML by design. Unset = no tag rendered. See
+          # docs/SEO.md for where to get them.
+          NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
 
       - name: Disable Jekyll processing
         # Next.js emits _next/, and Jekyll strips underscore-prefixed
@@ -90,3 +96,28 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
+
+      - name: Notify search engines (IndexNow)
+        # Tells Bing (and through it DuckDuckGo, Yahoo and Copilot/ChatGPT
+        # search), Yandex, Naver and Seznam that the sitemap's URLs
+        # changed, so they recrawl within hours instead of whenever they
+        # next get round to it. Google does not take part in IndexNow --
+        # it reads the sitemap via Search Console (docs/SEO.md).
+        #
+        # The key is public by design: the protocol proves ownership by
+        # the engine fetching it back from the site itself
+        # (public/<key>.txt). Never fails the deploy -- the site is
+        # already live by this step, and a missed ping only means a
+        # slower recrawl.
+        continue-on-error: true
+        env:
+          SITE: https://vedantayojana.org
+          INDEXNOW_KEY: df341b3613b51c0f587a8717bf632eda
+        run: |
+          urls=$(curl -fsS "$SITE/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed -e 's/<loc>//' -e 's#</loc>##' | head -n 10000)
+          jq -n --arg host "${SITE#https://}" --arg key "$INDEXNOW_KEY" --arg keyLocation "$SITE/$INDEXNOW_KEY.txt" \
+            --arg urls "$urls" '{host: $host, key: $key, keyLocation: $keyLocation, urlList: ($urls | split("\n") | map(select(length > 0)))}' \
+            > indexnow.json
+          echo "Submitting $(jq '.urlList | length' indexnow.json) URLs"
+          curl -fsS -X POST "https://api.indexnow.org/indexnow" \
+            -H "Content-Type: application/json; charset=utf-8" --data @indexnow.json -w "HTTP %{http_code}\n"

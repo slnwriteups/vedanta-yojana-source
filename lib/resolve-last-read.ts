@@ -1,6 +1,6 @@
-import type { LanguageCode } from "@/content-lib/schemas";
-import type { PublicBook, PublicChapter } from "./public-content";
-import { localizeBook, localizeChapter } from "@/content-lib/i18n.ts";
+import type { Chapter, LanguageCode } from "@/content-lib/schemas";
+import type { PublicBook } from "./public-content";
+import { localizeBook, localizeChapterSummary } from "@/content-lib/i18n.ts";
 import { estimateReadingMinutes } from "@/content-lib/text-format.ts";
 import type { LastReadPosition } from "./preferences";
 
@@ -32,9 +32,48 @@ export interface ResolvedLastRead {
   minutesLeft: number;
 }
 
+/**
+ * Just what a Continue Reading card needs from a chapter: its title and
+ * its reading time, each per language. Deliberately NOT the whole
+ * chapter -- the catalog is a Client Component prop, so everything in it
+ * is serialized into the Home page's HTML, and full bodies in every
+ * language made that page a 16 MB download (slow first paint, and a
+ * Core Web Vitals problem for search ranking) to compute a title and a
+ * minute count.
+ */
+export interface HomeChapterSummary {
+  slug: string;
+  title: string;
+  readingMinutes: number;
+  translations?: Partial<Record<LanguageCode, { title?: string; readingMinutes?: number }>>;
+}
+
+/**
+ * Projects a loaded chapter to its HomeChapterSummary, resolving each
+ * translation exactly as localizeChapter would -- a translation without
+ * its own body falls back to the original body, so its reading time is
+ * the original's too.
+ */
+export function toHomeChapterSummary(chapter: Pick<Chapter, "slug" | "title" | "body" | "translations">): HomeChapterSummary {
+  const translations: NonNullable<HomeChapterSummary["translations"]> = {};
+  for (const [language, t] of Object.entries(chapter.translations ?? {}) as [LanguageCode, { title?: string; body?: string } | undefined][]) {
+    if (!t) continue;
+    translations[language] = {
+      ...(t.title ? { title: t.title } : {}),
+      readingMinutes: estimateReadingMinutes(t.body ?? chapter.body),
+    };
+  }
+  return {
+    slug: chapter.slug,
+    title: chapter.title,
+    readingMinutes: estimateReadingMinutes(chapter.body),
+    ...(Object.keys(translations).length > 0 ? { translations } : {}),
+  };
+}
+
 export interface HomeCatalogEntry {
   book: PublicBook;
-  chapters: PublicChapter[];
+  chapters: HomeChapterSummary[];
 }
 
 function resolveLastRead(
@@ -48,7 +87,8 @@ function resolveLastRead(
   if (!entry || !chapter) return null;
 
   const chapterPosition = entry.chapters.findIndex((c) => c.slug === chapter.slug) + 1;
-  const localizedChapter = localizeChapter(chapter, language);
+  const localizedChapter = localizeChapterSummary(chapter, language);
+  const minutesLeft = (language ? chapter.translations?.[language]?.readingMinutes : undefined) ?? chapter.readingMinutes;
   return {
     bookSlug: position.bookSlug,
     chapterSlug: position.chapterSlug,
@@ -57,7 +97,7 @@ function resolveLastRead(
     chapterTitle: localizedChapter.title,
     chapterPosition,
     totalChapters: entry.chapters.length,
-    minutesLeft: estimateReadingMinutes(localizedChapter.body),
+    minutesLeft,
   };
 }
 

@@ -7,7 +7,7 @@ import { RecordImages } from "@/components/shared/RecordImages";
 import { LocalizedKnowledgeContent } from "@/components/knowledge/LocalizedKnowledgeContent";
 import { RelatedContentLinks } from "@/components/knowledge/RelatedContentLinks";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { truncateForDescription } from "@/lib/metadata";
+import { pageMetadata, truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
 import { toPublicKnowledge } from "@/lib/public-content";
 
@@ -31,11 +31,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const record = loadKnowledgeRecord(INTRODUCTION_SLUG);
   if (!record) return { title: "Divya Desams" };
 
-  return {
+  return pageMetadata({
     title: record.title,
     description: truncateForDescription(record.body),
-    alternates: { canonical: siteUrl("/divya-desams/introduction") },
-  };
+    path: "/divya-desams/introduction",
+    type: "article",
+  });
 }
 
 export default function DivyaDesamsIntroductionPage() {
@@ -49,6 +50,8 @@ export default function DivyaDesamsIntroductionPage() {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: record.title,
+          url: siteUrl("/divya-desams/introduction/"),
+          description: truncateForDescription(record.body),
         }}
       />
       <Breadcrumbs

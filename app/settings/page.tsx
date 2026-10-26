@@ -9,6 +9,8 @@ export const metadata: Metadata = {
   title: "Settings",
   description: "Language, appearance, and text-size preferences for Vedanta Yojana.",
   alternates: { canonical: siteUrl("/settings") },
+  // A preferences screen, not content -- nothing for a searcher to land on.
+  robots: { index: false, follow: true },
 };
 
 const INSTAGRAM_URL = "https://www.instagram.com/vedantayojana/";

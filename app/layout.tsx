@@ -6,6 +6,7 @@ import { OnboardingGate } from "@/components/OnboardingGate";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { SitePing } from "@/components/SitePing";
 import { getSiteOrigin, siteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
+import { defaultShareImage } from "@/lib/metadata";
 import { resolveImageHref } from "@/lib/image-file";
 import "./globals.css";
 
@@ -64,6 +65,18 @@ const notoSansDevanagari = Noto_Sans_Devanagari({
 
 const siteOrigin = getSiteOrigin();
 
+/**
+ * Search-engine ownership tokens (Google Search Console's "HTML tag"
+ * method and Bing Webmaster Tools'), supplied by the deployment from
+ * repository variables -- see deploy-pages.yml and docs/SEO.md. Like the
+ * analytics token above they are public by design (they sit in every
+ * page's HTML) and prove nothing on their own; unset simply means the
+ * tag is not rendered, which is the right state for forks and local
+ * builds.
+ */
+const GOOGLE_SITE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ?? "";
+const BING_SITE_VERIFICATION = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ?? "";
+
 export const metadata: Metadata = {
   // Only set when a real deployment origin has been configured (see
   // lib/site.ts) -- omitted entirely otherwise, rather than fabricating
@@ -92,7 +105,34 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    // Allow large image previews and full-length snippets in results --
+    // the defaults are more conservative than this site needs.
+    "max-image-preview": "large",
+    "max-snippet": -1,
   },
+  // Link-preview defaults for routes that don't build their own via
+  // pageMetadata() (lib/metadata.ts).
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [defaultShareImage()],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [defaultShareImage().url],
+  },
+  ...(GOOGLE_SITE_VERIFICATION || BING_SITE_VERIFICATION
+    ? {
+        verification: {
+          ...(GOOGLE_SITE_VERIFICATION ? { google: GOOGLE_SITE_VERIFICATION } : {}),
+          ...(BING_SITE_VERIFICATION ? { other: { "msvalidate.01": BING_SITE_VERIFICATION } } : {}),
+        },
+      }
+    : {}),
 };
 
 // Theme-color matches the exact light/dark --background tokens already

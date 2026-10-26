@@ -9,7 +9,7 @@ import { LocalizedChapterBody } from "@/components/library/LocalizedChapterBody"
 import { ReadingPositionTracker } from "@/components/library/ReadingPositionTracker";
 import { BookmarkButton } from "@/components/library/BookmarkButton";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { truncateForDescription } from "@/lib/metadata";
+import { pageMetadata, truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
 import { toPublicBook, toPublicChapter } from "@/lib/public-content";
 
@@ -46,11 +46,12 @@ export async function generateMetadata({
   const chapter = loadChapter(bookSlug, chapterSlug);
   if (!chapter) return { title: "Chapter" };
 
-  return {
+  return pageMetadata({
     title: chapter.title,
     description: truncateForDescription(chapter.body),
-    alternates: { canonical: siteUrl(`/library/${bookSlug}/${chapter.slug}`) },
-  };
+    path: `/library/${bookSlug}/${chapter.slug}`,
+    type: "article",
+  });
 }
 
 export default async function LibraryChapterPage({
@@ -72,8 +73,16 @@ export default async function LibraryChapterPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "WebPage",
+          "@type": book.kind === "blog" ? "BlogPosting" : "Chapter",
           name: chapter.title,
+          headline: chapter.title,
+          url: siteUrl(`/library/${book.slug}/${chapter.slug}/`),
+          description: truncateForDescription(chapter.body),
+          isPartOf: {
+            "@type": book.kind === "blog" ? "Blog" : "Book",
+            name: book.title,
+            url: siteUrl(`/library/${book.slug}/`),
+          },
         }}
       />
       <Breadcrumbs

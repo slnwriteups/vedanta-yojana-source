@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { siteUrl } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
     "Vedanta Yojana is a digital reference for the 108 Divya Desams and related Vaishnava teachings.",
-  alternates: { canonical: siteUrl("/about") },
-};
+  path: "/about",
+});
 
 export default function AboutPage() {
   return (

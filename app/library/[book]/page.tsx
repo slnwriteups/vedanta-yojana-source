@@ -9,7 +9,7 @@ import { LocalizedBookHeader } from "@/components/library/LocalizedBookHeader";
 import { LocalizedPartHeading } from "@/components/library/LocalizedPartHeading";
 import { LocalizedText } from "@/components/shared/LocalizedText";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { truncateForDescription } from "@/lib/metadata";
+import { pageMetadata, truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
 import { toPublicBook, toPublicChapter } from "@/lib/public-content";
 
@@ -38,11 +38,11 @@ export async function generateMetadata({
   const book = loadBook(bookSlug);
   if (!book) return { title: "Library" };
 
-  return {
+  return pageMetadata({
     title: book.title,
     description: book.description ? truncateForDescription(book.description) : undefined,
-    alternates: { canonical: siteUrl(`/library/${book.slug}`) },
-  };
+    path: `/library/${book.slug}`,
+  });
 }
 
 export default async function LibraryBookPage({
@@ -60,8 +60,9 @@ export default async function LibraryBookPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "WebPage",
+          "@type": book.kind === "blog" ? "Blog" : "Book",
           name: book.title,
+          url: siteUrl(`/library/${book.slug}/`),
           ...(book.description ? { description: book.description } : {}),
         }}
       />

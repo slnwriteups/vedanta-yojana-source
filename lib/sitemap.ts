@@ -52,7 +52,13 @@ export function buildSitemapEntries(): MetadataRoute.Sitemap {
   // siteUrl() applies both the deployment origin (when configured) and
   // the basePath the site is served under -- without the latter every
   // <loc> would point at a 404 on a project-page deployment.
-  const toUrl = siteUrl;
+  //
+  // The trailing slash matches next.config.ts's `trailingSlash: true`:
+  // it is the form every page is actually served at and the form its
+  // own <link rel="canonical"> uses. Without it, every <loc> 301-
+  // redirects and disagrees with the page's canonical, which Search
+  // Console reports as "Page with redirect" and leaves unindexed.
+  const toUrl = (path: string) => siteUrl(path.endsWith("/") ? path : `${path}/`);
 
   const entries: MetadataRoute.Sitemap = STATIC_ROUTES.map((path) => ({ url: toUrl(path) }));
 

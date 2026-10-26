@@ -6,8 +6,8 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
 import { RecordImages } from "@/components/shared/RecordImages";
 import { LocalizedDivyaDesamContent } from "@/components/divya-desams/LocalizedDivyaDesamContent";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { truncateForDescription } from "@/lib/metadata";
-import { siteUrl } from "@/lib/site";
+import { pageMetadata, truncateForDescription } from "@/lib/metadata";
+import { getSiteOrigin, siteUrl } from "@/lib/site";
 import { resolveImageHref } from "@/lib/image-file";
 import { toPublicDivyaDesam, toPublicImage } from "@/lib/public-content";
 
@@ -46,11 +46,24 @@ export async function generateMetadata({
   // entirely, if sthalaPuranam is absent (e.g. the multi-shrine records).
   const source = record.sthalaPuranam ?? record.azhwarPasuram;
 
-  return {
-    title: record.displayName,
+  // "Divya Desam" and "Sthala Puranam" in the title are what people
+  // actually search alongside a temple's name.
+  return pageMetadata({
+    title: `${record.displayName} Divya Desam: Sthala Puranam & Temple Details`,
     description: source ? truncateForDescription(source) : undefined,
-    alternates: { canonical: siteUrl(`/divya-desams/${record.slug}`) },
-  };
+    path: `/divya-desams/${record.slug}`,
+    image: firstImageHref(record.images),
+    type: "article",
+  });
+}
+
+/** The record's own first photo that actually resolves to a file, if any. */
+function firstImageHref(images: { sourceAssetUuid: string }[]): string | null {
+  for (const image of images) {
+    const href = resolveImageHref(image.sourceAssetUuid);
+    if (href) return href;
+  }
+  return null;
 }
 
 export default async function DivyaDesamDetailPage({
@@ -69,6 +82,8 @@ export default async function DivyaDesamDetailPage({
   // data. Page93 and the multi-shrine records (empty shrines[] or
   // ambiguous shrine data) simply omit `hasMap`.
   const firstMapsLink = record.shrines[0]?.mapsLink;
+  const imageHref = firstImageHref(record.images);
+  const description = record.sthalaPuranam ?? record.azhwarPasuram;
 
   // Most images keep the source's own top-of-page position ("default").
   // A minority (per record) were placed AFTER Sthala Puranam in the
@@ -94,8 +109,12 @@ export default async function DivyaDesamDetailPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "Place",
+          // HinduTemple is schema.org's own Place subtype for exactly this.
+          "@type": ["Place", "HinduTemple"],
           name: record.displayName,
+          url: siteUrl(`/divya-desams/${record.slug}/`),
+          ...(description ? { description: truncateForDescription(description) } : {}),
+          ...(imageHref ? { image: `${getSiteOrigin() ?? ""}${imageHref}` } : {}),
           ...(firstMapsLink ? { hasMap: firstMapsLink } : {}),
         }}
       />
