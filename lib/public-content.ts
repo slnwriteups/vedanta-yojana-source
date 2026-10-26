@@ -126,3 +126,29 @@ export function toDivyaDesamIndexRecord(record: DivyaDesam): PublicDivyaDesam {
     ...(translations ? { translations: slimTranslations } : {}),
   };
 }
+
+/**
+ * One row of a book's chapter list: title (per language), slug and the
+ * DraftBadge fields. Not the chapter body -- every row is a Client
+ * Component prop, and full bodies in every language made a long book's
+ * page several megabytes (Sri Rama Charithram: 6.5 MB) just to list
+ * titles. scripts/seo-audit.ts's page-weight check is what caught it.
+ */
+export type PublicChapterListEntry = Pick<PublicChapter, "slug" | "title" | "status" | "migration"> & {
+  translations?: Partial<Record<keyof NonNullable<Chapter["translations"]>, { title?: string }>>;
+};
+
+export function toChapterListEntry(record: Chapter): PublicChapterListEntry {
+  const translations: NonNullable<PublicChapterListEntry["translations"]> = {};
+  for (const language of Object.keys(record.translations ?? {}) as (keyof typeof translations)[]) {
+    const title = record.translations?.[language]?.title;
+    if (title) translations[language] = { title };
+  }
+  return {
+    slug: record.slug,
+    title: record.title,
+    status: record.status,
+    migration: toPublicMigration(record.migration),
+    ...(Object.keys(translations).length > 0 ? { translations } : {}),
+  };
+}

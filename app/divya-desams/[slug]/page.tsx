@@ -49,7 +49,7 @@ export async function generateMetadata({
   // "Divya Desam" and "Sthala Puranam" in the title are what people
   // actually search alongside a temple's name.
   return pageMetadata({
-    title: `${record.displayName} Divya Desam: Sthala Puranam & Temple Details`,
+    title: `${record.displayName} Divya Desam: Sthala Puranam`,
     description: source ? truncateForDescription(source) : undefined,
     path: `/divya-desams/${record.slug}`,
     image: firstImageHref(record.images),

@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
-import type { PublicChapter } from "@/lib/public-content";
-import { localizeChapter } from "@/content-lib/i18n.ts";
+import type { PublicChapterListEntry } from "@/lib/public-content";
+import { localizeChapterSummary } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
 import { sectionTint } from "@/lib/section-tints";
@@ -18,7 +18,7 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
  * (mobile/app/(tabs)/library/[book].tsx).
  *
  * Client component so the title follows the reader's language
- * preference (content-lib/i18n.ts's localizeChapter).
+ * preference (content-lib/i18n.ts's localizeChapterSummary).
  */
 export function ChapterListItem({
   bookSlug,
@@ -29,13 +29,13 @@ export function ChapterListItem({
   bookSlug: string;
   /** "book" or "blog" -- labels the entry "Chapter N" or "Post N". */
   kind?: "book" | "blog";
-  chapter: PublicChapter;
+  chapter: PublicChapterListEntry;
   /** This chapter's 1-indexed position in the book's own chapter order -- mobile's `index + 1`. */
   position: number;
 }) {
   const { language } = useLanguage();
   const theme = useTheme();
-  const localized = useMemo(() => localizeChapter(chapter, language), [chapter, language]);
+  const localized = useMemo(() => localizeChapterSummary(chapter, language), [chapter, language]);
   const tint = sectionTint(bookSlug, theme);
 
   return (

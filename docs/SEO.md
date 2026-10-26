@@ -20,6 +20,28 @@ Every deploy (`.github/workflows/deploy-pages.yml`) publishes:
 Low-value pages are kept out of the index on purpose: `/settings/` and the
 404 page are `noindex`.
 
+## The SEO bot
+
+`scripts/seo-audit.ts` re-checks everything above, so nobody has to:
+
+- **Every push (`ci.yml`):** audits the built site. CI fails if anything
+  would stop pages being indexed: a sitemap URL that redirects or doesn't
+  match its canonical, a page in the sitemap marked `noindex`, broken
+  structured data, a missing title or canonical, or a page over 1.5 MB of
+  HTML. A bad change can't deploy unnoticed.
+- **After every deploy and every Monday (`seo-health.yml`):** audits the
+  live site, including real redirects and the `www.`/`http://` addresses.
+  If anything fails, it opens a GitHub issue labelled `seo-health`, and
+  GitHub emails you. It keeps that one issue updated and closes it by itself
+  once the site passes again. **No open `seo-health` issue means all is
+  well.**
+
+Warnings (long titles, pages without a description or share image) appear
+in each run's summary but never fail a build or open an issue.
+
+Run it yourself at any time: `node scripts/seo-audit.ts --url
+https://vedantayojana.org`, or `--dir out` after `npm run build`.
+
 ## One-time setup (owner only)
 
 Google gets no automatic signal like IndexNow. It needs Search Console.

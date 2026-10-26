@@ -1,0 +1,93 @@
+name: SEO health check
+
+# The SEO "bot". Audits the LIVE site with scripts/seo-audit.ts -- the
+# same checks ci.yml runs on every build, plus what only the live site
+# can show (real redirects, the www/http variants, what the CDN actually
+# serves). Runs:
+#   - after every deploy, so a bad release is caught the same day
+#   - every Monday, so problems that don't come from this repository
+#     (DNS, GitHub Pages, the domain) are caught within a week
+#   - on demand (Actions -> SEO health check -> Run workflow)
+#
+# It never changes the site. When it finds an error it opens one GitHub
+# issue labelled `seo-health` (GitHub emails the repository owner),
+# keeps that same issue's report up to date on later failing runs, and
+# closes it by itself once the site passes again -- so an open issue
+# always means "something is broken right now", and no issue means all
+# is well. See docs/SEO.md.
+on:
+  workflow_run:
+    workflows: ["Deploy to GitHub Pages"]
+    types: [completed]
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: seo-health
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    name: Audit vedantayojana.org
+    # After a deploy, only when it actually published.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    env:
+      SITE: https://vedantayojana.org
+      LABEL: seo-health
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Let the new deploy reach the CDN
+        # GitHub Pages caches for up to 10 minutes; checking the instant
+        # a deploy finishes can audit the previous release.
+        if: github.event_name == 'workflow_run'
+        run: sleep 300
+
+      - name: Audit the live site
+        id: audit
+        # The script has no dependencies, so no `npm ci`.
+        run: |
+          set +e
+          node scripts/seo-audit.ts --url "$SITE" --report seo-report.md
+          echo "status=$?" >> "$GITHUB_OUTPUT"
+          cat seo-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Open or update the issue
+        if: steps.audit.outputs.status != '0'
+        run: |
+          gh label create "$LABEL" --color D93F0B --description "Opened and closed automatically by the SEO health check" 2>/dev/null || true
+          {
+            echo "The [SEO health check]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID) found problems that can stop pages on $SITE being indexed by search engines."
+            echo
+            cat seo-report.md
+            echo
+            echo "_This issue is updated on every failing run and closes by itself once the site passes. To check again now, run **Actions → SEO health check → Run workflow**._"
+          } > issue.md
+          number=$(gh issue list --label "$LABEL" --state open --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --body-file issue.md
+          else
+            gh issue create --title "SEO health check is failing on $SITE" --label "$LABEL" --body-file issue.md
+          fi
+          exit 1
+
+      - name: Close the issue once fixed
+        if: steps.audit.outputs.status == '0'
+        run: |
+          for number in $(gh issue list --label "$LABEL" --state open --json number --jq '.[].number'); do
+            gh issue close "$number" --comment "Fixed: the [latest SEO health check]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID) passes with no errors."
+          done
