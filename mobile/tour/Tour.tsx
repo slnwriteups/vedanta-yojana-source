@@ -1,12 +1,12 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
-import { Pressable, StyleSheet, Text, View, useWindowDimensions, type StyleProp, type ViewStyle } from "react-native";
+import { AppState, Pressable, StyleSheet, Text, View, useWindowDimensions, type StyleProp, type ViewStyle } from "react-native";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { tourStepCountLabel, useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import { writeJSON } from "../storage.ts";
-import { TOUR_SEEN_STORAGE_KEY, TOUR_STEPS } from "./tourSteps.ts";
+import { TOUR_SEEN_STORAGE_KEY, TOUR_STEPS, type TourRoute } from "./tourSteps.ts";
 
 /**
  * The "How to use the app" tour (steps in tourSteps.ts). TourProvider
@@ -33,11 +33,19 @@ interface TourContextValue {
   active: boolean;
   /** Starts the tour from its first step. */
   start: () => void;
-  /** Starts the tour once the tabs have had a moment to appear (used right after first-launch setup). */
+  /**
+   * Starts the tour once the app has settled after first-launch setup:
+   * Home has finished its first Panchangam load (which is when the
+   * location-permission prompt has been answered and the date/city
+   * controls the tour points at exist) and the app is in the foreground
+   * (no system dialog over it). See markHomeReady().
+   */
   startSoon: () => void;
+  /** Home's signal that its first Panchangam load is done, answered prompt and all. */
+  markHomeReady: () => void;
   register: (id: string, measure: Measure) => () => void;
-  /** The Home screen's way to scroll a highlighted element into view. */
-  registerScroller: (scrollBy: (dy: number) => void) => () => void;
+  /** A screen's way to scroll a highlighted element into view -- one per tab that has steps below the fold. */
+  registerScroller: (route: TourRoute, scrollBy: (dy: number) => void) => () => void;
 }
 
 const TourContext = createContext<TourContextValue | null>(null);
@@ -51,28 +59,64 @@ export function useTour(): TourContextValue {
 export function TourProvider({ children }: { children: ReactNode }) {
   const [active, setActive] = useState(false);
   const targets = useRef(new Map<string, Measure>());
-  const scroller = useRef<((dy: number) => void) | null>(null);
+  const scrollers = useRef(new Map<TourRoute, (dy: number) => void>());
 
   const start = useCallback(() => setActive(true), []);
-  const startSoon = useCallback(() => {
-    setTimeout(() => setActive(true), 900);
+
+  // First launch: starting on a fixed timer raced Home's location-permission
+  // prompt and its Panchangam load -- the tour opened behind the system
+  // dialog, before the date/city controls it points at existed, and then the
+  // page reflowed under it. So it waits for both, instead of for a delay.
+  const pending = useRef(false);
+  const homeReady = useRef(false);
+  const fallbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const tryStart = useCallback(() => {
+    if (!pending.current || !homeReady.current || AppState.currentState !== "active") return;
+    pending.current = false;
+    if (fallbackTimer.current) clearTimeout(fallbackTimer.current);
+    // A moment for the freshly loaded Panchangam to lay out.
+    setTimeout(() => setActive(true), 700);
   }, []);
+  const startSoon = useCallback(() => {
+    pending.current = true;
+    // Never wait forever on Home: if its load stalls, go ahead anyway --
+    // still only while the app is in the foreground.
+    fallbackTimer.current = setTimeout(() => {
+      homeReady.current = true;
+      tryStart();
+    }, 15000);
+    tryStart();
+  }, [tryStart]);
+  const markHomeReady = useCallback(() => {
+    homeReady.current = true;
+    tryStart();
+  }, [tryStart]);
+  useEffect(() => {
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") tryStart();
+    });
+    return () => {
+      subscription.remove();
+      if (fallbackTimer.current) clearTimeout(fallbackTimer.current);
+    };
+  }, [tryStart]);
+
   const register = useCallback((id: string, measure: Measure) => {
     targets.current.set(id, measure);
     return () => {
       if (targets.current.get(id) === measure) targets.current.delete(id);
     };
   }, []);
-  const registerScroller = useCallback((scrollBy: (dy: number) => void) => {
-    scroller.current = scrollBy;
+  const registerScroller = useCallback((route: TourRoute, scrollBy: (dy: number) => void) => {
+    scrollers.current.set(route, scrollBy);
     return () => {
-      if (scroller.current === scrollBy) scroller.current = null;
+      if (scrollers.current.get(route) === scrollBy) scrollers.current.delete(route);
     };
   }, []);
 
   const value = useMemo(
-    () => ({ active, start, startSoon, register, registerScroller }),
-    [active, start, startSoon, register, registerScroller]
+    () => ({ active, start, startSoon, markHomeReady, register, registerScroller }),
+    [active, start, startSoon, markHomeReady, register, registerScroller]
   );
 
   return (
@@ -81,7 +125,7 @@ export function TourProvider({ children }: { children: ReactNode }) {
       {active ? (
         <TourOverlay
           targets={targets.current}
-          scroller={scroller}
+          scrollers={scrollers.current}
           onEnd={() => {
             setActive(false);
             void writeJSON(TOUR_SEEN_STORAGE_KEY, true);
@@ -117,23 +161,25 @@ export function TourTarget({ id, style, children }: { id: string; style?: StyleP
   );
 }
 
-/** Lets the Home screen scroll the tour's highlighted element into view. */
-export function useTourScroller(scrollBy: (dy: number) => void) {
+/** Lets a tab's screen (Home, Settings) scroll the tour's highlighted element into view. */
+export function useTourScroller(route: TourRoute, scrollBy: (dy: number) => void) {
   const context = useContext(TourContext);
-  useEffect(() => (context ? context.registerScroller(scrollBy) : undefined), [context, scrollBy]);
+  useEffect(() => (context ? context.registerScroller(route, scrollBy) : undefined), [context, route, scrollBy]);
 }
 
 const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 const PADDING = 6;
 const CARD_ESTIMATE = 220;
+/** Per step: enough to follow a reflow or two, never a scroll loop. */
+const MAX_SCROLLS_PER_STEP = 3;
 
 function TourOverlay({
   targets,
-  scroller,
+  scrollers,
   onEnd,
 }: {
   targets: Map<string, Measure>;
-  scroller: { current: ((dy: number) => void) | null };
+  scrollers: Map<TourRoute, (dy: number) => void>;
   onEnd: () => void;
 }) {
   const theme = useTheme();
@@ -146,45 +192,54 @@ function TourOverlay({
   const step = TOUR_STEPS[index];
   const last = index === TOUR_STEPS.length - 1;
 
-  // Open the step's tab, bring its element into view, then keep tracking it:
-  // a language or text-size change, or a rotation, moves it.
+  // Open the step's tab, then keep finding its element and bringing it into
+  // view: it may not exist yet (a tab mounting for the first time, data still
+  // loading), and a language or text-size change, a rotation or late-loading
+  // content above it moves it. Every check can scroll, not only the first --
+  // a target that appears late, or below the fold, is still brought into view.
   useEffect(() => {
     let cancelled = false;
+    let busy = false;
+    let scrolls = 0;
     setRect(null);
     router.navigate(step.route as never);
 
     const measure = async () => (await targets.get(step.target)?.()) ?? null;
-    (async () => {
-      await wait(450);
-      let found = await measure();
-      if (cancelled) return;
-      if (found && step.scroll && scroller.current) {
-        const top = insets.top + 72;
-        const bottom = screenH - insets.bottom - 90 - CARD_ESTIMATE;
-        if (found.y < top || found.y + found.height > bottom) {
-          scroller.current(found.y - top - 24);
+    const top = insets.top + 72;
+    const bottom = screenH - insets.bottom - 90 - CARD_ESTIMATE;
+    const check = async () => {
+      if (busy) return;
+      busy = true;
+      try {
+        let found = await measure();
+        if (cancelled) return;
+        const scrollBy = step.scroll ? scrollers.get(step.route) : undefined;
+        if (found && scrollBy && scrolls < MAX_SCROLLS_PER_STEP && (found.y < top || found.y + found.height > bottom)) {
+          scrolls += 1;
+          scrollBy(found.y - top - 24);
           await wait(400);
+          if (cancelled) return;
           found = await measure();
+          if (cancelled) return;
         }
-      }
-      if (!cancelled) setRect(found);
-    })();
-
-    const timer = setInterval(async () => {
-      const found = await measure();
-      if (!cancelled) {
         setRect((prev) =>
           prev && found && prev.x === found.x && prev.y === found.y && prev.width === found.width && prev.height === found.height
             ? prev
             : found
         );
+      } finally {
+        busy = false;
       }
-    }, 600);
+    };
+
+    const first = setTimeout(check, 450);
+    const timer = setInterval(check, 600);
     return () => {
       cancelled = true;
+      clearTimeout(first);
       clearInterval(timer);
     };
-  }, [index, step, targets, scroller, insets.top, insets.bottom, screenH]);
+  }, [index, step, targets, scrollers, insets.top, insets.bottom, screenH]);
 
   const finish = () => {
     onEnd();

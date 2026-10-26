@@ -59,6 +59,23 @@ jobs:
 
       - name: Production build
         run: npm run build
+        env:
+          # The same origin deploy-pages.yml builds with, so canonicals,
+          # the sitemap and robots.txt come out exactly as they will on
+          # the live site -- which is what the SEO check below verifies.
+          NEXT_PUBLIC_SITE_URL: https://vedantayojana.org
+
+      - name: SEO check
+        # scripts/seo-audit.ts -- fails the build on anything that would
+        # stop pages being indexed (redirecting or non-canonical sitemap
+        # URLs, noindex, broken structured data, oversized pages). The
+        # live site gets the same check weekly from seo-health.yml.
+        run: |
+          set +e
+          node scripts/seo-audit.ts --dir out --report seo-report.md
+          status=$?
+          cat seo-report.md >> "$GITHUB_STEP_SUMMARY"
+          exit $status
 
       # The Android/iOS app (mobile/) has its own dependencies and test
       # suite. Its tests read the book payloads that the build's prebuild

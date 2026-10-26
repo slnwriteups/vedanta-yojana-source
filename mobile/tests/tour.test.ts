@@ -47,3 +47,37 @@ test("the tour ends on the Settings button that replays it, and lets readers try
   const interactive = TOUR_STEPS.filter((s) => s.interactive).map((s) => s.target);
   assert.deepEqual(interactive, ["settings-language", "settings-appearance", "settings-text-size"]);
 });
+
+test("every step that scrolls its element into view has a screen providing the scroller for its tab", () => {
+  const registered = new Set<string>();
+  for (const file of sourceFiles("app")) {
+    for (const match of read(file).matchAll(/useTourScroller\("([^"]+)"/g)) registered.add(match[1]);
+  }
+  for (const step of TOUR_STEPS.filter((s) => s.scroll)) {
+    assert.ok(registered.has(step.route), `${step.id}: no screen registers a tour scroller for ${step.route}`);
+  }
+  // On first launch Settings opens at the top, so its lower steps must be able to scroll.
+  for (const step of TOUR_STEPS.filter((s) => s.route === "/settings")) {
+    assert.ok(step.scroll, `${step.id}: a Settings step that cannot scroll may sit below the fold`);
+  }
+});
+
+test("on first launch the tour waits for Home's first Panchangam load, not a fixed delay", () => {
+  // Starting on a timer raced the location-permission prompt and the
+  // Panchangam load, so the tour opened behind the system dialog, before
+  // the date and city controls it highlights existed.
+  assert.match(read("app/_layout.tsx"), /tour\.startSoon\(\)/);
+  assert.match(read("app/(tabs)/index.tsx"), /if \(panchangam\) markHomeReady\(\)/);
+  const tour = read("tour/Tour.tsx");
+  const startSoon = tour.slice(tour.indexOf("const startSoon = useCallback"), tour.indexOf("const markHomeReady"));
+  assert.ok(!/setActive\(true\)/.test(startSoon), "startSoon must not start the tour by itself");
+  assert.match(tour, /AppState\.currentState !== "active"/);
+});
+
+test("first-launch setup asks for location before starting the tour, so the system prompt can't pop up over it", () => {
+  const layout = read("app/_layout.tsx");
+  const ask = layout.indexOf("await askForLocationUpFront()");
+  const start = layout.indexOf("tour.startSoon()");
+  assert.ok(ask !== -1 && start !== -1 && ask < start, "askForLocationUpFront() must be awaited before tour.startSoon()");
+  assert.match(read("services/panchangamService.ts"), /export async function askForLocationUpFront[\s\S]*?requestForegroundPermissionsAsync/);
+});

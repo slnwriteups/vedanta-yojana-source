@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { buildSitemapEntries } from "../../lib/sitemap.ts";
 import { buildRobots } from "../../lib/robots.ts";
 import { getSiteOrigin } from "../../lib/site.ts";
-import { truncateForDescription } from "../../lib/metadata.ts";
+import { pageMetadata, truncateForDescription } from "../../lib/metadata.ts";
 import { serializeJsonLd } from "../../lib/json-ld.ts";
 import { loadDivyaDesam } from "../../content-lib/loader/index.ts";
 
@@ -19,9 +19,9 @@ import { loadDivyaDesam } from "../../content-lib/loader/index.ts";
 // Sitemap
 // ---------------------------------------------------------------------------
 
-test("sitemap includes exactly the expected public-route counts: 5 static + 107 Divya Desams + 4 books and 3 blogs + 303 chapters and posts + 1 Knowledge", () => {
+test("sitemap includes exactly the expected public-route counts: 6 static + 107 Divya Desams + 4 books and 3 blogs + 303 chapters and posts + 1 Knowledge", () => {
   const entries = buildSitemapEntries();
-  assert.equal(entries.length, 5 + 107 + (4 + 3) + (61 + 75 + 33 + 70 + (38 + 15 + 11)) + 1);
+  assert.equal(entries.length, 6 + 107 + (4 + 3) + (61 + 75 + 33 + 70 + (38 + 15 + 11)) + 1);
 });
 
 test("sitemap excludes Page150, known gaps, and arbitrary search-query URLs", () => {
@@ -32,7 +32,7 @@ test("sitemap excludes Page150, known gaps, and arbitrary search-query URLs", ()
   }
   // Exactly one /search entry (the bare route), never a query variant.
   assert.equal(urls.filter((u) => u.includes("/search")).length, 1);
-  assert.ok(urls.some((u) => u.endsWith("/search")));
+  assert.ok(urls.some((u) => u.endsWith("/search/")));
 });
 
 test("sitemap entries are root-relative when no deployment origin is configured (no fabricated domain)", () => {
@@ -52,8 +52,8 @@ test("sitemap ordering is deterministic across repeated calls", () => {
 
 test("sitemap Divya Desam ordering matches source-page provenance (Sri Rangam/Page5 appears before a much later-numbered temple)", () => {
   const urls = buildSitemapEntries().map((e) => e.url);
-  const sriRangamIndex = urls.indexOf("/divya-desams/sri-rangam");
-  const tirukoodalIndex = urls.indexOf("/divya-desams/tirukoodal"); // Page93
+  const sriRangamIndex = urls.indexOf("/divya-desams/sri-rangam/");
+  const tirukoodalIndex = urls.indexOf("/divya-desams/tirukoodal/"); // Page93
   assert.ok(sriRangamIndex !== -1 && tirukoodalIndex !== -1);
   assert.ok(sriRangamIndex < tirukoodalIndex);
 });
@@ -64,8 +64,14 @@ test("sitemap chapter URLs use the correct real book slug", () => {
   assert.ok(chapterUrl);
   assert.equal(
     chapterUrl?.url,
-    "/library/untitled-recovered-book-pending-editorial-title/rama-charama-shlokam"
+    "/library/untitled-recovered-book-pending-editorial-title/rama-charama-shlokam/"
   );
+});
+
+test("every sitemap entry ends in a trailing slash, matching trailingSlash: true and each page's canonical (no 301 per <loc>)", () => {
+  for (const entry of buildSitemapEntries()) {
+    assert.ok(entry.url.endsWith("/"), `expected a trailing slash: ${entry.url}`);
+  }
 });
 
 // ---------------------------------------------------------------------------
@@ -179,4 +185,36 @@ test("serializeJsonLd never uses dangerouslySetInnerHTML or manual string concat
     assert.doesNotThrow(() => serializeJsonLd(input));
     assert.ok(!serializeJsonLd(input).includes("</script>"));
   }
+});
+
+// ---------------------------------------------------------------------------
+// pageMetadata -- canonical + link-preview fields in one place
+// ---------------------------------------------------------------------------
+
+test("pageMetadata sets the canonical, Open Graph and Twitter card fields together, defaulting to the sitewide share image", () => {
+  const metadata = pageMetadata({ title: "Library", description: "Books.", path: "/library" });
+  assert.equal(metadata.title, "Library");
+  assert.deepEqual(metadata.alternates, { canonical: "/library" });
+  const og = metadata.openGraph as { title: string; url: string; images: { url: string }[] };
+  assert.equal(og.title, "Library — Vedanta Yojana");
+  assert.equal(og.url, "/library");
+  assert.equal(og.images[0].url, "/og-image.png");
+  assert.equal((metadata.twitter as { card: string }).card, "summary_large_image");
+});
+
+test("pageMetadata uses a record's own image when given one, made absolute only when an origin is configured", (t) => {
+  const original = process.env.NEXT_PUBLIC_SITE_URL;
+  t.after(() => {
+    if (original === undefined) delete process.env.NEXT_PUBLIC_SITE_URL;
+    else process.env.NEXT_PUBLIC_SITE_URL = original;
+  });
+  const relative = pageMetadata({ path: "/x", image: "/images/a.webp" });
+  assert.equal((relative.openGraph as { images: { url: string }[] }).images[0].url, "/images/a.webp");
+
+  process.env.NEXT_PUBLIC_SITE_URL = "https://example-configured-deployment.test";
+  const absolute = pageMetadata({ path: "/x", image: "/images/a.webp" });
+  assert.equal(
+    (absolute.openGraph as { images: { url: string }[] }).images[0].url,
+    "https://example-configured-deployment.test/images/a.webp"
+  );
 });

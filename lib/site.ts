@@ -8,7 +8,20 @@
 export const SITE_NAME = "Vedanta Yojana";
 
 export const SITE_DESCRIPTION =
-  "A developing reference for the 108 Divya Desams and related Vaishnava teachings.";
+  "The 108 Divya Desams with sthala puranam and Azhwar pasurams, a library of Sanātana Dharma books, and a daily Panchangam. Free on web and Android.";
+
+/**
+ * The home page's own <title>. Longer and more descriptive than the bare
+ * SITE_NAME every other page's title template ends with, since it is
+ * what a search result for the site itself shows.
+ */
+export const SITE_HOME_TITLE = `${SITE_NAME} — 108 Divya Desams, Sacred Texts & Daily Panchangam`;
+
+/** The project's own public profiles, for structured data's `sameAs`. */
+export const SITE_PROFILES = [
+  "https://www.instagram.com/vedantayojana/",
+  "https://github.com/slnwriteups/vedanta-yojana-releases",
+];
 
 /**
  * The sub-path the site is served under, mirroring next.config.ts's

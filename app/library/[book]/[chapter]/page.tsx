@@ -9,7 +9,7 @@ import { LocalizedChapterBody } from "@/components/library/LocalizedChapterBody"
 import { ReadingPositionTracker } from "@/components/library/ReadingPositionTracker";
 import { BookmarkButton } from "@/components/library/BookmarkButton";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { truncateForDescription } from "@/lib/metadata";
+import { pageMetadata, truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
 import { toPublicBook, toPublicChapter } from "@/lib/public-content";
 
@@ -37,6 +37,20 @@ export function generateStaticParams() {
   );
 }
 
+/** Chapter titles used in more than one book, computed once per build. */
+let sharedTitlesCache: Set<string> | null = null;
+function sharedChapterTitles(): Set<string> {
+  if (sharedTitlesCache) return sharedTitlesCache;
+  const booksByTitle = new Map<string, Set<string>>();
+  for (const book of loadBooks()) {
+    for (const chapter of loadChapters(book.slug)) {
+      booksByTitle.set(chapter.title, (booksByTitle.get(chapter.title) ?? new Set()).add(book.slug));
+    }
+  }
+  sharedTitlesCache = new Set([...booksByTitle].filter(([, books]) => books.size > 1).map(([title]) => title));
+  return sharedTitlesCache;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -46,11 +60,16 @@ export async function generateMetadata({
   const chapter = loadChapter(bookSlug, chapterSlug);
   if (!chapter) return { title: "Chapter" };
 
-  return {
-    title: chapter.title,
+  // A chapter whose name another book also uses ("Invocation",
+  // "Gajendra Moksham") gets its book's title added, so search engines
+  // don't see two pages with the same title. Unique names stay short.
+  const book = loadBook(bookSlug);
+  return pageMetadata({
+    title: book && sharedChapterTitles().has(chapter.title) ? `${chapter.title} — ${book.title}` : chapter.title,
     description: truncateForDescription(chapter.body),
-    alternates: { canonical: siteUrl(`/library/${bookSlug}/${chapter.slug}`) },
-  };
+    path: `/library/${bookSlug}/${chapter.slug}`,
+    type: "article",
+  });
 }
 
 export default async function LibraryChapterPage({
@@ -72,8 +91,16 @@ export default async function LibraryChapterPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "WebPage",
+          "@type": book.kind === "blog" ? "BlogPosting" : "Chapter",
           name: chapter.title,
+          headline: chapter.title,
+          url: siteUrl(`/library/${book.slug}/${chapter.slug}/`),
+          description: truncateForDescription(chapter.body),
+          isPartOf: {
+            "@type": book.kind === "blog" ? "Blog" : "Book",
+            name: book.title,
+            url: siteUrl(`/library/${book.slug}/`),
+          },
         }}
       />
       <Breadcrumbs

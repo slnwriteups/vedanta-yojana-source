@@ -1,0 +1,36 @@
+{
+  "announcements": [
+    {
+      "id": "2026-10-19-panchangam-upgrades",
+      "date": "2026-10-19",
+      "platforms": ["app", "website"],
+      "title": "A fuller Panchangam, for any city and any day",
+      "body": "Choose any city in the world and pick any date. The Tithi and Nakshatram rows now show when each one changes during the day, and the observances published by Srimad Andavan Ashramam appear on their dates.",
+      "link": { "href": "/", "label": "Open today's Panchangam" }
+    },
+    {
+      "id": "2026-10-18-blogs-in-the-library",
+      "date": "2026-10-18",
+      "platforms": ["app", "website"],
+      "title": "Blogs are now in the Library",
+      "body": "Āzhwār Vaibhavam, Nityasūri Vaibhavam and Temples and Festivals can now be read in the Library, with photos, cover artwork and translations.",
+      "link": { "href": "/library", "label": "Open the Library" }
+    },
+    {
+      "id": "2026-10-15-sankalpam-in-your-language",
+      "date": "2026-10-15",
+      "platforms": ["app", "website"],
+      "title": "The daily Sankalpam, in your language",
+      "body": "The Sankalpam is now written in the language and script you read the app in: Tamil, Kannada, Hindi, Telugu or English.",
+      "link": { "href": "/", "label": "See today's Sankalpam" }
+    },
+    {
+      "id": "2026-09-24-telugu-in-the-app",
+      "date": "2026-09-24",
+      "platforms": ["app"],
+      "title": "Telugu in the Android app",
+      "body": "Version 1.0.3 of the Android app adds Telugu, including Telugu Pasurams for all 108 Divya Desams. From this version on, new content and fixes arrive automatically without reinstalling.",
+      "link": { "href": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/latest", "label": "Download the Android app" }
+    }
+  ]
+}

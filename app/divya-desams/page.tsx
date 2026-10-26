@@ -4,14 +4,15 @@ import { sourcePageNumber, divyaDesamNumberLabels } from "@/content-lib/ordering
 import { resolveImageHref } from "@/lib/image-file";
 import { LocalizedPageHeading } from "@/components/shared/LocalizedPageHeading";
 import { DivyaDesamsIndexClient, type DivyaDesamIndexEntry } from "@/components/divya-desams/DivyaDesamsIndexClient";
-import { siteUrl } from "@/lib/site";
-import { toPublicDivyaDesam, toPublicKnowledge } from "@/lib/public-content";
+import { pageMetadata } from "@/lib/metadata";
+import { toDivyaDesamIndexRecord, toPublicKnowledge } from "@/lib/public-content";
 
-export const metadata: Metadata = {
-  title: "Divya Desams",
-  description: "The 108 sacred abodes of Vishnu venerated by the Alwars.",
-  alternates: { canonical: siteUrl("/divya-desams") },
-};
+export const metadata: Metadata = pageMetadata({
+  title: "108 Divya Desams: Complete List with Sthala Puranam",
+  description:
+    "All 108 Divya Desams, the sacred abodes of Vishnu sung by the Azhwars, grouped by region — Chola Nadu, Pandya Nadu, Malai Nadu, Thondai Nadu and more — each with its sthala puranam and temple details.",
+  path: "/divya-desams",
+});
 
 /**
  * Divya Desam index -- matches mobile's Divya Desams tab: a localized
@@ -50,7 +51,7 @@ export default function DivyaDesamsIndexPage() {
         break;
       }
     }
-    return { record: toPublicDivyaDesam(record), number: numberLabels[record.slug] ?? "", imageHref };
+    return { record: toDivyaDesamIndexRecord(record), number: numberLabels[record.slug] ?? "", imageHref };
   });
 
   // Links to the "Introduction" record only when it actually resolves

@@ -19,6 +19,7 @@ import { TourProvider, useTour } from "../tour/Tour";
 import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/preferences.ts";
 import { readJSON, writeJSON } from "../storage.ts";
 import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
+import { askForLocationUpFront } from "../services/panchangamService.ts";
 
 /**
  * Phase 6C -- the root layout hosts the ThemeProvider and a single Stack
@@ -63,6 +64,8 @@ function RootStack() {
   const [seenWelcome, setSeenWelcome] = useState(false);
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
   const tour = useTour();
+  // One finish per setup, however many times the button is tapped while the location prompt is up.
+  const finishingSetup = useRef(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -98,9 +101,15 @@ function RootStack() {
   if (!onboarded) {
     return (
       <OnboardingScreen
-        onDone={() => {
-          setOnboarded(true);
+        onDone={async () => {
+          if (finishingSetup.current) return;
+          finishingSetup.current = true;
           void writeJSON(ONBOARDED_STORAGE_KEY, true);
+          // Location is asked for here, before the app opens, so its system
+          // prompt is answered before the tour starts rather than popping up
+          // over it (see askForLocationUpFront).
+          await askForLocationUpFront();
+          setOnboarded(true);
           // A new reader goes straight into the "How to use the app" tour.
           tour.startSoon();
         }}

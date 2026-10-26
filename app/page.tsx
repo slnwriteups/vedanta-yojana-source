@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import { loadBooks, loadChapters } from "@/content-lib/loader";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { SITE_DESCRIPTION, SITE_NAME, getSiteOrigin, siteUrl } from "@/lib/site";
+import { SITE_DESCRIPTION, SITE_HOME_TITLE, SITE_NAME, SITE_PROFILES, getSiteOrigin, siteUrl } from "@/lib/site";
+import { pageMetadata } from "@/lib/metadata";
 import { DivyaDesamSpotlightSection } from "@/components/divya-desams/DivyaDesamSpotlightSection";
 import { HomeDashboardClient } from "@/components/home/HomeDashboardClient";
-import type { HomeCatalogEntry } from "@/lib/resolve-last-read";
-import { toPublicBook, toPublicChapter } from "@/lib/public-content";
+import { toPublicBook } from "@/lib/public-content";
+import { toHomeChapterSummary, type HomeCatalogEntry } from "@/lib/resolve-last-read";
+import { loadAnnouncements } from "@/content-lib/announcements-loader.ts";
 
 export const metadata: Metadata = {
-  alternates: { canonical: siteUrl("/") },
+  ...pageMetadata({ description: SITE_DESCRIPTION, path: "/" }),
+  title: { absolute: SITE_HOME_TITLE },
 };
 
 /**
@@ -35,7 +38,7 @@ export default function HomePage() {
 
   const catalog: HomeCatalogEntry[] = loadBooks().map((book) => ({
     book: toPublicBook(book),
-    chapters: loadChapters(book.slug).map(toPublicChapter),
+    chapters: loadChapters(book.slug).map(toHomeChapterSummary),
   }));
 
   return (
@@ -46,10 +49,25 @@ export default function HomePage() {
           "@type": "WebSite",
           name: SITE_NAME,
           description: SITE_DESCRIPTION,
+          inLanguage: "en",
           ...(origin ? { url: origin } : {}),
         }}
       />
-      <HomeDashboardClient catalog={catalog} spotlight={<DivyaDesamSpotlightSection />} />
+      {origin ? (
+        // Who publishes the site -- the entity a search engine attaches
+        // the logo and the social profiles to.
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: SITE_NAME,
+            url: origin,
+            logo: siteUrl("/icon.png"),
+            sameAs: SITE_PROFILES,
+          }}
+        />
+      ) : null}
+      <HomeDashboardClient catalog={catalog} announcements={loadAnnouncements()} spotlight={<DivyaDesamSpotlightSection />} />
     </>
   );
 }

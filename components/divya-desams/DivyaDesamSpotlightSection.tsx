@@ -1,7 +1,7 @@
 import { loadDivyaDesams } from "@/content-lib/loader";
 import { sourcePageNumber, divyaDesamNumberLabels } from "@/content-lib/ordering.ts";
 import { resolveImageHref } from "@/lib/image-file";
-import { toPublicDivyaDesam } from "@/lib/public-content";
+import { toDivyaDesamIndexRecord } from "@/lib/public-content";
 import { DivyaDesamSpotlight, type SpotlightEntry } from "@/components/divya-desams/DivyaDesamSpotlight";
 
 /**
@@ -35,7 +35,7 @@ export function DivyaDesamSpotlightSection() {
         break;
       }
     }
-    return { record: toPublicDivyaDesam(record), numberLabel: numberLabels.get(record.slug) ?? "", imageHref };
+    return { record: toDivyaDesamIndexRecord(record), numberLabel: numberLabels.get(record.slug) ?? "", imageHref };
   });
 
   return <DivyaDesamSpotlight entries={entries} />;

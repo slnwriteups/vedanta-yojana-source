@@ -1,9 +1,10 @@
+import { useCallback, useRef } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SettingsControls } from "../../components/SettingsControls";
 import { SocialButton } from "../../components/SocialButton";
 import { layout, radius, spacing, typography, useTheme } from "../../theme";
 import { useT } from "../../ui-strings.ts";
-import { TourTarget, useTour } from "../../tour/Tour";
+import { TourTarget, useTour, useTourScroller } from "../../tour/Tour";
 
 const INSTAGRAM_URL = "https://www.instagram.com/vedantayojana/";
 
@@ -25,8 +26,23 @@ export default function SettingsScreen() {
   const t = useT();
   const tour = useTour();
 
+  // The tour's Settings steps scroll their control into view: on first
+  // launch this tab opens at the top, and the lower controls (the "How to
+  // use the app" button especially) can be below the fold on a phone.
+  const scrollRef = useRef<ScrollView>(null);
+  const scrollY = useRef(0);
+  const scrollBy = useCallback((dy: number) => {
+    scrollRef.current?.scrollTo({ y: Math.max(0, scrollY.current + dy), animated: true });
+  }, []);
+  useTourScroller("/settings", scrollBy);
+
   return (
     <ScrollView
+      ref={scrollRef}
+      onScroll={(e) => {
+        scrollY.current = e.nativeEvent.contentOffset.y;
+      }}
+      scrollEventThrottle={32}
       style={{ backgroundColor: theme.colors.background }}
       contentContainerStyle={styles.content}
     >

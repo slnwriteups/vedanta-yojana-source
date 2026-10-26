@@ -72,7 +72,8 @@ test("every dynamic route's generateMetadata resolves through the real loader an
     const source = read(file);
     assert.ok(source.includes("generateMetadata"), `${file} missing generateMetadata`);
     assert.ok(source.includes(loader), `${file} does not call ${loader}`);
-    assert.ok(source.includes("alternates:"), `${file} missing alternates.canonical`);
+    // pageMetadata() (lib/metadata.ts) always sets alternates.canonical.
+    assert.ok(source.includes("alternates:") || source.includes("pageMetadata({"), `${file} missing alternates.canonical`);
     assert.ok(source.includes("notFound()"), `${file} lost its notFound() behavior`);
   }
 });
@@ -179,7 +180,7 @@ test("structured data never fabricates postal address, phone, geo coordinates, a
 
 test("the Divya Desam Place structured data only includes hasMap when a real shrine Maps link exists -- never fabricated", () => {
   const source = read("app/divya-desams/[slug]/page.tsx");
-  assert.match(source, /"@type":\s*"Place"/);
+  assert.match(source, /"@type":\s*\[?"Place"/);
   assert.ok(source.includes("firstMapsLink"));
   assert.ok(source.includes("record.shrines[0]?.mapsLink"));
 });

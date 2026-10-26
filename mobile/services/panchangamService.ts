@@ -1,4 +1,5 @@
 import * as Location from "expo-location";
+import { loadPanchangamPlace } from "./panchangamPlaceStore.ts";
 import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type TithiChange, type YogaChange } from "../../content-lib/panchangam-engine.ts";
 import type { ChosenPlace } from "../../content-lib/panchangam-place.ts";
 
@@ -147,6 +148,24 @@ async function resolveTimeZone(latitude: number, longitude: number): Promise<str
     return timeZoneAt(latitude, longitude, deviceZone);
   } catch {
     return deviceZone;
+  }
+}
+
+/**
+ * Asks for location permission up front, at the end of first-launch setup
+ * (app/_layout.tsx), so the system prompt is answered BEFORE the "How to
+ * use the app" tour starts -- left to Home's first Panchangam load, the
+ * prompt popped up over the tour and broke it. Skipped when the reader has
+ * already chosen a city (the Panchangam then never needs the phone's
+ * location). Never throws; the answer itself is read again by
+ * resolveLocation(), which then returns without prompting.
+ */
+export async function askForLocationUpFront(): Promise<void> {
+  try {
+    if (await loadPanchangamPlace()) return;
+    await Location.requestForegroundPermissionsAsync();
+  } catch {
+    // No answer is still an answer: Home falls back to "choose a city".
   }
 }
 

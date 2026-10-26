@@ -95,3 +95,60 @@ export function toPublicBook(record: Book): PublicBook {
     coverImage: record.coverImage ? toPublicImage(record.coverImage) : record.coverImage,
   };
 }
+
+/**
+ * A Divya Desam as one row of the index needs it: name, number-related
+ * slug, region, status and temple-information line, in every language
+ * -- without the long-form sthala puranam/pasuram prose (in every
+ * language), shrines, images, resources or related links, none of which
+ * an index row (or the Home spotlight card) renders. Same reason as the Home page's chapter
+ * summaries (lib/resolve-last-read.ts): Client Component props are
+ * serialized into the page, and passing all 107 whole records made
+ * /divya-desams/ a ~3 MB download.
+ */
+export function toDivyaDesamIndexRecord(record: DivyaDesam): PublicDivyaDesam {
+  const { sthalaPuranam: _sthalaPuranam, azhwarPasuram: _azhwarPasuram, translations, ...rest } = toPublicDivyaDesam(record);
+  const slimTranslations: NonNullable<DivyaDesam["translations"]> = {};
+  for (const language of Object.keys(translations ?? {}) as (keyof typeof slimTranslations)[]) {
+    const t = translations?.[language];
+    if (!t) continue;
+    slimTranslations[language] = {
+      ...(t.displayName ? { displayName: t.displayName } : {}),
+      ...(t.templeInformation ? { templeInformation: t.templeInformation } : {}),
+    };
+  }
+  return {
+    ...rest,
+    shrines: [],
+    images: [],
+    resources: [],
+    relatedContent: [],
+    ...(translations ? { translations: slimTranslations } : {}),
+  };
+}
+
+/**
+ * One row of a book's chapter list: title (per language), slug and the
+ * DraftBadge fields. Not the chapter body -- every row is a Client
+ * Component prop, and full bodies in every language made a long book's
+ * page several megabytes (Sri Rama Charithram: 6.5 MB) just to list
+ * titles. scripts/seo-audit.ts's page-weight check is what caught it.
+ */
+export type PublicChapterListEntry = Pick<PublicChapter, "slug" | "title" | "status" | "migration"> & {
+  translations?: Partial<Record<keyof NonNullable<Chapter["translations"]>, { title?: string }>>;
+};
+
+export function toChapterListEntry(record: Chapter): PublicChapterListEntry {
+  const translations: NonNullable<PublicChapterListEntry["translations"]> = {};
+  for (const language of Object.keys(record.translations ?? {}) as (keyof typeof translations)[]) {
+    const title = record.translations?.[language]?.title;
+    if (title) translations[language] = { title };
+  }
+  return {
+    slug: record.slug,
+    title: record.title,
+    status: record.status,
+    migration: toPublicMigration(record.migration),
+    ...(Object.keys(translations).length > 0 ? { translations } : {}),
+  };
+}

@@ -9,9 +9,9 @@ import { LocalizedBookHeader } from "@/components/library/LocalizedBookHeader";
 import { LocalizedPartHeading } from "@/components/library/LocalizedPartHeading";
 import { LocalizedText } from "@/components/shared/LocalizedText";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { truncateForDescription } from "@/lib/metadata";
+import { pageMetadata, truncateForDescription } from "@/lib/metadata";
 import { siteUrl } from "@/lib/site";
-import { toPublicBook, toPublicChapter } from "@/lib/public-content";
+import { toChapterListEntry, toPublicBook } from "@/lib/public-content";
 
 /**
  * Phase 5L -- real, loader-driven Book detail page.
@@ -38,11 +38,11 @@ export async function generateMetadata({
   const book = loadBook(bookSlug);
   if (!book) return { title: "Library" };
 
-  return {
+  return pageMetadata({
     title: book.title,
     description: book.description ? truncateForDescription(book.description) : undefined,
-    alternates: { canonical: siteUrl(`/library/${book.slug}`) },
-  };
+    path: `/library/${book.slug}`,
+  });
 }
 
 export default async function LibraryBookPage({
@@ -60,8 +60,9 @@ export default async function LibraryBookPage({
       <JsonLd
         data={{
           "@context": "https://schema.org",
-          "@type": "WebPage",
+          "@type": book.kind === "blog" ? "Blog" : "Book",
           name: book.title,
+          url: siteUrl(`/library/${book.slug}/`),
           ...(book.description ? { description: book.description } : {}),
         }}
       />
@@ -81,7 +82,7 @@ export default async function LibraryBookPage({
               {group.part ? <LocalizedPartHeading part={group.part} /> : null}
               <ol role="list" className="space-y-3" start={group.items[0].index + 1}>
                 {group.items.map(({ item: chapter, index }) => (
-                  <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toPublicChapter(chapter)} position={index + 1} />
+                  <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toChapterListEntry(chapter)} position={index + 1} />
                 ))}
               </ol>
             </section>

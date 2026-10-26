@@ -2,6 +2,8 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
+import type { Announcement } from "@/content-lib/announcements.ts";
+import { WhatsNewList } from "@/components/whats-new/WhatsNewList";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
 import { sectionTint } from "@/lib/section-tints";
@@ -39,14 +41,17 @@ import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
  * `spotlight` is DivyaDesamSpotlightSection, rendered by the server page
  * around this component (it needs node:fs to resolve the day's image)
  * and slotted in here so the visual order matches mobile's exactly:
- * header -> continue-reading/get-started -> spotlight -> Panchangam ->
+ * header -> continue-reading/get-started -> What's New -> spotlight -> Panchangam ->
  * Sankalpam.
  */
 export function HomeDashboardClient({
   catalog,
+  announcements,
   spotlight,
 }: {
   catalog: HomeCatalogEntry[];
+  /** Newest first, from content/announcements.json -- the What's New card shows the latest two. */
+  announcements: Announcement[];
   spotlight: ReactNode;
 }) {
   const theme = useTheme();
@@ -141,6 +146,16 @@ export function HomeDashboardClient({
           </div>
         </div>
       )}
+
+      {announcements.length > 0 ? (
+        <div className="space-y-2">
+          <p className="eyebrow">{t("whatsNewLabel")}</p>
+          <WhatsNewList announcements={announcements} limit={2} />
+          <Link href="/whats-new" className="inline-block text-sm font-semibold text-[var(--accent)] hover:underline">
+            {t("whatsNewSeeAll")} <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      ) : null}
 
       {spotlight}
 
