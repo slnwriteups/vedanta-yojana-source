@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "runs": [
+    {
+      "checkedAt": "2026-10-26T12:16:09.000Z",
+      "trigger": "manual",
+      "pages": 423,
+      "errors": 845,
+      "warnings": 1,
+      "byCheck": {
+        "sitemap": {
+          "errors": 422,
+          "warnings": 0
+        },
+        "reachable": {
+          "errors": 422,
+          "warnings": 0
+        },
+        "page weight": {
+          "errors": 1,
+          "warnings": 0
+        },
+        "link preview": {
+          "errors": 0,
+          "warnings": 1
+        }
+      }
+    },
+    {
+      "checkedAt": "2026-10-26T16:00:46.818Z",
+      "trigger": "manual",
+      "pages": 424,
+      "errors": 0,
+      "warnings": 3,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 3
+        }
+      }
+    }
+  ]
+}
