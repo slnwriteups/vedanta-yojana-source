@@ -298,7 +298,10 @@ security regression test added 2026-09-18.
   starts.
 - **Mobile:** production Android builds are produced on demand via
   EAS Build with the production signing credential — the `production`
-  profile (AAB) or `production-apk` profile (APK) in `mobile/eas.json`.
+  profile (AAB) or `production-apk` profile (APK) in `mobile/eas.json`,
+  started from GitHub with `.github/workflows/build-android-eas.yml`
+  (Actions → "Build Android app (EAS)", any branch; the download link is
+  in the run summary), the Android counterpart of `build-ios.yml`.
   `.github/workflows/build-apk.yml` (`451c600`) also builds an APK when
   an `android-v*` or `v*` tag is pushed, but it signs with the Android
   debug key, so it is not a production release path (it produced the

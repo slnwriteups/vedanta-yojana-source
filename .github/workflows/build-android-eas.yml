@@ -1,0 +1,90 @@
+name: Build Android app (EAS)
+
+# Builds the Android app on EAS Build (Expo's cloud) and signs it with the
+# project's production key stored on EAS -- the key that signed v16 and
+# later, so the result installs over the released app as a normal update,
+# keeping readers' bookmarks and settings. build-apk.yml, by contrast,
+# builds on the GitHub runner with the debug key: fine for a quick check
+# that the native project compiles, but its APK cannot replace an
+# installed release.
+#
+# Run it from the GitHub app or website (Actions -> "Build Android app
+# (EAS)" -> Run workflow), choosing the branch to build. The download link
+# appears in the run summary and on expo.dev. Nothing is published: a
+# release is still made by uploading the APK to the releases repository as
+# android-v<versionCode> (see public/app-version.json).
+#
+# Profiles (mobile/eas.json):
+# - production-apk: a sideloadable APK; versionCode from mobile/app.json.
+# - production: an Android App Bundle (.aab) for Google Play; its
+#   autoIncrement raises versionCode for that build only.
+#
+# Needs the EXPO_TOKEN secret (already used by publish-ota-update.yml and
+# build-ios.yml) and the Android keystore stored on EAS.
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: "EAS build profile"
+        type: choice
+        options:
+          - production-apk
+          - production
+        default: production-apk
+
+concurrency:
+  group: build-android-eas-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: eas build (android)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      # Root node_modules is on Metro's resolver path for the shared
+      # content-lib/ code (mobile/metro.config.js nodeModulesPaths).
+      - name: Install root dependencies
+        run: npm ci
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Build on EAS
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          PROFILE: ${{ inputs.profile }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo "::error::EXPO_TOKEN is not set"
+            exit 1
+          fi
+          npx --yes eas-cli@latest build --platform android --profile "$PROFILE" --non-interactive --wait --json > build.json
+          url=$(node -e 'const b = JSON.parse(require("fs").readFileSync("build.json", "utf8"))[0]; console.log(b.artifacts?.buildUrl ?? "")')
+          version=$(node -e 'const b = JSON.parse(require("fs").readFileSync("build.json", "utf8"))[0]; console.log(`${b.appVersion} (versionCode ${b.appBuildVersion})`)')
+          if [ -z "$url" ]; then
+            echo "::error::EAS finished without a download URL; see the build on expo.dev"
+            exit 1
+          fi
+          {
+            echo "### Android build ready: $version"
+            echo
+            echo "Profile: \`$PROFILE\` -- signed with the production key."
+            echo
+            echo "**Download:** $url"
+            echo
+            echo "All builds: https://expo.dev/accounts/slnwriteupss-team/projects/vedanta-yojana/builds"
+          } >> "$GITHUB_STEP_SUMMARY"
