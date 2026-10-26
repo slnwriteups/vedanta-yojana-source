@@ -71,3 +71,8 @@ test("seo-health.yml records each check on main, before the step that fails the 
   assert.ok(workflow.indexOf("record-seo-health") < workflow.indexOf("Open or update the issue"));
   assert.match(workflow, /contents: write/);
 });
+
+test("the stats commit skips CI, so recording a check can't start a deploy and another check in a loop", () => {
+  const workflow = fs.readFileSync(path.join(REPO_ROOT, ".github", "workflows", "seo-health.yml"), "utf8");
+  assert.match(workflow, /git commit -m "chore\(stats\): record SEO health check \[skip ci\]"/);
+});
