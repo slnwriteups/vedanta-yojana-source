@@ -20,7 +20,7 @@ import { loadPanchangamPlace, usePanchangamPlace } from "../../services/panchang
 import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
 import { useAnnouncements } from "../../services/announcementsService.ts";
 import { loadOfflineBook } from "../../services/bookOfflineService.ts";
-import { useTourScroller } from "../../tour/Tour";
+import { useTour, useTourScroller } from "../../tour/Tour";
 
 /**
  * UI/UX refactor: Home is now a proper dashboard rather than a plain
@@ -117,7 +117,15 @@ export default function HomeScreen() {
   const scrollBy = useCallback((dy: number) => {
     scrollRef.current?.scrollTo({ y: Math.max(0, scrollY.current + dy), animated: true });
   }, []);
-  useTourScroller(scrollBy);
+  useTourScroller("/", scrollBy);
+
+  // First launch: the tour waits for this -- the first Panchangam load ends
+  // only once the location prompt has been answered, and its date and city
+  // controls (two of the tour's steps) exist from then on. See Tour.tsx.
+  const { markHomeReady } = useTour();
+  useEffect(() => {
+    if (panchangam) markHomeReady();
+  }, [panchangam, markHomeReady]);
 
   return (
     <ScrollView

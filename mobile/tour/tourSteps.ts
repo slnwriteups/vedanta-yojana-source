@@ -17,7 +17,7 @@ export interface TourStep {
   title: UiStringKey;
   body: UiStringKey;
   interactive?: boolean;
-  /** The element sits in the Home screen's scrolling content, so scroll it into view first. */
+  /** The element sits in its screen's scrolling content (Home, Settings), so scroll it into view. */
   scroll?: boolean;
 }
 
@@ -28,10 +28,10 @@ export const TOUR_STEPS: readonly TourStep[] = [
   { id: "divya-desams", route: "/divya-desams", target: "tab-divya-desams", title: "tabDivyaDesams", body: "tourDivyaDesamsBody" },
   { id: "library", route: "/library", target: "tab-library", title: "tabLibrary", body: "tourLibraryBody" },
   { id: "search", route: "/search", target: "tab-search", title: "tabSearch", body: "tourSearchBody" },
-  { id: "language", route: "/settings", target: "settings-language", title: "settingsLanguageLabel", body: "tourLanguageBody", interactive: true },
-  { id: "appearance", route: "/settings", target: "settings-appearance", title: "settingsAppearanceLabel", body: "tourAppearanceBody", interactive: true },
-  { id: "text-size", route: "/settings", target: "settings-text-size", title: "settingsTextSizeLabel", body: "tourTextSizeBody", interactive: true },
-  { id: "replay", route: "/settings", target: "settings-tour", title: "settingsHowToUse", body: "tourReplayBody" },
+  { id: "language", route: "/settings", target: "settings-language", title: "settingsLanguageLabel", body: "tourLanguageBody", interactive: true, scroll: true },
+  { id: "appearance", route: "/settings", target: "settings-appearance", title: "settingsAppearanceLabel", body: "tourAppearanceBody", interactive: true, scroll: true },
+  { id: "text-size", route: "/settings", target: "settings-text-size", title: "settingsTextSizeLabel", body: "tourTextSizeBody", interactive: true, scroll: true },
+  { id: "replay", route: "/settings", target: "settings-tour", title: "settingsHowToUse", body: "tourReplayBody", scroll: true },
 ];
 
 /** Set once a reader has finished or skipped the tour, so it starts on its own only once. */
