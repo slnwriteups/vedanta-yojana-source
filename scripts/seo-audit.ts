@@ -19,7 +19,9 @@ import path from "node:path";
  *     deploy; that workflow turns a failure into a GitHub issue.
  *
  * `--report <file>` also writes the findings as Markdown (used for the
- * issue body and the job summary). Exits 1 when any ERROR is found;
+ * issue body and the job summary), and `--json <file>` a one-object
+ * summary (counts per check) that seo-health.yml records into
+ * stats/seo-health.json for the analytics dashboard. Exits 1 when any ERROR is found;
  * WARNINGs are reported but never fail the run.
  *
  * Standard library only, no network access in --dir mode.
@@ -50,9 +52,10 @@ function arg(name: string): string | undefined {
 const DIR = arg("dir");
 const URL_BASE = arg("url")?.replace(/\/+$/, "");
 const REPORT = arg("report");
+const JSON_OUT = arg("json");
 
 if (!DIR === !URL_BASE) {
-  console.error("Usage: node scripts/seo-audit.ts (--dir <out> | --url <https://origin>) [--report <file.md>]");
+  console.error("Usage: node scripts/seo-audit.ts (--dir <out> | --url <https://origin>) [--report <file.md>] [--json <file.json>]");
   process.exit(2);
 }
 
@@ -319,6 +322,18 @@ if (REPORT) {
   if (errors.length) sections.push(`### Errors -- these can stop pages being indexed\n\n${table(errors)}`);
   if (warnings.length) sections.push(`<details><summary>Warnings (${warnings.length})</summary>\n\n${table(warnings)}\n\n</details>`);
   fs.writeFileSync(REPORT, `${sections.join("\n\n")}\n`);
+}
+
+if (JSON_OUT) {
+  const byCheck: Record<string, { errors: number; warnings: number }> = {};
+  for (const f of findings) {
+    byCheck[f.check] ??= { errors: 0, warnings: 0 };
+    byCheck[f.check][f.level === "ERROR" ? "errors" : "warnings"] += 1;
+  }
+  fs.writeFileSync(
+    JSON_OUT,
+    `${JSON.stringify({ checkedAt: new Date().toISOString(), target, pages: locs.length, errors: errors.length, warnings: warnings.length, byCheck }, null, 2)}\n`
+  );
 }
 
 process.exit(errors.length > 0 ? 1 : 0);

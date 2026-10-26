@@ -36,6 +36,10 @@ Low-value pages are kept out of the index on purpose: `/settings/` and the
   once the site passes again. **No open `seo-health` issue means all is
   well.**
 
+Every check of the live site on `main` is also recorded in
+`stats/seo-health.json` (pages checked, errors and warnings per check), the
+history the private analytics dashboard charts.
+
 Warnings (long titles, pages without a description or share image) appear
 in each run's summary but never fail a build or open an issue.
 

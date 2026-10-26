@@ -24,7 +24,8 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  # write: to commit stats/seo-health.json (the dashboard's history).
+  contents: write
   issues: write
 
 concurrency:
@@ -65,9 +66,31 @@ jobs:
         # The script has no dependencies, so no `npm ci`.
         run: |
           set +e
-          node scripts/seo-audit.ts --url "$SITE" --report seo-report.md
+          node scripts/seo-audit.ts --url "$SITE" --report seo-report.md --json seo-summary.json
           echo "status=$?" >> "$GITHUB_OUTPUT"
           cat seo-report.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Record the result for the analytics dashboard
+        # Appends this check to stats/seo-health.json, which the private
+        # analytics dashboard charts -- the same pattern as
+        # apk-download-stats.yml. Only on main (a check started by hand
+        # from another branch isn't the live site's history), and before
+        # the issue step, which ends a failing run.
+        if: github.ref == 'refs/heads/main' && hashFiles('seo-summary.json') != ''
+        env:
+          TRIGGER: ${{ github.event_name == 'workflow_run' && 'deploy' || github.event_name == 'schedule' && 'weekly' || 'manual' }}
+        run: |
+          node scripts/record-seo-health.ts seo-summary.json "$TRIGGER"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats/seo-health.json
+          git commit -m "chore(stats): record SEO health check [skip ci]"
+          # Another job (APK download stats) may have pushed meanwhile.
+          for attempt in 1 2 3; do
+            git pull --rebase --quiet origin main && git push && exit 0
+            sleep 5
+          done
+          echo "::warning::Could not push stats/seo-health.json; this check is not recorded."
 
       - name: Open or update the issue
         if: steps.audit.outputs.status != '0'
