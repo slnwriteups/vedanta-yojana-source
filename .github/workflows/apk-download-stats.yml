@@ -40,8 +40,9 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
+          # setup-node v5+ caches npm automatically when no cache is set;
+          # this job never cached, so keep it that way.
           package-manager-cache: false
-        with:
           # Matches .nvmrc, as every other workflow here does. No `npm
           # ci` step: the script uses only Node builtins and the global
           # fetch, so installing the application's dependencies would be
