@@ -305,11 +305,14 @@ if (REPORT) {
   // Capped: a GitHub issue body is limited to 65,536 characters, and one
   // systemic fault (say, every sitemap URL) repeats hundreds of times.
   const MAX_ROWS = 60;
+  // Cell text comes from the audited pages (titles, URLs): escape the
+  // backslash first, then the pipe that would end the table cell.
+  const cell = (text: string) => text.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
   const table = (rows: Finding[]) =>
     [
       "| Check | Where | Detail |",
       "|---|---|---|",
-      ...rows.slice(0, MAX_ROWS).map((f) => `| ${f.check} | ${f.where} | ${f.detail.replace(/\|/g, "\\|")} |`),
+      ...rows.slice(0, MAX_ROWS).map((f) => `| ${cell(f.check)} | ${cell(f.where)} | ${cell(f.detail)} |`),
       ...(rows.length > MAX_ROWS ? [`| … | ${rows.length - MAX_ROWS} more | see the workflow log for the full list |`] : []),
     ].join("\n");
   const sections = [`**${summary}**`];
