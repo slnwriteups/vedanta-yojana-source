@@ -115,7 +115,7 @@ export function ImageViewerModal({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (evt) => {
-        const touches = evt.nativeEvent.touches as ViewerTouch[];
+        const touches = evt.nativeEvent.touches as readonly ViewerTouch[];
         gestureStart.current.scale = current.current.scale;
         gestureStart.current.x = current.current.x;
         gestureStart.current.y = current.current.y;
@@ -124,7 +124,7 @@ export function ImageViewerModal({
         gestureStart.current.hadMultitouch = touches.length >= 2;
       },
       onPanResponderMove: (evt) => {
-        const touches = evt.nativeEvent.touches as ViewerTouch[];
+        const touches = evt.nativeEvent.touches as readonly ViewerTouch[];
         if (touches.length >= 2) {
           gestureStart.current.hadMultitouch = true;
           gestureStart.current.panOrigin = null;

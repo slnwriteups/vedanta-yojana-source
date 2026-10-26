@@ -258,9 +258,9 @@ as a `prebuild` step, then `next build` produces the static export.
   `expo-build-properties`).
 - Dependency installs are reproducible (`npm ci` in CI, `package-lock.json`
   committed for both the web root and `mobile/`).
-- `patch-package` applies two dependency patches at install time (see
-  [docs/SECURITY.md](SECURITY.md#dependency-security) for what they fix
-  and why).
+- `patch-package` runs at install time. There are no patches at present:
+  the two it used to apply became unnecessary with the Expo SDK 58 upgrade
+  (see [docs/SECURITY.md](SECURITY.md#dependency-security)).
 
 The Android production build itself runs on **EAS Build** (Expo
 Application Services), not on a local machine — see

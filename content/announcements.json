@@ -1,6 +1,14 @@
 {
   "announcements": [
     {
+      "id": "2026-10-26-android-1-1-0",
+      "date": "2026-10-26",
+      "platforms": ["app"],
+      "title": "Android app 1.1.0: please install this update",
+      "body": "This release needs a one-time install. Tap \"Update available\" at the top of Home, or download it below. Your bookmarks and settings are kept, and future updates arrive automatically again.",
+      "link": { "href": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/latest", "label": "Download the Android app" }
+    },
+    {
       "id": "2026-10-19-panchangam-upgrades",
       "date": "2026-10-19",
       "platforms": ["app", "website"],

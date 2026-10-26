@@ -1,7 +1,7 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import * as Haptics from "expo-haptics";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ComponentRef } from "react";
 import {
   AccessibilityInfo,
   PanResponder,
@@ -128,7 +128,7 @@ export default function LibraryChapterScreen() {
   const chapter = loadedChapter ? localizeChapter(loadedChapter, language) : null;
   const tint = sectionTint(bookSlug, theme.scheme);
   const adjacentRef = useRef<{ previous: Chapter | null; next: Chapter | null }>({ previous: null, next: null });
-  const scrollViewRef = useRef<ScrollView>(null);
+  const scrollViewRef = useRef<ComponentRef<typeof ScrollView>>(null);
   function handleScroll(event: NativeSyntheticEvent<NativeScrollEvent>) {
     const { contentOffset, contentSize, layoutMeasurement } = event.nativeEvent;
     const scrollable = contentSize.height - layoutMeasurement.height;

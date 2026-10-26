@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ComponentRef } from "react";
 import { useRouter } from "expo-router";
 import { AppState, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { resolveAllLastRead } from "../../content-lib/reading-position.ts";
@@ -112,7 +112,7 @@ export default function HomeScreen() {
   }, []);
 
   // The "How to use the app" tour scrolls Home to the Panchangam controls it points at.
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
   const scrollY = useRef(0);
   const scrollBy = useCallback((dy: number) => {
     scrollRef.current?.scrollTo({ y: Math.max(0, scrollY.current + dy), animated: true });

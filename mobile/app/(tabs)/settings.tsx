@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, type ComponentRef } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SettingsControls } from "../../components/SettingsControls";
 import { SocialButton } from "../../components/SocialButton";
@@ -29,7 +29,7 @@ export default function SettingsScreen() {
   // The tour's Settings steps scroll their control into view: on first
   // launch this tab opens at the top, and the lower controls (the "How to
   // use the app" button especially) can be below the fold on a phone.
-  const scrollRef = useRef<ScrollView>(null);
+  const scrollRef = useRef<ComponentRef<typeof ScrollView>>(null);
   const scrollY = useRef(0);
   const scrollBy = useCallback((dy: number) => {
     scrollRef.current?.scrollTo({ y: Math.max(0, scrollY.current + dy), animated: true });

@@ -1,5 +1,5 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
-import type { NativeStackHeaderProps } from "@react-navigation/native-stack";
+import type { NativeStackHeaderProps } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { layout, spacing, typography, useTheme } from "../theme";

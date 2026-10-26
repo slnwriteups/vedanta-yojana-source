@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode, type ComponentRef } from "react";
 import { AppState, Pressable, StyleSheet, Text, View, useWindowDimensions, type StyleProp, type ViewStyle } from "react-native";
 import { router } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -139,7 +139,7 @@ export function TourProvider({ children }: { children: ReactNode }) {
 /** Marks an element the tour can highlight. Renders a plain View around its children. */
 export function TourTarget({ id, style, children }: { id: string; style?: StyleProp<ViewStyle>; children: ReactNode }) {
   const context = useContext(TourContext);
-  const ref = useRef<View>(null);
+  const ref = useRef<ComponentRef<typeof View>>(null);
 
   useEffect(() => {
     if (!context) return;

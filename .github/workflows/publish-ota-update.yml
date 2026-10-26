@@ -9,8 +9,9 @@ name: Publish OTA update (iOS and Android apps)
 # which left iPhones without the Blogs shelf and every later change.
 #
 # Runtimes (runtimeVersion policy "appVersion", resolved per platform by
-# eas-cli): Android from expo.version (1.0.3, v16 and later), iOS from
-# expo.ios.version (1.1.0, the App Store build). See docs/DEVELOPMENT.md
+# eas-cli): Android from expo.version (1.1.0, v17 and later -- the Expo
+# SDK 58 build; v16 stays on runtime 1.0.3), iOS from expo.ios.version
+# (1.2.0; the earlier App Store build stays on 1.1.0). See docs/DEVELOPMENT.md
 # ("Over-the-air (OTA) updates") for what an update can and cannot carry.
 #
 # Scoped by path to what the bundle is built from: mobile/ itself, plus

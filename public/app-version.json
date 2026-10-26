@@ -1,8 +1,8 @@
 {
   "android": {
-    "versionCode": 16,
-    "version": "1.0.3",
-    "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v16/vedanta-yojana.apk",
-    "notes": "Production-signed release with over-the-air updates enabled and Telugu language support. If you installed v14 or v15, uninstall it first (this removes the app's local data), then install this version."
+    "versionCode": 17,
+    "version": "1.1.0",
+    "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v17/vedanta-yojana.apk",
+    "notes": "A one-time install is needed for this update: it moves the app to the latest Expo and React Native, for better speed and stability, and adds split-screen support. Your bookmarks and settings are kept. Future updates arrive automatically again."
   }
 }

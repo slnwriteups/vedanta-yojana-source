@@ -118,7 +118,7 @@ export function PanchangamPlacePicker({
               );
             }}
             ListEmptyComponent={
-              showEmpty ? <Text style={[styles.note, { color: theme.colors.muted }]}>{t("panchangamNoPlaces")}</Text> : null
+              showEmpty ? <Text style={[styles.note, { color: theme.colors.muted }]}>{t("panchangamNoPlaces")}</Text> : undefined
             }
             ListFooterComponent={
               <View style={styles.footer}>
