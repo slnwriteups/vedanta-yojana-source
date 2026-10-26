@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "expo-router";
-import { AppState, ScrollView, StyleSheet, Text, View } from "react-native";
+import { AppState, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { resolveAllLastRead } from "../../content-lib/reading-position.ts";
 import { ContentCard } from "../../components/ContentCard";
 import { HomeHeader } from "../../components/HomeHeader";
@@ -8,6 +8,7 @@ import { ContinueReadingCard } from "../../components/ContinueReadingCard";
 import { DivyaDesamSpotlight } from "../../components/DivyaDesamSpotlight";
 import { PanchangamCalendar } from "../../components/PanchangamCalendar";
 import { UpdateBanner } from "../../components/UpdateBanner";
+import { WhatsNewList } from "../../components/WhatsNewList";
 import { layout, spacing, typography, useTheme } from "../../theme";
 import { sectionTint } from "../../section-tints.ts";
 import { bookCoverAsset } from "../../book-covers.ts";
@@ -17,6 +18,7 @@ import { useReadingPosition } from "../../reading-position-context.ts";
 import { fetchPanchangam, type PanchangamData } from "../../services/panchangamService.ts";
 import { loadPanchangamPlace, usePanchangamPlace } from "../../services/panchangamPlaceStore.ts";
 import { checkForUpdate, type UpdateInfo } from "../../services/updateCheckService.ts";
+import { useAnnouncements } from "../../services/announcementsService.ts";
 import { loadOfflineBook } from "../../services/bookOfflineService.ts";
 import { useTourScroller } from "../../tour/Tour";
 
@@ -51,6 +53,7 @@ export default function HomeScreen() {
   const t = useT();
   const { lastReadByBook } = useReadingPosition();
   const resolvedList = resolveAllLastRead(lastReadByBook, language, loadOfflineBook);
+  const announcements = useAnnouncements();
 
   // Today's Panchangam for the chosen city, or the phone's location when
   // none is chosen; recomputed when the reader changes the city, and when
@@ -171,6 +174,18 @@ export default function HomeScreen() {
         </View>
       )}
 
+      {announcements.length > 0 ? (
+        <View style={styles.section}>
+          <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("whatsNewLabel")}</Text>
+          <View style={styles.whatsNew}>
+            <WhatsNewList announcements={announcements} limit={2} />
+            <Pressable onPress={() => router.push("/whats-new" as never)} accessibilityRole="link" hitSlop={spacing.sm}>
+              <Text style={[styles.seeAll, { color: theme.colors.accent }]}>{t("whatsNewSeeAll")} →</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : null}
+
       <DivyaDesamSpotlight />
 
       <PanchangamCalendar initialPanchangam={panchangam} />
@@ -188,6 +203,14 @@ const styles = StyleSheet.create({
   },
   section: {
     gap: spacing.xs,
+  },
+  whatsNew: {
+    paddingHorizontal: layout.screenPadding,
+    gap: spacing.md,
+  },
+  seeAll: {
+    fontSize: typography.small,
+    fontWeight: "700",
   },
   sectionLabel: {
     fontSize: typography.eyebrow,

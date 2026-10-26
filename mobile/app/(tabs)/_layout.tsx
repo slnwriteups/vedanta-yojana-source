@@ -1,5 +1,6 @@
 import { Tabs, router } from "expo-router";
-import { Image, Text, View } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import { Image, Pressable, Text, View } from "react-native";
 import type { ImageSourcePropType } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTheme } from "../../theme";
@@ -230,6 +231,26 @@ export default function TabsLayout() {
           title: t("tabSettings"),
           headerShown: true,
           tabBarIcon: ({ focused }) => <TabIcon source={NAV_ICONS.settings} focused={focused} tourId="tab-settings" />,
+        }}
+      />
+      {/* What's New: opened from Home's card, never a tab of its own. */}
+      <Tabs.Screen
+        name="whats-new"
+        options={{
+          href: null,
+          title: t("whatsNewLabel"),
+          headerShown: true,
+          headerLeft: () => (
+            <Pressable
+              onPress={() => router.navigate("/")}
+              accessibilityRole="button"
+              accessibilityLabel={t("tabHome")}
+              hitSlop={12}
+              style={{ paddingHorizontal: 12 }}
+            >
+              <Ionicons name="chevron-back" size={24} color={theme.colors.foreground} />
+            </Pressable>
+          ),
         }}
       />
     </Tabs>

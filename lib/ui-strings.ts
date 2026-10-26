@@ -103,6 +103,25 @@ const UI_STRINGS = {
     hi: "दिव्य देशम स्पॉटलाइट",
     te: "దివ్య దేశ విశేష దర్శనం",
   },
+  /** What's New -- the announcements list (content/announcements.json, content-lib/announcements.ts). */
+  whatsNewLabel: { en: "What's New", ta: "புதியவை", kn: "ಹೊಸತೇನು", hi: "नया क्या है", te: "కొత్తవి" },
+  whatsNewSubtitle: {
+    en: "New books, translations and features on the Vedanta Yojana app and website.",
+    ta: "வேதாந்த யோஜனா செயலி மற்றும் இணையதளத்தில் புதிய நூல்கள், மொழிபெயர்ப்புகள் மற்றும் வசதிகள்.",
+    kn: "ವೇದಾಂತ ಯೋಜನಾ ಆ್ಯಪ್ ಮತ್ತು ಜಾಲತಾಣದಲ್ಲಿ ಹೊಸ ಪುಸ್ತಕಗಳು, ಅನುವಾದಗಳು ಮತ್ತು ಸೌಲಭ್ಯಗಳು.",
+    hi: "वेदांत योजना ऐप और वेबसाइट पर नई पुस्तकें, अनुवाद और सुविधाएँ।",
+    te: "వేదాంత యోజన యాప్ మరియు వెబ్‌సైట్‌లో కొత్త పుస్తకాలు, అనువాదాలు మరియు సౌకర్యాలు.",
+  },
+  whatsNewSeeAll: {
+    en: "See all updates",
+    ta: "அனைத்துப் புதுப்பிப்புகளையும் காண்க",
+    kn: "ಎಲ್ಲಾ ನವೀಕರಣಗಳನ್ನು ನೋಡಿ",
+    hi: "सभी अपडेट देखें",
+    te: "అన్ని నవీకరణలను చూడండి",
+  },
+  whatsNewNewBadge: { en: "New", ta: "புதிது", kn: "ಹೊಸದು", hi: "नया", te: "కొత్తది" },
+  whatsNewAppTag: { en: "App", ta: "செயலி", kn: "ಆ್ಯಪ್", hi: "ऐप", te: "యాప్" },
+  whatsNewWebsiteTag: { en: "Website", ta: "இணையதளம்", kn: "ಜಾಲತಾಣ", hi: "वेबसाइट", te: "వెబ్‌సైట్" },
   resumeButtonLabel: { en: "Resume", ta: "தொடரவும்", kn: "ಮುಂದುವರಿಸಿ", hi: "जारी रखें", te: "కొనసాగించండి" },
   homeSankalpamLabel: {
     en: "Sankalpam",

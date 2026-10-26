@@ -7,6 +7,7 @@ import { DivyaDesamSpotlightSection } from "@/components/divya-desams/DivyaDesam
 import { HomeDashboardClient } from "@/components/home/HomeDashboardClient";
 import { toPublicBook } from "@/lib/public-content";
 import { toHomeChapterSummary, type HomeCatalogEntry } from "@/lib/resolve-last-read";
+import { loadAnnouncements } from "@/content-lib/announcements-loader.ts";
 
 export const metadata: Metadata = {
   ...pageMetadata({ description: SITE_DESCRIPTION, path: "/" }),
@@ -66,7 +67,7 @@ export default function HomePage() {
           }}
         />
       ) : null}
-      <HomeDashboardClient catalog={catalog} spotlight={<DivyaDesamSpotlightSection />} />
+      <HomeDashboardClient catalog={catalog} announcements={loadAnnouncements()} spotlight={<DivyaDesamSpotlightSection />} />
     </>
   );
 }

@@ -40,7 +40,7 @@ import { siteUrl } from "./site.ts";
  * Next.js convention file) is a thin wrapper around this.
  */
 
-const STATIC_ROUTES = ["/", "/about", "/divya-desams", "/library", "/search"];
+const STATIC_ROUTES = ["/", "/about", "/divya-desams", "/library", "/search", "/whats-new"];
 
 /** Mirrors the same source-page-derived ordering already used by the Divya Desam index page (app/divya-desams/page.tsx), applied here only for deterministic sitemap ordering. */
 function sourcePageNumber(sourcePageId: string): number {
