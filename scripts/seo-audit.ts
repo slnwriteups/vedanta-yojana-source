@@ -88,16 +88,33 @@ function pathOf(loc: string): string {
   return /^https?:\/\//.test(loc) ? new URL(loc).pathname : loc;
 }
 
+const NOT_FOUND: Fetched = { status: 404, body: "", bytes: 0 };
+
+/**
+ * Sitemap URLs come from a file this script downloaded or read, so they are
+ * confined before use: in --dir mode to files inside the built directory
+ * (no "../" escapes), live to the audited origin (never another host).
+ */
 async function get(sitePath: string): Promise<Fetched> {
   if (DIR) {
-    let file = path.join(DIR, decodeURIComponent(sitePath));
+    const root = path.resolve(DIR);
+    let decoded: string;
+    try {
+      decoded = decodeURIComponent(sitePath);
+    } catch {
+      return NOT_FOUND;
+    }
+    let file = path.resolve(root, `.${decoded}`);
     if (sitePath.endsWith("/")) file = path.join(file, "index.html");
-    if (!fs.existsSync(file)) return { status: 404, body: "", bytes: 0 };
+    if (file !== root && !file.startsWith(root + path.sep)) return NOT_FOUND;
+    if (!fs.existsSync(file)) return NOT_FOUND;
     const data = fs.readFileSync(file);
     return { status: 200, body: data.toString("utf8"), bytes: data.length };
   }
+  const target = new URL(sitePath, `${URL_BASE}/`);
+  if (target.origin !== new URL(URL_BASE!).origin) return NOT_FOUND;
   // redirect: "manual" -- a redirect IS the finding for a sitemap URL.
-  const response = await fetch(`${URL_BASE}${sitePath}`, {
+  const response = await fetch(target, {
     redirect: "manual",
     headers: { "User-Agent": "vedanta-yojana-seo-audit (+https://github.com/slnwriteups/vedanta-yojana-source)" },
   });
@@ -225,7 +242,8 @@ async function checkPage(loc: string): Promise<void> {
 
   if (!metaContent(h, "property", "og:image")) report("WARNING", "link preview", loc, "No og:image");
 
-  for (const match of html.matchAll(/<script type="application\/ld\+json">([^<]*)<\/script>/g)) {
+  // Case-insensitive, and the closing tag may carry spaces or attributes.
+  for (const match of html.matchAll(/<script\b[^>]*\btype=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script[^>]*>/gi)) {
     try {
       JSON.parse(match[1]);
     } catch {
