@@ -349,7 +349,7 @@ const styles = StyleSheet.create({
     padding: spacing.lg,
     gap: spacing.sm,
   },
-  count: { fontSize: typography.eyebrow, textTransform: "uppercase", letterSpacing: 0.5 },
+  count: { fontSize: typography.small },
   title: { fontSize: typography.heading, fontWeight: "700" },
   body: { fontSize: typography.body, lineHeight: typography.body * 1.4 },
   buttons: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: spacing.sm },

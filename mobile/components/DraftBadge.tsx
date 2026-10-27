@@ -31,8 +31,6 @@ export function DraftBadge({ status, needsReview }: { status: string; needsRevie
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
   },
 });

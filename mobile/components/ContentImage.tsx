@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Animated, Pressable, StyleSheet, View } from "react-native";
+import { Animated, Pressable, StyleSheet, View, type StyleProp, type ViewStyle } from "react-native";
 import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { useTheme } from "../theme";
@@ -39,11 +39,17 @@ export function FadeInImage({
   asset,
   label,
   size,
+  frameStyle,
+  fill = false,
   onPress,
 }: {
   asset: ImageAsset;
   label: string | null;
-  size: number;
+  size?: number;
+  /** Sizes the frame instead of `size` (feature layout: a width plus an aspectRatio). */
+  frameStyle?: StyleProp<ViewStyle>;
+  /** Fill the frame ("cover") instead of showing the whole image ("contain"). */
+  fill?: boolean;
   onPress: () => void;
 }) {
   const theme = useTheme();
@@ -55,13 +61,13 @@ export function FadeInImage({
       onPress={onPress}
       accessibilityRole="imagebutton"
       accessibilityLabel={label ?? translateUi("viewImageFullScreen", language)}
-      style={[styles.thumbWrap, { width: size, height: size, backgroundColor: theme.colors.border }]}
+      style={[styles.thumbWrap, size !== undefined ? { width: size, height: size } : null, frameStyle, { backgroundColor: theme.colors.border }]}
     >
       <Animated.Image
         source={asset}
         accessibilityLabel={label ?? undefined}
         style={[styles.thumb, { opacity, borderRadius: theme.scheme === "dark" ? 10 : 10 }]}
-        resizeMode="contain"
+        resizeMode={fill ? "cover" : "contain"}
         onLoad={() => {
           Animated.timing(opacity, { toValue: 1, duration: 200, useNativeDriver: true }).start();
         }}
@@ -73,10 +79,18 @@ export function FadeInImage({
 export function ContentImage({
   images,
   resolveLocalUri,
+  feature = false,
 }: {
   images: MobileImageEntry[];
   /** When set, resolves each image's local file:// URI (a downloaded book's chapter images) instead of the default Metro imagesByUuid lookup (Divya Desam images). Unset for every existing caller -- behavior there is completely unchanged. */
   resolveLocalUri?: (sourceAssetUuid: string) => string | null;
+  /**
+   * Lead with the first image large (a record's top images, same as the
+   * website): one image across the full width at 4:3; two side by side at
+   * 4:3; three or more with the first across the full width and the rest
+   * two to a row, square -- all filling their frames.
+   */
+  feature?: boolean;
 }) {
   const [viewerAsset, setViewerAsset] = useState<{ asset: ImageAsset; label: string | null } | null>(null);
 
@@ -95,12 +109,18 @@ export function ContentImage({
   return (
     <View style={styles.section}>
       <View style={styles.row}>
-        {resolved.map(({ image, asset }) => (
+        {resolved.map(({ image, asset }, index) => (
           <FadeInImage
             key={image.assetId}
             asset={asset}
             label={image.alt}
-            size={IMAGE_SIZE}
+            {...(feature
+              ? {
+                  frameStyle:
+                    resolved.length === 2 ? styles.featurePair : index === 0 ? styles.featureLead : styles.featureRest,
+                  fill: true,
+                }
+              : { size: IMAGE_SIZE })}
             onPress={() => setViewerAsset({ asset, label: image.alt })}
           />
         ))}
@@ -126,6 +146,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 8,
+  },
+  featureLead: {
+    width: "100%",
+    aspectRatio: 4 / 3,
+  },
+  featureRest: {
+    width: "48.5%",
+    aspectRatio: 1,
+  },
+  featurePair: {
+    width: "48.5%",
+    aspectRatio: 4 / 3,
   },
   thumbWrap: {
     borderRadius: 10,

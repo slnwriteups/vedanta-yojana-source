@@ -2,14 +2,13 @@ import { useCallback, useEffect, useRef, useState, type ComponentRef } from "rea
 import { useRouter } from "expo-router";
 import { AppState, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { resolveAllLastRead } from "../../content-lib/reading-position.ts";
-import { ContentCard } from "../../components/ContentCard";
 import { HomeHeader } from "../../components/HomeHeader";
 import { ContinueReadingCard } from "../../components/ContinueReadingCard";
 import { DivyaDesamSpotlight } from "../../components/DivyaDesamSpotlight";
 import { PanchangamCalendar } from "../../components/PanchangamCalendar";
 import { UpdateBanner } from "../../components/UpdateBanner";
 import { WhatsNewList } from "../../components/WhatsNewList";
-import { layout, spacing, typography, useTheme } from "../../theme";
+import { layout, radius, spacing, typography, useTheme } from "../../theme";
 import { sectionTint } from "../../section-tints.ts";
 import { bookCoverAsset } from "../../book-covers.ts";
 import { useLanguage } from "../../language-context.ts";
@@ -141,11 +140,29 @@ export default function HomeScreen() {
       {update && !updateDismissed ? (
         <UpdateBanner update={update} onDismiss={() => setUpdateDismissed(true)} />
       ) : null}
-      <HomeHeader panchangam={panchangam} />
+      <HomeHeader />
+
+      {/* Right under the greeting, as a short list of titles, so a notice
+          that needs acting on (an app update to install) is seen first. */}
+      {announcements.length > 0 ? (
+        <View style={styles.section}>
+          <Text style={[styles.sectionHeading, { color: theme.colors.foreground }]} accessibilityRole="header">
+            {t("whatsNewLabel")}
+          </Text>
+          <View style={styles.padded}>
+            <WhatsNewList announcements={announcements} limit={3} compact />
+            <Pressable onPress={() => router.push("/whats-new" as never)} accessibilityRole="link" hitSlop={spacing.sm}>
+              <Text style={[styles.seeAll, { color: theme.colors.accent }]}>{t("whatsNewSeeAll")} →</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : null}
 
       {resolvedList.length > 0 ? (
         <View style={styles.section}>
-          <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("homeContinueReadingLabel")}</Text>
+          <Text style={[styles.sectionHeading, { color: theme.colors.foreground }]} accessibilityRole="header">
+            {t("homeContinueReadingLabel")}
+          </Text>
           {resolvedList.map((resolved) => (
             <ContinueReadingCard
               key={resolved.bookSlug}
@@ -164,40 +181,50 @@ export default function HomeScreen() {
         </View>
       ) : (
         <View style={styles.section}>
-          <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("homeGetStartedLabel")}</Text>
-          <ContentCard
-            title={t("tabDivyaDesams")}
-            subtitle={t("divyaDesamsCardSubtitle")}
-            tintColor={sectionTint("divya-desams", theme.scheme)}
-            monogram="D"
-            onPress={() => router.push("/divya-desams" as never)}
-          />
-          <ContentCard
-            title={t("tabLibrary")}
-            subtitle={t("libraryCardSubtitle")}
-            tintColor={theme.colors.accent}
-            monogram="L"
-            onPress={() => router.push("/library" as never)}
-          />
-        </View>
-      )}
-
-      {announcements.length > 0 ? (
-        <View style={styles.section}>
-          <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("whatsNewLabel")}</Text>
-          <View style={styles.whatsNew}>
-            <WhatsNewList announcements={announcements} limit={2} />
-            <Pressable onPress={() => router.push("/whats-new" as never)} accessibilityRole="link" hitSlop={spacing.sm}>
-              <Text style={[styles.seeAll, { color: theme.colors.accent }]}>{t("whatsNewSeeAll")} →</Text>
-            </Pressable>
+          <Text style={[styles.sectionHeading, { color: theme.colors.foreground }]} accessibilityRole="header">
+            {t("homeGetStartedLabel")}
+          </Text>
+          <View style={styles.padded}>
+            <GetStartedCard
+              title={t("tabDivyaDesams")}
+              subtitle={t("divyaDesamsCardSubtitle")}
+              onPress={() => router.push("/divya-desams" as never)}
+            />
+            <GetStartedCard
+              title={t("tabLibrary")}
+              subtitle={t("libraryCardSubtitle")}
+              onPress={() => router.push("/library" as never)}
+            />
           </View>
         </View>
-      ) : null}
+      )}
 
       <DivyaDesamSpotlight />
 
       <PanchangamCalendar initialPanchangam={panchangam} />
     </ScrollView>
+  );
+}
+
+/**
+ * Home's two "Get Started" entry points: a surface one tone step off the
+ * screen, with the title at heading size and an arrow -- no outline, no
+ * monogram tile (same as the website).
+ */
+function GetStartedCard({ title, subtitle, onPress }: { title: string; subtitle: string; onPress: () => void }) {
+  const theme = useTheme();
+  return (
+    <Pressable
+      onPress={onPress}
+      accessibilityRole="button"
+      accessibilityLabel={title}
+      style={({ pressed }) => [styles.getStarted, { backgroundColor: theme.colors.surfaceAlt, opacity: pressed ? 0.85 : 1 }]}
+    >
+      <Text style={[styles.getStartedTitle, { color: theme.colors.foreground }]}>
+        {title} <Text style={{ color: theme.colors.accent }}>→</Text>
+      </Text>
+      <Text style={[styles.getStartedSubtitle, { color: theme.colors.muted }]}>{subtitle}</Text>
+    </Pressable>
   );
 }
 
@@ -207,23 +234,35 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingBottom: layout.tabBarClearance,
-    gap: spacing.lg,
+    gap: spacing.xxl,
   },
   section: {
-    gap: spacing.xs,
+    gap: spacing.md,
   },
-  whatsNew: {
+  padded: {
     paddingHorizontal: layout.screenPadding,
     gap: spacing.md,
   },
+  sectionHeading: {
+    fontSize: typography.title,
+    fontWeight: "600",
+    paddingHorizontal: layout.screenPadding,
+  },
   seeAll: {
-    fontSize: typography.small,
+    fontSize: typography.body,
     fontWeight: "700",
   },
-  sectionLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    paddingHorizontal: layout.screenPadding,
+  getStarted: {
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    gap: spacing.xs,
+  },
+  getStartedTitle: {
+    fontSize: typography.title,
+    fontWeight: "600",
+  },
+  getStartedSubtitle: {
+    fontSize: typography.body,
+    lineHeight: typography.body * 1.5,
   },
 });

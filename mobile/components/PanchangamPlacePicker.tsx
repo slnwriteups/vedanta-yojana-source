@@ -1,3 +1,4 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useState } from "react";
 import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -71,7 +72,7 @@ export function PanchangamPlacePicker({
             accessibilityLabel={t("panchangamPlaceSearchPlaceholder")}
             style={[
               styles.input,
-              { color: theme.colors.foreground, borderColor: theme.colors.border, backgroundColor: theme.colors.surface },
+              { color: theme.colors.foreground, borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.surface },
             ]}
           />
 
@@ -81,11 +82,12 @@ export function PanchangamPlacePicker({
             accessibilityState={{ selected: current === null }}
             style={({ pressed }) => [
               styles.option,
-              { borderColor: theme.colors.border, backgroundColor: theme.colors.surface, opacity: pressed ? 0.7 : 1 },
+              { borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.surface, opacity: pressed ? 0.7 : 1 },
             ]}
           >
             <Text style={[styles.optionText, { color: theme.colors.accent }]}>
-              {current === null ? "✓ " : ""}
+              {current === null ? <Ionicons name="checkmark" size={16} color={theme.colors.accent} /> : null}
+              {current === null ? " " : ""}
               {t("panchangamUseMyLocation")}
             </Text>
           </Pressable>
@@ -108,7 +110,8 @@ export function PanchangamPlacePicker({
                   style={({ pressed }) => [styles.result, { borderBottomColor: theme.colors.border, opacity: pressed ? 0.7 : 1 }]}
                 >
                   <Text style={[styles.resultName, { color: theme.colors.foreground }]}>
-                    {selected ? "✓ " : ""}
+                    {selected ? <Ionicons name="checkmark" size={16} color={theme.colors.accent} /> : null}
+                    {selected ? " " : ""}
                     {item.name}
                   </Text>
                   <Text style={[styles.resultWhere, { color: theme.colors.muted }]}>

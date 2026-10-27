@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Stack, useRouter } from "expo-router";
-import { FlatList, StyleSheet, Text, View } from "react-native";
-import { ContentCard } from "../../../components/ContentCard";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { GridTile } from "../../../components/GridTile";
 import { layout, spacing, typography, useTheme } from "../../../theme";
 import { sectionTint } from "../../../section-tints.ts";
 import { bookCoverAsset } from "../../../book-covers.ts";
@@ -55,32 +55,36 @@ export default function LibraryIndexScreen() {
   // heading only appears once there is a Blogs shelf to tell it apart from.
   const books = catalog.filter((entry) => entry.book.kind !== "blog");
   const blogs = catalog.filter((entry) => entry.book.kind === "blog");
-  const rows: LibraryRow[] = [
-    ...(blogs.length > 0 && books.length > 0 ? [{ heading: "libraryBooksHeading" as const }] : []),
-    ...books.map((entry) => ({ entry })),
-    ...(blogs.length > 0 ? [{ heading: "libraryBlogsHeading" as const }] : []),
-    ...blogs.map((entry) => ({ entry })),
-  ];
 
-  function renderRow({ item: row }: { item: LibraryRow }) {
-    if ("heading" in row) {
-      return <Text style={[styles.heading, { color: theme.colors.foreground }]}>{t(row.heading)}</Text>;
-    }
-    const item = row.entry;
-    const book = localizeBook(item.book, language);
-    const tint = sectionTint(book.slug, theme.scheme);
+  function shelf(entries: CatalogEntry[], heading: "libraryBooksHeading" | "libraryBlogsHeading" | null) {
+    if (entries.length === 0) return null;
     return (
-      <ContentCard
-        title={book.title}
-        subtitle={libraryEntryCountLabel(language, item.book.kind, item.chapters.length)}
-        status={book.status}
-        needsReview={book.migration.needsReview}
-        tintColor={tint}
-        imageAsset={bookCoverAsset(book.slug)}
-        monogram={book.title.trim().charAt(0).toUpperCase()}
-        variant="cover"
-        onPress={() => router.push(`/library/${book.slug}` as never)}
-      />
+      <View style={styles.shelf}>
+        {heading ? (
+          <Text style={[styles.heading, { color: theme.colors.foreground }]} accessibilityRole="header">
+            {t(heading)}
+          </Text>
+        ) : null}
+        <View style={styles.grid}>
+          {entries.map((item) => {
+            const book = localizeBook(item.book, language);
+            return (
+              <GridTile
+                key={book.slug}
+                title={book.title}
+                subtitle={libraryEntryCountLabel(language, item.book.kind, item.chapters.length)}
+                status={book.status}
+                needsReview={book.migration.needsReview}
+                imageAsset={bookCoverAsset(book.slug)}
+                tintColor={sectionTint(book.slug, theme.scheme)}
+                fallbackText={book.title.trim().charAt(0).toUpperCase()}
+                variant="cover"
+                onPress={() => router.push(`/library/${book.slug}` as never)}
+              />
+            );
+          })}
+        </View>
+      </View>
     );
   }
 
@@ -88,12 +92,10 @@ export default function LibraryIndexScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen options={{ title: t("tabLibrary") }} />
       {catalog.length > 0 ? (
-        <FlatList
-          data={rows}
-          keyExtractor={(row) => ("heading" in row ? row.heading : row.entry.book.slug)}
-          renderItem={renderRow}
-          contentContainerStyle={styles.list}
-        />
+        <ScrollView contentContainerStyle={styles.list}>
+          {shelf(books, blogs.length > 0 ? "libraryBooksHeading" : null)}
+          {shelf(blogs, "libraryBlogsHeading")}
+        </ScrollView>
       ) : (
         <Text style={[styles.empty, { color: theme.colors.muted }]}>{t("noBooksYet")}</Text>
       )}
@@ -101,20 +103,26 @@ export default function LibraryIndexScreen() {
   );
 }
 
-type LibraryRow = { heading: "libraryBooksHeading" | "libraryBlogsHeading" } | { entry: CatalogEntry };
-
 const styles = StyleSheet.create({
   container: { flex: 1 },
   list: {
-    paddingTop: spacing.md,
+    paddingTop: spacing.lg,
     paddingBottom: layout.tabBarClearance,
+    paddingHorizontal: layout.screenPadding,
+    gap: spacing.xxl,
+  },
+  shelf: {
+    gap: spacing.lg,
   },
   heading: {
-    paddingHorizontal: layout.screenPadding,
-    paddingTop: spacing.md,
-    paddingBottom: spacing.xs,
-    fontSize: typography.heading,
-    fontWeight: "700",
+    fontSize: typography.title,
+    fontWeight: "600",
+  },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    rowGap: spacing.xl,
   },
   empty: {
     padding: layout.screenPadding,

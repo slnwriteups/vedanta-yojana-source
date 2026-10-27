@@ -1,3 +1,4 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useRef } from "react";
 import { Animated, Modal, PanResponder, Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
 import { layout, radius, spacing, useTheme } from "../theme";
@@ -208,7 +209,7 @@ export function ImageViewerModal({
           hitSlop={spacing.sm}
           style={[styles.closeButton, { backgroundColor: theme.colors.overlay }]}
         >
-          <Text style={styles.closeButtonText}>✕</Text>
+          <Ionicons name="close" size={22} color="#fffaf5" />
         </Pressable>
       </View>
     </Modal>
@@ -234,10 +235,5 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
-  },
-  closeButtonText: {
-    color: "#fffaf5",
-    fontSize: 20,
-    fontWeight: "700",
   },
 });

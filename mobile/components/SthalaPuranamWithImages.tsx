@@ -238,10 +238,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   specialNoteLabel: {
-    fontSize: typography.eyebrow,
+    fontSize: typography.small,
     fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
     marginBottom: spacing.xs,
   },
   specialNoteListItem: {

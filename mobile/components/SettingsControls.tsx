@@ -109,7 +109,7 @@ function PillGroup<T>({
               style={[
                 styles.toggleButton,
                 {
-                  borderColor: selected ? theme.colors.accent : theme.colors.border,
+                  borderColor: selected ? theme.colors.accent : theme.colors.borderStrong,
                   backgroundColor: selected ? theme.colors.surfaceAlt : "transparent",
                 },
               ]}
@@ -133,9 +133,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   pillGroupLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
   },
   toggleRow: {
     flexDirection: "row",

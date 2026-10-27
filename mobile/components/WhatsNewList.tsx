@@ -10,7 +10,6 @@ import {
   type Announcement,
 } from "../../content-lib/announcements.ts";
 import { radius, spacing, typography, useTheme } from "../theme";
-import { shadows } from "../shadows";
 import { useLanguage } from "../language-context.ts";
 import { useT } from "../ui-strings.ts";
 import { readJSON, writeJSON } from "../storage";
@@ -25,10 +24,13 @@ export function WhatsNewList({
   announcements,
   limit,
   markSeen = false,
+  compact = false,
 }: {
   announcements: Announcement[];
   limit?: number;
   markSeen?: boolean;
+  /** Date and title only, one row each, opening the full What's New screen. */
+  compact?: boolean;
 }) {
   const theme = useTheme();
   const router = useRouter();
@@ -60,12 +62,30 @@ export function WhatsNewList({
     else void Linking.openURL(href);
   };
 
+  if (compact) {
+    return (
+      <View style={styles.list}>
+        {shown.map((announcement) => (
+          <Pressable
+            key={announcement.id}
+            onPress={() => router.push("/whats-new" as never)}
+            accessibilityRole="link"
+            style={({ pressed }) => [styles.compactRow, { opacity: pressed ? 0.7 : 1 }]}
+          >
+            <Text style={[styles.compactDate, { color: theme.colors.muted }]}>{formatAnnouncementDate(announcement.date)}</Text>
+            <Text style={[styles.compactTitle, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+          </Pressable>
+        ))}
+      </View>
+    );
+  }
+
   return (
     <View style={styles.list}>
       {shown.map((announcement) => (
         <View
           key={announcement.id}
-          style={[styles.card, shadows.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+          style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
         >
           <View style={[styles.stripe, { backgroundColor: theme.colors.accent }]} />
           <View style={styles.metaRow}>
@@ -76,7 +96,7 @@ export function WhatsNewList({
               </Text>
             ))}
             {lastSeen !== undefined && isNewAnnouncement(announcement, lastSeen) ? (
-              <Text style={[styles.tag, styles.newTag, { backgroundColor: theme.colors.accent, borderColor: theme.colors.accent, color: theme.colors.surface }]}>
+              <Text style={[styles.tag, styles.newTag, { backgroundColor: theme.colors.highlight, borderColor: theme.colors.highlight, color: theme.colors.onHighlight }]}>
                 {t("whatsNewNewBadge")}
               </Text>
             ) : null}
@@ -104,6 +124,22 @@ export function WhatsNewList({
 const styles = StyleSheet.create({
   list: {
     gap: spacing.md,
+  },
+  compactRow: {
+    flexDirection: "row",
+    gap: spacing.lg,
+    minHeight: 44,
+    alignItems: "baseline",
+  },
+  compactDate: {
+    width: 92,
+    fontSize: typography.small,
+    fontVariant: ["tabular-nums"],
+  },
+  compactTitle: {
+    flex: 1,
+    fontSize: typography.body,
+    fontWeight: "500",
   },
   card: {
     borderWidth: StyleSheet.hairlineWidth,

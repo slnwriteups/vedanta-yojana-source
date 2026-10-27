@@ -390,8 +390,6 @@ const styles = StyleSheet.create({
   bookLabel: {
     fontSize: typography.small,
     fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
   },
   title: {
     fontSize: typography.title,
@@ -434,9 +432,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   pagerDirection: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
   },
   pagerTitle: {
     fontSize: typography.small,

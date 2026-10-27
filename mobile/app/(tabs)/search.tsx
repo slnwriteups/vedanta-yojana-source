@@ -90,7 +90,7 @@ export default function SearchScreen() {
         accessibilityHint={t("searchHint")}
         style={[
           styles.input,
-          { borderColor: theme.colors.border, backgroundColor: theme.colors.surface, color: theme.colors.foreground },
+          { borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.surface, color: theme.colors.foreground },
         ]}
         autoCorrect={false}
         autoCapitalize="none"
@@ -110,7 +110,7 @@ export default function SearchScreen() {
               style={[
                 styles.filterChip,
                 {
-                  borderColor: selected ? theme.colors.accent : theme.colors.border,
+                  borderColor: selected ? theme.colors.accent : theme.colors.borderStrong,
                   backgroundColor: selected ? theme.colors.surfaceAlt : "transparent",
                 },
               ]}
@@ -187,9 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   resultMeta: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
   },
   excerpt: {
     fontSize: typography.small,

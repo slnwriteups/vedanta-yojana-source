@@ -191,10 +191,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   specialNoteLabel: {
-    fontSize: typography.eyebrow,
+    fontSize: typography.small,
     fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
     marginBottom: spacing.xs,
   },
   /** Any list items grouped into a special note (see specialNoteListItemSpan()) get a touch less top space than a full paragraph break would. */

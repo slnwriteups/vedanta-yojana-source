@@ -92,8 +92,6 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   sectionLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
   },
 });
