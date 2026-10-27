@@ -40,8 +40,8 @@ import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
  *
  * `spotlight` is DivyaDesamSpotlightSection, rendered by the server page
  * around this component (it needs node:fs to resolve the day's image)
- * and slotted in here beside the header. Order: header + continue-
- * reading/get-started beside the spotlight -> Panchangam -> What's New.
+ * and slotted in here beside the header. Order: header, What's New and
+ * continue-reading/get-started beside the spotlight -> Panchangam.
  */
 export function HomeDashboardClient({
   catalog,
@@ -137,33 +137,32 @@ export function HomeDashboardClient({
 
   return (
     <div className="space-y-16">
-      {/* Desktop: the greeting and entry points beside the day's Divya
-          Desam photograph, so the first screen holds both; a phone stacks
-          them in that order. */}
+      {/* Desktop: the greeting, What's New and entry points beside the
+          day's Divya Desam photograph, so the first screen holds them all;
+          a phone stacks them in that order. */}
       <div className="grid gap-12 lg:grid-cols-2">
         <div className="space-y-12">
           <HomeHeader />
+          {/* Right under the greeting, as a short list of titles, so a notice
+              that needs acting on (an app update to install) is seen first --
+              What's New is not in the site navigation. */}
+          {announcements.length > 0 ? (
+            <section aria-labelledby="home-whats-new" className="space-y-4">
+              <h2 id="home-whats-new" className="section-heading">
+                {t("whatsNewLabel")}
+              </h2>
+              <WhatsNewList announcements={announcements} limit={3} compact />
+              <Link href="/whats-new" className="inline-block font-semibold text-[var(--accent)] hover:underline">
+                {t("whatsNewSeeAll")} <span aria-hidden="true">→</span>
+              </Link>
+            </section>
+          ) : null}
           {readingOrStart}
         </div>
         {spotlight}
       </div>
 
       <PanchangamCalendar initialPanchangam={panchangam} />
-
-      {/* Last, as a short list of titles: announcements stay one tap from
-          Home (What's New is not in the site navigation) without pushing
-          the day's content down. */}
-      {announcements.length > 0 ? (
-        <section aria-labelledby="home-whats-new" className="space-y-4">
-          <h2 id="home-whats-new" className="section-heading">
-            {t("whatsNewLabel")}
-          </h2>
-          <WhatsNewList announcements={announcements} limit={3} compact />
-          <Link href="/whats-new" className="inline-block font-semibold text-[var(--accent)] hover:underline">
-            {t("whatsNewSeeAll")} <span aria-hidden="true">→</span>
-          </Link>
-        </section>
-      ) : null}
     </div>
   );
 }
