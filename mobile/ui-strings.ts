@@ -122,6 +122,8 @@ const UI_STRINGS = {
   whatsNewNewBadge: { en: "New", ta: "புதிது", kn: "ಹೊಸದು", hi: "नया", te: "కొత్తది" },
   whatsNewAppTag: { en: "App", ta: "செயலி", kn: "ಆ್ಯಪ್", hi: "ऐप", te: "యాప్" },
   whatsNewWebsiteTag: { en: "Website", ta: "இணையதளம்", kn: "ಜಾಲತಾಣ", hi: "वेबसाइट", te: "వెబ్‌సైట్" },
+  whatsNewAndroidTag: { en: "Android", ta: "Android", kn: "Android", hi: "Android", te: "Android" },
+  whatsNewIosTag: { en: "iOS", ta: "iOS", kn: "iOS", hi: "iOS", te: "iOS" },
   resumeButtonLabel: { en: "Resume", ta: "தொடரவும்", kn: "ಮುಂದುವರಿಸಿ", hi: "जारी रखें", te: "కొనసాగించండి" },
   homeSankalpamLabel: {
     en: "Sankalpam",

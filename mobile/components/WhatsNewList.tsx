@@ -3,6 +3,7 @@ import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementTags,
   formatAnnouncementDate,
   isNewAnnouncement,
   isValidLastSeenDate,
@@ -14,9 +15,17 @@ import { useLanguage } from "../language-context.ts";
 import { useT } from "../ui-strings.ts";
 import { readJSON, writeJSON } from "../storage";
 
+/** The label for each tag announcementTags() can return. */
+const TAG_LABEL_KEYS = {
+  app: "whatsNewAppTag",
+  website: "whatsNewWebsiteTag",
+  android: "whatsNewAndroidTag",
+  ios: "whatsNewIosTag",
+} as const;
+
 /**
  * The What's New list -- app half of components/whats-new/WhatsNewList.tsx
- * on the website, same behavior: Home shows the latest two (`limit`), the
+ * on the website, same behavior: Home shows the latest three (`limit`), the
  * whats-new screen shows all of them and, with `markSeen`, records the
  * newest date as read so the "New" badges clear from the next visit on.
  */
@@ -108,9 +117,9 @@ export function WhatsNewList({
           <View style={[styles.stripe, { backgroundColor: theme.colors.accent }]} />
           <View style={styles.metaRow}>
             <Text style={[styles.meta, { color: theme.colors.muted }]}>{formatAnnouncementDate(announcement.date)}</Text>
-            {announcement.platforms.map((platform) => (
-              <Text key={platform} style={[styles.tag, { color: theme.colors.muted, borderColor: theme.colors.border }]}>
-                {t(platform === "app" ? "whatsNewAppTag" : "whatsNewWebsiteTag")}
+            {announcementTags(announcement).map((tag) => (
+              <Text key={tag} style={[styles.tag, { color: theme.colors.muted, borderColor: theme.colors.border }]}>
+                {t(TAG_LABEL_KEYS[tag])}
               </Text>
             ))}
             {lastSeen !== undefined && isNewAnnouncement(announcement, lastSeen) ? (

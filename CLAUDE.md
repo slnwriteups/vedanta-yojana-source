@@ -35,6 +35,11 @@ validates it):
 - `date` is the day readers get the change: the deploy date for the website,
   or the release/OTA date for the app.
 - `platforms` lists where it applies: `"app"`, `"website"` or both.
+- `appPlatforms` is optional: `["android"]` or `["ios"]` limits an `"app"`
+  entry to that app (for example, an APK to install). The app hides it on
+  the other platform; the website still lists it, tagged Android or iOS.
+  Never put `"android"` or `"ios"` in `platforms` itself: older installed
+  apps would reject the whole list.
 - `link` is optional. Use a site path (the same routes exist in the app) or a
   full `https://` URL.
 - `translations` (`ta`/`kn`/`hi`/`te`, with any of `title`, `body`,
