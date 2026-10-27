@@ -62,3 +62,11 @@ credentials.json
 # Local preview output, if any (a local preview server serves
 # from memory and writes nothing, but keep stray renders out of the repo).
 out-preview/
+
+# Playwright
+node_modules/
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+/playwright/.auth/
