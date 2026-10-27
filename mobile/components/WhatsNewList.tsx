@@ -29,7 +29,7 @@ export function WhatsNewList({
   announcements: Announcement[];
   limit?: number;
   markSeen?: boolean;
-  /** Date and title only, one row each, opening the full What's New screen. */
+  /** Date and title (opening the full What's New screen), plus the announcement's own link when it has one. */
   compact?: boolean;
 }) {
   const theme = useTheme();
@@ -66,15 +66,33 @@ export function WhatsNewList({
     return (
       <View style={styles.list}>
         {shown.map((announcement) => (
-          <Pressable
-            key={announcement.id}
-            onPress={() => router.push("/whats-new" as never)}
-            accessibilityRole="link"
-            style={({ pressed }) => [styles.compactRow, { opacity: pressed ? 0.7 : 1 }]}
-          >
+          <View key={announcement.id} style={styles.compactRow}>
             <Text style={[styles.compactDate, { color: theme.colors.muted }]}>{formatAnnouncementDate(announcement.date)}</Text>
-            <Text style={[styles.compactTitle, { color: theme.colors.foreground }]}>{announcement.title}</Text>
-          </Pressable>
+            <View style={styles.compactText}>
+              <Pressable
+                onPress={() => router.push("/whats-new" as never)}
+                accessibilityRole="link"
+                style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
+              >
+                <Text style={[styles.compactTitle, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+              </Pressable>
+              {/* The announcement's own link (an app download, a new screen) is
+                  kept even in the short list, so a notice that needs acting on
+                  can be acted on from Home. */}
+              {announcement.link ? (
+                <Pressable
+                  onPress={() => openLink(announcement.link!.href)}
+                  accessibilityRole="link"
+                  hitSlop={spacing.sm}
+                  style={({ pressed }) => [styles.compactLink, { opacity: pressed ? 0.7 : 1 }]}
+                >
+                  <Text style={[styles.link, { color: theme.colors.accent }]}>
+                    {announcement.link.label} {announcement.link.href.startsWith("/") ? "→" : "↗"}
+                  </Text>
+                </Pressable>
+              ) : null}
+            </View>
+          </View>
         ))}
       </View>
     );
@@ -129,17 +147,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: spacing.lg,
     minHeight: 44,
-    alignItems: "baseline",
+    alignItems: "flex-start",
   },
+
   compactDate: {
     width: 92,
+    paddingTop: 2,
     fontSize: typography.small,
     fontVariant: ["tabular-nums"],
   },
-  compactTitle: {
+  compactText: {
     flex: 1,
+    gap: spacing.xs,
+  },
+  compactTitle: {
     fontSize: typography.body,
     fontWeight: "500",
+  },
+  compactLink: {
+    alignSelf: "flex-start",
+    minHeight: 32,
+    justifyContent: "center",
   },
   card: {
     borderWidth: StyleSheet.hairlineWidth,
