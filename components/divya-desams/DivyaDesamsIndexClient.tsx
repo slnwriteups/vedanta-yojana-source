@@ -6,8 +6,6 @@ import type { PublicDivyaDesam, PublicKnowledge } from "@/lib/public-content";
 import { DIVYA_DESAM_REGION_ORDER, type DivyaDesamRegion } from "@/content-lib/schemas/divya-desam-region.ts";
 import { localizeKnowledge } from "@/content-lib/i18n.ts";
 import { useLanguage } from "@/lib/language-context";
-import { useTheme } from "@/lib/theme";
-import { sectionTint } from "@/lib/section-tints";
 import { regionLabel } from "@/content-lib/divya-desam-region-labels.ts";
 import { translateUi, useT, type UiStringKey } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
@@ -74,8 +72,6 @@ export function DivyaDesamsIndexClient({
   introduction: PublicKnowledge | null;
 }) {
   const { language } = useLanguage();
-  const theme = useTheme();
-  const tint = sectionTint("divya-desams", theme);
   const t = useT();
   const [selectedTab, setSelectedTab] = useState<DivyaDesamTab>(ALL_TAB);
 
@@ -94,18 +90,19 @@ export function DivyaDesamsIndexClient({
       {localizedIntroduction ? (
         <Link
           href="/divya-desams/introduction"
-          className="relative block overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 transition-colors hover:border-[var(--accent)]"
+          className="group block rounded-lg bg-[var(--surface-alt)] p-6 transition-colors hover:bg-[var(--surface)]"
         >
-          <span aria-hidden className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: tint }} />
-          <h2 className="section-heading">{localizedIntroduction.title}</h2>
-          <p className="mt-2 text-sm text-[var(--muted)]">{t("introCardSubtitle")}</p>
+          <h2 className="section-heading">
+            {localizedIntroduction.title} <span aria-hidden="true" className="text-[var(--accent)]">→</span>
+          </h2>
+          <p className="mt-2 text-[var(--muted)]">{t("introCardSubtitle")}</p>
         </Link>
       ) : null}
 
       <div className="space-y-3">
         <p className="eyebrow">{t("geoClassificationEyebrow")}</p>
         <div
-          className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="flex flex-wrap gap-2"
           role="tablist"
           aria-label={t("geoClassificationEyebrow")}
         >
@@ -121,8 +118,8 @@ export function DivyaDesamsIndexClient({
                 onClick={() => setSelectedTab(tab)}
                 className={`flex-none whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
                   active
-                    ? "border-[var(--accent)] bg-[var(--accent)] text-[#fffaf5]"
-                    : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)]"
+                    ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--on-accent)]"
+                    : "border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)]"
                 }`}
               >
                 {label}
@@ -135,11 +132,29 @@ export function DivyaDesamsIndexClient({
         </p>
       </div>
 
-      <ul role="list" className="space-y-3">
-        {visibleEntries.map(({ record, number, imageHref }) => (
-          <DivyaDesamCard key={record.slug} record={record} number={number} imageHref={imageHref} />
-        ))}
-      </ul>
+      {/* Grouped by Nadu under a heading each (the "All" view shows every
+          group in DIVYA_DESAM_REGION_ORDER; a selected tab shows its own),
+          so the 108 read as regions rather than one long list. */}
+      {DIVYA_DESAM_REGION_ORDER.map((region) => {
+        const regionEntries = visibleEntries.filter((e) => e.record.region === region);
+        if (regionEntries.length === 0) return null;
+        const headingId = `region-${DIVYA_DESAM_REGION_ORDER.indexOf(region)}`;
+        return (
+          <section key={region} aria-labelledby={headingId} className="space-y-6 pt-6">
+            <h2 id={headingId} className="section-heading">
+              {regionLabel(region, language)}
+              <span className="ml-3 text-lg font-normal text-[var(--muted)]">
+                {tabCountLabel(region, traditionalCount(regionEntries.map((e) => e.record), numberLabels), language)}
+              </span>
+            </h2>
+            <ul role="list" className="grid grid-cols-2 gap-x-5 gap-y-8 sm:grid-cols-3">
+              {regionEntries.map(({ record, number, imageHref }) => (
+                <DivyaDesamCard key={record.slug} record={record} number={number} imageHref={imageHref} />
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </div>
   );
 }

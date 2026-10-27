@@ -33,7 +33,7 @@ export default function LibraryIndexPage() {
   const blogs = entries.filter((entry) => entry.kind === "blog");
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-12">
       <LocalizedPageHeading stringKey="tabLibrary" />
 
       {entries.length === 0 ? (
@@ -65,9 +65,9 @@ function LibraryShelf({
 }) {
   if (entries.length === 0) return null;
   return (
-    <section className="space-y-3">
+    <section className="space-y-6">
       {showHeading ? <LocalizedText as="h2" stringKey={headingKey} className="section-heading" /> : null}
-      <ul role="list" className="space-y-3">
+      <ul role="list" className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
         {entries.map((entry) => (
           <BookCard key={entry.slug} book={toPublicBook(entry)} chapterCount={loadChapters(entry.slug).length} />
         ))}

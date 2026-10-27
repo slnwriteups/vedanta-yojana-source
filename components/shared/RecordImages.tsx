@@ -46,6 +46,7 @@ export function RecordImages({ images }: { images: ImageEntry[] }) {
 
   return (
     <ImageLightboxGrid
+      feature
       images={resolved.map(({ image, href }) => ({
         id: image.assetId,
         href,

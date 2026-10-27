@@ -64,13 +64,13 @@ export function PanchangamPlacePicker({
         placeholder={t("panchangamPlaceSearchPlaceholder")}
         aria-label={t("panchangamPlaceSearchPlaceholder")}
         autoComplete="off"
-        className="w-full rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)]"
+        className="w-full rounded-md border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-2 text-sm text-[var(--foreground)]"
       />
       <button
         type="button"
         onClick={() => onChoose(null)}
         aria-pressed={current === null}
-        className="w-full rounded-md border border-[var(--border)] px-3 py-2 text-left text-sm font-semibold text-[var(--accent)]"
+        className="w-full rounded-md border border-[var(--border-strong)] px-3 py-2 text-left text-sm font-semibold text-[var(--accent)]"
       >
         {current === null ? "✓ " : ""}
         {t("panchangamUseMyLocation")}

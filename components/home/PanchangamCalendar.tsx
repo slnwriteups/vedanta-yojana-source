@@ -106,7 +106,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
       type="button"
       onClick={() => setPickerOpen((open) => !open)}
       aria-expanded={pickerOpen}
-      className="text-xs sm:text-sm font-semibold text-[var(--accent)] underline"
+      className="text-sm font-semibold text-[var(--accent)] underline"
     >
       {t("panchangamChangePlace")}
     </button>
@@ -181,18 +181,18 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   return (
     <div className="space-y-3">
       <div>
-        <p className="eyebrow">{t("homeCalendarBrowseTitle")}</p>
-        <p className="mt-1 text-xs text-[var(--muted)]">{t("homeCalendarBrowseSubtitle")}</p>
+        <h2 className="section-heading">{t("homeCalendarBrowseTitle")}</h2>
+        <p className="mt-1 text-[var(--muted)]">{t("homeCalendarBrowseSubtitle")}</p>
       </div>
 
-      <div className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
+      <div className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
         {/* Navigation Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
           <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={() => goToOffset(-1)}
-              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] px-2.5 text-xs font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-2.5 text-sm font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
               aria-label={t("calendarPreviousDay")}
             >
               ← {t("calendarPreviousDay")}
@@ -201,10 +201,10 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               type="button"
               onClick={goToToday}
               disabled={isCurrentToday}
-              className={`inline-flex h-8 items-center justify-center rounded-md px-3 text-xs font-medium transition-colors ${
+              className={`inline-flex h-8 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors ${
                 isCurrentToday
-                  ? "bg-[var(--accent)] text-white"
-                  : "border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+                  ? "bg-[var(--accent)] text-[var(--on-accent)]"
+                  : "border border-[var(--border-strong)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
               }`}
             >
               {t("calendarTodayButton")}
@@ -212,7 +212,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <button
               type="button"
               onClick={() => goToOffset(1)}
-              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] px-2.5 text-xs font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-2.5 text-sm font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
               aria-label={t("calendarNextDay")}
             >
               {t("calendarNextDay")} →
@@ -228,7 +228,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                   setSelectedDate(parseDateKey(e.target.value));
                 }
               }}
-              className="rounded-md border border-[var(--border)] bg-[var(--background)] px-2 py-1 text-xs text-[var(--foreground)] shadow-sm focus:border-[var(--accent)] focus:outline-none"
+              className="rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-2 py-1 text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
               aria-label="Select date"
             />
           </div>
@@ -249,15 +249,15 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 onClick={() => setSelectedDate(d)}
                 className={`relative flex flex-col items-center justify-center rounded-md py-1.5 text-center transition-colors ${
                   isSelected
-                    ? "bg-[var(--accent)] text-white font-bold"
-                    : "border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+                    ? "bg-[var(--highlight)] text-[var(--on-highlight)] font-bold"
+                    : "border border-[var(--border-strong)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
                 }`}
               >
-                <span className="text-[10px] uppercase opacity-80">{dayName}</span>
+                <span className="text-xs opacity-80">{dayName}</span>
                 <span className="text-sm font-semibold">{dayNum}</span>
                 {isDayToday && (
                   <span
-                    className={`mt-0.5 h-1 w-1 rounded-full ${isSelected ? "bg-white" : "bg-[var(--accent)]"}`}
+                    className={`mt-0.5 h-1 w-1 rounded-full ${isSelected ? "bg-[var(--on-highlight)]" : "bg-[var(--accent)]"}`}
                   />
                 )}
               </button>
@@ -271,9 +271,9 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <h3 className="text-sm font-semibold text-[var(--foreground)]">{formattedDateHeading}</h3>
           </div>
           <span
-            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-semibold tracking-wide ${
+            className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
               isCurrentToday
-                ? "bg-[var(--accent)]/15 text-[var(--accent)]"
+                ? "bg-[var(--highlight-soft)] text-[var(--on-highlight-soft)]"
                 : isPast
                 ? "bg-[var(--muted)]/15 text-[var(--muted)]"
                 : "bg-blue-500/15 text-blue-600 dark:text-blue-400"
@@ -285,7 +285,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 
         {/* Panchangam Content Details */}
         {isLoading ? (
-          <div className="py-4 text-center text-xs text-[var(--muted)]">
+          <div className="py-4 text-center text-sm text-[var(--muted)]">
             <span className="animate-pulse">{t("calendarLoading")}</span>
           </div>
         ) : hasData && data ? (
@@ -308,13 +308,13 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               <Row key={label} label={label} value={value} />
             ))}
             {data.timeZoneNote ? (
-              <p className="text-xs italic text-[var(--muted)]">{timesInZoneLabel(language, data.timeZoneNote)}</p>
+              <p className="text-sm italic text-[var(--muted)]">{timesInZoneLabel(language, data.timeZoneNote)}</p>
             ) : null}
             <div className="flex items-baseline justify-between gap-4">
-              <span className="text-xs sm:text-sm text-[var(--muted)]">{t("homeCalendarLocationLabel")}</span>
+              <span className="text-sm text-[var(--muted)]">{t("homeCalendarLocationLabel")}</span>
               <span className="flex items-baseline gap-2 text-right">
                 {data.location ? (
-                  <span className="text-xs sm:text-sm font-semibold text-[var(--foreground)]">{data.location}</span>
+                  <span className="text-sm font-semibold text-[var(--foreground)]">{data.location}</span>
                 ) : null}
                 {chooseButton}
               </span>
@@ -333,14 +333,14 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           </div>
         ) : (
           <div className="py-2">
-            <p className="text-xs text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
+            <p className="text-sm text-[var(--muted)]">{t("homeLocationUnavailable")}</p>
             {pickerOpen ? (
               picker
             ) : (
               <button
                 type="button"
                 onClick={() => setPickerOpen(true)}
-                className="mt-2 rounded-md border border-[var(--accent)] px-3 py-1.5 text-xs font-semibold text-[var(--accent)]"
+                className="mt-2 rounded-md border border-[var(--accent)] px-3 py-1.5 text-sm font-semibold text-[var(--accent)]"
               >
                 {t("panchangamChoosePlace")}
               </button>
@@ -366,8 +366,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4">
-      <span className="text-xs sm:text-sm text-[var(--muted)]">{label}</span>
-      <span className="text-right text-xs sm:text-sm font-semibold text-[var(--foreground)]">{value}</span>
+      <span className="text-sm text-[var(--muted)]">{label}</span>
+      <span className="text-right text-sm font-semibold text-[var(--foreground)]">{value}</span>
     </div>
   );
 }
@@ -422,13 +422,13 @@ function SankalpamSection({
   return (
     <div className="mt-4 border-t border-[var(--border)] pt-3">
       <div className="flex items-center justify-between pb-2">
-        <span className="text-xs font-bold uppercase tracking-wider text-[var(--muted)]">
+        <span className="text-sm font-semibold text-[var(--muted)]">
           {t("homeSankalpamLabel")}
         </span>
         <button
           type="button"
           onClick={onToggle}
-          className="text-xs font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
+          className="text-sm font-medium text-[var(--muted)] hover:text-[var(--accent)] transition-colors"
           aria-label={t("homeSankalpamLabel")}
         >
           {show ? "▲" : "▼"}
@@ -439,9 +439,9 @@ function SankalpamSection({
           {dailyText ? (
             <div>
               {both ? (
-                <p className="pb-1 text-xs font-semibold text-[var(--accent)]">{t("sankalpamDailyLabel")}</p>
+                <p className="pb-1 text-sm font-semibold text-[var(--accent)]">{t("sankalpamDailyLabel")}</p>
               ) : null}
-              <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
+              <p className="prose-body text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
                 {localizeSankalpamText(dailyText, language)}
               </p>
             </div>
@@ -449,9 +449,9 @@ function SankalpamSection({
           {tarpanam ? (
             <div className={both ? "border-t border-[var(--border)] pt-3" : undefined}>
               {both ? (
-                <p className="pb-1 text-xs font-semibold text-[var(--accent)]">{t("padukaTarpanamLabel")}</p>
+                <p className="pb-1 text-sm font-semibold text-[var(--accent)]">{t("padukaTarpanamLabel")}</p>
               ) : null}
-              <p className="prose-body text-xs sm:text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
+              <p className="prose-body text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
                 {localizePadukaTarpanam(tarpanam, language)}
               </p>
             </div>

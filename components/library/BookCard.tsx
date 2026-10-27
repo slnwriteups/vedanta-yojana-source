@@ -12,22 +12,17 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
 import { bookCoverAsset } from "@/lib/book-covers";
 
 /**
- * One row of the Library index -- a bordered/shadowed card (not a flat
- * divide-y row), a per-book tint accent stripe + monogram fallback for a
- * book with no cover art, and an uncropped ("contain", not "cover") book
- * cover -- all mirroring mobile's shared ContentCard
- * (mobile/components/ContentCard.tsx, `variant="cover"`) exactly, whose
- * own comment explains why cover art is never cropped: "a cropped book
- * cover loses its title/author lettering." `chapterCount` is passed down
- * from the server page (loadChapters(book.slug).length -- chapters that
- * actually load/validate, the same source mobile's Library index uses)
- * rather than derived here, since the loader is server-only.
+ * One book on the Library shelf -- the cover large, uncropped ("contain",
+ * not "cover": "a cropped book cover loses its title/author lettering",
+ * per mobile's ContentCard), with the title and chapter count beneath
+ * it. A book with no cover art gets a tinted 2:3 panel with its initial
+ * in the same place, so the shelf keeps one rhythm. `chapterCount` is
+ * passed down from the server page (loadChapters(book.slug).length --
+ * chapters that actually load/validate, the same source mobile's Library
+ * index uses) rather than derived here, since the loader is server-only.
  *
- * No description line here -- mobile's Library index screen
- * (mobile/app/(tabs)/library/index.tsx) only ever passes `title`/
- * `subtitle` (the chapter count) to ContentCard; a book's description
- * only appears on its own detail page (LocalizedBookHeader.tsx), never
- * repeated on this index row.
+ * No description line here -- a book's description only appears on its
+ * own detail page (LocalizedBookHeader.tsx), never repeated on the shelf.
  *
  * Client component so title follows the reader's language preference
  * (content-lib/i18n.ts's localizeBook), same as every other content
@@ -43,31 +38,31 @@ export function BookCard({ book, chapterCount }: { book: PublicBook; chapterCoun
 
   return (
     <li>
-      <Link
-        href={`/library/${book.slug}`}
-        className="relative flex items-center gap-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 transition-colors hover:border-[var(--accent)]"
-      >
-        <span aria-hidden className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: tint }} />
-        {cover ? (
-          <img
-            src={cover}
-            alt=""
-            loading="lazy"
-            className="h-24 w-16 flex-none rounded-sm border border-[var(--border)] bg-[var(--border)] object-contain"
-          />
-        ) : (
-          <span
-            aria-hidden
-            className="flex h-16 w-16 flex-none items-center justify-center rounded-md text-lg font-bold"
-            style={{ backgroundColor: tint, color: "#fffaf5" }}
-          >
-            {monogram}
-          </span>
-        )}
-        <div className="min-w-0">
+      <Link href={`/library/${book.slug}`} className="group block">
+        <div className="aspect-[2/3] overflow-hidden rounded-md bg-[var(--surface-alt)]">
+          {cover ? (
+            <img
+              src={cover}
+              alt=""
+              width={400}
+              height={600}
+              loading="lazy"
+              className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+            />
+          ) : (
+            <span
+              aria-hidden
+              className="flex h-full w-full items-center justify-center text-5xl font-semibold"
+              style={{ backgroundColor: tint, color: "var(--on-accent)" }}
+            >
+              {monogram}
+            </span>
+          )}
+        </div>
+        <div className="mt-3 min-w-0">
           <DraftBadge status={book.status} needsReview={book.migration.needsReview} />
-          <span className="font-medium">{localized.title}</span>
-          <p className="mt-1 text-sm text-[var(--muted)]">{libraryEntryCountLabel(language, book.kind, chapterCount)}</p>
+          <span className="block font-semibold text-balance group-hover:underline">{localized.title}</span>
+          <span className="mt-1 block text-[var(--muted)]">{libraryEntryCountLabel(language, book.kind, chapterCount)}</span>
         </div>
       </Link>
     </li>

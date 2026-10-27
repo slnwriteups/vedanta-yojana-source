@@ -62,28 +62,33 @@ export function DivyaDesamSpotlight({ entries }: { entries: SpotlightEntry[] }) 
   const deity = localized.templeInformation.moolavar ?? "";
   const titleLine = `${entry.numberLabel}. ${localized.displayName}`;
 
+  // The photograph is shown whole and large, with its caption beneath it
+  // rather than laid over it, so the deity is never covered.
   return (
-    <div className="space-y-2">
-      <p className="eyebrow px-1">{t("homeSpotlightLabel")}</p>
-      <Link
-        href={`/divya-desams/${entry.record.slug}`}
-        aria-label={[titleLine, region, deity].filter(Boolean).join(". ")}
-        className="block overflow-hidden rounded-lg transition-opacity hover:opacity-95"
-      >
-        <div
-          className="relative flex h-45 items-end bg-cover bg-center"
-          style={{
-            backgroundColor: tint,
-            backgroundImage: entry.imageHref ? `url(${entry.imageHref})` : undefined,
-          }}
-        >
-          <div className="w-full p-4" style={{ backgroundColor: "var(--overlay)" }}>
-            <p className="line-clamp-2 text-lg font-bold text-[#fffaf5]">{titleLine}</p>
-            {region ? <p className="text-sm text-[#fffaf5] opacity-90">{region}</p> : null}
-            {deity ? <p className="text-sm text-[#fffaf5] opacity-90">{deity}</p> : null}
-          </div>
+    <Link
+      href={`/divya-desams/${entry.record.slug}`}
+      aria-label={[titleLine, region, deity].filter(Boolean).join(". ")}
+      className="group block"
+    >
+      <figure>
+        <div className="aspect-[4/3] overflow-hidden rounded-lg" style={{ backgroundColor: tint }}>
+          {entry.imageHref ? (
+            <img
+              src={entry.imageHref}
+              alt=""
+              width={800}
+              height={600}
+              fetchPriority="high"
+              className="h-full w-full object-cover object-[center_30%] transition-transform duration-500 group-hover:scale-[1.02] motion-reduce:transition-none"
+            />
+          ) : null}
         </div>
-      </Link>
-    </div>
+        <figcaption className="mt-3">
+          <span className="block text-sm text-[var(--muted)]">{t("homeSpotlightLabel")}</span>
+          <span className="mt-0.5 block text-xl font-semibold tracking-tight group-hover:underline">{titleLine}</span>
+          <span className="block text-[var(--muted)]">{[region, deity].filter(Boolean).join(" · ")}</span>
+        </figcaption>
+      </figure>
+    </Link>
   );
 }

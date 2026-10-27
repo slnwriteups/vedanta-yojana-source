@@ -18,6 +18,7 @@
     "test:content": "node --test tests/content/*.test.ts tests/content/migration/*.test.ts",
     "test:app": "node --test tests/app/*.test.ts",
     "test:mobile": "node --test mobile/tests/*.test.ts",
+    "test:e2e": "playwright test",
     "ci": "npm run test:content && npm run test:app && npm run typecheck && npm run build"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.1",
     "@tailwindcss/postcss": "4.3.3",
     "@types/node": "26.6.5",
     "@types/react": "19.3.0",

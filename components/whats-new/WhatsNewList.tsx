@@ -30,10 +30,13 @@ export function WhatsNewList({
   announcements,
   limit,
   markSeen = false,
+  compact = false,
 }: {
   announcements: Announcement[];
   limit?: number;
   markSeen?: boolean;
+  /** Date and title only, one line each, linking to the full What's New page. */
+  compact?: boolean;
 }) {
   const { language } = useLanguage();
   const t = useT();
@@ -60,6 +63,23 @@ export function WhatsNewList({
     [announcements, limit, language]
   );
 
+  if (compact) {
+    return (
+      <ul role="list" className="space-y-3">
+        {shown.map((announcement) => (
+          <li key={announcement.id}>
+            <Link href="/whats-new" className="group flex flex-wrap items-baseline gap-x-4 gap-y-0.5">
+              <time dateTime={announcement.date} className="w-24 flex-none text-sm text-[var(--muted)] tabular-nums">
+                {formatAnnouncementDate(announcement.date)}
+              </time>
+              <span className="min-w-0 flex-1 font-medium group-hover:underline">{announcement.title}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <ul role="list" className="space-y-3">
       {shown.map((announcement) => (
@@ -76,7 +96,7 @@ export function WhatsNewList({
               </span>
             ))}
             {lastSeen !== undefined && isNewAnnouncement(announcement, lastSeen) ? (
-              <span className="rounded-full bg-[var(--accent)] px-2 py-0.5 font-semibold text-[#fffaf5]">
+              <span className="rounded-full bg-[var(--highlight)] px-2 py-0.5 font-semibold text-[var(--on-highlight)]">
                 {t("whatsNewNewBadge")}
               </span>
             ) : null}

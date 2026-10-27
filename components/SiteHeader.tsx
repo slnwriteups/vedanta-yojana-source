@@ -67,7 +67,7 @@ export function SiteHeader() {
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-md border border-[var(--border)] px-3 py-2 text-sm sm:hidden"
+          className="inline-flex items-center justify-center rounded-md border border-[var(--border-strong)] px-3 py-2 text-sm sm:hidden"
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
           onClick={() => setMenuOpen((open) => !open)}

@@ -66,7 +66,7 @@ export function LongFormSection({
           {heading}
         </h2>
       ) : null}
-      <div className="prose-body space-y-5 whitespace-pre-line">
+      <div className="prose-body reading-text space-y-5 whitespace-pre-line">
         {(() => {
           const nodes: React.ReactNode[] = [];
           for (let index = 0; index < paragraphs.length; index++) {

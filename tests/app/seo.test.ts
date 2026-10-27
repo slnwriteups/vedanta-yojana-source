@@ -280,6 +280,7 @@ test("no new dependency was introduced for Phase 5N", () => {
   const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
   const expectedDeps = ["next", "react", "react-dom", "zod"];
   const expectedDevDeps = [
+    "@playwright/test",
     "@tailwindcss/postcss",
     "@types/node",
     "@types/react",

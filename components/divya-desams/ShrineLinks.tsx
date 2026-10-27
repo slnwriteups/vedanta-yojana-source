@@ -25,14 +25,14 @@ export function ShrineLinks({ shrines, language }: { shrines: Shrine[]; language
       <h2 id="shrine-links-heading" className="section-heading">
         {shrineLocationsHeading(language, shrines.length)}
       </h2>
-      <ul role="list" className="flex flex-wrap gap-3 text-sm">
+      <ul role="list" className="flex flex-wrap gap-3">
         {shrines.map((shrine, index) => (
           <li key={`${shrine.mapsLink}-${index}`}>
             <a
               href={shrine.mapsLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block rounded-md border border-[var(--border)] px-3 py-2 hover:border-[var(--accent)] hover:underline"
+              className="inline-flex min-h-11 items-center rounded-full bg-[var(--accent)] px-5 font-semibold text-[var(--surface)] transition-opacity hover:opacity-90"
             >
               {shrine.label ?? translateUi("viewOnGoogleMaps", language)} ↗
               <span className="sr-only">{translateUi("opensInBrowserSuffix", language)}</span>

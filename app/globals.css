@@ -17,14 +17,28 @@
  * states, e.g. SettingsControls' pill buttons; overlay: a scrim behind
  * modal-style content, e.g. WelcomeGate/OnboardingGate).
  */
+/*
+ * Roles added for the palette pass: --on-accent is text on an --accent
+ * fill (white in light, dark brown in dark, where the accent turns light);
+ * --border-strong outlines a control (field, button, chip) at 3:1, while
+ * --border stays for decorative edges; --highlight (turmeric gold) marks
+ * "today" and "new", leaving --accent to mean actions and links, with
+ * --highlight-soft as its quiet tinted form.
+ */
 :root {
   --background: #fbf9f5;
   --surface: #ffffff;
-  --surface-alt: #f3efe7;
+  --surface-alt: #efe7da;
   --foreground: #211c16;
   --muted: #6b6259;
   --border: #e3dcd0;
+  --border-strong: #9a8d7b;
   --accent: #7a3b2e;
+  --on-accent: #ffffff;
+  --highlight: #e9b949;
+  --on-highlight: #211c16;
+  --highlight-soft: #f8ecc9;
+  --on-highlight-soft: #6e4b00;
   --focus-ring: #7a3b2e;
   --overlay: rgba(33, 28, 22, 0.85);
 }
@@ -33,11 +47,17 @@
   :root {
     --background: #1a1712;
     --surface: #231e18;
-    --surface-alt: #2b241d;
+    --surface-alt: #302820;
     --foreground: #f1ece2;
     --muted: #a89e90;
     --border: #3a332a;
+    --border-strong: #7a6e5e;
     --accent: #d99879;
+    --on-accent: #1a1712;
+    --highlight: #e3b450;
+    --on-highlight: #1a1712;
+    --highlight-soft: #3a301c;
+    --on-highlight-soft: #f0c868;
     --focus-ring: #d99879;
     --overlay: rgba(0, 0, 0, 0.9);
   }
@@ -54,11 +74,17 @@
 :root[data-theme="light"] {
   --background: #fbf9f5;
   --surface: #ffffff;
-  --surface-alt: #f3efe7;
+  --surface-alt: #efe7da;
   --foreground: #211c16;
   --muted: #6b6259;
   --border: #e3dcd0;
+  --border-strong: #9a8d7b;
   --accent: #7a3b2e;
+  --on-accent: #ffffff;
+  --highlight: #e9b949;
+  --on-highlight: #211c16;
+  --highlight-soft: #f8ecc9;
+  --on-highlight-soft: #6e4b00;
   --focus-ring: #7a3b2e;
   --overlay: rgba(33, 28, 22, 0.85);
 }
@@ -66,17 +92,29 @@
 :root[data-theme="dark"] {
   --background: #1a1712;
   --surface: #231e18;
-  --surface-alt: #2b241d;
+  --surface-alt: #302820;
   --foreground: #f1ece2;
   --muted: #a89e90;
   --border: #3a332a;
+  --border-strong: #7a6e5e;
   --accent: #d99879;
+  --on-accent: #1a1712;
+  --highlight: #e3b450;
+  --on-highlight: #1a1712;
+  --highlight-soft: #3a301c;
+  --on-highlight-soft: #f0c868;
   --focus-ring: #d99879;
   --overlay: rgba(0, 0, 0, 0.9);
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -111,11 +149,11 @@ body {
   }
 
   .page-title {
-    @apply text-3xl font-semibold tracking-tight sm:text-4xl;
+    @apply text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl;
   }
 
   .section-heading {
-    @apply text-xl font-semibold tracking-tight sm:text-2xl;
+    @apply text-2xl font-semibold tracking-tight text-balance sm:text-3xl;
   }
 
   .prose-body {
@@ -127,8 +165,30 @@ body {
     font-size: calc(1rem * var(--reading-font-scale, 1));
   }
 
+  /* A small secondary line (a field name, a chapter's position), in
+     sentence case at a readable size -- never tiny letter-spaced caps. */
   .eyebrow {
-    @apply text-xs font-medium tracking-wide text-[var(--muted)] uppercase;
+    @apply text-sm font-medium text-[var(--muted)];
+  }
+
+  /*
+   * Long-form reading text (chapters, Sthala Puranam, Knowledge): the
+   * Noto Serif faces app/layout.tsx loads -- the Latin face first, then
+   * the face for each Indic script, so every script falls through to
+   * its own serif. Larger than UI body text (1.125rem), still scaled by
+   * the reader's text-size preference via --reading-font-scale.
+   */
+  .reading-text {
+    font-family:
+      var(--font-reading-latin), var(--font-reading-tamil), var(--font-reading-kannada), var(--font-reading-telugu),
+      var(--font-reading-devanagari), Georgia, serif;
+    font-size: calc(1.125rem * var(--reading-font-scale, 1));
+    line-height: 1.7;
+  }
+
+  .reading-text .prose-body {
+    font-size: inherit;
+    line-height: inherit;
   }
 
   /* Hidden until keyboard-focused -- the "skip to content" link. */

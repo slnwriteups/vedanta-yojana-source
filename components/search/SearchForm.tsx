@@ -55,13 +55,13 @@ export function SearchForm({
         placeholder={translateUi("searchPlaceholder", language ?? null)}
         aria-label={translateUi("tabSearch", language ?? null)}
         title={translateUi("searchHint", language ?? null)}
-        className="min-w-0 flex-1 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3 py-2 text-sm"
+        className="min-w-0 flex-1 rounded-md border border-[var(--border-strong)] bg-[var(--surface)] px-3 py-2 text-sm"
         autoCorrect="off"
         autoCapitalize="none"
       />
       <button
         type="submit"
-        className="rounded-md border border-[var(--border)] px-4 py-2 text-sm hover:border-[var(--accent)]"
+        className="rounded-md border border-[var(--border-strong)] px-4 py-2 text-sm hover:border-[var(--accent)]"
       >
         {translateUi("tabSearch", language ?? null)}
       </button>

@@ -20,7 +20,7 @@ export function LanguageSwitcher() {
       <select
         value={language ?? ""}
         onChange={(event) => setLanguage((event.target.value || null) as LanguageCode | null)}
-        className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-1.5 text-sm text-[var(--foreground)]"
+        className="rounded-md border border-[var(--border-strong)] bg-[var(--surface)] px-2 py-1.5 text-sm text-[var(--foreground)]"
       >
         <option value="">English</option>
         {SUPPORTED_LANGUAGES.map((option) => (

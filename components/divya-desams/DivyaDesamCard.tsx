@@ -10,9 +10,9 @@ import { sectionTint } from "@/lib/section-tints";
 import { DraftBadge } from "@/components/shared/DraftBadge";
 
 /**
- * One row of the Divya Desam index -- a photo thumbnail (mobile's
- * ContentCard `variant="temple"`, `mobile/app/(tabs)/divya-desams/index.tsx`)
- * plus the same text stack Phase 5J/5K already established. The
+ * One temple in the Divya Desam index grid -- its photograph large (4:3,
+ * the same ratio as mobile's ContentCard `variant="temple"` thumbnail)
+ * with the number, name and presiding deity beneath it. The
  * secondary line uses only an already-present field
  * (templeInformation.moolavar, the presiding deity) and is omitted
  * entirely when that field is absent -- never a fabricated summary.
@@ -45,29 +45,31 @@ export function DivyaDesamCard({
 
   return (
     <li>
-      <Link
-        href={`/divya-desams/${record.slug}`}
-        className="relative flex items-center gap-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 transition-colors hover:border-[var(--accent)]"
-      >
-        <span aria-hidden className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: tint }} />
-        {imageHref ? (
-          // 108x81 (4:3) -- mobile's ContentCard `variant="temple"` thumbnail
-          // size (mobile/components/ContentCard.tsx), not a square crop.
-          <img
-            src={imageHref}
-            alt=""
-            loading="lazy"
-            className="h-[81px] w-[108px] flex-none rounded-sm border border-[var(--border)] object-cover"
-          />
-        ) : null}
-        <div className="min-w-0">
+      <Link href={`/divya-desams/${record.slug}`} className="group block">
+        <div className="aspect-[4/3] overflow-hidden rounded-md" style={{ backgroundColor: tint }}>
+          {imageHref ? (
+            <img
+              src={imageHref}
+              alt=""
+              width={400}
+              height={300}
+              loading="lazy"
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
+            />
+          ) : (
+            <span aria-hidden className="flex h-full w-full items-center justify-center text-4xl font-semibold text-[var(--on-accent)] tabular-nums">
+              {number}
+            </span>
+          )}
+        </div>
+        <div className="mt-3 min-w-0">
           <DraftBadge status={record.status} needsReview={record.migration.needsReview} />
-          <span className="mr-2 tabular-nums text-[var(--muted)]">{number}.</span>
-          <span className="font-medium">{localized.displayName}</span>
+          <span className="block font-semibold break-words group-hover:underline">
+            <span className="mr-1.5 tabular-nums text-[var(--muted)]">{number}.</span>
+            {localized.displayName}
+          </span>
           {localized.templeInformation.moolavar ? (
-            <p className="mt-1 text-sm text-[var(--muted)]">
-              {localized.templeInformation.moolavar}
-            </p>
+            <span className="mt-0.5 block text-sm text-[var(--muted)]">{localized.templeInformation.moolavar}</span>
           ) : null}
         </div>
       </Link>

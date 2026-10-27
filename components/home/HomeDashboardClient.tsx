@@ -40,9 +40,8 @@ import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
  *
  * `spotlight` is DivyaDesamSpotlightSection, rendered by the server page
  * around this component (it needs node:fs to resolve the day's image)
- * and slotted in here so the visual order matches mobile's exactly:
- * header -> continue-reading/get-started -> What's New -> spotlight -> Panchangam ->
- * Sankalpam.
+ * and slotted in here beside the header. Order: header, What's New and
+ * continue-reading/get-started beside the spotlight -> Panchangam.
  */
 export function HomeDashboardClient({
   catalog,
@@ -100,64 +99,68 @@ export function HomeDashboardClient({
     };
   }, [currentUntil]);
 
+  const readingOrStart =
+    resolvedList.length > 0 ? (
+      <section aria-labelledby="home-continue-reading" className="space-y-4">
+        <h2 id="home-continue-reading" className="section-heading">
+          {t("homeContinueReadingLabel")}
+        </h2>
+        <div className="space-y-3">
+          {resolvedList.map((resolved) => (
+            <ContinueReadingCard
+              key={resolved.bookSlug}
+              chapterTitle={resolved.chapterTitle}
+              bookTitle={resolved.bookTitle}
+              coverHref={bookCoverAsset(resolved.bookSlug)}
+              tintColor={sectionTint(resolved.bookSlug, theme)}
+              monogram={resolved.bookTitle.trim().charAt(0).toUpperCase()}
+              position={resolved.chapterPosition}
+              total={resolved.totalChapters}
+              minutesLeft={resolved.minutesLeft}
+              kind={resolved.kind}
+              href={`/library/${resolved.bookSlug}/${resolved.chapterSlug}`}
+            />
+          ))}
+        </div>
+      </section>
+    ) : (
+      <section aria-labelledby="home-get-started" className="space-y-4">
+        <h2 id="home-get-started" className="section-heading">
+          {t("homeGetStartedLabel")}
+        </h2>
+        <div className="space-y-4">
+          <GetStartedCard href="/divya-desams" title={t("tabDivyaDesams")} subtitle={t("divyaDesamsCardSubtitle")} />
+          <GetStartedCard href="/library" title={t("tabLibrary")} subtitle={t("libraryCardSubtitle")} />
+        </div>
+      </section>
+    );
+
   return (
-    <div className="space-y-8">
-      <HomeHeader panchangam={panchangam} />
-
-      {resolvedList.length > 0 ? (
-        <div className="space-y-2">
-          <p className="eyebrow">{t("homeContinueReadingLabel")}</p>
-          <div className="space-y-3">
-            {resolvedList.map((resolved) => (
-              <ContinueReadingCard
-                key={resolved.bookSlug}
-                chapterTitle={resolved.chapterTitle}
-                bookTitle={resolved.bookTitle}
-                coverHref={bookCoverAsset(resolved.bookSlug)}
-                tintColor={sectionTint(resolved.bookSlug, theme)}
-                monogram={resolved.bookTitle.trim().charAt(0).toUpperCase()}
-                position={resolved.chapterPosition}
-                total={resolved.totalChapters}
-                minutesLeft={resolved.minutesLeft}
-                kind={resolved.kind}
-                href={`/library/${resolved.bookSlug}/${resolved.chapterSlug}`}
-              />
-            ))}
-          </div>
+    <div className="space-y-16">
+      {/* Desktop: the greeting, What's New and entry points beside the
+          day's Divya Desam photograph, so the first screen holds them all;
+          a phone stacks them in that order. */}
+      <div className="grid gap-12 lg:grid-cols-2">
+        <div className="space-y-12">
+          <HomeHeader />
+          {/* Right under the greeting, as a short list of titles, so a notice
+              that needs acting on (an app update to install) is seen first --
+              What's New is not in the site navigation. */}
+          {announcements.length > 0 ? (
+            <section aria-labelledby="home-whats-new" className="space-y-4">
+              <h2 id="home-whats-new" className="section-heading">
+                {t("whatsNewLabel")}
+              </h2>
+              <WhatsNewList announcements={announcements} limit={3} compact />
+              <Link href="/whats-new" className="inline-block font-semibold text-[var(--accent)] hover:underline">
+                {t("whatsNewSeeAll")} <span aria-hidden="true">→</span>
+              </Link>
+            </section>
+          ) : null}
+          {readingOrStart}
         </div>
-      ) : (
-        <div className="space-y-2">
-          <p className="eyebrow">{t("homeGetStartedLabel")}</p>
-          <div className="grid gap-3 sm:grid-cols-2">
-            <GetStartedCard
-              href="/divya-desams"
-              title={t("tabDivyaDesams")}
-              subtitle={t("divyaDesamsCardSubtitle")}
-              monogram="D"
-              tintColor={sectionTint("divya-desams", theme)}
-            />
-            <GetStartedCard
-              href="/library"
-              title={t("tabLibrary")}
-              subtitle={t("libraryCardSubtitle")}
-              monogram="L"
-              tintColor="var(--accent)"
-            />
-          </div>
-        </div>
-      )}
-
-      {announcements.length > 0 ? (
-        <div className="space-y-2">
-          <p className="eyebrow">{t("whatsNewLabel")}</p>
-          <WhatsNewList announcements={announcements} limit={2} />
-          <Link href="/whats-new" className="inline-block text-sm font-semibold text-[var(--accent)] hover:underline">
-            {t("whatsNewSeeAll")} <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-      ) : null}
-
-      {spotlight}
+        {spotlight}
+      </div>
 
       <PanchangamCalendar initialPanchangam={panchangam} />
     </div>
@@ -165,42 +168,20 @@ export function HomeDashboardClient({
 }
 
 /**
- * Web port of mobile's shared ContentCard (mobile/components/ContentCard.tsx)
- * as rendered for Home's two "Get Started" entry points, which have no
- * cover photo: a thin left-edge tint stripe plus a tinted monogram
- * swatch in place of a thumbnail -- previously missing entirely on web,
- * which rendered these two tiles as plain bordered text blocks.
+ * Home's two "Get Started" entry points: a surface one tone step off the
+ * page, with the title at heading size and an arrow -- no outline, no
+ * monogram tile.
  */
-function GetStartedCard({
-  href,
-  title,
-  subtitle,
-  monogram,
-  tintColor,
-}: {
-  href: string;
-  title: string;
-  subtitle: string;
-  monogram: string;
-  tintColor: string;
-}) {
+function GetStartedCard({ href, title, subtitle }: { href: string; title: string; subtitle: string }) {
   return (
     <Link
       href={href}
-      className="relative flex items-center gap-4 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 transition-colors hover:border-[var(--accent)]"
+      className="group block rounded-lg bg-[var(--surface-alt)] p-6 transition-colors hover:bg-[var(--surface)]"
     >
-      <span aria-hidden className="absolute inset-y-0 left-0 w-1" style={{ backgroundColor: tintColor }} />
-      <span
-        aria-hidden
-        className="flex h-14 w-14 flex-none items-center justify-center rounded-md text-lg font-bold"
-        style={{ backgroundColor: tintColor, color: "#fffaf5" }}
-      >
-        {monogram}
+      <span className="block text-2xl font-semibold tracking-tight">
+        {title} <span aria-hidden="true" className="text-[var(--accent)]">→</span>
       </span>
-      <div>
-        <h2 className="section-heading">{title}</h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">{subtitle}</p>
-      </div>
+      <span className="mt-2 block text-[var(--muted)]">{subtitle}</span>
     </Link>
   );
 }
