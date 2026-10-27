@@ -35,7 +35,7 @@ export function WhatsNewList({
   announcements: Announcement[];
   limit?: number;
   markSeen?: boolean;
-  /** Date and title only, one line each, linking to the full What's New page. */
+  /** Date and title (linking to the full What's New page), plus the announcement's own link when it has one. */
   compact?: boolean;
 }) {
   const { language } = useLanguage();
@@ -67,13 +67,23 @@ export function WhatsNewList({
     return (
       <ul role="list" className="space-y-3">
         {shown.map((announcement) => (
-          <li key={announcement.id}>
-            <Link href="/whats-new" className="group flex flex-wrap items-baseline gap-x-4 gap-y-0.5">
-              <time dateTime={announcement.date} className="w-24 flex-none text-sm text-[var(--muted)] tabular-nums">
-                {formatAnnouncementDate(announcement.date)}
-              </time>
-              <span className="min-w-0 flex-1 font-medium group-hover:underline">{announcement.title}</span>
-            </Link>
+          <li key={announcement.id} className="flex flex-wrap items-baseline gap-x-4 gap-y-0.5">
+            <time dateTime={announcement.date} className="w-24 flex-none text-sm text-[var(--muted)] tabular-nums">
+              {formatAnnouncementDate(announcement.date)}
+            </time>
+            <div className="min-w-0 flex-1">
+              <Link href="/whats-new" className="font-medium hover:underline">
+                {announcement.title}
+              </Link>
+              {/* The announcement's own link (an app download, a new page) is kept
+                  even in the short list, so a notice that needs acting on can be
+                  acted on from Home. */}
+              {announcement.link ? (
+                <div>
+                  <AnnouncementLink {...announcement.link} />
+                </div>
+              ) : null}
+            </div>
           </li>
         ))}
       </ul>
