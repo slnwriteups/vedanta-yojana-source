@@ -40,10 +40,8 @@ import { PanchangamCalendar } from "@/components/home/PanchangamCalendar";
  *
  * `spotlight` is DivyaDesamSpotlightSection, rendered by the server page
  * around this component (it needs node:fs to resolve the day's image)
- * and slotted in here beside the header, so the first screen is the
- * day's Panchangam as the title next to the day's Divya Desam photograph:
- * header + spotlight -> continue-reading/get-started -> Panchangam ->
- * What's New.
+ * and slotted in here beside the header. Order: header + continue-
+ * reading/get-started beside the spotlight -> Panchangam -> What's New.
  */
 export function HomeDashboardClient({
   catalog,
@@ -101,60 +99,66 @@ export function HomeDashboardClient({
     };
   }, [currentUntil]);
 
+  const readingOrStart =
+    resolvedList.length > 0 ? (
+      <section aria-labelledby="home-continue-reading" className="space-y-4">
+        <h2 id="home-continue-reading" className="section-heading">
+          {t("homeContinueReadingLabel")}
+        </h2>
+        <div className="space-y-3">
+          {resolvedList.map((resolved) => (
+            <ContinueReadingCard
+              key={resolved.bookSlug}
+              chapterTitle={resolved.chapterTitle}
+              bookTitle={resolved.bookTitle}
+              coverHref={bookCoverAsset(resolved.bookSlug)}
+              tintColor={sectionTint(resolved.bookSlug, theme)}
+              monogram={resolved.bookTitle.trim().charAt(0).toUpperCase()}
+              position={resolved.chapterPosition}
+              total={resolved.totalChapters}
+              minutesLeft={resolved.minutesLeft}
+              kind={resolved.kind}
+              href={`/library/${resolved.bookSlug}/${resolved.chapterSlug}`}
+            />
+          ))}
+        </div>
+      </section>
+    ) : (
+      <section aria-labelledby="home-get-started" className="space-y-4">
+        <h2 id="home-get-started" className="section-heading">
+          {t("homeGetStartedLabel")}
+        </h2>
+        <div className="space-y-4">
+          <GetStartedCard href="/divya-desams" title={t("tabDivyaDesams")} subtitle={t("divyaDesamsCardSubtitle")} />
+          <GetStartedCard href="/library" title={t("tabLibrary")} subtitle={t("libraryCardSubtitle")} />
+        </div>
+      </section>
+    );
+
   return (
     <div className="space-y-16">
-      {/* The first screen: the day's Panchangam as the title, beside the
-          day's Divya Desam photograph (stacked under it on a phone). */}
-      <section className="grid gap-10 lg:grid-cols-2 lg:items-center">
-        <HomeHeader panchangam={panchangam} />
+      {/* Desktop: the greeting and entry points beside the day's Divya
+          Desam photograph, so the first screen holds both; a phone stacks
+          them in that order. */}
+      <div className="grid gap-12 lg:grid-cols-2">
+        <div className="space-y-12">
+          <HomeHeader />
+          {readingOrStart}
+        </div>
         {spotlight}
-      </section>
-
-      {resolvedList.length > 0 ? (
-        <section aria-labelledby="home-continue-reading" className="space-y-4">
-          <h2 id="home-continue-reading" className="section-heading">
-            {t("homeContinueReadingLabel")}
-          </h2>
-          <div className="space-y-3">
-            {resolvedList.map((resolved) => (
-              <ContinueReadingCard
-                key={resolved.bookSlug}
-                chapterTitle={resolved.chapterTitle}
-                bookTitle={resolved.bookTitle}
-                coverHref={bookCoverAsset(resolved.bookSlug)}
-                tintColor={sectionTint(resolved.bookSlug, theme)}
-                monogram={resolved.bookTitle.trim().charAt(0).toUpperCase()}
-                position={resolved.chapterPosition}
-                total={resolved.totalChapters}
-                minutesLeft={resolved.minutesLeft}
-                kind={resolved.kind}
-                href={`/library/${resolved.bookSlug}/${resolved.chapterSlug}`}
-              />
-            ))}
-          </div>
-        </section>
-      ) : (
-        <section aria-labelledby="home-get-started" className="space-y-4">
-          <h2 id="home-get-started" className="section-heading">
-            {t("homeGetStartedLabel")}
-          </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <GetStartedCard href="/divya-desams" title={t("tabDivyaDesams")} subtitle={t("divyaDesamsCardSubtitle")} />
-            <GetStartedCard href="/library" title={t("tabLibrary")} subtitle={t("libraryCardSubtitle")} />
-          </div>
-        </section>
-      )}
-
-      <div id="panchangam" className="scroll-mt-24">
-        <PanchangamCalendar initialPanchangam={panchangam} />
       </div>
 
+      <PanchangamCalendar initialPanchangam={panchangam} />
+
+      {/* Last, as a short list of titles: announcements stay one tap from
+          Home (What's New is not in the site navigation) without pushing
+          the day's content down. */}
       {announcements.length > 0 ? (
         <section aria-labelledby="home-whats-new" className="space-y-4">
           <h2 id="home-whats-new" className="section-heading">
             {t("whatsNewLabel")}
           </h2>
-          <WhatsNewList announcements={announcements} limit={1} />
+          <WhatsNewList announcements={announcements} limit={3} compact />
           <Link href="/whats-new" className="inline-block font-semibold text-[var(--accent)] hover:underline">
             {t("whatsNewSeeAll")} <span aria-hidden="true">→</span>
           </Link>
