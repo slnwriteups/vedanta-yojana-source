@@ -77,6 +77,19 @@
           "warnings": 3
         }
       }
+    },
+    {
+      "checkedAt": "2026-10-27T16:08:23.866Z",
+      "trigger": "deploy",
+      "pages": 424,
+      "errors": 0,
+      "warnings": 3,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 3
+        }
+      }
     }
   ]
 }
