@@ -1,6 +1,5 @@
 import { Platform, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
-import { shadows } from "../shadows";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import { localizeSankalpamText } from "../panchangam-labels.ts";
@@ -30,7 +29,7 @@ export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | nul
     <View style={styles.section}>
       <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("homeSankalpamLabel")}</Text>
       <View
-        style={[styles.card, shadows.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+        style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
       >
         <Text
           style={[
@@ -53,9 +52,7 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   sectionLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
     paddingHorizontal: layout.screenPadding,
   },
   card: {

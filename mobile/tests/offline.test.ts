@@ -188,8 +188,8 @@ test("Library: a blog's entries are numbered as posts, a book's as chapters", as
   const { chapterOrdinalLabel, chapterPositionLabel, continueReadingProgressLabel } = await import("../ui-strings.ts");
   assert.equal(chapterOrdinalLabel(null, 2), "Chapter 2");
   assert.equal(chapterOrdinalLabel(null, 2, "blog"), "Post 2");
-  assert.equal(chapterPositionLabel(null, 6, 8), "CHAPTER 6 OF 8");
-  assert.equal(chapterPositionLabel(null, 6, 8, "blog"), "POST 6 OF 8");
+  assert.equal(chapterPositionLabel(null, 6, 8), "Chapter 6 of 8");
+  assert.equal(chapterPositionLabel(null, 6, 8, "blog"), "Post 6 of 8");
   assert.equal(chapterPositionLabel("ta", 6, 8, "blog"), "பதிவு 6 / 8");
   assert.match(continueReadingProgressLabel(null, 3, 8, 38, 5, "blog"), /^Post 3 of 8 /);
 });

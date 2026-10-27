@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { calendarDay, todayIn } from "../../content-lib/panchangam-place.ts";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
-import { shadows } from "../shadows";
 import { timesInZoneLabel, useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import {
@@ -151,12 +150,12 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   return (
     <View style={styles.section}>
       <View style={styles.headerArea}>
-        <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("homeCalendarBrowseTitle")}</Text>
+        <Text style={[styles.sectionLabel, { color: theme.colors.foreground }]} accessibilityRole="header">{t("homeCalendarBrowseTitle")}</Text>
         <Text style={[styles.sectionSubtitle, { color: theme.colors.muted }]}>{t("homeCalendarBrowseSubtitle")}</Text>
       </View>
 
       <View
-        style={[styles.card, shadows.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
+        style={[styles.card, { backgroundColor: theme.colors.surface, borderColor: theme.colors.border }]}
       >
         {/* Navigation Toolbar */}
         <View style={[styles.toolbar, { borderBottomColor: theme.colors.border }]}>
@@ -164,7 +163,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             onPress={() => goToOffset(-1)}
             style={({ pressed }) => [
               styles.navBtn,
-              { borderColor: theme.colors.border, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
+              { borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
             ]}
             accessibilityRole="button"
             accessibilityLabel={t("calendarPreviousDay")}
@@ -179,7 +178,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               styles.navBtn,
               isCurrentToday
                 ? { backgroundColor: theme.colors.accent, borderColor: theme.colors.accent }
-                : { borderColor: theme.colors.border, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
+                : { borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
             ]}
             accessibilityRole="button"
             accessibilityLabel={t("calendarTodayButton")}
@@ -187,7 +186,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <Text
               style={[
                 styles.navBtnText,
-                { color: isCurrentToday ? "#fff" : theme.colors.foreground, fontWeight: isCurrentToday ? "700" : "500" },
+                { color: isCurrentToday ? theme.colors.onAccent : theme.colors.foreground, fontWeight: isCurrentToday ? "700" : "500" },
               ]}
             >
               {t("calendarTodayButton")}
@@ -198,7 +197,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             onPress={() => goToOffset(1)}
             style={({ pressed }) => [
               styles.navBtn,
-              { borderColor: theme.colors.border, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
+              { borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
             ]}
             accessibilityRole="button"
             accessibilityLabel={t("calendarNextDay")}
@@ -222,8 +221,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 style={[
                   styles.stripChip,
                   isSelected
-                    ? { backgroundColor: theme.colors.accent, borderColor: theme.colors.accent }
-                    : { backgroundColor: theme.colors.background, borderColor: theme.colors.border },
+                    ? { backgroundColor: theme.colors.highlight, borderColor: theme.colors.highlight }
+                    : { backgroundColor: theme.colors.background, borderColor: theme.colors.borderStrong },
                 ]}
                 accessibilityRole="button"
                 accessibilityLabel={`${d.toDateString()}`}
@@ -231,7 +230,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 <Text
                   style={[
                     styles.chipDayName,
-                    { color: isSelected ? "#fff" : theme.colors.muted },
+                    { color: isSelected ? theme.colors.onHighlight : theme.colors.muted },
                   ]}
                 >
                   {dayName}
@@ -239,7 +238,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 <Text
                   style={[
                     styles.chipDayNum,
-                    { color: isSelected ? "#fff" : theme.colors.foreground, fontWeight: isSelected ? "700" : "600" },
+                    { color: isSelected ? theme.colors.onHighlight : theme.colors.foreground, fontWeight: isSelected ? "700" : "600" },
                   ]}
                 >
                   {dayNum}
@@ -248,7 +247,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                   <View
                     style={[
                       styles.todayDot,
-                      { backgroundColor: isSelected ? "#fff" : theme.colors.accent },
+                      { backgroundColor: isSelected ? theme.colors.onHighlight : theme.colors.accent },
                     ]}
                   />
                 ) : null}
@@ -267,7 +266,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             hitSlop={8}
             style={({ pressed }) => [
               styles.dateButton,
-              { borderColor: theme.colors.border, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
+              { borderColor: theme.colors.borderStrong, backgroundColor: theme.colors.background, opacity: pressed ? 0.7 : 1 },
             ]}
           >
             <Text style={[styles.dateHeadingText, { color: theme.colors.foreground }]}>{formattedDateHeading}</Text>
@@ -279,7 +278,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               styles.badge,
               {
                 backgroundColor: isCurrentToday
-                  ? theme.colors.accent + "20"
+                  ? theme.colors.highlightSoft
                   : isPast
                   ? theme.colors.muted + "20"
                   : theme.colors.accent + "15",
@@ -289,7 +288,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <Text
               style={[
                 styles.badgeText,
-                { color: isCurrentToday ? theme.colors.accent : isPast ? theme.colors.muted : theme.colors.accent },
+                { color: isCurrentToday ? theme.colors.onHighlightSoft : isPast ? theme.colors.muted : theme.colors.accent },
               ]}
             >
               {isCurrentToday ? t("calendarTodayButton") : isPast ? t("calendarPastPassed") : t("calendarUpcoming")}
@@ -536,12 +535,12 @@ const styles = StyleSheet.create({
     gap: 2,
   },
   sectionLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.title,
+    fontWeight: "600",
   },
   sectionSubtitle: {
-    fontSize: typography.small,
+    fontSize: typography.body,
+    lineHeight: typography.body * 1.4,
   },
   card: {
     marginHorizontal: layout.screenPadding,
@@ -582,8 +581,7 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
   },
   chipDayName: {
-    fontSize: 10,
-    textTransform: "uppercase",
+    fontSize: typography.eyebrow,
   },
   chipDayNum: {
     fontSize: typography.small,
@@ -630,7 +628,7 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
   },
   badgeText: {
-    fontSize: typography.eyebrow,
+    fontSize: typography.small,
     fontWeight: "700",
   },
   loadingArea: {
@@ -678,9 +676,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.xs,
   },
   sankalpamSectionLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
     fontWeight: "600",
   },
   toggleArrow: {

@@ -4,7 +4,7 @@ import { createContext, useContext } from "react";
  * Phase 6C -- the mobile design system. Phase 6A/6B's flat `colors`
  * export is replaced by a light/dark PAIR behind a React context, since
  * a plain module-level constant can never react to a theme change at
- * runtime. Typography/spacing/radius/shadows/layout are scheme-
+ * runtime. Typography/spacing/radius/layout are scheme-
  * independent and stay as plain exports -- only color needs to be
  * reactive.
  *
@@ -24,25 +24,45 @@ import { createContext, useContext } from "react";
  * tokens directly.
  */
 
+/*
+ * Roles shared with the website (app/globals.css): onAccent is text on an
+ * accent fill or a book/section tint (white in light, dark brown in dark,
+ * where the accent turns light); borderStrong outlines a control (field,
+ * button, chip) at 3:1, while border stays for decorative edges;
+ * highlight (turmeric gold) marks "today" and "new", leaving accent to
+ * mean actions and links, with highlightSoft as its quiet tinted form.
+ */
 const lightColors = {
   background: "#FBF9F5",
   surface: "#ffffff",
-  surfaceAlt: "#f3efe7",
+  surfaceAlt: "#efe7da",
   foreground: "#211c16",
   muted: "#6b6259",
   border: "#e3dcd0",
+  borderStrong: "#9a8d7b",
   accent: "#7a3b2e",
+  onAccent: "#ffffff",
+  highlight: "#e9b949",
+  onHighlight: "#211c16",
+  highlightSoft: "#f8ecc9",
+  onHighlightSoft: "#6e4b00",
   overlay: "rgba(33, 28, 22, 0.85)",
 } as const;
 
 const darkColors = {
   background: "#1a1712",
   surface: "#231e18",
-  surfaceAlt: "#2b241d",
+  surfaceAlt: "#302820",
   foreground: "#f1ece2",
   muted: "#a89e90",
   border: "#3a332a",
+  borderStrong: "#7a6e5e",
   accent: "#d99879",
+  onAccent: "#1a1712",
+  highlight: "#e3b450",
+  onHighlight: "#1a1712",
+  highlightSoft: "#3a301c",
+  onHighlightSoft: "#f0c868",
   overlay: "rgba(0, 0, 0, 0.9)",
 } as const;
 

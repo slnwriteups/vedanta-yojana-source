@@ -1,3 +1,4 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, View } from "react-native";
 import { radius, spacing, typography, useTheme } from "../theme";
@@ -41,23 +42,23 @@ export function UpdateBanner({ update, onDismiss }: { update: UpdateInfo; onDism
         accessibilityRole="button"
         accessibilityLabel={`Update available: version ${update.latestVersion}. Tap to install.`}
       >
-        <Text style={[styles.title, { color: theme.colors.surface }]}>
+        <Text style={[styles.title, { color: theme.colors.onAccent }]}>
           Update available: v{update.latestVersion}
         </Text>
-        <Text style={[styles.subtitle, { color: theme.colors.surface }]}>
+        <Text style={[styles.subtitle, { color: theme.colors.onAccent }]}>
           {isDownloading
             ? `Downloading update… ${downloadProgress}%`
             : "Tap to download and install"}
         </Text>
         {update.notes ? (
-          <Text style={[styles.notes, { color: theme.colors.surface }]}>
+          <Text style={[styles.notes, { color: theme.colors.onAccent }]}>
             {update.notes}
           </Text>
         ) : null}
       </Pressable>
 
       {isDownloading ? (
-        <ActivityIndicator color={theme.colors.surface} size="small" style={styles.spinner} />
+        <ActivityIndicator color={theme.colors.onAccent} size="small" style={styles.spinner} />
       ) : (
         <Pressable
           onPress={onDismiss}
@@ -66,7 +67,7 @@ export function UpdateBanner({ update, onDismiss }: { update: UpdateInfo; onDism
           accessibilityLabel="Dismiss update notice"
           style={styles.dismiss}
         >
-          <Text style={[styles.dismissText, { color: theme.colors.surface }]}>✕</Text>
+          <Ionicons name="close" size={20} color={theme.colors.onAccent} />
         </Pressable>
       )}
     </View>
@@ -106,9 +107,5 @@ const styles = StyleSheet.create({
   },
   dismiss: {
     paddingHorizontal: spacing.xs,
-  },
-  dismissText: {
-    fontSize: typography.body,
-    fontWeight: "700",
   },
 });

@@ -1,7 +1,6 @@
 import * as Haptics from "expo-haptics";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
-import { shadows } from "../shadows";
 import { DraftBadge } from "./DraftBadge";
 
 /**
@@ -13,12 +12,11 @@ import { DraftBadge } from "./DraftBadge";
  * a single combined accessibilityLabel so a screen reader announces the
  * whole card as one row, not fragments.
  *
- * UI/UX pass: each row is now its own separated, rounded card
- * (shadows.card) with breathing room between them, rather than a flat
- * hairline-divided strip -- the difference between a settings list and
- * a content-browsing list. Still just one shared component, so this
- * benefits every screen that renders one (Library's book/chapter
- * lists, Divya Desams) at once.
+ * Each row is its own separated, rounded card (no resting shadow) with
+ * breathing room between them, rather than a flat hairline-divided
+ * strip. Used for list rows such as a book's chapters; the Library and
+ * Divya Desams indexes show their covers and photographs large instead
+ * (GridTile).
  *
  * `tintColor` (optional): a thin colored left-edge stripe identifying
  * which section/book a row belongs to (section-tints.ts) -- a
@@ -97,7 +95,6 @@ export function ContentCard({
       accessibilityLabel={a11yLabel}
       style={({ pressed }) => [
         styles.card,
-        shadows.card,
         disabled ? styles.disabled : null,
         {
           backgroundColor: pressed ? theme.colors.surfaceAlt : theme.colors.surface,
@@ -117,7 +114,7 @@ export function ContentCard({
         />
       ) : monogram && tintColor ? (
         <View style={[styles.thumb, thumbSize, styles.monogram, { backgroundColor: tintColor }]}>
-          <Text style={styles.monogramText}>{monogram}</Text>
+          <Text style={[styles.monogramText, { color: theme.colors.onAccent }]}>{monogram}</Text>
         </View>
       ) : null}
       <View style={styles.textBlock}>
@@ -160,7 +157,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   monogramText: {
-    color: "#fffaf5",
     fontSize: typography.heading,
     fontWeight: "700",
   },

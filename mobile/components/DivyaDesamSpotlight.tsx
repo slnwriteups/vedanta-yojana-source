@@ -1,12 +1,11 @@
 import { useMemo } from "react";
 import { useRouter } from "expo-router";
-import { ImageBackground, Pressable, StyleSheet, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { loadDivyaDesams, type DivyaDesam } from "../content-lib/loader.ts";
 import { divyaDesamNumberLabels } from "../content-lib/ordering.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { localizeDivyaDesam } from "../../content-lib/i18n.ts";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
-import { shadows } from "../shadows";
 import { sectionTint } from "../section-tints.ts";
 import { regionLabel } from "../divya-desam-region-labels.ts";
 import { useLanguage } from "../language-context.ts";
@@ -97,81 +96,59 @@ export function DivyaDesamSpotlight() {
   const deity = record.templeInformation.moolavar ?? "";
   const titleLine = `${numberLabel}. ${record.displayName}`;
 
-  const overlay = (
-    <View style={[styles.overlay, { backgroundColor: theme.colors.overlay }]}>
-      <Text style={styles.title} numberOfLines={2}>
-        {titleLine}
-      </Text>
-      {region ? (
-        <Text style={styles.subtitle} numberOfLines={1}>
-          {region}
-        </Text>
-      ) : null}
-      {deity ? (
-        <Text style={styles.subtitle} numberOfLines={1}>
-          {deity}
-        </Text>
-      ) : null}
-    </View>
-  );
-
+  // The photograph is shown whole and large, with its caption beneath it
+  // rather than laid over it, so the deity is never covered.
   return (
-    <View style={styles.section}>
-      <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("homeSpotlightLabel")}</Text>
-      <Pressable
-        onPress={() => router.push(`/divya-desams/${record.slug}` as never)}
-        accessibilityRole="button"
-        accessibilityLabel={[titleLine, region, deity].filter(Boolean).join(". ")}
-        style={({ pressed }) => [styles.cardWrap, shadows.card, { opacity: pressed ? 0.92 : 1 }]}
-      >
-        {image ? (
-          <ImageBackground source={image} style={styles.card} imageStyle={styles.image}>
-            {overlay}
-          </ImageBackground>
-        ) : (
-          <View style={[styles.card, { backgroundColor: tint }]}>{overlay}</View>
-        )}
-      </Pressable>
-    </View>
+    <Pressable
+      onPress={() => router.push(`/divya-desams/${record.slug}` as never)}
+      accessibilityRole="button"
+      accessibilityLabel={[titleLine, region, deity].filter(Boolean).join(". ")}
+      style={({ pressed }) => [styles.section, { opacity: pressed ? 0.92 : 1 }]}
+    >
+      <View style={[styles.frame, { backgroundColor: tint }]}>
+        {image ? <Image source={image} style={styles.image} /> : null}
+      </View>
+      <View style={styles.caption}>
+        <Text style={[styles.label, { color: theme.colors.muted }]}>{t("homeSpotlightLabel")}</Text>
+        <Text style={[styles.title, { color: theme.colors.foreground }]} numberOfLines={2}>
+          {titleLine}
+        </Text>
+        {region || deity ? (
+          <Text style={[styles.subtitle, { color: theme.colors.muted }]} numberOfLines={2}>
+            {[region, deity].filter(Boolean).join(" · ")}
+          </Text>
+        ) : null}
+      </View>
+    </Pressable>
   );
 }
 
-const CARD_HEIGHT = 180;
-
 const styles = StyleSheet.create({
   section: {
-    gap: spacing.xs,
-  },
-  sectionLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
-    paddingHorizontal: layout.screenPadding,
-  },
-  cardWrap: {
     marginHorizontal: layout.screenPadding,
+    gap: spacing.md,
+  },
+  frame: {
+    aspectRatio: 4 / 3,
     borderRadius: radius.lg,
     overflow: "hidden",
   },
-  card: {
-    height: CARD_HEIGHT,
-    justifyContent: "flex-end",
-  },
   image: {
+    width: "100%",
+    height: "100%",
     resizeMode: "cover",
   },
-  overlay: {
-    padding: spacing.md,
+  caption: {
     gap: 2,
   },
+  label: {
+    fontSize: typography.small,
+  },
   title: {
-    color: "#fffaf5",
-    fontSize: typography.heading,
-    fontWeight: "700",
+    fontSize: typography.heading + 2,
+    fontWeight: "600",
   },
   subtitle: {
-    color: "#fffaf5",
-    fontSize: typography.small,
-    opacity: 0.9,
+    fontSize: typography.body,
   },
 });

@@ -207,7 +207,7 @@ export default function DivyaDesamDetailScreen() {
         <Text style={[styles.title, { color: theme.colors.foreground }]}>{record.displayName}</Text>
       </View>
 
-      <ContentImage images={topImages} />
+      <ContentImage images={topImages} feature />
 
       {presentTempleFields.length > 0 ? (
         <Section heading={t("templeInformationHeading")}>
@@ -338,9 +338,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   templeLabel: {
-    fontSize: typography.eyebrow,
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
+    fontSize: typography.small,
   },
   templeValue: {
     fontSize: typography.body,
@@ -359,10 +357,8 @@ const styles = StyleSheet.create({
     marginTop: spacing.xs,
   },
   specialNoteLabel: {
-    fontSize: typography.eyebrow,
+    fontSize: typography.small,
     fontWeight: "600",
-    textTransform: "uppercase",
-    letterSpacing: 0.5,
     marginBottom: spacing.xs,
   },
   linkList: {

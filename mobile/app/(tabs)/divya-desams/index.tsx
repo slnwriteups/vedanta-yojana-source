@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 import { Stack, useRouter } from "expo-router";
-import { FlatList, Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import { loadDivyaDesams, loadKnowledgeRecord, type DivyaDesam } from "../../../content-lib/loader.ts";
 import { divyaDesamNumberLabels } from "../../../content-lib/ordering.ts";
 import { imagesByUuid } from "../../../content-lib/image-manifest.generated.ts";
-import { ContentCard } from "../../../components/ContentCard";
+import { GridTile } from "../../../components/GridTile";
 import { layout, radius, spacing, typography, useTheme } from "../../../theme";
 import { sectionTint } from "../../../section-tints.ts";
 import { localizeDivyaDesam, localizeKnowledge } from "../../../../content-lib/i18n.ts";
@@ -118,18 +118,50 @@ export default function DivyaDesamsIndexScreen() {
     [records, selectedTab]
   );
 
-  function renderItem({ item }: { item: DivyaDesam }) {
+  // Grouped by Nadu under a heading each (the "All" view shows every group
+  // in DIVYA_DESAM_REGION_ORDER; a selected tab shows its own), laid out
+  // two photographs to a row. Rows rather than one big grid so the list
+  // stays virtualized across all 107 records.
+  const rows = useMemo(() => {
+    const out: IndexRow[] = [];
+    for (const region of DIVYA_DESAM_REGION_ORDER) {
+      const inRegion = regionRecords.filter((r) => r.region === region);
+      if (inRegion.length === 0) continue;
+      out.push({ key: `h-${region}`, region, count: traditionalCount(inRegion, numberLabels) });
+      for (let i = 0; i < inRegion.length; i += 2) {
+        out.push({ key: `r-${inRegion[i].slug}`, pair: inRegion.slice(i, i + 2) });
+      }
+    }
+    return out;
+  }, [regionRecords, numberLabels]);
+
+  function renderRow({ item: row }: { item: IndexRow }) {
+    if ("region" in row) {
+      return (
+        <Text style={[styles.regionHeading, { color: theme.colors.foreground }]} accessibilityRole="header">
+          {regionLabel(row.region, language)}
+          <Text style={[styles.regionCount, { color: theme.colors.muted }]}>{`  ${tabCountLabel(row.region, row.count, language)}`}</Text>
+        </Text>
+      );
+    }
     return (
-      <ContentCard
-        title={`${numberLabels.get(item.slug)}. ${item.displayName}`}
-        subtitle={item.templeInformation.moolavar}
-        status={item.status}
-        needsReview={item.migration.needsReview}
-        imageAsset={firstImageAsset(item)}
-        tintColor={tint}
-        variant="temple"
-        onPress={() => router.push(`/divya-desams/${item.slug}` as never)}
-      />
+      <View style={styles.pairRow}>
+        {row.pair.map((item) => (
+          <GridTile
+            key={item.slug}
+            title={item.displayName}
+            titlePrefix={`${numberLabels.get(item.slug)}.`}
+            subtitle={item.templeInformation.moolavar}
+            status={item.status}
+            needsReview={item.migration.needsReview}
+            imageAsset={firstImageAsset(item)}
+            tintColor={tint}
+            fallbackText={numberLabels.get(item.slug)}
+            variant="photo"
+            onPress={() => router.push(`/divya-desams/${item.slug}` as never)}
+          />
+        ))}
+      </View>
     );
   }
 
@@ -137,28 +169,27 @@ export default function DivyaDesamsIndexScreen() {
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Stack.Screen options={{ title: t("tabDivyaDesams") }} />
       <FlatList
-        data={regionRecords}
-        keyExtractor={(item) => item.slug}
-        renderItem={renderItem}
+        data={rows}
+        keyExtractor={(row) => row.key}
+        renderItem={renderRow}
         contentContainerStyle={styles.list}
         ListHeaderComponent={
-          <View>
+          <View style={styles.header}>
             {introduction ? (
-              <ContentCard
-                title={introduction.title}
-                subtitle={t("introCardSubtitle")}
-                tintColor={tint}
+              <Pressable
                 onPress={() => router.push("/divya-desams/introduction" as never)}
-              />
+                accessibilityRole="button"
+                accessibilityLabel={introduction.title}
+                style={({ pressed }) => [styles.intro, { backgroundColor: theme.colors.surfaceAlt, opacity: pressed ? 0.85 : 1 }]}
+              >
+                <Text style={[styles.introTitle, { color: theme.colors.foreground }]}>
+                  {introduction.title} <Text style={{ color: theme.colors.accent }}>→</Text>
+                </Text>
+                <Text style={[styles.introSubtitle, { color: theme.colors.muted }]}>{t("introCardSubtitle")}</Text>
+              </Pressable>
             ) : null}
-            <Text style={[styles.classificationEyebrow, { color: theme.colors.muted }]}>
-              {t("geoClassificationEyebrow")}
-            </Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.tabRow}
-            >
+            <Text style={[styles.classificationLabel, { color: theme.colors.muted }]}>{t("geoClassificationEyebrow")}</Text>
+            <View style={styles.tabRow}>
               {TABS.map((tab) => {
                 const active = tab === selectedTab;
                 const label = tab === ALL_TAB ? t("allDivyaDesamsTab") : regionLabel(tab, language);
@@ -172,20 +203,16 @@ export default function DivyaDesamsIndexScreen() {
                     style={[
                       styles.tab,
                       {
-                        backgroundColor: active ? tint : theme.colors.surface,
-                        borderColor: active ? tint : theme.colors.border,
+                        backgroundColor: active ? theme.colors.accent : theme.colors.surface,
+                        borderColor: active ? theme.colors.accent : theme.colors.borderStrong,
                       },
                     ]}
                   >
-                    <Text
-                      style={[styles.tabText, { color: active ? "#fffaf5" : theme.colors.foreground }]}
-                    >
-                      {label}
-                    </Text>
+                    <Text style={[styles.tabText, { color: active ? theme.colors.onAccent : theme.colors.foreground }]}>{label}</Text>
                   </Pressable>
                 );
               })}
-            </ScrollView>
+            </View>
             <Text style={[styles.count, { color: theme.colors.muted }]}>
               {tabCountLabel(selectedTab, traditionalCount(regionRecords, numberLabels), language)}
             </Text>
@@ -196,32 +223,41 @@ export default function DivyaDesamsIndexScreen() {
   );
 }
 
+type IndexRow = { key: string; region: DivyaDesamRegion; count: number } | { key: string; pair: DivyaDesam[] };
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  count: {
-    fontSize: typography.small,
-    paddingHorizontal: layout.screenPadding,
-    paddingVertical: spacing.sm,
-  },
   list: {
+    paddingHorizontal: layout.screenPadding,
     paddingBottom: layout.tabBarClearance,
   },
-  classificationEyebrow: {
-    fontSize: typography.eyebrow,
-    fontWeight: "700",
-    letterSpacing: 0.5,
-    paddingHorizontal: layout.screenPadding,
+  header: {
     paddingTop: spacing.lg,
-    paddingBottom: spacing.sm,
+    gap: spacing.md,
   },
-  // Horizontal-only: this ScrollView's own contentContainerStyle scrolls
-  // sideways within its row, never the outer FlatList/screen.
+  intro: {
+    borderRadius: radius.lg,
+    padding: spacing.xl,
+    gap: spacing.xs,
+  },
+  introTitle: {
+    fontSize: typography.title,
+    fontWeight: "600",
+  },
+  introSubtitle: {
+    fontSize: typography.body,
+  },
+  classificationLabel: {
+    fontSize: typography.small,
+    fontWeight: "500",
+    paddingTop: spacing.sm,
+  },
   tabRow: {
-    paddingHorizontal: layout.screenPadding,
+    flexDirection: "row",
+    flexWrap: "wrap",
     gap: spacing.sm,
-    paddingBottom: spacing.md,
   },
   tab: {
     borderWidth: 1,
@@ -234,5 +270,23 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: typography.small,
     fontWeight: "600",
+  },
+  count: {
+    fontSize: typography.small,
+  },
+  regionHeading: {
+    fontSize: typography.title,
+    fontWeight: "600",
+    paddingTop: spacing.xxl,
+    paddingBottom: spacing.lg,
+  },
+  regionCount: {
+    fontSize: typography.body,
+    fontWeight: "400",
+  },
+  pairRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: spacing.xl,
   },
 });

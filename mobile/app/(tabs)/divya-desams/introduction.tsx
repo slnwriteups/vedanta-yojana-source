@@ -47,7 +47,7 @@ export default function DivyaDesamsIntroductionScreen() {
         <Text style={[styles.title, { color: theme.colors.foreground }]}>{record.title}</Text>
       </View>
 
-      <ContentImage images={record.images} />
+      <ContentImage images={record.images} feature />
 
       {record.body ? (
         <Section text={record.body} />
@@ -74,10 +74,8 @@ const styles = StyleSheet.create({
     gap: spacing.xs,
   },
   contentType: {
-    fontSize: typography.eyebrow,
+    fontSize: typography.small,
     fontWeight: "700",
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
   },
   title: {
     fontSize: typography.title,

@@ -68,7 +68,7 @@ export function PanchangamDatePicker({
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={a11y}
-      style={({ pressed }) => [styles.navBtn, { borderColor: theme.colors.border, opacity: pressed ? 0.6 : 1 }]}
+      style={({ pressed }) => [styles.navBtn, { borderColor: theme.colors.borderStrong, opacity: pressed ? 0.6 : 1 }]}
     >
       <Text style={[styles.navText, { color: theme.colors.foreground }]}>{label}</Text>
     </Pressable>
@@ -117,15 +117,15 @@ export function PanchangamDatePicker({
                     styles.cell,
                     styles.dayCell,
                     isSelected
-                      ? { backgroundColor: theme.colors.accent, borderColor: theme.colors.accent }
-                      : { borderColor: isToday ? theme.colors.accent : "transparent" },
+                      ? { backgroundColor: theme.colors.highlight, borderColor: theme.colors.highlight }
+                      : { borderColor: isToday ? theme.colors.highlight : "transparent" },
                     { opacity: pressed ? 0.6 : 1 },
                   ]}
                 >
                   <Text
                     style={[
                       styles.dayText,
-                      { color: isSelected ? "#fff" : theme.colors.foreground, fontWeight: isSelected || isToday ? "700" : "500" },
+                      { color: isSelected ? theme.colors.onHighlight : theme.colors.foreground, fontWeight: isSelected || isToday ? "700" : "500" },
                     ]}
                   >
                     {day}

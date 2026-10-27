@@ -1,7 +1,7 @@
+import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Haptics from "expo-haptics";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
-import { shadows } from "../shadows";
 import { useLanguage } from "../language-context.ts";
 import { continueReadingProgressLabel, useT } from "../ui-strings.ts";
 
@@ -56,7 +56,6 @@ export function ContinueReadingCard({
       accessibilityLabel={[chapterTitle, bookTitle, progressLabel].join(". ")}
       style={({ pressed }) => [
         styles.card,
-        shadows.card,
         {
           backgroundColor: pressed ? theme.colors.surfaceAlt : theme.colors.surface,
           borderColor: theme.colors.border,
@@ -67,7 +66,7 @@ export function ContinueReadingCard({
         <Image source={imageAsset} style={[styles.cover, { backgroundColor: theme.colors.border }]} resizeMode="contain" />
       ) : (
         <View style={[styles.cover, styles.monogram, { backgroundColor: tintColor }]}>
-          <Text style={styles.monogramText}>{monogram}</Text>
+          <Text style={[styles.monogramText, { color: theme.colors.onAccent }]}>{monogram}</Text>
         </View>
       )}
 
@@ -87,7 +86,8 @@ export function ContinueReadingCard({
       </View>
 
       <View style={[styles.resumeButton, { backgroundColor: tintColor }]}>
-        <Text style={styles.resumeButtonText}>{`▶ ${t("resumeButtonLabel")}`}</Text>
+        <Ionicons name="play" size={12} color={theme.colors.onAccent} />
+        <Text style={[styles.resumeButtonText, { color: theme.colors.onAccent }]}>{t("resumeButtonLabel")}</Text>
       </View>
     </Pressable>
   );
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   monogramText: {
-    color: "#fffaf5",
     fontSize: typography.heading,
     fontWeight: "700",
   },
@@ -147,6 +146,8 @@ const styles = StyleSheet.create({
     fontSize: typography.eyebrow,
   },
   resumeButton: {
+    flexDirection: "row",
+    gap: spacing.xs,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: radius.md,
@@ -155,7 +156,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   resumeButtonText: {
-    color: "#fffaf5",
     fontSize: typography.small,
     fontWeight: "700",
   },
