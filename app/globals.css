@@ -17,14 +17,28 @@
  * states, e.g. SettingsControls' pill buttons; overlay: a scrim behind
  * modal-style content, e.g. WelcomeGate/OnboardingGate).
  */
+/*
+ * Roles added for the palette pass: --on-accent is text on an --accent
+ * fill (white in light, dark brown in dark, where the accent turns light);
+ * --border-strong outlines a control (field, button, chip) at 3:1, while
+ * --border stays for decorative edges; --highlight (turmeric gold) marks
+ * "today" and "new", leaving --accent to mean actions and links, with
+ * --highlight-soft as its quiet tinted form.
+ */
 :root {
   --background: #fbf9f5;
   --surface: #ffffff;
-  --surface-alt: #f3efe7;
+  --surface-alt: #efe7da;
   --foreground: #211c16;
   --muted: #6b6259;
   --border: #e3dcd0;
+  --border-strong: #9a8d7b;
   --accent: #7a3b2e;
+  --on-accent: #ffffff;
+  --highlight: #e9b949;
+  --on-highlight: #211c16;
+  --highlight-soft: #f8ecc9;
+  --on-highlight-soft: #6e4b00;
   --focus-ring: #7a3b2e;
   --overlay: rgba(33, 28, 22, 0.85);
 }
@@ -33,11 +47,17 @@
   :root {
     --background: #1a1712;
     --surface: #231e18;
-    --surface-alt: #2b241d;
+    --surface-alt: #302820;
     --foreground: #f1ece2;
     --muted: #a89e90;
     --border: #3a332a;
+    --border-strong: #7a6e5e;
     --accent: #d99879;
+    --on-accent: #1a1712;
+    --highlight: #e3b450;
+    --on-highlight: #1a1712;
+    --highlight-soft: #3a301c;
+    --on-highlight-soft: #f0c868;
     --focus-ring: #d99879;
     --overlay: rgba(0, 0, 0, 0.9);
   }
@@ -54,11 +74,17 @@
 :root[data-theme="light"] {
   --background: #fbf9f5;
   --surface: #ffffff;
-  --surface-alt: #f3efe7;
+  --surface-alt: #efe7da;
   --foreground: #211c16;
   --muted: #6b6259;
   --border: #e3dcd0;
+  --border-strong: #9a8d7b;
   --accent: #7a3b2e;
+  --on-accent: #ffffff;
+  --highlight: #e9b949;
+  --on-highlight: #211c16;
+  --highlight-soft: #f8ecc9;
+  --on-highlight-soft: #6e4b00;
   --focus-ring: #7a3b2e;
   --overlay: rgba(33, 28, 22, 0.85);
 }
@@ -66,11 +92,17 @@
 :root[data-theme="dark"] {
   --background: #1a1712;
   --surface: #231e18;
-  --surface-alt: #2b241d;
+  --surface-alt: #302820;
   --foreground: #f1ece2;
   --muted: #a89e90;
   --border: #3a332a;
+  --border-strong: #7a6e5e;
   --accent: #d99879;
+  --on-accent: #1a1712;
+  --highlight: #e3b450;
+  --on-highlight: #1a1712;
+  --highlight-soft: #3a301c;
+  --on-highlight-soft: #f0c868;
   --focus-ring: #d99879;
   --overlay: rgba(0, 0, 0, 0.9);
 }

@@ -57,7 +57,7 @@ export function DivyaDesamCard({
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03] motion-reduce:transition-none"
             />
           ) : (
-            <span aria-hidden className="flex h-full w-full items-center justify-center text-4xl font-semibold text-[#fffaf5] tabular-nums">
+            <span aria-hidden className="flex h-full w-full items-center justify-center text-4xl font-semibold text-[var(--on-accent)] tabular-nums">
               {number}
             </span>
           )}

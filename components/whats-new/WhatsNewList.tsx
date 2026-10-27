@@ -96,7 +96,7 @@ export function WhatsNewList({
               </span>
             ))}
             {lastSeen !== undefined && isNewAnnouncement(announcement, lastSeen) ? (
-              <span className="rounded-full bg-[var(--accent)] px-2 py-0.5 font-semibold text-[#fffaf5]">
+              <span className="rounded-full bg-[var(--highlight)] px-2 py-0.5 font-semibold text-[var(--on-highlight)]">
                 {t("whatsNewNewBadge")}
               </span>
             ) : null}

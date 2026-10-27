@@ -141,7 +141,7 @@ function SearchExperience() {
               className={`rounded-md border px-3 py-1 text-sm font-semibold transition-colors ${
                 selected
                   ? "border-[var(--accent)] bg-[var(--surface-alt)] text-[var(--accent)]"
-                  : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)]"
+                  : "border-[var(--border-strong)] text-[var(--muted)] hover:border-[var(--accent)]"
               }`}
             >
               {filterLabel}

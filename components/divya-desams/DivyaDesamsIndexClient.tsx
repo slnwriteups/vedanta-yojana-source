@@ -118,8 +118,8 @@ export function DivyaDesamsIndexClient({
                 onClick={() => setSelectedTab(tab)}
                 className={`flex-none whitespace-nowrap rounded-full border px-3 py-1.5 text-sm font-medium transition-colors ${
                   active
-                    ? "border-[var(--accent)] bg-[var(--accent)] text-[#fffaf5]"
-                    : "border-[var(--border)] bg-[var(--surface)] hover:border-[var(--accent)]"
+                    ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--on-accent)]"
+                    : "border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)]"
                 }`}
               >
                 {label}

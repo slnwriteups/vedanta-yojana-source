@@ -192,7 +192,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <button
               type="button"
               onClick={() => goToOffset(-1)}
-              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] px-2.5 text-sm font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-2.5 text-sm font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
               aria-label={t("calendarPreviousDay")}
             >
               ← {t("calendarPreviousDay")}
@@ -203,8 +203,8 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
               disabled={isCurrentToday}
               className={`inline-flex h-8 items-center justify-center rounded-md px-3 text-sm font-medium transition-colors ${
                 isCurrentToday
-                  ? "bg-[var(--accent)] text-white"
-                  : "border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+                  ? "bg-[var(--accent)] text-[var(--on-accent)]"
+                  : "border border-[var(--border-strong)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
               }`}
             >
               {t("calendarTodayButton")}
@@ -212,7 +212,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             <button
               type="button"
               onClick={() => goToOffset(1)}
-              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] px-2.5 text-sm font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+              className="inline-flex h-8 items-center justify-center rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-2.5 text-sm font-medium text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
               aria-label={t("calendarNextDay")}
             >
               {t("calendarNextDay")} →
@@ -228,7 +228,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                   setSelectedDate(parseDateKey(e.target.value));
                 }
               }}
-              className="rounded-md border border-[var(--border)] bg-[var(--background)] px-2 py-1 text-sm text-[var(--foreground)] shadow-sm focus:border-[var(--accent)] focus:outline-none"
+              className="rounded-md border border-[var(--border-strong)] bg-[var(--background)] px-2 py-1 text-sm text-[var(--foreground)] focus:border-[var(--accent)]"
               aria-label="Select date"
             />
           </div>
@@ -249,15 +249,15 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 onClick={() => setSelectedDate(d)}
                 className={`relative flex flex-col items-center justify-center rounded-md py-1.5 text-center transition-colors ${
                   isSelected
-                    ? "bg-[var(--accent)] text-white font-bold"
-                    : "border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
+                    ? "bg-[var(--highlight)] text-[var(--on-highlight)] font-bold"
+                    : "border border-[var(--border-strong)] bg-[var(--background)] text-[var(--foreground)] hover:border-[var(--accent)] hover:bg-[var(--surface)]"
                 }`}
               >
                 <span className="text-xs opacity-80">{dayName}</span>
                 <span className="text-sm font-semibold">{dayNum}</span>
                 {isDayToday && (
                   <span
-                    className={`mt-0.5 h-1 w-1 rounded-full ${isSelected ? "bg-white" : "bg-[var(--accent)]"}`}
+                    className={`mt-0.5 h-1 w-1 rounded-full ${isSelected ? "bg-[var(--on-highlight)]" : "bg-[var(--accent)]"}`}
                   />
                 )}
               </button>
@@ -273,7 +273,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           <span
             className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold ${
               isCurrentToday
-                ? "bg-[var(--accent)]/15 text-[var(--accent)]"
+                ? "bg-[var(--highlight-soft)] text-[var(--on-highlight-soft)]"
                 : isPast
                 ? "bg-[var(--muted)]/15 text-[var(--muted)]"
                 : "bg-blue-500/15 text-blue-600 dark:text-blue-400"

@@ -98,7 +98,7 @@ function PillGroup<T>({
               className={`min-h-11 rounded-md border px-3 py-1.5 text-sm font-semibold ${
                 selected
                   ? "border-[var(--accent)] bg-[var(--surface-alt)] text-[var(--accent)]"
-                  : "border-[var(--border)] text-[var(--muted)] hover:border-[var(--accent)]"
+                  : "border-[var(--border-strong)] text-[var(--muted)] hover:border-[var(--accent)]"
               }`}
             >
               {option.label}

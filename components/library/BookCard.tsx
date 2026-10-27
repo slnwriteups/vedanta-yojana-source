@@ -53,7 +53,7 @@ export function BookCard({ book, chapterCount }: { book: PublicBook; chapterCoun
             <span
               aria-hidden
               className="flex h-full w-full items-center justify-center text-5xl font-semibold"
-              style={{ backgroundColor: tint, color: "#fffaf5" }}
+              style={{ backgroundColor: tint, color: "var(--on-accent)" }}
             >
               {monogram}
             </span>

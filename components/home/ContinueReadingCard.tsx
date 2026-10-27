@@ -57,7 +57,7 @@ export function ContinueReadingCard({
         />
       ) : (
         <div
-          className="flex h-24 w-16 flex-none items-center justify-center rounded-md text-2xl font-bold text-[#fffaf5]"
+          className="flex h-24 w-16 flex-none items-center justify-center rounded-md text-2xl font-bold text-[var(--on-accent)]"
           style={{ backgroundColor: tintColor }}
         >
           {monogram}
@@ -74,7 +74,7 @@ export function ContinueReadingCard({
       </div>
 
       <span
-        className="flex-none rounded-md px-3 py-2 text-sm font-bold text-[#fffaf5]"
+        className="flex-none rounded-md px-3 py-2 text-sm font-bold text-[var(--on-accent)]"
         style={{ backgroundColor: tintColor }}
       >
         {`▶ ${t("resumeButtonLabel")}`}
