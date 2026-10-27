@@ -1,14 +1,6 @@
 {
   "announcements": [
     {
-      "id": "2026-10-27-a-fresh-look",
-      "date": "2026-10-27",
-      "platforms": ["website"],
-      "title": "A fresh look for Vedanta Yojana",
-      "body": "Temples and books now appear with large photographs and covers, the Divya Desams are grouped by Nadu, and chapters are set in a serif typeface that is easier to read.",
-      "link": { "href": "/divya-desams", "label": "Explore the Divya Desams" }
-    },
-    {
       "id": "2026-10-26-android-1-1-0",
       "date": "2026-10-26",
       "platforms": ["app"],
