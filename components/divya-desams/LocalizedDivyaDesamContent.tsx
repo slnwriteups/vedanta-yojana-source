@@ -54,40 +54,47 @@ export function LocalizedDivyaDesamContent({
 
       {topImages}
 
-      <TempleInformation info={localized.templeInformation} language={language} />
-      {/* Kept right beside Temple Information's own "How to reach" field
-          (not down with the narrative sections below) so a traveler gets
-          the travel note and the actual clickable map together, in one
-          place. Matches mobile's own [slug].tsx screen order: images,
-          then Temple Information, then the Shrine Locations/Maps links. */}
-      <ShrineLinks shrines={record.shrines} language={language} />
-      {localized.sthalaPuranam ? (
-        resolvedAfterSthalaPuranamImages.length > 0 ? (
-          <SthalaPuranamWithImages
-            text={localized.sthalaPuranam}
-            images={resolvedAfterSthalaPuranamImages}
-            heading={translateUi("sthalaPuranamHeading", language)}
-            language={language}
-          />
-        ) : (
-          <LongFormSection
-            heading={translateUi("sthalaPuranamHeading", language)}
-            headingId="sthala-puranam-heading"
-            text={localized.sthalaPuranam}
-            language={language}
-          />
-        )
-      ) : null}
-      {localized.azhwarPasuram ? (
-        <LongFormSection
-          heading={translateUi("azhwarPasuramHeading", language)}
-          headingId="azhwar-pasuram-heading"
-          text={localized.azhwarPasuram}
-          language={language}
-        />
-      ) : null}
-      <ShrineDetails shrines={localized.shrines} language={language} />
-      <ResourceLinks resources={record.resources} language={language} />
+      {/* Desktop: the reading column beside a sticky Temple Information
+          sidebar, so the facts and the map link stay in view through a
+          long Sthala Puranam. On a phone the sidebar comes first, as before:
+          images, then Temple Information, then the Shrine Locations/Maps
+          links (mobile's own [slug].tsx screen order), keeping the travel
+          note and the clickable map together in one place. */}
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1fr)_19rem]">
+        <aside className="space-y-8 self-start [&_h2]:text-2xl rounded-lg bg-[var(--surface-alt)] p-6 lg:sticky lg:top-24 lg:order-2">
+          <TempleInformation info={localized.templeInformation} language={language} />
+          <ShrineLinks shrines={record.shrines} language={language} />
+        </aside>
+        <div className="min-w-0 space-y-12 lg:order-1">
+          {localized.sthalaPuranam ? (
+            resolvedAfterSthalaPuranamImages.length > 0 ? (
+              <SthalaPuranamWithImages
+                text={localized.sthalaPuranam}
+                images={resolvedAfterSthalaPuranamImages}
+                heading={translateUi("sthalaPuranamHeading", language)}
+                language={language}
+              />
+            ) : (
+              <LongFormSection
+                heading={translateUi("sthalaPuranamHeading", language)}
+                headingId="sthala-puranam-heading"
+                text={localized.sthalaPuranam}
+                language={language}
+              />
+            )
+          ) : null}
+          {localized.azhwarPasuram ? (
+            <LongFormSection
+              heading={translateUi("azhwarPasuramHeading", language)}
+              headingId="azhwar-pasuram-heading"
+              text={localized.azhwarPasuram}
+              language={language}
+            />
+          ) : null}
+          <ShrineDetails shrines={localized.shrines} language={language} />
+          <ResourceLinks resources={record.resources} language={language} />
+        </div>
+      </div>
     </>
   );
 }

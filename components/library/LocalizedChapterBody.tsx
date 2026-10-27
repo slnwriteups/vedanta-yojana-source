@@ -106,7 +106,7 @@ export function LocalizedChapterBody({
               </p>
             ) : null}
           </div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+          <p className="font-medium text-[var(--muted)]">
             {localizedBook.title}
             {partLabelFor(localizedBook, chapter.slug, localized.title) ? ` · ${partLabelFor(localizedBook, chapter.slug, localized.title)}` : ""}
           </p>

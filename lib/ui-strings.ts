@@ -340,7 +340,7 @@ const UI_STRINGS = {
     te: "క్రింది ఆలయాలను దర్శించే ముందు ఇక్కడి నుండి ప్రారంభించండి.",
   },
   geoClassificationEyebrow: {
-    en: "GEOGRAPHICAL CLASSIFICATION",
+    en: "Geographical classification",
     ta: "புவியியல் வகைப்பாடு",
     kn: "ಭೌಗೋಳಿಕ ವರ್ಗೀಕರಣ",
     hi: "भौगोलिक वर्गीकरण",
@@ -594,7 +594,7 @@ export function chapterPositionLabel(language: LanguageCode | null, position: nu
   const word = entryWord(language, kind);
   return pick(
     language,
-    `${word.toUpperCase()} ${position} OF ${total}`,
+    `${word} ${position} of ${total}`,
     `${word} ${position} / ${total}`,
     `${word} ${position} / ${total}`,
     `${word} ${position} / ${total}`,
@@ -624,7 +624,7 @@ export function continueReadingProgressLabel(
 export function minReadLabel(language: LanguageCode | null, minutes: number): string {
   return pick(
     language,
-    `${minutes} MIN READ`,
+    `${minutes} min read`,
     `${minutes} நிமிட வாசிப்பு`,
     `${minutes} ನಿಮಿಷ ಓದು`,
     `${minutes} मिनट का पठन`,

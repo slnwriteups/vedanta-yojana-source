@@ -78,7 +78,7 @@ export function TempleInformation({
       <h2 id="temple-information-heading" className="section-heading">
         {translateUi("templeInformationHeading", language)}
       </h2>
-      <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+      <dl className="grid gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-1">
         {presentFields.map((key) => (
           <div key={key}>
             <dt className="eyebrow">{translateUi(FIELD_LABEL_KEYS[key], language)}</dt>

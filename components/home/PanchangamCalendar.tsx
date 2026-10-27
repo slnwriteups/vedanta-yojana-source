@@ -181,11 +181,11 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
   return (
     <div className="space-y-3">
       <div>
-        <p className="eyebrow">{t("homeCalendarBrowseTitle")}</p>
-        <p className="mt-1 text-xs text-[var(--muted)]">{t("homeCalendarBrowseSubtitle")}</p>
+        <h2 className="section-heading">{t("homeCalendarBrowseTitle")}</h2>
+        <p className="mt-1 text-[var(--muted)]">{t("homeCalendarBrowseSubtitle")}</p>
       </div>
 
-      <div className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
+      <div className="space-y-3 rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
         {/* Navigation Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
           <div className="flex items-center gap-1.5">

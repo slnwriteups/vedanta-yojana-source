@@ -79,6 +79,12 @@ html {
   scroll-behavior: smooth;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
@@ -111,11 +117,11 @@ body {
   }
 
   .page-title {
-    @apply text-3xl font-semibold tracking-tight sm:text-4xl;
+    @apply text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl;
   }
 
   .section-heading {
-    @apply text-xl font-semibold tracking-tight sm:text-2xl;
+    @apply text-2xl font-semibold tracking-tight text-balance sm:text-3xl;
   }
 
   .prose-body {
@@ -127,8 +133,30 @@ body {
     font-size: calc(1rem * var(--reading-font-scale, 1));
   }
 
+  /* A small secondary line (a field name, a chapter's position), in
+     sentence case at a readable size -- never tiny letter-spaced caps. */
   .eyebrow {
-    @apply text-xs font-medium tracking-wide text-[var(--muted)] uppercase;
+    @apply text-sm font-medium text-[var(--muted)];
+  }
+
+  /*
+   * Long-form reading text (chapters, Sthala Puranam, Knowledge): the
+   * Noto Serif faces app/layout.tsx loads -- the Latin face first, then
+   * the face for each Indic script, so every script falls through to
+   * its own serif. Larger than UI body text (1.125rem), still scaled by
+   * the reader's text-size preference via --reading-font-scale.
+   */
+  .reading-text {
+    font-family:
+      var(--font-reading-latin), var(--font-reading-tamil), var(--font-reading-kannada), var(--font-reading-telugu),
+      var(--font-reading-devanagari), Georgia, serif;
+    font-size: calc(1.125rem * var(--reading-font-scale, 1));
+    line-height: 1.7;
+  }
+
+  .reading-text .prose-body {
+    font-size: inherit;
+    line-height: inherit;
   }
 
   /* Hidden until keyboard-focused -- the "skip to content" link. */

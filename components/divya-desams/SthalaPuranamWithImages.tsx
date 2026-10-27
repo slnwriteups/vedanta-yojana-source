@@ -136,7 +136,7 @@ export function SthalaPuranamWithImages({
       <h2 id="sthala-puranam-heading" className="section-heading">
         {heading}
       </h2>
-      <div className="space-y-5">
+      <div className="reading-text space-y-5">
         {segments.map((segment) => {
           if (segment.text === undefined) {
             return (

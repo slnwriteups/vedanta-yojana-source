@@ -25,31 +25,49 @@ export interface LightboxImage {
  * SthalaPuranamWithImages already use for their `language`-reactive
  * text.
  */
-export function ImageLightboxGrid({ images, className }: { images: LightboxImage[]; className?: string }) {
+export function ImageLightboxGrid({
+  images,
+  className,
+  feature = false,
+}: {
+  images: LightboxImage[];
+  className?: string;
+  /**
+   * Lead with the first image large (a record's top images): two images
+   * sit side by side at 4:3; three or more put the first across two
+   * columns and two rows, with the rest square beside and below it.
+   */
+  feature?: boolean;
+}) {
   const { language } = useLanguage();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const open = openIndex !== null ? images[openIndex] : undefined;
 
   return (
     <>
-      <div className={className ?? "grid grid-cols-2 gap-3 sm:grid-cols-3"}>
-        {images.map((image, index) => (
-          <button
-            key={image.id}
-            type="button"
-            onClick={() => setOpenIndex(index)}
-            aria-label={image.alt || translateUi("viewImageFullScreen", language)}
-            className="block"
-          >
-            <img
-              src={image.href}
-              alt={image.alt}
-              data-alt-status={image.altStatus}
-              loading="lazy"
-              className="aspect-square w-full rounded-md border border-[var(--border)] object-cover"
-            />
-          </button>
-        ))}
+      <div className={className ?? featureGridClass(feature, images.length)}>
+        {images.map((image, index) => {
+          const lead = feature && index === 0;
+          return (
+            <button
+              key={image.id}
+              type="button"
+              onClick={() => setOpenIndex(index)}
+              aria-label={image.alt || translateUi("viewImageFullScreen", language)}
+              className={lead && images.length > 2 ? "col-span-2 row-span-2 block" : "block"}
+            >
+              <img
+                src={image.href}
+                alt={image.alt}
+                data-alt-status={image.altStatus}
+                loading={lead ? "eager" : "lazy"}
+                className={`w-full rounded-md object-cover ${
+                  feature && images.length <= 2 ? "aspect-[4/3]" : lead ? "aspect-square h-full" : "aspect-square"
+                }`}
+              />
+            </button>
+          );
+        })}
       </div>
 
       {open ? (
@@ -67,4 +85,11 @@ export function ImageLightboxGrid({ images, className }: { images: LightboxImage
       ) : null}
     </>
   );
+}
+
+function featureGridClass(feature: boolean, count: number): string {
+  if (!feature) return "grid grid-cols-2 gap-3 sm:grid-cols-3";
+  if (count === 1) return "grid grid-cols-1";
+  if (count === 2) return "grid grid-cols-2 gap-3";
+  return "grid grid-cols-2 gap-3 sm:grid-cols-4";
 }

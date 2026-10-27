@@ -1,5 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Noto_Sans_Devanagari } from "next/font/google";
+import {
+  Noto_Sans_Devanagari,
+  Noto_Serif,
+  Noto_Serif_Devanagari,
+  Noto_Serif_Kannada,
+  Noto_Serif_Tamil,
+  Noto_Serif_Telugu,
+} from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { WelcomeGate } from "@/components/WelcomeGate";
 import { OnboardingGate } from "@/components/OnboardingGate";
@@ -62,6 +69,54 @@ const notoSansDevanagari = Noto_Sans_Devanagari({
   variable: "--font-devanagari",
   display: "swap",
 });
+
+/**
+ * The reading face: long-form text (chapters, Sthala Puranam, Knowledge)
+ * is set in Noto Serif, matching the app's serif reader
+ * (mobile/theme.ts's readingFontFamily), with the Noto Serif face for
+ * each Indic script the content is translated into. Self-hosted like
+ * the Devanagari UI font above; each is split by unicode-range, so a
+ * browser only downloads the scripts a page actually contains. Only the
+ * Latin face is preloaded -- it is the one every reading page uses.
+ * Applied through globals.css's `.reading-text`, never to the UI.
+ */
+const notoSerif = Noto_Serif({
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "700"],
+  variable: "--font-reading-latin",
+  display: "swap",
+});
+const notoSerifTamil = Noto_Serif_Tamil({
+  subsets: ["tamil"],
+  weight: ["400", "700"],
+  variable: "--font-reading-tamil",
+  display: "swap",
+  preload: false,
+});
+const notoSerifKannada = Noto_Serif_Kannada({
+  subsets: ["kannada"],
+  weight: ["400", "700"],
+  variable: "--font-reading-kannada",
+  display: "swap",
+  preload: false,
+});
+const notoSerifTelugu = Noto_Serif_Telugu({
+  subsets: ["telugu"],
+  weight: ["400", "700"],
+  variable: "--font-reading-telugu",
+  display: "swap",
+  preload: false,
+});
+const notoSerifDevanagari = Noto_Serif_Devanagari({
+  subsets: ["devanagari"],
+  weight: ["400", "700"],
+  variable: "--font-reading-devanagari",
+  display: "swap",
+  preload: false,
+});
+const readingFontVariables = [notoSerif, notoSerifTamil, notoSerifKannada, notoSerifTelugu, notoSerifDevanagari]
+  .map((font) => font.variable)
+  .join(" ");
 
 const siteOrigin = getSiteOrigin();
 
@@ -152,7 +207,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={notoSansDevanagari.variable}>
+    <html lang="en" className={`${notoSansDevanagari.variable} ${readingFontVariables}`}>
       <body className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)] antialiased">
         <AppProviders>
           {/*
