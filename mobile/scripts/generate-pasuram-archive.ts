@@ -4,7 +4,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { loadDivyaDesams } from "../content-lib/loader.ts";
+import { loadBooks, loadDivyaDesams } from "../content-lib/loader.ts";
 import { allPasuramResourceUrls } from "../content-lib/pasuram-resources.ts";
 import { getPasuramFileName } from "../services/pasuramResourceId.ts";
 
@@ -81,7 +81,7 @@ function sha256OfFile(filePath: string): string {
 }
 
 function main(): void {
-  const urls = allPasuramResourceUrls(loadDivyaDesams());
+  const urls = allPasuramResourceUrls([...loadDivyaDesams(), ...loadBooks()]);
   const filenames: string[] = [];
   let missing = 0;
 

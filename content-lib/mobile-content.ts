@@ -157,6 +157,8 @@ export const MobileBookSchema = z.object({
   migration: MobileMigrationSchema,
   parts: z.array(BookPartSchema).default([]),
   chapterOrder: z.array(SlugSchema).default([]),
+  /** See BookSchema.resources. */
+  resources: z.array(ResourceEntrySchema).default([]),
   translations: BookTranslationsSchema.optional(),
 });
 export type MobileBook = z.infer<typeof MobileBookSchema>;

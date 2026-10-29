@@ -50,9 +50,9 @@ test("1: the Library index page imports and calls loadBooks()", () => {
 });
 
 test("2: the current recovered book's title appears exactly, verbatim, in the real migrated data loadBooks() returns", () => {
-  // Blog series (kind "blog") share loadBooks(); only the 4 books are counted here.
+  // Blog series (kind "blog") share loadBooks(); only the 5 books are counted here.
   const books = loadBooks().filter((b) => b.kind === "book");
-  assert.equal(books.length, 4);
+  assert.equal(books.length, 5);
   // Phase 6E confirmed "A Brief Insight to Visishtadvaita Philosophy.pdf"
   // as the source for 17 of this book's chapters and supplemented the
   // book's title/author accordingly (see content/_provenance/library/).

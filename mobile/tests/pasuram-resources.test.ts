@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { allPasuramResourceUrls } from "../content-lib/pasuram-resources.ts";
-import { loadDivyaDesams } from "../content-lib/loader.ts";
+import { loadBooks, loadDivyaDesams } from "../content-lib/loader.ts";
 
 /**
  * Exercises allPasuramResourceUrls() against both a small hand-built
@@ -64,4 +64,20 @@ test("allPasuramResourceUrls: real content -- 540 unique Prapatti PDFs across al
   assert.equal(urls.length, 540);
   assert.equal(new Set(urls).size, 540, "every entry must be unique");
   assert.ok(urls.every((u) => u.startsWith("https://www.prapatti.com/") && u.endsWith(".pdf")));
+});
+
+test("allPasuramResourceUrls: a book's stotram-pdf resources are bundled alongside pasurams", () => {
+  const records = [
+    fakeDivyaDesam("temple-a", [{ language: "Tamil", type: "pasuram-pdf", url: "https://www.prapatti.com/a.pdf" }]),
+    fakeDivyaDesam("a-book", [{ language: "Tamil", type: "stotram-pdf", url: "https://www.prapatti.com/stotram.pdf" }]),
+  ];
+  assert.deepEqual(allPasuramResourceUrls(records), ["https://www.prapatti.com/a.pdf", "https://www.prapatti.com/stotram.pdf"]);
+});
+
+test("allPasuramResourceUrls: real content -- Sri Vishnu Sahasranaama Anubhavam's 5 stotram PDFs", () => {
+  const book = loadBooks().find((b) => b.slug === "sri-vishnu-sahasranaama-anubhavam");
+  assert.ok(book, "expected the Sri Vishnu Sahasranaama Anubhavam book");
+  const urls = allPasuramResourceUrls([book]);
+  assert.equal(urls.length, 5);
+  assert.ok(urls.every((u) => u.startsWith("https://www.prapatti.com/slokas/") && u.endsWith("/vishnusahasranaamam.pdf")));
 });

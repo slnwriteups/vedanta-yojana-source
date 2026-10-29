@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ImageEntrySchema, MigrationMetadataSchema } from "./shared.ts";
+import { ResourceEntrySchema } from "./divya-desam-parts.ts";
 import { SlugSchema, StatusSchema } from "./shared-safe.ts";
 import { BookPartSchema, BookTranslationsSchema, LibraryKindSchema } from "./book-parts.ts";
 
@@ -32,6 +33,12 @@ export const BookSchema = z.object({
   parts: z.array(BookPartSchema).default([]),
   /** Ordered list of chapter slugs. Chapter records themselves live separately. */
   chapterOrder: z.array(SlugSchema).default([]),
+  /**
+   * Language-tagged PDFs of the text the book is about (the stotram, for
+   * Sri Vishnu Sahasranaama Anubhavam), shown on the book's page the same
+   * way a Divya Desam shows its pasuram PDFs. Empty for most books.
+   */
+  resources: z.array(ResourceEntrySchema).default([]),
   translations: BookTranslationsSchema.optional(),
 });
 export type Book = z.infer<typeof BookSchema>;

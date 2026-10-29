@@ -44,9 +44,9 @@ test("an unknown Divya Desam slug resolves to null, not an error", () => {
 });
 
 test("the recovered Book resolves with its real title and full chapter set", () => {
-  // Blog series (kind "blog") share loadBooks(); only the 4 books are counted here.
+  // Blog series (kind "blog") share loadBooks(); only the 5 books are counted here.
   const books = loadBooks().filter((b) => b.kind === "book");
-  assert.equal(books.length, 4);
+  assert.equal(books.length, 5);
 
   const book = loadBook("untitled-recovered-book-pending-editorial-title");
   assert.ok(book, "the book did not resolve");

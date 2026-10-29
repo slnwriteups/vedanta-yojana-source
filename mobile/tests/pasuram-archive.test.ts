@@ -5,7 +5,7 @@ import path from "node:path";
 import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { decompress } from "fzstd";
-import { loadDivyaDesams } from "../content-lib/loader.ts";
+import { loadBooks, loadDivyaDesams } from "../content-lib/loader.ts";
 import { allPasuramResourceUrls } from "../content-lib/pasuram-resources.ts";
 import { PASURAM_ARCHIVE_VERSION, pasuramFileHashes, pasuramFilenameByUrl } from "../content-lib/pasuram-manifest.generated.ts";
 import { parseUstar } from "../services/pasuramTar.ts";
@@ -74,7 +74,7 @@ test("every archived file is genuinely valid PDF content, not truncated or corru
 });
 
 test("pasuramFilenameByUrl covers every Pasuram URL the current content corpus references", () => {
-  const urls = allPasuramResourceUrls(loadDivyaDesams());
+  const urls = allPasuramResourceUrls([...loadDivyaDesams(), ...loadBooks()]);
   assert.ok(urls.length > 0, "expected at least one real Pasuram URL in the corpus");
   const missing = urls.filter((url) => !(url in pasuramFilenameByUrl));
   assert.deepEqual(missing, [], `${missing.length} Pasuram URL(s) have no entry in pasuramFilenameByUrl`);

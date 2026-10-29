@@ -42,7 +42,8 @@ test("2: the Book is searchable", () => {
   // Library entries are all "book" documents: the 4 books plus the 3 blog
   // series (Book.kind "blog"), which are searched the same way.
   const books = corpus.filter((d) => d.type === "book");
-  assert.equal(books.length, 4 + 3);
+  assert.equal(books.length, 5 + 3);
+  assert.ok(books.some((b) => b.title === "Sri Vishnu Sahasranaama Anubhavam"));
   assert.ok(books.some((b) => b.title === "Nityasūri Vaibhavam"));
   assert.ok(books.some((b) => b.title === "Āzhwār Vaibhavam"));
   assert.ok(books.some((b) => b.title === "Temples and Festivals"));
@@ -65,7 +66,8 @@ test("2: the Book is searchable", () => {
 
 test("3: all chapters across every book are searchable", () => {
   // Books' chapters, then the blogs' posts (34 Āzhwār Vaibhavam + 2 Temples and Festivals + 11 Nityasūri Vaibhavam).
-  assert.equal(corpus.filter((d) => d.type === "chapter").length, 61 + 75 + 33 + 70 + (38 + 15 + 11));
+  // Then Sri Vishnu Sahasranaama Anubhavam's 88 chapters.
+  assert.equal(corpus.filter((d) => d.type === "chapter").length, 61 + 75 + 33 + 70 + (38 + 15 + 11) + 88);
 });
 
 test("4: the Knowledge record is searchable", () => {
@@ -75,10 +77,13 @@ test("4: the Knowledge record is searchable", () => {
 });
 
 test("5: Page150 is not included -- exact corpus size, no href/title referencing it", () => {
-  assert.equal(corpus.length, 107 + (4 + 3) + (61 + 75 + 33 + 70 + (38 + 15 + 11)) + 1);
+  assert.equal(corpus.length, 107 + (5 + 3) + (61 + 75 + 33 + 70 + (38 + 15 + 11) + 88) + 1);
   for (const doc of corpus) {
     assert.ok(!doc.href.includes("Page150"));
-    assert.ok(!doc.title.includes("Hayagriva"));
+    // The excluded Page150 was a Hayagriva page; Sri Vishnu Sahasranaama
+    // Anubhavam's own "Naama 501-502" chapter on the Hayagriva incarnation
+    // is unrelated to it.
+    assert.ok(!doc.title.includes("Hayagriva") || doc.href.includes("/library/sri-vishnu-sahasranaama-anubhavam/"), doc.href);
   }
 });
 

@@ -1,0 +1,13 @@
+{
+  "title": "Organisation of the Stotram",
+  "slug": "organisation-of-the-stotram",
+  "order": 3,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "upload:sri-vishnu-sahasranaama-anubhavam#organisation-of-the-stotram",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "Sri Vishnu Sahasranama Stotram, as printed for chanting purposes, consists of three sections:\n\n1. A prologue explains why Bhishma imparted the Stotram to the great and just Yudhishthira.\n\n2. The thousand names of Vishnu, organised in a poetic format in 107 stanzas, in the anushtup chandas (a meter with eight syllables in a quarter), two quarters per line, and two lines per stanza.\n\n3. The Phalashruti, or recounting the accrued benefits by chanting the Stotram.",
+  "images": []
+}
