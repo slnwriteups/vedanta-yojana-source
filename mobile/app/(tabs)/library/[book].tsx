@@ -4,6 +4,9 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import { ContentCard } from "../../../components/ContentCard";
 import { DraftBadge } from "../../../components/DraftBadge";
 import { BookDownloadControl } from "../../../components/BookDownloadControl";
+import { Section } from "../../../components/Section";
+import { PasuramResource } from "../../../components/PasuramResource";
+import { isPasuramAvailable } from "../../../services/pasuramOfflineService.ts";
 import { layout, spacing, typography, useTheme } from "../../../theme";
 import { sectionTint } from "../../../section-tints.ts";
 import { bookCoverAsset } from "../../../book-covers.ts";
@@ -49,6 +52,12 @@ import type { ChapterSummary } from "../../../content-lib/loader.ts";
  * working offline afterward. Offline, with no cached copy, the fetch
  * simply fails and the tap surfaces that inline rather than opening
  * anything -- there is no server to silently fall back to.
+ *
+ * A book with resources (its stotram's PDFs) lists them under the
+ * description, opened from the bundled Pasuram archive exactly like a
+ * Divya Desam's pasurams. Only resources this build actually bundles are
+ * shown, so a book that arrives through the remote catalog before an app
+ * update never shows a button that can't open.
  */
 export default function LibraryBookScreen() {
   const { book: bookSlug } = useLocalSearchParams<{ book: string }>();
@@ -129,6 +138,7 @@ export default function LibraryBookScreen() {
   }
 
   const cover = bookCoverAsset(book.slug);
+  const resources = entry.book.resources.filter((resource) => isPasuramAvailable(resource.url));
   // Scrolls with the chapter list (ListHeaderComponent) rather than staying
   // fixed above it, so the full-size cover never crowds out the chapters.
   const header = (
@@ -140,6 +150,21 @@ export default function LibraryBookScreen() {
       ) : null}
       {book.description ? (
         <Text style={[styles.description, { color: theme.colors.muted }]}>{book.description}</Text>
+      ) : null}
+      {resources.length > 0 ? (
+        <Section heading={t("stotramResourcesHeading")}>
+          <View style={styles.linkList}>
+            {resources.map((resource, index) => (
+              <PasuramResource
+                key={`${resource.url}-${index}`}
+                url={resource.url}
+                language={resource.language}
+                type={resource.type}
+              />
+            ))}
+          </View>
+          <Text style={[styles.resourceAttribution, { color: theme.colors.muted }]}>{t("pasuramSourceAttribution")}</Text>
+        </Section>
       ) : null}
       <BookDownloadControl bookSlug={book.slug} onAvailabilityChange={setDownloaded} />
       {openError ? (
@@ -189,6 +214,13 @@ const styles = StyleSheet.create({
   },
   list: {
     paddingBottom: layout.tabBarClearance,
+  },
+  linkList: {
+    gap: spacing.xs,
+  },
+  resourceAttribution: {
+    fontSize: typography.small,
+    marginTop: spacing.xs,
   },
   title: {
     fontSize: typography.title,

@@ -1,6 +1,14 @@
 {
   "announcements": [
     {
+      "id": "2026-10-29-sri-vishnu-sahasranaama-anubhavam",
+      "date": "2026-10-29",
+      "platforms": ["app", "website"],
+      "title": "New book: Sri Vishnu Sahasranaama Anubhavam",
+      "body": "All thousand names of Sri Vishnu, explained one by one following Sri Parasara Bhattar's commentary, with every shloka and the Phala Shruti. You can also read the stotram itself in Sanskrit, Kannada, English, Telugu or Tamil.",
+      "link": { "href": "/library/sri-vishnu-sahasranaama-anubhavam", "label": "Open the book" }
+    },
+    {
       "id": "2026-10-26-android-1-1-0",
       "date": "2026-10-26",
       "platforms": ["app"],

@@ -1,5 +1,5 @@
 import type { ResourceEntry } from "@/content-lib/schemas";
-import { pasuramResourceLabel, translateUi } from "@/lib/ui-strings";
+import { resourceLabel, translateUi } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
 
 /**
@@ -8,21 +8,26 @@ import type { LanguageCode } from "@/lib/preferences";
  * record. Uses the existing `language` value verbatim -- never inferred
  * from the URL. If a record has no resources, this renders nothing (no
  * empty heading). Heading and each link's "(PDF)" suffix are localized
- * via ui-strings.ts (pasuramResourcesHeading, pasuramResourceLabel), the
+ * via ui-strings.ts (pasuramResourcesHeading, resourceLabel), the
  * same keys mobile's [slug].tsx screen uses.
  *
  * Phase 5N: each link carries a visually-hidden "(opens in a new tab)"
  * suffix in addition to the already-visible "(PDF)" label -- both the
  * file type and the new-tab behavior should be discoverable to
  * screen-reader users.
+ *
+ * Also used on a Library book's page for its stotram PDFs (BookSchema.
+ * resources): the heading and labels then read "Stotram" instead of
+ * "Pasuram", decided by the resources' own `type`.
  */
 export function ResourceLinks({ resources, language }: { resources: ResourceEntry[]; language: LanguageCode | null }) {
   if (resources.length === 0) return null;
+  const heading = resources.every((resource) => resource.type === "stotram-pdf") ? "stotramResourcesHeading" : "pasuramResourcesHeading";
 
   return (
     <section aria-labelledby="resource-links-heading" className="space-y-3">
       <h2 id="resource-links-heading" className="section-heading">
-        {translateUi("pasuramResourcesHeading", language)}
+        {translateUi(heading, language)}
       </h2>
       <ul role="list" className="flex flex-wrap gap-3 text-sm">
         {resources.map((resource, index) => (
@@ -33,7 +38,7 @@ export function ResourceLinks({ resources, language }: { resources: ResourceEntr
               rel="noopener noreferrer"
               className="inline-block rounded-md border border-[var(--border)] px-3 py-2 hover:border-[var(--accent)] hover:underline"
             >
-              {pasuramResourceLabel(language, resource.language)} ↗
+              {resourceLabel(language, resource)} ↗
               <span className="sr-only">{translateUi("opensInBrowserSuffix", language)}</span>
             </a>
           </li>

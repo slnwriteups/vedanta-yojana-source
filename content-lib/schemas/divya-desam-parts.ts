@@ -86,7 +86,13 @@ export const ResourceLanguageSchema = z.enum([
 ]);
 export type ResourceLanguage = z.infer<typeof ResourceLanguageSchema>;
 
-export const ResourceTypeSchema = z.enum(["pasuram-pdf"]);
+/**
+ * "stotram-pdf" is a whole stotram rather than a Divya Desam's pasurams --
+ * today, the Sri Vishnu Sahasranamam PDFs on a Library book's page (see
+ * BookSchema.resources). Both kinds are bundled into the app and opened
+ * the same way; only the label differs.
+ */
+export const ResourceTypeSchema = z.enum(["pasuram-pdf", "stotram-pdf"]);
 export type ResourceType = z.infer<typeof ResourceTypeSchema>;
 
 export const ResourceEntrySchema = z.object({

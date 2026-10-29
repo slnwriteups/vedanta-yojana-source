@@ -36,8 +36,8 @@ test("A: the default content loader resolves the real repository /content direct
   // as it was before this fix), every one of these would be empty/null
   // instead of matching the real, already-migrated Phase 5H/5I baseline.
   assert.equal(loadDivyaDesams().length, 107);
-  // 4 books plus the 3 blog series (kind "blog") published from the old blogs.
-  assert.equal(loadBooks().filter((b) => b.kind === "book").length, 4);
+  // 5 books plus the 3 blog series (kind "blog") published from the old blogs.
+  assert.equal(loadBooks().filter((b) => b.kind === "book").length, 5);
   assert.equal(loadBooks().filter((b) => b.kind === "blog").length, 3);
   assert.equal(loadKnowledge().length, 1);
 });
@@ -69,7 +69,15 @@ test("B: loadDivyaDesams() returns 107 and loadDivyaDesam() resolves real known 
 
 test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book", () => {
   const books = loadBooks().filter((b) => b.kind === "book");
-  assert.equal(books.length, 4);
+  assert.equal(books.length, 5);
+
+  // Sri Vishnu Sahasranaama Anubhavam: 9 introductory chapters (with the
+  // vandana and dhyana shlokam), 75 chapters of names (one per Sri
+  // Bhattar section) and 4 closing ones.
+  const vsn = loadBook("sri-vishnu-sahasranaama-anubhavam");
+  assert.equal(vsn?.title, "Sri Vishnu Sahasranaama Anubhavam");
+  assert.equal(loadChapters("sri-vishnu-sahasranaama-anubhavam").length, 88);
+  assert.equal(vsn?.resources.length, 5);
 
   const book = loadBook("untitled-recovered-book-pending-editorial-title");
   assert.ok(book);

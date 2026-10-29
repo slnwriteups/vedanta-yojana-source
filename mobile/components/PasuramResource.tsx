@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 import { layout, spacing, typography, useTheme } from "../theme";
 import { useLanguage } from "../language-context.ts";
-import { pasuramResourceLabel, translateUi } from "../ui-strings.ts";
+import { resourceLabel, translateUi } from "../ui-strings.ts";
 import { openOfflinePasuram } from "../services/pasuramOfflineService.ts";
 
 /**
@@ -11,11 +11,22 @@ import { openOfflinePasuram } from "../services/pasuramOfflineService.ts";
  * "↗" affordance so a reader can tell in advance that tapping leaves this
  * screen for a PDF viewer -- with no download/available/error state
  * machine to manage.
+ *
+ * Also used for a Library book's stotram PDFs (`type` "stotram-pdf"),
+ * which are bundled into the same archive and labelled "Stotram (PDF)".
  */
-export function PasuramResource({ url, language: pasuramLanguage }: { url: string; language: string }) {
+export function PasuramResource({
+  url,
+  language: pasuramLanguage,
+  type = "pasuram-pdf",
+}: {
+  url: string;
+  language: string;
+  type?: string;
+}) {
   const theme = useTheme();
   const { language } = useLanguage();
-  const label = pasuramResourceLabel(language, pasuramLanguage);
+  const label = resourceLabel(language, { language: pasuramLanguage, type });
 
   return (
     <Pressable

@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadDivyaDesams } from "../content-lib/loader.ts";
+import { loadBooks, loadDivyaDesams } from "../content-lib/loader.ts";
 import { allPasuramResourceUrls } from "../content-lib/pasuram-resources.ts";
 import { getPasuramFileName } from "../services/pasuramResourceId.ts";
 
@@ -24,7 +24,7 @@ const ASSETS_ROOT = path.join(MOBILE_ROOT, "assets", "pasurams");
 const PDF_MAGIC = [0x25, 0x50, 0x44, 0x46]; // "%PDF"
 
 test("every Pasuram URL the real corpus references has a bundled PDF under mobile/assets/pasurams/", () => {
-  const urls = allPasuramResourceUrls(loadDivyaDesams());
+  const urls = allPasuramResourceUrls([...loadDivyaDesams(), ...loadBooks()]);
   assert.ok(urls.length > 0, "expected at least one real Pasuram URL in the corpus");
 
   const missing = urls.filter((url) => !fs.existsSync(path.join(ASSETS_ROOT, getPasuramFileName(url))));
@@ -45,10 +45,10 @@ test("every bundled PDF under mobile/assets/pasurams/ is genuinely valid PDF con
 });
 
 test("mobile/assets/pasurams/ has no stray files beyond what the current corpus actually references", () => {
-  const urls = allPasuramResourceUrls(loadDivyaDesams());
+  const urls = allPasuramResourceUrls([...loadDivyaDesams(), ...loadBooks()]);
   const expected = new Set(urls.map(getPasuramFileName));
   const actual = fs.existsSync(ASSETS_ROOT) ? fs.readdirSync(ASSETS_ROOT).filter((f) => f.endsWith(".pdf")) : [];
 
   const stray = actual.filter((f) => !expected.has(f));
-  assert.deepEqual(stray, [], `${stray.length} bundled PDF(s) are not referenced by any current Divya Desam record`);
+  assert.deepEqual(stray, [], `${stray.length} bundled PDF(s) are not referenced by any current Divya Desam or book record`);
 });

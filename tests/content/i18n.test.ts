@@ -129,6 +129,7 @@ test("I: localizeBook applies title/description, never touches author", () => {
     migration: { sourcePageId: "aggregate:x", extractionConfidence: "medium", needsReview: false },
     parts: [],
     chapterOrder: [],
+    resources: [],
     translations: { kn: { title: "ಕನ್ನಡ ಪುಸ್ತಕ" } },
   };
   const localized = localizeBook(book, "kn");

@@ -400,6 +400,14 @@ const UI_STRINGS = {
     te: "పాశుర వనరులు",
   },
   pasuramPdfSuffix: { en: "Pasuram (PDF)", ta: "பாசுரம் (PDF)", kn: "ಪಾಸುರಂ (PDF)", hi: "पासुरम (PDF)", te: "పాశురం (PDF)" },
+  stotramResourcesHeading: {
+    en: "Read the Stotram",
+    ta: "ஸ்தோத்திரத்தைப் படிக்க",
+    kn: "ಸ್ತೋತ್ರವನ್ನು ಓದಿ",
+    hi: "स्तोत्र पढ़ें",
+    te: "స్తోత్రాన్ని చదవండి",
+  },
+  stotramPdfSuffix: { en: "Stotram (PDF)", ta: "ஸ்தோத்திரம் (PDF)", kn: "ಸ್ತೋತ್ರ (PDF)", hi: "स्तोत्र (PDF)", te: "స్తోత్రం (PDF)" },
 
   searchPlaceholder: {
     en: "Search Divya Desams, Library, Knowledge",
@@ -647,8 +655,9 @@ export function shrineOrdinalLabel(language: LanguageCode | null, index: number)
   return pick(language, `Shrine ${index}`, `சன்னதி ${index}`, `ಗುಡಿ ${index}`, `उप-मंदिर ${index}`, `సన్నిధి ${index}`);
 }
 
-export function pasuramResourceLabel(language: LanguageCode | null, resourceLanguage: string): string {
-  return `${resourceLanguage} ${translateUi("pasuramPdfSuffix", language)}`;
+/** A resource's link label: its language, then "Pasuram (PDF)" or "Stotram (PDF)" by kind. */
+export function resourceLabel(language: LanguageCode | null, resource: { language: string; type: string }): string {
+  return `${resource.language} ${translateUi(resource.type === "stotram-pdf" ? "stotramPdfSuffix" : "pasuramPdfSuffix", language)}`;
 }
 
 export function filterAccessibilityLabel(language: LanguageCode | null, filterLabel: string): string {
