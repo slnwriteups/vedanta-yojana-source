@@ -13,6 +13,7 @@ const bookCovers: Record<string, number> = {
   "azhwar-vaibhavam": require("./assets/book-covers/azhwar-vaibhavam.jpg"),
   "nityasuri-vaibhavam": require("./assets/book-covers/nityasuri-vaibhavam.jpg"),
   "temples-and-festivals": require("./assets/book-covers/temples-and-festivals.jpg"),
+  "sri-vishnu-sahasranaama-anubhavam": require("./assets/book-covers/sri-vishnu-sahasranaama-anubhavam.jpg"),
 };
 
 export function bookCoverAsset(slug: string): number | null {
