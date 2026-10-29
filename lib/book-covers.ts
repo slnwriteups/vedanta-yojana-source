@@ -20,6 +20,7 @@ const bookCovers: Record<string, string> = {
   "azhwar-vaibhavam": `${BASE_PATH}/book-covers/azhwar-vaibhavam.jpg`,
   "nityasuri-vaibhavam": `${BASE_PATH}/book-covers/nityasuri-vaibhavam.jpg`,
   "temples-and-festivals": `${BASE_PATH}/book-covers/temples-and-festivals.jpg`,
+  "sri-vishnu-sahasranaama-anubhavam": `${BASE_PATH}/book-covers/sri-vishnu-sahasranaama-anubhavam.jpg`,
 };
 
 export function bookCoverAsset(slug: string): string | null {
