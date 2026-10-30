@@ -110,3 +110,6 @@ jobs:
             mobile/vedanta-yojana.apk
             mobile/vedanta-yojana.apk.sha256
           if-no-files-found: error
+          # Releases carry the APK long-term; keep this copy briefly so it
+          # doesn't use up the account's Actions storage.
+          retention-days: 7
