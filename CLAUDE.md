@@ -49,4 +49,5 @@ from that same deploy, with no app update.
 Before translating or transliterating anything into Tamil, Kannada, Hindi or
 Telugu (books, chapters, Divya Desams, announcements, interface strings),
 read `docs/TRANSLATION-GUIDE.md` and follow it, together with that
-language's glossary in `docs/translation-glossaries/`.
+language's glossary in `docs/translation-glossaries/`. To translate a whole
+book, use the scripted workflow in `docs/TRANSLATION-WORKFLOW.md`.

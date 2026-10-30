@@ -170,6 +170,8 @@ A verse given **only** in romanised form (no Devanagari above it) is written in 
 
 ## 8. Workflow
 
+For a whole book, use the scripted session workflow in [`TRANSLATION-WORKFLOW.md`](TRANSLATION-WORKFLOW.md): verses, name lines and mantras are generated, chat sessions translate only prose, and every reply is checked before it is merged. The steps below still apply.
+
 1. **Set up.** Create a branch. Read this guide, your glossary and one model chapter in your language.
 2. **Translate in batches of 3 chapters.** Run the checks in §9, then commit and push. Never leave more than 3 translated chapters uncommitted.
 3. **Run the 13-point check for each chapter:**
@@ -204,6 +206,7 @@ A verse given **only** in romanised form (no Devanagari above it) is written in 
 ```bash
 npm run test:content      # schemas, typography, sections, verse layout, file counts
 npm run typecheck
+npm run test:translations   # parity, script leaks, digits, gloss echo on changed files
 ```
 
 Quick content checks for one language (`LANG=ta|kn|hi|te`). Run them on the chapters you changed:

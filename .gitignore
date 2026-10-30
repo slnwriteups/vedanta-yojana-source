@@ -70,3 +70,11 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# scripts/translation-prep.ts / scaffold-sahasranaama.ts working files that
+# are regenerated or only needed until merged. translation-work/<book>/store.json
+# and the batch manifests ARE tracked: they hold translated prose not yet
+# complete enough to write into content/.
+/translation-work/*/skeleton/
+/translation-work/*/batches/*.prompt.txt
+/translation-work/*/batches/*.reply.json

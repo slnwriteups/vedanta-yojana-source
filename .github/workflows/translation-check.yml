@@ -1,0 +1,48 @@
+name: Translation check
+
+# Runs scripts/test-translation-quality.ts on the content files a pull
+# request changes: paragraph parity with the English, Kannada/Telugu script
+# leaks, native digits and gloss echo (docs/TRANSLATION-GUIDE.md §9).
+# Free on a public repository. It needs no dependencies: the checker uses
+# only Node's built-ins. Content schemas and typography are already checked
+# by ci.yml's `npm run test:content`.
+on:
+  pull_request:
+    paths:
+      - "content/**"
+      - "docs/translation-glossaries/**"
+      - "scripts/translation/**"
+      - "scripts/test-translation-quality.ts"
+
+permissions:
+  contents: read
+
+jobs:
+  translation-quality:
+    name: Translation quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The full history, so the check can diff against the base branch.
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Check changed translations
+        run: |
+          set +e
+          node scripts/test-translation-quality.ts --changed=origin/${{ github.base_ref }} > translation-report.txt
+          status=$?
+          cat translation-report.txt
+          {
+            echo "### Translation check"
+            echo '```'
+            cat translation-report.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
