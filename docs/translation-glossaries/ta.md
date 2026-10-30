@@ -446,3 +446,9 @@ Narayaneeyam = நாராயணீயம்
 Bhaja Govindam = பஜ கோவிந்தம்
 anushtup = அனுஷ்டுப்
 pārāyaṇam (chanting) = பாராயணம்
+# --- reviewer's preferences, Sahasranaama batch 1 review
+upadesha / teaching / advice (of a sage) = உபதேசம்
+imparted (by a sage or the Lord) = அருளிச்செய்யப்பட்ட
+bondage = தளை
+counsel = ஆலோசனை
+Lord Krishna = பகவான் ஸ்ரீ கிருஷ்ணர்

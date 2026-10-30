@@ -407,3 +407,6 @@ Narayaneeyam = ನಾರಾಯಣೀಯಂ
 Bhaja Govindam = ಭಜ ಗೋವಿಂದಂ
 anushtup = ಅನುಷ್ಟುಪ್
 pārāyaṇam (chanting) = ಪಾರಾಯಣ
+# --- reviewer's preferences, Sahasranaama batch 1 review
+upadesha / teaching / advice (of a sage) = ಉಪದೇಶ
+bed of arrows = ಶರಶಯ್ಯೆ

@@ -331,3 +331,8 @@ Narayaneeyam = నారాయణీయం
 Bhaja Govindam = భజ గోవిందం
 anushtup = అనుష్టుప్
 pārāyaṇam (chanting) = పారాయణం
+# --- reviewer's preferences, Sahasranaama batch 1 review
+upadesha / teaching / advice (of a sage) = ఉపదేశం
+bed of arrows = అంపశయ్య
+better rulers / able rulers = ఉత్తమ పరిపాలనా దక్షులు
+best (of means) = శ్రేష్ఠ
