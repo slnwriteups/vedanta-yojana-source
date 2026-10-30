@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare Aksharamukha with the existing iastToScript implementation.
+"""Compare Aksharamukha with the actual translation mechanical pipeline.
 
 Read-only. Requires local Python aksharamukha and Node >=24.
 Usage: python scripts/compare-sanskrit-converters.py
@@ -26,10 +26,10 @@ def main():
     spec.loader.exec_module(module)
     payload = json.dumps({"samples": SAMPLES, "langs": LANGS}, ensure_ascii=False)
     node = r"""
-import { iastToScript } from './content-lib/sanskrit-script.ts';
+import { iastToDeva, devaToScript } from './scripts/translation/mechanical.ts';
 const {samples, langs} = JSON.parse(process.argv[1]);
 console.log(JSON.stringify(Object.fromEntries(langs.map(lang =>
-  [lang, samples.map(text => iastToScript(text, lang))]))));
+  [lang, samples.map(text => devaToScript(iastToDeva(text), lang))]))));
 """
     try:
         process = subprocess.run(
