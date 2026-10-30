@@ -9,5 +9,11 @@
     "needsReview": false
   },
   "body": "Sri Vishnu Sahasranama Stotram, as printed for chanting purposes, consists of three sections:\n\n1. A prologue explains why Bhishma imparted the Stotram to the great and just Yudhishthira.\n\n2. The thousand names of Vishnu, organised in a poetic format in 107 stanzas, in the anushtup chandas (a meter with eight syllables in a quarter), two quarters per line, and two lines per stanza.\n\n3. The Phalashruti, or recounting the accrued benefits by chanting the Stotram.",
-  "images": []
+  "images": [],
+  "translations": {
+    "hi": {
+      "title": "स्तोत्रम् की संरचना",
+      "body": "पाठ के लिए मुद्रित श्री विष्णु सहस्रनाम स्तोत्रम् के तीन खंड हैं:\n\n1. प्रस्तावना में बताया गया है कि भीष्म ने महान और न्यायप्रिय युधिष्ठिर को इस स्तोत्रम् का उपदेश क्यों दिया।\n\n2. विष्णु के हजार नाम, जिन्हें अनुष्टुप् छंद में 107 श्लोकों के काव्यात्मक रूप में व्यवस्थित किया गया है। इस छंद के प्रत्येक चरण में आठ अक्षर होते हैं। प्रत्येक पंक्ति में दो चरण और प्रत्येक श्लोक में दो पंक्तियाँ होती हैं।\n\n3. फलश्रुति, अर्थात् इस स्तोत्रम् के पाठ से प्राप्त होने वाले लाभों का वर्णन।"
+    }
+  }
 }
