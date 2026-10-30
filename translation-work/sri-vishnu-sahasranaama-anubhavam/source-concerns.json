@@ -1,0 +1,21 @@
+{
+  "note": "English passages a translator found ambiguous. For the owner to settle in the English (Standard §1 rule 1); translations follow the English as written until then.",
+  "concerns": [
+    {
+      "id": "naama-139-146.33",
+      "english": "Sri Bhattar's words are \"taiḥ bhujyatē sukhēna anubhūyatē iti bhōjanam\", \"He is enjoyed with delight by His devotees.\" The Lord makes the objects of this world fit to be enjoyed, and when His devotee rises above the desire for worldly things, He becomes Himself the object of their enjoyment. Nammazhwar says that for him, the Lord is the food he eats, the water he drinks, and the betel he chews (uṇṇum sōṟu parugu nīr thinnum veṭṭilaiyum ellām kaṇṇan).",
+      "note": "Tamil pasuram line (Nammazhwar) quoted only in romanisation; Hindi transliterated via the Tamil (உண்ணும் சோறு பருகு நீர் தின்னும் வெற்றிலையும் எல்லாம் கண்ணன்) per Standard §3.3; verify the line against the authoritative Tiruvaymozhi text.",
+      "batch": 7,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-153-164.13",
+      "english": "As soon as Bali poured the water to seal his gift of three steps into the hands of the dwarf, the dwarf was no longer a dwarf. The Lord grew to cover the three worlds: the earth became His foot, the sky His head, and the sun and the moon His eyes. The Harivamsa describes the beauty of this growth in relation to the sun and the stars. Andal begins the third pasuram of the Thiruppavai with \"the great one who grew and measured the worlds\" (ōṅgi ulagaḷanda uttaman).",
+      "note": "Andal's Tiruppavai 3 line quoted only in romanisation; Hindi transliterated via the Tamil (ஓங்கி உலகளந்த உத்தமன்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 8,
+      "translator": "claude-main-hi",
+      "status": "open"
+    }
+  ]
+}
