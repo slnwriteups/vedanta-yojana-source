@@ -319,3 +319,15 @@ Vēngaḍam (meaning text) = వేంకటాద్రి
 Arangam / Arangan = అరంగం / అరంగన్
 Āchāryas = ఆచార్యులు
 Kāveri = కావేరి
+# --- sri-vishnu-sahasranaama-anubhavam, batch 1 (new terms; review)
+Bhishma = భీష్ముడు
+Yudhishthira = యుధిష్ఠిరుడు
+Vedavyasa / Vyasa = వేదవ్యాసుడు / వ్యాసుడు
+Sri Parasara Bhattar = శ్రీ పరాశర భట్టర్
+Sri Adi Sankara = శ్రీ ఆది శంకరులు
+stotram = స్తోత్రం
+Phala Shruti = ఫలశ్రుతి
+Narayaneeyam = నారాయణీయం
+Bhaja Govindam = భజ గోవిందం
+anushtup = అనుష్టుప్
+pārāyaṇam (chanting) = పారాయణం
