@@ -1,0 +1,79 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 1,
+  "langs": [
+    "ta",
+    "kn",
+    "hi",
+    "te"
+  ],
+  "items": [
+    {
+      "id": "composition-of-the-stotram.title",
+      "en": "e9bd7f3b95"
+    },
+    {
+      "id": "composition-of-the-stotram.0",
+      "en": "62a9675a37"
+    },
+    {
+      "id": "composition-of-the-stotram.3",
+      "en": "d385bc01ec"
+    },
+    {
+      "id": "composition-of-the-stotram.4",
+      "en": "928d0f2231"
+    },
+    {
+      "id": "composition-of-the-stotram.5",
+      "en": "1101be52bb"
+    },
+    {
+      "id": "composition-of-the-stotram.6",
+      "en": "070e560305"
+    },
+    {
+      "id": "composition-of-the-stotram.7",
+      "en": "82ae02135e"
+    },
+    {
+      "id": "composition-of-the-stotram.8",
+      "en": "b056cc5f48"
+    },
+    {
+      "id": "composition-of-the-stotram.9",
+      "en": "0a6190dfce"
+    },
+    {
+      "id": "composition-of-the-stotram.10",
+      "en": "301f0e2191"
+    },
+    {
+      "id": "composition-of-the-stotram.11",
+      "en": "d1f061b3c3"
+    },
+    {
+      "id": "composition-of-the-stotram.12",
+      "en": "ec2d8cc7a1"
+    },
+    {
+      "id": "composition-of-the-stotram.13",
+      "en": "7bcaf464f6"
+    },
+    {
+      "id": "composition-of-the-stotram.14",
+      "en": "20b05a459a"
+    },
+    {
+      "id": "composition-of-the-stotram.15",
+      "en": "3c1d0c4ca0"
+    },
+    {
+      "id": "composition-of-the-stotram.16",
+      "en": "24e9395c6a"
+    }
+  ],
+  "merged": true,
+  "experiment": "exp-2026-10-30",
+  "translator": "subagent-translator-a"
+}

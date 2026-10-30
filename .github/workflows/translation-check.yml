@@ -2,7 +2,11 @@ name: Translation check
 
 # Runs scripts/test-translation-quality.ts on the content files a pull
 # request changes: paragraph parity with the English, Kannada/Telugu script
-# leaks, native digits and gloss echo (docs/TRANSLATION-GUIDE.md §9).
+# leaks, native digits and gloss echo (docs/TRANSLATION-GUIDE.md §9). Then
+# the translation engine (tools/translation-engine): its own tests, and its
+# rulebook check of the changed files. Errors recorded in its baseline.json
+# (historical defects) are listed as "known" and do not fail the check;
+# every new error does.
 # Free on a public repository. It needs no dependencies: the checker uses
 # only Node's built-ins. Content schemas and typography are already checked
 # by ci.yml's `npm run test:content`.
@@ -12,7 +16,10 @@ on:
       - "content/**"
       - "docs/translation-glossaries/**"
       - "scripts/translation/**"
+      - "scripts/translation-*.ts"
       - "scripts/test-translation-quality.ts"
+      - "tools/translation-engine/**"
+      - "prompts/translation-prompt-card.md"
 
 permissions:
   contents: read
@@ -43,6 +50,23 @@ jobs:
             echo "### Translation check"
             echo '```'
             cat translation-report.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          exit $status
+
+      - name: Translation engine tests
+        run: node --test tools/translation-engine/tests/*.test.ts
+
+      - name: Rulebook check of changed content (new errors block, known ones are listed)
+        run: |
+          set +e
+          node tools/translation-engine/cli.ts check --changed=origin/${{ github.base_ref }} > engine-report.txt
+          status=$?
+          cat engine-report.txt
+          {
+            echo "### Translation engine check"
+            echo '```'
+            cat engine-report.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
           exit $status

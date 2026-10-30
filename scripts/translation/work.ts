@@ -12,7 +12,10 @@ import { classify, generate, LANGS, splitParagraphs, type ParagraphKind } from "
  * and assembling finished bodies back into content/.
  */
 
-export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+// VY_TRANSLATION_ROOT points the workflow at another checkout (the engine's integration tests use a fixture copy).
+export const ROOT = process.env.VY_TRANSLATION_ROOT
+  ? path.resolve(process.env.VY_TRANSLATION_ROOT)
+  : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 export const WORK_DIR = path.join(ROOT, "translation-work");
 
 // ---------------------------------------------------------------- CLI + files
@@ -155,19 +158,24 @@ export interface Store {
   items: Record<string, { en: string } & Partial<Record<LanguageCode, string>>>;
 }
 
-export function storePath(book: string): string {
-  return path.join(WORK_DIR, book, "store.json");
+/** translation-work/<book>, or an experiment's own folder inside it, so an experiment never touches the real store. */
+export function workDir(book: string, experiment?: string): string {
+  return experiment ? path.join(WORK_DIR, book, "experiments", experiment) : path.join(WORK_DIR, book);
 }
 
-export function loadStore(book: string): Store {
-  const file = storePath(book);
+export function storePath(book: string, experiment?: string): string {
+  return path.join(workDir(book, experiment), "store.json");
+}
+
+export function loadStore(book: string, experiment?: string): Store {
+  const file = storePath(book, experiment);
   return fs.existsSync(file) ? readJson<Store>(file) : { book, items: {} };
 }
 
-export function saveStore(store: Store): void {
+export function saveStore(store: Store, experiment?: string): void {
   const sorted: Store["items"] = {};
   for (const k of Object.keys(store.items).sort()) sorted[k] = store.items[k];
-  writeJson(storePath(store.book), { book: store.book, items: sorted });
+  writeJson(storePath(store.book, experiment), { book: store.book, items: sorted });
 }
 
 /** A stored translation counts only while its English is unchanged. */

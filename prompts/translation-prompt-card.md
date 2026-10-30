@@ -12,6 +12,7 @@ FIDELITY
 - English is the source of truth: add nothing, drop nothing, summarise nothing, improve nothing. No invented explanations.
 - Plain, clear, natural prose, as in the Divya Desam pages: not ornate, not literary.
 - If an item is garbled or a placeholder, translate nothing for it and output the single word DEFECT in that slot for every language.
+- If an item is translatable but ambiguous or apparently wrong in the English (it says something the author probably did not mean), translate it faithfully and record it in an optional "concerns" key inside the same JSON object: "concerns": [{"item": 5, "note": "reads as if the stotram were one of the commentaries; probably his commentary on it"}]. The owner settles the English; never correct it yourself.
 
 REGISTER
 - Reverent and formal, never colloquial. No calques from English or Hindi, no newspaper phrasing.

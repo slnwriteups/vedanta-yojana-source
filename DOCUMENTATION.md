@@ -804,11 +804,12 @@ Full book-level review, after the final chapter
 Cross-book QC pass, across every translated book/collection
 ```
 
-### 9.1 Source languages — CONFIRMED (direct project rule, enforced throughout)
+### 9.1 Target languages and script purity — CONFIRMED (direct project rule, enforced throughout)
 
-Translations are produced in **Tamil, Kannada, and Hindi only.**
-**There is no Telugu translation component in this project.** This is
-enforced not only as a target-language rule but as a script-purity rule:
+Translations are produced in **Tamil, Kannada, Hindi and Telugu** (`ta`,
+`kn`, `hi`, `te`), with English as the base. (Until 2026-09-23 the rule was
+Tamil, Kannada and Hindi only; see the update below.) Script purity is
+enforced alongside the language rule:
 Telugu and Kannada share visually similar Unicode ranges for some
 independent vowel signs, which is a realistic place for a single
 character to leak from one script into the other unnoticed. A

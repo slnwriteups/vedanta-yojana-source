@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import type { LanguageCode } from "../../content-lib/schemas/language.ts";
 import { paragraphFindings, scriptFindings, SCRIPT } from "../../scripts/translation/checks.ts";
 import { classify, generate, LANGS, MechanicalError, splitParagraphs, type ParagraphKind } from "../../scripts/translation/mechanical.ts";
+import { glossaryFindings } from "./glossary.ts";
 
 /**
  * Mechanical validation of a translated record against its English, under
@@ -188,6 +189,7 @@ function markers(text: string): string[] {
 function proseFindings(en: string, tr: string, lang: LanguageCode, book: string | undefined): Array<Pick<Issue, "level" | "rule" | "detail">> {
   const out: Array<Pick<Issue, "level" | "rule" | "detail">> = paragraphFindings(en, tr, lang, "prose");
   out.push(...latinFindings(en, tr, { book }));
+  out.push(...glossaryFindings(en, tr, lang, book));
   if (en.startsWith("*") && !tr.startsWith("*")) out.push({ level: "error", rule: "note-marker", detail: 'the English is a "did you know" note; keep the leading *' });
   if (!en.startsWith("*") && tr.startsWith("*")) out.push({ level: "error", rule: "note-marker", detail: "a leading * makes this a highlighted note; the English is not one" });
   const a = markers(en);
@@ -203,6 +205,8 @@ export interface CheckOptions {
   book?: string;
   /** The committed record, to prove the English fields were not touched. */
   original?: any;
+  /** Checking an experiment candidate on purpose (cli `check --candidate`). */
+  allowExperiment?: boolean;
 }
 
 /** Body checks: paragraph parity, then each paragraph by its English kind. */
@@ -240,7 +244,7 @@ export function checkBody(en: string, tr: string, lang: LanguageCode, opts: Chec
 function checkShort(en: string | undefined, tr: unknown, lang: LanguageCode, kind: "title" | "description", loc: Loc, book?: string): Issue[] {
   if (!en || !en.trim()) return [];
   if (typeof tr !== "string" || !tr.trim()) return [{ ...loc, level: "error", rule: "missing-field", detail: `no translated ${loc.field}` }];
-  const found = [...paragraphFindings(en, tr, lang, kind), ...latinFindings(en, tr, { book })];
+  const found = [...paragraphFindings(en, tr, lang, kind), ...latinFindings(en, tr, { book }), ...glossaryFindings(en, tr, lang, book)];
   return found.map((f) => ({ ...loc, ...f }));
 }
 
@@ -248,6 +252,7 @@ function checkShort(en: string | undefined, tr: unknown, lang: LanguageCode, kin
 function englishPart(record: any): any {
   const copy = structuredClone(record);
   delete copy.translations;
+  delete copy._experiment;
   for (const p of copy.parts ?? []) delete p.translations;
   for (const img of copy.images ?? []) delete img.placementAnchorTranslations;
   return copy;
@@ -301,23 +306,57 @@ export function checkBook(record: any, lang: LanguageCode, opts: CheckOptions): 
   return issues;
 }
 
+const PLACEHOLDER = /lorem ipsum|\bTODO\b|\bTBD\b|\bFIXME\b|\bXXX\b|\[(?:missing|placeholder|insert)[^\]]*\]/i;
+
 /**
- * Freeze check on the English (Standard §6.2, §6.3): a romanised verse must be
- * in the §3.1 layout, ending its lines with | and ||, or the verse is not
- * recognised as one and would be sent to a translator as prose.
+ * Freeze check on the English (Standard §6.3), run before any translation is
+ * prepared and again on every check: placeholder or extraction text, an
+ * unresolved migration flag, a missing title or body, and verse blocks the
+ * generator cannot handle without guessing (§3.1 shape, §6.1 "sh" ambiguity,
+ * a name line or mantra it cannot parse, a romanised verse not in the §3.1
+ * layout and so about to be sent to a translator as prose). Every finding is
+ * an owner decision on the English; translation waits for it.
  */
-export function checkEnglish(record: any, file: string): Issue[] {
-  if (typeof record.body !== "string") return [];
+export function checkEnglish(record: any, file: string, kind: "book" | "chapter" = "chapter"): Issue[] {
+  const issues: Issue[] = [];
+  const add = (field: string, rule: string, detail: string, paragraph?: number) =>
+    issues.push({ level: "error", rule, file, lang: "en", field, paragraph, detail });
+  if (record.migration?.needsReview) add("migration", "source-needs-review", "migration.needsReview is set; the English awaits editorial review (Standard §6.3)");
+  if (typeof record.title !== "string" || !record.title.trim()) add("title", "source-missing", "no English title");
+  for (const field of ["title", "description"]) {
+    if (typeof record[field] === "string" && PLACEHOLDER.test(record[field])) add(field, "source-placeholder", `placeholder text: "${record[field].match(PLACEHOLDER)![0]}"`);
+  }
+  (record.parts ?? []).forEach((p: any, i: number) => {
+    if (!p.title?.trim()) add(`parts[${i}].title`, "source-missing", "no English part title");
+    else if (PLACEHOLDER.test(p.title)) add(`parts[${i}].title`, "source-placeholder", `placeholder text in a part title`);
+  });
+  if (kind === "book") return issues;
+  if (typeof record.body !== "string" || !record.body.trim()) {
+    add("body", "source-missing", "no English body");
+    return issues;
+  }
   const paras = splitParagraphs(record.body);
   const kinds = classify(paras);
-  const issues: Issue[] = [];
   paras.forEach((p, i) => {
-    if (kinds[i] !== "prose") return;
-    const lines = p.split("\n");
-    const words = p.split(/\s+/).filter(Boolean);
-    const iast = words.filter((w) => IAST_MARKS.test(w)).length;
-    const versey = lines.every((l) => IAST_MARKS.test(l) && !/[.?!:;"”]\s*$/.test(l)) && iast / words.length >= 0.4;
-    if (versey) issues.push({ level: "warning", rule: "verse-layout", file, lang: "en", field: "body", paragraph: i + 1, detail: "looks like a romanised verse but does not end with | / ||, so it is handled as prose (Standard §3.1)" });
+    const n = i + 1;
+    if (PLACEHOLDER.test(p)) add("body", "source-placeholder", `placeholder text: "${p.match(PLACEHOLDER)![0]}"`, n);
+    const k = kinds[i];
+    if (k === "roman" && paras[i - 1].split("\n").length !== p.split("\n").length) {
+      add("body", "source-verse-shape", `romanised verse has ${p.split("\n").length} line(s) under a ${paras[i - 1].split("\n").length}-line Devanagari block (Standard §3.1)`, n);
+    }
+    if (k === "roman-alone" && ambiguousRomanisation(p)) add("body", "source-verse-ambiguous", ambiguousRomanisation(p)!, n);
+    if (k !== "prose" && k !== "deva" && expectedForm(k, p, paras[i - 1], "kn") === null && !(k === "roman-alone" && ambiguousRomanisation(p))) {
+      add("body", "source-verse-unparsed", `this ${k} paragraph cannot be generated mechanically`, n);
+    }
+    if (k === "prose") {
+      const lines = p.split("\n");
+      const words = p.split(/\s+/).filter(Boolean);
+      const iast = words.filter((w) => IAST_MARKS.test(w)).length;
+      const lower = words.filter((w) => /^\p{Ll}/u.test(w)).length;
+      // A heading ("Ahalyā") is not a verse: verse lines carry several words.
+      const versey = words.length >= 4 && !lines.some((l) => LIST_MARKER.test(l)) && lines.every((l) => l.split(/\s+/).length >= 3 && IAST_MARKS.test(l) && !/[.?!:;"”]\s*$/.test(l)) && iast / words.length >= 0.4 && lower / words.length >= 0.6;
+      if (versey) add("body", "source-verse-layout", "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)", n);
+    }
   });
   return issues;
 }
@@ -329,9 +368,13 @@ export function requireLanguage(record: any, lang: LanguageCode, file: string): 
 /** Every check for one record, all languages, plus the English and key-order checks. */
 export function checkRecord(record: any, opts: CheckOptions & { kind: "book" | "chapter"; langs?: LanguageCode[]; require?: boolean }): Issue[] {
   const issues: Issue[] = [];
+  // Experiment candidates (translation-merge.ts --experiment) are marked so they can never pass as content.
+  if (record._experiment && !opts.allowExperiment) {
+    issues.push({ level: "error", rule: "experimental-candidate", file: opts.file, lang: "en", field: "_experiment", detail: `an experiment candidate (${record._experiment.name ?? "unnamed"}); it must never be copied into content/` });
+  }
   if (opts.original) issues.push(...englishDrift(opts.original, record, opts.file));
   issues.push(...keyOrder(record, opts.file));
-  if (opts.kind === "chapter") issues.push(...checkEnglish(record, opts.file));
+  issues.push(...checkEnglish(record, opts.file, opts.kind));
   for (const lang of opts.langs ?? LANGS) {
     if (opts.require && opts.kind === "chapter") issues.push(...requireLanguage(record, lang, opts.file));
     issues.push(...(opts.kind === "book" ? checkBook(record, lang, opts) : checkChapter(record, lang, opts)));

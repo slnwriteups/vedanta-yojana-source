@@ -1,0 +1,98 @@
+{
+  "composition-of-the-stotram.ta": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "subagent-reviewer-b",
+        "kind": "ai",
+        "at": "2026-10-30T13:07:12.128Z",
+        "textHash": "8734e9d9ac",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.ta.fields-renamed.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶7: the English source says that, of Sri Sankara's commentaries, 'Sri Vishnu Sahasranama Stotram was the foremost one', which literally ranks the stotram itself among commentaries. The meaning is presumably 'his commentary on Sri Vishnu Sahasranama' (and 'foremost' may mean 'first', as tradition holds it was his first bhashya). The Tamil faithfully keeps the source's wording. The owner may wish to clarify the English and then the translation. | ¶12: Sri Vedavyasa described as 'an incarnation of Vishnu', rendered faithfully as விஷ்ணுவின் அவதாரம். The tradition usually treats this as an āveśa/aṃśa avatāra. This is for the owner to note only; the translation matches the source."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "subagent-reviewer-b",
+      "kind": "ai",
+      "at": "2026-10-30T13:07:12.128Z",
+      "textHash": "8734e9d9ac",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.ta.fields-renamed.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶7: the English source says that, of Sri Sankara's commentaries, 'Sri Vishnu Sahasranama Stotram was the foremost one', which literally ranks the stotram itself among commentaries. The meaning is presumably 'his commentary on Sri Vishnu Sahasranama' (and 'foremost' may mean 'first', as tradition holds it was his first bhashya). The Tamil faithfully keeps the source's wording. The owner may wish to clarify the English and then the translation. | ¶12: Sri Vedavyasa described as 'an incarnation of Vishnu', rendered faithfully as விஷ்ணுவின் அவதாரம். The tradition usually treats this as an āveśa/aṃśa avatāra. This is for the owner to note only; the translation matches the source."
+    }
+  },
+  "composition-of-the-stotram.kn": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "subagent-reviewer-b",
+        "kind": "ai",
+        "at": "2026-10-30T13:07:12.433Z",
+        "textHash": "3d216a5b23",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.kn.fields-renamed.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶7: the English source says that, of Sri Sankara's commentaries, 'Sri Vishnu Sahasranama Stotram was the foremost one', which literally ranks the stotram itself among commentaries. The meaning is presumably 'his commentary on Sri Vishnu Sahasranama' (and 'foremost' may mean 'first', as tradition holds it was his first bhashya). The Kannada faithfully keeps the source's wording. The owner may wish to clarify the English and then the translation. | ¶12: Sri Vedavyasa described as 'an incarnation of Vishnu', rendered faithfully as ವಿಷ್ಣುವಿನ ಅವತಾರ. This is for the owner to note only; the translation matches the source."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "subagent-reviewer-b",
+      "kind": "ai",
+      "at": "2026-10-30T13:07:12.433Z",
+      "textHash": "3d216a5b23",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.kn.fields-renamed.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶7: the English source says that, of Sri Sankara's commentaries, 'Sri Vishnu Sahasranama Stotram was the foremost one', which literally ranks the stotram itself among commentaries. The meaning is presumably 'his commentary on Sri Vishnu Sahasranama' (and 'foremost' may mean 'first', as tradition holds it was his first bhashya). The Kannada faithfully keeps the source's wording. The owner may wish to clarify the English and then the translation. | ¶12: Sri Vedavyasa described as 'an incarnation of Vishnu', rendered faithfully as ವಿಷ್ಣುವಿನ ಅವತಾರ. This is for the owner to note only; the translation matches the source."
+    }
+  },
+  "composition-of-the-stotram.hi": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "subagent-reviewer-c",
+        "kind": "ai",
+        "at": "2026-10-30T13:07:12.645Z",
+        "textHash": "b62ad9586d",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.hi.fields-renamed.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶13: the English 'the best and most accessible of all dharmas or the means to attain relief from all bondage' can be read two ways: (a) best among all dharmas, i.e. among all means to release, which the translation adopts by adding 'सभी साधनों में'; or (b) Bhishma considers it the best dharma and also the means to release from bondage, echoing the two separate questions in the prologue (ko dharmaḥ sarvadharmāṇāṃ... / kiṃ japan mucyate jantur janmasaṃsārabandhanāt). The Telugu takes the same reading. The owner should confirm which is intended. | ¶7: the source says the Sri Vishnu Sahasranama Stotram was 'the foremost' of Sri Sankara's commentaries (meaning his commentary on it). The translation reproduces this faithfully, but the claim itself is the author's and may merit an editorial check."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "subagent-reviewer-c",
+      "kind": "ai",
+      "at": "2026-10-30T13:07:12.645Z",
+      "textHash": "b62ad9586d",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.hi.fields-renamed.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶13: the English 'the best and most accessible of all dharmas or the means to attain relief from all bondage' can be read two ways: (a) best among all dharmas, i.e. among all means to release, which the translation adopts by adding 'सभी साधनों में'; or (b) Bhishma considers it the best dharma and also the means to release from bondage, echoing the two separate questions in the prologue (ko dharmaḥ sarvadharmāṇāṃ... / kiṃ japan mucyate jantur janmasaṃsārabandhanāt). The Telugu takes the same reading. The owner should confirm which is intended. | ¶7: the source says the Sri Vishnu Sahasranama Stotram was 'the foremost' of Sri Sankara's commentaries (meaning his commentary on it). The translation reproduces this faithfully, but the claim itself is the author's and may merit an editorial check."
+    }
+  },
+  "composition-of-the-stotram.te": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "subagent-reviewer-c",
+        "kind": "ai",
+        "at": "2026-10-30T13:07:12.874Z",
+        "textHash": "1876115490",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.te.fields-renamed.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶13: the English 'the best and most accessible of all dharmas or the means to attain relief from all bondage' is ambiguous. The translation reads it as 'best among all dharmas, i.e. among all means to release from bondage' (అన్ని ధర్మాలలో, లేదా ... సాధనాలన్నింటిలో). It could instead mean 'the best dharma, and the means to release from bondage', mirroring the prologue's two questions (ko dharmaḥ sarvadharmāṇāṃ... / kiṃ japan mucyate jantur janmasaṃsārabandhanāt). Hindi takes the same reading; the owner should confirm. | ¶7: the source's claim that the Sahasranama commentary was 'the foremost' of Sri Sankara's commentaries is reproduced faithfully (అగ్రగణ్యమైనది); the claim itself is the author's and may merit an editorial check."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "subagent-reviewer-c",
+      "kind": "ai",
+      "at": "2026-10-30T13:07:12.874Z",
+      "textHash": "1876115490",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/review/reply.te.fields-renamed.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶13: the English 'the best and most accessible of all dharmas or the means to attain relief from all bondage' is ambiguous. The translation reads it as 'best among all dharmas, i.e. among all means to release from bondage' (అన్ని ధర్మాలలో, లేదా ... సాధనాలన్నింటిలో). It could instead mean 'the best dharma, and the means to release from bondage', mirroring the prologue's two questions (ko dharmaḥ sarvadharmāṇāṃ... / kiṃ japan mucyate jantur janmasaṃsārabandhanāt). Hindi takes the same reading; the owner should confirm. | ¶7: the source's claim that the Sahasranama commentary was 'the foremost' of Sri Sankara's commentaries is reproduced faithfully (అగ్రగణ్యమైనది); the claim itself is the author's and may merit an editorial check."
+    }
+  }
+}

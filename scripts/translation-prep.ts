@@ -3,9 +3,11 @@ import path from "node:path";
 import type { LanguageCode } from "../content-lib/schemas/language.ts";
 import { LANGS } from "./translation/mechanical.ts";
 import {
-  args, bookItems, chapterItems, glossaryFor, inContent, loadBook, loadGlossary, loadStore,
-  parseLangs, readJson, ROOT, stored, WORK_DIR, writeJson, type Item,
+  args, bookItems, chapterItems, fold, glossaryFor, inContent, loadBook, loadGlossary, loadStore,
+  parseLangs, readJson, ROOT, stored, workDir, writeJson, type Item,
 } from "./translation/work.ts";
+import { checkEnglish } from "../tools/translation-engine/validate.ts";
+import { loadPending } from "../tools/translation-engine/pending-terms.ts";
 
 /**
  * Prepares the next batch of untranslated prose as one block to paste into
@@ -21,6 +23,16 @@ import {
  * --langs      languages to ask for (default: every language still missing)
  * --no-card    leave out the prompt card (when it is already in the chat)
  * --batch=N    print batch N again instead of preparing a new one
+ * --chapter=<slug>  only this chapter
+ * --experiment=<name>  a controlled re-translation: works in
+ *              translation-work/<book>/experiments/<name>/, ignores the
+ *              chapter's existing translations (they are never shown), and
+ *              never writes content/
+ *
+ * The English is freeze-checked first (Standard §6.3, engine checkEnglish):
+ * a chapter with placeholder text, migration.needsReview, or a verse block
+ * that cannot be generated without guessing is not prepared; the report says
+ * why, for the owner to settle in the English.
  *
  * Only prose goes in the block: verses, name lines and mantras are generated
  * by translation-merge.ts. Only the glossary terms that occur in the batch
@@ -29,7 +41,8 @@ import {
 
 const a = args();
 const bookSlug = a.book ?? "sri-vishnu-sahasranaama-anubhavam";
-const batchDir = path.join(WORK_DIR, bookSlug, "batches");
+const experiment = a.experiment;
+const batchDir = path.join(workDir(bookSlug, experiment), "batches");
 const pad = (n: number) => String(n).padStart(3, "0");
 
 interface Manifest {
@@ -38,6 +51,8 @@ interface Manifest {
   langs: LanguageCode[];
   items: Array<{ id: string; en: string }>;
   merged: boolean;
+  experiment?: string;
+  translator?: string;
 }
 
 function manifests(): Manifest[] {
@@ -56,13 +71,23 @@ function render(m: Manifest, items: Item[], withCard: boolean): string {
   lines.push("", "GLOSSARY (binding)");
   if (!glossary.length) lines.push("(none in this batch)");
   for (const g of glossary) lines.push(`${g.key} = ${m.langs.filter((l) => g.forms[l]).map((l) => `${l} ${g.forms[l]}`).join(" | ")}`);
+  // Proposed terms not yet approved: shown so the book stays consistent, marked so nobody mistakes them for glossary.
+  const hay = fold(items.map((i) => i.en).join("\n"));
+  for (const t of loadPending(m.book, m.experiment).filter((x) => x.status === "pending" && hay.includes(fold(x.en)))) {
+    lines.push(`${t.en} = ${m.langs.filter((l) => t.forms[l]).map((l) => `${l} ${t.forms[l]}`).join(" | ")} (pending owner approval)`);
+  }
   lines.push("", "ITEMS", JSON.stringify(items.map((i) => i.en), null, 1));
   lines.push("", `Reply with JSON only: {${m.langs.map((l) => `"${l}": [${items.length} strings]`).join(", ")}} plus the optional "terms" key.`);
   return lines.join("\n") + "\n";
 }
 
 const book = loadBook(bookSlug);
-const all: Item[] = [...bookItems(book), ...book.chapters.flatMap(chapterItems)];
+let all: Item[] = [...bookItems(book), ...book.chapters.flatMap(chapterItems)];
+if (a.chapter) {
+  if (!book.chapters.some((c) => c.slug === a.chapter)) throw new Error(`No chapter ${a.chapter} in ${bookSlug}`);
+  all = all.filter((i) => i.group === a.chapter);
+}
+if (experiment && !a.chapter) throw new Error("An experiment re-translates one chapter: give --chapter=<slug>");
 const byId = new Map(all.map((i) => [i.id, i]));
 const existing = manifests();
 
@@ -75,9 +100,24 @@ if (a.batch) {
 }
 
 const wanted = parseLangs(a.langs);
-const store = loadStore(bookSlug);
+const store = loadStore(bookSlug, experiment);
 const inFlight = new Set(existing.filter((m) => !m.merged).flatMap((m) => m.items.map((i) => i.id)));
-const needs = (it: Item): LanguageCode[] => wanted.filter((l) => !inContent(book, it, l) && !stored(store, it, l));
+// In an experiment the chapter's live translations are ignored, so everything is asked for again.
+const needs = (it: Item): LanguageCode[] => wanted.filter((l) => (experiment || !inContent(book, it, l)) && !stored(store, it, l));
+
+// Freeze check: groups whose English has an unresolved source error are not prepared.
+const held = new Map<string, string[]>();
+const bookSource = checkEnglish(book.record, path.relative(ROOT, book.file), "book");
+if (bookSource.length) held.set("@book", bookSource.map((i) => `${i.field} ${i.rule}: ${i.detail}`));
+for (const ch of book.chapters) {
+  const found = checkEnglish(ch.record, path.relative(ROOT, ch.file));
+  if (found.length) held.set(ch.slug, found.map((i) => `${i.field}${i.paragraph ? ` ¶${i.paragraph}` : ""} ${i.rule}: ${i.detail}`));
+}
+const heldHere = [...held].filter(([g]) => all.some((i) => i.group === g && needs(i).length));
+if (heldHere.length) {
+  console.error(`Not prepared until the English is settled by the owner (Standard §6.3):`);
+  for (const [g, why] of heldHere) console.error(`  ${g}: ${why.join("; ")}`);
+}
 
 const size = Number(a.size ?? 3);
 const maxChars = Number(a["max-chars"] ?? 6000);
@@ -87,7 +127,7 @@ let chars = 0;
 const chapters = new Set<string>();
 
 for (const it of all) {
-  if (inFlight.has(it.id)) continue;
+  if (inFlight.has(it.id) || held.has(it.group)) continue;
   const n = needs(it);
   if (!n.length) continue;
   if (!picked.length) langs = n;
@@ -109,14 +149,14 @@ if (!picked.length) {
 
 const number = Math.max(0, ...existing.map((m) => m.batch)) + 1;
 const ordered = LANGS.filter((l) => langs.includes(l));
-const manifest: Manifest = { book: bookSlug, batch: number, langs: ordered, items: picked.map((i) => ({ id: i.id, en: i.enHash })), merged: false };
+const manifest: Manifest = { book: bookSlug, batch: number, langs: ordered, items: picked.map((i) => ({ id: i.id, en: i.enHash })), merged: false, ...(experiment ? { experiment } : {}) };
 writeJson(path.join(batchDir, `batch-${pad(number)}.json`), manifest);
 const text = render(manifest, picked, !a["no-card"]);
 fs.writeFileSync(path.join(batchDir, `batch-${pad(number)}.prompt.txt`), text);
 process.stdout.write(text);
 console.error(
   `\nBatch ${number}: ${picked.length} items, ${chars} English characters, ${chapters.size} chapter(s), languages ${ordered.join(", ")}.` +
-    `\nSaved to translation-work/${bookSlug}/batches/batch-${pad(number)}.prompt.txt` +
-    `\nPaste it into Claude, save the reply as translation-work/${bookSlug}/batches/batch-${pad(number)}.reply.json, then run:` +
-    `\n  node scripts/translation-merge.ts --book=${bookSlug} --batch=${number}`,
+    `\nSaved to ${path.relative(ROOT, batchDir)}/batch-${pad(number)}.prompt.txt` +
+    `\nPaste it into Claude, save the reply as ${path.relative(ROOT, batchDir)}/batch-${pad(number)}.reply.json, then run:` +
+    `\n  node scripts/translation-merge.ts --book=${bookSlug} --batch=${number}${experiment ? ` --experiment=${experiment}` : ""} --translator=<who translated it>`,
 );

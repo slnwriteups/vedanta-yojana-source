@@ -78,3 +78,8 @@ node_modules/
 /translation-work/*/skeleton/
 /translation-work/*/batches/*.prompt.txt
 /translation-work/*/batches/*.reply.json
+# Translation engine: rebuilt caches and regenerated review packets.
+/translation-work/.cache/
+/translation-work/*/review/*.md
+/translation-work/*/experiments/*/review/*.md
+/translation-work/*/experiments/*/batches/*.prompt.txt

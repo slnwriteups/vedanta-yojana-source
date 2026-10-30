@@ -16,11 +16,17 @@ npm run translate:prep -- --book=sri-vishnu-sahasranaama-anubhavam
 #    translation-work/<book>/batches/batch-NNN.reply.json
 
 # 3. Merge: checks each paragraph, stores it, and writes finished chapters.
-npm run translate:merge -- --book=sri-vishnu-sahasranaama-anubhavam --batch=N
+#    --translator names who produced the reply (a person or a chat session);
+#    the linguistic review must come from someone else.
+npm run translate:merge -- --book=sri-vishnu-sahasranaama-anubhavam --batch=N --translator=claude-chat-2026-10-30a
 
 # 4. Check, commit, open a pull request.
-npm run test:translations && npm run test:content
+node tools/translation-engine/cli.ts check --changed && npm run test:translations && npm run test:content
 ```
+
+Prep first freeze-checks the English (Standard §6.3). A chapter with placeholder text, `migration.needsReview`, or a verse block that cannot be generated without guessing (for example a romanised verse not in the Devanagari-couplet layout) is not prepared; prep prints why, for the owner to settle in the English.
+
+After a chapter is written, it still needs an independent linguistic review and the owner's theological approval before it is ready to publish: see `tools/translation-engine/README.md` (`review-packet`, `record-review`, `approve-theology`, `status`).
 
 Repeat until prep says nothing is left. Commit after every few batches; the `translation-work/<book>/store.json` file holds translated prose for chapters that are not finished yet, so commit it too.
 
@@ -53,18 +59,27 @@ Each translated paragraph is **rejected** (not stored, and asked for again by th
 - uses native digits;
 - repeats a word in its own gloss ("word (word)").
 
+It is also **rejected** when it:
+
+- leaves English or romanised Sanskrit in it (list markers, URLs and acronyms that are in the English are allowed; `tools/translation-engine/latin-allowlist.json` holds reviewed exceptions);
+- uses a form the glossary forbids (a `not …` / `never …` annotation).
+
 It is stored with a **warning** for:
 
 - missing or extra final punctuation;
 - a line-count difference;
-- leftover English;
+- a glossary term whose form (or an inflection of it) is not found, for the reviewer to check;
 - Perso-Arabic words in Hindi.
 
 Merge refuses the whole reply if a language array has the wrong number of strings, so a skipped or merged paragraph can never shift the rest out of place.
 
-A chapter is written to `content/` only when its title and all its prose exist for that language. Its verses, name lines and mantras are generated at that moment. Existing translations are never overwritten, and English fields are never written.
+A chapter is written to `content/` only when its title and all its prose exist for that language. Its verses, name lines and mantras are generated at that moment, and the whole chapter is checked by the translation engine first: if anything new blocks (a lost `*` note marker, for example), it is not written, the prose stays in the store, and merge exits 1. Only missing fields are filled: an existing translated title or body is never overwritten, and English fields are never written.
 
-New terms Claude reports under `"terms"` are appended to each glossary under a `# --- <book>, batch N (new terms; review)` header, so later batches reuse them. Review those lines in the pull request.
+New terms Claude reports under `"terms"` go to `translation-work/<book>/pending-terms.json`, never into the glossaries. Later batches see them marked "(pending owner approval)" so the book stays consistent. The owner approves them into the glossaries with `node tools/translation-engine/cli.ts approve-terms --book=<slug>` (interactive; it refuses to run in an agent session or CI).
+
+Passages the translator found ambiguous in the English (reported under `"concerns"`) are recorded in `translation-work/<book>/source-concerns.json` for the owner to settle in the English; the translation follows the English as written until then.
+
+`--experiment=<name> --chapter=<slug>` on both prep and merge re-translates one chapter in `translation-work/<book>/experiments/<name>/`, ignoring its live translations and writing candidates there instead of `content/`.
 
 ## Previewing the generated parts
 
@@ -93,3 +108,5 @@ Hand-placed word breaks inside compounds, as in some older Tamil verses, cannot 
 - gloss echo.
 
 It is free on a public repository and needs no install. Run it over everything with `node scripts/test-translation-quality.ts --all`. Older chapters predate the parity rule, so expect findings there.
+
+The same workflow then runs the translation engine's tests and `cli.ts check --changed`. Defects recorded in `tools/translation-engine/baseline.json` are listed as "known" and do not fail the check (until the text they were found in is edited); every new error does.

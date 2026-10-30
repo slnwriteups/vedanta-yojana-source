@@ -1,0 +1,56 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "composition-of-the-stotram",
+  "lang": "ta",
+  "textHash": "8734e9d9ac",
+  "reviewer": {
+    "name": "subagent-reviewer-b",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 5,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"earliest\" rendered as மிகப் பழமையானது (\"most ancient\"). Close, but the English is about order in time, not age.",
+      "suggestion": "அவற்றுள் ஸ்ரீ ஆதி சங்கரரின் உரையே காலத்தால் முந்தியது."
+    },
+    {
+      "n": 15,
+      "severity": "minor",
+      "category": "",
+      "comment": "ஒத்துப்போகிறது sounds conversational for this register.",
+      "suggestion": "... உபதேசங்களுடன் இசைந்துள்ளது / ஒத்திருக்கிறது."
+    },
+    {
+      "n": 16,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"personalities\" rendered as பெருமக்கள் (\"great persons\"), a slight elevation of the English. Also, the seeker (Yudhishthira) is referred to with the honorific நாடியவரும் ... அல்லர், while ¶17 and the glossary keep him plain (யுதிஷ்டிரன் ... கடைப்பிடித்தவன்). This is a generic noun, not his name, so it is not blocking, but it is uneven.",
+      "suggestion": "Consider நபர்கள் / மனிதர்கள் for \"personalities\" if strict literalness is wanted. For the seeker, keep the honorific (it reads naturally) or use நாடியவனும் ... அல்லன் to match ¶17."
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"integrity\" rendered as ஒழுக்கம் (\"conduct, discipline\"), which is not quite the same idea. கல்வி for \"education\" is literal and slightly secular in tone.",
+      "suggestion": "Use நாணயம் or மனத்தூய்மை for integrity. For the education, consider அருளிச்செய்யப்பட்ட இந்த ஞான போதனையின் பெருமையை, or keep கல்வி if the owner prefers literalness."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶7: the English source says that, of Sri Sankara's commentaries, 'Sri Vishnu Sahasranama Stotram was the foremost one', which literally ranks the stotram itself among commentaries. The meaning is presumably 'his commentary on Sri Vishnu Sahasranama' (and 'foremost' may mean 'first', as tradition holds it was his first bhashya). The Tamil faithfully keeps the source's wording. The owner may wish to clarify the English and then the translation.",
+    "¶12: Sri Vedavyasa described as 'an incarnation of Vishnu', rendered faithfully as விஷ்ணுவின் அவதாரம். The tradition usually treats this as an āveśa/aṃśa avatāra. This is for the owner to note only; the translation matches the source."
+  ],
+  "overall": "approve"
+}

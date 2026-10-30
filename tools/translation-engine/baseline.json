@@ -1,0 +1,1279 @@
+{
+  "note": "Known historical translation defects. Never add entries by hand or by tool; remove fixed ones with `node tools/translation-engine/cli.ts baseline --prune`. See REMEDIATION.md.",
+  "created": "2026-10-30",
+  "entries": [
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "source-verse-layout",
+      "fingerprint": "d6147134dc",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 5,
+      "rule": "source-verse-layout",
+      "fingerprint": "56b26a50f4",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "d8656b5dab",
+      "detail": "5 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "3da278a0f9",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "d0173cfa39",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "630cb4bc50",
+      "detail": "5 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "6146587d35",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "e2b3553859",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "3aeb1e4c7c",
+      "detail": "5 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "0451017ff7",
+      "detail": "the Devanagari verse must be kept character for character (0/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/jaya/chapters/invocation.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "78721b8838",
+      "detail": "the Devanagari verse must be kept character for character (0/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/jaya/chapters/the-field-and-the-knower.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "143ac1f6b6",
+      "detail": "4 English paragraphs, 1 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/jaya/chapters/god-nature-and-right-action.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "e7c1becea8",
+      "detail": "2 English paragraphs, 1 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/jaya/chapters/mind-control-and-devotion.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "c9ccc12e77",
+      "detail": "4 English paragraphs, 1 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/nityasuri-vaibhavam/chapters/the-sudarsana-ashtakam.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 22,
+      "rule": "devanagari-in-prose",
+      "fingerprint": "203c1751d5",
+      "detail": "Devanagari inside Tamil text: \"விஷமேऽபி\""
+    },
+    {
+      "file": "content/library/nityasuri-vaibhavam/chapters/the-sudarsana-ashtakam.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 21,
+      "rule": "devanagari-changed",
+      "fingerprint": "56804ad495",
+      "detail": "the Devanagari verse must be kept character for character (1/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/intrigue-wasted.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "32ae5db709",
+      "detail": "12 English paragraphs, 10 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/viradhas-end.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "script-leak",
+      "fingerprint": "b7773321e4",
+      "detail": "Tamil character U+0BB0 in Kannada text: \"…ಭரತ ಮನೆಗೆ ಹೋದ…\""
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/kambans-shurpanakha.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "c70173644b",
+      "detail": "10 English paragraphs, 9 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/the-search-in-lanka.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "aaf49f8460",
+      "detail": "13 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/the-search-in-lanka.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "755b7aa361",
+      "detail": "13 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/sita-in-the-ashoka-park.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "258c117f2c",
+      "detail": "9 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/sita-in-the-ashoka-park.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "893ae739bd",
+      "detail": "9 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/first-among-the-astute.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "d3b2a21225",
+      "detail": "9 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/first-among-the-astute.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "5eb6cdacd5",
+      "detail": "9 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/sita-comforted.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "9337ea021f",
+      "detail": "10 English paragraphs, 5 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/sita-comforted.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "445455a45e",
+      "detail": "10 English paragraphs, 5 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/sita-and-hanuman.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "d010311535",
+      "detail": "10 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/sita-and-hanuman.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "1d65c2e29e",
+      "detail": "10 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/inviting-battle.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "13f8fd499a",
+      "detail": "8 English paragraphs, 5 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/inviting-battle.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "1659f9741d",
+      "detail": "8 English paragraphs, 5 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/the-tidings-conveyed.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "3ee16a8be0",
+      "detail": "8 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-rama-charithram/chapters/the-tidings-conveyed.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "5be935b038",
+      "detail": "8 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/sri-vishnu-sahasranaama-anubhavam/book.json",
+      "lang": "hi",
+      "field": "parts[3].title",
+      "rule": "missing-field",
+      "fingerprint": "af9c9a7659",
+      "detail": "no translated parts[3].title"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 6,
+      "rule": "source-verse-layout",
+      "fingerprint": "d6147134dc",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 7,
+      "rule": "source-verse-layout",
+      "fingerprint": "56b26a50f4",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "6c8ccd03dd",
+      "detail": "7 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "cc9d93bfa5",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "3da278a0f9",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "d0173cfa39",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "cc28f052cd",
+      "detail": "7 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "089508fd58",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "6146587d35",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "e2b3553859",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "e50dc1909b",
+      "detail": "7 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "3f55e53a28",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "11b41b5af6",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "cda14e2894",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-changed",
+      "fingerprint": "ca276555db",
+      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "0451017ff7",
+      "detail": "the Devanagari verse must be kept character for character (0/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "78721b8838",
+      "detail": "the Devanagari verse must be kept character for character (0/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/daksha-yagnam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "0df6143937",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/daksha-yagnam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "b4713c5894",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/daksha-yagnam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "92c6c947ef",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/how-sudarshana-is-manifest-in-every-avataram.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "f05980f7ee",
+      "detail": "9 English paragraphs, 8 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/how-sudarshana-is-manifest-in-every-avataram.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "e67f096092",
+      "detail": "9 English paragraphs, 8 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/how-sudarshana-is-manifest-in-every-avataram.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "c8b63609cb",
+      "detail": "9 English paragraphs, 8 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/sudarshana-ashtakam.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 28,
+      "rule": "devanagari-in-prose",
+      "fingerprint": "d258c705da",
+      "detail": "Devanagari inside Tamil text: \"விஷமேऽபி\""
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/sudarshana-ashtakam.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 28,
+      "rule": "devanagari-in-prose",
+      "fingerprint": "858b180ab9",
+      "detail": "Devanagari inside Kannada text: \"ವಿಷಮೇऽಪಿ\""
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/sudarshana-ashtakam.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 28,
+      "rule": "devanagari-in-prose",
+      "fingerprint": "697d53068b",
+      "detail": "Devanagari inside Telugu text: \"విషమేऽపి\""
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/jadabharatha-charitram.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "788a678a7c",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/jadabharatha-charitram.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "a89b6db0e6",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/jadabharatha-charitram.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "84501ff29b",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/parijata-vrittantam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "ecd1dac507",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/parijata-vrittantam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "8a3ce95848",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/parijata-vrittantam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "297d631fc7",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-narayaneeyam-and-melpathur-narayana-bhattathiri.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "6d2d41da76",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-narayaneeyam-and-melpathur-narayana-bhattathiri.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "9a04ed990f",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-narayaneeyam-and-melpathur-narayana-bhattathiri.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "2b8028d414",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-benefits-of-reading-or-listening-to-srimad-bhagavatam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "00a2122d7a",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-benefits-of-reading-or-listening-to-srimad-bhagavatam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "bc2b03fbb0",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-benefits-of-reading-or-listening-to-srimad-bhagavatam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "d8f2bd671f",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/srimad-bhagavata-kathasagaram/chapters/the-benefits-of-reading-or-listening-to-srimad-bhagavatam.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "devanagari-in-prose",
+      "fingerprint": "8ad1109e7d",
+      "detail": "Devanagari inside Telugu text: \"నిధయేऽర్థినామ్;\""
+    },
+    {
+      "file": "content/library/temples-and-festivals/chapters/the-festival-of-brahma.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 1,
+      "rule": "source-verse-layout",
+      "fingerprint": "6177c5b06a",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/eternal-bliss-in-sri-vaikuntham.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "c2d9333ab6",
+      "detail": "2 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/eternal-bliss-in-sri-vaikuntham.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "4ec5fa1a1d",
+      "detail": "2 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/eternal-bliss-in-sri-vaikuntham.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "364a599954",
+      "detail": "2 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 5,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "bc929785be",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/svarupam-of-parabramham.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "aee3dabca0",
+      "detail": "7 English paragraphs, 8 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/svarupam-of-parabramham.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "148fb0f478",
+      "detail": "7 English paragraphs, 8 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/svarupam-of-parabramham.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "15a178e8ed",
+      "detail": "7 English paragraphs, 8 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/phala-stuti.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "973073d438",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/phala-stuti.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "c0c4df2075",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/phala-stuti.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "ee1949a702",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/performance-of-panchasamskaram.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "a7fb68d1df",
+      "detail": "6 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/performance-of-panchasamskaram.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-in-prose",
+      "fingerprint": "e46c7f71fe",
+      "detail": "Devanagari inside Tamil text: \"நமः\"\""
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/performance-of-panchasamskaram.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "65376bbe79",
+      "detail": "6 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/performance-of-panchasamskaram.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "2ff51fd2cd",
+      "detail": "6 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "251504c850",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-ramanujar.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "efb057d862",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "d62e7152ee",
+      "detail": "12 English paragraphs, 13 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "d82e09377f",
+      "detail": "12 English paragraphs, 13 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "69de8d5ecb",
+      "detail": "12 English paragraphs, 13 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-kanchipuram.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "243deb730d",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/ramanujar-s-journey-to-sri-rangam.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "28e47e9877",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/encounter-with-tirukacchi-nambigal.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "28fca1da8c",
+      "detail": "13 English paragraphs, 14 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/encounter-with-tirukacchi-nambigal.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "14d5189b54",
+      "detail": "13 English paragraphs, 14 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/encounter-with-tirukacchi-nambigal.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "ce8d33b078",
+      "detail": "13 English paragraphs, 14 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-takes-up-sanyasam.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "43e824a9a4",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/gaining-of-disciples.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "4f1fb969fb",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/gaining-of-disciples.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "9ca0bc2100",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/gaining-of-disciples.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "140b84226e",
+      "detail": "1 English paragraphs, 2 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "0f017c2fd6",
+      "detail": "5 English paragraphs, 33 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "29a33e1a83",
+      "detail": "5 English paragraphs, 33 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "dded2754d6",
+      "detail": "5 English paragraphs, 33 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/reforming-periya-kovil-nambi.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "da45584a56",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/reforming-periya-kovil-nambi.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "6907d9fe5e",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/ananthazhwan.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "2e68776a14",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "018243a75f",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "e7af16f053",
+      "detail": "6 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "74268c3f9b",
+      "detail": "6 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "220aa8e80b",
+      "detail": "6 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/tirunarayanapuram-vaibhavam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "3c5af8f441",
+      "detail": "12 English paragraphs, 13 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/tirunarayanapuram-vaibhavam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "aafdfb38e0",
+      "detail": "12 English paragraphs, 13 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/tirunarayanapuram-vaibhavam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "90ecf77c33",
+      "detail": "12 English paragraphs, 13 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "291ffc4e1a",
+      "detail": "13 English paragraphs, 15 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "fa90f8f921",
+      "detail": "13 English paragraphs, 15 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "787452df1b",
+      "detail": "13 English paragraphs, 15 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-kanchipuram.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "f19e249484",
+      "detail": "5 English paragraphs, 9 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-kanchipuram.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "95ca824030",
+      "detail": "5 English paragraphs, 9 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-kanchipuram.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "cd5765d7fd",
+      "detail": "5 English paragraphs, 9 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/getting-the-title-of-vedanta-desikan-and-brahma-tantra-swatantra.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 2,
+      "rule": "glossary-wrong-variant",
+      "fingerprint": "d9843ad984",
+      "detail": "\"पेरुमाळ्\" for Perumāḷ; the glossary forbids it (use पेरुमाल; hi.md:8, hi.md:200)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/present-day-sri-vaishnava-mutts-and-ashramams.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "3a7a21cbc0",
+      "detail": "2 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/present-day-sri-vaishnava-mutts-and-ashramams.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "01cace42b6",
+      "detail": "2 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/present-day-sri-vaishnava-mutts-and-ashramams.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "1827465a4a",
+      "detail": "2 English paragraphs, 3 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/charama-shlokams.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "57b36c59c3",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/charama-shlokams.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "c6eeb4df9e",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/charama-shlokams.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "35ed789f75",
+      "detail": "3 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 5,
+      "rule": "source-verse-layout",
+      "fingerprint": "2a2744ab95",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "58513c4195",
+      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "4431356089",
+      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "devanagari-changed",
+      "fingerprint": "00b8a8c74e",
+      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "source-verse-layout",
+      "fingerprint": "dd5a6a9f52",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "83e6a26210",
+      "detail": "5 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "ad99b3480d",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "19c51ad9bb",
+      "detail": "5 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "fb3587d49a",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "72cda1e45b",
+      "detail": "5 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "658960e6ad",
+      "detail": "the Devanagari verse must be kept character for character (0/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "source-verse-layout",
+      "fingerprint": "e5c4ce3278",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "28e2d14bcd",
+      "detail": "5 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "ta",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "855859821c",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "34d9f5c1d2",
+      "detail": "5 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "kn",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "7306c6cfda",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "6211f2a679",
+      "detail": "5 English paragraphs, 4 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "hi",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "a3a1446cd0",
+      "detail": "this Devanagari verse block is not in the translation character for character (English paragraph number)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+      "lang": "te",
+      "field": "body",
+      "paragraph": 3,
+      "rule": "devanagari-changed",
+      "fingerprint": "fd951266fe",
+      "detail": "the Devanagari verse must be kept character for character (0/2 lines unchanged)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/conclusion.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 4,
+      "rule": "source-verse-layout",
+      "fingerprint": "bcfef2d7c1",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/conclusion.json",
+      "lang": "en",
+      "field": "body",
+      "paragraph": 5,
+      "rule": "source-verse-layout",
+      "fingerprint": "e8a61dc18c",
+      "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/conclusion.json",
+      "lang": "ta",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "35b8f1c540",
+      "detail": "7 English paragraphs, 6 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/conclusion.json",
+      "lang": "kn",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "5f5d718eee",
+      "detail": "7 English paragraphs, 6 translated; never merge or split (Standard §1 rule 5)"
+    },
+    {
+      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/conclusion.json",
+      "lang": "hi",
+      "field": "body",
+      "rule": "paragraph-parity",
+      "fingerprint": "ac5c862e60",
+      "detail": "7 English paragraphs, 6 translated; never merge or split (Standard §1 rule 5)"
+    }
+  ]
+}

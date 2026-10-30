@@ -1,0 +1,63 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "composition-of-the-stotram",
+  "lang": "kn",
+  "textHash": "3d216a5b23",
+  "reviewer": {
+    "name": "subagent-reviewer-b",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"the sage\" rendered as ಆ ಮಹರ್ಷಿಗಳು (\"great sage\"), a slight elevation. The passive ಆರಾಧಿಸಲ್ಪಡುವ is a little stiff. The mechanical 'glossary-missing: Krishna' warning is a false positive: ಶ್ರೀಕೃಷ್ಣನೇ contains ಕೃಷ್ಣ (written joined to ಶ್ರೀ).",
+      "suggestion": "ಆ ಋಷಿಗಳು / ಆ ಮುನಿಗಳು ... ಒಟ್ಟಿಗೆ ಪೋಣಿಸಿದರು. ... ದೇವಕಿಯ ಪುತ್ರನಾದ ಭಗವಾನ್ ಶ್ರೀಕೃಷ್ಣನೇ ಇಲ್ಲಿ ಆರಾಧ್ಯ ದೇವತೆ."
+    },
+    {
+      "n": 5,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"earliest\" rendered as ಅತ್ಯಂತ ಪ್ರಾಚೀನವಾದುದು (\"most ancient\"). The English is about order in time.",
+      "suggestion": "ಅವುಗಳಲ್ಲಿ ಶ್ರೀ ಆದಿ ಶಂಕರರ ವ್ಯಾಖ್ಯಾನವೇ ಮೊದಲನೆಯದು / ಕಾಲದ ದೃಷ್ಟಿಯಿಂದ ಅತ್ಯಂತ ಮೊದಲಿನದು."
+    },
+    {
+      "n": 6,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"epic Mahabharata\" rendered as ಮಹಾಭಾರತ ಮಹಾಕಾವ್ಯ. In the tradition the Mahabharata is an ಇತಿಹಾಸ (the Tamil uses இதிகாசம்), and ಮಹಾಕಾವ್ಯ is the term for literary epics such as those of Kalidasa.",
+      "suggestion": "... ವೇದವ್ಯಾಸ ಮಹರ್ಷಿಗಳು ರಚಿಸಿದ ಮಹಾಭಾರತ ಇತಿಹಾಸದ ಅವಿಭಾಜ್ಯ ಅಂಗವಾಗಿದೆ."
+    },
+    {
+      "n": 16,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"personalities\" rendered as ಮಹನೀಯರು (\"great persons\"), a slight elevation of the English.",
+      "suggestion": "Acceptable in context. Use ವ್ಯಕ್ತಿಗಳು if strict literalness is wanted."
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "",
+      "comment": "\"imparted\" rendered as the everyday ನೀಡಿದ, and \"education\" as ಶಿಕ್ಷಣ, which has a school or secular connotation. The register rule asks for the tradition's word for what sages impart.",
+      "suggestion": "... ವ್ಯಾಸರು ಮತ್ತು ಭೀಷ್ಮನು ಮಾನವಕುಲಕ್ಕೆ ಅನುಗ್ರಹಿಸಿದ ಈ ಬೋಧನೆಯ ಮಹಿಮೆಯನ್ನು ಅರಿಯಲು ..."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶7: the English source says that, of Sri Sankara's commentaries, 'Sri Vishnu Sahasranama Stotram was the foremost one', which literally ranks the stotram itself among commentaries. The meaning is presumably 'his commentary on Sri Vishnu Sahasranama' (and 'foremost' may mean 'first', as tradition holds it was his first bhashya). The Kannada faithfully keeps the source's wording. The owner may wish to clarify the English and then the translation.",
+    "¶12: Sri Vedavyasa described as 'an incarnation of Vishnu', rendered faithfully as ವಿಷ್ಣುವಿನ ಅವತಾರ. This is for the owner to note only; the translation matches the source."
+  ],
+  "overall": "approve"
+}

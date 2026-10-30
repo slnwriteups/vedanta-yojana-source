@@ -1,0 +1,74 @@
+{
+  "note": "Proposed terms awaiting owner approval. Not binding until approved into docs/translation-glossaries/.",
+  "terms": [
+    {
+      "en": "meter (chandas)",
+      "forms": {
+        "ta": "சந்தஸ்",
+        "kn": "ಛಂದಸ್ಸು",
+        "hi": "छंद",
+        "te": "ఛందస్సు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Dvaita school",
+      "forms": {
+        "ta": "த்வைத சம்பிரதாயம்",
+        "kn": "ದ್ವೈತ ಸಂಪ್ರದಾಯ",
+        "hi": "द्वैत संप्रदाय",
+        "te": "ద్వైత సంప్రదాయం"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Alwars",
+      "forms": {
+        "ta": "ஆழ்வார்கள்",
+        "kn": "ಆಳ್ವಾರರು",
+        "hi": "आळ्वार",
+        "te": "ఆళ్వారులు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "composers (vaggeyakaras)",
+      "forms": {
+        "ta": "வாக்கேயக்காரர்கள்",
+        "kn": "ವಾಗ್ಗೇಯಕಾರರು",
+        "hi": "वाग्गेयकार",
+        "te": "వాగ్గేయకారులు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Mother Ganga",
+      "forms": {
+        "ta": "அன்னை கங்கை",
+        "kn": "ಗಂಗಾ ಮಾತೆ",
+        "hi": "माता गंगा",
+        "te": "గంగా మాత"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Vedas (te)",
+      "forms": {
+        "te": "వేదాలు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    }
+  ]
+}
