@@ -1,0 +1,41 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "kn",
+  "textHash": "ab5c09050f",
+  "reviewer": {
+    "name": "pilot-reviewer2-kn",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 13,
+      "severity": "minor",
+      "category": "readability",
+      "comment": "In the Yama Smriti quotation \"…ಭಗವಂತನನ್ನು ಪಡೆದು, ಅವನು ಅಮೃತತ್ವಕ್ಕೆ ಯೋಗ್ಯನಾಗುತ್ತಾನೆ\" the subject is the released soul, but the sentence just before uses ಅವನು for the Lord (\"ಅವನು ಅವರನ್ನು ದೂರಕ್ಕೆ ಕಳುಹಿಸುವುದಿಲ್ಲ\"). The grammar resolves it (one cannot attain oneself), but a reader may stumble for a moment. The Tamil reviewer flagged the same point.",
+      "suggestion": "\"ಪರಮ ವೈಕುಂಠದಲ್ಲಿ ಪರಮಾತ್ಮನಾದ ಭಗವಂತನನ್ನು ಪಡೆದ ಜೀವನು ಅಮೃತತ್ವಕ್ಕೆ ಯೋಗ್ಯನಾಗುತ್ತಾನೆ ಮತ್ತು ಮತ್ತೆಂದೂ ಹಿಂತಿರುಗುವುದಿಲ್ಲ\" (optional)"
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"ಮಹಾತ್ಮನು ವ್ಯಾಪಿಸಿ ನೆಲೆಸಿರುವುದರಿಂದ\" — the English translates mahātmā as \"the great Self\"; in modern Kannada ಮಹಾತ್ಮ usually means a great person or saint. The ta and hi reviewers raised the same point, so the book may want one approach.",
+      "suggestion": "\"…(ದೇಹದಲ್ಲಿ) ಮಹಾನ್ ಆತ್ಮನಾದ ಪರಮಾತ್ಮನು ವ್ಯಾಪಿಸಿ ನೆಲೆಸಿರುವುದರಿಂದ…\" (optional)"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶7 (English source): \"have earned a permanent place\" — in Sri Vaishnava doctrine moksha is the Lord's grace, not something earned. The Kannada \"ಗಳಿಸಿರುವ\" faithfully follows the English; the wording is for the owner to decide."
+  ],
+  "overall": "approve"
+}

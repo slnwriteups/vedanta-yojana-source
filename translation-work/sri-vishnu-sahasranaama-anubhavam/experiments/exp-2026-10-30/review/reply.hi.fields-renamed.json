@@ -1,0 +1,49 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "composition-of-the-stotram",
+  "lang": "hi",
+  "textHash": "b62ad9586d",
+  "reviewer": {
+    "name": "subagent-reviewer-c",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 6,
+      "severity": "minor",
+      "category": "",
+      "comment": "In the parenthesis the relative clause 'जिन्हें हम आज जानते हैं' sits after 'व्यास ही हैं', so on a first reading it can attach to Vyasa rather than to the classifications.",
+      "suggestion": "(आज हम वेदों को जिन विभागों के रूप में जानते हैं, उनमें वेदों को व्यवस्थित करने वाले भी व्यास ही हैं)"
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "",
+      "comment": "'उपदेश और प्रकटीकरण किए जाने' is clumsy: उपदेश usually takes दिया जाना, and प्रकटीकरण reads like officialese. 'धार्मिकता' and 'सत्यनिष्ठा' are acceptable, but सत्यनिष्ठा overlaps with सत्य for 'integrity'. 'प्रमाण' for 'justification' is a slight shift.",
+      "suggestion": "...भीष्म द्वारा युधिष्ठिर को उपदेश दिए जाने और प्रकट किए जाने की उस पूरी घटना के साक्षी...; integrity: सदाचार / चारित्रिक दृढ़ता; justification: औचित्य or प्रमाण (owner's choice)"
+    },
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "",
+      "comment": "The automatic 'Krishna missing' warning is a false positive: श्रीकृष्ण contains कृष्ण. 'श्री' is added to 'Lord Krishna' (भगवान श्रीकृष्ण), the conventional Hindi form, also used in ¶17. Acceptable; noted only for the record.",
+      "suggestion": "No change needed."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶13: the English 'the best and most accessible of all dharmas or the means to attain relief from all bondage' can be read two ways: (a) best among all dharmas, i.e. among all means to release, which the translation adopts by adding 'सभी साधनों में'; or (b) Bhishma considers it the best dharma and also the means to release from bondage, echoing the two separate questions in the prologue (ko dharmaḥ sarvadharmāṇāṃ... / kiṃ japan mucyate jantur janmasaṃsārabandhanāt). The Telugu takes the same reading. The owner should confirm which is intended.",
+    "¶7: the source says the Sri Vishnu Sahasranama Stotram was 'the foremost' of Sri Sankara's commentaries (meaning his commentary on it). The translation reproduces this faithfully, but the claim itself is the author's and may merit an editorial check."
+  ],
+  "overall": "approve"
+}

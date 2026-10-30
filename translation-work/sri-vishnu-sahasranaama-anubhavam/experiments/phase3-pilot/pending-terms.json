@@ -1,0 +1,325 @@
+{
+  "note": "Proposed terms awaiting owner approval. Not binding until approved into docs/translation-glossaries/.",
+  "terms": [
+    {
+      "en": "Dhyana Shlokam",
+      "forms": {
+        "kn": "ಧ್ಯಾನ ಶ್ಲೋಕ",
+        "hi": "ध्यान श्लोकम्",
+        "te": "ధ్యాన శ్లోకం"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Ksheerabdhi",
+      "forms": {
+        "kn": "ಕ್ಷೀರಾಬ್ಧಿ",
+        "hi": "क्षीराब्धि",
+        "te": "క్షీరాబ్ధి"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "milky ocean",
+      "forms": {
+        "kn": "ಕ್ಷೀರಸಾಗರ",
+        "hi": "क्षीरसागर",
+        "te": "క్షీరసాగరం"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Adisesha",
+      "forms": {
+        "kn": "ಆದಿಶೇಷ",
+        "hi": "आदिशेष",
+        "te": "ఆదిశేషుడు"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Vishwaroopam",
+      "forms": {
+        "kn": "ವಿಶ್ವರೂಪ",
+        "hi": "विश्वरूपम्",
+        "te": "విశ్వరూపం"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Kaustubha",
+      "forms": {
+        "kn": "ಕೌಸ್ತುಭ",
+        "hi": "कौस्तुभ",
+        "te": "కౌస్తుభం"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Panchajanya Shankam",
+      "forms": {
+        "kn": "ಪಾಂಚಜನ್ಯ ಶಂಖ",
+        "hi": "पाञ्चजन्य शंखम्",
+        "te": "పాంచజన్య శంఖం"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "jeevaatma",
+      "forms": {
+        "kn": "ಜೀವಾತ್ಮ",
+        "hi": "जीवात्मा",
+        "te": "జీవాత్మ"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Maharishi Vedavyasa",
+      "forms": {
+        "kn": "ಮಹರ್ಷಿ ವೇದವ್ಯಾಸರು",
+        "hi": "महर्षि वेदव्यास",
+        "te": "మహర్షి వేదవ్యాసుడు"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Sri Mahalakshmi",
+      "forms": {
+        "kn": "ಶ್ರೀ ಮಹಾಲಕ್ಷ್ಮಿ",
+        "hi": "श्री महालक्ष्मी",
+        "te": "శ్రీ మహాలక్ష్మి"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Rukmini",
+      "forms": {
+        "kn": "ರುಕ್ಮಿಣಿ",
+        "hi": "रुक्मिणी",
+        "te": "రుక్మిణి"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Satyabhama",
+      "forms": {
+        "kn": "ಸತ್ಯಭಾಮೆ",
+        "hi": "सत्यभामा",
+        "te": "సత్యభామ"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Parijata tree",
+      "forms": {
+        "kn": "ಪಾರಿಜಾತ ವೃಕ್ಷ",
+        "hi": "पारिजात वृक्ष",
+        "te": "పారిజాత వృక్షం"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Lord Vishnu",
+      "forms": {
+        "kn": "ಭಗವಾನ್ ವಿಷ್ಣು",
+        "hi": "भगवान विष्णु",
+        "te": "విష్ణు భగవానుడు"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Sri Bhattar",
+      "forms": {
+        "ta": "ஸ்ரீ பட்டர்",
+        "kn": "ಶ್ರೀ ಭಟ್ಟರು",
+        "hi": "श्री भट्टर",
+        "te": "శ్రీ భట్టరు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Pradyumna",
+      "forms": {
+        "ta": "பிரத்யும்னர்",
+        "kn": "ಪ್ರದ್ಯುಮ್ನ",
+        "hi": "प्रद्युम्न",
+        "te": "ప్రద్యుమ్నుడు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Vedangams",
+      "forms": {
+        "ta": "வேதாங்கங்கள்",
+        "kn": "ವೇದಾಂಗಗಳು",
+        "hi": "वेदांग",
+        "te": "వేదాంగాలు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Upangams",
+      "forms": {
+        "ta": "உபாங்கங்கள்",
+        "kn": "ಉಪಾಂಗಗಳು",
+        "hi": "उपांग",
+        "te": "ఉపాంగాలు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "shloka",
+      "forms": {
+        "ta": "ஶ்லோகம்",
+        "kn": "ಶ್ಲೋಕ",
+        "hi": "श्लोक",
+        "te": "శ్లోకం"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "suras",
+      "forms": {
+        "ta": "ஸுரர்கள்",
+        "kn": "ಸುರರು",
+        "hi": "सुर",
+        "te": "సురలు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "lōkas",
+      "forms": {
+        "ta": "லோகங்கள்",
+        "kn": "ಲೋಕಗಳು",
+        "hi": "लोक",
+        "te": "లోకాలు"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "liberation (moksha)",
+      "forms": {
+        "ta": "மோக்ஷம்",
+        "kn": "ಮೋಕ್ಷ",
+        "hi": "मोक्षम्",
+        "te": "మోక్షం"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "bhakti yogam",
+      "forms": {
+        "ta": "பக்தி யோகம்",
+        "kn": "ಭಕ್ತಿಯೋಗ",
+        "hi": "भक्ति योगम्",
+        "te": "భక్తియోగం"
+      },
+      "batch": 2,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "service (to the Lord)",
+      "forms": {
+        "ta": "கைங்கர்யம்",
+        "kn": "ಕೈಂಕರ್ಯ",
+        "hi": "सेवा",
+        "te": "కైంకర్యం"
+      },
+      "batch": 2,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "supreme goal (paramā gatiḥ)",
+      "forms": {
+        "ta": "பரம கதி",
+        "kn": "ಪರಮ ಗತಿ",
+        "hi": "परम गति",
+        "te": "పరమ గతి"
+      },
+      "batch": 2,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "mortal world",
+      "forms": {
+        "ta": "மரணத்திற்கு உட்பட்ட உலகம்",
+        "kn": "ಮರ್ತ್ಯಲೋಕ",
+        "hi": "मर्त्यलोक",
+        "te": "మర్త్యలోకం"
+      },
+      "batch": 2,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "verbal root (dhātu)",
+      "forms": {
+        "ta": "தாது",
+        "kn": "ಧಾತು",
+        "hi": "धातु"
+      },
+      "batch": 1,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    },
+    {
+      "en": "Lord Brahma",
+      "forms": {
+        "kn": "ಬ್ರಹ್ಮದೇವ",
+        "hi": "भगवान ब्रह्मा",
+        "te": "బ్రహ్మదేవుడు"
+      },
+      "batch": 3,
+      "proposedAt": "2026-10-30",
+      "status": "pending"
+    }
+  ]
+}

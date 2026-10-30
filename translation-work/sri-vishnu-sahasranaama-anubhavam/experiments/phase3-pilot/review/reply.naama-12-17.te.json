@@ -1,0 +1,42 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "te",
+  "textHash": "b090d324a0",
+  "reviewer": {
+    "name": "pilot-reviewer2-te",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 9,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "\"ముక్తాత్మలకు (ముక్తులు)\": the bracketed gloss is nominative while it glosses a dative.",
+      "suggestion": "ముక్తాత్మలకు (ముక్తులకు) ఎటువంటి అవసరాలూ లేవు"
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"మహాత్ముడు వ్యాపించి నివసిస్తాడు\": for \"the great Self\", మహాత్ముడు is commonly read in modern Telugu as 'a great person / saint'. The English translates the word, so a clearer rendering helps (the ta and hi versions were flagged for the same point).",
+      "suggestion": "… ఈ పుణ్య నగరంలో (శరీరంలో) పరమాత్మ వ్యాపించి నివసిస్తాడు కనుక ఆయన పురుష అని పిలువబడతాడు"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶5 (English): \"must rely on bhakti yogam to reach the Lord\" names only bhakti yoga as the means for baddha souls; a Sri Vaishnava reader may expect prapatti (śaraṇāgati) to be acknowledged. The Telugu follows the English without added emphasis.",
+    "¶7 (English): \"have earned a permanent place\" implies attainment by merit, whereas in Sri Vaishnava doctrine mokṣa is the Lord's grace. The Telugu follows the English (\"సంపాదించుకున్న\")."
+  ],
+  "overall": "approve"
+}

@@ -1,0 +1,77 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "kn",
+  "textHash": "15bef0c2ad",
+  "reviewer": {
+    "name": "pilot-reviewer-kn",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 6,
+      "severity": "minor",
+      "category": "honorifics",
+      "comment": "The nityasuris, who include Garuḍa, are introduced with the neuter \"ಇವು ... ಆತ್ಮಗಳು\". The language rules give Garuḍa the honorific plural, and the approved maran-of-tirukkurugur example writes \"ವಿಷ್ವಕ್ಸೇನರ\". The list \"ಗರುಡ, ಆದಿಶೇಷ, ವಿಷ್ವಕ್ಸೇನ ಮುಂತಾದವರು\" is acceptable, but the subject should be personal.",
+      "suggestion": "2. ನಿತ್ಯಾತ್ಮ- ಇವರು ಭಗವಂತನ ಶಾಶ್ವತ ಕೈಂಕರ್ಯಕ್ಕೆ ಎಂದೆಂದಿಗೂ ಬದ್ಧರಾಗಿರುವ, ನಿತ್ಯಸೂರಿಗಳು ಎಂದು ಕರೆಯಲ್ಪಡುವ ಆತ್ಮಗಳು—ಉದಾಹರಣೆಗೆ, ಗರುಡ, ಆದಿಶೇಷ, ವಿಷ್ವಕ್ಸೇನ ಮುಂತಾದವರು."
+    },
+    {
+      "n": 7,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "\"ಭಗವಂತನನ್ನೇ\" adds an emphatic ಏ (\"the Lord alone\") that the English (\"attained the Lord as the final destination\") does not have.",
+      "suggestion": "ಇವು ಕೊನೆಗೆ ಭಗವಂತನನ್ನು ಅಂತಿಮ ಗಮ್ಯವಾಗಿ ಪಡೆದು, ..."
+    },
+    {
+      "n": 9,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "\"ಮುಕ್ತಾತ್ಮರಿಗೆ (ಮುಕ್ತರು)\": the gloss in brackets is in the nominative and does not agree with the dative it glosses.",
+      "suggestion": "ಮುಕ್ತಾತ್ಮರಿಗೆ (ಮುಕ್ತರಿಗೆ) ಯಾವುದೇ ಅಗತ್ಯಗಳಿಲ್ಲ, ..."
+    },
+    {
+      "n": 11,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "Within one paragraph the gender and number change: \"ಒಂದು ಆತ್ಮವು ಮುಕ್ತಾತ್ಮವಾದಾಗ\" (neuter), \"ಅಂತಹ ಆತ್ಮಗಳನ್ನು\" (plural), then \"ಮುಕ್ತಾತ್ಮನನ್ನು\" (masculine singular). Everywhere else the chapter uses ಮುಕ್ತಾತ್ಮರು.",
+      "suggestion": "ಮುಕ್ತಾತ್ಮರನ್ನು ಪುನರ್ಜನ್ಮದ ಪ್ರಕ್ರಿಯೆಯಿಂದ ದೂರವಿರಿಸುವವನು ಅವ್ಯಯಃ."
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "\"ತನ್ನ ಅನುಭವದ ಆನಂದವನ್ನು\" is ambiguous: it can be read as \"the joy of His own experience\". The English means the souls' enjoyment of Him (\"the enjoyment of Himself\").",
+      "suggestion": "ಅವನು ಮುಕ್ತಾತ್ಮರಿಗೆ ತನ್ನನ್ನು ಅನುಭವಿಸುವ ಆನಂದವನ್ನು ಹೇರಳವಾಗಿ ನೀಡುತ್ತಾನೆ."
+    },
+    {
+      "n": 19,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ಮುಕ್ತಾತ್ಮರು ತನ್ನ ಮಕ್ಕಳೋ ಎಂಬಂತೆ\" sounds like doubt (\"as if perhaps they were His children\"). The plain simile reads better.",
+      "suggestion": "ಮುಕ್ತಾತ್ಮರನ್ನು ತನ್ನ ಮಕ್ಕಳೆಂಬಂತೆ ಕಂಡು, ಅವರ ಆನಂದದಲ್ಲಿ ಸಂತೋಷಪಡುವವನು."
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "The English uses \"form\" throughout. The Kannada uses \"ರೂಪಗಳನ್ನೂ\" for \"new forms\" but \"ಸ್ವರೂಪದಲ್ಲಿ\" for \"true and complete form\". In Sri Vaishnava usage ಸ್ವರೂಪ (essential nature) and ರೂಪ (divine form) are distinct technical terms, so the switch says something the English does not. \"ಸ್ವರೂಪದಲ್ಲಿ ತೊಡಗಲು\" is also a calque of \"engage in\".",
+      "suggestion": "ಹೀಗೆ ಅವನು ಅವರು ತನ್ನ ನಿಜವಾದ, ಪರಿಪೂರ್ಣವಾದ ರೂಪದ ಅನುಭವದಲ್ಲಿ ತೊಡಗುವಂತೆ ಅನುವು ಮಾಡಿಕೊಡುತ್ತಾನೆ."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶3 (generated mantra): \"(ಓಂ) ಮುಕ್ತಾನಾಂ ಪರಮಾಯೈ ಗತಯೇ ನಮಃ\" uses the feminine dative ಪರಮಾಯೈ with the dative ಗತಯೇ. The packet shows no Devanagari for the mantra to compare against. A Sanskrit scholar should confirm the archana form (e.g. ಮುಕ್ತಾನಾಂ ಪರಮಾಯೈ ಗತ್ಯೈ / ಪರಮಗತಯೇ) the tradition uses.",
+    "¶9: \"they enjoy the same bliss as the Lord\" (ಭಗವಂತನು ಅನುಭವಿಸುವ ಅದೇ ಆನಂದ) is faithful and fits parama-sāmya. It is flagged only for the owner to confirm the wording."
+  ],
+  "overall": "approve"
+}

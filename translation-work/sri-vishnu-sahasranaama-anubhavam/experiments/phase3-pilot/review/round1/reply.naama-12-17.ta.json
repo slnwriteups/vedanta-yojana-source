@@ -1,0 +1,85 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "ta",
+  "textHash": "1fb292b9af",
+  "reviewer": {
+    "name": "pilot-reviewer-ta",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "fail",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "fail",
+    "terminology": "fail",
+    "consistency": "fail",
+    "theology": "fail",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 0,
+      "severity": "blocking",
+      "category": "honorifics",
+      "comment": "Whole chapter, starting with the title \"வழிகாட்டுபவன்\": the Lord is referred to with the singular அவன் / -ான் verbs throughout (¶2 இருப்பவன், ¶9 அவனுக்கு … இருக்கிறான், ¶11 வைப்பவன், ¶15 வல்லவனும் … அருள்பவனும், ¶17 அளிக்கிறான், ¶21 காண்கிறான் … மகிழ்கிறான், ¶25 அறிவான் … செல்கிறான், ¶27 இடமளிக்கிறான், ¶29 குறைவதில்லை … அழைக்கப்படுகிறான்). The sister chapter of the same book (naama-129-138) and the approved examples (pallandu ¶2 \"அவரும் விரும்பினார்\", sudarsana-in-the-avatarams ¶2) use அவர் with honorific verbs. The same book cannot switch register for the Lord between chapters. Paragraph 0 is used here for the title and chapter-wide issue.",
+      "suggestion": "Use அவர் / தம் / -ார் forms throughout: title \"மோக்ஷத்தை அடைவதற்கு வழிகாட்டுபவர்\"; ¶2 \"…பரம கதியாக இருப்பவர்\"; ¶9 \"அவருக்கு முடிவின்றிக் கைங்கர்யம் செய்வதே. அதனால்தான் அவர் அவர்களுக்குப் பரம கதியாக இருக்கிறார்\"; ¶15 \"தம்முன் … வல்லவரும் … அருள்பவரும் புருஷஃ எனப்படுகிறார்\"; ¶17 \"தம்மை அனுபவிக்கும் இன்பத்தை … அளிக்கிறார்\", \"அவர் புருஷ என்று அழைக்கப்படுகிறார்\"; and so on."
+    },
+    {
+      "n": 5,
+      "severity": "blocking",
+      "category": "faithfulness",
+      "comment": "\"பக்தி யோகத்தையே சார்ந்திருக்க வேண்டிய\" adds the exclusive particle ஏ ('only bhakti yoga'), which the English does not have ('must rely on bhakti yogam'). For a Sri Vaishnava reader this also wrongly excludes prapatti (śaraṇāgati) as a means for baddha souls.",
+      "suggestion": "1. பத்தாத்மா- இவை பூலோகத்தில் பிறந்து, பெருமாளை அடைவதற்குப் பக்தி யோகத்தைச் சார்ந்திருக்க வேண்டிய ஆத்மாக்கள்."
+    },
+    {
+      "n": 6,
+      "severity": "blocking",
+      "category": "terminology",
+      "comment": "Glossary fixes Nityasūri = நித்யசூரி; the text has \"நித்யஸூரிகள்\". Also \"நித்திய கைங்கர்யத்தில்\" spells nitya differently from \"நித்யாத்மா\" and \"நித்ய…\" in the same sentence. Secondary (minor): \"கட்டுண்டிருக்கும்\" carries the sense of bondage (கட்டு, தளை), and sits right after பத்தாத்மா (the bound souls); the nityasūris are never bound in that sense. A word of devotion-in-service avoids the confusion while keeping 'bound'.",
+      "suggestion": "2. நித்யாத்மா- இவை பெருமாளின் நித்ய கைங்கர்யத்தில் என்றென்றும் பிணைந்திருக்கும், நித்யசூரிகள் என்று அறியப்படும் ஆத்மாக்கள்—எடுத்துக்காட்டாக, கருடன், ஆதிசேஷன், விஷ்வக்சேனர் முதலியோர்."
+    },
+    {
+      "n": 8,
+      "severity": "minor",
+      "category": "transliteration",
+      "comment": "The name is written \"முக்தானாம்\" (ன) in the generated name line ¶1 and mantra ¶3, but \"முக்தாநாம்\" (ந) here. Use one form for the same name. Also \"ஒரே இலக்காக ஆகுபவன்\" is awkward Tamil.",
+      "suggestion": "இவ்வாறு, மோக்ஷத்தை நாடும் அனைவருக்கும் ஒரே இலக்காக விளங்குபவர் முக்தானாம் பரமா கதிஃ."
+    },
+    {
+      "n": 13,
+      "severity": "blocking",
+      "category": "theology",
+      "comment": "In the Yama Smriti quotation the 'he' who becomes fit for immortality is the released soul, but the chapter uses அவன் for the Lord everywhere, so \"அவன் அழியாமைக்குத் தகுதியுடையவன் ஆகிறான்; ஒருபோதும் மீண்டும் திரும்புவதில்லை\" reads as the Lord becoming fit for immortality. In the same paragraph \"அவன் அவர்களை விலக்கி அனுப்புவதில்லை\" uses அவன் for the Lord. Separately, \"யம ஸ்ம்ருதி\" does not match the glossary form used in the sister chapter (¶16 there: ஸ்மிருதிகள்).",
+      "suggestion": "யம ஸ்மிருதி, \"பரமாத்மாவாகிய பெருமாளைப் பரம வைகுண்டத்தில் அடைந்த ஆத்மா அழியாமைக்குத் தகுதியுடையதாகிறது; ஒருபோதும் மீண்டும் திரும்புவதில்லை\" (…) என்கிறது. … \"அவர் அவர்களை விலக்கி அனுப்புவதில்லை.\""
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"மஹாத்மா வியாபித்து உறைவதால்\" leaves 'the great Self' as மஹாத்மா, which a modern Tamil reader takes as 'a great person / saint'. The English translates it ('the great Self').",
+      "suggestion": "…இந்தப் புண்ணிய நகரத்தில் (உடலில்) பரமாத்மா வியாபித்து உறைவதால், அவர் புருஷ என்று அழைக்கப்படுகிறார்"
+    },
+    {
+      "n": 21,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"முக்தாத்மாக்கள் தான் அருளும் ஆனந்தத்தை\" can be misread as the emphatic particle (முக்தாத்மாக்கள்தான்), so it is unclear who gives the bliss. \"இதுவே பதிலுக்கு\" calques 'in turn' (பதிலுக்கு = 'in reply/in exchange') and the ஏ adds emphasis not in the English.",
+      "suggestion": "பெருமாள், தாம் அருளும் ஆனந்தத்தை முக்தாத்மாக்கள் அனுபவிப்பதைக் கண்டு தாமும் மகிழ்கிறார் என்றும், அது மீண்டும் முக்தாத்மாக்களை மகிழ்விக்கிறது என்றும் ஸ்ரீ பட்டர் விளக்குகிறார்."
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "'His true and complete form' is rendered \"ஸ்வரூபத்தில்\" whereas 'new forms' in the previous clause is \"ரூபங்களையும்\". ஸ்வரூபம் (essential nature) is a narrower technical term than the English 'form'; keep the two renderings aligned or make the shift deliberate.",
+      "suggestion": "இவ்வாறு அவர்கள் அவருடைய உண்மையான, பூரணமான ரூபத்தில் ஈடுபட அவர் இடமளிக்கிறார்."
+    }
+  ],
+  "theologicalConcerns": [
+    "Register for the Lord: traditional Sri Vaishnava vyākhyāna Tamil does use அவன் for Emperumān, so the singular is not wrong in itself; but this book (naama-129-138) and the approved examples use அவர். The owner should fix one register for the whole book; this review treats the mismatch as blocking only for consistency.",
+    "¶7: English 'have earned a permanent place' is rendered \"நிரந்தரமான இடத்தைப் பெற்ற\" ('obtained'). This softens 'earned', which is arguably better theology (moksha is the Lord's grace, not earned), but it departs from the English. Owner to decide whether the source wording should change or the Tamil should follow it.",
+    "¶27: \"பெருமாள் புதிய ரூபங்களையும் குணங்களையும் காட்டுவதாக\" follows the English 'new forms and qualities'. The tradition holds that the Lord's qualities are eternal and infinite and are experienced as ever-fresh (ஆராவமுதம்), not newly acquired. The owner may want the source and translation to say the experience is ever new rather than the forms."
+  ],
+  "overall": "revise"
+}

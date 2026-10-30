@@ -302,7 +302,8 @@ Māsi = మాసి
 Kulasekharan = కులశేఖరన్ (plain as prince); కులశేఖరులు / కులశేఖరుల / కులశేఖరులకు from "the-turning"
 tīrtham = తీర్థం
 Purāṇas / Rāmāyaṇa = పురాణాలు / రామాయణం
-Sri Rāma / Lakshmaṇa / Sītā = శ్రీరాముడు / లక్ష్మణుడు / సీతాదేవి
+Sri Rāma / Lakshmaṇa = శ్రీరాముడు / లక్ష్మణుడు
+Sītā = సీత (oblique సీతను / సీతకు / సీతతో / సీతపై; honorific సీతాదేవి)
 Shūrpaṇakhā / rākshasas = శూర్పణఖ / రాక్షసులు
 Principle (author's direction): Telugu follows the Sanskrit roots.
 Hanumān = హనుమాన్ (హనుమానును, హనుమానుకు); the vāhanam keeps its name హనుమంత వాహనం

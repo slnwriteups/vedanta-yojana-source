@@ -1,0 +1,91 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "te",
+  "textHash": "f6c11f8385",
+  "reviewer": {
+    "name": "pilot-reviewer-te",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "fail",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "fail",
+    "terminology": "pass",
+    "consistency": "fail",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 17,
+      "severity": "blocking",
+      "category": "honorifics",
+      "comment": "Inside the two quotations the Lord is called \"అతడు\": \"అతడే ఆనందస్వరూపుడు\" and \"…నివసిస్తాడు కనుక అతడు పురుష అని పిలువబడతాడు\". \"అతడు\" is the plain pronoun the book keeps for ordinary people (the mukta in ¶13, newborn Nam Āzhwār). For the Lord the approved content uses \"ఆయన\" with singular verbs, or స్వామి / పరమాత్మ.",
+      "suggestion": "\"ఆయనే ఆనందస్వరూపుడు; ఆ ఆనందాన్ని పొందినవాడు ఆనందమయుడవుతాడు\" … \"… మహాత్ముడు వ్యాపించి శయనించి ఉంటాడు కనుక ఆయన పురుష అని పిలువబడతాడు\""
+    },
+    {
+      "n": 17,
+      "severity": "blocking",
+      "category": "faithfulness",
+      "comment": "\"స్వామి ముక్తాత్మలకు తన అనుభవానందాన్ని సమృద్ధిగా ప్రసాదిస్తాడు\" for \"He gives the released souls the enjoyment of Himself in abundance\". \"తన అనుభవానందం\" most naturally means \"the bliss He Himself experiences\", not the souls' enjoyment OF Him (bhagavad-anubhavam), which is the point of Bhattar's gloss.",
+      "suggestion": "స్వామి ముక్తాత్మలకు తనను అనుభవించే ఆనందాన్ని సమృద్ధిగా ప్రసాదిస్తాడు."
+    },
+    {
+      "n": 29,
+      "severity": "blocking",
+      "category": "honorifics",
+      "comment": "\"తన అపరిమిత గుణాల గొప్పదనం వల్ల అతడు ఎన్నడూ క్షీణించడు\": the plain pronoun \"అతడు\" is used for the Lord (same fault as ¶17).",
+      "suggestion": "\"ముక్తాత్మలు ఎల్లప్పుడూ అనుభవిస్తున్నప్పటికీ, తన అపరిమిత గుణాల గొప్పదనం వల్ల ఆయన ఎన్నడూ క్షీణించడు; అందుకే అక్షరః అని కీర్తించబడతాడు\""
+    },
+    {
+      "n": 9,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "\"శ్రీ భట్టర్\" (also ¶13, ¶17, ¶21, ¶29) is spelt \"శ్రీ భట్టరు\" throughout naama-129-138. Fix one form for the book; \"భట్టర్\" matches approved forms such as ఆళ్వార్.",
+      "suggestion": "Keep శ్రీ భట్టర్ here and align naama-129-138 to it (or add the form to the glossary)."
+    },
+    {
+      "n": 6,
+      "severity": "minor",
+      "category": "honorifics",
+      "comment": "\"ఇవి … నిత్యసూరులు అని పిలువబడే ఆత్మలు—ఉదాహరణకు, గరుడుడు, ఆదిశేషుడు, విష్వక్సేనుడు మొదలైనవారు\": the Nityasūris, who include Garuḍa (honorific by rule), are introduced with the neuter \"ఇవి\" and then closed with the honorific \"మొదలైనవారు\". Using \"వీరు\" for this class removes the clash. ¶5 and ¶7 may keep \"ఇవి\" for ఆత్మలు in general.",
+      "suggestion": "2. నిత్యాత్మ- వీరు స్వామి యొక్క శాశ్వత కైంకర్యానికి ఎల్లప్పుడూ బద్ధులై ఉండే, నిత్యసూరులు అని పిలువబడే ఆత్మలు—ఉదాహరణకు, గరుడుడు, ఆదిశేషుడు, విష్వక్సేనుడు మొదలైనవారు."
+    },
+    {
+      "n": 11,
+      "severity": "minor",
+      "category": "register",
+      "comment": "\"పునర్జన్మ ప్రక్రియ నుండి\": \"ప్రక్రియ\" is a modern technical or newspaper word. The tradition speaks of the cycle of births.",
+      "suggestion": "ముక్తాత్మను పునర్జన్మ చక్రం నుండి దూరంగా ఉంచేవాడు అవ్యయః."
+    },
+    {
+      "n": 21,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ముక్తాత్మలు తాను ఇచ్చే ఆనందాన్ని అనుభవిస్తుండగా స్వామి చూసి తానూ ఆనందిస్తాడని\": \"తాను\" comes before its antecedent \"స్వామి\", so on first reading it is unclear who gives the bliss.",
+      "suggestion": "తాను ప్రసాదించే ఆనందాన్ని ముక్తాత్మలు అనుభవించడం చూసి స్వామి తానూ ఆనందిస్తాడని, అది తిరిగి ముక్తాత్మలకు ఆనందాన్ని కలిగిస్తుందని శ్రీ భట్టర్ వివరిస్తారు."
+    },
+    {
+      "n": 25,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "The glossary gives \"అగస్త్యుడు\", but the text has \"అగస్త్య మహర్షి … తపించారో\" (honorific plural). This is acceptable and matches the approved jaya example (\"అగస్త్య మహర్షి … ఆయన\"), but it is out of step with the dhyana-shlokam chapter, which keeps Vedavyāsa plain (\"వేదవ్యాసుడు … అందిస్తాడు / చెబుతాడు\"). The book should treat sages one way, and the owner should decide which.",
+      "suggestion": "Either keep అగస్త్య మహర్షి … తపించారో and make Vedavyāsa honorific too, or use అగస్త్యుడు … తపించాడో per the glossary."
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "register",
+      "comment": "\"కొత్త రూపాలను, గుణాలను ప్రదర్శిస్తాడని\": \"ప్రదర్శించు\" (exhibit, put on show) is a secular word for the Lord revealing His forms and qualities.",
+      "suggestion": "స్వామి కొత్త రూపాలను, గుణాలను ప్రకాశింపజేస్తాడని / చూపిస్తాడని చెప్పబడుతుంది"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶7: \"శాశ్వత స్థానాన్ని సంపాదించుకున్న\" follows the English \"have earned a permanent place\". In Sri Vaishnava teaching, moksham is granted by the Lord's grace, not earned. The translation is faithful; the owner may prefer \"పొందిన\" and revise the English to match.",
+    "¶5: the English says baddhātmas \"must rely on bhakti yogam\" to reach the Lord, which leaves out prapatti / śaraṇāgati. The translation is faithful; this is for the owner to consider at the source."
+  ],
+  "overall": "revise"
+}

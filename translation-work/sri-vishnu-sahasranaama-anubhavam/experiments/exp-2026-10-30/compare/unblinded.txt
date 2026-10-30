@@ -1,0 +1,37 @@
+ta {"new":7,"approved":1,"equal":7}
+  ¶1 better=new | approved: "இயற்றமைப்பைப்" is an awkward coinage; "சஹஸ்ரநாம" (ச) where ஸ is expected || new: none significant
+  ¶4 better=new MEANING-DIFF | new: none significant || approved: "அசைகள்" is a Tamil prosodic unit, not akshara/syllable, so it misstates the Anushtup rule; "தொகுத்தார்" loses 'strung'; "தெய்வம்" generic for 'the Lo
+  ¶5 better=equal | approved: "சஹஸ்ரநாம" spelling
+  ¶6 better=equal | new: none significant || approved: "சத்யசந்த"/"சஹஸ்ரநாம" with ச rather than ஸ
+  ¶7 better=approved MEANING-DIFF | new: "ஸ்ரீ விஷ்ணு ஸஹஸ்ரநாம ஸ்தோத்திரமே முதன்மையானது" ranks the stotram itself among commentaries, which is illogical; "சாஸ்திரங்களுக்கு" acceptable
+  ¶11 better=new | approved: "இசையமைப்பாளர்கள்" means modern music composers, not vaggeyakaras; "நாமங்களை" rather than திருநாமங்களை || new: none significant
+  ¶12 better=new | approved: "தொகுத்து" (compiled) is weaker than 'strung' || new: the sentence is long but correct
+  ¶13 better=new | approved: sandhi typo "எல்லாக் தளைகளிலிருந்தும்" (should be எல்லாத்); "சிறந்ததும்" drops the superlative || new: none significant
+  ¶16 better=new | new: none significant || approved: "அறிவுரை" is a mundane register for Bhishma's upadesa; "பங்கேற்றவர்களை" is flat
+  ¶17 better=new | new: none significant || approved: "எளிய, சிறந்த" drops 'easiest and best'; "நாணயம்" is colloquial for honesty; "அறிவுரை" weak
+kn {"new":4,"approved":1,"equal":10}
+  ¶4 better=new | approved: "ತಿಳಿಸಿದಂತೆ" is weaker than 'revealed'; "ದೇವರು" generic || new: none significant
+  ¶6 better=new | approved: "ಭಟ್ಟರ್ ಅವರು" is a Tamil form plus a redundant honorific
+  ¶7 better=approved MEANING-DIFF | new: "ಸ್ತೋತ್ರವೇ ಅಗ್ರಗಣ್ಯವಾದುದು" ranks the stotram itself among commentaries
+  ¶13 better=equal | approved: none significant || new: "ಅಥವಾ" could be read as a true alternative
+  ¶16 better=new | approved: "ಸಲಹೆ" is a mundane register for upadesa; "ವ್ಯಕ್ತಿಗಳನ್ನು" flat || new: none significant
+  ¶17 better=new | approved: first mention drops 'Lord' ("ಶ್ರೀಕೃಷ್ಣನಲ್ಲಿನ"); "ಶ್ರೀಕೃಷ್ಣನೇ ಸಾಕ್ಷಿ" adds emphasis not in the source
+hi {"new":5,"approved":2,"equal":8}
+  ¶4 better=new MEANING-DIFF | new: "भगवान श्रीकृष्ण ही वे भगवान हैं जिनकी उपासना की जा रही है" is literal and clunky || approved: "जैसे-जैसे ... वैसे-वैसे" adds simultaneity not in the source; "हजार" where सहस्र suits; "भगवान कृष्ण" drops श्री
+  ¶6 better=approved | new: "जिन्हें हम आज जानते हैं" is misplaced after "व्यास ही हैं", so the clause is ambiguous || approved: drops 'also' in the Vyasa clause; the parenthetical becomes a separate sentence
+  ¶7 better=approved MEANING-DIFF | new: "श्री विष्णु सहस्रनाम स्तोत्रम् सर्वप्रमुख था" ranks the stotram itself among commentaries
+  ¶11 better=new | approved: "रचनाकारों" is generic; "अनेक" is added
+  ¶12 better=equal | approved: "हजार"; split into two sentences (fine)
+  ¶13 better=equal | approved: "सबसे उत्तम और सुलभ" softens the second superlative
+  ¶14 better=new | approved: "राहत" is colloquial; "प्रदान करता है" for 'leads to'
+  ¶16 better=new | approved: "सलाह" is a mundane register; "व्यक्तित्वों" || new: none significant
+  ¶17 better=new | approved: "उद्घाटन" (inauguration) is wrong for 'revelation'; "भगवान कृष्ण" without श्री; the event sentence is restructured || new: "उपदेश और प्रकटीकरण किए जाने की" is heavy
+te {"new":4,"approved":3,"equal":8}
+  ¶4 better=approved | new: "శ్రీకృష్ణ పరమాత్మే" is an odd form (పరమాత్మయే); "ఆరాధించబడుతున్న స్వామి" stiff || approved: none significant
+  ¶6 better=approved | new: "మహర్షి అయిన వేదవ్యాసుడు" is awkward
+  ¶7 better=approved MEANING-DIFF | new: "శ్రీ విష్ణు సహస్రనామ స్తోత్రమే అగ్రగణ్యమైనది" ranks the stotram itself among commentaries
+  ¶11 better=new | approved: "నారదుడు వంటి" is ungrammatical (should be నారదుని వంటి)
+  ¶12 better=equal | approved: "భద్రపరిచినవారు" (plural honorific) is mixed with singular "అగ్రగణ్యుడు"
+  ¶13 better=new | approved: "మరియు" is anglicised; "ఉత్తమమైనది" drops the superlative
+  ¶16 better=new | approved: "సలహా" is a mundane register; "వ్యక్తులను" flat
+  ¶17 better=new | approved: first mention drops 'Lord' ("శ్రీకృష్ణుని పట్ల")

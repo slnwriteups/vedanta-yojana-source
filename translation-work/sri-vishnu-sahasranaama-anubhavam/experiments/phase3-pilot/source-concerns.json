@@ -1,0 +1,125 @@
+{
+  "note": "English passages a translator found ambiguous. For the owner to settle in the English (Standard §1 rule 1); translations follow the English as written until then.",
+  "concerns": [
+    {
+      "id": "dhyana-shlokam.3",
+      "english": "The Lord resides in Sri Vaikuntham, situated in the centre of the milky ocean (Ksheerabdhi). Just as our earthly ocean has sand at the shore, the shore of Ksheerabdhi is studded with various riches such as diamonds, jewels, pearls, etc., which have originated from the Lord coming in contact with Ksheerabdhi. Zooming in on the Lord, He is seen adorning the holy garland, Mukunda. The Lord is seen reclining on Adisesha, above whom is said to be a cloud continuously showering the Lord gently with drops of Amritam or nectar, which ensures eternal happiness in His abode.",
+      "note": "'the holy garland, Mukunda' names the garland Mukunda; Mukunda is a name of the Lord (मुकुन्दः in the verse), and the garland is usually Vanamālā/Vaijayantī. Translated as written.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.6",
+      "english": "The Vishwaroopam form of the Lord has been explained above. His foot measured the earth; His navel encompasses the vast expanses of space; all of the air that surrounds us, we see, feel, and breathe is just a single breath of the Lord; the sun and moon are His eyes; all the directions are in His ears; all of the heavens and expanses of the seven worlds above us constitute His head; His face is that which glows and gives warmth like that of a great roaring inextinguishable flame; His residence is in the milky ocean known as Ksheerabdhi.",
+      "note": "'has been explained above' – the description is in this item itself (presumably refers to the verse shown above). Translated as written.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.12",
+      "english": "After seeing the gross form of the Lord, which is often difficult for us to imagine, Maharishi Vedavyasa gives us the picture of the Lord in a cosmic form, which is somewhat more accessible to us so we may wrap our heads around the Lord more easily.",
+      "note": "Calls the preceding (Vishwaroopam) form 'gross' and the next one 'cosmic' and 'more accessible'; the Vishwaroopam is itself the cosmic form, so the labels look swapped or the 'cosmic' form is meant as the reclining form of the next verse. Translated as written.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.13",
+      "english": "The Lord may be seen as calm as he reclines on Adisesha. From His navel arises a lotus atop which is seated, Lord Brahma. Lord Brahma is our creator and the one responsible for giving the various gods their roles in creation. Thus, Lord Vishnu is the Lord even to the Gods. It is He who permeates all of space. (Space is said to be vast and unimaginable. It is said to possess qualities one cannot fathom, and such is said to be the nature of God.) That being said, the Lord's colour is comparable to that of a full rain cloud, dark-coloured.",
+      "note": "'That being said' does not connect logically to the colour sentence. Hindi now writes 'भगवान ब्रह्मा' for 'Lord Brahma' per reviewer; if भगवान is to be reserved for Sriman Nārāyaṇa, the glossary should say so.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.14",
+      "english": "He who is the consort of Sri Mahalakshmi has eyes like that of a freshly bloomed lotus; who is worshipped by all the sage and preservers of all that is good; the one who is the destroyer of all fears; I ask for refuge at your holy feet oh Lord of all Lords.",
+      "note": "Mixes third person ('He who...') with direct address ('your holy feet'); 'all the sage' is presumably 'all the sages'; 'preservers of all that is good' is vague (devas/sādhus?). Translated as written.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.17",
+      "english": "He who sports the holy gem Kaustubha in his heart. (this divine gem is said to signify all the jeevaatmas, in turn, meaning He keeps all of His devotees close to Him)",
+      "note": "Fragment ending in a bracket with no final full stop; kept structure. 'in his heart' presumably means on His chest (vakṣaḥ); kn renders 'in', hi/te render 'on' the heart. Owner to decide.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.18",
+      "english": "Upon gaining viewership of Him, particularly His lotus petal-like eyes, all sins are relinquished, and all that remains is a virtue. I pray and pledge my allegiance to that Lord Vishnu.",
+      "note": "'gaining viewership' and 'all that remains is a virtue' are awkward English; rendered as darshan and 'only puṇya remains'.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.26",
+      "english": "For those who cannot imagine the Lord in any of the above circumstances, Maharishi Vedavyasa asks the reciter to paint a picture of Krishna in their heads. Seated beside Him on either side are Rukmini and Satyabhama. They are all sitting on a golden throne under the cool shade of the Parijata tree, ready to bless all their devotees.",
+      "note": "'any of the above circumstances' probably means 'any of the above forms'; translated as circumstances/situations pending the owner's decision.",
+      "batch": 3,
+      "translator": "pilot-translator-dhyana",
+      "status": "open"
+    },
+    {
+      "id": "naama-129-138.27",
+      "english": "The one who presents Himself to those who follow and perform the various vedic practices established by the shastras and the Vedas.",
+      "note": "\"presents Himself to\" glosses lōkādhyakṣa, but item 14 explains adhyakṣa as one who presides over/superintends; probably \"presides over\" was meant. Translated faithfully as 'reveals Himself to'.",
+      "batch": 1,
+      "translator": "pilot-translator-129",
+      "status": "open"
+    },
+    {
+      "id": "naama-129-138.31",
+      "english": "He who presents Himself to the Devas.",
+      "note": "Same as item 13 for surādhyakṣa: \"presents Himself to the Devas\" probably means \"presides over the Devas\" (item 16 says the Lord presides over them).",
+      "batch": 1,
+      "translator": "pilot-translator-129",
+      "status": "open"
+    },
+    {
+      "id": "naama-129-138.21",
+      "english": "The one wholly equipped with all the vedic knowledge, nuances, and applications.",
+      "note": "Short meaning for the name kavi (wholly equipped with vedic knowledge) does not match the commentary in item 12 (seer who sees beyond); possibly a carried-over meaning of vedavit. Translated as written.",
+      "batch": 1,
+      "translator": "pilot-translator-129",
+      "status": "open"
+    },
+    {
+      "id": "naama-12-17.5",
+      "english": "2. Nithyaathma- These are the aathmas that are forever bound in eternal service to the Lord and known as the nityasuris—for example, Garuda, Adisesha, Vishvaksena, etc.",
+      "note": "\"forever bound in eternal service\": \"bound\" may be confused with baddha (bound souls) of item 3; rendered as devoted/engaged in service (ta பிணைந்திருக்கும், hi रत) while keeping kn/te ಬದ್ಧ / బద్ధ.",
+      "batch": 2,
+      "translator": "pilot-translator-12",
+      "status": "open"
+    },
+    {
+      "id": "naama-12-17.18",
+      "english": "The one who derives happiness in the bliss of the mukthaathmas as if they were His children.",
+      "note": "Summary says He delights in the mukthaathmas' bliss \"as if they were His children\", but the explanation in item 13 says nothing about children; the name (sākṣī, presumably) is not named in the English.",
+      "batch": 2,
+      "translator": "pilot-translator-12",
+      "status": "open"
+    },
+    {
+      "id": "naama-12-17.22",
+      "english": "The one who gives the mukthaathmas the experience of always seeing the Lord's non-confined celestial form.",
+      "note": "Summary (gives the experience of always seeing His \"non-confined celestial form\") does not match the explanation in item 15 (He alone knows the way to Sri Vaikuntham and leads the released souls there, i.e. kṣetrajñaḥ); \"non-confined\" is also unusual English. The name itself is not given in the English.",
+      "batch": 2,
+      "translator": "pilot-translator-12",
+      "status": "open"
+    },
+    {
+      "id": "naama-12-17.24",
+      "english": "The Varaha Purana describes how even the great Sage Agastya longed for Sri Vaikuntham: \"Even now, I stand meditating on that best of worlds. When shall I reach that noblest of all worlds?\" (adyāpi taṃ lōkavaraṃ dhyāyan tiṣṭhāmi suvrata). The Lord alone knows the way to that place and leads the released souls to it.",
+      "note": "The IAST (adyāpi taṃ lōkavaraṃ dhyāyan tiṣṭhāmi suvrata) covers only the first sentence of the English quote; the second sentence (\"When shall I reach...\") has no Sanskrit given, and \"suvrata\" (vocative, 'O one of good vows') is not rendered in the English.",
+      "batch": 2,
+      "translator": "pilot-translator-12",
+      "status": "open"
+    }
+  ]
+}

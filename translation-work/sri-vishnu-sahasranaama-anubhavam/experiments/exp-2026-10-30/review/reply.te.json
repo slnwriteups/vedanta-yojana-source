@@ -1,0 +1,52 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "composition-of-the-stotram",
+  "lang": "te",
+  "textHash": "1876115490",
+  "reviewer": {
+    "name": "subagent-reviewer-c",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "paragraph": 11,
+      "severity": "minor",
+      "issue": "'Saint Tyagaraja' is rendered 'సద్గురు త్యాగరాజు'. Telugu readers know him by this title, so it is acceptable, but it is a substitution rather than a translation of 'Saint'. The name then takes the plain form (త్యాగరాజుతో), which sits a little oddly beside an honorific title.",
+      "suggestion": "Keep సద్గురు if the owner prefers the customary title (త్యాగరాజస్వామితో సహా would be more reverent); otherwise use 'సంత్'/'భక్త త్యాగరాజు'."
+    },
+    {
+      "paragraph": 14,
+      "severity": "minor",
+      "issue": "'విస్తృతంగా అంగీకరించబడింది' is a passive calque of 'it is widely accepted' and reads like newspaper phrasing.",
+      "suggestion": "...దారితీస్తుందని సర్వత్రా అంగీకరిస్తారు / అందరూ విశ్వసిస్తారు."
+    },
+    {
+      "paragraph": 7,
+      "severity": "minor",
+      "issue": "The automatic 'Brahmā missing' warning is a false positive. The text is 'Brahma Sutras' (బ్రహ్మసూత్రాలు), not the deity, so no change is needed.",
+      "suggestion": "No change needed."
+    },
+    {
+      "paragraph": 4,
+      "severity": "minor",
+      "issue": "Vyasa takes plain forms (వేదవ్యాసుడు, కూర్చాడు, ¶6 వ్యాసుడే), while Sri Sankara, Sri Bhattar and Sri Satyasandha Yatiswara are honorific. This matches the approved the-thousand-names.json ¶3 and is consistent across the chapter, so it is not a fault. The owner may still wish to confirm the glossary's choice for 'Sri Vedavyasa' when he is titled శ్రీ.",
+      "suggestion": "No change unless the glossary changes."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶13: the English 'the best and most accessible of all dharmas or the means to attain relief from all bondage' is ambiguous. The translation reads it as 'best among all dharmas, i.e. among all means to release from bondage' (అన్ని ధర్మాలలో, లేదా ... సాధనాలన్నింటిలో). It could instead mean 'the best dharma, and the means to release from bondage', mirroring the prologue's two questions (ko dharmaḥ sarvadharmāṇāṃ... / kiṃ japan mucyate jantur janmasaṃsārabandhanāt). Hindi takes the same reading; the owner should confirm.",
+    "¶7: the source's claim that the Sahasranama commentary was 'the foremost' of Sri Sankara's commentaries is reproduced faithfully (అగ్రగణ్యమైనది); the claim itself is the author's and may merit an editorial check."
+  ],
+  "overall": "approve"
+}

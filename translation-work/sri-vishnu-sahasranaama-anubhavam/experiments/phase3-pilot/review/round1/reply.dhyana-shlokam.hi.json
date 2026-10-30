@@ -1,0 +1,92 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "dhyana-shlokam",
+  "lang": "hi",
+  "textHash": "a99da58614",
+  "reviewer": {
+    "name": "pilot-reviewer-hi",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "fail",
+    "completeness": "pass",
+    "grammar": "fail",
+    "naturalness": "pass",
+    "honorifics": "fail",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"the holy garland\" is rendered \"दिव्य माला\" (divine); holy is पावन/पवित्र. This matters because the paragraph's reading is already doubtful (see theologicalConcerns).",
+      "suggestion": "वे मुकुन्द नामक पावन माला धारण किए हुए दिखाई देते हैं।"
+    },
+    {
+      "n": 7,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "\"गर्जती\" is not standard Hindi; the verb is गरजना, so the participle is गरजती.",
+      "suggestion": "… किसी महान, गरजती, कभी न बुझने वाली ज्वाला के समान …"
+    },
+    {
+      "n": 8,
+      "severity": "blocking",
+      "category": "faithfulness",
+      "comment": "\"जो मेरे दर्शन के लिए अपना ऐसा सुन्दर स्वरूप रचते हैं\": in Hindi \"मेरे दर्शन\" means \"a sight of me\", so the sentence says the Lord creates His form in order to see the devotee, not for the devotee to view. The ending \"उन भगवान को, उनके समक्ष मैं साष्टांग प्रणाम करता हूँ\" combines को and समक्ष for the same person and is ungrammatical; the English redundancy should not be copied.",
+      "suggestion": "इस विश्व में जिनके समान कोई नहीं है, जो मेरे दर्शन करने के लिए अपना ऐसा सुन्दर स्वरूप रचते हैं, उन भगवान के समक्ष मैं साष्टांग प्रणाम करता हूँ।"
+    },
+    {
+      "n": 13,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"भगवान का ब्रह्माण्डीय रूप में चित्र प्रस्तुत करते हैं\": the adverbial phrase splits the possessive from its noun.",
+      "suggestion": "… महर्षि वेदव्यास हमारे सामने भगवान का चित्र उनके ब्रह्माण्डीय रूप में प्रस्तुत करते हैं …"
+    },
+    {
+      "n": 14,
+      "severity": "blocking",
+      "category": "honorifics",
+      "comment": "\"Lord Brahma\" appears twice in the English; both times the Hindi drops the title (\"जिसके ऊपर ब्रह्मा विराजमान हैं\", \"ब्रह्मा हमारे सृष्टिकर्ता हैं\"). The approved bhaktisarar ¶1 keeps such titles (\"भगवान परमशिव\"). If the owner deliberately reserves भगवान for Sriman Nārāyaṇa, the choice should go in the glossary; otherwise this is an omission.",
+      "suggestion": "… जिसके ऊपर भगवान ब्रह्मा विराजमान हैं। भगवान ब्रह्मा हमारे सृष्टिकर्ता हैं …"
+    },
+    {
+      "n": 14,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "\"भगवान का वर्ण … श्याम वर्ण है\" repeats वर्ण as subject and predicate. \"इतना कहने के बाद\" is a calque of the discourse marker \"That being said\" and suggests a time sequence that is not there.",
+      "suggestion": "अब, भगवान का वर्ण जल से भरे वर्षा-मेघ के समान श्याम है।"
+    },
+    {
+      "n": 15,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"श्री महालक्ष्मी के पति\" is the everyday word; the verse's लक्ष्मीकान्तम् and the register call for कान्त/नाथ. \"हे सब प्रभुओं के प्रभु\" uses colloquial सब. \"शरण माँगता हूँ\" is plain; ¶24 uses \"शरण ग्रहण करता हूँ\" for the parallel \"seek refuge\", and \"ask for\" is best rendered याचना.",
+      "suggestion": "जो श्री महालक्ष्मी के कान्त हैं, … हे समस्त प्रभुओं के प्रभु, मैं आपके पावन चरणों में शरण की याचना करता हूँ।"
+    },
+    {
+      "n": 18,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"अपने हृदय पर\" for \"in his heart\". \"पर\" is the better physical sense (the gem rests on the chest), but it departs from the English; the owner should approve the change knowingly.",
+      "suggestion": "जो अपने वक्षःस्थल (हृदय) पर पावन कौस्तुभ मणि धारण करते हैं। (or keep हृदय में to match the English)"
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"विराजमान हैं\" ends two consecutive sentences (\"रुक्मिणी और सत्यभामा विराजमान हैं। वे सब … विराजमान हैं\"). Also \"किसी भी स्थिति में\" for \"in any of the above circumstances\"; what precedes are forms of the Lord, so \"रूप\" reads better while staying faithful.",
+      "suggestion": "उनके दोनों ओर रुक्मिणी और सत्यभामा बैठी हैं। वे सब पारिजात वृक्ष की शीतल छाया में एक स्वर्ण सिंहासन पर विराजमान हैं, …"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶4 follows the English in calling \"Mukunda\" a garland (\"मुकुन्द नामक दिव्य माला\"). In the shloka (¶2) मुकुन्दः is the Lord Himself (आनन्दी नः पुनीयात् … मुकुन्दः), and the pearl garlands form His seat (मौक्तिकानां मालाकॢप्तासनस्थः). The English also has Him \"reclining on Adisesha\" where the verse says seated (आसनस्थः). The Hindi is faithful to the English, but the source itself should go to a scholar.",
+    "¶15 follows the English \"worshipped by all the sage and preservers of all that is good\", which can also be parsed as the Lord being the preserver of all that is good. The verse has योगिहृद्ध्यानगम्यम् (attainable by meditation in the hearts of yogis). The owner should confirm the intended sense.",
+    "¶14: should Brahmā carry the title भगवान in this book? This is a policy decision for the owner (see the paragraph finding)."
+  ],
+  "overall": "revise"
+}

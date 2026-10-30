@@ -1,0 +1,105 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "hi",
+  "textHash": "14ccfe7517",
+  "reviewer": {
+    "name": "pilot-reviewer-hi",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "fail",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "fail",
+    "consistency": "fail",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 5,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "\"भक्ति योगम्\" follows the English \"bhakti yogam\" and the -म् rule, but the approved naama-18-20 ¶6 of this book writes \"भक्ति योग के मार्ग पर\" and \"भक्ति योग मोक्षम् पाने का उपायम्\". The book needs one form.",
+      "suggestion": "भक्ति योग पर निर्भर रहना पड़ता है (or change the approved chapters to भक्ति योगम्, on the owner's decision)"
+    },
+    {
+      "n": 6,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"शाश्वत सेवा में सदा के लिए बँधी हैं\": बँधी evokes बंधन, the very bondage that defines the बद्धात्मा in ¶5; for the nityasuris, who were never bound, it reads as a contradiction. The English \"bound in service\" is idiomatic, not doctrinal. \"शाश्वत … सदा के लिए\" is also redundant.",
+      "suggestion": "ये वे आत्माएँ हैं जो सदा भगवान की शाश्वत सेवा में रत रहती हैं और नित्यसूरि कहलाती हैं — उदाहरण के लिए, गरुड, आदिशेष, विष्वक्सेन आदि।"
+    },
+    {
+      "n": 7,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"भगवान को ही अंतिम गंतव्य के रूप में\" adds the emphatic \"ही\", which is not in the English.",
+      "suggestion": "… जिन्होंने अंततः भगवान को अंतिम गंतव्य के रूप में प्राप्त कर लिया है …"
+    },
+    {
+      "n": 9,
+      "severity": "blocking",
+      "category": "consistency",
+      "comment": "\"श्री भट्टर\" (also in ¶13, ¶17, ¶21, ¶29) contradicts the approved chapters of this book, which write \"श्री भट्ट\" (naama-1-5 ¶12, ¶16). One commentator, one form, book-wide; the owner must fix the canonical form.",
+      "suggestion": "श्री भट्ट (throughout), unless the owner decides on श्री भट्टर for the whole book"
+    },
+    {
+      "n": 9,
+      "severity": "minor",
+      "category": "readability",
+      "comment": "\"मुक्त आत्माओं (मुक्त)\" glosses with the same adjective just used, so the parenthesis tells the reader nothing; the English gives the Sanskrit noun \"muktas\". The last sentence \"की व्याख्या इस रूप में करते हैं कि वे बताते हैं कि\" has two कि clauses, and \"वे\" could refer to Sri Bhattar (honorific) or to the names.",
+      "suggestion": "मुक्त आत्माओं (मुक्तों) की … श्री भट्टर के अनुसार अगले पाँच नाम यह स्पष्ट करते हैं कि मुक्त आत्माएँ भगवान को ही अपनी परम गति क्यों चुनती हैं।"
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "\"तैत्तिरीय उपनिषद् कहता है\" treats उपनिषद् as masculine; the approved naama-1-5 ¶12 has \"तैत्तिरीय उपनिषद् कहती है\" (feminine, standard Hindi).",
+      "suggestion": "तैत्तिरीय उपनिषद् कहती है, …"
+    },
+    {
+      "n": 17,
+      "severity": "minor",
+      "category": "theology",
+      "comment": "\"अपने अनुभव का आनंद प्रचुरता से प्रदान करते हैं\" can be read as \"the joy of His own experience\" rather than the released souls' enjoyment of Him (bhagavad-anubhava). In the Mahabharata line, \"महात्मा\" in modern Hindi suggests a saintly man; the English has \"the great Self\".",
+      "suggestion": "वे मुक्त आत्माओं को स्वयं का (अपने स्वरूप का) अनुभव प्रचुरता से प्रदान करते हैं। … \"क्योंकि वह महान आत्मा (परमात्मा) नौ द्वारों वाले इस पवित्र नगर (शरीर) में व्याप्त होकर निवास करते हैं …\""
+    },
+    {
+      "n": 21,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"फिर भी अछूते रहते हैं\": अछूता/अछूत carries the caste sense of \"untouchable\" and is unsuitable for the Lord; the precise doctrinal term for \"remaining untouched\" by what He witnesses is निर्लिप्त. The repeated \"रहते हैं, … रहते हैं\" is weak. \"और यह बदले में\" is a calque of \"in turn\".",
+      "suggestion": "… वैसे ही भगवान सबके साक्षी हैं, फिर भी निर्लिप्त रहते हैं। … और स्वयं आनंदित होते हैं, और उनका यह आनंद पुनः मुक्त आत्माओं को आनंदित करता है।"
+    },
+    {
+      "n": 25,
+      "severity": "minor",
+      "category": "honorifics",
+      "comment": "\"महान ऋषि अगस्त्य\" renders \"the great Sage\" word for word; the tradition's own title is महर्षि (as this book uses for महर्षि वेदव्यास).",
+      "suggestion": "वराह पुराण बताता है कि महर्षि अगस्त्य भी श्री वैकुण्ठम् के लिए कैसे लालायित थे: …"
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "Gender of आत्मा is inconsistent within the chapter: ¶4–¶9 and ¶29 use feminine (\"होती हैं\", \"करती हैं\", \"मानती हैं\"), but here \"मुक्तात्मा भगवान का ध्यान करते हैं\" is masculine. \"ऐसा कहा जाता है;\" is tacked on after the clause it qualifies, and \"अपने सच्चे और पूर्ण स्वरूप में संलग्न होने देते हैं\" is a calque of \"engage in His true and complete form\".",
+      "suggestion": "कहा जाता है कि श्री वैकुण्ठम् में मुक्तात्माएँ भगवान का ध्यान करती हैं। कहा जाता है कि ध्यान की इस प्रक्रिया में भगवान मुक्तात्माओं के ध्यान के लिए नए रूप और गुण प्रकट करते हैं, और इस प्रकार उन्हें अपने वास्तविक और पूर्ण स्वरूप के अनुभव में लीन होने देते हैं। …"
+    },
+    {
+      "n": 29,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"इसके साथ, श्री भट्टर …\" is a calque of \"With this\".",
+      "suggestion": "इसी के साथ श्री भट्टर इस विषय की अपनी व्याख्या पूर्ण करते हैं कि …"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶6: the English calls the nityasuris \"forever bound in eternal service\". The Hindi \"बँधी\" makes this sound like bondage; the owner may wish to confirm a wording (रत/निरत) that does not imply the nityasuris were ever bound.",
+    "¶17: please confirm that \"the enjoyment of Himself\" means the released souls' enjoyment of the Lord (bhagavad-anubhava), and that the Hindi conveys this without ambiguity."
+  ],
+  "overall": "revise"
+}
