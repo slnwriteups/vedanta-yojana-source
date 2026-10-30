@@ -76,7 +76,7 @@ test("B: loadBooks()/loadBook()/loadChapters() resolve the real recovered book",
   // Bhattar section) and 4 closing ones.
   const vsn = loadBook("sri-vishnu-sahasranaama-anubhavam");
   assert.equal(vsn?.title, "Sri Vishnu Sahasranaama Anubhavam");
-  assert.equal(loadChapters("sri-vishnu-sahasranaama-anubhavam").length, 88);
+  assert.equal(loadChapters("sri-vishnu-sahasranaama-anubhavam").length, 116);
   assert.equal(vsn?.resources.length, 5);
 
   const book = loadBook("untitled-recovered-book-pending-editorial-title");
