@@ -131,6 +131,40 @@
           "title": "फलश्रुति और उपसंहार"
         }
       }
+    },
+    {
+      "title": "Appendix: Your Birth Star",
+      "order": 4,
+      "chapters": [
+        "your-birth-star-and-the-sahasranamam",
+        "birth-star-aswini",
+        "birth-star-bharani",
+        "birth-star-krittika",
+        "birth-star-rohini",
+        "birth-star-mrigasira",
+        "birth-star-ardra",
+        "birth-star-punarvasu",
+        "birth-star-pushyami",
+        "birth-star-aslesha",
+        "birth-star-makha",
+        "birth-star-purva-phalguni",
+        "birth-star-uttara-phalguni",
+        "birth-star-hasta",
+        "birth-star-chitra",
+        "birth-star-swathi",
+        "birth-star-visakha",
+        "birth-star-anuradha",
+        "birth-star-jyeshta",
+        "birth-star-moola",
+        "birth-star-purva-ashadha",
+        "birth-star-uttara-ashadha",
+        "birth-star-shravana",
+        "birth-star-dhanishta",
+        "birth-star-satabhisha",
+        "birth-star-purva-badra",
+        "birth-star-uttara-badra",
+        "birth-star-revathi"
+      ]
     }
   ],
   "chapterOrder": [
@@ -221,7 +255,35 @@
     "concluding-shloka",
     "phala-shruti",
     "uttara-bhagam",
-    "conclusion"
+    "conclusion",
+    "your-birth-star-and-the-sahasranamam",
+    "birth-star-aswini",
+    "birth-star-bharani",
+    "birth-star-krittika",
+    "birth-star-rohini",
+    "birth-star-mrigasira",
+    "birth-star-ardra",
+    "birth-star-punarvasu",
+    "birth-star-pushyami",
+    "birth-star-aslesha",
+    "birth-star-makha",
+    "birth-star-purva-phalguni",
+    "birth-star-uttara-phalguni",
+    "birth-star-hasta",
+    "birth-star-chitra",
+    "birth-star-swathi",
+    "birth-star-visakha",
+    "birth-star-anuradha",
+    "birth-star-jyeshta",
+    "birth-star-moola",
+    "birth-star-purva-ashadha",
+    "birth-star-uttara-ashadha",
+    "birth-star-shravana",
+    "birth-star-dhanishta",
+    "birth-star-satabhisha",
+    "birth-star-purva-badra",
+    "birth-star-uttara-badra",
+    "birth-star-revathi"
   ],
   "resources": [
     {
