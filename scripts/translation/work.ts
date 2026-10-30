@@ -190,6 +190,8 @@ export interface GlossaryEntry {
   key: string; // English side, as written
   needles: string[]; // normalised search forms
   forms: Partial<Record<LanguageCode, string>>;
+  /** Languages whose form comes from a section still headed "(new terms; review)": not yet owner-approved. */
+  pending?: LanguageCode[];
 }
 
 export function fold(text: string): string {
@@ -208,7 +210,9 @@ export function loadGlossary(): GlossaryEntry[] {
   for (const lang of LANGS) {
     const file = path.join(ROOT, "docs/translation-glossaries", `${lang}.md`);
     if (!fs.existsSync(file)) continue;
+    let pendingSection = false;
     for (const line of fs.readFileSync(file, "utf8").split("\n")) {
+      if (line.startsWith("# ---")) pendingSection = /new terms; review/i.test(line);
       if (!line.trim() || line.startsWith("#")) continue;
       const i = line.indexOf(" = ");
       if (i < 0) continue;
@@ -226,7 +230,10 @@ export function loadGlossary(): GlossaryEntry[] {
           row = { key: note ? `${alt} (${note})` : alt, needles: [needle], forms: {} };
           rows.set(rowKey, row);
         }
-        if (!row.forms[lang]) row.forms[lang] = forms.length === alts.length ? forms[k].trim() : form;
+        if (!row.forms[lang]) {
+          row.forms[lang] = forms.length === alts.length ? forms[k].trim() : form;
+          if (pendingSection) row.pending = [...(row.pending ?? []), lang];
+        }
       });
     }
   }

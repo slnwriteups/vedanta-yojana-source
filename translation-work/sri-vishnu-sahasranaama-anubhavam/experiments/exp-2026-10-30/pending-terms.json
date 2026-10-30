@@ -35,7 +35,8 @@
       },
       "batch": 1,
       "proposedAt": "2026-10-30",
-      "status": "pending"
+      "status": "rejected",
+      "note": "Owner decision 2026-10-30: not a new term; the glossaries already have Āzhwār / Āzhwārs, and English prose uses Āzhwār / Āzhwārs."
     },
     {
       "en": "composers (vaggeyakaras)",
@@ -62,13 +63,14 @@
       "status": "pending"
     },
     {
-      "en": "Vedas (te)",
+      "en": "Vedas",
       "forms": {
         "te": "వేదాలు"
       },
       "batch": 1,
       "proposedAt": "2026-10-30",
-      "status": "pending"
+      "status": "pending",
+      "note": "Key corrected 2026-10-30 (was \"Vedas (te)\"); Telugu form only, ta/kn/hi already have Vedas."
     }
   ]
 }

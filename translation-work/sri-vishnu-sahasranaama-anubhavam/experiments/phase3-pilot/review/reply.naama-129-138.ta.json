@@ -1,0 +1,26 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "ta",
+  "textHash": "e8e340bcdf",
+  "reviewer": {
+    "name": "pilot-reviewer2-ta",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "¶12 (English source): \"the Vedas, which He Himself created\" (translated faithfully as தாமே படைத்த வேதங்கள்). In Sri Vaishnava doctrine the Vedas are apauruṣeya and eternal; the Lord reveals or brings them forth (as ¶4 itself says, 'came forth from His breath') rather than creating them. The owner may wish to revise the English (e.g. 'which came forth from Him'), after which the Tamil should follow."
+  ],
+  "overall": "approve"
+}

@@ -1,0 +1,28 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "dhyana-shlokam",
+  "lang": "hi",
+  "textHash": "55edcfeb80",
+  "reviewer": {
+    "name": "pilot-reviewer2-hi",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "¶4 (English): \"adorning the holy garland, Mukunda\" makes Mukunda sound like the name of the garland, but in the verse (¶2) मुकुन्दः is the Lord. Following the convention, the Hindi \"मुकुन्द नामक पावन माला\" translates the English as written. The English should be corrected (for example 'the Lord, Mukunda, adorned with the holy garland'), and the Hindi should then be updated to match.",
+    "¶4 (English): \"Sri Vaikuntham, situated in the centre of the milky ocean\" runs together Sri Vaikuntham and the Ksheerabdhi (vyūha) abode. The Hindi translates it faithfully; the owner should decide whether to change the English.",
+    "¶8: For the English \"creates such a beautiful vision of Himself\", the Hindi now reads \"अपना ऐसा सुन्दर दर्शन मुझे प्रदान करते हैं\" ('grants me such a beautiful vision of Himself'). This avoids saying that His divine form is created, which round 1 had flagged, and I accept it. The owner should confirm that 'creates' may be softened to 'grants', or change the English the same way."
+  ],
+  "overall": "approve"
+}

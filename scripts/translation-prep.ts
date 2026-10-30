@@ -6,7 +6,7 @@ import {
   args, bookItems, chapterItems, fold, glossaryFor, inContent, loadBook, loadGlossary, loadStore,
   parseLangs, readJson, ROOT, stored, workDir, writeJson, type Item,
 } from "./translation/work.ts";
-import { checkEnglish } from "../tools/translation-engine/validate.ts";
+import { checkEnglish, untransliterable } from "../tools/translation-engine/validate.ts";
 import { loadPending } from "../tools/translation-engine/pending-terms.ts";
 
 /**
@@ -20,7 +20,9 @@ import { loadPending } from "../tools/translation-engine/pending-terms.ts";
  * --max-chars  most English characters in one batch (default 6000); a long
  *              chapter is split across batches, and is written to content/
  *              once all its prose is in
- * --langs      languages to ask for (default: every language still missing)
+ * --langs      the language to ask for (default: the first of hi, ta, kn, te that
+ *              still has work). One language per batch, by the owner's rule;
+ *              --allow-multiple-languages only if the owner has overridden it
  * --no-card    leave out the prompt card (when it is already in the chat)
  * --batch=N    print batch N again instead of preparing a new one
  * --chapter=<slug>  only this chapter
@@ -68,9 +70,9 @@ function render(m: Manifest, items: Item[], withCard: boolean): string {
   lines.push(`=== BATCH ${m.batch} · ${m.book} · languages: ${m.langs.join(", ")} · ${items.length} items ===`);
   if (titles.length) lines.push(`Titles (no final punctuation): items ${titles.join(", ")}`);
   if (items.some((i) => i.kind === "description")) lines.push(`Item ${items.findIndex((i) => i.kind === "description")} is the book's one-paragraph description.`);
-  lines.push("", "GLOSSARY (binding)");
+  lines.push("", "GLOSSARY (binding; a form marked * is pending owner review: use it for consistency)");
   if (!glossary.length) lines.push("(none in this batch)");
-  for (const g of glossary) lines.push(`${g.key} = ${m.langs.filter((l) => g.forms[l]).map((l) => `${l} ${g.forms[l]}`).join(" | ")}`);
+  for (const g of glossary) lines.push(`${g.key} = ${m.langs.filter((l) => g.forms[l]).map((l) => `${l} ${g.forms[l]}${g.pending?.includes(l) ? "*" : ""}`).join(" | ")}`);
   // Proposed terms not yet approved: shown so the book stays consistent, marked so nobody mistakes them for glossary.
   const hay = fold(items.map((i) => i.en).join("\n"));
   for (const t of loadPending(m.book, m.experiment).filter((x) => x.status === "pending" && hay.includes(fold(x.en)))) {
@@ -99,11 +101,33 @@ if (a.batch) {
   process.exit(0);
 }
 
-const wanted = parseLangs(a.langs);
+// Owner's rule (2026-10-31): one language at a time, in the order hi, ta, kn, te.
+const LANGUAGE_ORDER: LanguageCode[] = ["hi", "ta", "kn", "te"];
+const multiple = !!a["allow-multiple-languages"];
+let wanted = parseLangs(a.langs);
+if (a.langs && wanted.length > 1 && !multiple) {
+  throw new Error(`One language at a time: give a single --langs (order ${LANGUAGE_ORDER.join(", ")}), or --allow-multiple-languages if the owner has overridden the rule.`);
+}
 const store = loadStore(bookSlug, experiment);
 const inFlight = new Set(existing.filter((m) => !m.merged).flatMap((m) => m.items.map((i) => i.id)));
 // In an experiment the chapter's live translations are ignored, so everything is asked for again.
-const needs = (it: Item): LanguageCode[] => wanted.filter((l) => (experiment || !inContent(book, it, l)) && !stored(store, it, l));
+// A chapter-language whose verses cannot be generated without guessing is held for that language only.
+const heldLang = new Map<string, Map<LanguageCode, string[]>>();
+for (const ch of book.chapters) {
+  for (const i of untransliterable(ch.record, path.relative(ROOT, ch.file), wanted)) {
+    const m = heldLang.get(ch.slug) ?? new Map<LanguageCode, string[]>();
+    m.set(i.lang as LanguageCode, [...(m.get(i.lang as LanguageCode) ?? []), `¶${i.paragraph} ${i.rule}: ${i.detail}`]);
+    heldLang.set(ch.slug, m);
+  }
+}
+const needsIn = (it: Item, l: LanguageCode) => (experiment || !inContent(book, it, l)) && !stored(store, it, l) && !heldLang.get(it.group)?.has(l);
+if (!a.langs && !multiple) {
+  // No language given: the first language in the owner's order that still has work.
+  const next = LANGUAGE_ORDER.find((l) => all.some((it) => !inFlight.has(it.id) && needsIn(it, l)));
+  wanted = next ? [next] : [];
+  if (next) console.error(`Language: ${next} (one language at a time, order ${LANGUAGE_ORDER.join(", ")}).`);
+}
+const needs = (it: Item): LanguageCode[] => wanted.filter((l) => needsIn(it, l));
 
 // Freeze check: groups whose English has an unresolved source error are not prepared.
 const held = new Map<string, string[]>();
@@ -112,6 +136,10 @@ if (bookSource.length) held.set("@book", bookSource.map((i) => `${i.field} ${i.r
 for (const ch of book.chapters) {
   const found = checkEnglish(ch.record, path.relative(ROOT, ch.file));
   if (found.length) held.set(ch.slug, found.map((i) => `${i.field}${i.paragraph ? ` ¶${i.paragraph}` : ""} ${i.rule}: ${i.detail}`));
+}
+for (const [g, m] of heldLang) {
+  if (!all.some((i) => i.group === g)) continue;
+  for (const [l, why] of m) console.error(`Not prepared in ${l} until the owner settles the transliteration: ${g}: ${why.join("; ")}`);
 }
 const heldHere = [...held].filter(([g]) => all.some((i) => i.group === g && needs(i).length));
 if (heldHere.length) {

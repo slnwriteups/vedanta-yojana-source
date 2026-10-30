@@ -1,0 +1,28 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "hi",
+  "textHash": "8f87aa9496",
+  "reviewer": {
+    "name": "pilot-reviewer2-hi",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "Glossary warnings for 'released souls' in ¶2, ¶17, ¶21 and ¶25 are false positives. The text uses \"मुक्त आत्माओं\", the oblique plural of the glossary form मुक्त आत्माएँ, which Hindi grammar requires before को/की/द्वारा. The form is correct and should not change.",
+    "¶5 (English): \"must rely on bhakti yogam to reach the Lord\" gives bhakti yoga as the only means for the bound souls and leaves out prapatti (śaraṇāgati). The Hindi renders it faithfully; the owner may wish to qualify the English.",
+    "¶7 (English): \"have earned a permanent place\" in Sri Vaikuntham suggests that moksham is earned rather than granted by the Lord's grace. The Hindi \"स्थायी स्थान पा लिया है\" ('have obtained') already softens this; the owner may want to change the English to match."
+  ],
+  "overall": "approve"
+}

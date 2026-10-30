@@ -87,7 +87,7 @@ const glossBefore = Object.fromEntries(LANGS.map((l) => [l, fs.readFileSync(path
 const returnBefore = fs.readFileSync(path.join(lib, "chapters/return.json"), "utf8");
 
 test("prep holds a chapter whose English is not frozen, and sends only prose", () => {
-  const r = run("translation-prep.ts", "--no-card");
+  const r = run("translation-prep.ts", "--no-card", "--allow-multiple-languages");
   assert.equal(r.status, 0, r.stderr);
   assert.match(r.stderr, /draft: .*source-placeholder/);
   const m = manifest(1);
@@ -145,10 +145,13 @@ test("merge rejects faulty paragraphs, keeps them out of content/, writes only c
   assert.equal(manifest(1).translator, "chat-session-a");
   const concerns = read(path.join(work, "source-concerns.json")).concerns;
   assert.deepEqual(concerns.map((c: any) => [c.id, c.english, c.status]), [["arrival.3", "Sītā followed him.", "open"]]);
+  // Merging the same (or a corrected) reply again does not duplicate its concerns.
+  run("translation-merge.ts", "--batch=1", "--translator=chat-session-a");
+  assert.equal(read(path.join(work, "source-concerns.json")).concerns.length, 1);
 });
 
 test("the next prep asks again for exactly the rejected and unfinished work", () => {
-  const r = run("translation-prep.ts", "--no-card");
+  const r = run("translation-prep.ts", "--no-card", "--allow-multiple-languages");
   assert.equal(r.status, 0, r.stderr);
   const m = manifest(2);
   const ids = m.items.map((i: any) => i.id);
@@ -158,7 +161,7 @@ test("the next prep asks again for exactly the rejected and unfinished work", ()
 
 test("an experiment re-translates a finished chapter in its own folder and never touches content/", () => {
   const before = fs.readFileSync(path.join(lib, "chapters/arrival.json"), "utf8");
-  const p = run("translation-prep.ts", "--no-card", "--chapter=arrival", "--experiment=e1");
+  const p = run("translation-prep.ts", "--no-card", "--chapter=arrival", "--experiment=e1", "--allow-multiple-languages");
   assert.equal(p.status, 0, p.stderr);
   const m = manifest(1, "e1");
   assert.deepEqual(m.langs, ["ta", "kn", "hi", "te"], "the live Tamil is ignored, so Tamil is asked for again");
@@ -188,4 +191,28 @@ test("experiment work cannot reach content/: wrong-mode merges refuse, and a cop
   const issues = checkRecord(cand, { file: "content/library/demo-book/chapters/arrival.json", kind: "chapter", langs: ["ta"] });
   assert.ok(issues.some((i) => i.level === "error" && i.rule === "experimental-candidate"));
   assert.ok(!checkRecord(cand, { file: "x", kind: "chapter", langs: ["ta"], allowExperiment: true }).some((i) => i.rule === "experimental-candidate"));
+});
+
+test("prep marks glossary forms from unreviewed sections as pending, not silently binding", () => {
+  write(path.join(FIX, "docs/translation-glossaries/ta.md"), GLOSS.ta + "# --- demo-book, batch 1 (new terms; review)\nforest = வனம்\n");
+  const r = run("translation-prep.ts", "--no-card", "--chapter=arrival", "--experiment=e2", "--allow-multiple-languages");
+  assert.equal(r.status, 0, r.stderr);
+  assert.match(r.stdout, /forest = ta வனம்\*/);
+  assert.match(r.stdout, /Sri Rāma = ta ஸ்ரீ ராமன் \|/, "approved forms carry no mark");
+  write(path.join(FIX, "docs/translation-glossaries/ta.md"), GLOSS.ta);
+});
+
+test("one language at a time: prep defaults to the next language in the order hi, ta, kn, te and refuses several", () => {
+  const several = run("translation-prep.ts", "--no-card", "--chapter=arrival", "--experiment=e3", "--langs=ta,kn");
+  assert.notEqual(several.status, 0);
+  assert.match(several.stderr, /One language at a time/);
+  const def = run("translation-prep.ts", "--no-card", "--chapter=arrival", "--experiment=e3");
+  assert.equal(def.status, 0, def.stderr);
+  assert.match(def.stderr, /Language: hi/);
+  assert.deepEqual(manifest(1, "e3").langs, ["hi"]);
+  // Hindi must be completed (merged) before another language is prepared.
+  const next = run("translation-prep.ts", "--no-card", "--chapter=arrival", "--experiment=e3");
+  assert.equal(next.status, 0, next.stderr);
+  assert.match(next.stderr, /Batches waiting to be merged: 1/);
+  assert.equal(fs.existsSync(path.join(work, "experiments/e3/batches/batch-002.json")), false);
 });

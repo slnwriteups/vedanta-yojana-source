@@ -4,6 +4,8 @@ The rulebook gate for translations into Tamil, Kannada, Hindi and Telugu, under 
 
 It builds on the existing workflow rather than replacing it: `scripts/translation-prep.ts` and `scripts/translation-merge.ts` (`docs/TRANSLATION-WORKFLOW.md`) call it, and it reuses `scripts/translation/mechanical.ts` (verse, name-line and mantra generation), `scripts/translation/checks.ts` (script checks) and `content-lib/sanskrit-script.ts` (`iastToScript`).
 
+Working rules (owner, 2026-10-31): one agent, one language at a time (hi → ta → kn → te), sequential independent review with the mandatory Register (Pass / Needs Revision) criterion. See `docs/TRANSLATION-WORKFLOW.md`.
+
 ## The process
 
 ```

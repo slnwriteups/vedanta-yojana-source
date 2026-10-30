@@ -361,6 +361,31 @@ export function checkEnglish(record: any, file: string, kind: "book" | "chapter"
   return issues;
 }
 
+/**
+ * Verse, name and mantra paragraphs the generator cannot write in a target
+ * script without guessing: a Devanagari letter survives the conversion (the
+ * Tamil rules of Standard §3.2 have no letter for vocalic ḷ, ॢ). Prep holds
+ * that chapter-language and the owner settles the convention; nothing guesses.
+ */
+export function untransliterable(record: any, file: string, langs: LanguageCode[] = LANGS): Issue[] {
+  if (typeof record.body !== "string") return [];
+  const paras = splitParagraphs(record.body);
+  const kinds = classify(paras);
+  const issues: Issue[] = [];
+  paras.forEach((p, i) => {
+    if (kinds[i] === "prose" || kinds[i] === "deva") return;
+    for (const lang of langs) {
+      if (lang === "hi") continue;
+      const g = expectedForm(kinds[i], p, paras[i - 1], lang);
+      if (g === null) continue; // reported by checkEnglish
+      // A name line keeps its Devanagari after "·" on purpose.
+      const left = [...new Set(g.split("\n").map((l) => l.split("·")[0]).join("").match(/[\u0900-\u0963\u0966-\u097F]/gu) ?? [])];
+      if (left.length) issues.push({ level: "error", rule: "source-untransliterable", file, lang, field: "body", paragraph: i + 1, detail: `${left.join(" ")} has no ${lang} rule in the Standard (§3.2); the owner must settle how to write it` });
+    }
+  });
+  return issues;
+}
+
 export function requireLanguage(record: any, lang: LanguageCode, file: string): Issue[] {
   return record.translations?.[lang] ? [] : [{ level: "error", rule: "missing-translation", file, lang, field: "translations", detail: `no ${lang} translation` }];
 }

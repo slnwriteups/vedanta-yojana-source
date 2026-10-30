@@ -1,86 +1,100 @@
-# Editorial decisions pending the owner
+# Editorial decisions
 
-Prepared 2026-10-30 for the owner's review. **Nothing here has been applied.** The glossaries, the English and every published translation are unchanged. Usage counts come from the live `translations.ta` / `translations.te` text in `content/`, inflected forms included.
+Status as of 2026-10-30, Phase 3. Approved published translations and the English source are unchanged. Usage counts come from the live `translations.<lang>` text in `content/`, inflected forms included.
 
-## 1. Tamil glossary conflicts
+## A. Decided by the owner and applied to the glossaries
 
-`ta.md:423` already records the author's direction:
+| Decision | Glossary change | Effect on content |
+|---|---|---|
+| ta Hanumān = **அனுமன்** | `ta.md` deleted the old `Hanumān = ஹனுமான்`; kept `Hanumān = அனுமன் (not ஹனுமான்)` | none: live Tamil already uses அனுமன் 120×, ஹனுமான் 0× |
+| ta Vinatā = **வினதை** | deleted the old `Vinatā = விநதை` | none: வினதை 33×, விநதை 0× |
+| ta rākshasas = **அரக்கர் / அரக்கர்கள்**; **ராக்ஷசன்** only where the Sanskrit term itself is discussed | `rākshasas = அரக்கர் / அரக்கர்கள்`; `rākshasa (the Sanskrit term itself) = ராக்ஷசன் (pl. ராக்ஷசர்கள்)` | none |
+| ta brāhmaṇas (people) = **பிராமணர்**, **அந்தணர்** where suitable; Vedic texts are distinct | `Brāhmaṇas / Āraṇyakas (Vedic texts) = பிராமணங்கள் / ஆரண்யகங்கள்`; `brāhmaṇa(s) (people) = பிராமணர் / பிராமணர்கள் (also where the context suits: அந்தணர் / அந்தணர்கள்)`; deleted the duplicate `brāhmaṇas = அந்தணர்கள்`; the Principle line updated | none: both forms are accepted |
+| te Sītā = **సీత** and its inflections; **సీతాదేవి** honorific | `Sri Rāma / Lakshmaṇa = శ్రీరాముడు / లక్ష్మణుడు`; `Sītā = సీత (oblique సీతను / సీతకు / సీతతో / సీతపై; honorific సీతాదేవి)` | none: the 213 paragraphs now conform |
+| Āzhwār naming: no "Alwars" term | the experiment's "Alwars" term marked `rejected`; its malformed `Vedas (te)` key corrected to `Vedas` (still pending) | none |
 
-> Principle (author's direction): Tamil follows the Tamil roots (அனுமன், வினதை, அரக்கர், அந்தணர்).
+After these changes `cli.ts glossary` reports **0 conflicts** in all four languages, and the library check still reports 0 blocking errors with the same 152 known historical defects.
 
-Lines 419–422 implement it. The earlier lines it supersedes were never removed, so the glossary contradicts itself:
+## B. The 33 pending lines (36 terms) under "(new terms; review)": still pending
 
-| Term | Older line | Later line (author's principle) | Live Tamil usage | Recommendation |
-|---|---|---|---|---|
-| Hanumān | `ta.md:53` ஹனுமான் | `ta.md:419` அனுமன் ("book form; not ஹனுமான்") | அனுமன் **120** (Sri Rāma Charithram 116, three Divya Desam records, Temples and Festivals 1); அனுமான் 4 (JAYA 2, Visishtadvaita book 2); ஹனுமான் **0** | Canonical **அனுமன்**. Remove or annotate line 53. The 4 அனுமான் are older variants: leave them, or list them for remediation. |
-| Vinatā | `ta.md:122` விநதை | `ta.md:420` வினதை | வினதை **33** (Divya Desam records 23, Nityasūri Vaibhavam 10); விநதை **0** | Canonical **வினதை**. Remove line 122. |
-| rākshasas | `ta.md:417` ராக்ஷசர்கள் | `ta.md:421` அரக்கர்கள் | அரக்க- **162** (Divya Desams, Sri Rāma Charithram 93, JAYA 15, Bhāgavatam 16); ராட்சச- 19 and ராக்ஷச- 9 (Sri Rāma Charithram, in names and singular ராட்சசன்/ராக்ஷசி) | Canonical **அரக்கர்(கள்)** for the people in general. Decide whether the singular ராக்ஷசன் / ராக்ஷசி stays acceptable where the English names one. |
-| Brāhmaṇas | `ta.md:177` "Brāhmaṇas / Āraṇyakas = பிராமணங்கள் / ஆரண்யகங்கள்" (**the Vedic texts**) | `ta.md:284` and `ta.md:422` அந்தணர் / அந்தணர்கள் (**the people**) | Texts: பிராமணங்கள் (1). People: பிராமணர்- about **60** (JAYA, Bhāgavatam, Visishtadvaita book, Divya Desams); அந்தணர்- **10** (Āzhwār Vaibhavam) | **Not a real conflict.** Line 177 is the texts and line 422 the people; the engine merged them because matching ignores case. Proposed: add "(texts)" to line 177 and "(people)" to line 422. For the people, the principle says அந்தணர், yet most live text uses பிராமணர். Decide whether the principle governs new work only (recommended: existing text unchanged) or calls for remediation. |
+These sit at `ta.md:435–445`, `kn.md:399–409` and `te.md:324–334`. They stay non-binding. Translator packets now mark these forms with `*` (pending owner review) instead of presenting them as binding glossary.
 
-## 2. Lines still headed "(new terms; review)"
+The "approved usage" column is evidence from published paragraphs whose English contains the term. Hindi has the same terms under its own headers (`hi.md:386` onward), which are not marked for review, and its usage agrees.
 
-These were appended automatically by the old merge step during Sahasranāma batch 1. There are 33 lines (11 each in ta, kn and te), which split into 36 terms because "Vedavyasa / Vyasa" is two. They remain pending: the engine treats them as non-binding and they can never block on their own. They are listed in the same order in each file:
-
-| English | ta (`ta.md:438–448`) | kn (`kn.md:399–409`) | te (`te.md:323–333`) |
-|---|---|---|---|
-| Bhishma | பீஷ்மர் | ಭೀಷ್ಮ | భీష్ముడు |
-| Yudhishthira | யுதிஷ்டிரன் | ಯುಧಿಷ್ಠಿರ | యుధిష్ఠిరుడు |
-| Vedavyasa / Vyasa | வேதவியாசர் / வியாசர் | ವೇದವ್ಯಾಸ / ವ್ಯಾಸ | వేదవ్యాసుడు / వ్యాసుడు |
-| Sri Parasara Bhattar | ஸ்ரீ பராசர பட்டர் | ಶ್ರೀ ಪರಾಶರ ಭಟ್ಟರ್ | శ్రీ పరాశర భట్టర్ |
-| Sri Adi Sankara | ஸ்ரீ ஆதி சங்கரர் | ಶ್ರೀ ಆದಿ ಶಂಕರ | శ్రీ ఆది శంకరులు |
-| stotram | ஸ்தோத்திரம் | ಸ್ತೋತ್ರ | స్తోత్రం |
-| Phala Shruti | பலஸ்ருதி | ಫಲಶ್ರುತಿ | ఫలశ్రుతి |
-| Narayaneeyam | நாராயணீயம் | ನಾರಾಯಣೀಯಂ | నారాయణీయం |
-| Bhaja Govindam | பஜ கோவிந்தம் | ಭಜ ಗೋವಿಂದಂ | భజ గోవిందం |
-| anushtup | அனுஷ்டுப் | ಅನುಷ್ಟುಪ್ | అనుష్టుప్ |
-| pārāyaṇam (chanting) | பாராயணம் | ಪಾರಾಯಣ | పారాయణం |
-
-Points to check before approving:
-- **Honorifics.** ta has பீஷ்மர் honorific but யுதிஷ்டிரன் plain, and kn has ಭೀಷ್ಮ but ವ್ಯಾಸರು in the prompt card. The independent reviewers of the experiment found this consistent with approved chapters.
-- **Hindi.** These terms are not in this section because Hindi's Sahasranāma terms were added under its own headers (`hi.md:386` onward), which are not marked for review.
-
-To approve: change each header from "(new terms; review)" to "(owner-approved <date>)". The engine then treats the lines as binding.
-
-## 3. Telugu Sītā (`te.md:305`)
-
-The glossary line `Sri Rāma / Lakshmaṇa / Sītā = శ్రీరాముడు / లక్ష్మణుడు / సీతాదేవి` gives only the honorific compound.
-
-**Usage (Telugu, all content).**
-- Plain base and inflections: సీత 219, సీతను 85, సీతకు 15, సీతపై 7, సీతతో 2, and so on.
-- సీతాదేవి and its inflections: **7**.
-- Compounds such as సీతాపహరణం and సీతారాములు: 4.
-- 337 of the occurrences are in Sri Rāma Charithram.
-
-**Grammar.** సీత is the nominative. Its oblique forms (సీతను, సీతకు, సీతతో, సీతపై) follow the regular -అ feminine declension. సీతాదేవి is an honorific compound, used in reverent address and in the Divya Desam records.
-
-**Other languages.** The narrative base is plain in all of them: ta சீதை, kn ಸೀತೆ, hi सीता.
-
-**Recommendation.** The 213 paragraphs follow settled, grammatical usage. The glossary line is narrower than the books. Make the glossary support both forms, for example:
-
-```
-Sītā = సీత (oblique సీతను / సీతకు; honorific సీతాదేవి)
-```
-
-The engine already reads annotation forms as accepted, so this would make both forms approved and clear the 213 drift warnings. No translation would change.
-
-## 4. English source concerns: `sri-vishnu-sahasranaama-anubhavam / composition-of-the-stotram`
-
-| ¶ | Original | Proposed correction | Reasoning |
-|---|---|---|---|
-| 7 | "Of all the commentaries Sri Sankara wrote for our religious scriptures (the Bhagavad Gita, the Brahma Sutras, etc.), Sri Vishnu Sahasranama Stotram was the foremost one." | **Option A:** "Of all the commentaries Sri Sankara wrote on our religious scriptures (the Bhagavad Gita, the Brahma Sutras, etc.), his commentary on the Sri Vishnu Sahasranama Stotram was the foremost one." **Option B:** "…, his commentary on the Sri Vishnu Sahasranama Stotram was the first." | As written, the sentence makes the stotram one of Sankara's commentaries. The approved translations silently read it as "his commentary on it". The experiment's translator followed it literally and flagged it, and both reviewers raised it. ¶5 of the same chapter says Sankara's commentary "is the earliest" of the stotram's commentaries. Whether ¶7 means *foremost* (A) or *first among his own commentaries* (B) is the author's claim to settle; the engine does not guess. |
-| 13 | "4. Bhishma considers it the best and most accessible of all dharmas or the means to attain relief from all bondage." | "4. Bhishma considers it the best and most accessible of all dharmas, and the means to attain release from all bondage." | The book's prologue gives these as separate questions. One asks which dharma is highest (prologue ¶11: "of all the dharmas … is the best"). Question 5 (prologue ¶7) asks by reciting which mantra man is released from the bondage of birth and death. "Or" lets readers take them as alternatives or as one gloss, and the four translations kept the ambiguity. "And" states both answers. "Release" matches the prologue's wording. |
-
-The same chapter's experiment raised one more point, which is not a defect: ¶12 calls Vedavyasa an incarnation of Vishnu. The reviewers listed it for the owner's note, and it is rendered faithfully.
-
-## 5. Terms proposed in the controlled experiment (pending, not in any glossary)
-
-These are from `translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/exp-2026-10-30/pending-terms.json`. They stay pending. Because they came from an experiment, they are not in the book's real pending list either.
-
-| English (as proposed) | ta | kn | hi | te | Note |
+| English | ta | kn | te | Approved usage (ta / kn / te) | Assessment |
 |---|---|---|---|---|---|
-| meter (chandas) | சந்தஸ் | ಛಂದಸ್ಸು | छंद | ఛందస్సు | New. ta சந்தஸ் versus the more usual யாப்பு / சந்தம்: owner choice. |
-| Dvaita school | த்வைத சம்பிரதாயம் | ದ್ವೈತ ಸಂಪ್ರದಾಯ | द्वैत संप्रदाय | ద్వైత సంప్రదాయం | hi has `Dvaita = द्वैत` already. "school" as சம்பிரதாயம் / संप्रदाय is consistent. |
-| Alwars | ஆழ்வார்கள் | ಆಳ್ವಾರರು | आळ्वार | ఆళ్వారులు | **Duplicate**: the glossaries already have Āzhwār / Āzhwārs. The English here spells it "Alwars". Reject as a term; consider whether the Sahasranāma English should use the settled "Āzhwārs" (Standard §6.1). |
-| composers (vaggeyakaras) | வாக்கேயக்காரர்கள் | ವಾಗ್ಗೇಯಕಾರರು | वाग्गेयकार | వాగ్గేయకారులు | New. The blind comparison preferred these to the approved generic "composers" (இசையமைப்பாளர்கள், रचनाकार). |
-| Mother Ganga | அன்னை கங்கை | ಗಂಗಾ ಮಾತೆ | माता गंगा | గంగా మాత | New. Check against the Divya Desam records' river names. |
-| Vedas (te) | | | | వేదాలు | Te only, filling a gap (ta/kn/hi have Vedas). The key is malformed: "(te)" belongs on the target side. If approved, write `Vedas = వేదాలు`. |
+| Bhishma | பீஷ்மர் | ಭೀಷ್ಮ | భీష్ముడు | 34/34 · 34/34 · 34/34 | **Supported.** The honorific differs by language (ta honorific; kn/te plain), as in the approved JAYA and Bhāgavatam. |
+| Yudhishthira | யுதிஷ்டிரன் | ಯುಧಿಷ್ಠಿರ | యుధిష్ఠిరుడు | 37/37 · 37/37 · 37/37 | **Supported** |
+| Vedavyasa | வேதவியாசர் | ವೇದವ್ಯಾಸ | వేదవ్యాసుడు | 5/5 · 5/5 · 3/5 | **Supported.** te also uses the compound form వ్యాస (వ్యాస మహర్షి), a grammatical variant. |
+| Vyasa | வியாசர் | ವ್ಯಾಸ | వ్యాసుడు | 14/20 · 20/20 · 17/20 | **Supported.** The misses are paraphrases or compounds, not a rival spelling. |
+| Sri Parasara Bhattar | ஸ்ரீ பராசர பட்டர் | ಶ್ರೀ ಪರಾಶರ ಭಟ್ಟರ್ | శ్రీ పరాశర భట్టర్ | 1/1 each | Supported, but thin evidence. Note that hi writes श्री पराशर भट्ट (no -र्), and the English writes both "Bhatta" and "Bhattar": **decide the English form**. |
+| Sri Adi Sankara | ஸ்ரீ ஆதி சங்கரர் | ಶ್ರೀ ಆದಿ ಶಂಕರ | శ్రీ ఆది శంకరులు | 1/1 each | Supported, thin evidence |
+| stotram | ஸ்தோத்திரம் | ಸ್ತೋತ್ರ | స్తోత్రం | 22/22 · 22/22 · 23/23 | **Supported** |
+| Phala Shruti | **பலஸ்ருதி** | ಫಲಶ್ರುತಿ | ఫలశ్రుతి | **2/6** · 6/6 · 6/6 | **Decision needed (ta).** The approved Sahasranāma Tamil writes **பலஶ்ருதி** (with ஶ) in all 9 occurrences; the pending line has ஸ. |
+| Narayaneeyam | நாராயணீயம் | ನಾರಾಯಣೀಯಂ | నారాయణీయం | 1/1 each | Supported, thin evidence |
+| Bhaja Govindam | பஜ கோவிந்தம் | ಭಜ ಗೋವಿಂದಂ | భజ గోవిందం | 1/1 each | Supported, thin evidence |
+| anushtup | அனுஷ்டுப் | ಅನುಷ್ಟುಪ್ | అనుష్టుప్ | 2/2 each | Supported |
+| pārāyaṇam (chanting) | பாராயணம் | ಪಾರಾಯಣ | పారాయణం | 0 uses | **No evidence yet.** These are the standard forms; approve on judgement, or wait for usage. |
+
+**Recommendation.** Approve the nine supported terms. Decide Tamil Phala Shruti (பலஶ்ருதி recommended, to match the approved text) and the Bhatta/Bhattar English form. pārāyaṇam is your call.
+
+## C. Terms proposed by the controlled experiment (exp-2026-10-30): pending
+
+| English | ta | kn | hi | te | Note |
+|---|---|---|---|---|---|
+| meter (chandas) | சந்தஸ் | ಛಂದಸ್ಸು | छंद | ఛందస్సు | New. For ta, சந்தஸ் versus யாப்பு / சந்தம் is the owner's choice. |
+| Dvaita school | த்வைத சம்பிரதாயம் | ದ್ವೈತ ಸಂಪ್ರದಾಯ | द्वैत संप्रदाय | ద్వైత సంప్రదాయం | hi already has `Dvaita = द्वैत` |
+| composers (vaggeyakaras) | வாக்கேயக்காரர்கள் | ವಾಗ್ಗೇಯಕಾರರು | वाग्गेयकार | వాగ్గేయకారులు | The blind comparison preferred these to the generic "composers" |
+| Mother Ganga | அன்னை கங்கை | ಗಂಗಾ ಮಾತೆ | माता गंगा | గంగా మాత | Check against the Divya Desam river names |
+| Vedas | | | | వేదాలు | te only; key corrected |
+| ~~Alwars~~ | | | | | **Rejected** (owner decision): use the existing Āzhwār / Āzhwārs |
+
+## D. English source: proposed corrections awaiting the owner's final wording
+
+`content/library/sri-vishnu-sahasranaama-anubhavam/chapters/composition-of-the-stotram.json`. **Not modified.**
+
+### ¶7
+
+| | Text |
+|---|---|
+| **Original** | Of all the commentaries Sri Sankara wrote for our religious scriptures (the Bhagavad Gita, the Brahma Sutras, etc.), Sri Vishnu Sahasranama Stotram was the foremost one. Sri Sankara emphasises the importance of reciting the Vishnu Sahasranama Stotram in his Bhaja Govindam (gēyaṃ gītā nāmasahasram). |
+| **Proposed** | Of all the commentaries Sri Sankara wrote for our religious scriptures (the Bhagavad Gita, the Brahma Sutras, etc.), **his commentary on the** Sri Vishnu Sahasranama Stotram was the foremost one. Sri Sankara emphasises the importance of reciting the Vishnu Sahasranama Stotram in his Bhaja Govindam (gēyaṃ gītā nāmasahasram). |
+| **Why** | The subject of "was the foremost one" is the stotram itself, which makes it one of Sankara's commentaries. ¶5 ("Sri Adi Sankara's commentary is the earliest of them") shows the chapter is about his commentary on the stotram. The change adds four words and keeps "foremost" (not "first", which would be a different historical claim). The second sentence is unchanged. The approved ta/kn/hi/te translations already read it this way, so they would need no change. |
+
+### ¶13 (item 4 of the list in ¶9–¶14, "These are:")
+
+| | Text |
+|---|---|
+| **Original** | 4. Bhishma considers it the best and most accessible of all dharmas or the means to attain relief from all bondage. |
+| **Proposed (owner's wording)** | 4. Bhishma considers it the best and most accessible of all dharmas, and the means to attain release from all bondage. |
+| **Minimal alternative** | 4. Bhishma considers it the best and most accessible of all dharmas, and the means to attain relief from all bondage. |
+| **Why** | The book's prologue gives these as two separate answers of Bhishma. One is which dharma is highest (prologue ¶11: "of all the dharmas … is the best"). The other answers question 5, by reciting which mantra one is "released from the bondage of the cycle of birth and death" (prologue ¶7). "or" lets the clause read as an alternative or as a gloss of "dharmas"; ", and" states both answers. "release" matches the prologue's "released from the bondage". The minimal alternative keeps the chapter's word "relief", also used in ¶14 ("relief from all sorrows"). The four approved translations kept the ambiguity, and would need the conjunction adjusted once the English is settled. |
+
+### Other source concerns (separate; not proposed for change in this phase)
+
+- **¶11 of the same chapter: "Sages such as Narada, the Alwars, and composers…"** This uses "Alwars" against the settled Āzhwār / Āzhwārs convention (Standard §6.1). A minimal correction is "the Āzhwārs". It awaits the owner's approval like ¶7 and ¶13.
+- **`dhyana-shlokam` ¶3, Tamil verse.** मालाकॢप्तासन contains vocalic ḷ (ॢ). The Standard's §3.2 Tamil rules have no letter for it, and no approved Tamil in the corpus writes it (this is its only occurrence in all content). Tamil for this chapter is held until the owner sets the convention. One common reading writes ḷ as லு (மாலாக்லுப்தாஸன); the engine will not choose. This is an owner or scholar decision. Once it is decided, the rule goes into `scripts/translation/mechanical.ts` and the Standard's §3.2.
+- **Pilot chapters:** source concerns raised by the pilot translators and reviewers are listed in the pilot report (`translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/REPORT.md`).
+
+## E. Decisions raised by the Phase 3 pilot (pending)
+
+Details and evidence: `translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/REPORT.md` §6 and §7.
+
+| # | Decision | Evidence | Proposal |
+|---|---|---|---|
+| E1 | The Lord's pronoun and verb register | Round-1 defects in ta, kn and te; Divya Desam benchmark | **Decided 2026-10-31 for ta (அவர், honorific), te (ఆయన, singular verbs) and hi (honorific); in the prompt card.** **kn decided 2026-10-31:** retain the established singular ಅವನು / ಭಗವಂತನು of approved Kannada devotional prose, with honorific forms allowed contextually; no global pronoun substitution and no Tamil/Telugu conventions imposed. |
+| E2 | `Sri Bhattar` glossary lines | hi भट्टर 10× in the pilot vs approved श्री भट्ट 53×; te used two spellings | ஸ்ரீ பட்டர் / ಶ್ರೀ ಭಟ್ಟರ್ / श्री भट्ट / శ్రీ భట్టర్ (pilot `pending-terms.json`) |
+| E3 | No restrictive or emphatic particles beyond the English | Added ஏ / ಏ / ही in 6 places across 3 chapters | **Decided 2026-10-31; in the prompt card's DOCTRINE section** |
+| E4 | Telugu sages: plain glossary forms or honorific | వేదవ్యాసుడు / అగస్త్యుడు plain vs honorific in the drafts | Owner's choice |
+| E5 | Tamil vocalic ḷ (`dhyana-shlokam` ¶3) | Only occurrence in the corpus; no precedent | Owner or scholar convention, then a rule in `mechanical.ts` and Standard §3.2 |
+| E6 | 28 terms proposed by the pilot | `phase3-pilot/pending-terms.json` | Review with section B |
+| E7 | 15 English-source concerns and 6 theological concerns | `phase3-pilot/source-concerns.json`; REPORT §7 | Owner settles the English; translations follow it |
+
+## F. Standard §4 wording: reconciled (2026-10-31)
+
+The owner directed that §4's "neither ornate nor literary" means not ornamented. Translations are dignified, traditional, scholarly, devotional, natural and accessible, with no unnecessary ornamentation, artificial archaism, colloquialism or embellishment, and fidelity always comes first. This is applied in `docs/TRANSLATION-GUIDE.md` §1.6, the prompt card's FIDELITY section and the reviewer packet. The PDF itself is outside the repository; the owner may want its §4 updated to match.
+
+## G. Deferred: `content/README.md` correction
+
+The stale `content/README.md` ("intentionally empty") was corrected in commit `aa88f50`. That correction is held back from the merge to `main`: any change under `content/` triggers `publish-ota-update.yml`, which publishes a production OTA update unconditionally. Ship the corrected text (in `aa88f50`) together with the next real content change, which publishes an update anyway.
+

@@ -1,0 +1,63 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "kn",
+  "textHash": "017cf2a3ea",
+  "reviewer": {
+    "name": "pilot-reviewer-kn",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"ವಿದ್ ಎಂಬುದರಿಂದ ಬಂದಿದೆ\" leaves vid without saying what it is. Kannada names a verbal root as ಧಾತು.",
+      "suggestion": "ಈ ನಾಮವು \"ತಿಳಿಯುವುದು\" ಎಂಬ ಅರ್ಥದ ವಿದ್ ಧಾತುವಿನಿಂದ ಬಂದಿದೆ."
+    },
+    {
+      "n": 8,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ಪ್ರದ್ಯುಮ್ನನನ್ನು ಸೂಚಿಸುವುದಾಗಿ ಕಾಣುತ್ತಾರೆ\" is a calque of \"sees this name as\". \"ಶಾಸ್ತ್ರಗಳನ್ನು ಉಪದೇಶಿಸಿ\" for \"propounds\" is acceptable, though ಪ್ರವರ್ತಿಸಿ is closer. \"ಭಗವಾನ್ ಶ್ರೀ ಕೃಷ್ಣನು\" is spaced, while the approved composition-of-the-stotram example writes \"ಭಗವಾನ್ ಶ್ರೀಕೃಷ್ಣ\".",
+      "suggestion": "ಭಗವಾನ್ ಶ್ರೀಕೃಷ್ಣನು ... ಶಾಸ್ತ್ರಗಳನ್ನು ಪ್ರವರ್ತಿಸಿ ಅವುಗಳ ಅರ್ಥವನ್ನು ವಿವರಿಸುವ ಪ್ರದ್ಯುಮ್ನನನ್ನು ಈ ನಾಮವು ಪ್ರತಿನಿಧಿಸುತ್ತದೆ ಎಂದು ಶ್ರೀ ಭಟ್ಟರು ಪರಿಗಣಿಸುತ್ತಾರೆ."
+    },
+    {
+      "n": 16,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "\"ಅವನ ಆಜ್ಞೆಗಳೇ ಆಗಿವೆ\" adds an emphatic ಏ. The English \"are also His commands\" is already carried by \"ಸಹ\".",
+      "suggestion": "ಶ್ರುತಿಗಳೂ ಸ್ಮೃತಿಗಳೂ ಸಹ ಅವನ ಆಜ್ಞೆಗಳಾಗಿವೆ."
+    },
+    {
+      "n": 30,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "\"ಎಚ್ಚರದಿಂದ ಗಮನಿಸುವ\" means \"watches alertly\", not \"watches closely\". The same phrase recurs at the end of the paragraph. \"ಲೋಕಗಳು ಎಂದರೆ ... ಜನರು\" puts the neuter plural -ಗಳು (normally \"worlds\") on people, which is jarring.",
+      "suggestion": "ಅಧ್ಯಕ್ಷ ಎಂಬ ಪದದ ಅರ್ಥ ನಿಕಟವಾಗಿ ಗಮನಿಸುವ ಮೇಲ್ವಿಚಾರಕ. ... ಇಲ್ಲಿ ಲೋಕ ಎಂದರೆ ಧರ್ಮವನ್ನು ಆಚರಿಸುವುದು ಕರ್ತವ್ಯವಾಗಿರುವ ಜನರು; ... ಅವನು ಅವರನ್ನು ನಿಕಟವಾಗಿ ಗಮನಿಸುತ್ತಾ, ..."
+    },
+    {
+      "n": 42,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "\"ಭಗವಂತನೇ ಸಮಸ್ತ ವಸ್ತುಗಳಿಗೂ ...\" adds an emphatic ಏ that the English (\"the Lord is both the cause and the effect\") does not have.",
+      "suggestion": "ಭಗವಂತನು ಸಮಸ್ತ ವಸ್ತುಗಳಿಗೂ ಕಾರಣವೂ ಕಾರ್ಯವೂ ಆಗಿದ್ದಾನೆ."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶8: \"author of the Vedanta\" is rendered faithfully as \"ವೇದಾಂತವನ್ನು ರಚಿಸಿದವನೂ\". ರಚಿಸು (compose/author) could suggest the Vedas have a personal author, against apaurusheyatva. Sri Rāmānuja reads vedāntakṛt differently in his Gītā Bhāṣya. The owner may prefer ವೇದಾಂತಪ್ರವರ್ತಕನೂ, or may decide to keep the English sense.",
+    "¶12: \"six qualities\" (ಆರು ಗುಣಗಳು) is faithful. The owner may want the traditional term ಷಾಡ್ಗುಣ್ಯ (jñāna, bala, aiśvarya, vīrya, śakti, tejas) noted, but that would add to the English."
+  ],
+  "overall": "approve"
+}

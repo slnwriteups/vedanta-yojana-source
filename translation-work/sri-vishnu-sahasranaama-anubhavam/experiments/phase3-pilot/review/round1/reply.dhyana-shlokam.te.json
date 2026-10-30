@@ -1,0 +1,86 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "dhyana-shlokam",
+  "lang": "te",
+  "textHash": "6f7a1e0d34",
+  "reviewer": {
+    "name": "pilot-reviewer-te",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "fail",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "fail",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "fail",
+    "theology": "fail",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 8,
+      "severity": "blocking",
+      "category": "faithfulness",
+      "comment": "\"నేను దర్శించడానికి తన ఇంతటి సుందర రూపాన్ని సృష్టించే ఆ స్వామికి\": the English says He \"creates such a beautiful vision of Himself\". The Telugu turns this into \"creates His beautiful FORM\", which suggests the divine form (divya maṅgaḷa vigraham, eternal in Sri Vaishnava doctrine) is created. The sentence also says the object twice: \"ఆ స్వామికి, ఆయన ఎదుట\".",
+      "suggestion": "ఈ విశ్వంలో సాటిలేనివాడై, నేను దర్శించడానికి తన ఇంతటి సుందర దర్శనాన్ని కల్పించే ఆ స్వామికి నేను సాష్టాంగ ప్రణామం చేస్తున్నాను."
+    },
+    {
+      "n": 1,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ప్రవేశించే ముందు, ముందుగా\" is redundant. \"వివరణ ద్వారా మిమ్మల్ని తీసుకువెళ్లాలని\" is a calque of \"take you through\", which is not idiomatic Telugu.",
+      "suggestion": "స్వామి సహస్ర నామాలలోకి ప్రవేశించే ముందు, ధ్యాన శ్లోకానికి ఒక సంక్షిప్త వివరణను మీకు అందించాలని కోరుకుంటున్నాను."
+    },
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"అమృతం లేదా సుధా బిందువులను\" can be parsed as \"amritam, or drops of nectar\". The English means drops of amritam (nectar). Also \"స్వామిని సమీపంగా దర్శిస్తే\" for \"Zooming in\" is acceptable, but \"సమీపించి\" reads better.",
+      "suggestion": "… స్వామిపై అమృత (సుధా) బిందువులను నిరంతరం మృదువుగా కురిపిస్తూ ఉంటుందని చెబుతారు; … / స్వామిని సమీపించి దర్శిస్తే, …"
+    },
+    {
+      "n": 13,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"మహర్షి వేదవ్యాసుడు\" follows English word order; Telugu puts the title after the name. \"కొంత ఎక్కువ సులభంగా అందుబాటులో ఉండి\" is clumsy.",
+      "suggestion": "… వేదవ్యాస మహర్షి మనకు స్వామి యొక్క బ్రహ్మాండ రూపపు చిత్రాన్ని అందిస్తాడు; ఇది మనకు కొంత సులభంగా అందుబాటులో ఉండి, …"
+    },
+    {
+      "n": 14,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"అలా ఉండగా\" is a calque of \"That being said\" and does not join the sentences in Telugu.",
+      "suggestion": "ఇక, స్వామి వర్ణం నీటితో నిండిన వర్షమేఘపు వర్ణం వంటి శ్యామ వర్ణం."
+    },
+    {
+      "n": 19,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ఆయనకు నా నిష్ఠను సమర్పిస్తున్నాను\" is a calque of \"pledge my allegiance\" and is not idiomatic devotional Telugu.",
+      "suggestion": "ఆ విష్ణు భగవానుని నేను ప్రార్థించి, ఆయనకే నన్ను అంకితం చేసుకుంటున్నాను."
+    },
+    {
+      "n": 24,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"మహిమాన్వితమైన కౌస్తుభాన్ని\" for \"the great Kausthubha\" slightly intensifies the English. \"ధరించినవాడు\" also appears three times in one sentence.",
+      "suggestion": "పాంచజన్య శంఖాన్ని, సుదర్శన చక్రాన్ని ధరించినవాడు, రాజ కిరీటంతో అలంకృతుడు, పీతాంబరధారి, గొప్ప కౌస్తుభాన్ని అలంకరించుకున్నవాడు అయిన నిన్ను నేను శరణు వేడుతున్నాను."
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "\"ఏ సందర్భాలలోనూ\" translates \"circumstances\" too literally; the meaning is the forms or scenes described above. \"కృష్ణుని\" lacks the reverence of approved usage (\"శ్రీకృష్ణ భగవానుడు\"). Vedavyāsa is plain here (\"చెబుతాడు\") and in ¶13. That follows the glossary and composition-of-the-stotram, but naama-12-17 ¶25 makes Agastya honorific (\"తపించారో\"), so the book treats sages inconsistently.",
+      "suggestion": "పైన చెప్పిన ఏ రూపాలలోనూ స్వామిని ఊహించుకోలేనివారి కోసం, వేదవ్యాస మహర్షి పఠించేవారిని తమ మనసులో శ్రీకృష్ణుని చిత్రాన్ని రూపొందించుకోమని చెబుతాడు."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶4 (source English): \"adorning the holy garland, Mukunda\" misreads the verse. In it, Mukunda is the Lord's name (ānandī naḥ punīyād … mukundaḥ), and the pearl garlands form His seat (mālākḷptāsanasthaḥ). The Telugu \"ముకుంద అనే దివ్య మాలను ధరించి\" faithfully reproduces this error. The English should be corrected first.",
+    "¶4 (source English): it places Sri Vaikuntham \"in the centre of the milky ocean\". Sri Vaishnava doctrine distinguishes Paramapadam (Sri Vaikuntham) from the Kṣīrābdhi (vyūha). This needs a scholar's view before the text is published.",
+    "¶7 (source English): \"His foot measured the earth\" and \"His residence is in the milky ocean\" do not match the verse, where the earth IS His feet (bhūḥ pādau) and the ocean is part of His body (vāsteyam abdhiḥ). The Telugu follows the English.",
+    "Generated paragraphs (¶2/3, 5/6, 9/10, 11/12, 16/17, 20/21, 22/23, 25/26): the Devanagari is intact and the Telugu transliteration is correct (ౢ in మాలాకౢప్తా is the Telugu vocalic-l sign), with no Kannada-block letters."
+  ],
+  "overall": "revise"
+}

@@ -126,8 +126,10 @@ const concerns = (Array.isArray(reply.concerns) ? (reply.concerns as Array<{ ite
   .map((c) => ({ id: manifest.items[c.item!].id, english: current.get(manifest.items[c.item!].id)?.en ?? "", note: c.note!.trim(), batch: manifest.batch, translator: a.translator, status: "open" }));
 if (concerns.length) {
   const file = path.join(workDir(bookSlug, experiment), "source-concerns.json");
-  const prev = fs.existsSync(file) ? readJson<{ concerns: unknown[] }>(file).concerns : [];
-  writeJson(file, { note: "English passages a translator found ambiguous. For the owner to settle in the English (Standard §1 rule 1); translations follow the English as written until then.", concerns: [...prev, ...concerns] });
+  const prev = fs.existsSync(file) ? readJson<{ concerns: Array<{ id: string; note: string; translator?: string }> }>(file).concerns : [];
+  // A re-merged (corrected) reply repeats its concerns: the same translator's newer note for a passage replaces the older one.
+  const kept = prev.filter((p) => !concerns.some((c) => c.id === p.id && c.translator === p.translator));
+  writeJson(file, { note: "English passages a translator found ambiguous. For the owner to settle in the English (Standard §1 rule 1); translations follow the English as written until then.", concerns: [...kept, ...concerns] });
 }
 
 // ---------------------------------------------------------------- write finished records

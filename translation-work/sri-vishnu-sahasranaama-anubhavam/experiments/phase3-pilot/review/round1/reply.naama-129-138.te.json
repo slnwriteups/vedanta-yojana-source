@@ -1,0 +1,69 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "te",
+  "textHash": "5f13bfa6d5",
+  "reviewer": {
+    "name": "pilot-reviewer-te",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "fail",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 8,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "Sri Bhattar is written \"శ్రీ భట్టరు\" here and in ¶20, ¶30, ¶38 and ¶42, but \"శ్రీ భట్టర్\" throughout naama-12-17 (¶9, ¶13, ¶17, ¶21, ¶29). One Āchārya has to have one form across the book. The Tamil-derived forms in approved content keep the final consonant (ఆళ్వార్, తిరుప్పాణాళ్వార్), so \"భట్టర్\" fits better. Also \"భగవాన్ శ్రీ కృష్ణుడు\" has a space, while the approved content writes \"శ్రీకృష్ణ\" as one word.",
+      "suggestion": "శ్రీ భట్టర్ ఈ నామాన్ని … భావిస్తారు; భగవాన్ శ్రీకృష్ణుడు గీతలో …"
+    },
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"అన్ని అర్పణలూ\" for \"all offerings\" (ijyāḥ). ijyā means worship or sacrificial offering, and \"అర్పణ\" sounds like an everyday gift. A Vedic word fits better.",
+      "suggestion": "అన్ని యజ్ఞాలూ, అన్ని ఆరాధనలూ (ఇజ్యలూ) కృష్ణుడే"
+    },
+    {
+      "n": 18,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"భక్తుల మనస్సులలోనూ కర్మలలోనూ … వైదిక కర్మలను ఆచరింపజేసే\" uses కర్మ twice in two senses (actions, then rituals), which blurs the sentence.",
+      "suggestion": "భక్తుల మనస్సులలోనూ ఆచరణలోనూ వేదాల జ్ఞానాన్ని ప్రేరేపించి, వారిచేత తగిన వైదిక కర్మలను ఆచరింపజేసే స్వామి."
+    },
+    {
+      "n": 24,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"అవతల చూసేవాడు\" is a literal calque of \"the one who sees beyond\" and reads oddly as a gloss of krāntadarśī. \"ఇంద్రియాలు తెలియజేయగలిగే దానికి అవతల కూడా\" has the same problem.",
+      "suggestion": "కవి అనే పదానికి \"అతీతమైనదాన్ని దర్శించేవాడు\" (క్రాంతదర్శీ) అని వివరణ ఇవ్వబడింది. ఇంద్రియాలకు అందని దానిని కూడా స్వామి దర్శిస్తాడు; …"
+    },
+    {
+      "n": 28,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"తనను తాను ప్రకటించుకునేవాడు\" for \"presents Himself\" can be read in Telugu as \"proclaims / announces Himself\". The sense is that He makes Himself directly present (adhyakṣa). ¶32 has the same wording.",
+      "suggestion": "… ఆచరించేవారికి తనను తాను ప్రత్యక్షం చేసుకునేవాడు. (¶32: దేవతలకు తనను తాను ప్రత్యక్షం చేసుకునేవాడు.)"
+    },
+    {
+      "n": 32,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"దేవతలకు తనను తాను ప్రకటించుకునేవాడు\": same problem as ¶28.",
+      "suggestion": "దేవతలకు తనను తాను ప్రత్యక్షం చేసుకునేవాడు."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶12: the English (and so the Telugu \"తానే సృష్టించిన వేదాల\") says the Lord \"created\" the Vedas. Sri Vaishnava doctrine holds the Vedas to be apauruṣeya and eternal; the Lord reveals them (cf. ¶4 \"came forth from His breath\"). The translation is faithful to the source, but the owner may wish to check the English, e.g. \"తానే ప్రకటించిన\"."
+  ],
+  "overall": "approve"
+}

@@ -1,0 +1,27 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "dhyana-shlokam",
+  "lang": "kn",
+  "textHash": "79e50ffca6",
+  "reviewer": {
+    "name": "pilot-reviewer2-kn",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "¶4 (English source): \"He is seen adorning the holy garland, Mukunda\" makes Mukunda the name of the garland, whereas in the verse (¶2) मुकुन्दः is the Lord's name. The Kannada \"ಮುಕುಂದ ಎಂಬ ಪವಿತ್ರ ಮಾಲೆಯನ್ನು\" follows the English as instructed; the English needs the owner's correction, and the Kannada should then follow it.",
+    "¶4 (English source): \"Sri Vaikuntham, situated in the centre of the milky ocean\" conflates Sri Vaikuntham (Paramapadam) with the Kshirabdhi (Vyuha) abode. The Kannada follows the English; for the owner to decide."
+  ],
+  "overall": "approve"
+}

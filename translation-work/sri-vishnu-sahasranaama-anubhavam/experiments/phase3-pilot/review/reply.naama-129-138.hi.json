@@ -1,0 +1,26 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "hi",
+  "textHash": "bb8349584d",
+  "reviewer": {
+    "name": "pilot-reviewer2-hi",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "¶12 (English): \"the Vedas, which He Himself created\" is rendered faithfully as \"जिन वेदों को उन्होंने स्वयं रचा\". In the tradition the Vedas are eternal and not composed (apauruṣeya); ¶4 itself says they came forth from His breath. The owner may want to change the English to 'revealed' or 'brought forth'. This is not a fault in the translation."
+  ],
+  "overall": "approve"
+}

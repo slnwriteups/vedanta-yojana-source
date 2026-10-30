@@ -1,0 +1,41 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "te",
+  "textHash": "3cc08335b2",
+  "reviewer": {
+    "name": "pilot-reviewer2-te",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"విద్ నుండి వచ్చింది\" does not say what vid is; the English means the verbal root. The Tamil and Kannada corrections name it as a root (தாது / ಧಾತು).",
+      "suggestion": "ఈ నామం \"తెలుసుకోవడం\" అనే అర్థం గల విద్ ధాతువు నుండి వచ్చింది."
+    },
+    {
+      "n": 8,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"శాస్త్రాలను ఉపదేశించి\" for \"propounds the shastras\" is slightly narrower (teaching rather than establishing/promulgating). Acceptable; noted because the ta/kn/hi versions were moved to the 'promulgate' sense.",
+      "suggestion": "శాస్త్రాలను ప్రవర్తింపజేసి వాటి అర్థాన్ని వివరించే ప్రద్యుమ్నుడిని"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶12 (English): \"the Vedas, which He Himself created\" may sit uneasily with the Vedas as eternal and apauruṣeya (manifested/breathed forth, not created; compare ¶4 \"came forth from His breath\"). The Telugu follows the English (\"తానే సృష్టించిన\"); the owner may wish to review the English."
+  ],
+  "overall": "approve"
+}

@@ -160,17 +160,22 @@ const needleRe = new Map<string, RegExp>();
  */
 export function termsIn(english: string, entries: GlossaryEntry[]): Map<string, GlossaryEntry[]> {
   const hay = fold(english);
+  // Singular and plural lines are one term ("brāhmaṇa(s) (people)" and "Brāhmaṇas (Vedic texts)"): all senses are judged together.
+  const singular = (n: string) => (n.length > 4 ? n.replace(/(?<=[a-z])e?s$/, "") : n);
   const byNeedle = new Map<string, GlossaryEntry[]>();
-  for (const e of entries) byNeedle.set(e.needle, [...(byNeedle.get(e.needle) ?? []), e]);
+  for (const e of entries) byNeedle.set(singular(e.needle), [...(byNeedle.get(singular(e.needle)) ?? []), e]);
   const taken: Array<[number, number]> = [];
   const found = new Map<string, GlossaryEntry[]>();
   for (const needle of [...byNeedle.keys()].sort((a, b) => b.length - a.length)) {
-    if (!needleRe.has(needle)) needleRe.set(needle, new RegExp(`(^|[^a-z0-9])(${escape(needle)})(?:e?s|'s)?(?=[^a-z0-9]|$)`, "g"));
-    const re = needleRe.get(needle)!;
+    // A group with a singular line matches singular and plural; a plural-only line ("Vedas") does not claim the singular.
+    const exact = byNeedle.get(needle)!.some((e) => e.needle === needle);
+    const body = exact ? `${escape(needle)})(?:e?s|'s)?` : `${[...new Set(byNeedle.get(needle)!.map((e) => escape(e.needle)))].join("|")})(?:'s)?`;
+    if (!needleRe.has(body)) needleRe.set(body, new RegExp(`(^|[^a-z0-9])(${body}(?=[^a-z0-9]|$)`, "g"));
+    const re = needleRe.get(body)!;
     re.lastIndex = 0;
     for (const m of hay.matchAll(re)) {
       const start = m.index! + m[1].length;
-      const end = start + needle.length;
+      const end = start + m[2].length;
       if (taken.some(([s, e]) => start < e && end > s)) continue;
       taken.push([start, end]);
       found.set(needle, byNeedle.get(needle)!);
@@ -186,7 +191,7 @@ const ENDINGS: Record<LanguageCode, string[]> = {
   ta: ["ம்", "ன்", "ர்", "ள்", "ல்"],
   kn: ["ನು", "ರು", "ಳು", "ವು", "ಂ"],
   te: ["ుడు", "డు", "లు", "ము", "ం", "రు"],
-  hi: ["म्"],
+  hi: ["म्", "एँ", "एं"], // आत्माएँ → आत्मा, so the oblique आत्माओं matches
 };
 const VIRAMA_OR_SIGN = /[ஂா-்ಂಃಾ-್ా-్ంఃा-्ंः]$/u;
 

@@ -1,0 +1,93 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "dhyana-shlokam",
+  "lang": "kn",
+  "textHash": "86e342bbf1",
+  "reviewer": {
+    "name": "pilot-reviewer-kn",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "fail",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "fail",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 1,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ಸಾವಿರ ನಾಮಗಳನ್ನು ಪ್ರವೇಶಿಸುವ ಮೊದಲು\" (entering the names) and \"ವಿವರಣೆಯ ಮೂಲಕ ನಿಮ್ಮನ್ನು ಕರೆದೊಯ್ಯಲು\" (take you through) are English calques. The English \"first\" is also lost, because the single \"ಮೊದಲು\" now has to mean \"before\".",
+      "suggestion": "ಭಗವಂತನ ಸಾವಿರ ನಾಮಗಳ ಅನುಭವಕ್ಕೆ ತೊಡಗುವ ಮೊದಲು, ಧ್ಯಾನ ಶ್ಲೋಕದ ಸಂಕ್ಷಿಪ್ತ ವಿವರಣೆಯನ್ನು ಮೊದಲಿಗೆ ನಿಮ್ಮ ಮುಂದಿಡಲು ಬಯಸುತ್ತೇನೆ."
+    },
+    {
+      "n": 4,
+      "severity": "blocking",
+      "category": "accuracy",
+      "comment": "\"ಆತನು ಮುಕುಂದ ಎಂಬ ದಿವ್ಯ ಮಾಲೆಯನ್ನು ಧರಿಸಿರುವುದು ಕಾಣುತ್ತದೆ\" says the garland is called Mukunda. In the English \"the holy garland, Mukunda\", Mukunda is in apposition to the Lord, and in the verse (¶2) मुकुन्दः is the Lord's name. The rendering also turns \"holy\" into \"ದಿವ್ಯ\" (divine), which breaks the chapter's own pattern of \"ಪವಿತ್ರ\" for \"holy\" (¶15, ¶18).",
+      "suggestion": "ಭಗವಂತನನ್ನು ಸಮೀಪದಿಂದ ನೋಡಿದರೆ, ಪವಿತ್ರ ಮಾಲೆಯನ್ನು ಧರಿಸಿರುವ ಮುಕುಂದನಾಗಿ ಆತನು ಕಾಣುತ್ತಾನೆ."
+    },
+    {
+      "n": 7,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"ಮಹತ್ತಾಗಿ ಘರ್ಜಿಸುವ ... ಮಹಾಜ್ವಾಲೆ\" says \"great\" twice (the English has it once), and \"ಘರ್ಜಿಸುವ\" is a lion's roar, which is odd for a fire. \"ಉಷ್ಣವನ್ನು ನೀಡುವ\" sounds technical next to \"gives warmth\".",
+      "suggestion": "ಭೋರ್ಗರೆಯುವ, ಎಂದೂ ಆರದ ಮಹಾಜ್ವಾಲೆಯಂತೆ ಪ್ರಕಾಶಿಸಿ ಶಾಖವನ್ನು ನೀಡುವುದೇ ಆತನ ಮುಖ"
+    },
+    {
+      "n": 8,
+      "severity": "blocking",
+      "category": "theology",
+      "comment": "The English says the Lord \"creates such a beautiful vision of Himself for me to view\". \"ತನ್ನ ಇಂತಹ ಸುಂದರ ರೂಪವನ್ನು ಸೃಷ್ಟಿಸುವ\" changes \"vision\" into \"form\" (ರೂಪ), so the Lord now creates His own form. In Sri Vaishnava doctrine the divya-mangala-vigraha is eternal and uncreated, so this is a change of meaning with a doctrinal error. Separately, \"ಆತನಲ್ಲಿಯೇ ಅಡಗಿವೆ\" adds emphasis with ಏ, and ಅಡಗು can be read as \"hidden\".",
+      "suggestion": "ಸಮಸ್ತ ವಿಶ್ವವೂ ಅದರ ಎಲ್ಲ ನಿವಾಸಿಗಳೂ ಆತನೊಳಗೆ ಅಡಕವಾಗಿವೆ. ಈ ವಿಶ್ವದಲ್ಲಿ ಸರಿಸಾಟಿಯಿಲ್ಲದ, ನಾನು ದರ್ಶಿಸಲೆಂದು ತನ್ನ ಇಂತಹ ಸುಂದರ ದರ್ಶನವನ್ನು ಕಲ್ಪಿಸಿಕೊಡುವ ಆ ಭಗವಂತನಿಗೆ, ಆತನ ಮುಂದೆ ನಾನು ಸಾಷ್ಟಾಂಗ ನಮಸ್ಕಾರ ಮಾಡುತ್ತೇನೆ."
+    },
+    {
+      "n": 13,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "The English gives a purpose (\"so we may wrap our heads around the Lord more easily\"). \"... ಗ್ರಹಿಸಲು ಸಾಧ್ಯವಾಗುತ್ತದೆ\" turns it into a result.",
+      "suggestion": "... ನಿಲುಕುವಂತಹದ್ದು; ಇದರಿಂದ ನಾವು ಭಗವಂತನನ್ನು ಇನ್ನೂ ಸುಲಭವಾಗಿ ಮನಸ್ಸಿನಲ್ಲಿ ಗ್ರಹಿಸಬಹುದು."
+    },
+    {
+      "n": 14,
+      "severity": "minor",
+      "category": "register",
+      "comment": "\"ಅದೇನೇ ಇರಲಿ\" (\"be that as it may\" / \"whatever\") sounds dismissive and colloquial for \"That being said\". The modal in \"may be seen as calm\" is also dropped in \"ಪ್ರಶಾಂತನಾಗಿ ಕಾಣುತ್ತಾನೆ\".",
+      "suggestion": "ಹೀಗಿರಲಾಗಿ, ಭಗವಂತನ ವರ್ಣವು ... / ಭಗವಂತನು ಆದಿಶೇಷನ ಮೇಲೆ ಪವಡಿಸಿರುವಾಗ ಪ್ರಶಾಂತನಾಗಿ ಕಾಣಬಹುದು."
+    },
+    {
+      "n": 15,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "The glossary check flags that the Lord's term is missing. \"ಓ ಎಲ್ಲ ಪ್ರಭುಗಳ ಪ್ರಭುವೇ\" is acceptable for \"Lord of all Lords\", but the established term can be kept in the vocative.",
+      "suggestion": "ಓ ಎಲ್ಲ ಪ್ರಭುಗಳಿಗೂ ಪ್ರಭುವಾದ ಭಗವಂತನೇ, ನಿನ್ನ ಪವಿತ್ರ ಪಾದಗಳಲ್ಲಿ ನಾನು ಶರಣು ಬೇಡುತ್ತೇನೆ."
+    },
+    {
+      "n": 24,
+      "severity": "minor",
+      "category": "accuracy",
+      "comment": "\"the great Kausthubha\" has become \"ಮಹಿಮಾನ್ವಿತ ಕೌಸ್ತುಭ\" (glorious), which is a slight intensification. \"ಪೀತಾಂಬರ\" for \"yellow-coloured attire\" is acceptable as the traditional term.",
+      "suggestion": "ಶ್ರೇಷ್ಠವಾದ ಕೌಸ್ತುಭವನ್ನು ಧರಿಸಿರುವವನು"
+    },
+    {
+      "n": 27,
+      "severity": "minor",
+      "category": "register",
+      "comment": "The register drops between sentences: Rukmini and Satyabhama are \"ಆಸೀನರಾಗಿದ್ದಾರೆ\", then \"ಅವರೆಲ್ಲರೂ ... ಕುಳಿತಿದ್ದು\". The seated Lord and His consorts should keep the elevated verb.",
+      "suggestion": "ಅವರೆಲ್ಲರೂ ಪಾರಿಜಾತ ವೃಕ್ಷದ ತಂಪಾದ ನೆರಳಿನಲ್ಲಿ ಸುವರ್ಣ ಸಿಂಹಾಸನದ ಮೇಲೆ ಆಸೀನರಾಗಿದ್ದು, ..."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶4 (source text): the English places Sri Vaikuntham \"in the centre of the milky ocean (Ksheerabdhi)\". In Sri Vaishnava cosmology Paramapadam lies beyond prakriti, and Ksheerabdhi is the seat of the vyuha form. The Kannada follows the English faithfully. The owner should decide whether the English needs correcting.",
+    "¶4: who or what \"Mukunda\" refers to (the Lord, or a garland) needs owner confirmation. The verse makes Mukunda the Lord; the Kannada currently names the garland.",
+    "¶13: the English calls the reclining Ksheerabdhi form \"gross\" and then introduces a \"cosmic form\" after the Shantakaram verse, while the Vishwaroopa verse came earlier (¶5–¶7). The sequence in the source looks muddled. The translation follows it.",
+    "¶18: \"in his heart\" is rendered literally as \"ಹೃದಯದಲ್ಲಿ\". The Kaustubha is worn on the chest (वक्षःस्थल, ¶22). This is faithful to the English, but the owner may prefer \"ವಕ್ಷಸ್ಥಳದಲ್ಲಿ\"."
+  ],
+  "overall": "revise"
+}

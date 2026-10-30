@@ -1,0 +1,26 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "kn",
+  "textHash": "5d9d2f90f9",
+  "reviewer": {
+    "name": "pilot-reviewer2-kn",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "¶12 (English source): \"the Vedas, which He Himself created\" — in Sri Vaishnava doctrine the Vedas are eternal and not authored (apaurusheya); the Lord manifests or reveals them rather than creating them. The Kannada \"ತಾನೇ ಸೃಷ್ಟಿಸಿದ ವೇದಗಳ\" faithfully follows the English; the owner may wish to revise the English (compare ¶4 \"came forth from His breath\")."
+  ],
+  "overall": "approve"
+}

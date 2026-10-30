@@ -1,0 +1,49 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "dhyana-shlokam",
+  "lang": "te",
+  "textHash": "603664710c",
+  "reviewer": {
+    "name": "pilot-reviewer2-te",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "\"holy garland\" is rendered \"దివ్య మాల\" (divine), while the chapter renders \"holy\" as పవిత్ర elsewhere (¶15 \"పవిత్ర పాదాలను\", ¶18 \"పవిత్రమైన కౌస్తుభ మణిని\").",
+      "suggestion": "ఆయన ముకుంద అనే పవిత్ర మాలను ధరించి కనిపిస్తాడు."
+    },
+    {
+      "n": 7,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"గొప్పగా గర్జించే … మహాజ్వాల\" says 'great' twice; the English has it once (\"a great roaring inextinguishable flame\").",
+      "suggestion": "గర్జించే, ఆరిపోని మహాజ్వాల వలె ప్రకాశిస్తూ వెచ్చదనాన్ని ఇచ్చేదే ఆయన ముఖం"
+    },
+    {
+      "n": 13,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "The corrected ending \"ఇది మనకు కొంత ఎక్కువగా అందుబాటులో ఉంటుంది, మనం స్వామిని మరింత సులభంగా మనసులో గ్రహించగలిగేలా.\" leaves the purpose clause dangling after the main verb, an English word order that Telugu does not close.",
+      "suggestion": "ఇది మనకు కొంత ఎక్కువగా అందుబాటులో ఉండి, మనం స్వామిని మరింత సులభంగా మనసులో గ్రహించగలిగేలా చేస్తుంది."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶4 (English): \"adorning the holy garland, Mukunda\" reads as if the garland is named Mukunda; in the verse (¶2) मुकुन्दः is the Lord. The Telugu (\"ముకుంద అనే … మాలను\") follows the English as instructed; the owner may wish to correct the English.",
+    "¶4 (English): \"Sri Vaikuntham, situated in the centre of the milky ocean\" conflates Paramapadam with the Kṣīrābdhi (Vyūha abode). The Telugu follows the English."
+  ],
+  "overall": "approve"
+}

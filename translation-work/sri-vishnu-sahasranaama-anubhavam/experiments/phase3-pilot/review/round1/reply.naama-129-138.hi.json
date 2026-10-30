@@ -1,0 +1,112 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "hi",
+  "textHash": "6b25bc4636",
+  "reviewer": {
+    "name": "pilot-reviewer-hi",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "fail",
+    "consistency": "fail",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 2,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "Name-gloss opener \"वे, जो समस्त ज्ञान के स्रोत हैं।\" (repeated in ¶14, ¶22, ¶28, ¶32, ¶36, ¶40) differs from the approved pattern in this book, which begins directly with \"जो …\" (naama-21-64 ¶60 \"जो भूलोक में जन्म लेकर भी …\"; naama-12-17 ¶2 \"जो मुक्त आत्माओं की परम गति हैं।\"). The leading \"वे,\" is an English calque of \"He who\".",
+      "suggestion": "जो समस्त ज्ञान के स्रोत हैं। (and likewise drop \"वे,\" in ¶14, ¶22, ¶28, ¶32, ¶36, ¶40)"
+    },
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "readability",
+      "comment": "\"वेद उनके श्वास से प्रकट हुए, इसलिए वे उनसे भिन्न नहीं हैं\": the honorific \"वे\" is used both for the Lord and for the Vedas in the same clause, so the reader cannot tell who is not different from whom. Also \"उनके श्वास\" is masculine, while the dhyana-shlokam chapter ¶7 has \"भगवान की केवल एक श्वास\" (feminine); keep one gender across the book. \"विद् से आया है\" would be clearer as \"विद् धातु से\".",
+      "suggestion": "यह नाम \"जानना\" अर्थ वाली विद् धातु से बना है। वेद उनकी श्वास से प्रकट हुए, इसलिए वेद उनसे भिन्न नहीं हैं।"
+    },
+    {
+      "n": 8,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"भगवान श्री कृष्ण\" adds \"श्री\" not in the English (\"Lord Krishna\"); the approved composition-of-the-stotram ¶4 renders the same phrase as \"भगवान कृष्ण\", and dhyana-shlokam ¶27 uses plain \"कृष्ण\". \"शास्त्रों का उपदेश करते हैं\" for \"propounds the shastras\" is loose; propounding is establishing/expounding, not instructing.",
+      "suggestion": "भगवान कृष्ण गीता में कहते हैं … श्री भट्ट इस नाम को प्रद्युम्न का द्योतक मानते हैं, जो शास्त्रों का प्रवर्तन करते हैं और उनका अर्थ समझाते हैं।"
+    },
+    {
+      "n": 8,
+      "severity": "blocking",
+      "category": "consistency",
+      "comment": "The commentator is written \"श्री भट्टर\" here and in ¶20, ¶30, ¶38, ¶42, but the approved chapters of this same book write \"श्री भट्ट\" (naama-1-5 ¶12 \"श्री भट्ट के शब्द हैं\", ¶16 \"श्री भट्ट समझाते हैं\"). One person must have one form throughout the book. The owner should fix the canonical form (and the glossary should record it); until then this chapter disagrees with approved text.",
+      "suggestion": "श्री भट्ट (in ¶8, ¶20, ¶30, ¶38, ¶42), unless the owner decides to change the approved chapters to श्री भट्टर"
+    },
+    {
+      "n": 10,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"समझने का अनुग्रह देते हैं\" is not idiomatic; अनुग्रह is done (किया जाता है), not given.",
+      "suggestion": "वे भगवान, जो हम पर अनुग्रह करते हैं कि हम उन छह वैदिक अंगों को समझ सकें जो वेदों की व्याख्या में हमारी सहायता करते हैं।"
+    },
+    {
+      "n": 12,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "Doubled locatives make both sentences clumsy: \"के ज्ञान में उनमें किसी प्रकार की कमी नहीं है\" and \"किसी में भी उनमें कोई कमी नहीं है\".",
+      "suggestion": "… उनके छंद, कर्मविधि और अन्य अवयवों (अंग) का उन्हें पूर्ण ज्ञान है, उसमें किसी प्रकार की कमी नहीं है। इसका यह अर्थ भी हो सकता है कि उनके छह गुणों में से किसी में भी कोई कमी नहीं है।"
+    },
+    {
+      "n": 14,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"और आगे उपांगों\" is a calque of \"and further the upangams\". Note too that the English uses vedangams/upangams; under the -म् rule for technical terms the owner may want वेदांगम्/उपांगम् forms, but the plain वेदांग/उपांग should then be used consistently across the book.",
+      "suggestion": "वे, जो वेदों, छह वेदांगों तथा उपांगों के रूप में भी साकार प्रकट होते हैं।"
+    },
+    {
+      "n": 20,
+      "severity": "minor",
+      "category": "readability",
+      "comment": "\"उनके वास्तविक प्रयोजन धर्म को\" runs the apposition together; the reader can take it as \"the dharma of their true purpose\".",
+      "suggestion": "… बल्कि उनके वास्तविक प्रयोजन, अर्थात् धर्म, को भी जानते हैं …"
+    },
+    {
+      "n": 24,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"इंद्रियों द्वारा प्रकट की जा सकने वाली वस्तुओं से परे देखते हैं\" is heavy and passive.",
+      "suggestion": "भगवान उससे भी परे देखते हैं जो इंद्रियाँ दिखा सकती हैं; वे सभी द्रष्टाओं और कवियों में श्रेष्ठ हैं।"
+    },
+    {
+      "n": 30,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"निकट से निगरानी रखने वाला\" uses निगरानी, a Persian word, where a Tatsama word exists. \"धार्मिक कर्मों\" in modern Hindi means \"religious acts\", not \"acts done according to dharma\".",
+      "suggestion": "अध्यक्ष शब्द का अर्थ है वह अधीक्षक जो निकट से निरीक्षण करता है। … और उनके धर्मानुकूल कर्मों के फल प्रदान करते हैं।"
+    },
+    {
+      "n": 36,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"मार्गदर्शन और आशीर्वाद देते हैं\": मार्गदर्शन is done (करते हैं), not given; the shared verb does not fit both nouns.",
+      "suggestion": "जो भक्तों का मार्गदर्शन करते हैं और उन्हें आशीर्वाद देते हैं कि वे धर्म के मार्ग पर चलें।"
+    },
+    {
+      "n": 42,
+      "severity": "minor",
+      "category": "faithfulness",
+      "comment": "\"भगवान ही सभी वस्तुओं के कारण और कार्य दोनों हैं\" adds the emphatic \"ही\", which the English (\"the Lord is both the cause and the effect\") does not have.",
+      "suggestion": "भगवान सभी वस्तुओं के कारण और कार्य दोनों हैं।"
+    }
+  ],
+  "theologicalConcerns": [
+    "¶12 follows the English in saying the Vedas were created by the Lord (\"जिन वेदों को उन्होंने स्वयं रचा\"). Sri Vaishnava doctrine holds the Vedas to be eternal and authorless (apaurusheya), revealed by the Lord rather than composed; ¶4 of the same chapter speaks of them coming forth from His breath. The owner may wish to check whether \"प्रकट किया\" better reflects the intended sense; the translation is faithful to the English as it stands.",
+    "¶42: Sri Sankara's reading of kṛta as effect and akṛta as cause is reproduced faithfully; the owner may wish to confirm the English source's attribution."
+  ],
+  "overall": "revise"
+}

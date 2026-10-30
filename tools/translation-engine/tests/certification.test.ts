@@ -82,7 +82,8 @@ function reply(over: Partial<ReviewReply> = {}): ReviewReply {
     lang: "te",
     textHash: chapterHash(record(), "te"),
     reviewer: { name: "reviewer-session-b", kind: "ai" },
-    checks: { faithfulness: "pass", completeness: "pass", grammar: "pass", naturalness: "pass", honorifics: "pass", terminology: "pass", consistency: "pass", theology: "pass", readability: "pass" },
+    checks: { faithfulness: "pass", completeness: "pass", grammar: "pass", naturalness: "pass", honorifics: "pass", terminology: "pass", doctrine: "pass", transliteration: "pass", structure: "pass", consistency: "pass", theology: "pass", readability: "pass" },
+    register: "pass",
     paragraphs: [],
     theologicalConcerns: [],
     overall: "approve",
@@ -164,4 +165,33 @@ test("review paragraph entries must use the documented shape", () => {
   const bad = recordReview({ ...reply(), paragraphs: [{ paragraph: 2, severity: "minor", issue: "x" } as any] }, record(), {}, []);
   assert.equal(bad.ok, false);
   assert.match(bad.message, /"n" \(number\)/);
+});
+
+test("the Traditional Brahminical and Sri Vaishnava Register criterion is mandatory and gates approval", () => {
+  const { register, ...noRegister } = reply();
+  const missing = recordReview(noRegister as any, record(), {}, []);
+  assert.equal(missing.ok, false);
+  assert.match(missing.message, /register/);
+  const ledger: Ledger = {};
+  recordReview(reply({ register: "needs-revision", paragraphs: [{ n: 4, severity: "minor", category: "register", comment: "colloquial verb" }] }), record(), ledger, []);
+  assert.equal(ledger[`${CHAPTER}.te`].linguistic!.status, "changes-requested", "a minor register point still blocks approval");
+});
+
+test("the review packet carries the register criterion, the doctrine rules and the self-review warning", () => {
+  const { markdown, template } = reviewPacket({ book: BOOK, chapter: CHAPTER, lang: "ta", record: record(), file: FILE });
+  assert.match(markdown, /Traditional Brahminical and Sri Vaishnava Register — Pass \/ Needs Revision/);
+  assert.match(markdown, /DOCTRINE/);
+  assert.match(markdown, /self-review/);
+  assert.equal(template.register, "pass");
+  assert.ok("doctrine" in template.checks && "transliteration" in template.checks && "structure" in template.checks);
+});
+
+test("the translator card states the owner's register, doctrine and pronoun rules", () => {
+  const card = fs.readFileSync(path.join(ROOT, "prompts/translation-prompt-card.md"), "utf8");
+  for (const rule of [/Vadakalai Sri Vaishnava/, /Viśiṣṭādvaita/, /never add a restrictive or emphatic particle/i, /ta அவர்/, /te ఆయన/, /kn the established singular forms .*ಅವನು \/ ಭಗವಂತನು.*honorific forms allowed/, /never apply Tamil or Telugu pronoun conventions to Kannada/, /Register never overrides fidelity/, /one language at a time/i, /record it under "concerns"/]) assert.match(card, rule);
+  // Standard §4 reconciled in the guide; the fidelity non-negotiables are still there.
+  const guide = fs.readFileSync(path.join(ROOT, "docs/TRANSLATION-GUIDE.md"), "utf8");
+  assert.match(guide, /Dignified, natural prose/);
+  assert.match(guide, /The fidelity rules above are unchanged/);
+  assert.match(guide, /English is the source of truth/);
 });

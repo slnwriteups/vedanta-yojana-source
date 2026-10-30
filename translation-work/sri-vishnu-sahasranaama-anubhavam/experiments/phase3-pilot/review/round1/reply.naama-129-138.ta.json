@@ -1,0 +1,84 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-129-138",
+  "lang": "ta",
+  "textHash": "622074e233",
+  "reviewer": {
+    "name": "pilot-reviewer-ta",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [
+    {
+      "n": 4,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"வித் என்பதிலிருந்து\" leaves vid unclassified; the English means the verbal root. Also \"அர்ப்பணங்கள்\" for ijyā ('offerings' in the sacrificial/worship sense) is a modern, general word.",
+      "suggestion": "இந்த நாமம் \"அறிதல்\" எனப் பொருள்படும் 'வித்' என்ற தாதுவிலிருந்து வருகிறது. … எல்லா ஆராதனைகளும் கிருஷ்ணரே"
+    },
+    {
+      "n": 8,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"சாஸ்திரங்களை உபதேசித்து\" for 'propounds the shastras': Pradyumna is the one who establishes/promulgates the śāstras (śāstra-pravartana), not merely one who teaches them. Acceptable, but slightly narrower than 'propounds'.",
+      "suggestion": "சாஸ்திரங்களைத் தோற்றுவித்து (வெளியிட்டு) அவற்றின் பொருளை விளக்கும் பிரத்யும்னரைக் குறிப்பதாகக் காண்கிறார்."
+    },
+    {
+      "n": 12,
+      "severity": "minor",
+      "category": "consistency",
+      "comment": "¶10 renders the six limbs as \"வேத அங்கங்கள்\", but ¶12 switches to \"உறுப்புகள் (அங்க)\" for the same term. Keep one word so the reader sees the link.",
+      "suggestion": "சந்தஸ், சடங்குமுறை முதலிய அங்கங்கள் (அங்க) பற்றிய ஞானத்தில்"
+    },
+    {
+      "n": 16,
+      "severity": "minor",
+      "category": "transliteration",
+      "comment": "Dental n is written ந in \"தநும்\" but ன in \"பரிதுன்வதே\" in the same quotation (paridhunvatē). The other chapter (naama-12-17 ¶13, ¶17, ¶25, ¶29) uses ந for dental n inside Sanskrit (புநஃ, லப்த்வாநந்தீ, த்யாயந், அநுபூயமாநோ). Also \"ஸ்ருதிகளும்\": Śruti has ś; if the glossary follows Grantha for ś, it should be ஶ்ருதி; otherwise keep, but match whatever the glossary chooses.",
+      "suggestion": "(த்ரயீம் தநும் ஸ்வாம் பரிதுந்வதே நமஃ)"
+    },
+    {
+      "n": 20,
+      "severity": "minor",
+      "category": "terminology",
+      "comment": "\"ஶ்லோகத்தில்\" uses Grantha ஶ in running prose; the language rule allows Grantha only where the glossary uses it. Confirm the glossary form for śloka (the usual Tamil reader's form is ஸ்லோகம்).",
+      "suggestion": "இந்த நாமம் இதே ஸ்லோகத்தில் (or the glossary's form) முன்பே 130-ஆவது நாமமாக வந்துள்ளது."
+    },
+    {
+      "n": 30,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "\"லோகங்கள் என்பது … மக்கள்\" mismatches a singular neuter predicate frame with a personal plural noun, and லோகங்கள் alone reads as 'worlds'. Make clear that here the word denotes people.",
+      "suggestion": "இங்கு லோகங்கள் என்பவர்கள், தர்மத்தைக் கடைப்பிடிப்பதைக் கடமையாகக் கொண்ட மக்கள்;"
+    },
+    {
+      "n": 40,
+      "severity": "minor",
+      "category": "naturalness",
+      "comment": "\"உழைப்பு\" is the everyday/economic word for labour; in a devotional gloss on karma-phala the usual word is முயற்சி or செயல்.",
+      "suggestion": "நம் முயற்சிகள் அனைத்திற்கும் பலனை அருள்பவர்."
+    },
+    {
+      "n": 42,
+      "severity": "minor",
+      "category": "grammar",
+      "comment": "After the colon the two kinds of fruit are listed as bare nominatives (\"…அழிந்துபோகும் பலன்கள் (க்ருத), அழியாத பலன் (அக்ருத), அதாவது மோக்ஷம்\") with no case or connective, so the sentence does not close grammatically.",
+      "suggestion": "இவ்வுலக இன்பங்கள், ஸ்வர்க்க இன்பங்கள் போன்ற அழிந்துபோகும் பலன்களையும் (க்ருத), அழியாத பலனாகிய மோக்ஷத்தையும் (அக்ருத) பெருமாள் அருள்கிறார் என்று ஸ்ரீ பட்டர் விளக்குகிறார்."
+    }
+  ],
+  "theologicalConcerns": [
+    "¶6: the English gloss for name 130 (vedavit, 'knower of the Vedas') reads 'physical personification and manifestation of the Vedas', which fits names 129/132 better than 'knower'. The Tamil faithfully follows the English; the owner may wish to check the source gloss.",
+    "¶12: 'six qualities' is rendered \"ஆறு குணங்கள்\"; a Sri Vaishnava reader would recognise these as the ஷாட்குண்யம் (jñāna, bala, aiśvarya, vīrya, śakti, tejas). No change required, but the owner may prefer the technical term."
+  ],
+  "overall": "approve"
+}

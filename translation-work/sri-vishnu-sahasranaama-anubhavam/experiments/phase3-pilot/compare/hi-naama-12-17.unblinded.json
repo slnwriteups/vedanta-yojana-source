@@ -1,0 +1,182 @@
+[
+ {
+  "p": "title",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "Drops 'He who' ('वे जो ... हैं'); acceptable as a compact heading.",
+  "yIssues": "None; fuller relative clause 'वे जो ... मार्गदर्शक हैं' mirrors the English exactly but is heavier for a title.",
+  "note": "Style only: X is title-like, Y is a full clause.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶2",
+  "better": "X",
+  "meaningDifference": false,
+  "xIssues": "None. 'परम गति' renders 'supreme goal' with the very word of the name (परमा गतिः).",
+  "yIssues": "'परम लक्ष्य' is correct but loses the echo of the nama 'मुक्तानां परमा गतिः'.",
+  "note": "Both valid; X ties the gloss to the Sanskrit name.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶4",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "None.",
+  "yIssues": "None.",
+  "note": "Identical.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶5",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "None.",
+  "yIssues": "None.",
+  "note": "Identical.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶6",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "'जैसे' is a slightly lighter rendering of 'for example'.",
+  "yIssues": "None; 'सेवा में रत' is a little more elevated than X's 'लगी रहती हैं'.",
+  "note": "Style only.",
+  "X": "approved",
+  "Y": "new"
+ },
+ {
+  "p": "¶7",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "'श्री वैकुण्ठम् नामक लोक' ('a realm named Sri Vaikuntham') adds an explanatory, slightly distancing 'नामक'.",
+  "yIssues": "'परम गंतव्य' shifts 'final destination' to 'supreme destination'; 'श्री वैकुण्ठम् के धाम में' is slightly redundant (Vaikuntham is itself the dhaam).",
+  "note": "X is more literal ('अंतिम गंतव्य'); Y reads more devotionally. Small trade-offs on both sides.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶8",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "None.",
+  "yIssues": "None.",
+  "note": "'चाहने वाले सभी जनों' vs 'कामना करने वाले सभी के': style only.",
+  "X": "approved",
+  "Y": "new"
+ },
+ {
+  "p": "¶9",
+  "better": "X",
+  "meaningDifference": true,
+  "xIssues": "Minor: 'श्री भट्ट के अनुसार ... नाम यह स्पष्ट करते हैं' makes the names the subject rather than Bhattar's interpreting, but the sense holds.",
+  "yIssues": "Pronoun ambiguity: 'उनकी एक ही लालसा है, उनकी अनंत सेवा करना' and 'इसीलिए वे उनके परम लक्ष्य हैं' leave it unclear who serves whom and who is whose goal. Gender agreement inconsistent: 'मुक्त आत्माओं ... अनुभव करते हैं' (masc.) against 'आत्माएँ ... चुनती हैं' (fem.) later. 'भगवान को ही' adds an emphatic 'ही' not in the English. 'अगले पाँच नामों को इस रूप में समझाते हैं कि' is awkward.",
+  "note": "X names 'भगवान' explicitly and is unambiguous; Y's 'वे उनके' makes the key theological point hard to read.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶11",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "'फिर' adds 'again'; harmless.",
+  "yIssues": "None; 'ऐसी आत्माओं' follows the English plural after a singular subject.",
+  "note": "Style only.",
+  "X": "approved",
+  "Y": "new"
+ },
+ {
+  "p": "¶13",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "'श्री शंकर \"अविनाशी\" अर्थ देते हैं' is stiff.",
+  "yIssues": "'परम वैकुण्ठ' drops the -म् used elsewhere ('वैकुण्ठम्'), an inconsistency.",
+  "note": "X keeps terminology consistent; Y has the more natural last sentence ('इसका अर्थ ... बताते हैं').",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶15",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "None; 'समक्ष लाई गई कामना' closely matches 'brought before Him'.",
+  "yIssues": "None; 'सामने रखी गई इच्छा' is equally clear.",
+  "note": "Style only: कामना vs इच्छा.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶17",
+  "better": "X",
+  "meaningDifference": false,
+  "xIssues": "'अपना अनुभव करने का आनंद' is a little wordy for 'enjoyment of Himself'.",
+  "yIssues": "'वह महात्मा ... निवास करते हैं': singular 'वह' with honorific plural verb is an agreement slip, and 'महात्मा' in modern Hindi suggests a saintly man rather than the Supreme Self. 'पुर' is literal but less clear than 'नगर'.",
+  "note": "Y's 'अपने स्वरूप का भोग' is good Sri Vaishnava idiom and its Taittiriya line ('पाकर ही यह जीव आनंदित होता है') is closer to the Sanskrit; X wins on the Mahabharata line, where 'परमात्मा' is correctly unambiguous.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶19",
+  "better": "Y",
+  "meaningDifference": false,
+  "xIssues": "'अपनी संतान' adds an 'own' emphasis absent from the English.",
+  "yIssues": "None.",
+  "note": "Minor.",
+  "X": "approved",
+  "Y": "new"
+ },
+ {
+  "p": "¶21",
+  "better": "X",
+  "meaningDifference": false,
+  "xIssues": "'पुनः' for 'in turn' reads as 'again'; slight.",
+  "yIssues": "'अछूते रहते हैं' is weaker and less philosophical than 'निर्लिप्त' for the sun-analogy sense of 'untouched'.",
+  "note": "X's 'निर्लिप्त' is the apt term; otherwise both are faithful.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶23",
+  "better": "Y",
+  "meaningDifference": false,
+  "xIssues": "'भगवान के असीम दिव्य रूप' repeats the English third person literally; in Hindi, with the Lord as subject, it reads as if someone else's form.",
+  "yIssues": "None; 'अपने ... स्वरूप' and 'कराते हैं' are natural and precise.",
+  "note": "Y idiomatically resolves the English's awkward self-reference.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶25",
+  "better": "equal",
+  "meaningDifference": false,
+  "xIssues": "None; 'महान अगस्त्य मुनि' is faithful.",
+  "yIssues": "None; 'महर्षि अगस्त्य' is idiomatic; 'सभी लोकों में सबसे उत्तम' renders 'noblest of all worlds' more fully.",
+  "note": "Style only.",
+  "X": "approved",
+  "Y": "new"
+ },
+ {
+  "p": "¶27",
+  "better": "equal",
+  "meaningDifference": true,
+  "xIssues": "Repeating 'कहा जाता है' twice is faithful but clunky.",
+  "yIssues": "Drops the second 'is said to', so it states the Lord's showing new forms as fact rather than as reported; 'जिससे ... लीन हो सकें' turns the result ('thus allowing') into a purpose. Masculine 'मुक्तात्मा ... करते हैं' differs from the feminine used elsewhere.",
+  "note": "Y is more readable ('नए-नए रूप'); X keeps the English's hedging.",
+  "X": "new",
+  "Y": "approved"
+ },
+ {
+  "p": "¶29",
+  "better": "Y",
+  "meaningDifference": false,
+  "xIssues": "'अक्षर कहलाते हैं' drops the visarga of the name 'अक्षरः'. Uses ASCII '|' and '||' instead of the Devanagari danda.",
+  "yIssues": "Uses 'परम गति' where the English has 'supreme goal'; fine, and it matches the name.",
+  "note": "Y has correct dandas '।' '॥' and a consistent name form.",
+  "X": "approved",
+  "Y": "new"
+ }
+]

@@ -1,0 +1,27 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "chapter": "naama-12-17",
+  "lang": "ta",
+  "textHash": "20d85b66f1",
+  "reviewer": {
+    "name": "pilot-reviewer2-ta",
+    "kind": "ai"
+  },
+  "checks": {
+    "faithfulness": "pass",
+    "completeness": "pass",
+    "grammar": "pass",
+    "naturalness": "pass",
+    "honorifics": "pass",
+    "terminology": "pass",
+    "consistency": "pass",
+    "theology": "pass",
+    "readability": "pass"
+  },
+  "paragraphs": [],
+  "theologicalConcerns": [
+    "¶5 (English source): \"must rely on bhakti yogam to reach the Lord\" names bhakti yoga as the means for baddha souls without mentioning prapatti (śaraṇāgati), which Sri Vaishnava doctrine holds to be an independent and sufficient means. The Tamil now translates the English exactly (no added exclusivity); the owner may wish to qualify the English.",
+    "¶7 (English source): \"have earned a permanent place within the realm of Sri Vaikuntham\" (Tamil: பெற்ற, neutral). 'Earned' suggests moksham is merited by the soul's effort rather than granted by the Lord's grace; the owner may prefer 'attained' or 'been granted' in the English."
+  ],
+  "overall": "approve"
+}

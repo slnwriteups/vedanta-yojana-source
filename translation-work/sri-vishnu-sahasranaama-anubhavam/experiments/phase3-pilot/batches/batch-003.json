@@ -1,0 +1,62 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 3,
+  "langs": [
+    "kn",
+    "hi",
+    "te"
+  ],
+  "items": [
+    {
+      "id": "dhyana-shlokam.title",
+      "en": "11adddb697"
+    },
+    {
+      "id": "dhyana-shlokam.0",
+      "en": "6b53cd1626"
+    },
+    {
+      "id": "dhyana-shlokam.3",
+      "en": "4d274d065f"
+    },
+    {
+      "id": "dhyana-shlokam.6",
+      "en": "2b85b8831c"
+    },
+    {
+      "id": "dhyana-shlokam.7",
+      "en": "2f9bda39ef"
+    },
+    {
+      "id": "dhyana-shlokam.12",
+      "en": "393057ad51"
+    },
+    {
+      "id": "dhyana-shlokam.13",
+      "en": "8ecc41b818"
+    },
+    {
+      "id": "dhyana-shlokam.14",
+      "en": "7397ea2c46"
+    },
+    {
+      "id": "dhyana-shlokam.17",
+      "en": "1d370a70a9"
+    },
+    {
+      "id": "dhyana-shlokam.18",
+      "en": "296aa9a211"
+    },
+    {
+      "id": "dhyana-shlokam.23",
+      "en": "a8bcad7433"
+    },
+    {
+      "id": "dhyana-shlokam.26",
+      "en": "4572cef96e"
+    }
+  ],
+  "merged": true,
+  "experiment": "phase3-pilot",
+  "translator": "pilot-translator-dhyana"
+}

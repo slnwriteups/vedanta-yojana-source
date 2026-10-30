@@ -1,4 +1,7 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { test } from "node:test";
 import { checkTerms, glossaryAudit, glossaryFindings, loadGlossaryRules, parseGlossary, stem, termsIn, unglossedTerms } from "../glossary.ts";
 
@@ -70,9 +73,22 @@ test("a missing glossary form is a warning for review, never a rejection", () =>
 });
 
 test("a conflicting glossary is never resolved silently: no rejection, reported as an owner decision", () => {
-  // ta.md:53 accepts ஹனுமான், ta.md:419 says "not ஹனுமான்".
-  assert.deepEqual(rules(glossaryFindings("Hanumān leapt.", "ஹனுமான் தாவினார்.", "ta")), []);
-  assert.ok(glossaryAudit("ta").conflicts.some((c) => c.startsWith("Hanumān")));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "vy-gloss-"));
+  fs.mkdirSync(path.join(root, "docs/translation-glossaries"), { recursive: true });
+  fs.writeFileSync(path.join(root, "docs/translation-glossaries/ta.md"), "# t\nHanumān = ஹனுமான்\nHanumān = அனுமன் (not ஹனுமான்)\n");
+  assert.deepEqual(rules(glossaryFindings("Hanumān leapt.", "ஹனுமான் தாவினார்.", "ta", undefined, root)), []);
+  assert.ok(glossaryAudit("ta", root).conflicts.some((c) => c.startsWith("Hanumān")));
+});
+
+test("the owner's 2026-10-30 decisions hold in the live glossaries", () => {
+  for (const lang of ["ta", "kn", "hi", "te"] as const) assert.deepEqual(glossaryAudit(lang).conflicts, [], lang);
+  assert.deepEqual(rules(glossaryFindings("Hanumān leapt.", "ஹனுமான் தாவினார்.", "ta")), ["error glossary-wrong-variant"]);
+  assert.deepEqual(rules(glossaryFindings("Hanumān leapt.", "அனுமன் தாவினார்.", "ta")), []);
+  assert.deepEqual(rules(glossaryFindings("Vinatā wept.", "வினதை அழுதாள்.", "ta")), []);
+  assert.deepEqual(rules(glossaryFindings("The rākshasas fled.", "அரக்கர்கள் ஓடினர்.", "ta")), []);
+  assert.deepEqual(rules(glossaryFindings("The brāhmaṇas came.", "பிராமணர்கள் வந்தனர்.", "ta")), []);
+  assert.deepEqual(rules(glossaryFindings("The brāhmaṇas came.", "அந்தணர்கள் வந்தனர்.", "ta")), []);
+  for (const tr of ["సీత వనానికి వెళ్ళింది.", "సీతను చూశాడు.", "సీతాదేవి ప్రార్థించింది."]) assert.deepEqual(rules(glossaryFindings("Sītā went.", tr, "te")), [], tr);
 });
 
 test("an unreviewed glossary line cannot block on its own", () => {
@@ -109,4 +125,8 @@ test("Tamil மோட்சம் is accepted (Standard §3) and only noted as t
 
 test("a term joined to 'Sri' (श्रीकृष्ण) is found", () => {
   assert.deepEqual(rules(glossaryFindings("Bhishma praised Krishna.", "भीष्म ने श्रीकृष्ण की स्तुति की।", "hi")).filter((r) => r.includes("glossary-missing")), []);
+});
+
+test("a Hindi plural glossary form accepts its oblique (मुक्त आत्माएँ → मुक्त आत्माओं)", () => {
+  assert.deepEqual(rules(glossaryFindings("The released souls rejoice.", "मुक्त आत्माओं का आनंद।", "hi")).filter((r) => r.includes("glossary-missing")), []);
 });

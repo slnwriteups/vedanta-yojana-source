@@ -1,0 +1,266 @@
+{
+  "naama-129-138.ta": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-ta",
+        "kind": "ai",
+        "at": "2026-10-30T17:26:26.574Z",
+        "textHash": "e8e340bcdf",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.ta.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶12 (English source): \"the Vedas, which He Himself created\" (translated faithfully as தாமே படைத்த வேதங்கள்). In Sri Vaishnava doctrine the Vedas are apauruṣeya and eternal; the Lord reveals or brings them forth (as ¶4 itself says, 'came forth from His breath') rather than creating them. The owner may wish to revise the English (e.g. 'which came forth from Him'), after which the Tamil should follow."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-ta",
+      "kind": "ai",
+      "at": "2026-10-30T17:26:26.574Z",
+      "textHash": "e8e340bcdf",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.ta.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶12 (English source): \"the Vedas, which He Himself created\" (translated faithfully as தாமே படைத்த வேதங்கள்). In Sri Vaishnava doctrine the Vedas are apauruṣeya and eternal; the Lord reveals or brings them forth (as ¶4 itself says, 'came forth from His breath') rather than creating them. The owner may wish to revise the English (e.g. 'which came forth from Him'), after which the Tamil should follow."
+    }
+  },
+  "naama-12-17.ta": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-ta",
+        "kind": "ai",
+        "at": "2026-10-30T17:26:26.661Z",
+        "textHash": "20d85b66f1",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.ta.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶5 (English source): \"must rely on bhakti yogam to reach the Lord\" names bhakti yoga as the means for baddha souls without mentioning prapatti (śaraṇāgati), which Sri Vaishnava doctrine holds to be an independent and sufficient means. The Tamil now translates the English exactly (no added exclusivity); the owner may wish to qualify the English. | ¶7 (English source): \"have earned a permanent place within the realm of Sri Vaikuntham\" (Tamil: பெற்ற, neutral). 'Earned' suggests moksham is merited by the soul's effort rather than granted by the Lord's grace; the owner may prefer 'attained' or 'been granted' in the English."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-ta",
+      "kind": "ai",
+      "at": "2026-10-30T17:26:26.661Z",
+      "textHash": "20d85b66f1",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.ta.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶5 (English source): \"must rely on bhakti yogam to reach the Lord\" names bhakti yoga as the means for baddha souls without mentioning prapatti (śaraṇāgati), which Sri Vaishnava doctrine holds to be an independent and sufficient means. The Tamil now translates the English exactly (no added exclusivity); the owner may wish to qualify the English. | ¶7 (English source): \"have earned a permanent place within the realm of Sri Vaikuntham\" (Tamil: பெற்ற, neutral). 'Earned' suggests moksham is merited by the soul's effort rather than granted by the Lord's grace; the owner may prefer 'attained' or 'been granted' in the English."
+    }
+  },
+  "naama-129-138.te": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-te",
+        "kind": "ai",
+        "at": "2026-10-30T17:27:19.496Z",
+        "textHash": "3cc08335b2",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.te.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶12 (English): \"the Vedas, which He Himself created\" may sit uneasily with the Vedas as eternal and apauruṣeya (manifested/breathed forth, not created; compare ¶4 \"came forth from His breath\"). The Telugu follows the English (\"తానే సృష్టించిన\"); the owner may wish to review the English."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-te",
+      "kind": "ai",
+      "at": "2026-10-30T17:27:19.496Z",
+      "textHash": "3cc08335b2",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.te.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶12 (English): \"the Vedas, which He Himself created\" may sit uneasily with the Vedas as eternal and apauruṣeya (manifested/breathed forth, not created; compare ¶4 \"came forth from His breath\"). The Telugu follows the English (\"తానే సృష్టించిన\"); the owner may wish to review the English."
+    }
+  },
+  "naama-12-17.te": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-te",
+        "kind": "ai",
+        "at": "2026-10-30T17:27:19.579Z",
+        "textHash": "b090d324a0",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.te.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶5 (English): \"must rely on bhakti yogam to reach the Lord\" names only bhakti yoga as the means for baddha souls; a Sri Vaishnava reader may expect prapatti (śaraṇāgati) to be acknowledged. The Telugu follows the English without added emphasis. | ¶7 (English): \"have earned a permanent place\" implies attainment by merit, whereas in Sri Vaishnava doctrine mokṣa is the Lord's grace. The Telugu follows the English (\"సంపాదించుకున్న\")."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-te",
+      "kind": "ai",
+      "at": "2026-10-30T17:27:19.579Z",
+      "textHash": "b090d324a0",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.te.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶5 (English): \"must rely on bhakti yogam to reach the Lord\" names only bhakti yoga as the means for baddha souls; a Sri Vaishnava reader may expect prapatti (śaraṇāgati) to be acknowledged. The Telugu follows the English without added emphasis. | ¶7 (English): \"have earned a permanent place\" implies attainment by merit, whereas in Sri Vaishnava doctrine mokṣa is the Lord's grace. The Telugu follows the English (\"సంపాదించుకున్న\")."
+    }
+  },
+  "dhyana-shlokam.te": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-te",
+        "kind": "ai",
+        "at": "2026-10-30T17:27:19.664Z",
+        "textHash": "603664710c",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.dhyana-shlokam.te.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶4 (English): \"adorning the holy garland, Mukunda\" reads as if the garland is named Mukunda; in the verse (¶2) मुकुन्दः is the Lord. The Telugu (\"ముకుంద అనే … మాలను\") follows the English as instructed; the owner may wish to correct the English. | ¶4 (English): \"Sri Vaikuntham, situated in the centre of the milky ocean\" conflates Paramapadam with the Kṣīrābdhi (Vyūha abode). The Telugu follows the English."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-te",
+      "kind": "ai",
+      "at": "2026-10-30T17:27:19.664Z",
+      "textHash": "603664710c",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.dhyana-shlokam.te.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶4 (English): \"adorning the holy garland, Mukunda\" reads as if the garland is named Mukunda; in the verse (¶2) मुकुन्दः is the Lord. The Telugu (\"ముకుంద అనే … మాలను\") follows the English as instructed; the owner may wish to correct the English. | ¶4 (English): \"Sri Vaikuntham, situated in the centre of the milky ocean\" conflates Paramapadam with the Kṣīrābdhi (Vyūha abode). The Telugu follows the English."
+    }
+  },
+  "naama-129-138.hi": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-hi",
+        "kind": "ai",
+        "at": "2026-10-30T17:26:46.636Z",
+        "textHash": "bb8349584d",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.hi.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶12 (English): \"the Vedas, which He Himself created\" is rendered faithfully as \"जिन वेदों को उन्होंने स्वयं रचा\". In the tradition the Vedas are eternal and not composed (apauruṣeya); ¶4 itself says they came forth from His breath. The owner may want to change the English to 'revealed' or 'brought forth'. This is not a fault in the translation."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-hi",
+      "kind": "ai",
+      "at": "2026-10-30T17:26:46.636Z",
+      "textHash": "bb8349584d",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.hi.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶12 (English): \"the Vedas, which He Himself created\" is rendered faithfully as \"जिन वेदों को उन्होंने स्वयं रचा\". In the tradition the Vedas are eternal and not composed (apauruṣeya); ¶4 itself says they came forth from His breath. The owner may want to change the English to 'revealed' or 'brought forth'. This is not a fault in the translation."
+    }
+  },
+  "naama-12-17.hi": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-hi",
+        "kind": "ai",
+        "at": "2026-10-30T17:26:46.723Z",
+        "textHash": "8f87aa9496",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.hi.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: Glossary warnings for 'released souls' in ¶2, ¶17, ¶21 and ¶25 are false positives. The text uses \"मुक्त आत्माओं\", the oblique plural of the glossary form मुक्त आत्माएँ, which Hindi grammar requires before को/की/द्वारा. The form is correct and should not change. | ¶5 (English): \"must rely on bhakti yogam to reach the Lord\" gives bhakti yoga as the only means for the bound souls and leaves out prapatti (śaraṇāgati). The Hindi renders it faithfully; the owner may wish to qualify the English. | ¶7 (English): \"have earned a permanent place\" in Sri Vaikuntham suggests that moksham is earned rather than granted by the Lord's grace. The Hindi \"स्थायी स्थान पा लिया है\" ('have obtained') already softens this; the owner may want to change the English to match."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-hi",
+      "kind": "ai",
+      "at": "2026-10-30T17:26:46.723Z",
+      "textHash": "8f87aa9496",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.hi.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: Glossary warnings for 'released souls' in ¶2, ¶17, ¶21 and ¶25 are false positives. The text uses \"मुक्त आत्माओं\", the oblique plural of the glossary form मुक्त आत्माएँ, which Hindi grammar requires before को/की/द्वारा. The form is correct and should not change. | ¶5 (English): \"must rely on bhakti yogam to reach the Lord\" gives bhakti yoga as the only means for the bound souls and leaves out prapatti (śaraṇāgati). The Hindi renders it faithfully; the owner may wish to qualify the English. | ¶7 (English): \"have earned a permanent place\" in Sri Vaikuntham suggests that moksham is earned rather than granted by the Lord's grace. The Hindi \"स्थायी स्थान पा लिया है\" ('have obtained') already softens this; the owner may want to change the English to match."
+    }
+  },
+  "dhyana-shlokam.hi": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-hi",
+        "kind": "ai",
+        "at": "2026-10-30T17:26:46.813Z",
+        "textHash": "55edcfeb80",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.dhyana-shlokam.hi.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶4 (English): \"adorning the holy garland, Mukunda\" makes Mukunda sound like the name of the garland, but in the verse (¶2) मुकुन्दः is the Lord. Following the convention, the Hindi \"मुकुन्द नामक पावन माला\" translates the English as written. The English should be corrected (for example 'the Lord, Mukunda, adorned with the holy garland'), and the Hindi should then be updated to match. | ¶4 (English): \"Sri Vaikuntham, situated in the centre of the milky ocean\" runs together Sri Vaikuntham and the Ksheerabdhi (vyūha) abode. The Hindi translates it faithfully; the owner should decide whether to change the English. | ¶8: For the English \"creates such a beautiful vision of Himself\", the Hindi now reads \"अपना ऐसा सुन्दर दर्शन मुझे प्रदान करते हैं\" ('grants me such a beautiful vision of Himself'). This avoids saying that His divine form is created, which round 1 had flagged, and I accept it. The owner should confirm that 'creates' may be softened to 'grants', or change the English the same way."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-hi",
+      "kind": "ai",
+      "at": "2026-10-30T17:26:46.813Z",
+      "textHash": "55edcfeb80",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.dhyana-shlokam.hi.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶4 (English): \"adorning the holy garland, Mukunda\" makes Mukunda sound like the name of the garland, but in the verse (¶2) मुकुन्दः is the Lord. Following the convention, the Hindi \"मुकुन्द नामक पावन माला\" translates the English as written. The English should be corrected (for example 'the Lord, Mukunda, adorned with the holy garland'), and the Hindi should then be updated to match. | ¶4 (English): \"Sri Vaikuntham, situated in the centre of the milky ocean\" runs together Sri Vaikuntham and the Ksheerabdhi (vyūha) abode. The Hindi translates it faithfully; the owner should decide whether to change the English. | ¶8: For the English \"creates such a beautiful vision of Himself\", the Hindi now reads \"अपना ऐसा सुन्दर दर्शन मुझे प्रदान करते हैं\" ('grants me such a beautiful vision of Himself'). This avoids saying that His divine form is created, which round 1 had flagged, and I accept it. The owner should confirm that 'creates' may be softened to 'grants', or change the English the same way."
+    }
+  },
+  "naama-129-138.kn": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-kn",
+        "kind": "ai",
+        "at": "2026-10-30T17:27:19.212Z",
+        "textHash": "5d9d2f90f9",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.kn.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶12 (English source): \"the Vedas, which He Himself created\" — in Sri Vaishnava doctrine the Vedas are eternal and not authored (apaurusheya); the Lord manifests or reveals them rather than creating them. The Kannada \"ತಾನೇ ಸೃಷ್ಟಿಸಿದ ವೇದಗಳ\" faithfully follows the English; the owner may wish to revise the English (compare ¶4 \"came forth from His breath\")."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-kn",
+      "kind": "ai",
+      "at": "2026-10-30T17:27:19.212Z",
+      "textHash": "5d9d2f90f9",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-129-138.kn.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶12 (English source): \"the Vedas, which He Himself created\" — in Sri Vaishnava doctrine the Vedas are eternal and not authored (apaurusheya); the Lord manifests or reveals them rather than creating them. The Kannada \"ತಾನೇ ಸೃಷ್ಟಿಸಿದ ವೇದಗಳ\" faithfully follows the English; the owner may wish to revise the English (compare ¶4 \"came forth from His breath\")."
+    }
+  },
+  "naama-12-17.kn": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-kn",
+        "kind": "ai",
+        "at": "2026-10-30T17:27:19.312Z",
+        "textHash": "ab5c09050f",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.kn.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶7 (English source): \"have earned a permanent place\" — in Sri Vaishnava doctrine moksha is the Lord's grace, not something earned. The Kannada \"ಗಳಿಸಿರುವ\" faithfully follows the English; the wording is for the owner to decide."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-kn",
+      "kind": "ai",
+      "at": "2026-10-30T17:27:19.312Z",
+      "textHash": "ab5c09050f",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.naama-12-17.kn.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶7 (English source): \"have earned a permanent place\" — in Sri Vaishnava doctrine moksha is the Lord's grace, not something earned. The Kannada \"ಗಳಿಸಿರುವ\" faithfully follows the English; the wording is for the owner to decide."
+    }
+  },
+  "dhyana-shlokam.kn": {
+    "advisory": [
+      {
+        "status": "approved",
+        "by": "pilot-reviewer2-kn",
+        "kind": "ai",
+        "at": "2026-10-30T17:27:19.402Z",
+        "textHash": "79e50ffca6",
+        "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.dhyana-shlokam.kn.json",
+        "independence": "verified",
+        "note": "theological concerns for the owner: ¶4 (English source): \"He is seen adorning the holy garland, Mukunda\" makes Mukunda the name of the garland, whereas in the verse (¶2) मुकुन्दः is the Lord's name. The Kannada \"ಮುಕುಂದ ಎಂಬ ಪವಿತ್ರ ಮಾಲೆಯನ್ನು\" follows the English as instructed; the English needs the owner's correction, and the Kannada should then follow it. | ¶4 (English source): \"Sri Vaikuntham, situated in the centre of the milky ocean\" conflates Sri Vaikuntham (Paramapadam) with the Kshirabdhi (Vyuha) abode. The Kannada follows the English; for the owner to decide."
+      }
+    ],
+    "linguistic": {
+      "status": "approved",
+      "by": "pilot-reviewer2-kn",
+      "kind": "ai",
+      "at": "2026-10-30T17:27:19.402Z",
+      "textHash": "79e50ffca6",
+      "file": "translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/review/reply.dhyana-shlokam.kn.json",
+      "independence": "verified",
+      "note": "theological concerns for the owner: ¶4 (English source): \"He is seen adorning the holy garland, Mukunda\" makes Mukunda the name of the garland, whereas in the verse (¶2) मुकुन्दः is the Lord's name. The Kannada \"ಮುಕುಂದ ಎಂಬ ಪವಿತ್ರ ಮಾಲೆಯನ್ನು\" follows the English as instructed; the English needs the owner's correction, and the Kannada should then follow it. | ¶4 (English source): \"Sri Vaikuntham, situated in the centre of the milky ocean\" conflates Sri Vaikuntham (Paramapadam) with the Kshirabdhi (Vyuha) abode. The Kannada follows the English; for the owner to decide."
+    }
+  }
+}
