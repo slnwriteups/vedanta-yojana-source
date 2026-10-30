@@ -278,14 +278,6 @@
       "detail": "8 English paragraphs, 7 translated; never merge or split (Standard §1 rule 5)"
     },
     {
-      "file": "content/library/sri-vishnu-sahasranaama-anubhavam/book.json",
-      "lang": "hi",
-      "field": "parts[3].title",
-      "rule": "missing-field",
-      "fingerprint": "af9c9a7659",
-      "detail": "no translated parts[3].title"
-    },
-    {
       "file": "content/library/srimad-bhagavata-kathasagaram/chapters/invocation.json",
       "lang": "en",
       "field": "body",

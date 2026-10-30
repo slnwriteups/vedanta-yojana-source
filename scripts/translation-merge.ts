@@ -153,8 +153,9 @@ for (const group of groups) {
     const r = book.record;
     const rel = path.relative(ROOT, book.file);
     for (const lang of missingLangs(book, group, manifest.langs)) {
+      // A stored entry may hold other languages only; then the live value for this language stands.
       const get = (id: string) =>
-        store.items[id] && store.items[id].en === current.get(id)?.enHash ? store.items[id][lang] : bookValue(book, id, lang);
+        (store.items[id] && store.items[id].en === current.get(id)?.enHash ? store.items[id][lang] : undefined) ?? bookValue(book, id, lang);
       const title = get("@book.title");
       const description = r.description ? get("@book.description") : undefined;
       const parts = (r.parts ?? []).map((_: unknown, i: number) => get(`@part.${i}.title`));
