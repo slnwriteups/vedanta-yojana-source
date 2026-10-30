@@ -14,7 +14,7 @@ LANGS = ("ta", "kn", "hi", "te")
 BLOCKS = {"ta": (0x0B80, 0x0BFF), "kn": (0x0C80, 0x0CFF),
           "hi": (0x0900, 0x097F), "te": (0x0C00, 0x0C7F)}
 DIGITS = re.compile("[\\u0966-\\u096f\\u0be6-\\u0bef\\u0ce6-\\u0cef\\u0c66-\\u0c6f]")
-PLACEHOLDERS = re.compile(r"lorem ipsum|\\bTODO\\b|\\bTBD\\b", re.I)
+PLACEHOLDERS = re.compile(r"lorem ipsum|\bTODO\b|\bTBD\b", re.I)
 
 
 def blocks(text, lang):
@@ -32,7 +32,7 @@ def check_body(source, target, lang, path):
     issues = []
     if not isinstance(target, str) or not target.strip():
         return [(path, lang, "missing body")]
-    originals, translated = source.split("\\n\\n"), target.split("\\n\\n")
+    originals, translated = re.split(r"\n\s*\n", source), re.split(r"\n\s*\n", target)
     if len(originals) != len(translated):
         issues.append((path, lang, f"paragraph count {len(translated)} != {len(originals)}"))
     for idx, (a, b) in enumerate(zip(originals, translated), 1):
