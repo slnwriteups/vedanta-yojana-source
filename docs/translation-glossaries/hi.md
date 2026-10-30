@@ -402,3 +402,16 @@ Anushtup / anushtup chandas = अनुष्टुप् / अनुष्ट�
 Phalashruti / Phala Shruti = फलश्रुति
 Narada = नारद
 Saint Tyagaraja = संत त्यागराज
+
+# --- Sahasranaama Hindi batch 2
+sahasra = सहस्र
+Parama Purusha = परम पुरुष
+Taittiriya Upanishad = तैत्तिरीय उपनिषद्
+Isavasya Upanishad = ईशावास्य उपनिषद्
+Vasudeva (the Lord) = वासुदेव
+archana = अर्चना
+stava = स्तव
+guna = गुण
+dosha = दोष
+ashrama (stage of life) = आश्रम
+brahmacharya / grihasta = ब्रह्मचर्य / गृहस्थ

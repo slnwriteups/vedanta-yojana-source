@@ -28,9 +28,27 @@ Validation: 453 content tests passed; `npm run typecheck` passed;
 matching English exactly. No Latin prose or duplicate parenthetical glosses
 in these chapter translations.
 
+## Batch 2 — 2026-10-30
+
+Completed another three chapters (6 of 88 total):
+
+4. `the-prologue`
+5. `the-thousand-names`
+6. `the-benefits`
+
+Hindi chapter titles and full bodies added. Sanskrit quotations generated
+with `iastToScript`, normalizing Sunder Kidambi's long e/o notation in the
+converter input only; the English source remains untouched. Checked the
+output against the input Sanskrit. Paragraph counts match English exactly:
+11, 5 and 6. Reviewed for the same 13 guide requirements as batch 1.
+
+Validation: content tests and typecheck passed; `git diff --check` passed.
+No English source fields changed, Latin prose left over, script leaks or
+duplicate parenthetical glosses in these three chapter translations.
+
 ## Remaining
 
-85 chapters, starting with `the-prologue`, then the remaining chapters in
+82 chapters, starting with `importance-of-chanting-the-stotram`, then the remaining chapters in
 `book.json`'s `chapterOrder`. Translate in batches of three, validate and
-commit each batch. Final whole-book review is still pending. No announcement
-has been added, and this branch has not been merged or published.
+commit each batch. Final whole-book review is still pending. Batch 1 was merged in PR #122. Batch 2 is on a separate branch; final
+whole-book review is pending. No announcement has been added.
