@@ -415,3 +415,16 @@ guna = गुण
 dosha = दोष
 ashrama (stage of life) = आश्रम
 brahmacharya / grihasta = ब्रह्मचर्य / गृहस्थ
+
+# --- Sahasranaama Hindi batch 3: Vandana and names 1-9
+Vandana = वंदना
+naama (chapter heading) = नाम
+Moksha Dharma = मोक्ष धर्म
+Nirukti = निरुक्ति
+Srutis = श्रुतियाँ
+Vishnu Purana = विष्णु पुराण
+Brihadaranyaka Upanishad = बृहदारण्यक उपनिषद्
+Kathopanishad = कठोपनिषद्
+Antaryaami = अंतर्यामी
+sentient / insentient = चेतन / अचेतन
+material, accessory and instrumental causes = उपादान, सहकारी और निमित्त कारण
