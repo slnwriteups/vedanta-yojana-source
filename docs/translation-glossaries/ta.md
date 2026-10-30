@@ -434,3 +434,15 @@ Arangam / Arangan = அரங்கம் / அரங்கன்
 Āchāryas = ஆசாரியர்கள்
 commentary = உரை
 Kāveri = காவேரி
+# --- sri-vishnu-sahasranaama-anubhavam, batch 1 (new terms; review)
+Bhishma = பீஷ்மர்
+Yudhishthira = யுதிஷ்டிரன்
+Vedavyasa / Vyasa = வேதவியாசர் / வியாசர்
+Sri Parasara Bhattar = ஸ்ரீ பராசர பட்டர்
+Sri Adi Sankara = ஸ்ரீ ஆதி சங்கரர்
+stotram = ஸ்தோத்திரம்
+Phala Shruti = பலஸ்ருதி
+Narayaneeyam = நாராயணீயம்
+Bhaja Govindam = பஜ கோவிந்தம்
+anushtup = அனுஷ்டுப்
+pārāyaṇam (chanting) = பாராயணம்

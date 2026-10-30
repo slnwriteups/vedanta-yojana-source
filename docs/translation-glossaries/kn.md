@@ -395,3 +395,15 @@ Vēngaḍam (meaning text) = ವೇಂಕಟಾದ್ರಿ
 Arangam / Arangan = ಅರಂಗ (ಅರಂಗದ) / ಅರಂಗನ್
 Āchāryas = ಆಚಾರ್ಯರು
 Kāveri = ಕಾವೇರಿ
+# --- sri-vishnu-sahasranaama-anubhavam, batch 1 (new terms; review)
+Bhishma = ಭೀಷ್ಮ
+Yudhishthira = ಯುಧಿಷ್ಠಿರ
+Vedavyasa / Vyasa = ವೇದವ್ಯಾಸ / ವ್ಯಾಸ
+Sri Parasara Bhattar = ಶ್ರೀ ಪರಾಶರ ಭಟ್ಟರ್
+Sri Adi Sankara = ಶ್ರೀ ಆದಿ ಶಂಕರ
+stotram = ಸ್ತೋತ್ರ
+Phala Shruti = ಫಲಶ್ರುತಿ
+Narayaneeyam = ನಾರಾಯಣೀಯಂ
+Bhaja Govindam = ಭಜ ಗೋವಿಂದಂ
+anushtup = ಅನುಷ್ಟುಪ್
+pārāyaṇam (chanting) = ಪಾರಾಯಣ

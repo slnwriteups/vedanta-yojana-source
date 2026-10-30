@@ -1,0 +1,132 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 1,
+  "langs": [
+    "ta",
+    "kn",
+    "te"
+  ],
+  "items": [
+    {
+      "id": "@book.title",
+      "en": "02ede8cf60"
+    },
+    {
+      "id": "@book.description",
+      "en": "d4898c5a9b"
+    },
+    {
+      "id": "@part.0.title",
+      "en": "2473e96bc6"
+    },
+    {
+      "id": "@part.1.title",
+      "en": "1cfc3703b2"
+    },
+    {
+      "id": "@part.2.title",
+      "en": "2961221589"
+    },
+    {
+      "id": "how-did-sri-vishnu-sahasranaamam-come-to-be.title",
+      "en": "af10156922"
+    },
+    {
+      "id": "how-did-sri-vishnu-sahasranaamam-come-to-be.0",
+      "en": "616446a89e"
+    },
+    {
+      "id": "how-did-sri-vishnu-sahasranaamam-come-to-be.1",
+      "en": "9dc4727320"
+    },
+    {
+      "id": "how-did-sri-vishnu-sahasranaamam-come-to-be.2",
+      "en": "35c2e64cf5"
+    },
+    {
+      "id": "composition-of-the-stotram.title",
+      "en": "e9bd7f3b95"
+    },
+    {
+      "id": "composition-of-the-stotram.0",
+      "en": "62a9675a37"
+    },
+    {
+      "id": "composition-of-the-stotram.3",
+      "en": "d385bc01ec"
+    },
+    {
+      "id": "composition-of-the-stotram.4",
+      "en": "928d0f2231"
+    },
+    {
+      "id": "composition-of-the-stotram.5",
+      "en": "1101be52bb"
+    },
+    {
+      "id": "composition-of-the-stotram.6",
+      "en": "070e560305"
+    },
+    {
+      "id": "composition-of-the-stotram.7",
+      "en": "82ae02135e"
+    },
+    {
+      "id": "composition-of-the-stotram.8",
+      "en": "b056cc5f48"
+    },
+    {
+      "id": "composition-of-the-stotram.9",
+      "en": "0a6190dfce"
+    },
+    {
+      "id": "composition-of-the-stotram.10",
+      "en": "301f0e2191"
+    },
+    {
+      "id": "composition-of-the-stotram.11",
+      "en": "d1f061b3c3"
+    },
+    {
+      "id": "composition-of-the-stotram.12",
+      "en": "ec2d8cc7a1"
+    },
+    {
+      "id": "composition-of-the-stotram.13",
+      "en": "7bcaf464f6"
+    },
+    {
+      "id": "composition-of-the-stotram.14",
+      "en": "20b05a459a"
+    },
+    {
+      "id": "composition-of-the-stotram.15",
+      "en": "3c1d0c4ca0"
+    },
+    {
+      "id": "composition-of-the-stotram.16",
+      "en": "24e9395c6a"
+    },
+    {
+      "id": "organisation-of-the-stotram.title",
+      "en": "49ea8a8e78"
+    },
+    {
+      "id": "organisation-of-the-stotram.0",
+      "en": "84738d32cc"
+    },
+    {
+      "id": "organisation-of-the-stotram.1",
+      "en": "5a39403c13"
+    },
+    {
+      "id": "organisation-of-the-stotram.2",
+      "en": "a2c0f0eda3"
+    },
+    {
+      "id": "organisation-of-the-stotram.3",
+      "en": "6d8d6ea7a3"
+    }
+  ],
+  "merged": true
+}
