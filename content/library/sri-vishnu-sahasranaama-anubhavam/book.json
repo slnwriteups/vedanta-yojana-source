@@ -24,7 +24,12 @@
         "importance-of-chanting-the-stotram",
         "vandana",
         "dhyana-shlokam"
-      ]
+      ],
+      "translations": {
+        "hi": {
+          "title": "परिचय"
+        }
+      }
     },
     {
       "title": "The Thousand Names",
@@ -105,7 +110,12 @@
         "naama-912-945",
         "naama-946-992",
         "naama-993-1000"
-      ]
+      ],
+      "translations": {
+        "hi": {
+          "title": "हजार नाम"
+        }
+      }
     },
     {
       "title": "Phala Shruti and Conclusion",
@@ -115,7 +125,12 @@
         "phala-shruti",
         "uttara-bhagam",
         "conclusion"
-      ]
+      ],
+      "translations": {
+        "hi": {
+          "title": "फलश्रुति और उपसंहार"
+        }
+      }
     }
   ],
   "chapterOrder": [
@@ -239,5 +254,11 @@
       "url": "https://www.prapatti.com/slokas/tamil/vishnusahasranaamam.pdf",
       "sourceLabel": "Tamil Stotram"
     }
-  ]
+  ],
+  "translations": {
+    "hi": {
+      "title": "श्री विष्णु सहस्रनाम अनुभवम्",
+      "description": "श्री पराशर भट्ट की टीका के अनुसार श्री विष्णु के हजार नामों की एक-एक करके व्याख्या: प्रत्येक श्लोक, प्रत्येक नाम IAST और देवनागरी में उसके मंत्रम् सहित, तथा फलश्रुति।"
+    }
+  }
 }

@@ -382,3 +382,23 @@ Arangam / Arangan = अरंगम् / अरंगन्
 commentary = टीका
 Kāveri = कावेरी
 Tamil verse final full stop = । (as in pallandu)
+
+# --- Sri Vishnu Sahasranaama Anubhavam
+Sri Vishnu Sahasranaama Anubhavam (book) = श्री विष्णु सहस्रनाम अनुभवम्
+Sri Vishnu Sahasranama Stotram = श्री विष्णु सहस्रनाम स्तोत्रम्
+stotram = स्तोत्रम्
+Yudhishthira = युधिष्ठिर
+Bhishma = भीष्म
+Maharishi Vyasa / Vedavyasa = महर्षि व्यास / वेदव्यास
+Sri Adi Sankara = श्री आदि शंकर
+Sri Ramanuja = श्री रामानुज
+Sri Parasara Bhatta / Sri Parasara Bhattar = श्री पराशर भट्ट
+Sri Satyasandha Yatiswara = श्री सत्यसंध यतीश्वर
+Dvaita = द्वैत
+Bhagavad Gita = भगवद्गीता
+Brahma Sutras = ब्रह्मसूत्र
+Bhaja Govindam = भज गोविंदम्
+Anushtup / anushtup chandas = अनुष्टुप् / अनुष्टुप् छंद
+Phalashruti / Phala Shruti = फलश्रुति
+Narada = नारद
+Saint Tyagaraja = संत त्यागराज
