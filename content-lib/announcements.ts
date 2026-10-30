@@ -21,6 +21,8 @@
  */
 
 export type AnnouncementPlatform = "app" | "website";
+/** Which app builds an "app" announcement is for, when not both. */
+export type AnnouncementAppPlatform = "android" | "ios";
 export type AnnouncementLanguage = "ta" | "kn" | "hi" | "te";
 
 export interface AnnouncementLink {
@@ -42,6 +44,16 @@ export interface Announcement {
   date: string;
   /** Where the change applies, shown as small tags. */
   platforms: AnnouncementPlatform[];
+  /**
+   * Optional: limits an "app" announcement to the Android or the iOS app
+   * (an APK to install means nothing on an iPhone). Absent means both.
+   * A field of its own rather than new `platforms` values on purpose:
+   * installed apps that predate it validate the fetched feed with the old
+   * parser, which ignores unknown fields but rejects the whole list on an
+   * unknown platform -- so this keeps every older install's feed working
+   * (they just show the entry on both).
+   */
+  appPlatforms?: AnnouncementAppPlatform[];
   title: string;
   body: string;
   link?: AnnouncementLink;
@@ -50,6 +62,7 @@ export interface Announcement {
 
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PLATFORMS: readonly string[] = ["app", "website"];
+const APP_PLATFORMS: readonly string[] = ["android", "ios"];
 const LANGUAGES: readonly string[] = ["ta", "kn", "hi", "te"];
 
 function isNonEmptyString(value: unknown): value is string {
@@ -85,10 +98,18 @@ function parseTranslations(value: unknown): Announcement["translations"] | null 
 
 function parseAnnouncement(value: unknown): Announcement | null {
   if (!isRecord(value)) return null;
-  const { id, date, platforms, title, body, link, translations } = value;
+  const { id, date, platforms, appPlatforms, title, body, link, translations } = value;
   if (!isNonEmptyString(id) || !isNonEmptyString(title) || !isNonEmptyString(body)) return null;
   if (typeof date !== "string" || !DATE_PATTERN.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) return null;
   if (!Array.isArray(platforms) || platforms.length === 0 || !platforms.every((p) => PLATFORMS.includes(p))) return null;
+  if (
+    appPlatforms !== undefined &&
+    (!platforms.includes("app") ||
+      !Array.isArray(appPlatforms) ||
+      appPlatforms.length === 0 ||
+      !appPlatforms.every((p) => APP_PLATFORMS.includes(p)))
+  )
+    return null;
 
   const parsedLink = link === undefined ? undefined : parseLink(link);
   if (parsedLink === null) return null;
@@ -99,6 +120,7 @@ function parseAnnouncement(value: unknown): Announcement | null {
     id,
     date,
     platforms: platforms as AnnouncementPlatform[],
+    ...(appPlatforms !== undefined ? { appPlatforms: [...new Set(appPlatforms as AnnouncementAppPlatform[])] } : {}),
     title,
     body,
     ...(parsedLink ? { link: parsedLink } : {}),
@@ -132,6 +154,23 @@ export function parseAnnouncements(data: unknown): Announcement[] | null {
 }
 
 /** The reader's language version of an announcement, falling back field by field to English. */
+/**
+ * The announcements the app shows on one operating system (`os` is
+ * React Native's Platform.OS): every entry except those limited by
+ * appPlatforms to the other one.
+ */
+export function announcementsForApp(announcements: Announcement[], os: string): Announcement[] {
+  return announcements.filter((a) => !a.appPlatforms || a.appPlatforms.includes(os as AnnouncementAppPlatform));
+}
+
+/**
+ * The platform tags to show on an announcement, in order: "app" becomes
+ * "android" and/or "ios" when appPlatforms limits it.
+ */
+export function announcementTags(announcement: Announcement): (AnnouncementPlatform | AnnouncementAppPlatform)[] {
+  return announcement.platforms.flatMap((p) => (p === "app" && announcement.appPlatforms ? announcement.appPlatforms : [p]));
+}
+
 export function localizeAnnouncement(announcement: Announcement, language: AnnouncementLanguage | null): Announcement {
   const t = language ? announcement.translations?.[language] : undefined;
   if (!t) return announcement;

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { Platform } from "react-native";
 import bundledAnnouncements from "../../content/announcements.json";
 import {
   ANNOUNCEMENTS_URL,
+  announcementsForApp,
   parseAnnouncements,
   preferredAnnouncements,
   type Announcement,
@@ -71,5 +73,6 @@ export function useAnnouncements(): Announcement[] {
       cancelled = true;
     };
   }, []);
-  return announcements;
+  // Entries limited to the other operating system (appPlatforms) are left out.
+  return announcementsForApp(announcements, Platform.OS);
 }

@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {
+  announcementTags,
+  announcementsForApp,
   formatAnnouncementDate,
   isNewAnnouncement,
   localizeAnnouncement,
@@ -110,4 +112,48 @@ test("preferredAnnouncements: live wins, but never an older list than the bundle
   assert.equal(preferredAnnouncements(null, list("cached", "2026-09-01"), bundled)[0].id, "bundled");
   assert.equal(preferredAnnouncements(null, null, bundled)[0].id, "bundled");
   assert.deepEqual(preferredAnnouncements(null, null, null), []);
+});
+
+test("appPlatforms: optional, only android/ios, only on an app announcement", () => {
+  const ok = parseAnnouncements({ announcements: [entry({ platforms: ["app"], appPlatforms: ["android"] })] });
+  assert.deepEqual(ok?.[0].appPlatforms, ["android"]);
+  assert.equal(parseAnnouncements({ announcements: [entry()] })?.[0].appPlatforms, undefined);
+  for (const appPlatforms of [[], ["windows"], "android", ["android", 1]]) {
+    assert.equal(parseAnnouncements({ announcements: [entry({ appPlatforms })] }), null, JSON.stringify(appPlatforms));
+  }
+  assert.equal(parseAnnouncements({ announcements: [entry({ platforms: ["website"], appPlatforms: ["ios"] })] }), null);
+});
+
+test("the real feed keeps `platforms` to app/website, so older installs keep a working feed", () => {
+  // Installed apps that predate appPlatforms validate the fetched feed with
+  // a parser that ignores unknown fields but rejects the whole list on any
+  // `platforms` value other than "app" or "website" -- so Android/iOS-only
+  // entries must use appPlatforms, never new `platforms` values.
+  for (const { id, platforms } of loadAnnouncements()) {
+    assert.ok(platforms.every((p) => p === "app" || p === "website"), id);
+  }
+});
+
+test("announcementsForApp leaves out entries for the other operating system", () => {
+  const list = parseAnnouncements({
+    announcements: [
+      entry({ id: "both", platforms: ["app"] }),
+      entry({ id: "android", platforms: ["app"], appPlatforms: ["android"] }),
+      entry({ id: "ios", platforms: ["app"], appPlatforms: ["ios"] }),
+      entry({ id: "web", platforms: ["website"] }),
+    ],
+  })!;
+  assert.deepEqual(announcementsForApp(list, "android").map((a) => a.id), ["both", "android", "web"]);
+  assert.deepEqual(announcementsForApp(list, "ios").map((a) => a.id), ["both", "ios", "web"]);
+});
+
+test("announcementTags names the app build an entry is limited to", () => {
+  const [limited, both] = parseAnnouncements({
+    announcements: [
+      entry({ id: "a", platforms: ["app", "website"], appPlatforms: ["android"] }),
+      entry({ id: "b", platforms: ["app", "website"] }),
+    ],
+  })!;
+  assert.deepEqual(announcementTags(limited), ["android", "website"]);
+  assert.deepEqual(announcementTags(both), ["app", "website"]);
 });

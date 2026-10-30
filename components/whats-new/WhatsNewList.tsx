@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementTags,
   formatAnnouncementDate,
   isNewAnnouncement,
   isValidLastSeenDate,
@@ -13,6 +14,14 @@ import {
 import { useLanguage } from "@/lib/language-context";
 import { readJSON, writeJSON } from "@/lib/storage";
 import { useT } from "@/lib/ui-strings";
+
+/** The label for each tag announcementTags() can return. */
+const TAG_LABEL_KEYS = {
+  app: "whatsNewAppTag",
+  website: "whatsNewWebsiteTag",
+  android: "whatsNewAndroidTag",
+  ios: "whatsNewIosTag",
+} as const;
 
 /**
  * The What's New list -- web half of mobile/components/WhatsNewList.tsx.
@@ -100,9 +109,9 @@ export function WhatsNewList({
           <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-[var(--accent)]" />
           <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
             <time dateTime={announcement.date}>{formatAnnouncementDate(announcement.date)}</time>
-            {announcement.platforms.map((platform) => (
-              <span key={platform} className="rounded-full border border-[var(--border)] px-2 py-0.5">
-                {t(platform === "app" ? "whatsNewAppTag" : "whatsNewWebsiteTag")}
+            {announcementTags(announcement).map((tag) => (
+              <span key={tag} className="rounded-full border border-[var(--border)] px-2 py-0.5">
+                {t(TAG_LABEL_KEYS[tag])}
               </span>
             ))}
             {lastSeen !== undefined && isNewAnnouncement(announcement, lastSeen) ? (
