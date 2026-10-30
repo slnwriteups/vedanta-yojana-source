@@ -4,7 +4,7 @@ import path from "node:path";
 import readline from "node:readline/promises";
 import type { LanguageCode } from "../../content-lib/schemas/language.ts";
 import { args, parseLangs, readJson, ROOT, workDir, writeJson } from "../../scripts/translation/work.ts";
-import { applyBaseline, BASELINE_FILE, baselineFrom, loadBaseline, saveBaseline } from "./baseline.ts";
+import { applyBaseline, BASELINE_FILE, baselineFrom, loadBaseline, markdownCell, saveBaseline } from "./baseline.ts";
 import { glossaryAudit } from "./glossary.ts";
 import { loadPending, savePending, writeApproved } from "./pending-terms.ts";
 import { chapterHash, loadLedger, ownerGuard, owners, readiness, recordReview, reviewPacket, saveLedger, translatorsOf, type ReviewReply } from "./review.ts";
@@ -193,12 +193,12 @@ switch (command) {
       "",
       "| Rule | Count | What fixing it means |",
       "|---|---|---|",
-      ...[...counts].sort((x, y) => y[1] - x[1]).map(([r, n]) => `| \`${r}\` | ${n} | ${(FIX[r] ?? "see the detail").replace(/\|/g, "\\|")} |`),
+      ...[...counts].sort((x, y) => y[1] - x[1]).map(([r, n]) => `| \`${r}\` | ${n} | ${markdownCell(FIX[r] ?? "see the detail")} |`),
       "",
     ];
     for (const [book, entries] of [...byBook].sort()) {
       L.push(`## ${book} (${entries.length})`, "", "| File | Lang | Field | ¶ | Rule | Detail |", "|---|---|---|---|---|---|");
-      for (const e of entries) L.push(`| ${e.file.split("/").pop()} | ${e.lang} | ${e.field} | ${e.paragraph ?? ""} | \`${e.rule}\` | ${e.detail.replace(/\|/g, "\\|").replace(/\n/g, " ").slice(0, 160)} |`);
+      for (const e of entries) L.push(`| ${e.file.split("/").pop()} | ${e.lang} | ${e.field} | ${e.paragraph ?? ""} | \`${e.rule}\` | ${markdownCell(e.detail).slice(0, 160)} |`);
       L.push("");
     }
     L.push("## Glossary decisions for the owner", "");

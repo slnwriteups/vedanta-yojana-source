@@ -116,3 +116,8 @@ export function baselineFrom(issues: Issue[], records: Map<string, any>): Baseli
 export function saveBaseline(b: Baseline, file = BASELINE_FILE): void {
   fs.writeFileSync(file, JSON.stringify(b, null, 2) + "\n");
 }
+
+/** Text made safe for one Markdown table cell: backslashes first, then pipes, then newlines. */
+export function markdownCell(text: string): string {
+  return text.replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\n/g, " ");
+}

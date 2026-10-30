@@ -236,3 +236,12 @@ test("a verse the Tamil rules cannot write (vocalic ḷ) is held for Tamil only,
   // Names keep their Devanagari after "·" by design: not reported.
   assert.deepEqual(untransliterable({ body: "1. viśvam · विश्वम्\n\nMeaning.\n\n(oṃ) viśvāya namaḥ" }, "y.json"), []);
 });
+
+test("the list-marker check runs in linear time on hostile tokens (CodeQL js/redos)", () => {
+  const hostile = "a" + ".c".repeat(60) + "-z";
+  const start = Date.now();
+  latinFindings("x", `அ ${hostile} ஆ`);
+  assert.ok(Date.now() - start < 1000, "no exponential backtracking");
+  // Markers still work: roman numerals, single letters, digits, dotted sections.
+  assert.deepEqual(latinFindings("(i) a) iii.ii) 2.", "(i) அ a) ஆ iii.ii) இ 2. ஈ"), []);
+});

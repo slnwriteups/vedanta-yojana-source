@@ -37,7 +37,8 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const LATIN_RUN = /\p{Script=Latin}+(?:['’.-]\p{Script=Latin}+)*/gu;
 const IAST_MARKS = /[āīūṛṝḷḹṃṁḥśṣṇṭḍñṅēōĀĪŪṚṜḶṂṀḤŚṢṆṬḌÑṄĒŌ]/;
 const URL = /\b(?:https?:\/\/)?[a-z0-9-]+(?:\.[a-z0-9-]+)*\.(?:com|org|net|in|edu|io|gov)(?:\/[^\s)"”]*)?/gi;
-const MARKER = /^(?:[ivxlcdm]+|[a-z]|\d+)(?:\.(?:[ivxlcdm]+|[a-z]|\d+))*$/i;
+// Alternatives are disjoint (a roman-numeral run, one other letter, or digits), so no token can backtrack exponentially.
+const MARKER = /^(?:[ivxlcdm]+|[abefghjknopqrstuwyz]|\d+)(?:\.(?:[ivxlcdm]+|[abefghjknopqrstuwyz]|\d+))*$/i;
 
 let allowlistCache: Record<string, string[]> | null = null;
 

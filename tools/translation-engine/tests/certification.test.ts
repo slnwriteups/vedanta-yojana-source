@@ -21,6 +21,7 @@ const load = (f: string) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8
 const record = () => load(FILE);
 const bookRecord = () => load(`content/library/${BOOK}/book.json`);
 const paras = (s: string) => s.split(/\n\s*\n/);
+const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 // ---------------------------------------------------------------- baseline
 
@@ -157,7 +158,7 @@ test("a review packet carries the text hash, every prose paragraph, glossary ter
   assert.equal(template.textHash, chapterHash(record(), "te"));
   assert.match(markdown, /### ¶1\n/);
   assert.match(markdown, /Glossary: .*Chakrattāzhwār/);
-  assert.doesNotMatch(markdown, new RegExp(`Approved example \\(${FILE.replace(/[.]/g, "\\.")}`));
+  assert.doesNotMatch(markdown, new RegExp(`Approved example \\(${escapeRegExp(FILE)}`));
   assert.match(markdown, /final theological approval/);
 });
 
@@ -194,4 +195,11 @@ test("the translator card states the owner's register, doctrine and pronoun rule
   assert.match(guide, /Dignified, natural prose/);
   assert.match(guide, /The fidelity rules above are unchanged/);
   assert.match(guide, /English is the source of truth/);
+});
+
+test("Markdown table cells escape backslashes before pipes (CodeQL js/incomplete-sanitization)", async () => {
+  const { markdownCell } = await import("../baseline.ts");
+  assert.equal(markdownCell("a|b"), "a\\|b");
+  assert.equal(markdownCell("a\\|b"), "a\\\\\\|b", "an existing backslash cannot un-escape the pipe");
+  assert.equal(markdownCell("line\nnext"), "line next");
 });
