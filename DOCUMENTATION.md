@@ -778,6 +778,10 @@ App Store, built with the `production` EAS profile and uploaded with
 
 ## 9. Content engineering and translation
 
+> The working rules for new translations (data model, verse handling,
+> scripts, register, workflow and checks) are collected in
+> `docs/TRANSLATION-GUIDE.md`. This section is the history behind them.
+
 The translation work is treated in this project as a content-engineering
 process with the same rigor as code — with source-of-truth discipline,
 mechanical validation, checkpointed commits, and a dedicated review pass

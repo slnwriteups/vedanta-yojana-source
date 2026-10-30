@@ -43,3 +43,10 @@ validates it):
 The website picks up a new entry on its next deploy. Installed apps fetch
 `https://vedantayojana.org/announcements.json` on launch, so they see it
 from that same deploy, with no app update.
+
+## Translations and transliterations
+
+Before translating or transliterating anything into Tamil, Kannada, Hindi or
+Telugu (books, chapters, Divya Desams, announcements, interface strings),
+read `docs/TRANSLATION-GUIDE.md` and follow it, together with that
+language's glossary in `docs/translation-glossaries/`.
