@@ -40,6 +40,22 @@
       "batch": 10,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-211-225.27",
+      "english": "Even in Matsya Avataram, He adorns the Vaijayanti Mala, which indicates Parabrahma Swaroopam.",
+      "note": "Tiruppanazhwar's closing line of Amalanadipiran 'en amudhinaik kaṇḍa kaṇgaḷ maṟṟonṟinaik kāṇāvē' transliterated via the Tamil (என் அமுதினைக் கண்ட கண்கள் மற்றொன்றினைக் காணாவே) per Standard §3.3; verify against the authoritative text.",
+      "batch": 12,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-226-247.29",
+      "english": "The name comes from the root vṛ, \"to cover\". The Lord remains hidden from those in whom tamas dominates; only devotion reveals Him. Just as the sun creates the clouds that hide it from us, and yet its own light is untouched by them, our ignorance hides the Lord from us while He remains as radiant as ever. Nammazhwar praises Him as the one who blessed him with knowledge and devotion free from confusion (mayarvaṟa madhinalam aruḷinan).",
+      "note": "Nammazhwar line 'mayarvaṟa madhinalam aruḷinan' transliterated via the Tamil (மயர்வற மதிநலம் அருளினன்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 13,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
