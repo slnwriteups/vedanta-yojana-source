@@ -13,6 +13,19 @@ FIDELITY
 - Plain, clear, natural prose, as in the Divya Desam pages: not ornate, not literary.
 - If an item is garbled or a placeholder, translate nothing for it and output the single word DEFECT in that slot for every language.
 
+REGISTER
+- Reverent and formal, never colloquial. No calques from English or Hindi, no newspaper phrasing.
+- Use the tradition's own words where they exist: a sage's teaching is உபதேசம் / ಉಪದೇಶ / ఉపదేశం / उपदेश, not "advice"; what a sage or the Lord imparts is அருளிச்செய்யப்பட்டது in Tamil, not கொடுக்கப்பட்டது; bondage is தளை in Tamil; Bhishma's bed of arrows is அம்புப் படுக்கை / ಶರಶಯ್ಯೆ / అంపశయ్య.
+- Prefer the elevated word over the everyday one where both are plain enough to read (te ఉత్తమ పరిపాలనా దక్షులు over మంచి పాలకులు; శ్రేష్ఠ over మంచి).
+- Epic kinship words keep their epic sense: "brothers" stays சகோதரர்கள் / ಸಹೋದರರು / సోదరులు / भाई even where cousins are meant.
+
+CONSISTENCY
+- One person, one form, all chapter long: never switch the same sage, deity or king between plain and honorific mid-paragraph. Keep the glossary's choice (e.g. kn ಭೀಷ್ಮನು but ವ್ಯಾಸರು; ta பீஷ்மர் but யுதிஷ்டிரன்).
+- Tamil keeps its doubling after demonstratives and case endings (இந்தக் கேள்வி, உலகிற்குக் கிட்டாமல்).
+
+SCRIPT
+- Clean Unicode in the target script only: no Devanagari letters inside Tamil, Kannada or Telugu words (avagraha is ಽ / ఽ, visarga ಃ / ః / ஃ), no word starting with a vowel sign or virama, no broken conjuncts. The merge step rejects any of these.
+
 INSIDE PROSE
 - Sanskrit or Tamil words quoted in IAST inside a sentence (e.g. "(sarvāṇi bhūtāni svatantraḥ sṛjati)") are written in the target script, never translated; keep their brackets and quotes. Hindi writes them in Devanagari.
 - Gloss pattern "word (term)" becomes "translated word (term in target script)". Never repeat the translated word inside the brackets.

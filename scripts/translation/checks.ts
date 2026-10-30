@@ -62,6 +62,28 @@ export function scriptFindings(text: string, lang: LanguageCode): Finding[] {
       out.push({ level: "error", rule: "script-leak", detail: `${BLOCK_NAMES[other]} character U+${m[0].charCodeAt(0).toString(16).toUpperCase().padStart(4, "0")} in ${BLOCK_NAMES[lang]} text: "…${scanned.slice(Math.max(0, at - 12), at + 12)}…"` });
     }
   }
+  if (lang !== "hi") {
+    // A kept Devanagari verse line has no letters of the target script, and a
+    // Sahasranaama name line carries its Devanagari after "·". Anywhere else,
+    // Devanagari next to the target script (नमः in Tamil, ಮೇऽಪಿ in Kannada) is a slip.
+    for (const line of text.split("\n")) {
+      if (line.includes("·") || !SCRIPT[lang].test(line)) continue;
+      // । and ॥ (U+0964, U+0965) are shared Indic punctuation, not Devanagari letters.
+      const dev = line.match(new RegExp("\\S*[\\u0900-\\u0963\\u0966-\\u097F]\\S*", "u"));
+      if (dev) {
+        out.push({ level: "error", rule: "devanagari-in-prose", detail: `Devanagari inside ${BLOCK_NAMES[lang]} text: "${dev[0]}"` });
+        break;
+      }
+    }
+  }
+  // A vowel sign, virama or anusvara cannot start a word: that is a broken conjunct.
+  // (Tamil ஃ is a letter in its own right, as in ஃபிகஸ், so it is not listed.)
+  const marks = /(^|[\s"'“‘(\[,;:.!?-])([ஂா-்ௗఀ-ఃా-ౖಀ-ಃಾ-ೖऀ-ःऺ-ॏॢॣ])/u;
+  const broken = text.match(marks);
+  if (broken) {
+    const at = (broken.index ?? 0) + broken[1].length;
+    out.push({ level: "error", rule: "broken-glyph", detail: `a combining mark starts a word: "…${text.slice(Math.max(0, at - 8), at + 8)}…"` });
+  }
   const digits = withoutVerseLines(text).match(NATIVE_DIGITS[lang]);
   if (digits) out.push({ level: "error", rule: "native-digits", detail: `native digit "${digits[0]}" (use 0-9)` });
   for (const m of text.matchAll(GLOSS_ECHO)) {
