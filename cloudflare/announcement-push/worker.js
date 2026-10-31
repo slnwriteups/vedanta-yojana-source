@@ -45,7 +45,7 @@ export class AnnouncementPushStore {
     const result = this.processing.then(async () => {
       if (new URL(request.url).pathname === '/tick') {
         try { await this.tick(); return response({ ok: true }); }
-        catch { return response({ error: 'Push processing failed' }, 503); }
+        catch (error) { console.error('push.tick.failed', { stage: this.stage ?? 'unknown', reason: error instanceof Error ? error.message : 'unknown error' }); return response({ error: 'Push processing failed' }, 503); }
       }
       const value = await request.json();
       if (request.method === 'DELETE') {
@@ -64,22 +64,29 @@ export class AnnouncementPushStore {
   }
   async tick() {
     const now = Date.now();
+    this.stage = 'cleanup';
     // Expire dormant subscriptions; the app renews on launch/foreground.
     this.sql.exec('DELETE FROM subscribers WHERE refreshed < ?', now - 180 * 86400000);
     this.sql.exec('DELETE FROM queue WHERE token NOT IN (SELECT token FROM subscribers)');
+    this.stage = 'source-fetch';
     const remote = await fetch(SOURCE, { headers: { 'Cache-Control': 'no-cache' }, signal: AbortSignal.timeout(10000) });
     if (!remote.ok) throw new Error('Announcement source unavailable');
+    this.stage = 'source-parse';
     const list = parseAnnouncements(await remote.json());
     if (!list) throw new Error('Invalid announcement source');
+    this.stage = 'announcement-discovery';
     const initialized = this.sql.exec("SELECT value FROM meta WHERE key='initialized'").toArray().length > 0;
     // The first cron establishes a baseline; deploying never blasts historical notices.
+    let discovered = 0;
+    let enqueued = 0;
     for (const a of [...list].reverse()) {
       if (a.date > new Date(now).toISOString().slice(0, 10)) continue;
       if (this.sql.exec('SELECT id FROM announcements WHERE id=?', a.id).toArray().length) continue;
+      discovered++;
       this.ctx.storage.transactionSync(() => {
         if (initialized && a.date <= new Date(now).toISOString().slice(0, 10) && Date.parse(a.date + 'T23:59:59Z') >= now - 2 * 86400000) {
           for (const sub of this.sql.exec('SELECT * FROM subscribers').toArray()) {
-            if (targets(a, sub.platform)) this.sql.exec('INSERT OR IGNORE INTO queue (announcement, token, payload, created) VALUES (?, ?, ?, ?)', a.id, sub.token, JSON.stringify(messageFor(a, sub)), now);
+            if (targets(a, sub.platform)) { this.sql.exec('INSERT OR IGNORE INTO queue (announcement, token, payload, created) VALUES (?, ?, ?, ?)', a.id, sub.token, JSON.stringify(messageFor(a, sub)), now); enqueued++; }
           }
         }
         this.sql.exec('INSERT OR IGNORE INTO announcements (id) VALUES (?)', a.id);
@@ -88,6 +95,7 @@ export class AnnouncementPushStore {
     this.sql.exec("INSERT OR IGNORE INTO meta (key,value) VALUES ('initialized','yes')");
     this.sql.exec('DELETE FROM queue WHERE created < ?', now - 2 * 86400000);
     // Receipt checks precede sends. Expo accepting a ticket is not device delivery.
+    this.stage = 'receipt-check';
     const receipts = this.sql.exec("SELECT * FROM queue WHERE status='ticket' AND next_try <= ? LIMIT 100", now).toArray();
     if (receipts.length) {
       const result = await this.expo('getReceipts', { ids: receipts.map(x => x.receipt) });
@@ -98,6 +106,7 @@ export class AnnouncementPushStore {
         else this.sql.exec("UPDATE queue SET status=? WHERE announcement=? AND token=?", receipt.status === 'ok' ? 'accepted' : 'failed', row.announcement, row.token);
       }
     }
+    this.stage = 'ticket-send';
     const pending = this.sql.exec("SELECT * FROM queue WHERE status='pending' AND attempts < 5 AND next_try <= ? LIMIT 100", now).toArray();
     if (pending.length) {
       const result = await this.expo('send', pending.map(row => JSON.parse(row.payload)));
@@ -109,7 +118,10 @@ export class AnnouncementPushStore {
         else this.sql.exec("UPDATE queue SET status='failed' WHERE announcement=? AND token=?", row.announcement, row.token);
       });
     }
+    const counts = this.sql.exec("SELECT status, COUNT(*) AS count FROM queue GROUP BY status").toArray();
+    console.info('push.tick.summary', { initialized, subscribers: this.sql.exec('SELECT COUNT(*) AS count FROM subscribers').toArray()[0]?.count ?? 0, discovered, enqueued, receiptsChecked: receipts.length, pendingSent: pending.length, queue: Object.fromEntries(counts.map(x => [x.status, x.count])) });
     this.sql.exec("DELETE FROM queue WHERE status IN ('accepted','failed') OR attempts >= 5");
+    this.stage = 'complete';
   }
   remove(token) {
     this.sql.exec('DELETE FROM subscribers WHERE token=?', token);
