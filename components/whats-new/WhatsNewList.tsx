@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementLocalDate,
+  sortAnnouncements,
   formatAnnouncementDate,
   isNewAnnouncement,
   isValidLastSeenDate,
@@ -42,6 +44,12 @@ export function WhatsNewList({
   const t = useT();
   // undefined = not read yet (no badges); null = never opened the list.
   const [lastSeen, setLastSeen] = useState<string | null | undefined>(undefined);
+  const [today, setToday] = useState(announcementLocalDate);
+  useEffect(() => {
+    const timer = setInterval(() => setToday(announcementLocalDate()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+
 
   useEffect(() => {
     let cancelled = false;
@@ -59,8 +67,11 @@ export function WhatsNewList({
   }, [announcements, markSeen]);
 
   const shown = useMemo(
-    () => (limit === undefined ? announcements : announcements.slice(0, limit)).map((a) => localizeAnnouncement(a, language)),
-    [announcements, limit, language]
+    () => {
+      const ordered = sortAnnouncements(announcements, today);
+      return (limit === undefined ? ordered : ordered.slice(0, limit)).map((a) => localizeAnnouncement(a, language));
+    },
+    [announcements, limit, language, today]
   );
 
   if (compact) {
@@ -95,9 +106,11 @@ export function WhatsNewList({
       {shown.map((announcement) => (
         <li
           key={announcement.id}
+          id={announcement.id}
           className="relative overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4"
         >
           <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-[var(--accent)]" />
+          {markSeen && announcement.body.length > 1000 ? <ExitAnnouncementButton /> : null}
           <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
             <time dateTime={announcement.date}>{formatAnnouncementDate(announcement.date)}</time>
             {announcement.platforms.map((platform) => (
@@ -112,11 +125,20 @@ export function WhatsNewList({
             ) : null}
           </div>
           <h3 className="mt-2 font-semibold">{announcement.title}</h3>
-          <p className="mt-1 text-sm text-[var(--muted)]">{announcement.body}</p>
+          <p className="mt-1 whitespace-pre-line text-sm text-[var(--muted)]">{announcement.body}</p>
           {announcement.link ? <AnnouncementLink {...announcement.link} /> : null}
+          {markSeen && announcement.body.length > 1000 ? <ExitAnnouncementButton /> : null}
         </li>
       ))}
     </ul>
+  );
+}
+
+function ExitAnnouncementButton() {
+  return (
+    <Link href="/" className="my-3 inline-flex min-h-11 items-center rounded-md border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--accent)] hover:underline">
+      <span aria-hidden="true">←</span>&nbsp;Back to Home
+    </Link>
   );
 }
 
@@ -136,3 +158,4 @@ function AnnouncementLink({ href, label }: { href: string; label: string }) {
     </a>
   );
 }
+

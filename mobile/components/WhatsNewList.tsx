@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
-import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementLocalDate,
+  sortAnnouncements,
+  announcementsForMobile,
   formatAnnouncementDate,
   isNewAnnouncement,
   isValidLastSeenDate,
@@ -13,6 +16,8 @@ import { radius, spacing, typography, useTheme } from "../theme";
 import { useLanguage } from "../language-context.ts";
 import { useT } from "../ui-strings.ts";
 import { readJSON, writeJSON } from "../storage";
+import { AnnouncementReader } from "./AnnouncementReader";
+import { isAnnouncementReadLink } from "../content-lib/announcement-links.ts";
 
 /**
  * The What's New list -- app half of components/whats-new/WhatsNewList.tsx
@@ -38,6 +43,13 @@ export function WhatsNewList({
   const t = useT();
   // undefined = not read yet (no badges); null = never opened the list.
   const [lastSeen, setLastSeen] = useState<string | null | undefined>(undefined);
+  const [today, setToday] = useState(announcementLocalDate);
+  useEffect(() => {
+    const timer = setInterval(() => setToday(announcementLocalDate()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -53,24 +65,36 @@ export function WhatsNewList({
   }, [announcements, markSeen]);
 
   const shown = useMemo(
-    () => (limit === undefined ? announcements : announcements.slice(0, limit)).map((a) => localizeAnnouncement(a, language)),
-    [announcements, limit, language]
+    () => {
+      const relevant = sortAnnouncements(announcementsForMobile(announcements, Platform.OS), today);
+      return (limit === undefined ? relevant : relevant.slice(0, limit)).map((a) => localizeAnnouncement(a, language));
+    },
+    [announcements, limit, language, today]
   );
 
   const openLink = (href: string) => {
     if (href.startsWith("/")) router.push(href as never);
     else void Linking.openURL(href);
   };
+  const openAction = (announcement: Announcement) => {
+    if (!announcement.link || isAnnouncementReadLink(announcement.link.href, announcement.id)) {
+      setSelectedAnnouncement(announcement);
+    } else {
+      openLink(announcement.link.href);
+    }
+  };
+  const reader = <AnnouncementReader announcement={selectedAnnouncement} onClose={() => setSelectedAnnouncement(null)} />;
 
   if (compact) {
     return (
+      <>
       <View style={styles.list}>
         {shown.map((announcement) => (
           <View key={announcement.id} style={styles.compactRow}>
             <Text style={[styles.compactDate, { color: theme.colors.muted }]}>{formatAnnouncementDate(announcement.date)}</Text>
             <View style={styles.compactText}>
               <Pressable
-                onPress={() => router.push("/whats-new" as never)}
+                onPress={() => setSelectedAnnouncement(announcement)}
                 accessibilityRole="link"
                 style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
               >
@@ -81,13 +105,13 @@ export function WhatsNewList({
                   can be acted on from Home. */}
               {announcement.link ? (
                 <Pressable
-                  onPress={() => openLink(announcement.link!.href)}
+                  onPress={() => openAction(announcement)}
                   accessibilityRole="link"
                   hitSlop={spacing.sm}
                   style={({ pressed }) => [styles.compactLink, { opacity: pressed ? 0.7 : 1 }]}
                 >
                   <Text style={[styles.link, { color: theme.colors.accent }]}>
-                    {announcement.link.label} {announcement.link.href.startsWith("/") ? "→" : "↗"}
+                    {announcement.link.label} {announcement.link.href.startsWith("/") || isAnnouncementReadLink(announcement.link.href, announcement.id) ? "→" : "↗"}
                   </Text>
                 </Pressable>
               ) : null}
@@ -95,10 +119,13 @@ export function WhatsNewList({
           </View>
         ))}
       </View>
+      {reader}
+      </>
     );
   }
 
   return (
+    <>
     <View style={styles.list}>
       {shown.map((announcement) => (
         <View
@@ -119,23 +146,27 @@ export function WhatsNewList({
               </Text>
             ) : null}
           </View>
-          <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+            <Pressable onPress={() => setSelectedAnnouncement(announcement)} accessibilityRole="link" hitSlop={spacing.sm}>
+              <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+            </Pressable>
           <Text style={[styles.body, { color: theme.colors.muted }]}>{announcement.body}</Text>
           {announcement.link ? (
             <Pressable
-              onPress={() => openLink(announcement.link!.href)}
+              onPress={() => openAction(announcement)}
               accessibilityRole="link"
               hitSlop={spacing.sm}
               style={styles.linkButton}
             >
               <Text style={[styles.link, { color: theme.colors.accent }]}>
-                {announcement.link.label} {announcement.link.href.startsWith("/") ? "→" : "↗"}
+                {announcement.link.label} {announcement.link.href.startsWith("/") || isAnnouncementReadLink(announcement.link.href, announcement.id) ? "→" : "↗"}
               </Text>
             </Pressable>
           ) : null}
         </View>
       ))}
     </View>
+    {reader}
+    </>
   );
 }
 
@@ -222,3 +253,4 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+
