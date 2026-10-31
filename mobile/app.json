@@ -16,7 +16,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.slnwriteups.vedantayojana",
       "version": "1.3.0",
-      "buildNumber": "27",
+      "buildNumber": "28",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "Vedanta Yojana uses your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are."
