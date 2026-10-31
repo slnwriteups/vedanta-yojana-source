@@ -96,6 +96,22 @@
       "batch": 20,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-352-361.15",
+      "english": "Garuda is said to be the embodiment of the Vedas, and so the Lord's vehicle is worthy of the highest reverence. Nammazhwar calls the Lord \"the one who rides on the bird\" (puḷḷūrdhi).",
+      "note": "Nammazhwar phrases quoted only in romanisation in this batch (items 4 'puḷḷūrdhi', 27 'thiruc ceyya kamalak kaṇṇum sevvāyum sevvadiyum', 35 'etthiṟam! uralinōdu iṇaindhirundhu Engiya eḷivē') transliterated via the Tamil (புள்ளூர்தி; திருச் செய்ய கமலக் கண்ணும் செவ்வாயும் செவ்வடியும்; எத்திறம்! உரலினோடு இணைந்திருந்து ஏங்கிய எளிவே) per Standard §3.3; verify against the authoritative text.",
+      "batch": 21,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-362-385.45",
+      "english": "Nammazhwar sings of the Lord \"whose soft feet are pressed by the Lady of the lotus and by the Lady of the earth\" (malar magaḷ maṟṟum maṇ magaḷ pidikkum mel adiyān).",
+      "note": "Nammazhwar phrases quoted only in romanisation in this batch (items 2, 12, 26, 28: 'malar magaḷ maṟṟum maṇ magaḷ pidikkum mel adiyān', 'palapala māya mayakkugaḷāl inbuṟum iv viḷaiyāṭṭudaiyān', 'viṇṇavarkku eṇṇal ariyān', 'kākkum iyalvinan kaṇṇa perumān') transliterated via the Tamil per Standard §3.3; verify against the authoritative text.",
+      "batch": 22,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
