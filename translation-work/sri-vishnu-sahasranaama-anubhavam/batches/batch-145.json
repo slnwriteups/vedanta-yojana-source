@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 145,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "birth-star-purva-ashadha.title",
+      "en": "9f6048ae8f"
+    },
+    {
+      "id": "birth-star-purva-ashadha.0",
+      "en": "525713d5dc"
+    },
+    {
+      "id": "birth-star-purva-ashadha.1",
+      "en": "862ccde26f"
+    },
+    {
+      "id": "birth-star-purva-ashadha.4",
+      "en": "ccde66ea20"
+    },
+    {
+      "id": "birth-star-purva-ashadha.5",
+      "en": "c83c582660"
+    },
+    {
+      "id": "birth-star-purva-ashadha.8",
+      "en": "8610c55b66"
+    },
+    {
+      "id": "birth-star-purva-ashadha.9",
+      "en": "8a9a0a8270"
+    },
+    {
+      "id": "birth-star-purva-ashadha.12",
+      "en": "1e799fb1d1"
+    },
+    {
+      "id": "birth-star-purva-ashadha.13",
+      "en": "259422d89c"
+    },
+    {
+      "id": "birth-star-purva-ashadha.16",
+      "en": "f40cce387a"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.title",
+      "en": "d75f960b63"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.0",
+      "en": "f4a15932c5"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.1",
+      "en": "2cba6564cc"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.4",
+      "en": "482bc1cbf4"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.5",
+      "en": "0f6228acce"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.8",
+      "en": "c415bf5426"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.9",
+      "en": "01864b9774"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.12",
+      "en": "37a1d69225"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.13",
+      "en": "ecb95f0fe1"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.16",
+      "en": "f1e1adce5e"
+    },
+    {
+      "id": "birth-star-shravana.title",
+      "en": "66ece26e89"
+    },
+    {
+      "id": "birth-star-shravana.0",
+      "en": "6329c10e6d"
+    },
+    {
+      "id": "birth-star-shravana.1",
+      "en": "0bc1af6e80"
+    },
+    {
+      "id": "birth-star-shravana.4",
+      "en": "ff566b0113"
+    },
+    {
+      "id": "birth-star-shravana.5",
+      "en": "c2dd0b586c"
+    },
+    {
+      "id": "birth-star-shravana.8",
+      "en": "1a3a309b0b"
+    },
+    {
+      "id": "birth-star-shravana.9",
+      "en": "006e79fe4b"
+    },
+    {
+      "id": "birth-star-shravana.12",
+      "en": "f4a3591b73"
+    },
+    {
+      "id": "birth-star-shravana.13",
+      "en": "ea3fbe7735"
+    },
+    {
+      "id": "birth-star-shravana.16",
+      "en": "f4b6f6b334"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}
