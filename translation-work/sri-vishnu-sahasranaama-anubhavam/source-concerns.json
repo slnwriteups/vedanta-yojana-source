@@ -168,6 +168,22 @@
       "batch": 30,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-520-528.11",
+      "english": "Periyazhwar sings of the Lord \"who spread the serpent as His bed upon the white flood (of milk), and lies in His feigned sleep\" (veḷḷai veḷḷattin mēl oru pāmbai meththaiyāga viriththu athan mēlē kaḷḷa niththirai koḷginṟa). His sleep is yoga nidra, in which He is thinking of the welfare of the world.",
+      "note": "Periyazhwar phrase 'veḷḷai veḷḷattin mēl oru pāmbai meththaiyāga viriththu athan mēlē kaḷḷa niththirai koḷginṟa' transliterated via the Tamil (வெள்ளை வெள்ளத்தின் மேல் ஒரு பாம்பை மெத்தையாக விரித்து அதன் மேலே கள்ள நித்திரை கொள்கின்ற) per Standard §3.3; verify against the authoritative text.",
+      "batch": 31,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-544-563.13",
+      "english": "The one who is deep and mysterious, because His transcendent nature, revealed by the Pancha-Upanishad mantras, is beyond our full understanding.",
+      "note": "Nammazhwar phrase 'ñālam uṇḍu umizhndha mālai eṇṇumāṟu aṟiya māṭṭēn' transliterated via the Tamil (ஞாலம் உண்டு உமிழ்ந்த மாலை எண்ணுமாறு அறிய மாட்டேன்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 32,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
