@@ -144,6 +144,30 @@
       "batch": 27,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-464-470.29",
+      "english": "Sri Bhattar lists the many acts of the Lord during the churning: churning the ocean, supporting the mountain, overcoming the enemies, and distributing the nectar. Nammazhwar marvels at \"the skill of the one who churned the ocean and left in such a way that the devas ate the nectar while the asuras were left out\" (kūḍi nīraik kaḍaindavāṟum amudam dēvar uṇṇa asurargaḷai vīḍum vaṇṇaṅgaḷ seidu pōna vittagamum).",
+      "note": "Tamil phrases quoted only in romanisation (item 0 Nammazhwar 'kūḍi nīraik kaḍaindavāṟum … vittagamum', item 7 Andal 'kanṟu mēyttu inidu ugandha kāḷāy', item 17 Nammazhwar 'neṟi ellām eḍuttu uraitta niṟai ñāṉattu orumūrti') transliterated via the Tamil (கூடி நீரைக் கடைந்தவாறும் அமுதம் தேவர் உண்ண அசுரர்களை வீடும் வண்ணங்கள் செய்து போன வித்தகமும்; கன்று மேய்த்து இனிது உகந்த காளாய்; நெறி எல்லாம் எடுத்து உரைத்த நிறை ஞானத்து ஒருமூர்த்தி) per Standard §3.3; verify against the authoritative text.",
+      "batch": 28,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-471-482.83",
+      "english": "Sri Bhattar explains that the Lord is the supreme master of all beings, because He is the master even of Brahma, Yama, and the others who are themselves the lords of beings. Nammazhwar sings that He established the other gods in their places, and He Himself remains the Lord of those gods (niṟuttinān deivaṅgaḷāga a-ddeiva nāyagan tānē).",
+      "note": "Nammazhwar phrases quoted only in romanisation (items 9, 13, 15, 17, 29: 'niṟuttinān deivaṅgaḷāga a-ddeiva nāyagan tānē', 'inbuṟum ivviḷaiyāṭṭuḍaiyān', 'vānōr perumān māmāyan vaikunthan emperumān', 'manisarkku dēvar pōla dēvarkkum dēvan', 'ūzhi thōṟu ūzhi vaiyam kākkum āzhi nīr vaṇṇan') transliterated via the Tamil per Standard §3.3; verify against the authoritative text. In item 15 the glossary form एम्पेरुमान् was used for 'emperumān'.",
+      "batch": 29,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-503-516.63",
+      "english": "Thondaradippodi Azhwar says, \"You stay with them and know all that is in the hearts of those who think of You\" (uḷḷuvār uḷḷiṟṟellām uḍan irundu aṟidi). Sri Bhattar explains that the Lord watches over His devotees constantly, out of concern that no harm should come to them.",
+      "note": "Tamil phrases quoted only in romanisation (item 28 Thondaradippodi Azhwar 'uḷḷuvār uḷḷiṟṟellām uḍan irundu aṟidi', item 30 Nammazhwar 'pul eṟumbu ādi onṟu inṟiyē') transliterated via the Tamil (உள்ளுவார் உள்ளிற்றெல்லாம் உடன் இருந்து அறிதி; புல் எறும்பு ஆதி ஒன்று இன்றியே) per Standard §3.3; verify against the authoritative text.",
+      "batch": 30,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
