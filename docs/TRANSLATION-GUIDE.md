@@ -119,7 +119,7 @@ A verse given **only** in romanised form (no Devanagari above it) is written in 
 - **Tamil:** use the Grantha-assisted spelling of the live verses:
   - ś → ஶ (e.g. ஸுதர்ஶன); ṣ → ஷ; s → ஸ; j → ஜ; h → ஹ;
   - aspirates fold into the plain letter (bh → ப, dh → த);
-  - ṛ → ரு; dental n → ந; ṃ → ம் (or the nasal of the following consonant, as in வேங்கட); visarga → ஃ.
+  - ṛ → ரு; vocalic ḷ → லு, like ṛ (மாலாக்லுப்தாஸந, owner decision 2026-10-31); dental n → ந; ṃ → ம் (or the nasal of the following consonant, as in வேங்கட); visarga → ஃ.
 
   In **prose**, the Tamil glossary forms win (சுதர்சனம், not ஸுதர்ஶனம்). `iastToScript`'s Tamil mode follows the Sankalpam convention (ś → ச), so check its Tamil output against these rules.
 

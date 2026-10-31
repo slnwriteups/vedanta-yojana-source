@@ -101,11 +101,11 @@ const TA_CONS: Record<string, string> = {
   "श": "ஶ", "ष": "ஷ", "स": "ஸ", "ह": "ஹ",
 };
 const TA_VOWEL: Record<string, string> = {
-  "अ": "அ", "आ": "ஆ", "इ": "இ", "ई": "ஈ", "उ": "உ", "ऊ": "ஊ", "ऋ": "ரு", "ॠ": "ரூ",
+  "अ": "அ", "आ": "ஆ", "इ": "இ", "ई": "ஈ", "उ": "உ", "ऊ": "ஊ", "ऋ": "ரு", "ॠ": "ரூ", "ऌ": "லு", "ॡ": "லூ",
   "ए": "ஏ", "ऐ": "ஐ", "ओ": "ஓ", "औ": "ஔ",
 };
 const TA_SIGN: Record<string, string> = {
-  "ा": "ா", "ि": "ி", "ी": "ீ", "ु": "ு", "ू": "ூ", "ृ": "்ரு", "ॄ": "்ரூ",
+  "ा": "ா", "ि": "ி", "ी": "ீ", "ु": "ு", "ू": "ூ", "ृ": "்ரு", "ॄ": "்ரூ", "ॢ": "்லு", "ॣ": "்லூ",
   "े": "ே", "ै": "ை", "ो": "ோ", "ौ": "ௌ",
 };
 const TA_CLASS_NASAL: Array<[RegExp, string]> = [
@@ -127,7 +127,7 @@ function tamilDentalN(chars: string[], i: number): string {
 
 /**
  * Devanagari → Tamil, Grantha-assisted (TRANSLATION-GUIDE §5.2): aspirates and
- * voiced stops fold into the plain letter, ś → ஶ, ṣ s j h → ஷ ஸ ஜ ஹ, ṛ → ரு,
+ * voiced stops fold into the plain letter, ś → ஶ, ṣ s j h → ஷ ஸ ஜ ஹ, ṛ → ரு, ḷ → லு,
  * anusvara → the nasal of the next consonant's class (ம் otherwise),
  * visarga → ஃ, श्री → ஸ்ரீ, ॐ → ஓம்.
  */

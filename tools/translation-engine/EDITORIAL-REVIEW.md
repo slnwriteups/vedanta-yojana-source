@@ -73,7 +73,7 @@ The "approved usage" column is evidence from published paragraphs whose English 
 ### Other source concerns (separate; not proposed for change in this phase)
 
 - **¶11 of the same chapter: "Sages such as Narada, the Alwars, and composers…"** This uses "Alwars" against the settled Āzhwār / Āzhwārs convention (Standard §6.1). A minimal correction is "the Āzhwārs". It awaits the owner's approval like ¶7 and ¶13.
-- **`dhyana-shlokam` ¶3, Tamil verse.** मालाकॢप्तासन contains vocalic ḷ (ॢ). The Standard's §3.2 Tamil rules have no letter for it, and no approved Tamil in the corpus writes it (this is its only occurrence in all content). Tamil for this chapter is held until the owner sets the convention. One common reading writes ḷ as லு (மாலாக்லுப்தாஸன); the engine will not choose. This is an owner or scholar decision. Once it is decided, the rule goes into `scripts/translation/mechanical.ts` and the Standard's §3.2.
+- **`dhyana-shlokam` ¶3, Tamil verse.** मालाकॢप्तासन contains vocalic ḷ (ॢ). The Standard's §3.2 Tamil rules have no letter for it, and no approved Tamil in the corpus writes it (this is its only occurrence in all content). Tamil for this chapter is held until the owner sets the convention. One common reading writes ḷ as லு (மாலாக்லுப்தாஸன); the engine will not choose. This is an owner or scholar decision. Once it is decided, the rule goes into `scripts/translation/mechanical.ts` and the Standard's §3.2. **Settled 2026-10-31 by the owner (instruction to complete the chapter): ḷ is written லு, like ṛ → ரு; the rule is in `mechanical.ts` and TRANSLATION-GUIDE §5.2.**
 - **Pilot chapters:** source concerns raised by the pilot translators and reviewers are listed in the pilot report (`translation-work/sri-vishnu-sahasranaama-anubhavam/experiments/phase3-pilot/REPORT.md`).
 
 ## E. Decisions raised by the Phase 3 pilot (pending)
@@ -86,7 +86,7 @@ Details and evidence: `translation-work/sri-vishnu-sahasranaama-anubhavam/experi
 | E2 | `Sri Bhattar` glossary lines | hi भट्टर 10× in the pilot vs approved श्री भट्ट 53×; te used two spellings | ஸ்ரீ பட்டர் / ಶ್ರೀ ಭಟ್ಟರ್ / श्री भट्ट / శ్రీ భట్టర్ (pilot `pending-terms.json`) |
 | E3 | No restrictive or emphatic particles beyond the English | Added ஏ / ಏ / ही in 6 places across 3 chapters | **Decided 2026-10-31; in the prompt card's DOCTRINE section** |
 | E4 | Telugu sages: plain glossary forms or honorific | వేదవ్యాసుడు / అగస్త్యుడు plain vs honorific in the drafts | Owner's choice |
-| E5 | Tamil vocalic ḷ (`dhyana-shlokam` ¶3) | Only occurrence in the corpus; no precedent | Owner or scholar convention, then a rule in `mechanical.ts` and Standard §3.2 |
+| E5 | Tamil vocalic ḷ (`dhyana-shlokam` ¶3) | Only occurrence in the corpus; no precedent | Settled 2026-10-31: ḷ → லு (owner); rule in `mechanical.ts` and TRANSLATION-GUIDE §5.2 |
 | E6 | 28 terms proposed by the pilot | `phase3-pilot/pending-terms.json` | Review with section B |
 | E7 | 15 English-source concerns and 6 theological concerns | `phase3-pilot/source-concerns.json`; REPORT §7 | Owner settles the English; translations follow it |
 
