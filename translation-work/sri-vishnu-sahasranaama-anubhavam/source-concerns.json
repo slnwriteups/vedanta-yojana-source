@@ -648,6 +648,22 @@
       "batch": 138,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.3",
+      "english": "The Lord resides in Sri Vaikuntham, situated in the centre of the milky ocean (Ksheerabdhi). Just as our earthly ocean has sand at the shore, the shore of Ksheerabdhi is studded with various riches such as diamonds, jewels, pearls, etc., which have originated from the Lord coming in contact with Ksheerabdhi. Zooming in on the Lord, He is seen adorning the holy garland, Mukunda. The Lord is seen reclining on Adisesha, above whom is said to be a cloud continuously showering the Lord gently with drops of Amritam or nectar, which ensures eternal happiness in His abode.",
+      "note": "English reads 'He is seen adorning the holy garland, Mukunda', which appears to name the garland Mukunda; rendered as 'the Lord, Mukunda, is seen wearing the holy garland' (முகுந்தனான அவர் புனித மாலையை அணிந்திருப்பதைக் காண்கிறோம்). Owner to confirm the intended reading.",
+      "batch": 148,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.title",
+      "english": "Dhyana Shlokam",
+      "note": "Vocalic ḷ in the generated Tamil verse (मालाकॢप्तासनस्थः → மாலாக்லுப்தாஸனஸ்தஃ) follows the owner's 2026-10-31 decision ḷ → லு, matching the owner-supplied Tamil Sahasranāmam edition (Sunder Kidāmbi, prapatti.com), which prints மாலாக்லு'ப்தாஸநஸ்த₂:.",
+      "batch": 148,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
