@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   formatAnnouncementDate,
+  announcementsForMobile,
   isNewAnnouncement,
   localizeAnnouncement,
   parseAnnouncements,
@@ -55,6 +56,30 @@ test("parseAnnouncements sorts newest first and keeps same-day file order", () =
     ],
   });
   assert.deepEqual(parsed?.map((a) => a.id), ["b", "c", "a"]);
+});
+
+test("mobile targeting keeps shared notices and isolates operating systems", () => {
+  const parsed = parseAnnouncements({ announcements: [
+    entry({ id: "shared" }),
+    entry({ id: "android", mobilePlatforms: ["android"] }),
+    entry({ id: "ios", mobilePlatforms: ["ios"] }),
+    entry({ id: "website", platforms: ["website"] }),
+  ] })!;
+  assert.deepEqual(announcementsForMobile(parsed, "ios").map(a => a.id), ["shared", "ios"]);
+  assert.deepEqual(announcementsForMobile(parsed, "android").map(a => a.id), ["shared", "android"]);
+  for (const mobilePlatforms of [[], ["windows"], "android"]) {
+    assert.equal(parseAnnouncements({ announcements: [entry({ mobilePlatforms })] }), null);
+  }
+});
+
+test("published Android install notices are hidden on iOS", () => {
+  const all = loadAnnouncements();
+  const ids = ["2026-10-26-android-1-1-0", "2026-09-24-telugu-in-the-app"];
+  for (const id of ids) {
+    assert.ok(announcementsForMobile(all, "android").some(a => a.id === id));
+    assert.ok(!announcementsForMobile(all, "ios").some(a => a.id === id));
+  }
+  assert.ok(announcementsForMobile(all, "ios").some(a => a.id === "2026-10-31-deepavali-observance-dates"));
 });
 
 test("parseAnnouncements rejects the whole document on any invalid entry or duplicate id", () => {
@@ -111,3 +136,4 @@ test("preferredAnnouncements: live wins, but never an older list than the bundle
   assert.equal(preferredAnnouncements(null, null, bundled)[0].id, "bundled");
   assert.deepEqual(preferredAnnouncements(null, null, null), []);
 });
+

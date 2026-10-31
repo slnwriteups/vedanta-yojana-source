@@ -21,6 +21,7 @@
  */
 
 export type AnnouncementPlatform = "app" | "website";
+export type AnnouncementMobilePlatform = "ios" | "android";
 export type AnnouncementLanguage = "ta" | "kn" | "hi" | "te";
 
 export interface AnnouncementLink {
@@ -42,6 +43,8 @@ export interface Announcement {
   date: string;
   /** Where the change applies, shown as small tags. */
   platforms: AnnouncementPlatform[];
+  /** Omitted means both iOS and Android; applies only to the app. */
+  mobilePlatforms?: AnnouncementMobilePlatform[];
   title: string;
   body: string;
   link?: AnnouncementLink;
@@ -85,10 +88,11 @@ function parseTranslations(value: unknown): Announcement["translations"] | null 
 
 function parseAnnouncement(value: unknown): Announcement | null {
   if (!isRecord(value)) return null;
-  const { id, date, platforms, title, body, link, translations } = value;
+  const { id, date, platforms, mobilePlatforms, title, body, link, translations } = value;
   if (!isNonEmptyString(id) || !isNonEmptyString(title) || !isNonEmptyString(body)) return null;
   if (typeof date !== "string" || !DATE_PATTERN.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) return null;
   if (!Array.isArray(platforms) || platforms.length === 0 || !platforms.every((p) => PLATFORMS.includes(p))) return null;
+  if (mobilePlatforms !== undefined && (!Array.isArray(mobilePlatforms) || mobilePlatforms.length === 0 || !mobilePlatforms.every((p) => p === "ios" || p === "android"))) return null;
 
   const parsedLink = link === undefined ? undefined : parseLink(link);
   if (parsedLink === null) return null;
@@ -99,6 +103,7 @@ function parseAnnouncement(value: unknown): Announcement | null {
     id,
     date,
     platforms: platforms as AnnouncementPlatform[],
+    ...(mobilePlatforms ? { mobilePlatforms: mobilePlatforms as AnnouncementMobilePlatform[] } : {}),
     title,
     body,
     ...(parsedLink ? { link: parsedLink } : {}),
@@ -129,6 +134,13 @@ export function parseAnnouncements(data: unknown): Announcement[] | null {
     .map((announcement, index) => ({ announcement, index }))
     .sort((a, b) => b.announcement.date.localeCompare(a.announcement.date) || a.index - b.index)
     .map(({ announcement }) => announcement);
+}
+
+/** Filter before limiting Home's list, so irrelevant notices never consume a slot. */
+export function announcementsForMobile(announcements: Announcement[], platform: string): Announcement[] {
+  if (platform !== "ios" && platform !== "android") return [];
+  return announcements.filter((announcement) => announcement.platforms.includes("app") &&
+    (!announcement.mobilePlatforms || announcement.mobilePlatforms.includes(platform)));
 }
 
 /** The reader's language version of an announcement, falling back field by field to English. */
@@ -194,3 +206,4 @@ export function preferredAnnouncements(...candidates: (Announcement[] | null)[])
   const latest = valid.reduce((max, list) => (newest(list) > max ? newest(list) : max), "");
   return valid.find((list) => newest(list) === latest) ?? [];
 }
+

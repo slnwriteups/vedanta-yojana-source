@@ -95,6 +95,7 @@ export function WhatsNewList({
       {shown.map((announcement) => (
         <li
           key={announcement.id}
+          id={announcement.id}
           className="relative overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4"
         >
           <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-[var(--accent)]" />
@@ -136,3 +137,4 @@ function AnnouncementLink({ href, label }: { href: string; label: string }) {
     </a>
   );
 }
+

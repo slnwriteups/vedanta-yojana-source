@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-import { Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementsForMobile,
   formatAnnouncementDate,
   isNewAnnouncement,
   isValidLastSeenDate,
@@ -53,7 +54,10 @@ export function WhatsNewList({
   }, [announcements, markSeen]);
 
   const shown = useMemo(
-    () => (limit === undefined ? announcements : announcements.slice(0, limit)).map((a) => localizeAnnouncement(a, language)),
+    () => {
+      const relevant = announcementsForMobile(announcements, Platform.OS);
+      return (limit === undefined ? relevant : relevant.slice(0, limit)).map((a) => localizeAnnouncement(a, language));
+    },
     [announcements, limit, language]
   );
 
@@ -70,7 +74,7 @@ export function WhatsNewList({
             <Text style={[styles.compactDate, { color: theme.colors.muted }]}>{formatAnnouncementDate(announcement.date)}</Text>
             <View style={styles.compactText}>
               <Pressable
-                onPress={() => router.push("/whats-new" as never)}
+                onPress={() => openLink(announcement.link?.href ?? "/whats-new")}
                 accessibilityRole="link"
                 style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
               >
@@ -119,7 +123,13 @@ export function WhatsNewList({
               </Text>
             ) : null}
           </View>
-          <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+          {announcement.link ? (
+            <Pressable onPress={() => openLink(announcement.link!.href)} accessibilityRole="link" hitSlop={spacing.sm}>
+              <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+            </Pressable>
+          ) : (
+            <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
+          )}
           <Text style={[styles.body, { color: theme.colors.muted }]}>{announcement.body}</Text>
           {announcement.link ? (
             <Pressable
@@ -222,3 +232,4 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
+
