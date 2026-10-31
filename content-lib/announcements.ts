@@ -41,6 +41,8 @@ export interface Announcement {
   id: string;
   /** YYYY-MM-DD, the day the change reached readers. */
   date: string;
+  /** Remain above newer notices through this local calendar date, inclusive. */
+  pinnedUntil?: string;
   /** Where the change applies, shown as small tags. */
   platforms: AnnouncementPlatform[];
   /** Omitted means both iOS and Android; applies only to the app. */
@@ -88,11 +90,13 @@ function parseTranslations(value: unknown): Announcement["translations"] | null 
 
 function parseAnnouncement(value: unknown): Announcement | null {
   if (!isRecord(value)) return null;
-  const { id, date, platforms, mobilePlatforms, title, body, link, translations } = value;
+  const { id, date, pinnedUntil, platforms, mobilePlatforms, title, body, link, translations } = value;
   if (!isNonEmptyString(id) || !isNonEmptyString(title) || !isNonEmptyString(body)) return null;
   if (typeof date !== "string" || !DATE_PATTERN.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) return null;
   if (!Array.isArray(platforms) || platforms.length === 0 || !platforms.every((p) => PLATFORMS.includes(p))) return null;
   if (mobilePlatforms !== undefined && (!Array.isArray(mobilePlatforms) || mobilePlatforms.length === 0 || !mobilePlatforms.every((p) => p === "ios" || p === "android"))) return null;
+
+  if (pinnedUntil !== undefined && (typeof pinnedUntil !== "string" || !DATE_PATTERN.test(pinnedUntil) || Number.isNaN(Date.parse(`${pinnedUntil}T00:00:00Z`)) || new Date(`${pinnedUntil}T00:00:00Z`).toISOString().slice(0, 10) !== pinnedUntil)) return null;
 
   const parsedLink = link === undefined ? undefined : parseLink(link);
   if (parsedLink === null) return null;
@@ -102,6 +106,7 @@ function parseAnnouncement(value: unknown): Announcement | null {
   return {
     id,
     date,
+    ...(pinnedUntil ? { pinnedUntil: pinnedUntil as string } : {}),
     platforms: platforms as AnnouncementPlatform[],
     ...(mobilePlatforms ? { mobilePlatforms: mobilePlatforms as AnnouncementMobilePlatform[] } : {}),
     title,
@@ -207,3 +212,17 @@ export function preferredAnnouncements(...candidates: (Announcement[] | null)[])
   return valid.find((list) => newest(list) === latest) ?? [];
 }
 
+
+/** Local date: festival notices stay pinned until that day has ended for the reader. */
+export function announcementLocalDate(today: Date = new Date()): string {
+  return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+}
+
+/** Presentation order only; parsing/caching/read tracking still use publication dates. */
+export function sortAnnouncements(announcements: readonly Announcement[], today: string = announcementLocalDate()): Announcement[] {
+  const pinned = (a: Announcement) => a.pinnedUntil !== undefined && today <= a.pinnedUntil;
+  return announcements.map((announcement, index) => ({ announcement, index }))
+    .sort((a, b) => Number(pinned(b.announcement)) - Number(pinned(a.announcement)) ||
+      b.announcement.date.localeCompare(a.announcement.date) || a.index - b.index)
+    .map(({ announcement }) => announcement);
+}

@@ -3,6 +3,8 @@ import { Linking, Platform, Pressable, StyleSheet, Text, View } from "react-nati
 import { useRouter } from "expo-router";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementLocalDate,
+  sortAnnouncements,
   announcementsForMobile,
   formatAnnouncementDate,
   isNewAnnouncement,
@@ -41,6 +43,12 @@ export function WhatsNewList({
   const t = useT();
   // undefined = not read yet (no badges); null = never opened the list.
   const [lastSeen, setLastSeen] = useState<string | null | undefined>(undefined);
+  const [today, setToday] = useState(announcementLocalDate);
+  useEffect(() => {
+    const timer = setInterval(() => setToday(announcementLocalDate()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   useEffect(() => {
@@ -58,10 +66,10 @@ export function WhatsNewList({
 
   const shown = useMemo(
     () => {
-      const relevant = announcementsForMobile(announcements, Platform.OS);
+      const relevant = sortAnnouncements(announcementsForMobile(announcements, Platform.OS), today);
       return (limit === undefined ? relevant : relevant.slice(0, limit)).map((a) => localizeAnnouncement(a, language));
     },
-    [announcements, limit, language]
+    [announcements, limit, language, today]
   );
 
   const openLink = (href: string) => {

@@ -2,6 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   formatAnnouncementDate,
+  sortAnnouncements,
+  announcementLocalDate,
   announcementsForMobile,
   isNewAnnouncement,
   localizeAnnouncement,
@@ -137,3 +139,24 @@ test("preferredAnnouncements: live wins, but never an older list than the bundle
   assert.deepEqual(preferredAnnouncements(null, null, null), []);
 });
 
+
+test("festival pin survives newer notices, includes the last day and expires afterwards", () => {
+  const parsed = parseAnnouncements({ announcements: [
+    entry({ id: "newer", date: "2026-11-05" }),
+    entry({ id: "festival", date: "2026-10-31", pinnedUntil: "2026-11-09" }),
+  ] })!;
+  assert.equal(parsed[0].id, "newer", "cache order remains chronological");
+  assert.equal(parsed[1].pinnedUntil, "2026-11-09");
+  assert.deepEqual(sortAnnouncements(parsed, "2026-11-09").map(a => a.id), ["festival", "newer"]);
+  assert.deepEqual(sortAnnouncements(parsed, "2026-11-10").map(a => a.id), ["newer", "festival"]);
+  assert.equal(parsed[0].id, "newer", "presentation sorting does not mutate cache order");
+  assert.equal(preferredAnnouncements(parsed)[0].id, "newer");
+});
+
+test("pin dates reject malformed and nonexistent days", () => {
+  for (const pinnedUntil of [true, "forever", "2026-02-30", "2026-13-01", "2026-11-09T00:00:00Z"]) {
+    assert.equal(parseAnnouncements({ announcements: [entry({ pinnedUntil })] }), null);
+  }
+  assert.equal(announcementLocalDate(new Date(2026, 10, 9, 23, 59)), "2026-11-09");
+  assert.equal(announcementLocalDate(new Date(2026, 10, 10, 0, 0)), "2026-11-10");
+});

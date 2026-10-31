@@ -4,6 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import {
   ANNOUNCEMENTS_LAST_SEEN_KEY,
+  announcementLocalDate,
+  sortAnnouncements,
   formatAnnouncementDate,
   isNewAnnouncement,
   isValidLastSeenDate,
@@ -42,6 +44,12 @@ export function WhatsNewList({
   const t = useT();
   // undefined = not read yet (no badges); null = never opened the list.
   const [lastSeen, setLastSeen] = useState<string | null | undefined>(undefined);
+  const [today, setToday] = useState(announcementLocalDate);
+  useEffect(() => {
+    const timer = setInterval(() => setToday(announcementLocalDate()), 60_000);
+    return () => clearInterval(timer);
+  }, []);
+
 
   useEffect(() => {
     let cancelled = false;
@@ -59,8 +67,11 @@ export function WhatsNewList({
   }, [announcements, markSeen]);
 
   const shown = useMemo(
-    () => (limit === undefined ? announcements : announcements.slice(0, limit)).map((a) => localizeAnnouncement(a, language)),
-    [announcements, limit, language]
+    () => {
+      const ordered = sortAnnouncements(announcements, today);
+      return (limit === undefined ? ordered : ordered.slice(0, limit)).map((a) => localizeAnnouncement(a, language));
+    },
+    [announcements, limit, language, today]
   );
 
   if (compact) {
