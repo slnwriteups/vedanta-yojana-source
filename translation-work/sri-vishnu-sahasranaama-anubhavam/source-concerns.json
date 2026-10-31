@@ -296,6 +296,22 @@
       "batch": 55,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-946-992.33",
+      "english": "Even when He appears to be sleeping on Adisesha in the milky ocean, He is in yoga nidra, always awake and thinking of ways to help the jeevaathmas reach Him. Nammazhwar describes this as the Lord's sleep in which He is thinking of the protection of the world (ulagu aḷikkum yōga nidrai).",
+      "note": "Nammazhwar phrases quoted only in romanisation (item 10 'ulagu aḷikkum yōga nidrai', item 24 'vaikuntham puguvadu maṇṇavar vidhiyē', item 28 'uṇṇum sōṟu parugu nīr thinnum veṟṟilaiyum ellām kaṇṇan') transliterated via the Tamil per Standard §3.3; verify against the authoritative text.",
+      "batch": 58,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-993-1000.6",
+      "english": "The sound of the Panchajanya, when the Lord blows it, strikes terror into the hearts of the wicked and fills the hearts of His devotees with joy. Andal, in her Nachiyar Thirumozhi, asks the Panchajanya, which has the good fortune of touching the Lord's lips, \"Does His mouth smell of camphor? Does it smell of the lotus? Tell me, O white conch!\" (karpūram nāRumO kamalappū nāzhumō).",
+      "note": "Andal phrase quoted in romanisation as 'karpūram nāRumO kamalappū nāzhumō' (Nāchiyār Tirumoḻi 7.1). The second 'nāzhumō' appears to be a typo in the English for 'nāṟumō' (நாறுமோ); the Hindi follows the Tamil (கற்பூரம் நாறுமோ கமலப்பூ நாறுமோ → कर्पूरम् नाऱुमो कमलप्पू नाऱुमो). The authoritative text may read 'karuppūram'; owner to verify. Item 14 Andal 'śārṅgam udaitta sara mazhai pōl' (Tiruppāvai 4) transliterated via the Tamil (சார்ங்கம் உதைத்த சர மழை போல்); verify.",
+      "batch": 60,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
