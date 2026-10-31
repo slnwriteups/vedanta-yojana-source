@@ -1,5 +1,5 @@
 import { parseAnnouncements } from '../../content-lib/announcements.ts';
-import { PUSH_TOKEN, subscription, targets, messageFor } from './core.js';
+import { PUSH_TOKEN, subscription, targets, messageFor, publicationInstant, eligibleForPush } from './core.js';
 
 const JSON_HEADERS = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' };
 const response = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: JSON_HEADERS });
@@ -80,11 +80,11 @@ export class AnnouncementPushStore {
     let discovered = 0;
     let enqueued = 0;
     for (const a of [...list].reverse()) {
-      if (a.date > new Date(now).toISOString().slice(0, 10)) continue;
+      if (publicationInstant(a) > now) continue;
       if (this.sql.exec('SELECT id FROM announcements WHERE id=?', a.id).toArray().length) continue;
       discovered++;
       this.ctx.storage.transactionSync(() => {
-        if (initialized && a.date <= new Date(now).toISOString().slice(0, 10) && Date.parse(a.date + 'T23:59:59Z') >= now - 2 * 86400000) {
+        if (initialized && eligibleForPush(a, now)) {
           for (const sub of this.sql.exec('SELECT * FROM subscribers').toArray()) {
             if (targets(a, sub.platform)) { this.sql.exec('INSERT OR IGNORE INTO queue (announcement, token, payload, created) VALUES (?, ?, ?, ?)', a.id, sub.token, JSON.stringify(messageFor(a, sub)), now); enqueued++; }
           }
