@@ -1,6 +1,18 @@
 {
   "announcements": [
     {
+      "id": "2026-11-01-android-push-diagnostics-test",
+      "date": "2026-11-01",
+      "platforms": [
+        "app"
+      ],
+      "mobilePlatforms": [
+        "android"
+      ],
+      "title": "Android push notification verification",
+      "body": "This is a one-time diagnostic test of Vedanta Yojana's Android announcement push notifications. If this appeared in your Android notification tray, please tap it to verify that the announcement opens inside the app. No action is required."
+    },
+    {
       "id": "2026-10-31-enable-announcement-notifications-reissued",
       "date": "2026-10-31",
       "platforms": [
