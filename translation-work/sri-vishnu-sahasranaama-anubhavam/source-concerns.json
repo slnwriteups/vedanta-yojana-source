@@ -224,6 +224,30 @@
       "batch": 38,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-626-629.12",
+      "english": "Nammazhwar calls Him \"the one whose fame has no equal\" (nigar il pugazhāy). There are two kinds of fame: the fame that comes from wealth and position, which is temporary, and the fame that comes from following dharma, which lasts forever. The Lord's fame is of the second kind.",
+      "note": "Nammazhwar phrases quoted only in romanisation (item 5 'nigar il pugazhāy', item 21 'sēlēi kaṇṇiyarum perum selvamum nan makkaḷum mēlāt thāi thandhaiyum avarē') transliterated via the Tamil (நிகர் இல் புகழாய்; சேலேய் கண்ணியரும் பெரும் செல்வமும் நன் மக்களும் மேலாத் தாய் தந்தையும் அவரே) per Standard §3.3; verify against the authoritative text. Item 3 temple names (Thiruvekka, 'Sonna Vannam Seida Perumal') rendered तिरुवेक्का and सॊन्न वण्णम् शॆय्द पेरुमाल; verify.",
+      "batch": 39,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-630-643.37",
+      "english": "While all the wealth of this world eventually causes sorrow, the Lord is the only wealth that removes sorrow. Thirumazhisai Azhwar says, \"He becomes our father, our mother, and our Lord, puts an end to our countless births, and takes us into His service\" (attan āgi annai āgi āḷum empirānumāi).",
+      "note": "Tamil phrases quoted only in romanisation (item 0 Thirumazhisai Azhwar 'attan āgi annai āgi āḷum empirānumāi'; Nammazhwar items 11 'ennaik koṇḍu en pāvam tannaiyum pāṟak kaitthu', 16 'ottār mikkārai ilaiyāya māyan', 31 'ulagam mūnṟu udaiyāi') transliterated via the Tamil per Standard §3.3; verify against the authoritative text. Item 26: English gives the earlier naama as 'sūraḥ'; rendered शूरः (the 341st naama is śūraḥ); owner to confirm the English spelling.",
+      "batch": 40,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-644-660.48",
+      "english": "Kamsa sent the asura Kesi, in the form of a horse, to kill the child Krishna, but Krishna thrust His arm into its mouth and destroyed it. Andal refers to this in the Thiruppavai, \"mā vāi kīṇḍānai\", the one who tore apart the mouth of the horse. Sage Vyasa himself gives this as another meaning of the name Kesava, \"the slayer of Kesi.\"",
+      "note": "Tamil phrases quoted only in romanisation (item 2 Andal 'mā vāi kīṇḍānai'; item 4 Thondaradippodi Azhwar 'paccai mā malai pōl mēni'; Nammazhwar item 10 'parugu innamudē', item 27 'dēvum epporuḷum paḍaikka pūvil nānmuganaip paḍaitta dēvan emperumān') transliterated via the Tamil per Standard §3.3; verify against the authoritative text.",
+      "batch": 41,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
