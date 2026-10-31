@@ -352,6 +352,14 @@
       "batch": 86,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-211-225.23",
+      "english": "The one who is constantly blessing His devotees.",
+      "note": "Thiruppanazhwar line 'en amudhinaik kaṇḍa kaṇgaḷ maṟṟonṟinaik kāṇāvē' (Amalanādipirān 10) written in Tamil as என் அமுதினைக் கண்ட கண்கள் மற்றொன்றினைக் காணாவே; verify against the authoritative text.",
+      "batch": 88,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
