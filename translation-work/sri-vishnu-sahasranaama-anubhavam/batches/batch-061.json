@@ -1,0 +1,199 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 61,
+  "langs": [
+    "hi"
+  ],
+  "items": [
+    {
+      "id": "phala-shruti.title",
+      "en": "6be6f286c1"
+    },
+    {
+      "id": "phala-shruti.0",
+      "en": "1fba11a988"
+    },
+    {
+      "id": "phala-shruti.3",
+      "en": "565c98dfe3"
+    },
+    {
+      "id": "phala-shruti.6",
+      "en": "24fe8178d1"
+    },
+    {
+      "id": "phala-shruti.9",
+      "en": "7ab48e4b73"
+    },
+    {
+      "id": "phala-shruti.12",
+      "en": "a591a5d930"
+    },
+    {
+      "id": "phala-shruti.15",
+      "en": "e92613803d"
+    },
+    {
+      "id": "phala-shruti.18",
+      "en": "7fcb916e9e"
+    },
+    {
+      "id": "phala-shruti.21",
+      "en": "b420982feb"
+    },
+    {
+      "id": "phala-shruti.24",
+      "en": "6cbbe0c5c7"
+    },
+    {
+      "id": "phala-shruti.27",
+      "en": "46401d9905"
+    },
+    {
+      "id": "phala-shruti.30",
+      "en": "7bae3f58b6"
+    },
+    {
+      "id": "phala-shruti.33",
+      "en": "3453cda8ee"
+    },
+    {
+      "id": "phala-shruti.36",
+      "en": "97207ca6a0"
+    },
+    {
+      "id": "phala-shruti.39",
+      "en": "0040fccd36"
+    },
+    {
+      "id": "phala-shruti.42",
+      "en": "0a833ab876"
+    },
+    {
+      "id": "phala-shruti.45",
+      "en": "43a9df7093"
+    },
+    {
+      "id": "phala-shruti.48",
+      "en": "370ea627f2"
+    },
+    {
+      "id": "phala-shruti.51",
+      "en": "e4551aef02"
+    },
+    {
+      "id": "phala-shruti.54",
+      "en": "dc7a2ab9a5"
+    },
+    {
+      "id": "phala-shruti.57",
+      "en": "884a762dcf"
+    },
+    {
+      "id": "phala-shruti.60",
+      "en": "d35d2dc6d8"
+    },
+    {
+      "id": "phala-shruti.63",
+      "en": "b312b48d85"
+    },
+    {
+      "id": "phala-shruti.66",
+      "en": "b31e5e6be0"
+    },
+    {
+      "id": "uttara-bhagam.title",
+      "en": "0f457a2cba"
+    },
+    {
+      "id": "uttara-bhagam.0",
+      "en": "9894137e7c"
+    },
+    {
+      "id": "uttara-bhagam.1",
+      "en": "afc6371357"
+    },
+    {
+      "id": "uttara-bhagam.4",
+      "en": "44c73e421b"
+    },
+    {
+      "id": "uttara-bhagam.5",
+      "en": "32bc4f4fa6"
+    },
+    {
+      "id": "uttara-bhagam.8",
+      "en": "4e33374e35"
+    },
+    {
+      "id": "uttara-bhagam.9",
+      "en": "3bf5d7e9c9"
+    },
+    {
+      "id": "uttara-bhagam.12",
+      "en": "fdb80e77af"
+    },
+    {
+      "id": "uttara-bhagam.13",
+      "en": "55caada659"
+    },
+    {
+      "id": "uttara-bhagam.16",
+      "en": "5bb6980c8f"
+    },
+    {
+      "id": "uttara-bhagam.17",
+      "en": "06d2f8de42"
+    },
+    {
+      "id": "uttara-bhagam.20",
+      "en": "b4eabaefed"
+    },
+    {
+      "id": "uttara-bhagam.21",
+      "en": "f26ccf9c3a"
+    },
+    {
+      "id": "uttara-bhagam.24",
+      "en": "f39f4bdede"
+    },
+    {
+      "id": "uttara-bhagam.25",
+      "en": "a27ce9e66a"
+    },
+    {
+      "id": "uttara-bhagam.28",
+      "en": "964828ca06"
+    },
+    {
+      "id": "uttara-bhagam.29",
+      "en": "32bc4f4fa6"
+    },
+    {
+      "id": "uttara-bhagam.32",
+      "en": "40cd0f7eae"
+    },
+    {
+      "id": "uttara-bhagam.35",
+      "en": "cf2461cf92"
+    },
+    {
+      "id": "uttara-bhagam.38",
+      "en": "2d2d7a5c44"
+    },
+    {
+      "id": "uttara-bhagam.41",
+      "en": "484b80e751"
+    },
+    {
+      "id": "conclusion.title",
+      "en": "e39262defe"
+    },
+    {
+      "id": "conclusion.0",
+      "en": "7f2983e85d"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-hi"
+}
