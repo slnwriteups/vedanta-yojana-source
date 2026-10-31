@@ -1,6 +1,18 @@
 {
   "announcements": [
     {
+      "id": "2026-11-01-android-fcm-v1-credential-verification",
+      "date": "2026-11-01",
+      "platforms": [
+        "app"
+      ],
+      "mobilePlatforms": [
+        "android"
+      ],
+      "title": "Android notification delivery test",
+      "body": "Vedanta Yojana Android push notification test after FCM V1 setup. If this notification appears in your phone's notification tray, please tap it to confirm the announcement opens in the app. No action is needed."
+    },
+    {
       "id": "2026-11-01-android-push-diagnostics-test",
       "date": "2026-11-01",
       "platforms": [
