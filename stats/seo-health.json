@@ -289,6 +289,19 @@
           "warnings": 0
         }
       }
+    },
+    {
+      "checkedAt": "2026-10-31T08:54:12.119Z",
+      "trigger": "deploy",
+      "pages": 541,
+      "errors": 0,
+      "warnings": 16,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 16
+        }
+      }
     }
   ]
 }
