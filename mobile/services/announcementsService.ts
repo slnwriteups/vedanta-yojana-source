@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AppState } from "react-native";
 import bundledAnnouncements from "../../content/announcements.json";
 import {
   ANNOUNCEMENTS_URL,
@@ -11,8 +12,8 @@ import { readJSON, writeJSON } from "../storage";
 /**
  * The app's What's New list (content-lib/announcements.ts has the design).
  *
- * Three copies, best first: the live list on the website, fetched once per
- * launch, so an announcement reaches installed apps as soon as the site
+ * Three copies, best first: the live list on the website, refreshed on
+ * launch and foreground, so an announcement reaches installed apps after the site
  * deploys; the last successful fetch, cached for offline launches; and
  * content/announcements.json bundled into the app itself, so the list is
  * never empty, even offline on first launch. preferredAnnouncements()
@@ -32,10 +33,10 @@ function isCachedList(value: unknown): value is { announcements: unknown[] } {
   return parseAnnouncements(value) !== null;
 }
 
-/** One fetch per app launch, shared by Home and the What's New screen. */
+/** Share in-flight requests; allow a fresh request on the next foreground. */
 let liveRequest: Promise<Announcement[] | null> | null = null;
 function fetchLiveOnce(): Promise<Announcement[] | null> {
-  liveRequest ??= fetchLive();
+  liveRequest ??= fetchLive().finally(() => { liveRequest = null; });
   return liveRequest;
 }
 
@@ -43,7 +44,13 @@ async function fetchLive(): Promise<Announcement[] | null> {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   try {
-    const response = await fetch(ANNOUNCEMENTS_URL, { signal: controller.signal });
+    // GitHub Pages serves this file with max-age=600. A unique URL also
+    // avoids native URL caches that may retain the old response across launches.
+    const response = await fetch(`${ANNOUNCEMENTS_URL}?refresh=${Date.now()}`, {
+      signal: controller.signal,
+      cache: "no-store",
+      headers: { "Cache-Control": "no-cache" },
+    });
     if (!response.ok) return null;
     const data: unknown = await response.json();
     const parsed = parseAnnouncements(data);
@@ -61,15 +68,21 @@ export function useAnnouncements(): Announcement[] {
   const [announcements, setAnnouncements] = useState<Announcement[]>(BUNDLED ?? []);
   useEffect(() => {
     let cancelled = false;
-    (async () => {
+    async function refresh() {
       const cached = parseAnnouncements(await readJSON(CACHE_KEY, isCachedList));
-      if (!cancelled) setAnnouncements(preferredAnnouncements(cached, BUNDLED));
+      if (!cancelled) setAnnouncements(current => preferredAnnouncements(current, cached, BUNDLED));
       const live = await fetchLiveOnce();
-      if (!cancelled) setAnnouncements(preferredAnnouncements(live, cached, BUNDLED));
-    })();
+      if (!cancelled) setAnnouncements(current => preferredAnnouncements(live, current, cached, BUNDLED));
+    }
+    void refresh();
+    const subscription = AppState.addEventListener("change", state => {
+      if (state === "active") void refresh();
+    });
     return () => {
       cancelled = true;
+      subscription.remove();
     };
   }, []);
   return announcements;
 }
+
