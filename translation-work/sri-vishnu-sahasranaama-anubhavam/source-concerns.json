@@ -600,6 +600,46 @@
       "batch": 131,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-946-992.33",
+      "english": "Even when He appears to be sleeping on Adisesha in the milky ocean, He is in yoga nidra, always awake and thinking of ways to help the jeevaathmas reach Him. Nammazhwar describes this as the Lord's sleep in which He is thinking of the protection of the world (ulagu aḷikkum yōga nidrai).",
+      "note": "Nammazhwar phrase 'ulagu aḷikkum yōga nidrai' written in Tamil as உலகு அளிக்கும் யோக நித்திரை; verify against the authoritative text.",
+      "batch": 134,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-946-992.63",
+      "english": "Nammazhwar says that entering Vaikuntham is the destiny of the people of this earth (vaikuntham puguvadu maṇṇavar vidhiyē).",
+      "note": "Nammazhwar phrase 'vaikuntham puguvadu maṇṇavar vidhiyē' written in Tamil as வைகுந்தம் புகுவது மண்ணவர் விதியே; verify against the authoritative text.",
+      "batch": 134,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-946-992.71",
+      "english": "Indeed, food and water have the power to sustain life only because of Him. Nammazhwar says, \"For me, the food I eat, the water I drink, and the betel I chew are all Kannan, my Lord\" (uṇṇum sōṟu parugu nīr thinnum veṟṟilaiyum ellām kaṇṇan).",
+      "note": "Nammazhwar phrase 'uṇṇum sōṟu parugu nīr thinnum veṟṟilaiyum ellām kaṇṇan' written in Tamil as உண்ணும் சோறு பருகு நீர் தின்னும் வெற்றிலையும் எல்லாம் கண்ணன்; verify against the authoritative text.",
+      "batch": 134,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-993-1000.6",
+      "english": "The sound of the Panchajanya, when the Lord blows it, strikes terror into the hearts of the wicked and fills the hearts of His devotees with joy. Andal, in her Nachiyar Thirumozhi, asks the Panchajanya, which has the good fortune of touching the Lord's lips, \"Does His mouth smell of camphor? Does it smell of the lotus? Tell me, O white conch!\" (karpūram nāRumO kamalappū nāzhumō).",
+      "note": "Andal (Nachiyar Thirumozhi) phrase written in Tamil as கற்பூரம் நாறுமோ கமலப்பூ நாறுமோ. The English romanisation reads 'karpūram nāRumO kamalappū nāzhumō'; the second verb appears to be a typo for nāṟumō, and the authoritative text may read karuppūram. Verify against the authoritative text.",
+      "batch": 136,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-993-1000.17",
+      "english": "Andal sings in the Thiruppavai of \"the Lord who rained arrows from the Saarnga bow\" (śārṅgam udaitta sara mazhai pōl).",
+      "note": "Andal Thiruppavai phrase 'śārṅgam udaitta sara mazhai pōl' written in Tamil as சார்ங்கம் உதைத்த சர மழை போல்; verify against the authoritative text.",
+      "batch": 136,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
