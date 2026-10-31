@@ -392,6 +392,30 @@
       "batch": 96,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-352-361.15",
+      "english": "Garuda is said to be the embodiment of the Vedas, and so the Lord's vehicle is worthy of the highest reverence. Nammazhwar calls the Lord \"the one who rides on the bird\" (puḷḷūrdhi).",
+      "note": "Nammazhwar phrases in romanisation written in Tamil script, all to verify: 'puḷḷūrdhi' (புள்ளூர்தி); item 26 'thiruc ceyya kamalak kaṇṇum sevvāyum sevvadiyum' (திருச்செய்ய கமலக் கண்ணும் செவ்வாயும் செவ்வடியும்); item 34 'etthiṟam! uralinōdu iṇaindhirundhu Engiya eḷivē' (Tiruvāymoḻi 1.3.1; எத்திறம்! உரலினோடு இணைந்திருந்து ஏங்கிய எளிவே).",
+      "batch": 97,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-362-385.45",
+      "english": "Nammazhwar sings of the Lord \"whose soft feet are pressed by the Lady of the lotus and by the Lady of the earth\" (malar magaḷ maṟṟum maṇ magaḷ pidikkum mel adiyān).",
+      "note": "Nammazhwar phrases in romanisation written in Tamil script, all to verify: 'malar magaḷ maṟṟum maṇ magaḷ pidikkum mel adiyān' (மலர்மகள் மற்றும் மண்மகள் பிடிக்கும் மெல்லடியான்); item 12 'palapala māya mayakkugaḷāl inbuṟum iv viḷaiyāṭṭudaiyān' (பலபல மாய மயக்குகளால் இன்புறும் இவ்விளையாட்டுடையான்); item 26 'viṇṇavarkku eṇṇal ariyān' (விண்ணவர்க்கு எண்ணல் அரியான்); item 28 'kākkum iyalvinan kaṇṇa perumān' (காக்கும் இயல்வினன் கண்ணபெருமான்).",
+      "batch": 98,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-391-421.15",
+      "english": "Because He is complete in every respect, there is no room in Him for likes and dislikes, wants and desires. Thiruvalluvar describes the Lord as \"the one who has neither desire nor aversion\" (vēṇḍudal vēṇḍāmai ilān). Meditating on this naama helps us move towards that state ourselves.",
+      "note": "Thiruvalluvar (Kural 4) phrase 'vēṇḍudal vēṇḍāmai ilān' written in Tamil as வேண்டுதல் வேண்டாமை இலான்; verify against the authoritative text.",
+      "batch": 99,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
