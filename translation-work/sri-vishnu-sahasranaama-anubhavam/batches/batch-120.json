@@ -1,0 +1,143 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 120,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "naama-697-786.3",
+      "en": "fba485c73a"
+    },
+    {
+      "id": "naama-697-786.5",
+      "en": "bda049183b"
+    },
+    {
+      "id": "naama-697-786.7",
+      "en": "19f4e660b9"
+    },
+    {
+      "id": "naama-697-786.9",
+      "en": "5e76459026"
+    },
+    {
+      "id": "naama-697-786.11",
+      "en": "9e12dabfe0"
+    },
+    {
+      "id": "naama-697-786.13",
+      "en": "06e9891b40"
+    },
+    {
+      "id": "naama-697-786.15",
+      "en": "6d5b50889f"
+    },
+    {
+      "id": "naama-697-786.17",
+      "en": "c94d240759"
+    },
+    {
+      "id": "naama-697-786.19",
+      "en": "9ccaf5f65d"
+    },
+    {
+      "id": "naama-697-786.21",
+      "en": "3b4ada5d99"
+    },
+    {
+      "id": "naama-697-786.23",
+      "en": "967773596b"
+    },
+    {
+      "id": "naama-697-786.25",
+      "en": "b05f1e2fdb"
+    },
+    {
+      "id": "naama-697-786.27",
+      "en": "f55a4a1e05"
+    },
+    {
+      "id": "naama-697-786.31",
+      "en": "c4d5191eff"
+    },
+    {
+      "id": "naama-697-786.33",
+      "en": "6f0d2a6bb2"
+    },
+    {
+      "id": "naama-697-786.35",
+      "en": "5bbaabeda3"
+    },
+    {
+      "id": "naama-697-786.37",
+      "en": "cb33a5de66"
+    },
+    {
+      "id": "naama-697-786.39",
+      "en": "b89065884e"
+    },
+    {
+      "id": "naama-697-786.41",
+      "en": "d0e34751c4"
+    },
+    {
+      "id": "naama-697-786.43",
+      "en": "e5abdb7c88"
+    },
+    {
+      "id": "naama-697-786.45",
+      "en": "437b776a8d"
+    },
+    {
+      "id": "naama-697-786.47",
+      "en": "deaa02ab6f"
+    },
+    {
+      "id": "naama-697-786.49",
+      "en": "d7d12ecb7f"
+    },
+    {
+      "id": "naama-697-786.51",
+      "en": "2e42a22825"
+    },
+    {
+      "id": "naama-697-786.54",
+      "en": "b034ee38ab"
+    },
+    {
+      "id": "naama-697-786.56",
+      "en": "f4d34cf0b0"
+    },
+    {
+      "id": "naama-697-786.58",
+      "en": "58aee65e0d"
+    },
+    {
+      "id": "naama-697-786.60",
+      "en": "d7947e8c20"
+    },
+    {
+      "id": "naama-697-786.62",
+      "en": "c49a82ef5c"
+    },
+    {
+      "id": "naama-697-786.64",
+      "en": "5f035c69f2"
+    },
+    {
+      "id": "naama-697-786.68",
+      "en": "62d657e45c"
+    },
+    {
+      "id": "naama-697-786.70",
+      "en": "465c7cb4cd"
+    },
+    {
+      "id": "naama-697-786.72",
+      "en": "bbcd4fda17"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}

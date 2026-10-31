@@ -552,6 +552,22 @@
       "batch": 118,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-697-786.64",
+      "english": "Andal begins the Thiruppavai by remembering the Lord as \"the son of Nandagopa\" and later sings of \"the pure Yamuna of North Mathura\" (vada madurai maindanai thūya peru nīr yamunai thuṟaivanai). The Yamuna, which witnessed so many of His childhood pastimes, is especially dear to Him.",
+      "note": "Andal Thiruppavai phrases written in Tamil as நந்தகோபன் குமரன் and வடமதுரை மைந்தனைத் தூய பெருநீர் யமுனைத் துறைவனை (English: 'vada madurai maindanai thūya peru nīr yamunai thuṟaivanai'); verify against the authoritative text.",
+      "batch": 120,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-697-786.178",
+      "english": "Sri Bhattar explains that the Lord treats all beings as His own kin. Lord Krishna says in the Gita, \"I am the same towards all beings; there is no one hateful or dear to Me. But those who worship Me with devotion are in Me, and I am in them.\" Andal says in the Thiruppavai, \"Our relationship with You can never be broken\" (unthannōdu uṟavēl namakku iṅgu ozhikka ozhiyādu).",
+      "note": "Andal Thiruppavai phrase 'unthannōdu uṟavēl namakku iṅgu ozhikka ozhiyādu' written in Tamil as உந்தன்னோடு உறவேல் நமக்கு இங்கு ஒழிக்க ஒழியாது; verify against the authoritative text.",
+      "batch": 122,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
