@@ -56,6 +56,46 @@
       "batch": 13,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-334-345.16",
+      "english": "Nammazhwar describes how the Lord, as the inner controller of Rudra, burnt down the three cities of the asuras and gave knowledge to the devas (puram oru mūnṟu eritthu amararkkum aṟivu iyandhu). By destroying their cities, He removed the fears that came upon the devas.",
+      "note": "Nammazhwar line 'puram oru mūnṟu eritthu amararkkum aṟivu iyandhu' transliterated via the Tamil (புரம் ஒரு மூன்று எரித்து அமரர்க்கும் அறிவு இயந்து) per Standard §3.3; verify against the authoritative text.",
+      "batch": 19,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-334-345.34",
+      "english": "Andal sings in the Thiruppavai of the Lord who \"went there and destroyed beautiful Lanka in the south\" (senṟu angu then ilangai seṟṟāi). Periyazhwar sings of how He went and cut off the thousand arms of Banasura. The Lord's valour is always used to go to His devotees' aid.",
+      "note": "Andal's Tiruppavai line 'senṟu angu then ilangai seṟṟāi' transliterated via the Tamil (சென்று அங்கு தென் இலங்கை செற்றாய்) as quoted; the authoritative text may read 'அங்குத் தென்'; verify.",
+      "batch": 20,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-346-351.13",
+      "english": "This naama occurred earlier as the 48th and the 198th naamas. Here, in the description of the divine form of Para Vasudeva, it refers to the beauty of His lotus-like navel. Thiruppaanazhwar sings of \"the beauty of the navel that gave birth to Brahma\" (ayanaip paḍaitthadhōr ezhil undhi).",
+      "note": "Tiruppanazhwar line 'ayanaip paḍaitthadhōr ezhil undhi' transliterated via the Tamil (அயனைப் படைத்ததோர் எழில் உந்தி); verify against the authoritative text.",
+      "batch": 20,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-346-351.17",
+      "english": "Thiruppaanazhwar sings of \"those great, long eyes with red streaks, which have driven me mad\" (seyya vāya aiyō ennaic cindhai kavarndhadhuvē). In the Sundara Kandam, Hanuman describes Rama as \"rāmaḥ kamalapatrākṣaḥ\", Rama with eyes like lotus petals.",
+      "note": "Possible English-source mismatch: the gloss describes the Lord's eyes, but the quoted line 'seyya vāya aiyō ennaic cindhai kavarndhadhuvē' ('red mouth ... has stolen my mind') appears to close Amalanadipiran's verse on His mouth; the eyes verse ends '... ennaip pēdhaimai seydhanavē'. Translated as written; owner to check which line is intended.",
+      "batch": 20,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-352-361.5",
+      "english": "The one who thinks He is prosperous only when His devotees are prosperous.",
+      "note": "Nammazhwar line 'vīṟṟirundhu Ezh ulagum thanik kōl sella ALum ammān' transliterated via the Tamil (வீற்றிருந்து ஏழுலகும் தனிக்கோல் செல்ல ஆளும் அம்மான்); verify against the authoritative text.",
+      "batch": 20,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
