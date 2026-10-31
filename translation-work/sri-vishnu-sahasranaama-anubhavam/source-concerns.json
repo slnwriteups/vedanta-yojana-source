@@ -488,6 +488,22 @@
       "batch": 110,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-581-592.15",
+      "english": "The one who is the cause of the state of bliss for those whose sins have been destroyed, as described in the previous naama.",
+      "note": "Tamil phrases in romanisation written in Tamil script, to verify: Nammazhwar 'pāva nāsanai paṅkaya taḍam kaṇṇanai paravuminō' (பாவ நாசனைப் பங்கயத் தடங்கண்ணனைப் பரவுமினோ) and Periyazhwar 'naraka nāśan' (நரக நாசன்).",
+      "batch": 111,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-581-592.21",
+      "english": "In the Bhishma Stava Raja of the Mahabharata, it is said, \"The groups of rishis, the siddhas, the great serpents, the devas, and the divine sages came to know Narayana as the medicine for the disease of samsara.\" Peyazhwar says that He is the medicine, the wealth, and the nectar (marundum poruḷum amudamum tānē), and Nammazhwar calls Him the great medicine for our disease.",
+      "note": "Peyazhwar phrase 'marundum poruḷum amudamum tānē' written in Tamil as மருந்தும் பொருளும் அமுதமும் தானே; verify against the authoritative text.",
+      "batch": 112,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
