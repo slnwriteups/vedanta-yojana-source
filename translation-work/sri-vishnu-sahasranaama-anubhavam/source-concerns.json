@@ -448,6 +448,22 @@
       "batch": 104,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-471-482.83",
+      "english": "Sri Bhattar explains that the Lord is the supreme master of all beings, because He is the master even of Brahma, Yama, and the others who are themselves the lords of beings. Nammazhwar sings that He established the other gods in their places, and He Himself remains the Lord of those gods (niṟuttinān deivaṅgaḷāga a-ddeiva nāyagan tānē).",
+      "note": "Nammazhwar phrases in romanisation written in Tamil script, all to verify: 'niṟuttinān deivaṅgaḷāga a-ddeiva nāyagan tānē' (நிறுத்தினான் தெய்வங்களாக அத்தெய்வ நாயகன் தானே); item 13 'inbuṟum ivviḷaiyāṭṭuḍaiyān' (இன்புறும் இவ்விளையாட்டுடையான்); item 15 'vānōr perumān māmāyan vaikunthan emperumān' (வானோர் பெருமான் மாமாயன் வைகுந்தன் எம்பெருமான்); item 17 'manisarkku dēvar pōla dēvarkkum dēvan' (மனிசர்க்குத் தேவர் போலத் தேவர்க்கும் தேவன்); item 29 'ūzhi thōṟu ūzhi vaiyam kākkum āzhi nīr vaṇṇan' (ஊழிதோறூழி வையம் காக்கும் ஆழிநீர் வண்ணன்).",
+      "batch": 105,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-503-516.63",
+      "english": "Thondaradippodi Azhwar says, \"You stay with them and know all that is in the hearts of those who think of You\" (uḷḷuvār uḷḷiṟṟellām uḍan irundu aṟidi). Sri Bhattar explains that the Lord watches over His devotees constantly, out of concern that no harm should come to them.",
+      "note": "Tamil phrases in romanisation written in Tamil script, to verify: Thondaradippodi Azhwar 'uḷḷuvār uḷḷiṟṟellām uḍan irundu aṟidi' (Tirumālai; உள்ளுவார் உள்ளிற்றெல்லாம் உடனிருந்து அறிதி); item 30 Nammazhwar 'pul eṟumbu ādi onṟu inṟiyē' (Tiruvāymoḻi 7.5.1; புல் எறும்பு ஆதி ஒன்று இன்றியே).",
+      "batch": 106,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
