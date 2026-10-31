@@ -328,6 +328,22 @@
       "batch": 83,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-153-164.9",
+      "english": "One explanation of the name is \"the one who made Bali give up (vāmayati) his pride\". Another is \"the one with a charming small form\" (vāmō valgutvam asya asti). The Lord came to Bali as a young brahmachari student, so beautiful that Bali could not refuse Him anything. Periyazhwar and the other Azhwars sing of this \"little brahmachari\" (kuṟaḷ māṇi) with great delight.",
+      "note": "Tamil phrases quoted in romanisation: 'kuṟaḷ māṇi' (குறள் மாணி) and Andal's 'ōṅgi ulagaḷanda uttaman' (Tiruppāvai 3; ஓங்கி உலகளந்த உத்தமன், item 3) written in Tamil script; verify against the authoritative text.",
+      "batch": 84,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-165-170.25",
+      "english": "The Brihadaranyaka Upanishad says, \"This Self is honey to all beings\" (ayamātmā sarvēṣāṃ bhūtānāṃ madhu). Periyazhwar calls Him \"the Lord who is sweeter than honey\" (thēnil iniya pirānē). From the next name, Sri Bhattar describes the Lord's six divine qualities: knowledge, strength, lordship, valour, power, and splendour.",
+      "note": "Periyazhwar phrase 'thēnil iniya pirānē' written in Tamil as தேனில் இனிய பிரானே; verify against the authoritative text.",
+      "batch": 85,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
