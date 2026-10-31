@@ -280,6 +280,14 @@
       "batch": 50,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-871-880.29",
+      "english": "Thirumazhisai Azhwar describes the Lord as always thinking, \"What more can I do for My devotees?\" (un adiyārkku en seyvan enṟē irutti nī).",
+      "note": "Thirumazhisai Azhwar phrase 'un adiyārkku en seyvan enṟē irutti nī' transliterated via the Tamil (உன் அடியார்க்கு என் செய்வன் என்றே இருத்தி நீ) per Standard §3.3; verify against the authoritative text.",
+      "batch": 54,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
