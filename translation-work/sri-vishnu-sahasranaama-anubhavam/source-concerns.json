@@ -256,6 +256,30 @@
       "batch": 42,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-697-786.68",
+      "english": "The one in whom all beings reside.",
+      "note": "Andal phrase 'vada madurai maindanai thūya peru nīr yamunai thuṟaivanai' (Tiruppāvai 5) transliterated via the Tamil (வட மதுரை மைந்தனை தூய பெரு நீர் யமுனை துறைவனை) per Standard §3.3; verify against the authoritative text.",
+      "batch": 44,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-697-786.180",
+      "english": "The master of all the worlds, whose relationship with all beings as their master is natural and unique, and is the reason for His attachment to them.",
+      "note": "Andal phrase 'unthannōdu uṟavēl namakku iṅgu ozhikka ozhiyādu' (Tiruppāvai 28) transliterated via the Tamil (உன்தன்னோடு உறவேல் நமக்கு இங்கு ஒழிக்க ஒழியாது) per Standard §3.3; verify against the authoritative text.",
+      "batch": 46,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-811-838.40",
+      "english": "At Thirukkudanthai (Kumbakonam), the Lord is called Aaraavamudhan, the nectar that never satiates. Nammazhwar dedicates a whole decade of the Thiruvaimozhi (5.8) to Him, and calls out again and again to \"my nectar that never satiates\" (en ārā amudamē). It was by hearing these very pasurams sung at Kumbakonam that Sri Nathamuni was inspired to recover the Divya Prabandham.",
+      "note": "Nammazhwar phrase 'en ārā amudamē' transliterated via the Tamil (என் ஆரா அமுதமே) per Standard §3.3; verify against the authoritative text.",
+      "batch": 50,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
