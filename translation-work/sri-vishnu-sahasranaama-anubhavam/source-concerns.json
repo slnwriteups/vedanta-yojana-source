@@ -344,6 +344,14 @@
       "batch": 85,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-182-187.17",
+      "english": "When the Milk Ocean was churned, Sri Mahalakshmi rose from it. While all the devas waited and watched, She chose the Lord, and He welcomed Her to reside on His chest. Nammazhwar describes Her declaring that She will not leave Him even for a moment (agalagillēn iṟaiyum enṟu alarmēl maṅgai uṟai mārbā).",
+      "note": "Tamil quotations in romanisation written in Tamil script: Nammazhwar 'agalagillēn iṟaiyum enṟu alarmēl maṅgai uṟai mārbā' (Tiruvāymoḻi 6.10.10; அகலகில்லேன் இறையும் என்று அலர்மேல் மங்கை உறை மார்பா) and Andal 'kuṟai onṟum illādha gōvindā' (Tiruppāvai 28; item 12, குறைவொன்றுமில்லாத கோவிந்தா). Verify against the authoritative text.",
+      "batch": 86,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
