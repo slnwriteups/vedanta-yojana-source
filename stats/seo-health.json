@@ -272,6 +272,23 @@
           "warnings": 16
         }
       }
+    },
+    {
+      "checkedAt": "2026-10-31T04:09:14.783Z",
+      "trigger": "deploy",
+      "pages": 541,
+      "errors": 1,
+      "warnings": 16,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 16
+        },
+        "reachable": {
+          "errors": 1,
+          "warnings": 0
+        }
+      }
     }
   ]
 }
