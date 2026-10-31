@@ -99,6 +99,7 @@ export function WhatsNewList({
           className="relative overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4"
         >
           <span aria-hidden className="absolute inset-y-0 left-0 w-1 bg-[var(--accent)]" />
+          {markSeen && announcement.body.length > 1000 ? <ExitAnnouncementButton /> : null}
           <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--muted)]">
             <time dateTime={announcement.date}>{formatAnnouncementDate(announcement.date)}</time>
             {announcement.platforms.map((platform) => (
@@ -115,9 +116,18 @@ export function WhatsNewList({
           <h3 className="mt-2 font-semibold">{announcement.title}</h3>
           <p className="mt-1 whitespace-pre-line text-sm text-[var(--muted)]">{announcement.body}</p>
           {announcement.link ? <AnnouncementLink {...announcement.link} /> : null}
+          {markSeen && announcement.body.length > 1000 ? <ExitAnnouncementButton /> : null}
         </li>
       ))}
     </ul>
+  );
+}
+
+function ExitAnnouncementButton() {
+  return (
+    <Link href="/" className="my-3 inline-flex min-h-11 items-center rounded-md border border-[var(--border)] px-4 py-2 text-sm font-semibold text-[var(--accent)] hover:underline">
+      <span aria-hidden="true">←</span>&nbsp;Back to Home
+    </Link>
   );
 }
 
