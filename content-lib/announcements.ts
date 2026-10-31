@@ -43,6 +43,8 @@ export interface Announcement {
   date: string;
   /** Remain above newer notices through this local calendar date, inclusive. */
   pinnedUntil?: string;
+  /** Optional precise publication instant, with an explicit UTC offset. */
+  publishAt?: string;
   /** Where the change applies, shown as small tags. */
   platforms: AnnouncementPlatform[];
   /** Omitted means both iOS and Android; applies only to the app. */
@@ -53,6 +55,7 @@ export interface Announcement {
   translations?: Partial<Record<AnnouncementLanguage, AnnouncementTranslation>>;
 }
 
+const PUBLISH_AT_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2})$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PLATFORMS: readonly string[] = ["app", "website"];
 const LANGUAGES: readonly string[] = ["ta", "kn", "hi", "te"];
@@ -90,9 +93,10 @@ function parseTranslations(value: unknown): Announcement["translations"] | null 
 
 function parseAnnouncement(value: unknown): Announcement | null {
   if (!isRecord(value)) return null;
-  const { id, date, pinnedUntil, platforms, mobilePlatforms, title, body, link, translations } = value;
+  const { id, date, pinnedUntil, publishAt, platforms, mobilePlatforms, title, body, link, translations } = value;
   if (!isNonEmptyString(id) || !isNonEmptyString(title) || !isNonEmptyString(body)) return null;
   if (typeof date !== "string" || !DATE_PATTERN.test(date) || Number.isNaN(Date.parse(`${date}T00:00:00Z`))) return null;
+  if (publishAt !== undefined && (typeof publishAt !== "string" || !PUBLISH_AT_PATTERN.test(publishAt) || !Number.isFinite(Date.parse(publishAt)))) return null;
   if (!Array.isArray(platforms) || platforms.length === 0 || !platforms.every((p) => PLATFORMS.includes(p))) return null;
   if (mobilePlatforms !== undefined && (!Array.isArray(mobilePlatforms) || mobilePlatforms.length === 0 || !mobilePlatforms.every((p) => p === "ios" || p === "android"))) return null;
 
@@ -107,6 +111,7 @@ function parseAnnouncement(value: unknown): Announcement | null {
     id,
     date,
     ...(pinnedUntil ? { pinnedUntil: pinnedUntil as string } : {}),
+    ...(publishAt ? { publishAt } : {}),
     platforms: platforms as AnnouncementPlatform[],
     ...(mobilePlatforms ? { mobilePlatforms: mobilePlatforms as AnnouncementMobilePlatform[] } : {}),
     title,
