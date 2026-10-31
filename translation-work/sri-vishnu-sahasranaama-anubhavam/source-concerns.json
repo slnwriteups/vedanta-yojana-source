@@ -368,6 +368,14 @@
       "batch": 89,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-334-345.16",
+      "english": "Nammazhwar describes how the Lord, as the inner controller of Rudra, burnt down the three cities of the asuras and gave knowledge to the devas (puram oru mūnṟu eritthu amararkkum aṟivu iyandhu). By destroying their cities, He removed the fears that came upon the devas.",
+      "note": "Nammazhwar phrase 'puram oru mūnṟu eritthu amararkkum aṟivu iyandhu' (Tiruvāymoḻi 1.1.8) written in Tamil as புரம் ஒரு மூன்று எரித்து அமரர்க்கும் அறிவு இயந்து; verify against the authoritative text.",
+      "batch": 95,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
