@@ -576,6 +576,30 @@
       "batch": 126,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-871-880.29",
+      "english": "Thirumazhisai Azhwar describes the Lord as always thinking, \"What more can I do for My devotees?\" (un adiyārkku en seyvan enṟē irutti nī).",
+      "note": "Thirumazhisai Azhwar phrase 'un adiyārkku en seyvan enṟē irutti nī' written in Tamil as உன் அடியார்க்கு என் செய்வன் என்றே இருத்தி நீ; verify against the authoritative text.",
+      "batch": 130,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-881-896.54",
+      "english": "Nammazhwar, in one of the last decades of the Thiruvaimozhi, says, \"I joyfully served You and obtained Your lotus feet. What more could I want, my Father?\" (uṟṟēn ugandu paṇi seidu un pādam peṟṟēn).",
+      "note": "Nammazhwar phrase 'uṟṟēn ugandu paṇi seidu un pādam peṟṟēn' written in Tamil as உற்றேன் உகந்து பணி செய்து உன் பாதம் பெற்றேன்; verify against the authoritative text.",
+      "batch": 131,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-881-896.58",
+      "english": "Nammazhwar says, \"He gives us all prosperity here, and then He shows us the land of the devas (Vaikuntham) and says, 'See, this is yours; take it.'\" (sāi koṇḍa immaiyum sādittu vānavar nāṭṭaiyum nī kaṇḍu koḷ enṟu vīḍum tarum).",
+      "note": "Nammazhwar phrase 'sāi koṇḍa immaiyum sādittu vānavar nāṭṭaiyum nī kaṇḍu koḷ enṟu vīḍum tarum' written in Tamil as சாய் கொண்ட இம்மையும் சாதித்து வானவர் நாட்டையும் நீ கண்டு கொள் என்று வீடும் தரும்; verify against the authoritative text.",
+      "batch": 131,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
