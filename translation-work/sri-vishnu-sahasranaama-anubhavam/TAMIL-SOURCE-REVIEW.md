@@ -111,4 +111,8 @@ Source URLs:
 
 ## Remaining review limitations
 
-All 116 chapters remain translated. Full independent linguistic review and owner theological approval are not recorded. Unresolved quotation concerns remain open rather than being cleared by fuzzy text matching. In particular, the attributed phrase உலகு அளிக்கும் யோக நித்திரை has not been established as a verbatim pasuram line in the sources inspected. Do not treat the source correction pass or an automated test pass as approval of such attributions.
+All 116 chapters remain translated. Full independent linguistic review and owner theological approval are not recorded. Unresolved quotation concerns remain open rather than being cleared by fuzzy text matching. The former source concern at naama-946-992.33 is resolved. The dispensable Nammazhwar attribution was replaced with a fuller explanation from the supplied English volume 5, printed pp. 124–125. The owner has confirmed that supplied scholars are sufficient authority: external corroboration is not required. Other audit entries describe the earlier quotation-location pass, not a requirement to seek alternative interpretations.
+
+## Prajāgaraḥ: source-first correction
+
+Name 953 now follows supplied English volume 5, printed pp. 124–125: Sri Bhattar’s crop-protection analogy, the Katha Upanishad as cited in the commentary, Sri Vasishtha’s explanation of unique wakefulness, Srimad Srimushnam Andavan’s example of divine care during sleep, and the Lord’s constant activity through the elements. English, Tamil and Hindi are synchronized; the unsupported draft attribution is removed. No outside material was needed. The source-first rule is recorded in CLAUDE.md, the translation guide/workflow and prompt card.
