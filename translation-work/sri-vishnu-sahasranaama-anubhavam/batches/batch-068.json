@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 68,
+  "langs": [
+    "hi"
+  ],
+  "items": [
+    {
+      "id": "birth-star-anuradha.title",
+      "en": "d70902a97b"
+    },
+    {
+      "id": "birth-star-anuradha.0",
+      "en": "69dc90f8a5"
+    },
+    {
+      "id": "birth-star-anuradha.1",
+      "en": "87d1997c23"
+    },
+    {
+      "id": "birth-star-anuradha.4",
+      "en": "4d406b2c5a"
+    },
+    {
+      "id": "birth-star-anuradha.5",
+      "en": "b74fdfd5f6"
+    },
+    {
+      "id": "birth-star-anuradha.8",
+      "en": "96ae17cc7a"
+    },
+    {
+      "id": "birth-star-anuradha.9",
+      "en": "1129365f27"
+    },
+    {
+      "id": "birth-star-anuradha.12",
+      "en": "d2b665e36f"
+    },
+    {
+      "id": "birth-star-anuradha.13",
+      "en": "ec5c4e4961"
+    },
+    {
+      "id": "birth-star-anuradha.16",
+      "en": "f54e58b966"
+    },
+    {
+      "id": "birth-star-jyeshta.title",
+      "en": "3439996784"
+    },
+    {
+      "id": "birth-star-jyeshta.0",
+      "en": "bf3d8f1920"
+    },
+    {
+      "id": "birth-star-jyeshta.1",
+      "en": "36e9bddbf9"
+    },
+    {
+      "id": "birth-star-jyeshta.4",
+      "en": "82016badd7"
+    },
+    {
+      "id": "birth-star-jyeshta.5",
+      "en": "698e9394d1"
+    },
+    {
+      "id": "birth-star-jyeshta.8",
+      "en": "7fabf8712c"
+    },
+    {
+      "id": "birth-star-jyeshta.9",
+      "en": "ff01d10bc6"
+    },
+    {
+      "id": "birth-star-jyeshta.12",
+      "en": "f09aceb9b8"
+    },
+    {
+      "id": "birth-star-jyeshta.13",
+      "en": "5f681b812d"
+    },
+    {
+      "id": "birth-star-jyeshta.16",
+      "en": "87b2575d0e"
+    },
+    {
+      "id": "birth-star-moola.title",
+      "en": "cd1a88076c"
+    },
+    {
+      "id": "birth-star-moola.0",
+      "en": "eabcc6f83e"
+    },
+    {
+      "id": "birth-star-moola.1",
+      "en": "c4389902d8"
+    },
+    {
+      "id": "birth-star-moola.4",
+      "en": "bbb5a7a696"
+    },
+    {
+      "id": "birth-star-moola.5",
+      "en": "3167464b85"
+    },
+    {
+      "id": "birth-star-moola.8",
+      "en": "cf6fbe239e"
+    },
+    {
+      "id": "birth-star-moola.9",
+      "en": "9ccb49d400"
+    },
+    {
+      "id": "birth-star-moola.12",
+      "en": "b832e95430"
+    },
+    {
+      "id": "birth-star-moola.13",
+      "en": "4d90a4bfb2"
+    },
+    {
+      "id": "birth-star-moola.16",
+      "en": "0f4ed323a7"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-hi"
+}
