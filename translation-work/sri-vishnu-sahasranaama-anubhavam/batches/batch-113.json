@@ -1,0 +1,127 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 113,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "naama-593-600.23",
+      "en": "8d3cfa9ab5"
+    },
+    {
+      "id": "naama-593-600.25",
+      "en": "95d668a047"
+    },
+    {
+      "id": "naama-593-600.27",
+      "en": "41f330aebd"
+    },
+    {
+      "id": "naama-593-600.29",
+      "en": "00202a33b0"
+    },
+    {
+      "id": "naama-593-600.31",
+      "en": "3b2340109c"
+    },
+    {
+      "id": "naama-593-600.33",
+      "en": "865a36e4bb"
+    },
+    {
+      "id": "naama-601-607.title",
+      "en": "e03667d5a7"
+    },
+    {
+      "id": "naama-601-607.1",
+      "en": "7c24f575bb"
+    },
+    {
+      "id": "naama-601-607.3",
+      "en": "57116e863f"
+    },
+    {
+      "id": "naama-601-607.5",
+      "en": "c3dedeb253"
+    },
+    {
+      "id": "naama-601-607.7",
+      "en": "302beb2192"
+    },
+    {
+      "id": "naama-601-607.11",
+      "en": "75b418faa2"
+    },
+    {
+      "id": "naama-601-607.14",
+      "en": "3fe0cdc85a"
+    },
+    {
+      "id": "naama-601-607.16",
+      "en": "c53097ecc1"
+    },
+    {
+      "id": "naama-601-607.18",
+      "en": "9eb108fdfd"
+    },
+    {
+      "id": "naama-601-607.21",
+      "en": "d7178bf358"
+    },
+    {
+      "id": "naama-601-607.23",
+      "en": "047d3848ea"
+    },
+    {
+      "id": "naama-601-607.25",
+      "en": "a6d914e8b9"
+    },
+    {
+      "id": "naama-601-607.27",
+      "en": "7a8cc77830"
+    },
+    {
+      "id": "naama-608-626.title",
+      "en": "c8b26c6e49"
+    },
+    {
+      "id": "naama-608-626.1",
+      "en": "0bdc30a295"
+    },
+    {
+      "id": "naama-608-626.3",
+      "en": "ed7f4b5f83"
+    },
+    {
+      "id": "naama-608-626.5",
+      "en": "f29f119cfc"
+    },
+    {
+      "id": "naama-608-626.7",
+      "en": "804359995e"
+    },
+    {
+      "id": "naama-608-626.9",
+      "en": "31ba559c2e"
+    },
+    {
+      "id": "naama-608-626.11",
+      "en": "a3310b26cb"
+    },
+    {
+      "id": "naama-608-626.13",
+      "en": "cca4bc595b"
+    },
+    {
+      "id": "naama-608-626.15",
+      "en": "759b178f7e"
+    },
+    {
+      "id": "naama-608-626.19",
+      "en": "645582dbd4"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}
