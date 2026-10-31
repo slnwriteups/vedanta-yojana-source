@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "489157814991",
+    "project_id": "vedanta-yojana-8b0de",
+    "storage_bucket": "vedanta-yojana-8b0de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489157814991:android:3baa0e041546b7a04e25ba",
+        "android_client_info": {
+          "package_name": "com.example.vedantayojana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXgVRtGnACs3uy8HPqy7wfyIPkC26kbWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:489157814991:android:974305d57affb6414e25ba",
+        "android_client_info": {
+          "package_name": "com.slnwriteups.vedantayojana"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXgVRtGnACs3uy8HPqy7wfyIPkC26kbWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
