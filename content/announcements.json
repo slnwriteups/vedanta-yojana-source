@@ -1,6 +1,18 @@
 {
   "announcements": [
     {
+      "id": "2026-10-31-android-push-verification",
+      "date": "2026-10-31",
+      "platforms": [
+        "app"
+      ],
+      "mobilePlatforms": [
+        "android"
+      ],
+      "title": "Android notification delivery test",
+      "body": "This is a one-time test of Vedanta Yojana's optional Android announcement notifications. If you received a notification in your Android notification tray and tapping it opened this announcement inside the app, push delivery is working on your device. No action is required. Thank you for helping us verify this feature."
+    },
+    {
       "id": "2026-10-31-android-1-3-0-upgrade",
       "date": "2026-10-31",
       "platforms": [
