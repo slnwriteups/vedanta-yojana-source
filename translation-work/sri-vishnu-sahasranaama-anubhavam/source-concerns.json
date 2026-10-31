@@ -208,6 +208,22 @@
       "batch": 36,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-608-626.7",
+      "english": "Sri Bhattar quotes the Ramayana, which describes the Lord as \"nitya śrīḥ\", the one with whom Lakshmi always resides. The Lord is like a garden of wish-fulfilling (kalpaka) trees, and Lakshmi is like a wish-fulfilling creeper that roams freely and joyfully in that garden. Nammazhwar describes Him as the one on whose chest the Lady of the lotus resides, declaring, \"I shall not leave Him even for a moment\" (agalagillēn iṟaiyum enṟu alarmēl maṅgai uṟai mārbā).",
+      "note": "Nammazhwar phrases quoted only in romanisation (item 23 'agalagillēn iṟaiyum enṟu alarmēl maṅgai uṟai mārbā', item 25 'thiruvin maṇāḷan') transliterated via the Tamil (அகலகில்லேன் இறையும் என்று அலர்மேல் மங்கை உறை மார்பா; திருவின் மணாளன்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 37,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-608-626.69",
+      "english": "The one who is ever delighted, because He is always with Sri Mahalakshmi at all times, in all places, and in all ways.",
+      "note": "Nammazhwar phrase 'ayarvaṟum amarargaḷ adhipati' (Tiruvāymoḻi 1.1.1) transliterated via the Tamil (அயர்வறும் அமரர்கள் அதிபதி) per Standard §3.3; verify against the authoritative text.",
+      "batch": 38,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
