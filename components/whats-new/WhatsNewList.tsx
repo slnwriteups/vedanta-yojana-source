@@ -112,7 +112,7 @@ export function WhatsNewList({
             ) : null}
           </div>
           <h3 className="mt-2 font-semibold">{announcement.title}</h3>
-          <p className="mt-1 text-sm text-[var(--muted)]">{announcement.body}</p>
+          <p className="mt-1 whitespace-pre-line text-sm text-[var(--muted)]">{announcement.body}</p>
           {announcement.link ? <AnnouncementLink {...announcement.link} /> : null}
         </li>
       ))}
