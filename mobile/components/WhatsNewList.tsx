@@ -14,6 +14,8 @@ import { radius, spacing, typography, useTheme } from "../theme";
 import { useLanguage } from "../language-context.ts";
 import { useT } from "../ui-strings.ts";
 import { readJSON, writeJSON } from "../storage";
+import { AnnouncementReader } from "./AnnouncementReader";
+import { isAnnouncementReadLink } from "../content-lib/announcement-links.ts";
 
 /**
  * The What's New list -- app half of components/whats-new/WhatsNewList.tsx
@@ -39,6 +41,7 @@ export function WhatsNewList({
   const t = useT();
   // undefined = not read yet (no badges); null = never opened the list.
   const [lastSeen, setLastSeen] = useState<string | null | undefined>(undefined);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -65,16 +68,25 @@ export function WhatsNewList({
     if (href.startsWith("/")) router.push(href as never);
     else void Linking.openURL(href);
   };
+  const openAction = (announcement: Announcement) => {
+    if (!announcement.link || isAnnouncementReadLink(announcement.link.href, announcement.id)) {
+      setSelectedAnnouncement(announcement);
+    } else {
+      openLink(announcement.link.href);
+    }
+  };
+  const reader = <AnnouncementReader announcement={selectedAnnouncement} onClose={() => setSelectedAnnouncement(null)} />;
 
   if (compact) {
     return (
+      <>
       <View style={styles.list}>
         {shown.map((announcement) => (
           <View key={announcement.id} style={styles.compactRow}>
             <Text style={[styles.compactDate, { color: theme.colors.muted }]}>{formatAnnouncementDate(announcement.date)}</Text>
             <View style={styles.compactText}>
               <Pressable
-                onPress={() => openLink(announcement.link?.href ?? "/whats-new")}
+                onPress={() => setSelectedAnnouncement(announcement)}
                 accessibilityRole="link"
                 style={({ pressed }) => ({ opacity: pressed ? 0.7 : 1 })}
               >
@@ -85,13 +97,13 @@ export function WhatsNewList({
                   can be acted on from Home. */}
               {announcement.link ? (
                 <Pressable
-                  onPress={() => openLink(announcement.link!.href)}
+                  onPress={() => openAction(announcement)}
                   accessibilityRole="link"
                   hitSlop={spacing.sm}
                   style={({ pressed }) => [styles.compactLink, { opacity: pressed ? 0.7 : 1 }]}
                 >
                   <Text style={[styles.link, { color: theme.colors.accent }]}>
-                    {announcement.link.label} {announcement.link.href.startsWith("/") ? "→" : "↗"}
+                    {announcement.link.label} {announcement.link.href.startsWith("/") || isAnnouncementReadLink(announcement.link.href, announcement.id) ? "→" : "↗"}
                   </Text>
                 </Pressable>
               ) : null}
@@ -99,10 +111,13 @@ export function WhatsNewList({
           </View>
         ))}
       </View>
+      {reader}
+      </>
     );
   }
 
   return (
+    <>
     <View style={styles.list}>
       {shown.map((announcement) => (
         <View
@@ -123,29 +138,27 @@ export function WhatsNewList({
               </Text>
             ) : null}
           </View>
-          {announcement.link ? (
-            <Pressable onPress={() => openLink(announcement.link!.href)} accessibilityRole="link" hitSlop={spacing.sm}>
+            <Pressable onPress={() => setSelectedAnnouncement(announcement)} accessibilityRole="link" hitSlop={spacing.sm}>
               <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
             </Pressable>
-          ) : (
-            <Text style={[styles.title, { color: theme.colors.foreground }]}>{announcement.title}</Text>
-          )}
           <Text style={[styles.body, { color: theme.colors.muted }]}>{announcement.body}</Text>
           {announcement.link ? (
             <Pressable
-              onPress={() => openLink(announcement.link!.href)}
+              onPress={() => openAction(announcement)}
               accessibilityRole="link"
               hitSlop={spacing.sm}
               style={styles.linkButton}
             >
               <Text style={[styles.link, { color: theme.colors.accent }]}>
-                {announcement.link.label} {announcement.link.href.startsWith("/") ? "→" : "↗"}
+                {announcement.link.label} {announcement.link.href.startsWith("/") || isAnnouncementReadLink(announcement.link.href, announcement.id) ? "→" : "↗"}
               </Text>
             </Pressable>
           ) : null}
         </View>
       ))}
     </View>
+    {reader}
+    </>
   );
 }
 
