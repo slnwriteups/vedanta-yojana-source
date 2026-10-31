@@ -568,6 +568,14 @@
       "batch": 122,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-811-838.40",
+      "english": "At Thirukkudanthai (Kumbakonam), the Lord is called Aaraavamudhan, the nectar that never satiates. Nammazhwar dedicates a whole decade of the Thiruvaimozhi (5.8) to Him, and calls out again and again to \"my nectar that never satiates\" (en ārā amudamē). It was by hearing these very pasurams sung at Kumbakonam that Sri Nathamuni was inspired to recover the Divya Prabandham.",
+      "note": "Nammazhwar phrase 'en ārā amudamē' (Thiruvaimozhi 5.8) written in Tamil as என் ஆரா அமுதமே; verify against the authoritative text.",
+      "batch": 126,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
