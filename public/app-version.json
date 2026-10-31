@@ -1,8 +1,8 @@
 {
   "android": {
-    "versionCode": 17,
-    "version": "1.1.0",
-    "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v17/vedanta-yojana.apk",
-    "notes": "A one-time install is needed for this update: it moves the app to the latest Expo and React Native, for better speed and stability, and adds split-screen support. Your bookmarks and settings are kept. Future updates arrive automatically again."
+    "versionCode": 18,
+    "version": "1.3.0",
+    "url": "https://github.com/slnwriteups/vedanta-yojana-releases/releases/download/android-v18/vedanta-yojana.apk",
+    "notes": "Install Android v1.3.0 to enable optional announcement push notifications in your chosen language. Open Settings to opt in after updating. Your existing bookmarks and settings are preserved when updating over the current app."
   }
 }
