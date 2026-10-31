@@ -1,3 +1,4 @@
+import { PushNotificationSettings } from "./PushNotificationSettings";
 import * as Haptics from "expo-haptics";
 import { AccessibilityInfo, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme, useThemeControls, type ColorScheme } from "../theme";
@@ -33,6 +34,7 @@ export function SettingsControls() {
 
   return (
     <View style={styles.container}>
+      <PushNotificationSettings />
       <TourTarget id="settings-language">
         <PillGroup label={t("settingsLanguageLabel")} options={LANGUAGE_OPTIONS} selectedValue={language} onChange={setLanguage} />
       </TourTarget>

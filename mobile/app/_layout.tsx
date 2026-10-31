@@ -1,3 +1,4 @@
+import { PushNotificationsBridge } from "../components/PushNotificationsBridge";
 import { useEffect, useRef, useState } from "react";
 import { AppState, View } from "react-native";
 import { Stack, usePathname } from "expo-router";
@@ -118,9 +119,12 @@ function RootStack() {
   }
 
   return (
+    <>
+    <PushNotificationsBridge />
     <Stack screenOptions={{ contentStyle: { backgroundColor: theme.colors.background } }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
     </Stack>
+    </>
   );
 }
 

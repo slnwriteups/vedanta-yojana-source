@@ -1,0 +1,44 @@
+name: Prepare push-enabled native builds
+on:
+  push:
+    branches: ['feature/announcement-push']
+    paths: ['mobile/**', '.github/workflows/prepare-push-native-builds.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: push-native-builds
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: ios
+            profile: production
+          - platform: android
+            profile: production-apk
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: '.nvmrc'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm ci
+        working-directory: mobile
+      - name: Request signed native build (no store submission)
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          BUILD_PLATFORM: ${{ matrix.platform }}
+          BUILD_PROFILE: ${{ matrix.profile }}
+        run: |
+          if [ -z "$EXPO_TOKEN" ]; then
+            echo '::error::EXPO_TOKEN is required. Notifications are not enabled in installed apps.'
+            exit 1
+          fi
+          npx --yes eas-cli@latest build --platform "$BUILD_PLATFORM" --profile "$BUILD_PROFILE" --non-interactive --no-wait --json > push-build.json
+          node -e 'const fs=require("fs"); const b=JSON.parse(fs.readFileSync("push-build.json","utf8")); for(const x of (Array.isArray(b)?b:[b])) console.log("Native build:",x.id,x.status);' >> "$GITHUB_STEP_SUMMARY"

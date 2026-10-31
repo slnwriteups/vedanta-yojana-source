@@ -1,0 +1,62 @@
+name: Check push native builds
+on:
+  push:
+    branches: ['feature/announcement-push']
+    paths: ['.github/workflows/check-push-builds.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1
+        with:
+          node-version-file: '.nvmrc'
+          package-manager-cache: false
+      - run: npm ci
+      - run: npm ci
+        working-directory: mobile
+      - name: Observe requested builds without creating duplicates
+        working-directory: mobile
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: |
+          npx --yes eas-cli@latest build:view 2be91695-4023-4851-827a-e19578e143a1 --json > android-diagnostic.json
+          node --input-type=module -e '
+            import fs from "node:fs";
+            const b=JSON.parse(fs.readFileSync("android-diagnostic.json","utf8"));
+            for(const u of b.logFiles ?? []) {
+              if(typeof u!=="string") continue;
+              try {
+                const text=await (await fetch(u)).text();
+                const match=text.match(/Android push requires GOOGLE_SERVICES_JSON[^\\n]*/);
+                if(match) console.log("Android configuration diagnostic:",match[0].slice(0,400));
+              } catch {}
+            }
+          '
+          for attempt in $(seq 1 25); do
+            npx --yes eas-cli@latest build:view 87e1826d-7d0a-42b8-b924-dd2d1f20cc87 --json > ios-push-build.json
+            npx --yes eas-cli@latest build:view 2be91695-4023-4851-827a-e19578e143a1 --json > android-push-build.json
+            set +e
+            node -e '
+              const fs=require("fs");
+              let done=true, failed=false;
+              for(const p of ["ios","android"]) {
+                const b=JSON.parse(fs.readFileSync(p+"-push-build.json","utf8"));
+                console.log(JSON.stringify({platform:p,id:b.id,status:b.status,version:b.appVersion,build:b.appBuildVersion,download:b.artifacts?.buildUrl,error:b.error}));
+                failed ||= ["ERRORED","CANCELED"].includes(b.status);
+                done &&= b.status==="FINISHED";
+              }
+              process.exit(failed?1:done?0:2);
+            '
+            status=$?
+            set -e
+            if [ "$status" -eq 0 ]; then exit 0; fi
+            if [ "$status" -eq 1 ]; then exit 1; fi
+            sleep 45
+          done
+          echo '::error::Native builds remain queued/running. Check the EAS build URLs; push is not live in installed apps.'
+          exit 1
