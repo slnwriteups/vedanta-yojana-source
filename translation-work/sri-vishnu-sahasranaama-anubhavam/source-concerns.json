@@ -520,6 +520,22 @@
       "batch": 114,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-626-629.12",
+      "english": "Nammazhwar calls Him \"the one whose fame has no equal\" (nigar il pugazhāy). There are two kinds of fame: the fame that comes from wealth and position, which is temporary, and the fame that comes from following dharma, which lasts forever. The Lord's fame is of the second kind.",
+      "note": "Nammazhwar phrases in romanisation written in Tamil script, to verify: 'nigar il pugazhāy' (நிகரில் புகழாய்) and item 21 'sēlēi kaṇṇiyarum perum selvamum nan makkaḷum mēlāt thāi thandhaiyum avarē' (Tiruvāymoḻi 5.1.8; சேலேய் கண்ணியரும் பெருஞ்செல்வமும் நன்மக்களும் மேலாத் தாய் தந்தையும் அவரே).",
+      "batch": 115,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-630-643.37",
+      "english": "While all the wealth of this world eventually causes sorrow, the Lord is the only wealth that removes sorrow. Thirumazhisai Azhwar says, \"He becomes our father, our mother, and our Lord, puts an end to our countless births, and takes us into His service\" (attan āgi annai āgi āḷum empirānumāi).",
+      "note": "Tamil phrases in romanisation written in Tamil script, all to verify: Thirumazhisai Azhwar 'attan āgi annai āgi āḷum empirānumāi' (அத்தனாகி அன்னையாகி ஆளும் எம்பிரானுமாய்); Nammazhwar item 11 'ennaik koṇḍu en pāvam tannaiyum pāṟak kaitthu' (என்னைக் கொண்டு என் பாவந்தன்னையும் பாறக் கைத்து), item 16 'ottār mikkārai ilaiyāya māyan' (ஒத்தார் மிக்காரை இலையாய மாயன்), item 31 'ulagam mūnṟu udaiyāi' (உலகம் மூன்றுடையாய்). Item 26: English spells the earlier naama 'sūraḥ'; rendered ஶூரஃ (the 341st naama is śūraḥ), as for hi.",
+      "batch": 116,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
