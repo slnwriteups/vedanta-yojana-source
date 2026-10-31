@@ -16,7 +16,11 @@ jobs:
         with:
           node-version-file: '.nvmrc'
           package-manager-cache: false
+      - run: npm ci
+      - run: npm ci
+        working-directory: mobile
       - name: Observe requested builds without creating duplicates
+        working-directory: mobile
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: |
