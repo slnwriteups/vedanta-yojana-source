@@ -103,7 +103,10 @@ export class AnnouncementPushStore {
         const receipt = result.data?.[row.receipt];
         if (!receipt) { this.sql.exec('UPDATE queue SET next_try=? WHERE announcement=? AND token=?', now + 900000, row.announcement, row.token); continue; }
         if (receipt.details?.error === 'DeviceNotRegistered') this.remove(row.token);
-        else this.sql.exec("UPDATE queue SET status=? WHERE announcement=? AND token=?", receipt.status === 'ok' ? 'accepted' : 'failed', row.announcement, row.token);
+        else {
+          if (receipt.status !== 'ok') console.error('push.receipt.rejected', { error: receipt.details?.error ?? 'unknown', status: receipt.status ?? 'unknown' });
+          this.sql.exec("UPDATE queue SET status=? WHERE announcement=? AND token=?", receipt.status === 'ok' ? 'accepted' : 'failed', row.announcement, row.token);
+        }
       }
     }
     this.stage = 'ticket-send';
@@ -115,7 +118,10 @@ export class AnnouncementPushStore {
         const row = pending[i];
         if (ticket.details?.error === 'DeviceNotRegistered') this.remove(row.token);
         else if (ticket.status === 'ok' && ticket.id) this.sql.exec("UPDATE queue SET status='ticket', receipt=?, next_try=? WHERE announcement=? AND token=?", ticket.id, now + 900000, row.announcement, row.token);
-        else this.sql.exec("UPDATE queue SET status='failed' WHERE announcement=? AND token=?", row.announcement, row.token);
+        else {
+          console.error('push.ticket.rejected', { error: ticket.details?.error ?? 'unknown', status: ticket.status ?? 'unknown' });
+          this.sql.exec("UPDATE queue SET status='failed' WHERE announcement=? AND token=?", row.announcement, row.token);
+        }
       });
     }
     const counts = this.sql.exec("SELECT status, COUNT(*) AS count FROM queue GROUP BY status").toArray();
