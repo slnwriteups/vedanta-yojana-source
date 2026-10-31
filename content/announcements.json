@@ -1,6 +1,27 @@
 {
   "announcements": [
     {
+      "id": "2026-10-31-sahasranaama-tamil",
+      "date": "2026-10-31",
+      "platforms": [
+        "app",
+        "website"
+      ],
+      "title": "Sri Vishnu Sahasranaama Anubhavam, now in Tamil",
+      "body": "All thousand names, with Sri Parasara Bhattar's explanations, the Phala Shruti and the birth-star verses, can now be read in Tamil.",
+      "link": {
+        "href": "/library/sri-vishnu-sahasranaama-anubhavam",
+        "label": "Read the book"
+      },
+      "translations": {
+        "ta": {
+          "title": "ஸ்ரீ விஷ்ணு ஸஹஸ்ரநாம அனுபவம், இப்போது தமிழில்",
+          "body": "ஸ்ரீ பராசர பட்டரின் விளக்கங்களுடன் ஆயிரம் திருநாமங்களையும், பலஸ்ருதியையும், ஜன்ம நக்ஷத்திர ஶ்லோகங்களையும் இப்போது தமிழில் படிக்கலாம்.",
+          "linkLabel": "நூலைப் படிக்க"
+        }
+      }
+    },
+    {
       "id": "2026-10-31-deepavali-observance-dates",
       "date": "2026-10-31",
       "platforms": [

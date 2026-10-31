@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 143,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "birth-star-chitra.title",
+      "en": "36ba5d5586"
+    },
+    {
+      "id": "birth-star-chitra.0",
+      "en": "a6b2210d05"
+    },
+    {
+      "id": "birth-star-chitra.1",
+      "en": "8114cf3bc6"
+    },
+    {
+      "id": "birth-star-chitra.4",
+      "en": "ccda1b9bc4"
+    },
+    {
+      "id": "birth-star-chitra.5",
+      "en": "265ca0bc99"
+    },
+    {
+      "id": "birth-star-chitra.8",
+      "en": "3d3b46192f"
+    },
+    {
+      "id": "birth-star-chitra.9",
+      "en": "bad2703921"
+    },
+    {
+      "id": "birth-star-chitra.12",
+      "en": "237fac45dd"
+    },
+    {
+      "id": "birth-star-chitra.13",
+      "en": "21e4b6f4a2"
+    },
+    {
+      "id": "birth-star-chitra.16",
+      "en": "26118ce29b"
+    },
+    {
+      "id": "birth-star-swathi.title",
+      "en": "b3000e72e1"
+    },
+    {
+      "id": "birth-star-swathi.0",
+      "en": "17eecc1a8f"
+    },
+    {
+      "id": "birth-star-swathi.1",
+      "en": "27b78e76f6"
+    },
+    {
+      "id": "birth-star-swathi.4",
+      "en": "8bafea8002"
+    },
+    {
+      "id": "birth-star-swathi.5",
+      "en": "018da6d01d"
+    },
+    {
+      "id": "birth-star-swathi.8",
+      "en": "140d47e09c"
+    },
+    {
+      "id": "birth-star-swathi.9",
+      "en": "d509498fc0"
+    },
+    {
+      "id": "birth-star-swathi.12",
+      "en": "ff64fc1a34"
+    },
+    {
+      "id": "birth-star-swathi.13",
+      "en": "e07960ce63"
+    },
+    {
+      "id": "birth-star-swathi.16",
+      "en": "8e40c20498"
+    },
+    {
+      "id": "birth-star-visakha.title",
+      "en": "ad40b207b8"
+    },
+    {
+      "id": "birth-star-visakha.0",
+      "en": "a4f66a518e"
+    },
+    {
+      "id": "birth-star-visakha.1",
+      "en": "0543612405"
+    },
+    {
+      "id": "birth-star-visakha.4",
+      "en": "3a6d28ef03"
+    },
+    {
+      "id": "birth-star-visakha.5",
+      "en": "1ba4df151f"
+    },
+    {
+      "id": "birth-star-visakha.8",
+      "en": "2c828aab38"
+    },
+    {
+      "id": "birth-star-visakha.9",
+      "en": "bf6fb2756e"
+    },
+    {
+      "id": "birth-star-visakha.12",
+      "en": "bd42678dcc"
+    },
+    {
+      "id": "birth-star-visakha.13",
+      "en": "f7d5633a4b"
+    },
+    {
+      "id": "birth-star-visakha.16",
+      "en": "bacd1abcd7"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}

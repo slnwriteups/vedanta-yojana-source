@@ -1,0 +1,123 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 76,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "naama-21-64.57",
+      "en": "5e17ede70e"
+    },
+    {
+      "id": "naama-21-64.59",
+      "en": "eea6a49afe"
+    },
+    {
+      "id": "naama-21-64.61",
+      "en": "1c5d409038"
+    },
+    {
+      "id": "naama-21-64.63",
+      "en": "057229e52e"
+    },
+    {
+      "id": "naama-21-64.65",
+      "en": "5e22ce7719"
+    },
+    {
+      "id": "naama-21-64.69",
+      "en": "b9cff71ada"
+    },
+    {
+      "id": "naama-21-64.71",
+      "en": "aba4724fcd"
+    },
+    {
+      "id": "naama-21-64.73",
+      "en": "68ef7e28c7"
+    },
+    {
+      "id": "naama-21-64.75",
+      "en": "752f98e7c7"
+    },
+    {
+      "id": "naama-21-64.77",
+      "en": "5bb143a0b1"
+    },
+    {
+      "id": "naama-21-64.79",
+      "en": "83dd19cb4e"
+    },
+    {
+      "id": "naama-21-64.81",
+      "en": "cc8f1f455f"
+    },
+    {
+      "id": "naama-21-64.83",
+      "en": "4f9bdf48c1"
+    },
+    {
+      "id": "naama-21-64.85",
+      "en": "ba8d643a0d"
+    },
+    {
+      "id": "naama-21-64.87",
+      "en": "0e60dfcd3e"
+    },
+    {
+      "id": "naama-21-64.89",
+      "en": "c479cc316b"
+    },
+    {
+      "id": "naama-21-64.91",
+      "en": "39dc483907"
+    },
+    {
+      "id": "naama-21-64.93",
+      "en": "16dbdc38a3"
+    },
+    {
+      "id": "naama-21-64.95",
+      "en": "aa8212d757"
+    },
+    {
+      "id": "naama-21-64.97",
+      "en": "2dcf020e94"
+    },
+    {
+      "id": "naama-21-64.99",
+      "en": "bddc314a72"
+    },
+    {
+      "id": "naama-21-64.101",
+      "en": "f04bd73bfb"
+    },
+    {
+      "id": "naama-21-64.103",
+      "en": "7b4dd14560"
+    },
+    {
+      "id": "naama-21-64.107",
+      "en": "2ab817ef6e"
+    },
+    {
+      "id": "naama-21-64.109",
+      "en": "487efb0cb5"
+    },
+    {
+      "id": "naama-21-64.111",
+      "en": "22bbbef5f9"
+    },
+    {
+      "id": "naama-21-64.113",
+      "en": "419d9daa60"
+    },
+    {
+      "id": "naama-21-64.115",
+      "en": "a4db51a2e8"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}

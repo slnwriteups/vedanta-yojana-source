@@ -55,3 +55,14 @@ GLOSSARY lines in the batch are binding: write those terms exactly as given for 
 A recurring name or technical term NOT in the glossary: choose the most standard Sri Vaishnava form, use it the same way in every item, and record it in an optional "terms" key inside the same JSON object, so later batches reuse it:
 "terms": [{"en": "Nirukti", "ta": "நிருக்தி", "kn": "ನಿರುಕ್ತಿ", "te": "నిరుక్తి", "hi": "निरुक्ति"}]
 Only proper names and technical terms, not ordinary words. Never write anything outside the JSON object.
+
+## Owner-supplied scholarly sources: source-first editorial rule
+
+Owner direction, 31 October 2026:
+
+- The scholarly sources supplied or explicitly designated by the owner are sufficient authority. Do not require external corroboration, another interpretation or additional approval merely because the material is unfamiliar to the agent. Check our faithful use of the source; do not re-evaluate the scholar.
+- Read the relevant explanation and surrounding material first. When our draft contains an untraceable quotation, attribution or interpretation, replace that draft addition with a sufficient, faithfully attributed explanation already in the supplied sources. Do not delay an otherwise explainable name or chapter to pursue the exact wording of a dispensable citation elsewhere.
+- The owner authorizes this source-based editorial correction process: settle the English first, then synchronize affected translations. A fuller explanation may be drawn from the same supplied commentary. Do not invent doctrine, conflate different scholars' interpretations without attribution or present a paraphrase as a verbatim verse. Ordinary translation continues to follow the settled English without additions or omissions.
+- Supplementary information is exceptional: only when an essential point cannot be understood or responsibly explained from the supplied material. Tell the owner the precise missing point and request the specific passage needed before seeking an alternative interpretation. Do not browse elsewhere for routine corroboration.
+- Record the supplied source and correction, then close the concern when supported. Do not fabricate human reviews, theological approvals or waivers. This rule does not itself authorize merges, deployments, OTA updates or announcements.
+

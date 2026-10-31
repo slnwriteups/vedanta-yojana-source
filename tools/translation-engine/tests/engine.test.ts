@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import type { LanguageCode } from "../../../content-lib/schemas/language.ts";
 import { blocking, checkBook, checkRecord, englishDrift, latinFindings, untransliterable, type Issue } from "../validate.ts";
 import { repairVerses } from "../verses.ts";
+import { devaToTamil } from "../../../scripts/translation/mechanical.ts";
 
 /**
  * The approved Sudarshana Ashtakam (nityasuri-vaibhavam) is the test case:
@@ -228,11 +229,14 @@ test("the approved chapter on disk was not modified", () => {
   assert.equal(crypto.createHash("sha256").update(fs.readFileSync(MODEL)).digest("hex"), modelHash);
 });
 
-test("a verse the Tamil rules cannot write (vocalic ḷ) is held for Tamil only, never guessed", () => {
-  const body = "Intro.\n\nमालाकॢप्तासनस्थः ।\n\nmālākḷptāsanasthaḥ |";
+test("a verse the Tamil rules cannot write is held for Tamil only, never guessed", () => {
+  const body = "Intro.\n\nकॅमलः ।\n\nkămalaḥ |";
   const found = untransliterable({ body }, "x.json");
   assert.deepEqual(found.map((i) => `${i.lang} ¶${i.paragraph} ${i.rule}`), ["ta ¶3 source-untransliterable"]);
-  assert.match(found[0].detail, /ॢ/);
+  assert.match(found[0].detail, /ॅ/);
+  // Vocalic ḷ has a Tamil rule (லு, like ṛ → ரு; owner decision 2026-10-31).
+  assert.deepEqual(untransliterable({ body: "Intro.\n\nमालाकॢप्तासनस्थः ।\n\nmālākḷptāsanasthaḥ |" }, "z.json"), []);
+  assert.equal(devaToTamil("मालाकॢप्तासनस्थः"), "மாலாக்லுப்தாஸனஸ்தஃ");
   // Names keep their Devanagari after "·" by design: not reported.
   assert.deepEqual(untransliterable({ body: "1. viśvam · विश्वम्\n\nMeaning.\n\n(oṃ) viśvāya namaḥ" }, "y.json"), []);
 });

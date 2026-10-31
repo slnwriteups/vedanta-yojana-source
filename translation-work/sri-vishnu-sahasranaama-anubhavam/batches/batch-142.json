@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 142,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "birth-star-purva-phalguni.title",
+      "en": "dd220c1233"
+    },
+    {
+      "id": "birth-star-purva-phalguni.0",
+      "en": "0bcfa15ac4"
+    },
+    {
+      "id": "birth-star-purva-phalguni.1",
+      "en": "718fe0091f"
+    },
+    {
+      "id": "birth-star-purva-phalguni.4",
+      "en": "6cdc239f41"
+    },
+    {
+      "id": "birth-star-purva-phalguni.5",
+      "en": "c1ea0bb4e8"
+    },
+    {
+      "id": "birth-star-purva-phalguni.8",
+      "en": "f8f2ccc1c1"
+    },
+    {
+      "id": "birth-star-purva-phalguni.9",
+      "en": "8e0ca8ef2b"
+    },
+    {
+      "id": "birth-star-purva-phalguni.12",
+      "en": "12b9ac0577"
+    },
+    {
+      "id": "birth-star-purva-phalguni.13",
+      "en": "5cb6523204"
+    },
+    {
+      "id": "birth-star-purva-phalguni.16",
+      "en": "f7180e056d"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.title",
+      "en": "03ff039a04"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.0",
+      "en": "3c10adc532"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.1",
+      "en": "2081f89bdd"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.4",
+      "en": "02784bc37c"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.5",
+      "en": "f42b595641"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.8",
+      "en": "5636132b67"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.9",
+      "en": "7692bd346a"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.12",
+      "en": "fd215290f3"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.13",
+      "en": "4b0696cff0"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.16",
+      "en": "0f023f57fe"
+    },
+    {
+      "id": "birth-star-hasta.title",
+      "en": "28dca343e0"
+    },
+    {
+      "id": "birth-star-hasta.0",
+      "en": "9184fbce17"
+    },
+    {
+      "id": "birth-star-hasta.1",
+      "en": "7a5c205b16"
+    },
+    {
+      "id": "birth-star-hasta.4",
+      "en": "c57b50fc38"
+    },
+    {
+      "id": "birth-star-hasta.5",
+      "en": "49af8850d4"
+    },
+    {
+      "id": "birth-star-hasta.8",
+      "en": "27aa799408"
+    },
+    {
+      "id": "birth-star-hasta.9",
+      "en": "3397011ecd"
+    },
+    {
+      "id": "birth-star-hasta.12",
+      "en": "2494e76aa0"
+    },
+    {
+      "id": "birth-star-hasta.13",
+      "en": "eea4dfac55"
+    },
+    {
+      "id": "birth-star-hasta.16",
+      "en": "c8e42eeb7a"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}

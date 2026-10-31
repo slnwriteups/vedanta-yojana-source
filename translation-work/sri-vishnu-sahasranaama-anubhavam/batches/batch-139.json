@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 139,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "birth-star-bharani.title",
+      "en": "dfafdf2879"
+    },
+    {
+      "id": "birth-star-bharani.0",
+      "en": "d88f458766"
+    },
+    {
+      "id": "birth-star-bharani.1",
+      "en": "018ef3442e"
+    },
+    {
+      "id": "birth-star-bharani.4",
+      "en": "c957fbb834"
+    },
+    {
+      "id": "birth-star-bharani.5",
+      "en": "d61072f63a"
+    },
+    {
+      "id": "birth-star-bharani.8",
+      "en": "1169647f8f"
+    },
+    {
+      "id": "birth-star-bharani.9",
+      "en": "9dcbf4ed38"
+    },
+    {
+      "id": "birth-star-bharani.12",
+      "en": "75490cd55f"
+    },
+    {
+      "id": "birth-star-bharani.13",
+      "en": "aa915a4b50"
+    },
+    {
+      "id": "birth-star-bharani.16",
+      "en": "4a56d9da49"
+    },
+    {
+      "id": "birth-star-krittika.title",
+      "en": "240bdb59a9"
+    },
+    {
+      "id": "birth-star-krittika.0",
+      "en": "716fcdf33d"
+    },
+    {
+      "id": "birth-star-krittika.1",
+      "en": "29aeaa001d"
+    },
+    {
+      "id": "birth-star-krittika.4",
+      "en": "7e33b65d93"
+    },
+    {
+      "id": "birth-star-krittika.5",
+      "en": "a9bc0830c2"
+    },
+    {
+      "id": "birth-star-krittika.8",
+      "en": "3b6e745388"
+    },
+    {
+      "id": "birth-star-krittika.9",
+      "en": "89751b3288"
+    },
+    {
+      "id": "birth-star-krittika.12",
+      "en": "6dfda14f70"
+    },
+    {
+      "id": "birth-star-krittika.13",
+      "en": "3de21b3565"
+    },
+    {
+      "id": "birth-star-krittika.16",
+      "en": "dc44db1715"
+    },
+    {
+      "id": "birth-star-rohini.title",
+      "en": "aa146609d5"
+    },
+    {
+      "id": "birth-star-rohini.0",
+      "en": "77c042ddfe"
+    },
+    {
+      "id": "birth-star-rohini.1",
+      "en": "19cbdca5dd"
+    },
+    {
+      "id": "birth-star-rohini.4",
+      "en": "70c2cb0e7e"
+    },
+    {
+      "id": "birth-star-rohini.5",
+      "en": "bf36f378bf"
+    },
+    {
+      "id": "birth-star-rohini.8",
+      "en": "a22988e981"
+    },
+    {
+      "id": "birth-star-rohini.9",
+      "en": "1977992293"
+    },
+    {
+      "id": "birth-star-rohini.12",
+      "en": "3fd9d817ee"
+    },
+    {
+      "id": "birth-star-rohini.13",
+      "en": "95592ce858"
+    },
+    {
+      "id": "birth-star-rohini.16",
+      "en": "8f954434f5"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}

@@ -1,0 +1,155 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 87,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "naama-195-199.1",
+      "en": "0437c2e317"
+    },
+    {
+      "id": "naama-195-199.3",
+      "en": "873ca4930a"
+    },
+    {
+      "id": "naama-195-199.5",
+      "en": "d594103355"
+    },
+    {
+      "id": "naama-195-199.7",
+      "en": "edcdc02738"
+    },
+    {
+      "id": "naama-195-199.9",
+      "en": "e0aa0de8c3"
+    },
+    {
+      "id": "naama-195-199.11",
+      "en": "266b230fa9"
+    },
+    {
+      "id": "naama-195-199.13",
+      "en": "ab2b6e4b8d"
+    },
+    {
+      "id": "naama-195-199.15",
+      "en": "13ef416417"
+    },
+    {
+      "id": "naama-195-199.17",
+      "en": "e77bbc0368"
+    },
+    {
+      "id": "naama-195-199.19",
+      "en": "29f996197c"
+    },
+    {
+      "id": "naama-200-210.title",
+      "en": "85cdfe8305"
+    },
+    {
+      "id": "naama-200-210.3",
+      "en": "0f3c24a2be"
+    },
+    {
+      "id": "naama-200-210.7",
+      "en": "0f1fef8b9e"
+    },
+    {
+      "id": "naama-200-210.8",
+      "en": "6b19e7ad01"
+    },
+    {
+      "id": "naama-200-210.10",
+      "en": "4050c839b2"
+    },
+    {
+      "id": "naama-200-210.12",
+      "en": "8fc9ddbebe"
+    },
+    {
+      "id": "naama-200-210.14",
+      "en": "49818fb097"
+    },
+    {
+      "id": "naama-200-210.16",
+      "en": "09930a1e79"
+    },
+    {
+      "id": "naama-200-210.18",
+      "en": "e7bce3f71a"
+    },
+    {
+      "id": "naama-200-210.20",
+      "en": "2befaa3ffc"
+    },
+    {
+      "id": "naama-200-210.22",
+      "en": "92ce0c7d21"
+    },
+    {
+      "id": "naama-200-210.24",
+      "en": "01ad8f152c"
+    },
+    {
+      "id": "naama-200-210.26",
+      "en": "9a71ede2fb"
+    },
+    {
+      "id": "naama-200-210.28",
+      "en": "9c371e7733"
+    },
+    {
+      "id": "naama-200-210.30",
+      "en": "bbd1dfefc6"
+    },
+    {
+      "id": "naama-200-210.32",
+      "en": "5b5c7da8c5"
+    },
+    {
+      "id": "naama-200-210.34",
+      "en": "3cd71ed766"
+    },
+    {
+      "id": "naama-200-210.36",
+      "en": "d55faed780"
+    },
+    {
+      "id": "naama-200-210.38",
+      "en": "e6c05ab88a"
+    },
+    {
+      "id": "naama-200-210.40",
+      "en": "aec5364851"
+    },
+    {
+      "id": "naama-200-210.42",
+      "en": "abe2055607"
+    },
+    {
+      "id": "naama-200-210.44",
+      "en": "df1eef0732"
+    },
+    {
+      "id": "naama-200-210.46",
+      "en": "d317694d74"
+    },
+    {
+      "id": "naama-200-210.48",
+      "en": "8698451a0a"
+    },
+    {
+      "id": "naama-211-225.title",
+      "en": "80db91c485"
+    },
+    {
+      "id": "naama-211-225.3",
+      "en": "f7650ff8e0"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}
