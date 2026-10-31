@@ -312,6 +312,14 @@
       "batch": 60,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.18",
+      "english": "3. saṅkarṣaṇa - jñāna and bala - function of saṃhāra or destruction The vibhava is that group of manifestations that Bhagavān takes in the form of God, man, animal, etc. (sura, nara, tiryagādi). Vibhava is of two kinds:",
+      "note": "English item runs two paragraphs together: '... function of saṃhāra or destruction The vibhava is that group of manifestations ...' (missing full stop/paragraph break after 'destruction'). Translated as one item to keep paragraph parity; owner to fix the English.",
+      "batch": 72,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }

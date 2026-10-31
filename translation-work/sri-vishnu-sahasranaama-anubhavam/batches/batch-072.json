@@ -1,0 +1,147 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 72,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "importance-of-chanting-the-stotram.title",
+      "en": "1dc269a7bf"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.0",
+      "en": "fc7dc2ac4b"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.1",
+      "en": "4ab0333864"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.2",
+      "en": "fb70056db7"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.3",
+      "en": "dae085af87"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.4",
+      "en": "4d6430e584"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.5",
+      "en": "e252ef8419"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.6",
+      "en": "2b6c7ab5ac"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.7",
+      "en": "eb4c111267"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.8",
+      "en": "86d1982633"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.9",
+      "en": "79a5afb608"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.10",
+      "en": "1366189d12"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.11",
+      "en": "0bfc3c76d9"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.12",
+      "en": "21db0383dd"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.13",
+      "en": "cfcf3221b0"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.14",
+      "en": "b027d324b1"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.15",
+      "en": "c8b7f2b1c9"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.16",
+      "en": "dc28f0559f"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.17",
+      "en": "13f75339db"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.18",
+      "en": "a6d96e2f87"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.19",
+      "en": "a614409968"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.20",
+      "en": "78c6cbf1c1"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.21",
+      "en": "4d0791045d"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.22",
+      "en": "5dd97050a7"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.23",
+      "en": "3cb3377c05"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.24",
+      "en": "6c3668b567"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.25",
+      "en": "c3cc324a26"
+    },
+    {
+      "id": "importance-of-chanting-the-stotram.26",
+      "en": "a4f09a535d"
+    },
+    {
+      "id": "naama-1-5.title",
+      "en": "df9fbf5809"
+    },
+    {
+      "id": "naama-1-5.3",
+      "en": "5700238911"
+    },
+    {
+      "id": "naama-1-5.5",
+      "en": "b84da9065f"
+    },
+    {
+      "id": "naama-1-5.6",
+      "en": "d578622393"
+    },
+    {
+      "id": "naama-1-5.7",
+      "en": "39f0a79b09"
+    },
+    {
+      "id": "naama-1-5.9",
+      "en": "9a0e62d5c3"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}
