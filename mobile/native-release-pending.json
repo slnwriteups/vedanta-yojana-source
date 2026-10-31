@@ -1,6 +1,0 @@
-{
-  "version": "1.3.0",
-  "androidVersionCode": 18,
-  "publishedAndroidVersionCode": 17,
-  "reason": "Native push builds are pending distribution. Keep advertising the real v17 download until signed v18 exists, then remove this staging file."
-}
