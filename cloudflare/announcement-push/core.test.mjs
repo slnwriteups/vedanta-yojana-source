@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { DatabaseSync } from 'node:sqlite';
-import { subscription, targets, messageFor } from './core.js';
+import { subscription, targets, messageFor, publicationInstant, eligibleForPush } from './core.js';
 import worker, { AnnouncementPushStore } from './worker.js';
 const token = 'ExpoPushToken[abcdefghijklmnopqrstuv]';
 const base = { id: '2026-10-31-one', date: '2026-10-31', title: 'English', body: 'Original body', platforms: ['app'], translations: { ta: { title: 'தமிழ்', body: 'தமிழ் அறிவிப்பு' } } };
@@ -69,4 +69,14 @@ test('receipt DeviceNotRegistered deletes the subscription, and edit of existing
     list=[{...base,id:'new-id'},...list]; await instance.tick(); assert.equal(sends,1);
     now+=16*60000;await instance.tick();assert.equal(sql.exec('SELECT * FROM subscribers').toArray().length,0);
   } finally {globalThis.fetch=original;Date.now=originalNow;db.close();}
+});
+
+test('IST publication dates and explicit instants are globally deterministic', () => {
+  const dateOnly = { date: '2026-11-01' };
+  assert.equal(publicationInstant(dateOnly), Date.parse('2026-10-31T18:30:00Z'));
+  assert.equal(eligibleForPush(dateOnly, Date.parse('2026-10-31T18:29:59Z')), false);
+  assert.equal(eligibleForPush(dateOnly, Date.parse('2026-10-31T18:30:00Z')), true);
+  assert.equal(eligibleForPush({ ...dateOnly, publishAt: '2026-11-01T09:15:00+05:30' }, Date.parse('2026-11-01T03:44:59Z')), false);
+  assert.equal(eligibleForPush({ ...dateOnly, publishAt: '2026-11-01T09:15:00+05:30' }, Date.parse('2026-11-01T03:45:00Z')), true);
+  assert.equal(eligibleForPush(dateOnly, Date.parse('2026-11-04T00:00:00Z')), false);
 });
