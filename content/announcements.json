@@ -1,6 +1,36 @@
 {
   "announcements": [
     {
+      "id": "2026-10-31-enable-announcement-notifications",
+      "date": "2026-10-31",
+      "platforms": [
+        "app"
+      ],
+      "mobilePlatforms": [
+        "android"
+      ],
+      "title": "How to enable announcement notifications",
+      "body": "To receive Vedanta Yojana announcements as push notifications on Android, notifications must be enabled in TWO places:\n\n1. On your phone: Open Android Settings → Apps → Vedanta Yojana → Notifications, and allow notifications.\n\n2. Inside Vedanta Yojana: Open the app → Settings → Announcement notifications, then tap Enable notifications. Wait for the app to confirm that notifications are enabled.\n\nBoth steps are required. Allowing notifications in Android Settings alone does not subscribe your device to Vedanta Yojana announcements.\n\nNotifications are optional. You can disable them at any time in the app's Settings. New announcements will still appear in the app even if push notifications are off.",
+      "translations": {
+        "ta": {
+          "title": "அறிவிப்பு அறிவுறுத்தல்களை இயக்குவது எப்படி",
+          "body": "வேதாந்த யோஜனாவின் அறிவிப்புகளை Android தொலைபேசியில் பெற, இரண்டு இடங்களில் அறிவிப்புகளை இயக்க வேண்டும்:\n\n1. தொலைபேசியில்: Android அமைப்புகள் → செயலிகள் → Vedanta Yojana → அறிவிப்புகள் என்பதற்குச் சென்று அறிவிப்புகளை அனுமதிக்கவும்.\n\n2. Vedanta Yojana செயலியில்: அமைப்புகள் → அறிவிப்பு அறிவுறுத்தல்கள் என்பதற்குச் சென்று அறிவிப்புகளை இயக்கு என்பதைத் தட்டவும். அறிவிப்புகள் இயக்கப்பட்டதாக உறுதிப்படுத்தப்படும் வரை காத்திருக்கவும்.\n\nஇரண்டு படிகளும் அவசியம். தொலைபேசியில் மட்டும் அனுமதி வழங்குவது போதாது.\n\nஅறிவிப்புகள் விருப்பத்திற்குரியவை. அவற்றைச் செயலியின் அமைப்புகளில் எப்போது வேண்டுமானாலும் நிறுத்தலாம். அறிவிப்புகள் நிறுத்தப்பட்டிருந்தாலும் புதிய செய்திகள் செயலியில் தொடர்ந்து தோன்றும்."
+        },
+        "kn": {
+          "title": "ಪ್ರಕಟಣೆಗಳ ಪುಷ್ ಅಧಿಸೂಚನೆಗಳನ್ನು ಸಕ್ರಿಯಗೊಳಿಸುವುದು ಹೇಗೆ",
+          "body": "ವೇದಾಂತ ಯೋಜನೆಯ ಪ್ರಕಟಣೆಗಳ ಪುಷ್ ಅಧಿಸೂಚನೆಗಳನ್ನು Android ಫೋನ್‌ನಲ್ಲಿ ಪಡೆಯಲು ಎರಡು ಕಡೆ ಸಕ್ರಿಯಗೊಳಿಸಬೇಕು:\n\n1. ಫೋನ್‌ನಲ್ಲಿ: Android Settings → Apps → Vedanta Yojana → Notifications ತೆರೆಯಿರಿ ಮತ್ತು ಅಧಿಸೂಚನೆಗಳಿಗೆ ಅನುಮತಿ ನೀಡಿ.\n\n2. Vedanta Yojana ಆ್ಯಪ್‌ನಲ್ಲಿ: Settings → Announcement notifications ತೆರೆಯಿರಿ ಮತ್ತು Enable notifications ಒತ್ತಿರಿ. ಅಧಿಸೂಚನೆಗಳು ಸಕ್ರಿಯಗೊಂಡಿವೆ ಎಂಬ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಕಾಯಿರಿ.\n\nಎರಡೂ ಹಂತಗಳು ಅಗತ್ಯ. ಫೋನ್‌ನ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಮಾತ್ರ ಅನುಮತಿ ನೀಡಿದರೆ ಸಾಕಾಗುವುದಿಲ್ಲ.\n\nಅಧಿಸೂಚನೆಗಳು ಐಚ್ಛಿಕ. ಆ್ಯಪ್‌ನ ಸೆಟ್ಟಿಂಗ್‌ಗಳಲ್ಲಿ ಯಾವಾಗ ಬೇಕಾದರೂ ನಿಷ್ಕ್ರಿಯಗೊಳಿಸಬಹುದು. ಅವು ನಿಷ್ಕ್ರಿಯವಾಗಿದ್ದರೂ ಹೊಸ ಪ್ರಕಟಣೆಗಳು ಆ್ಯಪ್‌ನಲ್ಲಿ ಕಾಣಿಸುತ್ತವೆ."
+        },
+        "hi": {
+          "title": "घोषणाओं की पुश सूचनाएँ कैसे चालू करें",
+          "body": "Android पर वेदांत योजना की घोषणाओं की पुश सूचनाएँ पाने के लिए दो जगह सूचनाएँ चालू करनी होंगी:\n\n1. फ़ोन में: Android Settings → Apps → Vedanta Yojana → Notifications खोलें और सूचनाओं की अनुमति दें।\n\n2. Vedanta Yojana ऐप में: Settings → Announcement notifications खोलें और Enable notifications दबाएँ। सूचनाएँ चालू होने की पुष्टि होने तक प्रतीक्षा करें।\n\nदोनों चरण आवश्यक हैं। केवल फ़ोन की सेटिंग में अनुमति देना पर्याप्त नहीं है।\n\nसूचनाएँ वैकल्पिक हैं। आप ऐप की सेटिंग में इन्हें कभी भी बंद कर सकते हैं। पुश सूचनाएँ बंद होने पर भी नई घोषणाएँ ऐप में दिखाई देंगी।"
+        },
+        "te": {
+          "title": "ప్రకటనల పుష్ నోటిఫికేషన్‌లను ఎలా ప్రారంభించాలి",
+          "body": "Android ఫోన్‌లో వేదాంత యోజన ప్రకటనల పుష్ నోటిఫికేషన్‌లను పొందాలంటే రెండు చోట్ల వాటిని ప్రారంభించాలి:\n\n1. ఫోన్‌లో: Android Settings → Apps → Vedanta Yojana → Notifications తెరిచి నోటిఫికేషన్‌లను అనుమతించండి.\n\n2. Vedanta Yojana యాప్‌లో: Settings → Announcement notifications తెరిచి Enable notifications నొక్కండి. నోటిఫికేషన్‌లు ప్రారంభమయ్యాయని నిర్ధారణ వచ్చే వరకు వేచి ఉండండి.\n\nఈ రెండు దశలూ అవసరం. ఫోన్ సెట్టింగ్‌లలో మాత్రమే అనుమతి ఇవ్వడం సరిపోదు.\n\nనోటిఫికేషన్‌లు ఐచ్ఛికం. యాప్ సెట్టింగ్‌లలో ఎప్పుడైనా ఆపవచ్చు. పుష్ నోటిఫికేషన్‌లు ఆపినా కొత్త ప్రకటనలు యాప్‌లో కనిపిస్తాయి."
+        }
+      }
+    },
+    {
       "id": "2026-10-31-android-push-verification",
       "date": "2026-10-31",
       "platforms": [
