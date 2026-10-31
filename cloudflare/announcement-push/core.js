@@ -1,3 +1,17 @@
+/** Editorial publication timezone is Asia/Kolkata (UTC+05:30, no DST). */
+const IST_OFFSET_MS = 330 * 60_000;
+const DAY_MS = 86_400_000;
+export function publicationInstant(announcement) {
+  return announcement.publishAt ? Date.parse(announcement.publishAt) : Date.parse(announcement.date + 'T00:00:00Z') - IST_OFFSET_MS;
+}
+export function eligibleForPush(announcement, now) {
+  const published = publicationInstant(announcement);
+  // Keep the existing two-day freshness policy, anchored to the end of the
+  // IST publication date rather than UTC midnight.
+  const istDayEnd = Date.parse(announcement.date + 'T00:00:00Z') - IST_OFFSET_MS + DAY_MS - 1;
+  return Number.isFinite(published) && published <= now && istDayEnd >= now - 2 * DAY_MS;
+}
+
 export const PUSH_TOKEN = /^(ExponentPushToken|ExpoPushToken)\[[A-Za-z0-9_-]{16,256}\]$/;
 const LANGUAGES = new Set(['en', 'ta', 'kn', 'hi', 'te']);
 export function subscription(value) {
