@@ -1,3 +1,4 @@
+import { useLocalSearchParams } from "expo-router";
 import { ScrollView, StyleSheet, Text } from "react-native";
 import { WhatsNewList } from "../../components/WhatsNewList";
 import { useAnnouncements } from "../../services/announcementsService.ts";
@@ -14,6 +15,7 @@ import { useT } from "../../ui-strings.ts";
  * in the app; its title and back button are set there too.
  */
 export default function WhatsNewScreen() {
+  const { announcementId } = useLocalSearchParams<{ announcementId?: string }>();
   const theme = useTheme();
   const t = useT();
   const announcements = useAnnouncements();
@@ -24,7 +26,7 @@ export default function WhatsNewScreen() {
       contentContainerStyle={[styles.content, { paddingBottom: layout.tabBarClearance }]}
     >
       <Text style={[styles.subtitle, { color: theme.colors.muted }]}>{t("whatsNewSubtitle")}</Text>
-      <WhatsNewList announcements={announcements} markSeen />
+      <WhatsNewList announcements={announcements} markSeen initialAnnouncementId={announcementId} />
     </ScrollView>
   );
 }

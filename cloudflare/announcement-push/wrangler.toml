@@ -1,0 +1,16 @@
+name = "vedanta-yojana-announcement-push"
+main = "worker.js"
+compatibility_date = "2026-10-31"
+workers_dev = false
+routes = [{ pattern = "vedantayojana.org/_push*", zone_name = "vedantayojana.org" }]
+[triggers]
+crons = ["*/10 * * * *"]
+[durable_objects]
+bindings = [{ name = "PUSH_STORE", class_name = "AnnouncementPushStore" }]
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["AnnouncementPushStore"]
+[[ratelimits]]
+name = "REGISTRATION_LIMIT"
+namespace_id = "1002"
+simple = { limit = 20, period = 60 }

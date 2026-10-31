@@ -30,8 +30,10 @@ export function WhatsNewList({
   limit,
   markSeen = false,
   compact = false,
+  initialAnnouncementId,
 }: {
   announcements: Announcement[];
+  initialAnnouncementId?: string;
   limit?: number;
   markSeen?: boolean;
   /** Date and title (opening the full What's New screen), plus the announcement's own link when it has one. */
@@ -50,6 +52,12 @@ export function WhatsNewList({
   }, []);
 
   const [selectedAnnouncement, setSelectedAnnouncement] = useState<Announcement | null>(null);
+  useEffect(() => {
+    if (!initialAnnouncementId) return;
+    const selected = announcementsForMobile(announcements, Platform.OS).find(a => a.id === initialAnnouncementId);
+    if (selected) setSelectedAnnouncement(localizeAnnouncement(selected, language));
+  }, [initialAnnouncementId, announcements, language]);
+
 
   useEffect(() => {
     let cancelled = false;

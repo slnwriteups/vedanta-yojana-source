@@ -57,7 +57,7 @@ function isValidManifest(value: unknown): value is VersionManifest {
  * fires this fire-and-forget on mount; it must never block app
  * startup or be treated as an error when it resolves to null.
  */
-export const BUILD_VERSION_CODE = 17;
+export const BUILD_VERSION_CODE = 18;
 
 export async function checkForUpdate(): Promise<UpdateInfo | null> {
   // iOS installs come from the App Store, which delivers native updates

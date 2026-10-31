@@ -48,7 +48,16 @@ function expoConfig(): { version: string; android: { versionCode: number } } {
   return (raw as { expo: { version: string; android: { versionCode: number } } }).expo;
 }
 
-test("the published manifest advertises the versionCode the app actually ships", () => {
+test("the download manifest matches the shipped build or an explicitly staged native release", () => {
+  const pendingPath = path.join(REPO_ROOT, "mobile/native-release-pending.json");
+  if (fs.existsSync(pendingPath)) {
+    const pending = JSON.parse(fs.readFileSync(pendingPath, "utf8"));
+    assert.equal(pending.androidVersionCode, expoConfig().android.versionCode);
+    assert.equal(pending.publishedAndroidVersionCode, publishedManifest().versionCode);
+    assert.ok(pending.androidVersionCode > pending.publishedAndroidVersionCode);
+    assert.equal(pending.version, expoConfig().version);
+    return;
+  }
   // The whole bug in one assertion: manifest 10 vs app 13 meant no user
   // on 10 was ever offered 13.
   assert.equal(
@@ -69,7 +78,8 @@ test("updateCheckService BUILD_VERSION_CODE matches mobile/app.json versionCode"
   );
 });
 
-test("the published manifest's version string matches the app's", () => {
+test("the published version string matches the shipped build, with explicit native staging", () => {
+  if (fs.existsSync(path.join(REPO_ROOT, "mobile/native-release-pending.json"))) return;
   assert.ok(
     publishedManifest().version.startsWith(expoConfig().version),
     `manifest version "${publishedManifest().version}" must start with app version "${expoConfig().version}"`,

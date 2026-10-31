@@ -106,13 +106,17 @@
   </div>
 
   <h2>Data stored only on your device</h2>
-  <p>The following is saved locally on your phone and is never transmitted to us or anyone else:</p>
+  <p>Your reading progress, bookmarks and appearance preferences are saved locally on your phone. Your selected language is also sent if you enable optional notifications, as described below:</p>
   <ul>
     <li>Your reading progress (which chapter you last opened, per book)</li>
     <li>Bookmarked chapters</li>
     <li>Language, theme, and text-size preferences</li>
   </ul>
   <p>Uninstalling the app removes all of this data. We have no server that stores or can access it.</p>
+
+  <h2>Optional announcement notifications</h2>
+  <p>In app versions that support push notifications, you may enable them in Settings and allow your phone's notification permission. If you opt in, we store an Expo push token, your app platform and selected language in our Cloudflare notification service. These are used only to send new announcements, in your language where a translation is available. Delivery uses Expo and Apple's or Google's push services. Tokens are not used for advertising or reading analytics, and we do not attach your name, location or reading history to them.</p>
+  <p>Turning notifications off in the app removes your subscription and queued notifications when the request succeeds. Revoking permission in phone settings also stops display; the app removes the subscription when next opened online. Invalid tokens are removed when the push service reports them, and subscriptions not refreshed for 180 days expire. Uninstalling alone does not immediately notify our server. Cloudflare processes network addresses for security and rate limiting; we do not store them in the subscription database.</p>
 
   <h2>Aggregate counts, with no identifiers</h2>
   <p>Two things are counted in aggregate. Neither involves a cookie, an advertising identifier, a device identifier, or anything that could single you out or be linked to you.</p>
