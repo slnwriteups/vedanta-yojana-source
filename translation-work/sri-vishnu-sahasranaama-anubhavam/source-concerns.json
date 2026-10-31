@@ -320,6 +320,14 @@
       "batch": 72,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-139-146.33",
+      "english": "Sri Bhattar's words are \"taiḥ bhujyatē sukhēna anubhūyatē iti bhōjanam\", \"He is enjoyed with delight by His devotees.\" The Lord makes the objects of this world fit to be enjoyed, and when His devotee rises above the desire for worldly things, He becomes Himself the object of their enjoyment. Nammazhwar says that for him, the Lord is the food he eats, the water he drinks, and the betel he chews (uṇṇum sōṟu parugu nīr thinnum veṭṭilaiyum ellām kaṇṇan).",
+      "note": "Nammazhwar line 'uṇṇum sōṟu parugu nīr thinnum veṭṭilaiyum ellām kaṇṇan' (Tiruvāymoḻi 6.7.1) written in Tamil as உண்ணும் சோறு பருகுநீர் தின்னும் வெற்றிலையும் எல்லாம் கண்ணன்; verify against the authoritative text.",
+      "batch": 83,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
