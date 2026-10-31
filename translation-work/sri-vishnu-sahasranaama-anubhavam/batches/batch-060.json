@@ -1,0 +1,123 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 60,
+  "langs": [
+    "hi"
+  ],
+  "items": [
+    {
+      "id": "naama-946-992.178",
+      "en": "f42441a4d2"
+    },
+    {
+      "id": "naama-946-992.180",
+      "en": "0d63988d32"
+    },
+    {
+      "id": "naama-946-992.182",
+      "en": "65c7ee9475"
+    },
+    {
+      "id": "naama-946-992.184",
+      "en": "d7d75f0e5c"
+    },
+    {
+      "id": "naama-946-992.187",
+      "en": "ea13047e44"
+    },
+    {
+      "id": "naama-946-992.189",
+      "en": "d3669cbaa1"
+    },
+    {
+      "id": "naama-993-1000.title",
+      "en": "24ae9dab7e"
+    },
+    {
+      "id": "naama-993-1000.3",
+      "en": "86450a3944"
+    },
+    {
+      "id": "naama-993-1000.5",
+      "en": "cf7f2c2b59"
+    },
+    {
+      "id": "naama-993-1000.6",
+      "en": "ea4db3283b"
+    },
+    {
+      "id": "naama-993-1000.8",
+      "en": "b537c416f1"
+    },
+    {
+      "id": "naama-993-1000.11",
+      "en": "5f9a32ce01"
+    },
+    {
+      "id": "naama-993-1000.13",
+      "en": "598bc1a7b1"
+    },
+    {
+      "id": "naama-993-1000.15",
+      "en": "704b5648be"
+    },
+    {
+      "id": "naama-993-1000.17",
+      "en": "4e0b3590a1"
+    },
+    {
+      "id": "naama-993-1000.19",
+      "en": "578c0059e2"
+    },
+    {
+      "id": "naama-993-1000.21",
+      "en": "403ae8b322"
+    },
+    {
+      "id": "naama-993-1000.23",
+      "en": "41dd0b6427"
+    },
+    {
+      "id": "naama-993-1000.25",
+      "en": "1510c8a670"
+    },
+    {
+      "id": "naama-993-1000.27",
+      "en": "a04507533f"
+    },
+    {
+      "id": "naama-993-1000.29",
+      "en": "a5157819e4"
+    },
+    {
+      "id": "naama-993-1000.31",
+      "en": "9f25dc1c01"
+    },
+    {
+      "id": "naama-993-1000.33",
+      "en": "25546bc5a4"
+    },
+    {
+      "id": "naama-993-1000.34",
+      "en": "0ee92bca85"
+    },
+    {
+      "id": "concluding-shloka.title",
+      "en": "3bddb682cf"
+    },
+    {
+      "id": "concluding-shloka.0",
+      "en": "87704d6f77"
+    },
+    {
+      "id": "concluding-shloka.3",
+      "en": "1ec7befae0"
+    },
+    {
+      "id": "concluding-shloka.4",
+      "en": "c61e3d8ea4"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-hi"
+}

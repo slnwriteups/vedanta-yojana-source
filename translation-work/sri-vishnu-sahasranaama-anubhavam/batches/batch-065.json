@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 65,
+  "langs": [
+    "hi"
+  ],
+  "items": [
+    {
+      "id": "birth-star-pushyami.title",
+      "en": "e81ba7544b"
+    },
+    {
+      "id": "birth-star-pushyami.0",
+      "en": "a099e24546"
+    },
+    {
+      "id": "birth-star-pushyami.1",
+      "en": "20377c9d99"
+    },
+    {
+      "id": "birth-star-pushyami.4",
+      "en": "f8e5e27801"
+    },
+    {
+      "id": "birth-star-pushyami.5",
+      "en": "e189655765"
+    },
+    {
+      "id": "birth-star-pushyami.8",
+      "en": "835b143297"
+    },
+    {
+      "id": "birth-star-pushyami.9",
+      "en": "412725441a"
+    },
+    {
+      "id": "birth-star-pushyami.12",
+      "en": "d02fe27221"
+    },
+    {
+      "id": "birth-star-pushyami.13",
+      "en": "488c9d8935"
+    },
+    {
+      "id": "birth-star-pushyami.16",
+      "en": "c0a882d8ca"
+    },
+    {
+      "id": "birth-star-aslesha.title",
+      "en": "1f60dc0887"
+    },
+    {
+      "id": "birth-star-aslesha.0",
+      "en": "fa56e632f5"
+    },
+    {
+      "id": "birth-star-aslesha.1",
+      "en": "bf772c1f73"
+    },
+    {
+      "id": "birth-star-aslesha.4",
+      "en": "08eba0c229"
+    },
+    {
+      "id": "birth-star-aslesha.5",
+      "en": "0a9bfc3272"
+    },
+    {
+      "id": "birth-star-aslesha.8",
+      "en": "d8744359d2"
+    },
+    {
+      "id": "birth-star-aslesha.9",
+      "en": "eade619b02"
+    },
+    {
+      "id": "birth-star-aslesha.12",
+      "en": "e4bf8004c0"
+    },
+    {
+      "id": "birth-star-aslesha.13",
+      "en": "22a90c61e7"
+    },
+    {
+      "id": "birth-star-aslesha.16",
+      "en": "7edc999227"
+    },
+    {
+      "id": "birth-star-makha.title",
+      "en": "37d8d05506"
+    },
+    {
+      "id": "birth-star-makha.0",
+      "en": "f67c2f0ae5"
+    },
+    {
+      "id": "birth-star-makha.1",
+      "en": "8fc8cb856c"
+    },
+    {
+      "id": "birth-star-makha.4",
+      "en": "8971a88245"
+    },
+    {
+      "id": "birth-star-makha.5",
+      "en": "9fea96911b"
+    },
+    {
+      "id": "birth-star-makha.8",
+      "en": "566a2780cb"
+    },
+    {
+      "id": "birth-star-makha.9",
+      "en": "2f30eed5b2"
+    },
+    {
+      "id": "birth-star-makha.12",
+      "en": "f1113b4ae0"
+    },
+    {
+      "id": "birth-star-makha.13",
+      "en": "39ea59e39e"
+    },
+    {
+      "id": "birth-star-makha.16",
+      "en": "3a029c7ef5"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-hi"
+}

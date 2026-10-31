@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
@@ -215,4 +216,24 @@ test("one language at a time: prep defaults to the next language in the order hi
   assert.equal(next.status, 0, next.stderr);
   assert.match(next.stderr, /Batches waiting to be merged: 1/);
   assert.equal(fs.existsSync(path.join(work, "experiments/e3/batches/batch-002.json")), false);
+});
+
+test("book metadata is written when the store holds other languages for an item but this one is live", () => {
+  // The book already has ta/kn/hi/te titles from the first merge; add a part, store only its Hindi title,
+  // and leave a stored book-title entry that carries no Hindi.
+  const bookFile = path.join(lib, "book.json");
+  const b = read(bookFile);
+  b.parts.push({ title: "Part Two", chapters: [] });
+  write(bookFile, b);
+  const store = read(path.join(work, "store.json"));
+  const h = (t: string) => createHash("sha1").update(t).digest("hex").slice(0, 10);
+  store.items["@book.title"] = { en: h("The Forest Journey"), ta: "வனப் பயணம்" };
+  write(path.join(work, "store.json"), store);
+  write(path.join(work, "batches/batch-008.json"), { book: BOOK, batch: 8, langs: ["hi"], items: [{ id: "@part.1.title", en: h("Part Two") }], merged: false });
+  write(path.join(work, "batches/batch-008.reply.json"), { hi: ["दूसरा भाग"] });
+  const r = run("translation-merge.ts", "--batch=8", "--translator=chat-session-a");
+  assert.match(r.stdout, /Written to content\/: book\.json \[hi\]/, r.stdout + r.stderr);
+  const after = read(bookFile);
+  assert.equal(after.parts[1].translations.hi.title, "दूसरा भाग");
+  assert.equal(after.translations.hi.title, "वन यात्रा", "the live Hindi title is kept, not replaced");
 });

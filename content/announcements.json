@@ -1,6 +1,21 @@
 {
   "announcements": [
     {
+      "id": "2026-10-31-sahasranaama-in-hindi",
+      "date": "2026-10-31",
+      "platforms": ["app", "website"],
+      "title": "Sri Vishnu Sahasranaama Anubhavam is now in Hindi",
+      "body": "The whole book, all thousand names, the Phala Shruti and the birth-star chapters, can now be read in Hindi.",
+      "link": { "href": "/library/sri-vishnu-sahasranaama-anubhavam", "label": "Read in Hindi" },
+      "translations": {
+        "hi": {
+          "title": "श्री विष्णु सहस्रनाम अनुभवम् अब हिंदी में",
+          "body": "पूरी पुस्तक, सभी सहस्र नाम, फलश्रुति और जन्म-नक्षत्र अध्याय, अब हिंदी में पढ़ी जा सकती है।",
+          "linkLabel": "हिंदी में पढ़ें"
+        }
+      }
+    },
+    {
       "id": "2026-10-29-sri-vishnu-sahasranaama-anubhavam",
       "date": "2026-10-29",
       "platforms": ["app", "website"],
