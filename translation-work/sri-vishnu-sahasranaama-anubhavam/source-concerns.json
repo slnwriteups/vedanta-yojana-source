@@ -376,6 +376,22 @@
       "batch": 95,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-334-345.34",
+      "english": "Andal sings in the Thiruppavai of the Lord who \"went there and destroyed beautiful Lanka in the south\" (senṟu angu then ilangai seṟṟāi). Periyazhwar sings of how He went and cut off the thousand arms of Banasura. The Lord's valour is always used to go to His devotees' aid.",
+      "note": "Tamil quotations in romanisation written in Tamil script, all to verify: Andal 'senṟu angu then ilangai seṟṟāi' (Tiruppāvai 24; சென்று அங்குத் தென்இலங்கை செற்றாய்); item 22 Thiruppanazhwar 'ayanaip paḍaitthadhōr ezhil undhi' (Amalanādipirān 4; அயனைப் படைத்ததோர் எழில் உந்தி); item 32 Nammazhwar 'vīṟṟirundhu Ezh ulagum thanik kōl sella ALum ammān' (Tiruvāymoḻi 4.5.1; வீற்றிருந்து ஏழுலகும் தனிக்கோல் செல்ல ஆளும் அம்மான்).",
+      "batch": 96,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-346-351.17",
+      "english": "Thiruppaanazhwar sings of \"those great, long eyes with red streaks, which have driven me mad\" (seyya vāya aiyō ennaic cindhai kavarndhadhuvē). In the Sundara Kandam, Hanuman describes Rama as \"rāmaḥ kamalapatrākṣaḥ\", Rama with eyes like lotus petals.",
+      "note": "English-source mismatch (already recorded for hi): the quoted line 'seyya vāya aiyō ennaic cindhai kavarndhadhuvē' (Amalanādipirān 7, செய்ய வாய் ஐயோ என்னைச் சிந்தை கவர்ந்ததுவே) is about the Lord's red mouth, but the English glosses it as the long red-streaked eyes. Translated faithfully; owner to correct the English.",
+      "batch": 96,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
