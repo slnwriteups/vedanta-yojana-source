@@ -112,6 +112,22 @@
       "batch": 22,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-391-421.15",
+      "english": "Because He is complete in every respect, there is no room in Him for likes and dislikes, wants and desires. Thiruvalluvar describes the Lord as \"the one who has neither desire nor aversion\" (vēṇḍudal vēṇḍāmai ilān). Meditating on this naama helps us move towards that state ourselves.",
+      "note": "Thiruvalluvar (Kural 4) phrase 'vēṇḍudal vēṇḍāmai ilān' transliterated via the Tamil (வேண்டுதல் வேண்டாமை இலான்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 23,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-391-421.87",
+      "english": "Sri Bhattar quotes the Bala Kandam: \"The son of king Dasaratha, endowed with world-wide renown\" (pṛthuśrīḥ pārthivātmajaḥ), and \"Among them, Rama was the most renowned in the world\" (tēṣām atiyaśā lōkē rāmaḥ). Nammazhwar calls Him \"the one whose fame has no equal\" (nigar il pugazhāy).",
+      "note": "Nammazhwar phrases quoted only in romanisation (items 13 'nigar il pugazhāy', 23 'tēnum pālum kannalum amudumāgit tittippa') transliterated via the Tamil (நிகர் இல் புகழாய்; தேனும் பாலும் கன்னலும் அமுதுமாகித் தித்திப்ப) per Standard §3.3; verify against the authoritative text.",
+      "batch": 24,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
