@@ -1,0 +1,119 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 74,
+  "langs": [
+    "ta"
+  ],
+  "items": [
+    {
+      "id": "naama-12-17.title",
+      "en": "83d7bc42bc"
+    },
+    {
+      "id": "naama-12-17.1",
+      "en": "0e321864c1"
+    },
+    {
+      "id": "naama-12-17.3",
+      "en": "52b38f93e7"
+    },
+    {
+      "id": "naama-12-17.4",
+      "en": "f49022c3c0"
+    },
+    {
+      "id": "naama-12-17.5",
+      "en": "b2b7c40834"
+    },
+    {
+      "id": "naama-12-17.6",
+      "en": "2c803b5d9a"
+    },
+    {
+      "id": "naama-12-17.7",
+      "en": "90d4628339"
+    },
+    {
+      "id": "naama-12-17.8",
+      "en": "6e830a5201"
+    },
+    {
+      "id": "naama-12-17.10",
+      "en": "94f78dab98"
+    },
+    {
+      "id": "naama-12-17.12",
+      "en": "2724d36e7d"
+    },
+    {
+      "id": "naama-12-17.14",
+      "en": "5555545323"
+    },
+    {
+      "id": "naama-12-17.16",
+      "en": "a7bdb20710"
+    },
+    {
+      "id": "naama-12-17.18",
+      "en": "2ce46ca111"
+    },
+    {
+      "id": "naama-12-17.20",
+      "en": "fd8b5afcab"
+    },
+    {
+      "id": "naama-12-17.22",
+      "en": "100acc8ba4"
+    },
+    {
+      "id": "naama-12-17.24",
+      "en": "9957985466"
+    },
+    {
+      "id": "naama-12-17.26",
+      "en": "0fce9e0be0"
+    },
+    {
+      "id": "naama-12-17.28",
+      "en": "b4bfeae66d"
+    },
+    {
+      "id": "naama-18-20.title",
+      "en": "6a4e108830"
+    },
+    {
+      "id": "naama-18-20.3",
+      "en": "99673b3d95"
+    },
+    {
+      "id": "naama-18-20.5",
+      "en": "57214c4f7f"
+    },
+    {
+      "id": "naama-18-20.6",
+      "en": "47ebfcd3e2"
+    },
+    {
+      "id": "naama-18-20.8",
+      "en": "6dbdffb347"
+    },
+    {
+      "id": "naama-18-20.10",
+      "en": "f5e09f415b"
+    },
+    {
+      "id": "naama-18-20.12",
+      "en": "0a61fa4867"
+    },
+    {
+      "id": "naama-18-20.14",
+      "en": "336233582c"
+    },
+    {
+      "id": "naama-21-64.title",
+      "en": "aed5596850"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-ta"
+}
