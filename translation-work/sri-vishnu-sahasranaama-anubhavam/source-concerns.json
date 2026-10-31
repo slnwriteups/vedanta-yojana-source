@@ -464,6 +464,22 @@
       "batch": 106,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-520-528.11",
+      "english": "Periyazhwar sings of the Lord \"who spread the serpent as His bed upon the white flood (of milk), and lies in His feigned sleep\" (veḷḷai veḷḷattin mēl oru pāmbai meththaiyāga viriththu athan mēlē kaḷḷa niththirai koḷginṟa). His sleep is yoga nidra, in which He is thinking of the welfare of the world.",
+      "note": "Periyazhwar phrase 'veḷḷai veḷḷattin mēl oru pāmbai meththaiyāga viriththu athan mēlē kaḷḷa niththirai koḷginṟa' written in Tamil as வெள்ளை வெள்ளத்தின் மேல் ஒரு பாம்பை மெத்தையாக விரித்து அதன் மேலே கள்ள நித்திரை கொள்கின்ற; verify against the authoritative text.",
+      "batch": 107,
+      "translator": "claude-main-ta",
+      "status": "open"
+    },
+    {
+      "id": "naama-544-563.11",
+      "english": "Sri Bhattar explains that the Lord is concealed by His divine body, made of pure sattva, which is revealed only by the Upanishads. Nammazhwar declares, \"I cannot understand how to think of this Lord, who swallowed the world and brought it out again\" (ñālam uṇḍu umizhndha mālai eṇṇumāṟu aṟiya māṭṭēn).",
+      "note": "Nammazhwar phrase 'ñālam uṇḍu umizhndha mālai eṇṇumāṟu aṟiya māṭṭēn' written in Tamil as ஞாலம் உண்டு உமிழ்ந்த மாலை எண்ணுமாறு அறிய மாட்டேன்; verify against the authoritative text.",
+      "batch": 108,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
