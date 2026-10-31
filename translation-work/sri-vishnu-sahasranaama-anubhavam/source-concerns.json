@@ -128,6 +128,22 @@
       "batch": 24,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-453-463.7",
+      "english": "This naama occurs again as the 821st naama. Sri Bhattar explains that He knows that He is the inner controller of everything, and that He is Himself the best dharma, the best means, and the best goal. Thirumangai Azhwar addresses Him as \"You who know everything in the world\" (ulagattu ellām aṟivīr).",
+      "note": "Thirumangai Azhwar phrase 'ulagattu ellām aṟivīr' transliterated via the Tamil (உலகத்து எல்லாம் அறிவீர்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 26,
+      "translator": "claude-main-hi",
+      "status": "open"
+    },
+    {
+      "id": "naama-453-463.29",
+      "english": "Sri Bhattar explains that the Lord is proclaimed by the voice of the Upanishads. Nammazhwar sings of \"Narayana, the Lord of all the seven worlds, who is praised by the Vedas\" (nāraṇan muzhu ēzhulagukkum nāthan vēda mayan). Sri Sankara adds that His voice is deep and sonorous, like the rumbling of the rain cloud.",
+      "note": "Nammazhwar phrases quoted only in romanisation (items 6 'nāraṇan muzhu ēzhulagukkum nāthan vēda mayan', 12 'maiyal seidu ennai manam kavarndānē', 24 'parandha taṇ paravai uḷ nīr thoṟum paranduḷan') transliterated via the Tamil (நாரணன் முழு ஏழுலகுக்கும் நாதன் வேத மயன்; மையல் செய்து என்னை மனம் கவர்ந்தானே; பரந்த தண் பரவை உள் நீர் தொறும் பரந்துளன்) per Standard §3.3; verify against the authoritative text.",
+      "batch": 27,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
