@@ -328,6 +328,19 @@
           "warnings": 16
         }
       }
+    },
+    {
+      "checkedAt": "2026-10-31T13:03:33.880Z",
+      "trigger": "deploy",
+      "pages": 541,
+      "errors": 0,
+      "warnings": 16,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 16
+        }
+      }
     }
   ]
 }
