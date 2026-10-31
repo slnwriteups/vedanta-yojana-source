@@ -360,6 +360,14 @@
       "batch": 88,
       "translator": "claude-main-ta",
       "status": "open"
+    },
+    {
+      "id": "naama-226-247.27",
+      "english": "For those filled with Taamasa Guna, the Lord hides Himself until the Taamasa Guna is wholly relieved and then will show the devotee the right path.",
+      "note": "Nammazhwar phrase 'mayarvaṟa madhinalam aruḷinan' (Tiruvāymoḻi 1.1.1) written in Tamil as மயர்வற மதிநலம் அருளினன்; verify against the authoritative text.",
+      "batch": 89,
+      "translator": "claude-main-ta",
+      "status": "open"
     }
   ]
 }
