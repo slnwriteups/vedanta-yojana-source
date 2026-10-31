@@ -248,6 +248,14 @@
       "batch": 41,
       "translator": "claude-main-hi",
       "status": "open"
+    },
+    {
+      "id": "naama-676-683.13",
+      "english": "The Sruti says, \"Narayana is the supreme light\" (nārāyaṇa parō jyōtiḥ). The light of a thousand suns is only a small fraction of His light. Thirumazhisai Azhwar calls Him \"the light that no one can question\" (sōdiyāda sōdi nī).",
+      "note": "Thirumazhisai Azhwar phrase 'sōdiyāda sōdi nī' transliterated via the Tamil (சோதியாத சோதி நீ) per Standard §3.3; verify against the authoritative text.",
+      "batch": 42,
+      "translator": "claude-main-hi",
+      "status": "open"
     }
   ]
 }
