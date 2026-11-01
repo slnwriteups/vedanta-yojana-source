@@ -36,7 +36,7 @@ import {
  *
  * UI/UX pass: paragraph text renders in the serif reading face
  * (theme.ts's readingFontFamily -- a system font, Georgia on iOS, no
- * new asset; Kannada uses the bundled Noto Serif Kannada, see
+ * new asset; Kannada on iOS uses the system font, see
  * reading-font.ts). Headings stay in the app's regular sans, matching the
  * common reading-app convention of a sans UI chrome around serif body
  * prose (Apple Books, Kindle) rather than one typeface everywhere.
@@ -145,7 +145,7 @@ export function Section({
                     subheading && styles.subheading,
                     {
                       color: theme.colors.foreground,
-                      ...readingFont(language, subheading),
+                      ...readingFont(language),
                       fontSize: typography.body * preferences.fontScale,
                       lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                     },

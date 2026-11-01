@@ -190,7 +190,7 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
                 looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
                 {
                   color: theme.colors.foreground,
-                  ...readingFont(language, looksLikeSubheading(paragraph) && !isListItemLine(paragraph)),
+                  ...readingFont(language),
                   fontSize: typography.body * preferences.fontScale,
                   lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                 },

@@ -5,7 +5,6 @@ import { Stack, usePathname } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import * as ScreenOrientation from "expo-screen-orientation";
 import * as Updates from "expo-updates";
-import { useFonts } from "expo-font";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useTheme } from "../theme";
 import { ThemeProvider } from "../ThemeProvider";
@@ -22,7 +21,6 @@ import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/pref
 import { readJSON, writeJSON } from "../storage.ts";
 import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
 import { askForLocationUpFront } from "../services/panchangamService.ts";
-import { READING_FONT_ASSETS } from "../reading-font.ts";
 
 /**
  * Phase 6C -- the root layout hosts the ThemeProvider and a single Stack
@@ -237,10 +235,6 @@ function ScreenReporting() {
 export default function RootLayout() {
   useUnlockedOrientation();
   useForegroundUpdates();
-  // Bundled reading fonts (reading-font.ts). They load from the app in a
-  // moment; on failure the app carries on with the system reading face.
-  const [fontsLoaded, fontError] = useFonts(READING_FONT_ASSETS);
-  if (!fontsLoaded && !fontError) return null;
 
   return (
     <ThemeProvider>

@@ -1,40 +1,21 @@
 import { Platform } from "react-native";
-import { isLoaded } from "expo-font";
 import { typography } from "./theme";
 import type { LanguageCode } from "./content-lib/preferences.ts";
 
 /**
- * Kannada reading text needs a font that lays its conjuncts out whole.
+ * The reading face for `language`.
  *
- * iOS: React Native draws text with TextKit 1, which misplaces a glyph of
- * conjuncts such as ಸ್ತೋ with every OpenType Kannada font tested (Noto
- * Serif/Sans Kannada, Kannada Sangam MN, Kannada MN, and Georgia's
- * fallback): a blank gap with the vowel sign stranded or thrown to the
- * margin. Apple's system Kannada font lays them out correctly, so Kannada
- * uses the system font on iOS.
+ * Kannada on iOS uses Apple's system Kannada font. React Native draws iOS
+ * text with TextKit 1, which misplaces a glyph of conjuncts such as ಸ್ತೋ
+ * with Kannada Sangam MN/MN (Georgia's Kannada fallback) and the Noto
+ * Kannada fonts: a blank gap with the vowel sign stranded or thrown to the
+ * margin. The system font lays out all 4,651 Kannada paragraphs of the
+ * Sahasranaama correctly in regular and bold. `undefined` selects it, and a
+ * subheading's fontWeight "700" still gives its true bold.
  *
- * Android: HarfBuzz shapes every Kannada run in the content correctly
- * with Noto Serif Kannada, the website's Kannada reading face (Google
- * Fonts v2.005, static 400/700 instances, OFL, bundled in assets/fonts).
+ * Every other case (Android, other languages) keeps the usual reading face.
  */
-export const READING_FONT_ASSETS = {
-  NotoSerifKannada: require("./assets/fonts/NotoSerifKannada-Regular.ttf"),
-  "NotoSerifKannada-Bold": require("./assets/fonts/NotoSerifKannada-Bold.ttf"),
-};
-
-/**
- * The reading face for `language`. Bold Kannada on Android names the Bold
- * file and resets the weight, so Android never synthesises a fake bold.
- * Until the font has loaded (or if it failed to), the usual face is used.
- */
-export function readingFont(
-  language: LanguageCode | null,
-  bold = false,
-): { fontFamily: string | undefined; fontWeight?: "400" } {
-  if (language === "kn") {
-    if (Platform.OS === "ios") return { fontFamily: undefined };
-    const family = bold ? "NotoSerifKannada-Bold" : "NotoSerifKannada";
-    if (isLoaded(family)) return bold ? { fontFamily: family, fontWeight: "400" } : { fontFamily: family };
-  }
+export function readingFont(language: LanguageCode | null): { fontFamily: string | undefined } {
+  if (language === "kn" && Platform.OS === "ios") return { fontFamily: undefined };
   return { fontFamily: Platform.select(typography.readingFontFamily) };
 }
