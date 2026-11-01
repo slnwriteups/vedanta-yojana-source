@@ -1,6 +1,18 @@
 {
   "announcements": [
     {
+      "id": "2026-11-01-ios-enable-announcement-notifications",
+      "date": "2026-11-01",
+      "platforms": [
+        "app"
+      ],
+      "mobilePlatforms": [
+        "ios"
+      ],
+      "title": "Enable Announcement Notifications on iOS",
+      "body": "Dear Bhagavatas,\n\nStay informed about important announcements, festival observances, Panchangam updates, new book releases, and other updates from Vedanta Yojana.\n\nYou can enable push notifications directly within the Vedanta Yojana app.\n\nHow to Enable Notifications\n\n1. Open Vedanta Yojana on your iPhone.\n2. Tap Settings in the bottom navigation bar.\n3. Under Announcement notifications, tap Enable notifications.\n4. When your iPhone displays the notification permission pop-up, tap Allow.\n\nOnce enabled, the Settings screen will display “Notifications are on.”\n\nYou will then be registered to receive push notifications when new announcements are published, subject to successful notification delivery.\n\nAlready seeing “Notifications are on”? No further action is needed.\n\nNotifications are optional. You can turn them off whenever you wish, and all announcements will remain accessible within the app.\n\nThank you for being part of Vedanta Yojana.\n\nVedanta Yojana\nYatra Jñānam Pravāhati"
+    },
+    {
       "id": "2026-11-01-android-fcm-v1-credential-verification",
       "date": "2026-11-01",
       "platforms": [
