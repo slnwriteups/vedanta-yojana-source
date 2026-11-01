@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { calendarDay, todayIn } from "../../content-lib/panchangam-place.ts";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { timesInZoneLabel, useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
+import { readingFont } from "../reading-font.ts";
 import {
   localizeSankalpamText,
   localizeUpcomingEkadashi,
@@ -482,7 +483,7 @@ function SankalpamSection({
   const both = Boolean(dailyText && tarpanam);
   const bodyStyle = [
     styles.sankalpamBody,
-    { color: theme.colors.foreground, fontFamily: Platform.select(typography.readingFontFamily) },
+    { color: theme.colors.foreground, ...readingFont(language) },
   ];
 
   return (

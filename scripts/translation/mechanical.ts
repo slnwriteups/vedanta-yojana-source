@@ -76,7 +76,9 @@ export function devaToBrahmic(deva: string, lang: "kn" | "te"): string {
   const base = lang === "kn" ? 0x0c80 : 0x0c00;
   const om = lang === "kn" ? "ಓಂ" : "ఓం";
   // Class nasal + virama + same-class consonant → anusvara + consonant.
-  let text = deva.replace(/([ङञणनम])्(?=([क-ह]))/g, (m, nasal: string, next: string) =>
+  // Not after an avagraha or at a word start: an anusvara there has no
+  // vowel to sit on (शयोऽन्तकः → ಶಯೋಽನ್ತಕಃ, never ಶಯೋಽಂತಕಃ).
+  let text = deva.replace(/(?<![ऽ\s।॥|]|^)([ङञणनम])्(?=([क-ह]))/gm, (m, nasal: string, next: string) =>
     NASAL_CLASS[nasal].test(next) ? "ं" : m,
   );
   text = text.replace(/ॐ/g, "");

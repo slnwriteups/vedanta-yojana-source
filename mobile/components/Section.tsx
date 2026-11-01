@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { radius, spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
 import { useLanguage } from "../language-context.ts";
+import { readingFont } from "../reading-font.ts";
 import { translateUi } from "../ui-strings.ts";
 import {
   extractSpecialNote,
@@ -35,7 +36,8 @@ import {
  *
  * UI/UX pass: paragraph text renders in the serif reading face
  * (theme.ts's readingFontFamily -- a system font, Georgia on iOS, no
- * new asset). Headings stay in the app's regular sans, matching the
+ * new asset; Kannada uses the bundled Noto Serif Kannada, see
+ * reading-font.ts). Headings stay in the app's regular sans, matching the
  * common reading-app convention of a sans UI chrome around serif body
  * prose (Apple Books, Kindle) rather than one typeface everywhere.
  *
@@ -114,7 +116,7 @@ export function Section({
                           lineIndex > 0 && styles.specialNoteListItem,
                           {
                             color: theme.colors.foreground,
-                            fontFamily: Platform.select(typography.readingFontFamily),
+                            ...readingFont(language),
                             fontSize: typography.body * preferences.fontScale,
                             lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                           },
@@ -143,7 +145,7 @@ export function Section({
                     subheading && styles.subheading,
                     {
                       color: theme.colors.foreground,
-                      fontFamily: Platform.select(typography.readingFontFamily),
+                      ...readingFont(language, subheading),
                       fontSize: typography.body * preferences.fontScale,
                       lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                     },
