@@ -1,10 +1,11 @@
 import { useState, type ReactElement } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { radius, spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
 import { useLanguage } from "../language-context.ts";
+import { readingFont } from "../reading-font.ts";
 import { translateUi } from "../ui-strings.ts";
 import { FadeInImage, IMAGE_SIZE } from "./ContentImage";
 import { ImageViewerModal } from "./ImageViewerModal";
@@ -165,7 +166,7 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
                       lineIndex > 0 && styles.specialNoteListItem,
                       {
                         color: theme.colors.foreground,
-                        fontFamily: Platform.select(typography.readingFontFamily),
+                        ...readingFont(language),
                         fontSize: typography.body * preferences.fontScale,
                         lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                       },
@@ -189,7 +190,7 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
                 looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
                 {
                   color: theme.colors.foreground,
-                  fontFamily: Platform.select(typography.readingFontFamily),
+                  ...readingFont(language),
                   fontSize: typography.body * preferences.fontScale,
                   lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                 },

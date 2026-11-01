@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { radius, spacing, typography, useTheme } from "../theme";
 import { useReadingPreferences } from "../preferences-context.ts";
 import { useLanguage } from "../language-context.ts";
+import { readingFont } from "../reading-font.ts";
 import { translateUi } from "../ui-strings.ts";
 import {
   extractSpecialNote,
@@ -114,7 +115,7 @@ export function Section({
                           lineIndex > 0 && styles.specialNoteListItem,
                           {
                             color: theme.colors.foreground,
-                            fontFamily: Platform.select(typography.readingFontFamily),
+                            ...readingFont(language),
                             fontSize: typography.body * preferences.fontScale,
                             lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                           },
@@ -143,7 +144,7 @@ export function Section({
                     subheading && styles.subheading,
                     {
                       color: theme.colors.foreground,
-                      fontFamily: Platform.select(typography.readingFontFamily),
+                      ...readingFont(language),
                       fontSize: typography.body * preferences.fontScale,
                       lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                     },
