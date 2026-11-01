@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 242,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "birth-star-uttara-ashadha.title",
+      "en": "d75f960b63"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.0",
+      "en": "f4a15932c5"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.1",
+      "en": "2cba6564cc"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.4",
+      "en": "482bc1cbf4"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.5",
+      "en": "0f6228acce"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.8",
+      "en": "c415bf5426"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.9",
+      "en": "01864b9774"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.12",
+      "en": "37a1d69225"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.13",
+      "en": "ecb95f0fe1"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.16",
+      "en": "f1e1adce5e"
+    },
+    {
+      "id": "birth-star-shravana.title",
+      "en": "66ece26e89"
+    },
+    {
+      "id": "birth-star-shravana.0",
+      "en": "6329c10e6d"
+    },
+    {
+      "id": "birth-star-shravana.1",
+      "en": "0bc1af6e80"
+    },
+    {
+      "id": "birth-star-shravana.4",
+      "en": "ff566b0113"
+    },
+    {
+      "id": "birth-star-shravana.5",
+      "en": "c2dd0b586c"
+    },
+    {
+      "id": "birth-star-shravana.8",
+      "en": "1a3a309b0b"
+    },
+    {
+      "id": "birth-star-shravana.9",
+      "en": "006e79fe4b"
+    },
+    {
+      "id": "birth-star-shravana.12",
+      "en": "f4a3591b73"
+    },
+    {
+      "id": "birth-star-shravana.13",
+      "en": "ea3fbe7735"
+    },
+    {
+      "id": "birth-star-shravana.16",
+      "en": "f4b6f6b334"
+    },
+    {
+      "id": "birth-star-dhanishta.title",
+      "en": "9712c4b786"
+    },
+    {
+      "id": "birth-star-dhanishta.0",
+      "en": "e2b4f5590b"
+    },
+    {
+      "id": "birth-star-dhanishta.1",
+      "en": "3f899530df"
+    },
+    {
+      "id": "birth-star-dhanishta.4",
+      "en": "49fc53d609"
+    },
+    {
+      "id": "birth-star-dhanishta.5",
+      "en": "5868affc21"
+    },
+    {
+      "id": "birth-star-dhanishta.8",
+      "en": "104dca92e2"
+    },
+    {
+      "id": "birth-star-dhanishta.9",
+      "en": "3d8410a9be"
+    },
+    {
+      "id": "birth-star-dhanishta.12",
+      "en": "8a5cd5a441"
+    },
+    {
+      "id": "birth-star-dhanishta.13",
+      "en": "8cc55aa956"
+    },
+    {
+      "id": "birth-star-dhanishta.16",
+      "en": "862d1a5c72"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

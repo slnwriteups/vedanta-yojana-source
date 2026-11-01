@@ -1,6 +1,27 @@
 {
   "announcements": [
     {
+      "id": "2026-11-01-sahasranaama-kannada",
+      "date": "2026-11-01",
+      "platforms": [
+        "app",
+        "website"
+      ],
+      "title": "Sri Vishnu Sahasranaama Anubhavam is now in Kannada",
+      "body": "The complete book is now available in Kannada: all 116 chapters, with explanations of the thousand names following Sri Parasara Bhattar's commentary, the Phala Shruti and all 27 birth-star chapters.",
+      "link": {
+        "href": "/library/sri-vishnu-sahasranaama-anubhavam",
+        "label": "Read the book"
+      },
+      "translations": {
+        "kn": {
+          "title": "ಶ್ರೀ ವಿಷ್ಣು ಸಹಸ್ರನಾಮ ಅನುಭವಂ ಈಗ ಕನ್ನಡದಲ್ಲಿ",
+          "body": "ಶ್ರೀ ಪರಾಶರ ಭಟ್ಟರ್ ಅವರ ವ್ಯಾಖ್ಯಾನದ ಆಧಾರದಲ್ಲಿ ಸಾವಿರ ನಾಮಗಳ ವಿವರಣೆಗಳು, ಫಲಶ್ರುತಿ ಮತ್ತು ಎಲ್ಲ 27 ಜನ್ಮನಕ್ಷತ್ರಗಳ ಅಧ್ಯಾಯಗಳನ್ನು ಒಳಗೊಂಡ ಸಂಪೂರ್ಣ ಗ್ರಂಥದ 116 ಅಧ್ಯಾಯಗಳನ್ನೂ ಈಗ ಕನ್ನಡದಲ್ಲಿ ಓದಬಹುದು.",
+          "linkLabel": "ಗ್ರಂಥವನ್ನು ಓದಿ"
+        }
+      }
+    },
+    {
       "id": "2026-11-01-ios-enable-announcement-notifications",
       "date": "2026-11-01",
       "platforms": [

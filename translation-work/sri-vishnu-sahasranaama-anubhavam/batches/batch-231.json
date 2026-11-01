@@ -1,0 +1,27 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 231,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "concluding-shloka.title",
+      "en": "3bddb682cf"
+    },
+    {
+      "id": "concluding-shloka.0",
+      "en": "87704d6f77"
+    },
+    {
+      "id": "concluding-shloka.3",
+      "en": "1ec7befae0"
+    },
+    {
+      "id": "concluding-shloka.4",
+      "en": "c61e3d8ea4"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

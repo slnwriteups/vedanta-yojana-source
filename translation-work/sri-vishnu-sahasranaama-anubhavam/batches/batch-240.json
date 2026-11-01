@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 240,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "birth-star-swathi.title",
+      "en": "b3000e72e1"
+    },
+    {
+      "id": "birth-star-swathi.0",
+      "en": "17eecc1a8f"
+    },
+    {
+      "id": "birth-star-swathi.1",
+      "en": "27b78e76f6"
+    },
+    {
+      "id": "birth-star-swathi.4",
+      "en": "8bafea8002"
+    },
+    {
+      "id": "birth-star-swathi.5",
+      "en": "018da6d01d"
+    },
+    {
+      "id": "birth-star-swathi.8",
+      "en": "140d47e09c"
+    },
+    {
+      "id": "birth-star-swathi.9",
+      "en": "d509498fc0"
+    },
+    {
+      "id": "birth-star-swathi.12",
+      "en": "ff64fc1a34"
+    },
+    {
+      "id": "birth-star-swathi.13",
+      "en": "e07960ce63"
+    },
+    {
+      "id": "birth-star-swathi.16",
+      "en": "8e40c20498"
+    },
+    {
+      "id": "birth-star-visakha.title",
+      "en": "ad40b207b8"
+    },
+    {
+      "id": "birth-star-visakha.0",
+      "en": "a4f66a518e"
+    },
+    {
+      "id": "birth-star-visakha.1",
+      "en": "0543612405"
+    },
+    {
+      "id": "birth-star-visakha.4",
+      "en": "3a6d28ef03"
+    },
+    {
+      "id": "birth-star-visakha.5",
+      "en": "1ba4df151f"
+    },
+    {
+      "id": "birth-star-visakha.8",
+      "en": "2c828aab38"
+    },
+    {
+      "id": "birth-star-visakha.9",
+      "en": "bf6fb2756e"
+    },
+    {
+      "id": "birth-star-visakha.12",
+      "en": "bd42678dcc"
+    },
+    {
+      "id": "birth-star-visakha.13",
+      "en": "f7d5633a4b"
+    },
+    {
+      "id": "birth-star-visakha.16",
+      "en": "bacd1abcd7"
+    },
+    {
+      "id": "birth-star-anuradha.title",
+      "en": "d70902a97b"
+    },
+    {
+      "id": "birth-star-anuradha.0",
+      "en": "69dc90f8a5"
+    },
+    {
+      "id": "birth-star-anuradha.1",
+      "en": "87d1997c23"
+    },
+    {
+      "id": "birth-star-anuradha.4",
+      "en": "4d406b2c5a"
+    },
+    {
+      "id": "birth-star-anuradha.5",
+      "en": "b74fdfd5f6"
+    },
+    {
+      "id": "birth-star-anuradha.8",
+      "en": "96ae17cc7a"
+    },
+    {
+      "id": "birth-star-anuradha.9",
+      "en": "1129365f27"
+    },
+    {
+      "id": "birth-star-anuradha.12",
+      "en": "d2b665e36f"
+    },
+    {
+      "id": "birth-star-anuradha.13",
+      "en": "ec5c4e4961"
+    },
+    {
+      "id": "birth-star-anuradha.16",
+      "en": "f54e58b966"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

@@ -922,6 +922,90 @@
         "reviewer": "codex-source-review-2026-10-31",
         "note": "Existing vocalic l rule retained, following the owner decision and supplied Tamil edition. This source check does not add a new theological approval."
       }
+    },
+    {
+      "id": "naama-12-17.4",
+      "english": "1. Badhaathma- These are those aathmas born into bhulokam and must rely on bhakti yogam to reach the Lord.",
+      "note": "The settled English says bound souls must rely on bhakti yoga; it does not mention prapatti. Translated faithfully without adding an exclusion. An independent theological reviewer should assess this wording against the supplied scholarly sources.",
+      "batch": 151,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "English volume 1, naamas 12 and 65, printed pp. 47–48 and 102 (PDF pp. 53–54 and 108). The source distinguishes bound, released and ever-free souls; the unsupported requirement that every bound soul must rely on bhakti yoga was removed from the definition. Source-based editorial correction, not independent linguistic review or owner theological approval."
+      }
+    },
+    {
+      "id": "naama-18-20.5",
+      "english": "The ultimate goal is to become a mukthaathma and attain the Lord. The Lord, therefore, becomes the upeyam. Then, the question arises: What are the means for one to reach the Lord? The answer to this is straightforward to say but very hard to implement. To reach the Lord, one must constantly follow the path of Bhakti-yogam. Therefore, bhakti-yogam becomes the upayam to achieve moksham. But the Lord Himself is the true means: the one who is both the upayam as well as the upeyam to achieve moksham is yōgaḥ.",
+      "note": "English describes bhakti yoga as required to reach the Lord, then calls the Lord Himself the true means. Preserved the settled text without adding an exclusivity claim; check the exposition against the supplied sources during theological review.",
+      "batch": 152,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "English volume 1, naama 18, printed pp. 54–55 (PDF pp. 60–61). Sri Bhattar explains the Lord Himself as the natural, independent means to liberation, without dependence on another aid. Replaced the draft bhakti-yoga requirement with that supplied explanation; did not introduce an additional doctrinal system. Source-based editorial correction, not independent linguistic review or owner theological approval."
+      }
+    },
+    {
+      "id": "naama-18-20.3",
+      "english": "The meaning of this naama is better understood with the help of an analogy. Consider this: you desire to go from point A to point B. Point B becomes the destination (upeyam), and the means taken to reach your goal become the means (upayam).",
+      "note": "The English uses Latin A/B as arbitrary location labels, not acronyms or names. Localized these consistently as Kannada ಅ/ಬ to preserve the illustration while following target-script requirements.",
+      "batch": 152,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "Checked the English analogy and Kannada paragraph. A/B are arbitrary point labels, consistently localized as ಅ/ಬ; no meaning or doctrinal change. This is a localization check, not theological approval."
+      }
+    },
+    {
+      "id": "naama-21-64.63",
+      "english": "The one whose greatness and significance are showcased while taking different incarnations is far greater than the Para-Swaroopam.",
+      "note": "English compares the greatness shown in incarnations with Para-Swaroopam and calls the former far greater. Preserved the settled statement without adding doctrine; independent theological review should check the supplied commentary's intended comparison.",
+      "batch": 153,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "English volume 1, naama 36, printed pp. 70–71 (PDF pp. 76–77). Replaced the unsupported comparison placing incarnations above Para-Swaroopam with the source definition of Isvara as supreme ruler. The following paragraph already explains unlimited lordship and independent power. Source-based editorial correction, not independent linguistic review or owner theological approval."
+      }
+    },
+    {
+      "id": "naama-87-122.135",
+      "english": "He who treats the ones who have attained Him as a part of Himself. They are now one with the Lord and not separate entities.",
+      "note": "English says attained souls are now one with the Lord and not separate entities. Faithfully translated, but the intended relation should be checked against supplied Sri Vaishnava commentary; no non-dual identity explanation was added.",
+      "batch": 159,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "English volume 1, naama 118, printed pp. 133–134 (PDF pp. 139–140). The source explains uniting devotees with Himself; it does not state that liberated souls lose their distinct existence. Replaced the draft claim with the supplied definition. Source-based editorial correction, not independent linguistic review or owner theological approval."
+      }
+    },
+    {
+      "id": "naama-211-225.19",
+      "english": "The one who is so magnanimous that He even blesses the enemies of His devotees.",
+      "note": "English headline says He blesses even enemies of His devotees, while the following commentary says His gracious glance does not fall on opponents. Both were preserved faithfully; source-based reconciliation is needed in English before publication.",
+      "batch": 166,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "English volume 1, naama 215, printed p. 210 (PDF p. 216), visually checked. The old gloss reversed the supplied explanation and contradicted its own following paragraph. Restored the source meaning without changing the Sanskrit name or mantra. Source-based editorial correction, not independent linguistic review or owner theological approval."
+      }
+    },
+    {
+      "id": "naama-362-385.37",
+      "english": "Nammazhwar marvels, \"What wonder! The simplicity of the one who stood tied to the mortar, sobbing!\" (etthiṟam! uralinōdu iṇaindhirundhu Engiya eḷivē). The great Ramanuja is said to have fallen into a trance for six months while contemplating this single pasuram.",
+      "note": "English attributes the six-month trance over this pasuram to Ramanuja. Preserved attribution; verify it against supplied source material before publication rather than silently substituting another person's name.",
+      "batch": 177,
+      "translator": "codex-kn-2026-11-01",
+      "status": "resolved",
+      "resolution": {
+        "reviewer": "codex-source-editorial-2026-11-01",
+        "note": "English volume 2, naama 370, printed p. 35 (PDF p. 39), identifies the pasuram and its subject; volume 3, naama 626, printed pp. 34–35 (PDF pp. 38–39), explicitly attributes six-month loss of external awareness to Nammazhwar. Volume 4, naama 823, printed pp. 105–106 (PDF pp. 109–110), corroborates it. Corrected Ramanuja to Nammazhwar, retaining the quoted pasuram. Source-based editorial correction, not independent linguistic review or owner theological approval."
+      }
     }
   ]
 }

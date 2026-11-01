@@ -1,0 +1,47 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 169,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "naama-248-256.22",
+      "en": "8f50098cab"
+    },
+    {
+      "id": "naama-248-256.24",
+      "en": "d820fb5dd7"
+    },
+    {
+      "id": "naama-248-256.26",
+      "en": "f2a3441cfd"
+    },
+    {
+      "id": "naama-248-256.28",
+      "en": "81f11353ee"
+    },
+    {
+      "id": "naama-248-256.30",
+      "en": "706835af9e"
+    },
+    {
+      "id": "naama-248-256.32",
+      "en": "235493799c"
+    },
+    {
+      "id": "naama-248-256.34",
+      "en": "b6c2f05cb8"
+    },
+    {
+      "id": "naama-248-256.36",
+      "en": "42c8655695"
+    },
+    {
+      "id": "naama-248-256.38",
+      "en": "335ccb207f"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}
