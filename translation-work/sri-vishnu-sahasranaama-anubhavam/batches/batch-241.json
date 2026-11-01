@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 241,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "birth-star-jyeshta.title",
+      "en": "3439996784"
+    },
+    {
+      "id": "birth-star-jyeshta.0",
+      "en": "bf3d8f1920"
+    },
+    {
+      "id": "birth-star-jyeshta.1",
+      "en": "36e9bddbf9"
+    },
+    {
+      "id": "birth-star-jyeshta.4",
+      "en": "82016badd7"
+    },
+    {
+      "id": "birth-star-jyeshta.5",
+      "en": "698e9394d1"
+    },
+    {
+      "id": "birth-star-jyeshta.8",
+      "en": "7fabf8712c"
+    },
+    {
+      "id": "birth-star-jyeshta.9",
+      "en": "ff01d10bc6"
+    },
+    {
+      "id": "birth-star-jyeshta.12",
+      "en": "f09aceb9b8"
+    },
+    {
+      "id": "birth-star-jyeshta.13",
+      "en": "5f681b812d"
+    },
+    {
+      "id": "birth-star-jyeshta.16",
+      "en": "87b2575d0e"
+    },
+    {
+      "id": "birth-star-moola.title",
+      "en": "cd1a88076c"
+    },
+    {
+      "id": "birth-star-moola.0",
+      "en": "eabcc6f83e"
+    },
+    {
+      "id": "birth-star-moola.1",
+      "en": "c4389902d8"
+    },
+    {
+      "id": "birth-star-moola.4",
+      "en": "bbb5a7a696"
+    },
+    {
+      "id": "birth-star-moola.5",
+      "en": "3167464b85"
+    },
+    {
+      "id": "birth-star-moola.8",
+      "en": "cf6fbe239e"
+    },
+    {
+      "id": "birth-star-moola.9",
+      "en": "9ccb49d400"
+    },
+    {
+      "id": "birth-star-moola.12",
+      "en": "b832e95430"
+    },
+    {
+      "id": "birth-star-moola.13",
+      "en": "4d90a4bfb2"
+    },
+    {
+      "id": "birth-star-moola.16",
+      "en": "0f4ed323a7"
+    },
+    {
+      "id": "birth-star-purva-ashadha.title",
+      "en": "9f6048ae8f"
+    },
+    {
+      "id": "birth-star-purva-ashadha.0",
+      "en": "525713d5dc"
+    },
+    {
+      "id": "birth-star-purva-ashadha.1",
+      "en": "862ccde26f"
+    },
+    {
+      "id": "birth-star-purva-ashadha.4",
+      "en": "ccde66ea20"
+    },
+    {
+      "id": "birth-star-purva-ashadha.5",
+      "en": "c83c582660"
+    },
+    {
+      "id": "birth-star-purva-ashadha.8",
+      "en": "8610c55b66"
+    },
+    {
+      "id": "birth-star-purva-ashadha.9",
+      "en": "8a9a0a8270"
+    },
+    {
+      "id": "birth-star-purva-ashadha.12",
+      "en": "1e799fb1d1"
+    },
+    {
+      "id": "birth-star-purva-ashadha.13",
+      "en": "259422d89c"
+    },
+    {
+      "id": "birth-star-purva-ashadha.16",
+      "en": "f40cce387a"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

@@ -1,0 +1,930 @@
+{
+  "how-did-sri-vishnu-sahasranaamam-come-to-be.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:40.419Z",
+      "warnings": 0,
+      "textHash": "ab9487922e"
+    }
+  },
+  "composition-of-the-stotram.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T10:18:02.750Z",
+      "warnings": 0,
+      "textHash": "80268af800"
+    }
+  },
+  "organisation-of-the-stotram.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:40.794Z",
+      "warnings": 0,
+      "textHash": "e7db1b6152"
+    }
+  },
+  "the-prologue.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T10:20:00.468Z",
+      "warnings": 0,
+      "textHash": "1110a18d54"
+    }
+  },
+  "the-thousand-names.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T10:18:03.097Z",
+      "warnings": 0,
+      "textHash": "1c28d8135d"
+    }
+  },
+  "the-benefits.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:41.312Z",
+      "warnings": 1,
+      "textHash": "33a4b28f9d"
+    }
+  },
+  "importance-of-chanting-the-stotram.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T10:19:32.316Z",
+      "warnings": 2,
+      "textHash": "d6fe6ca82c"
+    }
+  },
+  "vandana.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T10:19:32.499Z",
+      "warnings": 0,
+      "textHash": "ade42a9eca"
+    }
+  },
+  "dhyana-shlokam.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:41.918Z",
+      "warnings": 0,
+      "textHash": "4278f27382"
+    }
+  },
+  "naama-1-5.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:42.145Z",
+      "warnings": 4,
+      "textHash": "3df89772b8"
+    }
+  },
+  "naama-6-9.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:42.329Z",
+      "warnings": 1,
+      "textHash": "b0a4b70181"
+    }
+  },
+  "naama-10-11.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:42.518Z",
+      "warnings": 0,
+      "textHash": "96864e5d99"
+    }
+  },
+  "naama-12-17.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:42.736Z",
+      "warnings": 0,
+      "textHash": "225701cea5"
+    }
+  },
+  "naama-18-20.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:42.921Z",
+      "warnings": 0,
+      "textHash": "03c400596f"
+    }
+  },
+  "naama-21-64.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:43.183Z",
+      "warnings": 3,
+      "textHash": "809406d5fe"
+    }
+  },
+  "naama-65-86.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:43.413Z",
+      "warnings": 2,
+      "textHash": "a18aaae2c0"
+    }
+  },
+  "naama-87-122.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:43.683Z",
+      "warnings": 7,
+      "textHash": "cddeb44b39"
+    }
+  },
+  "naama-123-128.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:43.907Z",
+      "warnings": 0,
+      "textHash": "ef70a4d119"
+    }
+  },
+  "naama-129-138.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:44.125Z",
+      "warnings": 2,
+      "textHash": "09ae691225"
+    }
+  },
+  "naama-139-146.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:44.339Z",
+      "warnings": 3,
+      "textHash": "bba383791b"
+    }
+  },
+  "naama-147-152.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:44.537Z",
+      "warnings": 5,
+      "textHash": "faa818ab81"
+    }
+  },
+  "naama-153-164.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T10:19:32.693Z",
+      "warnings": 0,
+      "textHash": "35db1f6613"
+    }
+  },
+  "naama-165-170.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:44.971Z",
+      "warnings": 2,
+      "textHash": "bd1864fbc6"
+    }
+  },
+  "naama-171-181.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:45.161Z",
+      "warnings": 0,
+      "textHash": "63afa14bc9"
+    }
+  },
+  "naama-182-187.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:45.346Z",
+      "warnings": 4,
+      "textHash": "d07ab77cf9"
+    }
+  },
+  "naama-188-194.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:45.532Z",
+      "warnings": 1,
+      "textHash": "e1581e6dea"
+    }
+  },
+  "naama-195-199.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:45.730Z",
+      "warnings": 4,
+      "textHash": "ea1dc2d06d"
+    }
+  },
+  "naama-200-210.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:45.923Z",
+      "warnings": 1,
+      "textHash": "999b22cd6b"
+    }
+  },
+  "naama-211-225.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:46.135Z",
+      "warnings": 5,
+      "textHash": "92b4aed59c"
+    }
+  },
+  "naama-226-247.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:46.353Z",
+      "warnings": 2,
+      "textHash": "66334641f7"
+    }
+  },
+  "naama-248-256.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:46.553Z",
+      "warnings": 2,
+      "textHash": "ccd3ec5f3b"
+    }
+  },
+  "naama-257-265.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:46.749Z",
+      "warnings": 0,
+      "textHash": "75d231bac7"
+    }
+  },
+  "naama-266-271.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:46.946Z",
+      "warnings": 2,
+      "textHash": "d250355b74"
+    }
+  },
+  "naama-272-283.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:47.162Z",
+      "warnings": 1,
+      "textHash": "cb01b815c2"
+    }
+  },
+  "naama-284-290.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:47.356Z",
+      "warnings": 1,
+      "textHash": "0d69365ecb"
+    }
+  },
+  "naama-291-300.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:47.555Z",
+      "warnings": 2,
+      "textHash": "d6341379df"
+    }
+  },
+  "naama-301-314.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:47.752Z",
+      "warnings": 2,
+      "textHash": "9f619c560a"
+    }
+  },
+  "naama-315-322.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:47.944Z",
+      "warnings": 3,
+      "textHash": "f6387585bc"
+    }
+  },
+  "naama-323-333.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:48.143Z",
+      "warnings": 1,
+      "textHash": "2d45e2288a"
+    }
+  },
+  "naama-334-345.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:48.325Z",
+      "warnings": 6,
+      "textHash": "8f0f169b84"
+    }
+  },
+  "naama-346-351.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:48.506Z",
+      "warnings": 2,
+      "textHash": "13bdad3d83"
+    }
+  },
+  "naama-352-361.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:48.695Z",
+      "warnings": 1,
+      "textHash": "b5b473117a"
+    }
+  },
+  "naama-362-385.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:48.904Z",
+      "warnings": 2,
+      "textHash": "b63527a09d"
+    }
+  },
+  "naama-386-390.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:49.088Z",
+      "warnings": 0,
+      "textHash": "d104acd84f"
+    }
+  },
+  "naama-391-421.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:49.317Z",
+      "warnings": 5,
+      "textHash": "7761555747"
+    }
+  },
+  "naama-422-436.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:49.510Z",
+      "warnings": 1,
+      "textHash": "24b4b1c04c"
+    }
+  },
+  "naama-437-445.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:49.703Z",
+      "warnings": 0,
+      "textHash": "bb4a1d9dea"
+    }
+  },
+  "naama-446-450.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:49.916Z",
+      "warnings": 4,
+      "textHash": "3a1140fa77"
+    }
+  },
+  "naama-453-463.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:50.105Z",
+      "warnings": 3,
+      "textHash": "cd9857febc"
+    }
+  },
+  "naama-464-470.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:50.289Z",
+      "warnings": 0,
+      "textHash": "24b3d8ec2d"
+    }
+  },
+  "naama-471-482.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:50.526Z",
+      "warnings": 5,
+      "textHash": "dccf333698"
+    }
+  },
+  "naama-501-502.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:50.697Z",
+      "warnings": 1,
+      "textHash": "59b3586648"
+    }
+  },
+  "naama-503-516.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:50.912Z",
+      "warnings": 4,
+      "textHash": "31b7e83f47"
+    }
+  },
+  "naama-520-528.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:51.094Z",
+      "warnings": 4,
+      "textHash": "bf9f54e1ee"
+    }
+  },
+  "naama-529-538.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:51.285Z",
+      "warnings": 3,
+      "textHash": "7a940051e9"
+    }
+  },
+  "naama-539-543.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:51.485Z",
+      "warnings": 2,
+      "textHash": "c46ec8fba4"
+    }
+  },
+  "naama-544-563.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:51.692Z",
+      "warnings": 3,
+      "textHash": "f6cd46b033"
+    }
+  },
+  "naama-564-567.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:51.885Z",
+      "warnings": 1,
+      "textHash": "a8a062b14e"
+    }
+  },
+  "naama-568-574.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:52.083Z",
+      "warnings": 4,
+      "textHash": "bb1ff3a05e"
+    }
+  },
+  "naama-575-579.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:52.266Z",
+      "warnings": 3,
+      "textHash": "96311a85cf"
+    }
+  },
+  "naama-581-592.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:52.453Z",
+      "warnings": 1,
+      "textHash": "ab64a0a3d9"
+    }
+  },
+  "naama-593-600.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:52.642Z",
+      "warnings": 1,
+      "textHash": "fc4a0753bd"
+    }
+  },
+  "naama-601-607.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:52.829Z",
+      "warnings": 5,
+      "textHash": "e5aa2ab479"
+    }
+  },
+  "naama-608-626.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:53.055Z",
+      "warnings": 2,
+      "textHash": "64c4e0dc2a"
+    }
+  },
+  "naama-626-629.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:53.241Z",
+      "warnings": 0,
+      "textHash": "ffab18e6d0"
+    }
+  },
+  "naama-630-643.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:53.442Z",
+      "warnings": 3,
+      "textHash": "56b82690df"
+    }
+  },
+  "naama-644-660.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:53.637Z",
+      "warnings": 1,
+      "textHash": "de2e115344"
+    }
+  },
+  "naama-661-666.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:53.809Z",
+      "warnings": 0,
+      "textHash": "2361db9a3c"
+    }
+  },
+  "naama-667-675.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:53.991Z",
+      "warnings": 1,
+      "textHash": "0465a9cfb5"
+    }
+  },
+  "naama-676-683.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:54.183Z",
+      "warnings": 3,
+      "textHash": "6c25117f83"
+    }
+  },
+  "naama-684-689.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:54.390Z",
+      "warnings": 3,
+      "textHash": "af4325fde0"
+    }
+  },
+  "naama-697-786.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:54.716Z",
+      "warnings": 18,
+      "textHash": "63e30b3f21"
+    }
+  },
+  "naama-787-810.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:54.931Z",
+      "warnings": 2,
+      "textHash": "8776f0e340"
+    }
+  },
+  "naama-811-838.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:55.144Z",
+      "warnings": 4,
+      "textHash": "9aa1822541"
+    }
+  },
+  "naama-839-846.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:55.316Z",
+      "warnings": 0,
+      "textHash": "1885b4822f"
+    }
+  },
+  "naama-847-850.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:55.474Z",
+      "warnings": 0,
+      "textHash": "ab388292d5"
+    }
+  },
+  "naama-851-860.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:55.644Z",
+      "warnings": 2,
+      "textHash": "86c0d68258"
+    }
+  },
+  "naama-861-870.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:55.827Z",
+      "warnings": 1,
+      "textHash": "47c5f84831"
+    }
+  },
+  "naama-871-880.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:56.013Z",
+      "warnings": 1,
+      "textHash": "8236c757f8"
+    }
+  },
+  "naama-881-896.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:56.194Z",
+      "warnings": 2,
+      "textHash": "dc21a77e27"
+    }
+  },
+  "naama-897-911.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:56.364Z",
+      "warnings": 0,
+      "textHash": "b697387242"
+    }
+  },
+  "naama-912-945.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:56.592Z",
+      "warnings": 9,
+      "textHash": "f84b39daf7"
+    }
+  },
+  "naama-946-992.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:56.845Z",
+      "warnings": 4,
+      "textHash": "400bf34058"
+    }
+  },
+  "naama-993-1000.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:57.057Z",
+      "warnings": 0,
+      "textHash": "25f21222a0"
+    }
+  },
+  "concluding-shloka.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:57.218Z",
+      "warnings": 2,
+      "textHash": "0f9d0753b4"
+    }
+  },
+  "phala-shruti.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:57.414Z",
+      "warnings": 6,
+      "textHash": "f77eb5fc48"
+    }
+  },
+  "uttara-bhagam.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:57.594Z",
+      "warnings": 4,
+      "textHash": "fcb91a2b6f"
+    }
+  },
+  "conclusion.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:57.773Z",
+      "warnings": 1,
+      "textHash": "215453e9a2"
+    }
+  },
+  "your-birth-star-and-the-sahasranamam.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:57.965Z",
+      "warnings": 0,
+      "textHash": "7c1ef2c859"
+    }
+  },
+  "birth-star-aswini.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:58.128Z",
+      "warnings": 0,
+      "textHash": "6e3ea23fef"
+    }
+  },
+  "birth-star-bharani.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:58.288Z",
+      "warnings": 2,
+      "textHash": "8c12dfc6e6"
+    }
+  },
+  "birth-star-krittika.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:58.444Z",
+      "warnings": 0,
+      "textHash": "038f52aeb0"
+    }
+  },
+  "birth-star-rohini.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:58.595Z",
+      "warnings": 1,
+      "textHash": "ef09362af6"
+    }
+  },
+  "birth-star-mrigasira.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:58.763Z",
+      "warnings": 0,
+      "textHash": "6b019f863c"
+    }
+  },
+  "birth-star-ardra.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:58.925Z",
+      "warnings": 1,
+      "textHash": "853155e431"
+    }
+  },
+  "birth-star-punarvasu.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:59.099Z",
+      "warnings": 1,
+      "textHash": "3a2f432451"
+    }
+  },
+  "birth-star-pushyami.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:59.268Z",
+      "warnings": 2,
+      "textHash": "7147cb7d64"
+    }
+  },
+  "birth-star-aslesha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:59.456Z",
+      "warnings": 2,
+      "textHash": "00c9b79849"
+    }
+  },
+  "birth-star-makha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:59.620Z",
+      "warnings": 3,
+      "textHash": "72f328c445"
+    }
+  },
+  "birth-star-purva-phalguni.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:59.800Z",
+      "warnings": 0,
+      "textHash": "e1e82d9c42"
+    }
+  },
+  "birth-star-uttara-phalguni.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:41:59.960Z",
+      "warnings": 1,
+      "textHash": "fe5b189d88"
+    }
+  },
+  "birth-star-hasta.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:00.123Z",
+      "warnings": 1,
+      "textHash": "0af293a980"
+    }
+  },
+  "birth-star-chitra.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:00.291Z",
+      "warnings": 2,
+      "textHash": "051e62851d"
+    }
+  },
+  "birth-star-swathi.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:00.461Z",
+      "warnings": 2,
+      "textHash": "a12e436514"
+    }
+  },
+  "birth-star-visakha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:00.634Z",
+      "warnings": 0,
+      "textHash": "a26c97924c"
+    }
+  },
+  "birth-star-anuradha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:00.807Z",
+      "warnings": 2,
+      "textHash": "6a0d79b640"
+    }
+  },
+  "birth-star-jyeshta.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:00.987Z",
+      "warnings": 0,
+      "textHash": "b2f73b6698"
+    }
+  },
+  "birth-star-moola.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:01.164Z",
+      "warnings": 1,
+      "textHash": "9ca35c6c2a"
+    }
+  },
+  "birth-star-purva-ashadha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:01.326Z",
+      "warnings": 0,
+      "textHash": "47aadbbb30"
+    }
+  },
+  "birth-star-uttara-ashadha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:01.489Z",
+      "warnings": 0,
+      "textHash": "79271b66ff"
+    }
+  },
+  "birth-star-shravana.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:01.658Z",
+      "warnings": 0,
+      "textHash": "d7a1c234ad"
+    }
+  },
+  "birth-star-dhanishta.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:01.828Z",
+      "warnings": 2,
+      "textHash": "2f8f3b767c"
+    }
+  },
+  "birth-star-satabhisha.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:02.003Z",
+      "warnings": 0,
+      "textHash": "a4670a18c7"
+    }
+  },
+  "birth-star-purva-badra.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:02.173Z",
+      "warnings": 0,
+      "textHash": "6cae878b05"
+    }
+  },
+  "birth-star-uttara-badra.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:02.344Z",
+      "warnings": 0,
+      "textHash": "016960ec54"
+    }
+  },
+  "birth-star-revathi.kn": {
+    "mechanical": {
+      "passed": true,
+      "checkedAt": "2026-11-01T08:42:02.516Z",
+      "warnings": 1,
+      "textHash": "00de51f778"
+    }
+  }
+}

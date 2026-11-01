@@ -1,0 +1,62 @@
+{
+  "recorded": "2026-11-01",
+  "scope": "Owner-supplied references available for validation; inventory is not a claim of full independent review.",
+  "sources": [
+    {
+      "filename": "Sri Vishnu Sahasranama_English_1.pdf",
+      "library_file_id": "libfile_a233ff5f714081919cebfbf3578e945d",
+      "sha256": "63a587e0aabb64a0401bd687e4a419c8a110d76bf2d9aa94d1479e98c1a29170",
+      "pages": 306,
+      "purpose": "Owner-supplied scholarly commentary for meanings and attributions."
+    },
+    {
+      "filename": "Sri Vishnu Sahasranama_English_2.pdf",
+      "library_file_id": "libfile_fe7a0ca6132c8191ad291dfcebc7bc9f",
+      "sha256": "2441ca7c7cd83b60d79e7d4d3cd63dc4fae18ffb3317fb437442328c51e4c707",
+      "pages": 301,
+      "purpose": "Owner-supplied scholarly commentary for meanings and attributions."
+    },
+    {
+      "filename": "Sri Vishnu Sahasranama_English_3.pdf",
+      "library_file_id": "libfile_3defb9a35db48191881bc20e08894df3",
+      "sha256": "e021a47be06158daed2d45cb0a511c56fd0353434f25dcf4a62a6720a13790d6",
+      "pages": 325,
+      "purpose": "Owner-supplied scholarly commentary for meanings and attributions."
+    },
+    {
+      "filename": "Sri Vishnu Sahasranama_English_4.pdf",
+      "library_file_id": "libfile_dd7afa5b174c8191a6f566e3138e026d",
+      "sha256": "a16c448eeae7a342a1f8d5ee6bf61f515d7382dc3aa1704418671c775ed5a6e4",
+      "pages": 291,
+      "purpose": "Owner-supplied scholarly commentary for meanings and attributions."
+    },
+    {
+      "filename": "Sri Vishnu Sahasranama_English_5.pdf",
+      "library_file_id": "libfile_1815e05ffd848191a5a9c1880a4459d8",
+      "sha256": "5d4259ab7b021eb65cf9430ad33ad752bd393b2966fd6329bf5275276a28091a",
+      "pages": 282,
+      "purpose": "Owner-supplied scholarly commentary for meanings and attributions."
+    },
+    {
+      "filename": "Sri Vishnu Sahasranama_English_Commentary.pdf",
+      "library_file_id": "libfile_5f28fafa4db481919b13e93c28f55b42",
+      "sha256": "c6ad962f39dfef152c5aa9a4e61e99e202e861f989fe1c557896da34fb7e4d69",
+      "pages": 1009,
+      "purpose": "Owner-supplied scholarly commentary for meanings and attributions."
+    },
+    {
+      "filename": "vishnusahasranaamam tamil.pdf",
+      "library_file_id": "libfile_74b847d3bab48191b32bc79f31d5c82d",
+      "sha256": "e951b95eaa3ce2e35a10891052b133cf4842d726a433c4ca22dcc2cd4e0b0c5e",
+      "pages": 26,
+      "purpose": "Tamil-script Sanskrit verse reference."
+    },
+    {
+      "filename": "vishnusahasranaamam_kan.pdf",
+      "library_file_id": "libfile_7e0dfcc70a0881919c56f21a5fbdc57f",
+      "sha256": "cb858e06dfebae49ddd3a7495e194357e64f00d34d716a3613c80bce81c53c33",
+      "pages": 26,
+      "purpose": "Kannada-script Sanskrit verse validation; font extraction is lossy, so visual confirmation is required."
+    }
+  ]
+}

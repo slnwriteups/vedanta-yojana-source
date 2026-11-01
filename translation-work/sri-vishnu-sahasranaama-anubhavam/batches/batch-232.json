@@ -1,0 +1,107 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 232,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "phala-shruti.title",
+      "en": "6be6f286c1"
+    },
+    {
+      "id": "phala-shruti.0",
+      "en": "1fba11a988"
+    },
+    {
+      "id": "phala-shruti.3",
+      "en": "565c98dfe3"
+    },
+    {
+      "id": "phala-shruti.6",
+      "en": "24fe8178d1"
+    },
+    {
+      "id": "phala-shruti.9",
+      "en": "7ab48e4b73"
+    },
+    {
+      "id": "phala-shruti.12",
+      "en": "a591a5d930"
+    },
+    {
+      "id": "phala-shruti.15",
+      "en": "e92613803d"
+    },
+    {
+      "id": "phala-shruti.18",
+      "en": "7fcb916e9e"
+    },
+    {
+      "id": "phala-shruti.21",
+      "en": "b420982feb"
+    },
+    {
+      "id": "phala-shruti.24",
+      "en": "6cbbe0c5c7"
+    },
+    {
+      "id": "phala-shruti.27",
+      "en": "46401d9905"
+    },
+    {
+      "id": "phala-shruti.30",
+      "en": "7bae3f58b6"
+    },
+    {
+      "id": "phala-shruti.33",
+      "en": "3453cda8ee"
+    },
+    {
+      "id": "phala-shruti.36",
+      "en": "97207ca6a0"
+    },
+    {
+      "id": "phala-shruti.39",
+      "en": "0040fccd36"
+    },
+    {
+      "id": "phala-shruti.42",
+      "en": "0a833ab876"
+    },
+    {
+      "id": "phala-shruti.45",
+      "en": "43a9df7093"
+    },
+    {
+      "id": "phala-shruti.48",
+      "en": "370ea627f2"
+    },
+    {
+      "id": "phala-shruti.51",
+      "en": "e4551aef02"
+    },
+    {
+      "id": "phala-shruti.54",
+      "en": "dc7a2ab9a5"
+    },
+    {
+      "id": "phala-shruti.57",
+      "en": "884a762dcf"
+    },
+    {
+      "id": "phala-shruti.60",
+      "en": "d35d2dc6d8"
+    },
+    {
+      "id": "phala-shruti.63",
+      "en": "b312b48d85"
+    },
+    {
+      "id": "phala-shruti.66",
+      "en": "b31e5e6be0"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

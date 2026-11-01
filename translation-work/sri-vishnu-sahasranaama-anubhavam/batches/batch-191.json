@@ -1,0 +1,95 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 191,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "naama-529-538.title",
+      "en": "c6fd81ca87"
+    },
+    {
+      "id": "naama-529-538.1",
+      "en": "b04e4e2585"
+    },
+    {
+      "id": "naama-529-538.3",
+      "en": "dc9a93e293"
+    },
+    {
+      "id": "naama-529-538.5",
+      "en": "958c9c54bd"
+    },
+    {
+      "id": "naama-529-538.7",
+      "en": "c8bf75b17d"
+    },
+    {
+      "id": "naama-529-538.9",
+      "en": "71976f711e"
+    },
+    {
+      "id": "naama-529-538.11",
+      "en": "2051c80b07"
+    },
+    {
+      "id": "naama-529-538.13",
+      "en": "9cacdc2720"
+    },
+    {
+      "id": "naama-529-538.15",
+      "en": "ce7bd2a649"
+    },
+    {
+      "id": "naama-529-538.17",
+      "en": "ec80921626"
+    },
+    {
+      "id": "naama-529-538.19",
+      "en": "8aeb485127"
+    },
+    {
+      "id": "naama-529-538.23",
+      "en": "9c2e6e924c"
+    },
+    {
+      "id": "naama-529-538.25",
+      "en": "ef6bc207dc"
+    },
+    {
+      "id": "naama-529-538.27",
+      "en": "e8e70958a3"
+    },
+    {
+      "id": "naama-529-538.29",
+      "en": "28da9b53ff"
+    },
+    {
+      "id": "naama-529-538.31",
+      "en": "a44546b49c"
+    },
+    {
+      "id": "naama-529-538.33",
+      "en": "5f7dfb8e30"
+    },
+    {
+      "id": "naama-529-538.35",
+      "en": "977d89ee12"
+    },
+    {
+      "id": "naama-529-538.37",
+      "en": "32f311ee4e"
+    },
+    {
+      "id": "naama-529-538.39",
+      "en": "1c1c75363f"
+    },
+    {
+      "id": "naama-529-538.41",
+      "en": "10673362ed"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

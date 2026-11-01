@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 237,
+  "langs": [
+    "kn"
+  ],
+  "items": [
+    {
+      "id": "birth-star-ardra.title",
+      "en": "9d0b7733a5"
+    },
+    {
+      "id": "birth-star-ardra.0",
+      "en": "50b9649485"
+    },
+    {
+      "id": "birth-star-ardra.1",
+      "en": "500d9b745a"
+    },
+    {
+      "id": "birth-star-ardra.4",
+      "en": "96d9b6f74b"
+    },
+    {
+      "id": "birth-star-ardra.5",
+      "en": "4d2f1f495f"
+    },
+    {
+      "id": "birth-star-ardra.8",
+      "en": "6f0241902e"
+    },
+    {
+      "id": "birth-star-ardra.9",
+      "en": "f12dba130b"
+    },
+    {
+      "id": "birth-star-ardra.12",
+      "en": "45a3d5b595"
+    },
+    {
+      "id": "birth-star-ardra.13",
+      "en": "550756aebb"
+    },
+    {
+      "id": "birth-star-ardra.16",
+      "en": "4994bc6f4b"
+    },
+    {
+      "id": "birth-star-punarvasu.title",
+      "en": "5290486e17"
+    },
+    {
+      "id": "birth-star-punarvasu.0",
+      "en": "219611534e"
+    },
+    {
+      "id": "birth-star-punarvasu.1",
+      "en": "434dbb1a31"
+    },
+    {
+      "id": "birth-star-punarvasu.4",
+      "en": "23f8a51b54"
+    },
+    {
+      "id": "birth-star-punarvasu.5",
+      "en": "006ed27daf"
+    },
+    {
+      "id": "birth-star-punarvasu.8",
+      "en": "a731b1fde5"
+    },
+    {
+      "id": "birth-star-punarvasu.9",
+      "en": "16d2932290"
+    },
+    {
+      "id": "birth-star-punarvasu.12",
+      "en": "3cb0b0cbc1"
+    },
+    {
+      "id": "birth-star-punarvasu.13",
+      "en": "6755b44071"
+    },
+    {
+      "id": "birth-star-punarvasu.16",
+      "en": "2a6228bdd1"
+    },
+    {
+      "id": "birth-star-pushyami.title",
+      "en": "e81ba7544b"
+    },
+    {
+      "id": "birth-star-pushyami.0",
+      "en": "a099e24546"
+    },
+    {
+      "id": "birth-star-pushyami.1",
+      "en": "20377c9d99"
+    },
+    {
+      "id": "birth-star-pushyami.4",
+      "en": "f8e5e27801"
+    },
+    {
+      "id": "birth-star-pushyami.5",
+      "en": "e189655765"
+    },
+    {
+      "id": "birth-star-pushyami.8",
+      "en": "835b143297"
+    },
+    {
+      "id": "birth-star-pushyami.9",
+      "en": "412725441a"
+    },
+    {
+      "id": "birth-star-pushyami.12",
+      "en": "d02fe27221"
+    },
+    {
+      "id": "birth-star-pushyami.13",
+      "en": "488c9d8935"
+    },
+    {
+      "id": "birth-star-pushyami.16",
+      "en": "c0a882d8ca"
+    }
+  ],
+  "merged": true,
+  "translator": "codex-kn-2026-11-01"
+}

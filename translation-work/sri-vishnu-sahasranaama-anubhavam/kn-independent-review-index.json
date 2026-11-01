@@ -1,0 +1,706 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "lang": "kn",
+  "prepared": "2026-11-01",
+  "translator": "codex-kn-2026-11-01",
+  "mandatoryCriterion": "Traditional Brahminical and Sri Vaishnava Register: Pass / Needs Revision",
+  "note": "Review packets updated after owner-authorized audit corrections. No approval or self-review is recorded; revised text requires independent assessment.",
+  "chapters": [
+    {
+      "chapter": "how-did-sri-vishnu-sahasranaamam-come-to-be",
+      "textHash": "ab9487922e",
+      "packet": "review/how-did-sri-vishnu-sahasranaamam-come-to-be.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "composition-of-the-stotram",
+      "textHash": "80268af800",
+      "packet": "review/composition-of-the-stotram.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "organisation-of-the-stotram",
+      "textHash": "e7db1b6152",
+      "packet": "review/organisation-of-the-stotram.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "the-prologue",
+      "textHash": "1110a18d54",
+      "packet": "review/the-prologue.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "the-thousand-names",
+      "textHash": "1c28d8135d",
+      "packet": "review/the-thousand-names.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "the-benefits",
+      "textHash": "33a4b28f9d",
+      "packet": "review/the-benefits.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "importance-of-chanting-the-stotram",
+      "textHash": "d6fe6ca82c",
+      "packet": "review/importance-of-chanting-the-stotram.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "vandana",
+      "textHash": "ade42a9eca",
+      "packet": "review/vandana.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "dhyana-shlokam",
+      "textHash": "4278f27382",
+      "packet": "review/dhyana-shlokam.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-1-5",
+      "textHash": "3df89772b8",
+      "packet": "review/naama-1-5.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-6-9",
+      "textHash": "b0a4b70181",
+      "packet": "review/naama-6-9.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-10-11",
+      "textHash": "96864e5d99",
+      "packet": "review/naama-10-11.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-12-17",
+      "textHash": "225701cea5",
+      "packet": "review/naama-12-17.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-18-20",
+      "textHash": "03c400596f",
+      "packet": "review/naama-18-20.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-21-64",
+      "textHash": "809406d5fe",
+      "packet": "review/naama-21-64.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-65-86",
+      "textHash": "a18aaae2c0",
+      "packet": "review/naama-65-86.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-87-122",
+      "textHash": "cddeb44b39",
+      "packet": "review/naama-87-122.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-123-128",
+      "textHash": "ef70a4d119",
+      "packet": "review/naama-123-128.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-129-138",
+      "textHash": "09ae691225",
+      "packet": "review/naama-129-138.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-139-146",
+      "textHash": "bba383791b",
+      "packet": "review/naama-139-146.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-147-152",
+      "textHash": "faa818ab81",
+      "packet": "review/naama-147-152.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-153-164",
+      "textHash": "35db1f6613",
+      "packet": "review/naama-153-164.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-165-170",
+      "textHash": "bd1864fbc6",
+      "packet": "review/naama-165-170.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-171-181",
+      "textHash": "63afa14bc9",
+      "packet": "review/naama-171-181.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-182-187",
+      "textHash": "d07ab77cf9",
+      "packet": "review/naama-182-187.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-188-194",
+      "textHash": "e1581e6dea",
+      "packet": "review/naama-188-194.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-195-199",
+      "textHash": "ea1dc2d06d",
+      "packet": "review/naama-195-199.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-200-210",
+      "textHash": "999b22cd6b",
+      "packet": "review/naama-200-210.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-211-225",
+      "textHash": "92b4aed59c",
+      "packet": "review/naama-211-225.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-226-247",
+      "textHash": "66334641f7",
+      "packet": "review/naama-226-247.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-248-256",
+      "textHash": "ccd3ec5f3b",
+      "packet": "review/naama-248-256.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-257-265",
+      "textHash": "75d231bac7",
+      "packet": "review/naama-257-265.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-266-271",
+      "textHash": "d250355b74",
+      "packet": "review/naama-266-271.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-272-283",
+      "textHash": "cb01b815c2",
+      "packet": "review/naama-272-283.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-284-290",
+      "textHash": "0d69365ecb",
+      "packet": "review/naama-284-290.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-291-300",
+      "textHash": "d6341379df",
+      "packet": "review/naama-291-300.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-301-314",
+      "textHash": "9f619c560a",
+      "packet": "review/naama-301-314.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-315-322",
+      "textHash": "f6387585bc",
+      "packet": "review/naama-315-322.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-323-333",
+      "textHash": "2d45e2288a",
+      "packet": "review/naama-323-333.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-334-345",
+      "textHash": "8f0f169b84",
+      "packet": "review/naama-334-345.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-346-351",
+      "textHash": "13bdad3d83",
+      "packet": "review/naama-346-351.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-352-361",
+      "textHash": "b5b473117a",
+      "packet": "review/naama-352-361.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-362-385",
+      "textHash": "b63527a09d",
+      "packet": "review/naama-362-385.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-386-390",
+      "textHash": "d104acd84f",
+      "packet": "review/naama-386-390.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-391-421",
+      "textHash": "7761555747",
+      "packet": "review/naama-391-421.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-422-436",
+      "textHash": "24b4b1c04c",
+      "packet": "review/naama-422-436.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-437-445",
+      "textHash": "bb4a1d9dea",
+      "packet": "review/naama-437-445.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-446-450",
+      "textHash": "3a1140fa77",
+      "packet": "review/naama-446-450.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-453-463",
+      "textHash": "cd9857febc",
+      "packet": "review/naama-453-463.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-464-470",
+      "textHash": "24b3d8ec2d",
+      "packet": "review/naama-464-470.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-471-482",
+      "textHash": "dccf333698",
+      "packet": "review/naama-471-482.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-501-502",
+      "textHash": "59b3586648",
+      "packet": "review/naama-501-502.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-503-516",
+      "textHash": "31b7e83f47",
+      "packet": "review/naama-503-516.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-520-528",
+      "textHash": "bf9f54e1ee",
+      "packet": "review/naama-520-528.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-529-538",
+      "textHash": "7a940051e9",
+      "packet": "review/naama-529-538.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-539-543",
+      "textHash": "c46ec8fba4",
+      "packet": "review/naama-539-543.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-544-563",
+      "textHash": "f6cd46b033",
+      "packet": "review/naama-544-563.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-564-567",
+      "textHash": "a8a062b14e",
+      "packet": "review/naama-564-567.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-568-574",
+      "textHash": "bb1ff3a05e",
+      "packet": "review/naama-568-574.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-575-579",
+      "textHash": "96311a85cf",
+      "packet": "review/naama-575-579.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-581-592",
+      "textHash": "ab64a0a3d9",
+      "packet": "review/naama-581-592.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-593-600",
+      "textHash": "fc4a0753bd",
+      "packet": "review/naama-593-600.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-601-607",
+      "textHash": "e5aa2ab479",
+      "packet": "review/naama-601-607.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-608-626",
+      "textHash": "64c4e0dc2a",
+      "packet": "review/naama-608-626.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-626-629",
+      "textHash": "ffab18e6d0",
+      "packet": "review/naama-626-629.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-630-643",
+      "textHash": "56b82690df",
+      "packet": "review/naama-630-643.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-644-660",
+      "textHash": "de2e115344",
+      "packet": "review/naama-644-660.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-661-666",
+      "textHash": "2361db9a3c",
+      "packet": "review/naama-661-666.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-667-675",
+      "textHash": "0465a9cfb5",
+      "packet": "review/naama-667-675.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-676-683",
+      "textHash": "6c25117f83",
+      "packet": "review/naama-676-683.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-684-689",
+      "textHash": "af4325fde0",
+      "packet": "review/naama-684-689.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-697-786",
+      "textHash": "63e30b3f21",
+      "packet": "review/naama-697-786.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-787-810",
+      "textHash": "8776f0e340",
+      "packet": "review/naama-787-810.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-811-838",
+      "textHash": "9aa1822541",
+      "packet": "review/naama-811-838.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-839-846",
+      "textHash": "1885b4822f",
+      "packet": "review/naama-839-846.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-847-850",
+      "textHash": "ab388292d5",
+      "packet": "review/naama-847-850.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-851-860",
+      "textHash": "86c0d68258",
+      "packet": "review/naama-851-860.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-861-870",
+      "textHash": "47c5f84831",
+      "packet": "review/naama-861-870.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-871-880",
+      "textHash": "8236c757f8",
+      "packet": "review/naama-871-880.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-881-896",
+      "textHash": "dc21a77e27",
+      "packet": "review/naama-881-896.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-897-911",
+      "textHash": "b697387242",
+      "packet": "review/naama-897-911.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-912-945",
+      "textHash": "f84b39daf7",
+      "packet": "review/naama-912-945.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-946-992",
+      "textHash": "400bf34058",
+      "packet": "review/naama-946-992.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "naama-993-1000",
+      "textHash": "25f21222a0",
+      "packet": "review/naama-993-1000.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "concluding-shloka",
+      "textHash": "0f9d0753b4",
+      "packet": "review/concluding-shloka.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "phala-shruti",
+      "textHash": "f77eb5fc48",
+      "packet": "review/phala-shruti.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "uttara-bhagam",
+      "textHash": "fcb91a2b6f",
+      "packet": "review/uttara-bhagam.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "conclusion",
+      "textHash": "215453e9a2",
+      "packet": "review/conclusion.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "your-birth-star-and-the-sahasranamam",
+      "textHash": "7c1ef2c859",
+      "packet": "review/your-birth-star-and-the-sahasranamam.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-aswini",
+      "textHash": "6e3ea23fef",
+      "packet": "review/birth-star-aswini.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-bharani",
+      "textHash": "8c12dfc6e6",
+      "packet": "review/birth-star-bharani.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-krittika",
+      "textHash": "038f52aeb0",
+      "packet": "review/birth-star-krittika.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-rohini",
+      "textHash": "ef09362af6",
+      "packet": "review/birth-star-rohini.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-mrigasira",
+      "textHash": "6b019f863c",
+      "packet": "review/birth-star-mrigasira.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-ardra",
+      "textHash": "853155e431",
+      "packet": "review/birth-star-ardra.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-punarvasu",
+      "textHash": "3a2f432451",
+      "packet": "review/birth-star-punarvasu.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-pushyami",
+      "textHash": "7147cb7d64",
+      "packet": "review/birth-star-pushyami.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-aslesha",
+      "textHash": "00c9b79849",
+      "packet": "review/birth-star-aslesha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-makha",
+      "textHash": "72f328c445",
+      "packet": "review/birth-star-makha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-purva-phalguni",
+      "textHash": "e1e82d9c42",
+      "packet": "review/birth-star-purva-phalguni.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-uttara-phalguni",
+      "textHash": "fe5b189d88",
+      "packet": "review/birth-star-uttara-phalguni.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-hasta",
+      "textHash": "0af293a980",
+      "packet": "review/birth-star-hasta.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-chitra",
+      "textHash": "051e62851d",
+      "packet": "review/birth-star-chitra.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-swathi",
+      "textHash": "a12e436514",
+      "packet": "review/birth-star-swathi.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-visakha",
+      "textHash": "a26c97924c",
+      "packet": "review/birth-star-visakha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-anuradha",
+      "textHash": "6a0d79b640",
+      "packet": "review/birth-star-anuradha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-jyeshta",
+      "textHash": "b2f73b6698",
+      "packet": "review/birth-star-jyeshta.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-moola",
+      "textHash": "9ca35c6c2a",
+      "packet": "review/birth-star-moola.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-purva-ashadha",
+      "textHash": "47aadbbb30",
+      "packet": "review/birth-star-purva-ashadha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-uttara-ashadha",
+      "textHash": "79271b66ff",
+      "packet": "review/birth-star-uttara-ashadha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-shravana",
+      "textHash": "d7a1c234ad",
+      "packet": "review/birth-star-shravana.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-dhanishta",
+      "textHash": "2f8f3b767c",
+      "packet": "review/birth-star-dhanishta.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-satabhisha",
+      "textHash": "a4670a18c7",
+      "packet": "review/birth-star-satabhisha.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-purva-badra",
+      "textHash": "6cae878b05",
+      "packet": "review/birth-star-purva-badra.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-uttara-badra",
+      "textHash": "016960ec54",
+      "packet": "review/birth-star-uttara-badra.kn.md",
+      "status": "pending-independent-review"
+    },
+    {
+      "chapter": "birth-star-revathi",
+      "textHash": "00de51f778",
+      "packet": "review/birth-star-revathi.kn.md",
+      "status": "pending-independent-review"
+    }
+  ]
+}
