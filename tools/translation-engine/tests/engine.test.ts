@@ -249,3 +249,10 @@ test("the list-marker check runs in linear time on hostile tokens (CodeQL js/red
   // Markers still work: roman numerals, single letters, digits, dotted sections.
   assert.deepEqual(latinFindings("(i) a) iii.ii) 2.", "(i) அ a) ஆ iii.ii) இ 2. ஈ"), []);
 });
+
+test("Kannada/Telugu: no anusvara after an avagraha (it has no vowel to sit on)", async () => {
+  const { devaToBrahmic } = await import("../../../scripts/translation/mechanical.ts");
+  assert.equal(devaToBrahmic("महोदधिशयोऽन्तकः", "kn"), "ಮಹೋದಧಿಶಯೋಽನ್ತಕಃ");
+  assert.equal(devaToBrahmic("महोदधिशयोऽन्तकः", "te"), "మహోదధిశయోఽన్తకః");
+  assert.equal(devaToBrahmic("अनन्तात्मा", "kn"), "ಅನಂತಾತ್ಮಾ");
+});
