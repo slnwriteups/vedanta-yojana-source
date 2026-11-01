@@ -1,7 +1,8 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
+import { readingFont } from "../reading-font.ts";
 import { localizeSankalpamText } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
 
@@ -36,7 +37,7 @@ export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | nul
             styles.text,
             {
               color: theme.colors.foreground,
-              fontFamily: Platform.select(typography.readingFontFamily),
+              ...readingFont(language),
             },
           ]}
         >
