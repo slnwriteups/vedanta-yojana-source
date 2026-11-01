@@ -1,0 +1,119 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 247,
+  "langs": [
+    "te"
+  ],
+  "items": [
+    {
+      "id": "naama-6-9.7",
+      "en": "2d907e27a8"
+    },
+    {
+      "id": "naama-6-9.9",
+      "en": "3846069a1f"
+    },
+    {
+      "id": "naama-6-9.11",
+      "en": "28a94824f7"
+    },
+    {
+      "id": "naama-6-9.13",
+      "en": "0255862923"
+    },
+    {
+      "id": "naama-6-9.15",
+      "en": "1e304a1a3a"
+    },
+    {
+      "id": "naama-10-11.title",
+      "en": "5fcb149c17"
+    },
+    {
+      "id": "naama-10-11.3",
+      "en": "22b40c4dd5"
+    },
+    {
+      "id": "naama-10-11.5",
+      "en": "c42dcae61b"
+    },
+    {
+      "id": "naama-10-11.6",
+      "en": "9a147db46f"
+    },
+    {
+      "id": "naama-10-11.8",
+      "en": "2dc97331ba"
+    },
+    {
+      "id": "naama-10-11.10",
+      "en": "5c675f776d"
+    },
+    {
+      "id": "naama-12-17.title",
+      "en": "83d7bc42bc"
+    },
+    {
+      "id": "naama-12-17.1",
+      "en": "0e321864c1"
+    },
+    {
+      "id": "naama-12-17.3",
+      "en": "52b38f93e7"
+    },
+    {
+      "id": "naama-12-17.4",
+      "en": "3ddee067ee"
+    },
+    {
+      "id": "naama-12-17.5",
+      "en": "b2b7c40834"
+    },
+    {
+      "id": "naama-12-17.6",
+      "en": "2c803b5d9a"
+    },
+    {
+      "id": "naama-12-17.7",
+      "en": "90d4628339"
+    },
+    {
+      "id": "naama-12-17.8",
+      "en": "6e830a5201"
+    },
+    {
+      "id": "naama-12-17.10",
+      "en": "94f78dab98"
+    },
+    {
+      "id": "naama-12-17.12",
+      "en": "2724d36e7d"
+    },
+    {
+      "id": "naama-12-17.14",
+      "en": "5555545323"
+    },
+    {
+      "id": "naama-12-17.16",
+      "en": "a7bdb20710"
+    },
+    {
+      "id": "naama-12-17.18",
+      "en": "2ce46ca111"
+    },
+    {
+      "id": "naama-12-17.20",
+      "en": "fd8b5afcab"
+    },
+    {
+      "id": "naama-12-17.22",
+      "en": "100acc8ba4"
+    },
+    {
+      "id": "naama-12-17.24",
+      "en": "9957985466"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-main-te"
+}
