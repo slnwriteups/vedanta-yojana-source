@@ -4,13 +4,18 @@ import { typography } from "./theme";
 import type { LanguageCode } from "./content-lib/preferences.ts";
 
 /**
- * Kannada reading text needs a font that actually contains Kannada.
- * Georgia (the iOS reading face) has none, so iOS substitutes per
- * character, and in some contexts it splits a conjunct such as ಸ್ತೋ
- * across fonts: a blank gap with the vowel sign stranded beside it.
- * Naming Noto Serif Kannada (the web's Kannada reading face, OFL, bundled
- * in assets/fonts) keeps every Kannada cluster in one font. Latin,
- * digits and Devanagari, which it lacks, still fall back cleanly.
+ * Kannada reading text needs a font that lays its conjuncts out whole.
+ *
+ * iOS: React Native draws text with TextKit 1, which misplaces a glyph of
+ * conjuncts such as ಸ್ತೋ with Georgia's Kannada fallback (Kannada Sangam
+ * MN/MN) and with the Noto Kannada fonts: a blank gap with the vowel sign
+ * stranded or thrown to the margin. Apple's system Kannada font lays out
+ * all 4,651 Kannada paragraphs of the Sahasranaama correctly in regular and
+ * bold, so Kannada uses the system font on iOS.
+ *
+ * Android: Noto Serif Kannada (the web's Kannada reading face, OFL, bundled
+ * in assets/fonts). Latin, digits and Devanagari, which it lacks, fall
+ * back cleanly.
  */
 export const READING_FONT_ASSETS = {
   NotoSerifKannada: require("./assets/fonts/NotoSerifKannada-Regular.ttf"),
@@ -26,6 +31,8 @@ export function readingFont(
   language: LanguageCode | null,
   bold = false,
 ): { fontFamily: string | undefined; fontWeight?: "400" } {
+  // undefined = the system font; a subheading's fontWeight "700" gives its true bold.
+  if (language === "kn" && Platform.OS === "ios") return { fontFamily: undefined };
   if (language === "kn") {
     const family = bold ? "NotoSerifKannada-Bold" : "NotoSerifKannada";
     if (isLoaded(family)) return bold ? { fontFamily: family, fontWeight: "400" } : { fontFamily: family };
