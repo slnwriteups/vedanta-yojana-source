@@ -514,6 +514,19 @@
           "warnings": 16
         }
       }
+    },
+    {
+      "checkedAt": "2026-11-02T11:13:25.467Z",
+      "trigger": "weekly",
+      "pages": 541,
+      "errors": 0,
+      "warnings": 16,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 16
+        }
+      }
     }
   ]
 }
