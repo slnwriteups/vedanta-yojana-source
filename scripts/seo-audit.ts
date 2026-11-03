@@ -84,6 +84,7 @@ interface Fetched {
   location?: string;
   body: string;
   bytes: number;
+  robotsHeader?: string;
 }
 
 /** Maps a sitemap <loc> (absolute or root-relative) to its path on the site. */
@@ -119,10 +120,12 @@ async function get(sitePath: string): Promise<Fetched> {
   // redirect: "manual" -- a redirect IS the finding for a sitemap URL.
   const response = await fetch(target, {
     redirect: "manual",
+    signal: AbortSignal.timeout(30000),
     headers: { "User-Agent": "vedanta-yojana-seo-audit (+https://github.com/slnwriteups/vedanta-yojana-source)" },
   });
   const buffer = Buffer.from(await response.arrayBuffer());
   return {
+    robotsHeader: response.headers.get("x-robots-tag") ?? undefined,
     status: response.status,
     location: response.headers.get("location") ?? undefined,
     body: buffer.toString("utf8"),
@@ -197,6 +200,8 @@ async function loadSitemap(): Promise<string[]> {
 }
 
 const titles = new Map<string, string[]>();
+const pageLinks = new Map<string, Set<string>>();
+
 
 async function checkPage(loc: string): Promise<void> {
   const sitePath = pathOf(loc);
@@ -218,6 +223,24 @@ async function checkPage(loc: string): Promise<void> {
 
   const html = page.body;
   const h = head(html);
+  // Ignore scripts: hydration payloads are not readable page content or links.
+  const body = html.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, "")
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, "");
+  const links = new Set<string>();
+  for (const match of body.matchAll(/<a\b[^>]*\bhref="([^"]+)"/gi)) {
+    try {
+      const base = new URL(loc, "https://static-export.invalid");
+      const target = new URL(decodeEntities(match[1]), base);
+      if (target.origin === base.origin) links.add(target.pathname.replace(/\/+$/, "") + "/");
+    } catch { /* Invalid hrefs are not crawlable. */ }
+  }
+  pageLinks.set(sitePath, links);
+  if (/\/divya-desams\/[^/]+\/$/.test(sitePath)) {
+    const main = body.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)?.[1] ?? "";
+    const readable = decodeEntities(main.replace(/<[^>]*>/g, " ")).replace(/\s+/g, " ").trim();
+    if (readable.length < 300) report("ERROR", "rendered content", loc, "Temple page has less than 300 characters in its initial main HTML; check for a client-only shell");
+  }
+
 
   if (page.bytes > PAGE_BYTES_ERROR) {
     report("ERROR", "page weight", loc, `${(page.bytes / 1e6).toFixed(1)} MB of HTML (limit ${(PAGE_BYTES_ERROR / 1e6).toFixed(1)} MB) -- slow pages rank lower`);
@@ -240,7 +263,7 @@ async function checkPage(loc: string): Promise<void> {
   if (!canonical) report("ERROR", "canonical", loc, "No canonical link");
   else if (decodeEntities(canonical) !== loc) report("ERROR", "canonical", loc, `Canonical is ${canonical} -- must match the sitemap URL`);
 
-  const robots = metaContent(h, "name", "robots") ?? "";
+  const robots = [metaContent(h, "name", "robots"), metaContent(h, "name", "googlebot"), page.robotsHeader].filter(Boolean).join(", ");
   if (/noindex/i.test(robots)) report("ERROR", "indexable", loc, `In the sitemap but marked "${robots}"`);
 
   if (!metaContent(h, "property", "og:image")) report("WARNING", "link preview", loc, "No og:image");
@@ -265,7 +288,7 @@ async function checkHostRedirects(): Promise<void> {
   if (!canonical.host.startsWith("www.")) variants.push(`https://www.${canonical.host}/`);
   for (const variant of variants) {
     try {
-      const response = await fetch(variant, { redirect: "manual" });
+      const response = await fetch(variant, { redirect: "manual", signal: AbortSignal.timeout(30000) });
       const location = response.headers.get("location") ?? "";
       if (response.status !== 301 && response.status !== 308) {
         report("ERROR", "host redirect", variant, `HTTP ${response.status} -- expected a permanent redirect to ${URL_BASE}/`);
@@ -291,6 +314,14 @@ async function inBatches<T>(items: T[], size: number, run: (item: T) => Promise<
 await checkRobots();
 const locs = await loadSitemap();
 await inBatches(locs, DIR ? 64 : LIVE_CONCURRENCY, checkPage);
+// Every temple must have a real anchor in the directory, not only a sitemap entry.
+for (const loc of locs) {
+  const sitePath = pathOf(loc);
+  const match = sitePath.match(/^(.*\/divya-desams\/)[^/]+\/$/);
+  if (match && !pageLinks.get(match[1])?.has(sitePath)) {
+    report("ERROR", "temple discovery", loc, "Missing crawlable link from the Divya Desams directory");
+  }
+}
 await checkHostRedirects();
 for (const [title, pages] of titles) {
   if (pages.length > 1) report("WARNING", "duplicate title", pages.join(", "), `"${title}" is used by ${pages.length} pages`);

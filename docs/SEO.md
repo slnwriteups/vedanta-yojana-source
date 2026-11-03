@@ -33,8 +33,9 @@ Low-value pages are kept out of the index on purpose: `/settings/` and the
   live site, including real redirects and the `www.`/`http://` addresses.
   If anything fails, it opens a GitHub issue labelled `seo-health`, and
   GitHub emails you. It keeps that one issue updated and closes it by itself
-  once the site passes again. **No open `seo-health` issue means all is
-  well.**
+  once the site passes again. **A passing audit means these technical checks passed; it does not
+  establish Google indexing, rankings or traffic. Check the latest run too:
+  a workflow that has stopped running cannot open a fresh issue.**
 
 Every check of the live site on `main` is also recorded in
 `stats/seo-health.json` (pages checked, errors and warnings per check), the
@@ -48,7 +49,8 @@ https://vedantayojana.org`, or `--dir out` after `npm run build`.
 
 ## One-time setup (owner only)
 
-Google gets no automatic signal like IndexNow. It needs Search Console.
+Google does not use IndexNow. Search Console is free and useful for diagnosis
+and sitemap submission, but it is not required for Google to discover a site.
 
 ### 1. Verify the site in Google Search Console
 
@@ -110,8 +112,35 @@ Search ranking mostly comes from things outside the code:
    (Sri Raṅgam).
 4. **Share pages, not just the home page.** Each temple and chapter now has
    its own preview card, so a direct link spreads better than the home page.
-5. **Remove first-visit barriers for people arriving from search.** Someone
-   who lands on a temple page from Google first sees the full-screen welcome
-   screen and then onboarding. Google counts full-screen interstitials against
-   mobile results, and visitors tend to leave. Consider showing those screens
-   only to people who arrive at the home page.
+5. **Direct content links open without first-visit barriers.**
+   The web welcome and settings gates now run only on home-page entry.
+   Visitors landing on a temple or book can read immediately.
+
+## November 2026 search improvements
+
+- Temple metadata and visible English summaries identify the temple and
+  available content, instead of truncating a legend mid-sentence. Common
+  plain spellings accompany the traditional names; Sri Raṅgam also uses
+  Srirangam. Existing URLs and scholarly text stay unchanged.
+- The audit checks initial temple HTML, links from the directory, and
+  HTTP X-Robots-Tag / googlebot noindex directives, with request timeouts.
+- No paid services, fabricated reviews, keyword stuffing or automated traffic.
+
+## Measure search growth separately from technical health
+
+In Search Console, inspect `/divya-desams/` and `/divya-desams/sri-rangam/`
+first. Record indexing status, Google-selected canonical and last crawl.
+Submit the sitemap and request indexing after deployment. A missing meta
+verification tag does not prove the site is unverified: DNS verification is separate.
+
+Export Performance data for the previous 28 days, then compare the next
+28-day period by page and query (country India, search type Web). Track
+impressions, clicks, CTR and average position for non-brand searches such as
+“108 divya desams”, “108 divya desam list”, “Srirangam temple” and
+“Srirangam sthala puranam”. These are target queries, not measured rankings.
+Use URL Inspection to distinguish indexing problems from low ranking.
+
+After technical deployment, share useful individual temple guides with
+existing readers and seek relevant editorial links from temple, pilgrimage
+and Sri Vaishnava resource sites. Do not buy links or mass-post promotional
+comments. No bot can guarantee first place or a traffic multiplier.

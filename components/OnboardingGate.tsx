@@ -1,5 +1,7 @@
 "use client";
 
+import { isHomeEntry } from "@/lib/entry-experience";
+
 import { useEffect, useState, type ReactNode } from "react";
 import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "@/lib/preferences";
 import { readJSON, writeJSON } from "@/lib/storage";
@@ -27,6 +29,7 @@ export function OnboardingGate({ children }: { children: ReactNode }) {
   const t = useT();
 
   useEffect(() => {
+    if (!isHomeEntry(window.location.pathname)) return;
     let cancelled = false;
     readJSON(ONBOARDED_STORAGE_KEY, isValidCompletedFlag).then((stored) => {
       if (!cancelled) setOnboarded(stored === true);

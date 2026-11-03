@@ -180,7 +180,7 @@ test("structured data never fabricates postal address, phone, geo coordinates, a
 
 test("the Divya Desam Place structured data only includes hasMap when a real shrine Maps link exists -- never fabricated", () => {
   const source = read("app/divya-desams/[slug]/page.tsx");
-  assert.match(source, /"@type":\s*\[?"Place"/);
+  assert.match(source, /"@type": seo\.celestial \? "Place" : \["Place", "HinduTemple"\]/);
   assert.ok(source.includes("firstMapsLink"));
   assert.ok(source.includes("record.shrines[0]?.mapsLink"));
 });
