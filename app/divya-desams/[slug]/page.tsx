@@ -1,3 +1,4 @@
+import { templeSeo } from "@/lib/divya-desam-seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { loadDivyaDesam, loadDivyaDesams } from "@/content-lib/loader";
@@ -41,16 +42,10 @@ export async function generateMetadata({
   const record = loadDivyaDesam(slug);
   if (!record) return { title: "Divya Desam" };
 
-  // Real stored prose, mechanically truncated -- never an invented
-  // description. Falls back to azhwarPasuram, then omits description
-  // entirely, if sthalaPuranam is absent (e.g. the multi-shrine records).
-  const source = record.sthalaPuranam ?? record.azhwarPasuram;
-
-  // "Divya Desam" and "Sthala Puranam" in the title are what people
-  // actually search alongside a temple's name.
+  const seo = templeSeo(record);
   return pageMetadata({
-    title: `${record.displayName} Divya Desam: Sthala Puranam`,
-    description: source ? truncateForDescription(source) : undefined,
+    title: seo.title,
+    description: truncateForDescription(seo.summary),
     path: `/divya-desams/${record.slug}`,
     image: firstImageHref(record.images),
     type: "article",
@@ -83,7 +78,7 @@ export default async function DivyaDesamDetailPage({
   // ambiguous shrine data) simply omit `hasMap`.
   const firstMapsLink = record.shrines[0]?.mapsLink;
   const imageHref = firstImageHref(record.images);
-  const description = record.sthalaPuranam ?? record.azhwarPasuram;
+  const seo = templeSeo(record);
 
   // Most images keep the source's own top-of-page position ("default").
   // A minority (per record) were placed AFTER Sthala Puranam in the
@@ -110,10 +105,11 @@ export default async function DivyaDesamDetailPage({
         data={{
           "@context": "https://schema.org",
           // HinduTemple is schema.org's own Place subtype for exactly this.
-          "@type": ["Place", "HinduTemple"],
+          "@type": seo.celestial ? "Place" : ["Place", "HinduTemple"],
           name: record.displayName,
+          alternateName: seo.name,
           url: siteUrl(`/divya-desams/${record.slug}/`),
-          ...(description ? { description: truncateForDescription(description) } : {}),
+          description: truncateForDescription(seo.summary),
           ...(imageHref ? { image: `${getSiteOrigin() ?? ""}${imageHref}` } : {}),
           ...(firstMapsLink ? { hasMap: firstMapsLink } : {}),
         }}

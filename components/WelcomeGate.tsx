@@ -1,5 +1,7 @@
 "use client";
 
+import { isHomeEntry } from "@/lib/entry-experience";
+
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -16,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
  * the mobile app's "shows again on every fresh launch, not just once
  * per install" behavior, per explicit direction. Renders `children`
  * untouched everywhere except the one-time overlay on top of them, so
- * there is no dependency on which page happens to be first.
+ * direct content entries bypass the overlay to reveal the requested page.
  *
  * Listening is optional (web only -- mobile/components/WelcomeScreen.tsx
  * is unchanged): Begin leads to a choice between Listen and Continue,
@@ -59,6 +61,7 @@ export function WelcomeGate({
   const fallbackTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
+    if (!isHomeEntry(window.location.pathname)) return;
     if (!window.sessionStorage.getItem(SEEN_KEY)) {
       setShowWelcome(true);
     }
@@ -123,10 +126,10 @@ export function WelcomeGate({
     <>
       {children}
       {/*
-       * preload="auto" only buffers the file so Listen starts promptly;
+       * preload="none" avoids downloading audio on direct content visits;
        * nothing plays until listen() is called from the Listen button.
        */}
-      <audio ref={audioRef} src={audioHref} preload="auto" />
+      <audio ref={audioRef} src={audioHref} preload="none" />
       {showWelcome ? (
         // Explicit h-dvh (dynamic viewport height), not just inset-0's
         // implicit sizing -- on mobile Safari a `fixed` element's height

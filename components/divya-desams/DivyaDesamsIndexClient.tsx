@@ -87,6 +87,13 @@ export function DivyaDesamsIndexClient({
 
   return (
     <div className="space-y-6">
+      {language === null ? (
+        <p className="prose-body text-[var(--muted)]">
+          Explore the 108 Divya Desams, the sacred abodes of Vishnu praised by the Azhwars.
+          Browse the complete list by region and open each temple guide for its deities,
+          sthala puranam, pasurams and available travel information.
+        </p>
+      ) : null}
       {localizedIntroduction ? (
         <Link
           href="/divya-desams/introduction"

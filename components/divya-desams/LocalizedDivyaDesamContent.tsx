@@ -1,5 +1,6 @@
 "use client";
 
+import { templeSeo } from "@/lib/divya-desam-seo";
 import { useMemo, type ReactNode } from "react";
 import type { PublicDivyaDesam } from "@/lib/public-content";
 import { localizeDivyaDesam } from "@/content-lib/i18n.ts";
@@ -50,6 +51,7 @@ export function LocalizedDivyaDesamContent({
       <div className="space-y-2">
         {badge}
         <h1 className="page-title">{localized.displayName}</h1>
+        {language === null ? <p className="prose-body text-[var(--muted)]">{templeSeo(record).summary}</p> : null}
       </div>
 
       {topImages}
