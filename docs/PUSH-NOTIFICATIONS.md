@@ -19,6 +19,18 @@ The public API can register/unregister a token but cannot trigger broadcasts or 
 
 The new version is 1.3.0, Android code 18. The appVersion runtime policy prevents notification code being sent to older 1.1/1.2 binaries that lack the native module. Keep this feature separate from the Tamil content OTA.
 
+## Delivery health and Android troubleshooting
+
+`https://vedantayojana.org/_push/status` reports, per platform, when Expo last accepted a notification (`lastAcceptedAt`) and the last error category it returned (`lastError`, `lastErrorAt`). It never shows tokens or subscriber counts.
+
+- `InvalidCredentials` on `android`: Expo has no working FCM V1 key. On expo.dev → Credentials → Android → `com.slnwriteups.vedantayojana`, upload a service-account key generated in Firebase project `vedanta-yojana-8b0de` (Project settings → Service accounts). No app build or OTA is needed.
+- `MismatchSenderId`: the FCM key is from a different Firebase project than the app's `google-services.json`. Replace it with a key from `vedanta-yojana-8b0de`.
+- These errors, and `MessageRateExceeded`, belong to the project, not the device. Messages that hit them are retried every 30 minutes, without using up their five attempts, for 12 hours after queuing, so a credential fix also delivers what was queued in that time. Device errors are not retried.
+
+Messages are sent with `priority: 'high'`. Expo's default is normal priority on Android, which FCM holds back while the phone is idle (Doze).
+
+The released v18 APK was checked on 4 November 2026. It contains the Firebase client for `com.slnwriteups.vedantayojana` (project `vedanta-yojana-8b0de`) and Expo's FCM messaging service, and the Firebase API key accepts its release signing certificate (SHA-1 `1D:99:66:22:1F:6A:15:9B:B6:50:E5:CC:B4:01:78:A0:2D:88:FC:ED`).
+
 ## Validation
 
 `node --test cloudflare/announcement-push/core.test.mjs`; Wrangler dry-run; content/app/mobile tests; web/mobile typechecks; Expo export for both platforms. Do not describe notifications as live until backend deployment, platform credentials, native distribution and a real-device delivery test have succeeded.
