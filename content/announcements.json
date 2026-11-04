@@ -1,6 +1,44 @@
 {
   "announcements": [
     {
+      "id": "2026-11-04-android-update-1-3-0",
+      "date": "2026-11-04",
+      "platforms": [
+        "app"
+      ],
+      "mobilePlatforms": [
+        "android"
+      ],
+      "title": "Please update the Vedanta Yojana Android app",
+      "body": "A new version of the Android app, 1.3.0, is available. It brings Ekadasi reminders and announcement notifications in your language.\n\nTo update, open vedantayojana.org, tap Install App in the menu, and install the latest version over your current app. Do not uninstall the old version first, so your bookmarks and settings are kept.\n\nIf your app is already version 1.3.0, no action is needed.",
+      "link": {
+        "href": "https://vedantayojana.org",
+        "label": "Open vedantayojana.org"
+      },
+      "translations": {
+        "ta": {
+          "title": "தயவுசெய்து வேதாந்த யோஜனா Android செயலியைப் புதுப்பிக்கவும்",
+          "body": "Android செயலியின் புதிய பதிப்பு 1.3.0 கிடைக்கிறது. இது ஏகாதசி நினைவூட்டல்களையும், உங்கள் மொழியில் அறிவிப்பு அறிவுறுத்தல்களையும் கொண்டு வருகிறது.\n\nபுதுப்பிக்க, vedantayojana.org-ஐத் திறந்து, மெனுவில் Install App என்பதைத் தட்டி, உங்கள் தற்போதைய செயலியின் மேலேயே புதிய பதிப்பை நிறுவவும். உங்கள் புக்மார்க்குகளும் அமைப்புகளும் பாதுகாக்கப்பட, பழைய பதிப்பை முதலில் நீக்க வேண்டாம்.\n\nஉங்கள் செயலி ஏற்கனவே 1.3.0 பதிப்பில் இருந்தால், எதுவும் செய்ய வேண்டியதில்லை.",
+          "linkLabel": "vedantayojana.org-ஐத் திறக்க"
+        },
+        "kn": {
+          "title": "ದಯವಿಟ್ಟು ವೇದಾಂತ ಯೋಜನೆ Android ಆ್ಯಪ್ ಅನ್ನು ನವೀಕರಿಸಿ",
+          "body": "Android ಆ್ಯಪ್‌ನ ಹೊಸ ಆವೃತ್ತಿ 1.3.0 ಲಭ್ಯವಿದೆ. ಇದು ಏಕಾದಶಿ ಜ್ಞಾಪನೆಗಳನ್ನು ಮತ್ತು ನಿಮ್ಮ ಭಾಷೆಯಲ್ಲಿ ಪ್ರಕಟಣೆಗಳ ಪುಷ್ ಅಧಿಸೂಚನೆಗಳನ್ನು ತರುತ್ತದೆ.\n\nನವೀಕರಿಸಲು, vedantayojana.org ತೆರೆಯಿರಿ, ಮೆನುವಿನಲ್ಲಿ Install App ಒತ್ತಿ, ನಿಮ್ಮ ಈಗಿನ ಆ್ಯಪ್‌ನ ಮೇಲೆಯೇ ಇತ್ತೀಚಿನ ಆವೃತ್ತಿಯನ್ನು ಸ್ಥಾಪಿಸಿ. ನಿಮ್ಮ ಬುಕ್‌ಮಾರ್ಕ್‌ಗಳು ಮತ್ತು ಸೆಟ್ಟಿಂಗ್‌ಗಳು ಉಳಿಯುವಂತೆ, ಹಳೆಯ ಆವೃತ್ತಿಯನ್ನು ಮೊದಲು ಅನ್‌ಇನ್‌ಸ್ಟಾಲ್ ಮಾಡಬೇಡಿ.\n\nನಿಮ್ಮ ಆ್ಯಪ್ ಈಗಾಗಲೇ 1.3.0 ಆವೃತ್ತಿಯಲ್ಲಿದ್ದರೆ, ಏನನ್ನೂ ಮಾಡುವ ಅಗತ್ಯವಿಲ್ಲ.",
+          "linkLabel": "vedantayojana.org ತೆರೆಯಿರಿ"
+        },
+        "hi": {
+          "title": "कृपया वेदांत योजना Android ऐप अपडेट करें",
+          "body": "Android ऐप का नया संस्करण 1.3.0 उपलब्ध है। इसमें एकादशी अनुस्मारक और आपकी भाषा में घोषणाओं की सूचनाएँ हैं।\n\nअपडेट करने के लिए vedantayojana.org खोलें, मेनू में Install App दबाएँ और नवीनतम संस्करण को अपने मौजूदा ऐप के ऊपर ही इंस्टॉल करें। पुराना संस्करण पहले अनइंस्टॉल न करें, ताकि आपके बुकमार्क और सेटिंग्स बने रहें।\n\nअगर आपका ऐप पहले से संस्करण 1.3.0 पर है, तो कुछ करने की ज़रूरत नहीं है।",
+          "linkLabel": "vedantayojana.org खोलें"
+        },
+        "te": {
+          "title": "దయచేసి వేదాంత యోజన Android యాప్‌ను అప్‌డేట్ చేయండి",
+          "body": "Android యాప్ కొత్త వెర్షన్ 1.3.0 అందుబాటులో ఉంది. ఇది ఏకాదశి రిమైండర్లను, మీ భాషలో ప్రకటనల నోటిఫికేషన్లను అందిస్తుంది.\n\nఅప్‌డేట్ చేయడానికి, vedantayojana.org తెరిచి, మెనూలో Install App నొక్కి, మీ ప్రస్తుత యాప్ పైనే తాజా వెర్షన్‌ను ఇన్‌స్టాల్ చేయండి. మీ బుక్‌మార్క్‌లు, సెట్టింగ్స్ నిలిచి ఉండేలా, పాత వెర్షన్‌ను ముందుగా అన్‌ఇన్‌స్టాల్ చేయవద్దు.\n\nమీ యాప్ ఇప్పటికే 1.3.0 వెర్షన్‌లో ఉంటే, ఏమీ చేయనక్కర్లేదు.",
+          "linkLabel": "vedantayojana.org తెరవండి"
+        }
+      }
+    },
+    {
       "id": "2026-11-04-ekadasi-reminders",
       "date": "2026-11-04",
       "platforms": [
