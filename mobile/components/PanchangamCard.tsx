@@ -8,7 +8,6 @@ import {
   tithiOfDayLabel,
 } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
-import { EkadasiReminderHint } from "./EkadasiReminderHint";
 
 /**
  * Home's full daily-calendar card -- the expanded counterpart to
@@ -75,7 +74,6 @@ export function PanchangamCard({ panchangam }: { panchangam: PanchangamData | nu
                 fg={theme.colors.foreground}
               />
             ) : null}
-            {panchangam.upcomingEkadashiText ? <EkadasiReminderHint /> : null}
           </>
         ) : (
           <Text style={[styles.unavailable, { color: theme.colors.muted }]}>{t("homeLocationUnavailable")}</Text>

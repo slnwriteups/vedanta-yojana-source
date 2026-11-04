@@ -19,7 +19,7 @@ import { EkadasiReminderSettings } from "./EkadasiReminderSettings";
  * language is chosen once up front and stays changeable later from the
  * same place -- no behavior change to the existing two: still the same
  * persisted ThemeProvider/ReadingPreferencesProvider/LanguageProvider
- * state. The Ekadasi reminder block (EkadasiReminderSettings) sits under
+ * state. The Ekadasi reminder note (EkadasiReminderSettings) sits under
  * the announcement-notifications block.
  */
 export function SettingsControls() {
