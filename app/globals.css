@@ -123,7 +123,7 @@ body {
   /*
    * The default UI sans stack (Tailwind's own preflight default,
    * repeated explicitly here) with a real Devanagari-shaping-capable
-   * font (app/layout.tsx's next/font/google Noto Sans Devanagari,
+   * font (app/layout.tsx's next/font/local Noto Sans Devanagari,
    * exposed as --font-devanagari) layered in as a fallback. Latin/IAST
    * text still resolves through the system sans stack exactly as
    * before; only Devanagari-range characters (a quoted Sanskrit shloka,
