@@ -4,7 +4,6 @@ import { requireOptionalNativeModule } from "expo";
 import type { PanchangamPlace } from "../../content-lib/panchangam-engine.ts";
 import type { LanguageCode } from "../content-lib/preferences.ts";
 import { useLanguage } from "../language-context.ts";
-import { readJSON, writeJSON } from "../storage.ts";
 import { EKADASI_REMINDER_ID_PREFIX, ekadasiReminderChannelName, planEkadasiReminders } from "./ekadasiReminderCore.ts";
 import { usePanchangamPlace } from "./panchangamPlaceStore.ts";
 import { useDevicePanchangamPlace } from "./panchangamService.ts";
@@ -22,14 +21,17 @@ import { useDevicePanchangamPlace } from "./panchangamService.ts";
  * (Settings > Language; English until they choose one), at the moment it
  * is scheduled -- so a language change reschedules every coming
  * reminder in the new language. The coming reminders are replaced
- * whenever the app comes to the foreground, the place or language changes, or the reader turns them
- * on or off in Settings; each run schedules the next
- * EKADASI_REMINDER_HORIZON_DAYS, so reminders keep coming between uses.
+ * whenever the app comes to the foreground or the place or language
+ * changes; each run schedules the next EKADASI_REMINDER_HORIZON_DAYS, so
+ * reminders keep coming between uses.
  *
- * They are off until the reader turns them on (Settings, or the hint on
- * the Home Panchangam card), and notification permission is asked only
- * then, never by a background refresh -- the same opt-in rule as
- * announcement notifications. The foreground display handler is the one
+ * On by default (owner decision, 4 Nov 2026): they are scheduled whenever
+ * the phone allows the app's notifications, with no in-app switch. The
+ * permission itself is asked once, automatically, by
+ * services/pushNotifications.ts (autoEnableNotifications); this service
+ * never prompts. A reader turns them off in the phone's settings: on
+ * Android the "Ekadasi reminders" channel alone, on iOS the app's
+ * notifications as a whole. The foreground display handler is the one
  * services/pushNotifications.ts installs for every notification.
  *
  * expo-notifications is native code. An over-the-air update can reach an
@@ -38,36 +40,11 @@ import { useDevicePanchangamPlace } from "./panchangamService.ts";
  * stay off until the next app build is installed, and nothing crashes.
  */
 
-const STORAGE_KEY = "ekadasiReminders";
 const ANDROID_CHANNEL_ID = "ekadasi-reminders";
 
-let enabled = false;
-let loaded = false;
+/** Bumped when notification permission may have changed, so the reminders reschedule. */
+let permissionVersion = 0;
 const listeners = new Set<() => void>();
-
-function emit() {
-  for (const listener of listeners) listener();
-}
-
-function isBoolean(value: unknown): value is boolean {
-  return typeof value === "boolean";
-}
-
-async function loadEnabled(): Promise<boolean> {
-  if (!loaded) {
-    enabled = (await readJSON(STORAGE_KEY, isBoolean)) ?? false;
-    loaded = true;
-    emit();
-  }
-  return enabled;
-}
-
-function setEnabled(next: boolean): void {
-  enabled = next;
-  loaded = true;
-  emit();
-  void writeJSON(STORAGE_KEY, next);
-}
 
 function subscribe(listener: () => void) {
   listeners.add(listener);
@@ -76,9 +53,10 @@ function subscribe(listener: () => void) {
   };
 }
 
-/** Whether the reminders are on, for the Settings toggle. */
-export function useEkadasiRemindersEnabled(): boolean {
-  return useSyncExternalStore(subscribe, () => enabled);
+/** Reschedules the reminders now: called after the notification permission is granted. */
+export function refreshEkadasiRemindersSoon(): void {
+  permissionVersion += 1;
+  for (const listener of listeners) listener();
 }
 
 /** Whether this build of the app carries expo-notifications' native code. */
@@ -124,60 +102,29 @@ async function ensureChannel(Notifications: NotificationsModule, language: Langu
   });
 }
 
-export type EkadasiReminderStatus = "on" | "off" | "denied" | "unavailable";
-
-/** What the Settings block shows: on, off, or on but blocked in the phone's settings. */
-export async function ekadasiReminderStatus(): Promise<EkadasiReminderStatus> {
+/** Whether the phone allows the app's notifications, for the Settings block's note. */
+export async function ekadasiRemindersAllowed(): Promise<boolean | null> {
   const Notifications = await loadNotifications();
-  if (!Notifications) return "unavailable";
-  if (!(await loadEnabled())) return "off";
+  if (!Notifications) return null;
   try {
-    return granted(Notifications, await Notifications.getPermissionsAsync()) ? "on" : "denied";
+    return granted(Notifications, await Notifications.getPermissionsAsync());
   } catch {
-    return "denied";
+    return false;
   }
-}
-
-/**
- * Turns the reminders on at the reader's request: asks for notification
- * permission if it can, and stays off if it is refused. The scheduling
- * itself follows from the change (useEkadasiReminders).
- */
-export async function enableEkadasiReminders(language: LanguageCode | null): Promise<EkadasiReminderStatus> {
-  try {
-    const Notifications = await loadNotifications();
-    if (!Notifications) return "unavailable";
-    await ensureChannel(Notifications, language);
-    let permission = await Notifications.getPermissionsAsync();
-    if (!granted(Notifications, permission) && permission.canAskAgain) permission = await Notifications.requestPermissionsAsync();
-    if (!granted(Notifications, permission)) return "denied";
-    setEnabled(true);
-    return "on";
-  } catch {
-    return "denied";
-  }
-}
-
-/** Turns the reminders off and clears the ones already scheduled. */
-export function disableEkadasiReminders(): EkadasiReminderStatus {
-  setEnabled(false);
-  return "off";
 }
 
 /**
  * Replaces the scheduled reminders with those for `place` in `language`,
- * or just clears them when they are turned off. Never throws: a reminder
+ * or clears them when notifications aren't allowed. Never throws: a reminder
  * that can't be scheduled is a missed convenience, not an error to show.
  */
 export async function refreshEkadasiReminders(place: PanchangamPlace | null, language: LanguageCode | null): Promise<void> {
   try {
     const Notifications = await loadNotifications();
     if (!Notifications) return;
-    const on = await loadEnabled();
     // No place yet (the phone's location not resolved this launch): keep what is already scheduled.
-    if (on && !place) return;
+    if (!place) return;
     await cancelScheduled(Notifications);
-    if (!on || !place) return;
     // Never prompts: permission is asked only when the reader turns the reminders on.
     if (!granted(Notifications, await Notifications.getPermissionsAsync())) return;
     await ensureChannel(Notifications, language);
@@ -212,7 +159,7 @@ export function useEkadasiReminders(): void {
   const { place: chosen, ready } = usePanchangamPlace();
   const devicePlace = useDevicePanchangamPlace();
   const { language, ready: languageReady } = useLanguage();
-  const on = useEkadasiRemindersEnabled();
+  const version = useSyncExternalStore(subscribe, () => permissionVersion);
   const place: PanchangamPlace | null = chosen
     ? { latitude: chosen.latitude, longitude: chosen.longitude, timeZone: chosen.timeZone }
     : devicePlace;
@@ -226,5 +173,5 @@ export function useEkadasiReminders(): void {
       if (state === "active") queueRefresh(place, language);
     });
     return () => subscription.remove();
-  }, [ready, languageReady, place?.latitude, place?.longitude, place?.timeZone, language, on]);
+  }, [ready, languageReady, place?.latitude, place?.longitude, place?.timeZone, language, version]);
 }

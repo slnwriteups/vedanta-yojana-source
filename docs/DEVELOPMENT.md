@@ -211,10 +211,11 @@ the workflow is ever narrowed to one:
   (`mobile/services/ekadasiReminderService.ts`) use
   `expo-notifications`, which v16 lacks, so they check for its native
   module first and stay off (the Settings block hidden) until an app
-  build that includes it is installed. They are opt-in: off until the
-  reader turns them on in Settings or from the hint on the Home
-  Panchangam card, which is the only time notification permission is
-  asked.
+  build that includes it is installed. They are on by default: they
+  schedule whenever the phone allows the app's notifications, which
+  the app asks for once (see `autoEnableNotifications` in
+  `services/pushNotifications.ts`), and readers turn them off in the
+  phone's settings; there is no in-app switch.
 - **Baseline:** v16 is the first OTA-enabled build (EAS build
   `1f5e3c13-39f7-4766-82ba-57712d373153`, production-signed). v15 and
   earlier have OTA disabled and must be upgraded to v16 by installing

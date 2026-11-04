@@ -22,6 +22,7 @@ import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/pref
 import { readJSON, writeJSON } from "../storage.ts";
 import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
 import { askForLocationUpFront } from "../services/panchangamService.ts";
+import { autoEnableNotifications } from "../services/pushNotifications.ts";
 import { READING_FONT_ASSETS } from "../reading-font.ts";
 import { useEkadasiReminders } from "../services/ekadasiReminderService.ts";
 
@@ -68,6 +69,7 @@ function RootStack() {
   const [seenWelcome, setSeenWelcome] = useState(false);
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
   const tour = useTour();
+  const { language } = useLanguage();
   // One finish per setup, however many times the button is tapped while the location prompt is up.
   const finishingSetup = useRef(false);
 
@@ -113,6 +115,11 @@ function RootStack() {
           // prompt is answered before the tour starts rather than popping up
           // over it (see askForLocationUpFront).
           await askForLocationUpFront();
+          // Notifications are on by default: their permission prompt comes
+          // here too, after location and before the tour
+          // (autoEnableNotifications; existing readers get it once on their
+          // next launch, from PushNotificationsBridge).
+          await autoEnableNotifications(language);
           setOnboarded(true);
           // A new reader goes straight into the "How to use the app" tour.
           tour.startSoon();

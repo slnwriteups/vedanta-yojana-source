@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { AppState } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useLanguage } from '../language-context.ts';
-import { Notifications, notificationAnnouncementId, refreshPush } from '../services/pushNotifications.ts';
+import { Notifications, autoEnableNotifications, notificationAnnouncementId, refreshPush } from '../services/pushNotifications.ts';
 
 export function PushNotificationsBridge() {
   const router = useRouter();
   const { language } = useLanguage();
   useEffect(() => {
-    void refreshPush(language).catch(() => {});
+    // Readers who were onboarded before notifications were on by default are asked once here.
+    void autoEnableNotifications(language).then(() => refreshPush(language)).catch(() => {});
     const renewal = Notifications.addPushTokenListener(() => { void refreshPush(language).catch(() => {}); });
     const foreground = AppState.addEventListener('change', state => { if (state === 'active') void refreshPush(language).catch(() => {}); });
     return () => { foreground.remove(); renewal.remove(); };
