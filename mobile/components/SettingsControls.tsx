@@ -7,7 +7,7 @@ import { useLanguage } from "../language-context.ts";
 import { TourTarget } from "../tour/Tour";
 import { FONT_SCALE_STEPS, SUPPORTED_LANGUAGES, type LanguageCode } from "../content-lib/preferences.ts";
 import { settingChangedAnnouncement, translateUi, useT, type UiStringKey } from "../ui-strings.ts";
-import { notificationsAvailable, setEkadasiRemindersEnabled, useEkadasiRemindersEnabled } from "../services/ekadasiReminderService.ts";
+import { EkadasiReminderSettings } from "./EkadasiReminderSettings";
 
 /**
  * The Appearance (theme override), Text size, and Language controls --
@@ -19,14 +19,13 @@ import { notificationsAvailable, setEkadasiRemindersEnabled, useEkadasiReminders
  * language is chosen once up front and stays changeable later from the
  * same place -- no behavior change to the existing two: still the same
  * persisted ThemeProvider/ReadingPreferencesProvider/LanguageProvider
- * state. The Ekadasi reminder toggle (services/ekadasiReminderService.ts)
- * is shown only on a build that carries the notifications native code.
+ * state. The Ekadasi reminder block (EkadasiReminderSettings) sits under
+ * the announcement-notifications block.
  */
 export function SettingsControls() {
   const { override, setOverride } = useThemeControls();
   const { preferences, setFontScale } = useReadingPreferences();
   const { language, setLanguage } = useLanguage();
-  const ekadasiReminders = useEkadasiRemindersEnabled();
   const t = useT();
 
   const themeOptions = THEME_OPTION_KEYS.map((o) => ({ label: t(o.key), value: o.value }));
@@ -38,6 +37,7 @@ export function SettingsControls() {
   return (
     <View style={styles.container}>
       <PushNotificationSettings />
+      <EkadasiReminderSettings />
       <TourTarget id="settings-language">
         <PillGroup label={t("settingsLanguageLabel")} options={LANGUAGE_OPTIONS} selectedValue={language} onChange={setLanguage} />
       </TourTarget>
@@ -47,17 +47,6 @@ export function SettingsControls() {
       <TourTarget id="settings-text-size">
         <PillGroup label={t("settingsTextSizeLabel")} options={fontScaleOptions} selectedValue={preferences.fontScale} onChange={setFontScale} />
       </TourTarget>
-      {notificationsAvailable() ? (
-        <PillGroup
-          label={t("settingsEkadasiReminderLabel")}
-          options={[
-            { label: t("settingsOn"), value: true },
-            { label: t("settingsOff"), value: false },
-          ]}
-          selectedValue={ekadasiReminders}
-          onChange={setEkadasiRemindersEnabled}
-        />
-      ) : null}
     </View>
   );
 }

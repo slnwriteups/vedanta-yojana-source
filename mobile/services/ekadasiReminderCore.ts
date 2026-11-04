@@ -82,7 +82,7 @@ const CHANNEL_NAMES: Wording<string> = {
   ta: "ஏகாதசி நினைவூட்டல்கள்",
   kn: "ಏಕಾದಶಿ ಜ್ಞಾಪನೆಗಳು",
   hi: "एकादशी अनुस्मारक",
-  te: "ఏకాదశి గుర్తింపులు",
+  te: "ఏకాదశి రిమైండర్లు",
 };
 
 export function ekadasiReminderTitle(name: string, language: LanguageCode | null): string {

@@ -26,6 +26,12 @@ import { useDevicePanchangamPlace } from "./panchangamService.ts";
  * on or off in Settings; each run schedules the next
  * EKADASI_REMINDER_HORIZON_DAYS, so reminders keep coming between uses.
  *
+ * They are off until the reader turns them on (Settings, or the hint on
+ * the Home Panchangam card), and notification permission is asked only
+ * then, never by a background refresh -- the same opt-in rule as
+ * announcement notifications. The foreground display handler is the one
+ * services/pushNotifications.ts installs for every notification.
+ *
  * expo-notifications is native code. An over-the-air update can reach an
  * installed app built before it was added, so it is only loaded once its
  * native module is known to be present; on such a build the reminders
@@ -35,7 +41,7 @@ import { useDevicePanchangamPlace } from "./panchangamService.ts";
 const STORAGE_KEY = "ekadasiReminders";
 const ANDROID_CHANNEL_ID = "ekadasi-reminders";
 
-let enabled = true;
+let enabled = false;
 let loaded = false;
 const listeners = new Set<() => void>();
 
@@ -49,15 +55,14 @@ function isBoolean(value: unknown): value is boolean {
 
 async function loadEnabled(): Promise<boolean> {
   if (!loaded) {
-    enabled = (await readJSON(STORAGE_KEY, isBoolean)) ?? true;
+    enabled = (await readJSON(STORAGE_KEY, isBoolean)) ?? false;
     loaded = true;
     emit();
   }
   return enabled;
 }
 
-/** Turns the Dasami-eve reminders on or off (on by default). */
-export function setEkadasiRemindersEnabled(next: boolean): void {
+function setEnabled(next: boolean): void {
   enabled = next;
   loaded = true;
   emit();
@@ -89,16 +94,7 @@ function loadNotifications(): Promise<NotificationsModule | null> {
   notificationsModule ??= (async () => {
     if (Platform.OS === "web" || !notificationsAvailable()) return null;
     try {
-      const Notifications = await import("expo-notifications");
-      Notifications.setNotificationHandler({
-        handleNotification: async () => ({
-          shouldShowBanner: true,
-          shouldShowList: true,
-          shouldPlaySound: false,
-          shouldSetBadge: false,
-        }),
-      });
-      return Notifications;
+      return await import("expo-notifications");
     } catch {
       return null;
     }
@@ -115,13 +111,57 @@ async function cancelScheduled(Notifications: NotificationsModule): Promise<void
   );
 }
 
-/** Asks for notification permission if the reader hasn't been asked yet; whether it is granted. */
-async function ensurePermission(Notifications: NotificationsModule): Promise<boolean> {
-  const current = await Notifications.getPermissionsAsync();
-  if (current.granted) return true;
-  if (!current.canAskAgain) return false;
-  const requested = await Notifications.requestPermissionsAsync();
-  return requested.granted;
+function granted(Notifications: NotificationsModule, permission: Awaited<ReturnType<NotificationsModule["getPermissionsAsync"]>>): boolean {
+  return permission.granted || permission.ios?.status === Notifications.IosAuthorizationStatus.PROVISIONAL;
+}
+
+/** Creates the Android channel (needed before Android 13+ can show the permission prompt), or renames it into the reader's language. */
+async function ensureChannel(Notifications: NotificationsModule, language: LanguageCode | null): Promise<void> {
+  if (Platform.OS !== "android") return;
+  await Notifications.setNotificationChannelAsync(ANDROID_CHANNEL_ID, {
+    name: ekadasiReminderChannelName(language),
+    importance: Notifications.AndroidImportance.DEFAULT,
+  });
+}
+
+export type EkadasiReminderStatus = "on" | "off" | "denied" | "unavailable";
+
+/** What the Settings block shows: on, off, or on but blocked in the phone's settings. */
+export async function ekadasiReminderStatus(): Promise<EkadasiReminderStatus> {
+  const Notifications = await loadNotifications();
+  if (!Notifications) return "unavailable";
+  if (!(await loadEnabled())) return "off";
+  try {
+    return granted(Notifications, await Notifications.getPermissionsAsync()) ? "on" : "denied";
+  } catch {
+    return "denied";
+  }
+}
+
+/**
+ * Turns the reminders on at the reader's request: asks for notification
+ * permission if it can, and stays off if it is refused. The scheduling
+ * itself follows from the change (useEkadasiReminders).
+ */
+export async function enableEkadasiReminders(language: LanguageCode | null): Promise<EkadasiReminderStatus> {
+  try {
+    const Notifications = await loadNotifications();
+    if (!Notifications) return "unavailable";
+    await ensureChannel(Notifications, language);
+    let permission = await Notifications.getPermissionsAsync();
+    if (!granted(Notifications, permission) && permission.canAskAgain) permission = await Notifications.requestPermissionsAsync();
+    if (!granted(Notifications, permission)) return "denied";
+    setEnabled(true);
+    return "on";
+  } catch {
+    return "denied";
+  }
+}
+
+/** Turns the reminders off and clears the ones already scheduled. */
+export function disableEkadasiReminders(): EkadasiReminderStatus {
+  setEnabled(false);
+  return "off";
 }
 
 /**
@@ -138,14 +178,9 @@ export async function refreshEkadasiReminders(place: PanchangamPlace | null, lan
     if (on && !place) return;
     await cancelScheduled(Notifications);
     if (!on || !place) return;
-    if (Platform.OS === "android") {
-      // Created on the first run, renamed into the reader's language on later ones.
-      await Notifications.setNotificationChannelAsync(ANDROID_CHANNEL_ID, {
-        name: ekadasiReminderChannelName(language),
-        importance: Notifications.AndroidImportance.DEFAULT,
-      });
-    }
-    if (!(await ensurePermission(Notifications))) return;
+    // Never prompts: permission is asked only when the reader turns the reminders on.
+    if (!granted(Notifications, await Notifications.getPermissionsAsync())) return;
+    await ensureChannel(Notifications, language);
     for (const reminder of planEkadasiReminders(place, Date.now(), language)) {
       await Notifications.scheduleNotificationAsync({
         identifier: reminder.id,
@@ -171,8 +206,7 @@ function queueRefresh(place: PanchangamPlace | null, language: LanguageCode | nu
 
 /**
  * Keeps the reminders scheduled for the Panchangam's place and the
- * reader's language. Mounted once, after onboarding, so the permission
- * prompt never interrupts the first-launch screens.
+ * reader's language. Mounted once, after onboarding.
  */
 export function useEkadasiReminders(): void {
   const { place: chosen, ready } = usePanchangamPlace();
