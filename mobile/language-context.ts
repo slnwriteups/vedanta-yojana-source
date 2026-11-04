@@ -10,11 +10,18 @@ import type { LanguageCode } from "./content-lib/preferences.ts";
 export interface LanguageContextValue {
   /** null = English, the base language every record always has. */
   language: LanguageCode | null;
+  /**
+   * False until the saved choice has been read (language is English
+   * meanwhile). Anything written out of the app in the reader's
+   * language -- the Ekadasi notifications -- waits for it.
+   */
+  ready: boolean;
   setLanguage: (language: LanguageCode | null) => void;
 }
 
 export const LanguageContext = createContext<LanguageContextValue>({
   language: null,
+  ready: false,
   setLanguage: () => {},
 });
 
