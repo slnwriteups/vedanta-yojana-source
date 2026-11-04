@@ -4,7 +4,8 @@ compatibility_date = "2026-10-31"
 workers_dev = false
 routes = [{ pattern = "vedantayojana.org/_push*", zone_name = "vedantayojana.org" }]
 [triggers]
-crons = ["*/10 * * * *"]
+# Every minute, so a notification follows the site deploy within a minute.
+crons = ["* * * * *"]
 [durable_objects]
 bindings = [{ name = "PUSH_STORE", class_name = "AnnouncementPushStore" }]
 [[migrations]]
