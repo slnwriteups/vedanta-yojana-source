@@ -367,4 +367,10 @@ if (JSON_OUT) {
   );
 }
 
-process.exit(errors.length > 0 ? 1 : 0);
+// Exit only once stdout has drained: process.exit() right after the
+// console.log calls above can cut off the last lines when stdout is a
+// pipe on a busy machine. The ERROR lines come last, so CI and
+// tests/app/seo-audit-discovery.test.ts intermittently saw exit code 1
+// without the error that caused it.
+process.exitCode = errors.length > 0 ? 1 : 0;
+process.stdout.write("", () => process.exit());
