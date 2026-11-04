@@ -106,10 +106,10 @@ Search ranking mostly comes from things outside the code:
 2. **Publish steadily.** New blog posts and newly translated chapters give
    Google a reason to come back. A regular rhythm, even one post a week,
    works better than occasional bursts.
-3. **Match how people search.** People type things like "Srirangam temple
-   history" and "108 Divya Desam list". Wherever it reads naturally, use those
-   plain spellings in a page's opening paragraph alongside the diacritic forms
-   (Sri Raṅgam).
+3. **Match how people search in metadata.** Search titles and descriptions
+   can use familiar spellings such as "Srirangam". Keep the visible temple
+   pages clean: do not add promotional SEO introductions or duplicate
+   plain-spelling labels to the headings or cards.
 4. **Share pages, not just the home page.** Each temple and chapter now has
    its own preview card, so a direct link spreads better than the home page.
 5. **Direct content links open without first-visit barriers.**
@@ -118,10 +118,11 @@ Search ranking mostly comes from things outside the code:
 
 ## November 2026 search improvements
 
-- Temple metadata and visible English summaries identify the temple and
-  available content, instead of truncating a legend mid-sentence. Common
-  plain spellings accompany the traditional names; Sri Raṅgam also uses
-  Srirangam. Existing URLs and scholarly text stay unchanged.
+- Temple metadata identifies the temple and available content instead of
+  truncating a legend mid-sentence. Common spellings such as Srirangam
+  remain in search metadata and structured data. Visible SEO summaries,
+  the promotional directory introduction and duplicate card names were
+  removed at the owner's request; pages retain their traditional names.
 - The audit checks initial temple HTML, links from the directory, and
   HTTP X-Robots-Tag / googlebot noindex directives, with request timeouts.
 - No paid services, fabricated reviews, keyword stuffing or automated traffic.
