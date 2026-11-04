@@ -8,6 +8,24 @@ The Cloudflare service stores the Expo token, platform, language and registratio
 
 The public API can register/unregister a token but cannot trigger broadcasts or supply notification content. Tokens are validated, requests size/rate limited, origins checked where supplied, and no token listings or token logs exist. Possession of a push token authorizes subscription updates/removal. No reading history, account or location is linked to it.
 
+## Status: live (verified 4 November 2026)
+
+Announcement push notifications are live on iOS and Android. All four conditions in Validation below now hold:
+
+- **Backend:** the Worker is deployed and checks for new announcements every minute (#173).
+- **Credentials:** FCM V1 and APNs both work. Expo's receipts came back accepted for both platforms.
+- **Native distribution:** Android 1.3.0 (versionCode 18) and iOS 1.3.0 have the notifications module.
+- **Real-device delivery:** the owner received both announcements on an iPhone and on an Android phone:
+  - `2026-11-04-ekadasi-notification-test`: receipts accepted at 15:36 UTC.
+  - `2026-11-04-ekadasi-reminders`: receipts accepted at 16:54 UTC.
+
+Not yet checked on a device:
+
+- Tapping a notification opens its announcement.
+- Translated (non-English) delivery.
+- The one-time automatic permission prompt (#178).
+- The first on-device Ekadasi reminder, due 07:00 local time on 19 November 2026 (the eve of Kaisika Ekadasi).
+
 ## Activation requirements
 
 1. The feature branch deploys the new Cloudflare workflow using existing CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID. The token must permit Worker/route/Durable Object deployment. Missing credentials fail visibly. Check `https://vedantayojana.org/_push/status`.
