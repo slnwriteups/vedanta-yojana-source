@@ -643,6 +643,23 @@
           "warnings": 15
         }
       }
+    },
+    {
+      "checkedAt": "2026-11-04T18:00:09.894Z",
+      "trigger": "deploy",
+      "pages": 541,
+      "errors": 4,
+      "warnings": 15,
+      "byCheck": {
+        "reachable": {
+          "errors": 4,
+          "warnings": 0
+        },
+        "title": {
+          "errors": 0,
+          "warnings": 15
+        }
+      }
     }
   ]
 }
