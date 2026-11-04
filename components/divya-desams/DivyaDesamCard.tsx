@@ -1,6 +1,5 @@
 "use client";
 
-import { templeSearchName } from "@/lib/divya-desam-seo";
 import { useMemo } from "react";
 import Link from "next/link";
 import type { PublicDivyaDesam } from "@/lib/public-content";
@@ -68,9 +67,6 @@ export function DivyaDesamCard({
           <span className="block font-semibold break-words group-hover:underline">
             <span className="mr-1.5 tabular-nums text-[var(--muted)]">{number}.</span>
             {localized.displayName}
-            {language === null && templeSearchName(record) !== record.displayName ? (
-              <span className="block text-sm font-normal text-[var(--muted)]">{templeSearchName(record)}</span>
-            ) : null}
           </span>
           {localized.templeInformation.moolavar ? (
             <span className="mt-0.5 block text-sm text-[var(--muted)]">{localized.templeInformation.moolavar}</span>

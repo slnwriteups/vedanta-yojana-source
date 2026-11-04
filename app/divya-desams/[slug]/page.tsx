@@ -1,3 +1,4 @@
+import { SharePage } from "@/components/shared/SharePage";
 import { templeSeo } from "@/lib/divya-desam-seo";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -125,6 +126,7 @@ export default async function DivyaDesamDetailPage({
         topImages={<RecordImages images={topImages} />}
         resolvedAfterSthalaPuranamImages={resolvedAfterSthalaPuranamImages}
       />
+      <SharePage title={record.displayName} url={siteUrl(`/divya-desams/${record.slug}/`)} />
     </div>
   );
 }
