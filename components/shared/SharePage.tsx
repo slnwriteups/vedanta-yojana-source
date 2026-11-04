@@ -68,6 +68,22 @@ export function SharePage({ title, url }: { title: string; url: string }) {
         >
           WhatsApp<span className="sr-only"> (opens in a new tab)</span>
         </a>
+        <a
+          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(absoluteUrl)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={buttonClass}
+        >
+          Facebook<span className="sr-only"> (opens in a new tab)</span>
+        </a>
+        <a
+          href={`https://x.com/intent/tweet?url=${encodeURIComponent(absoluteUrl)}&text=${encodeURIComponent(title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={buttonClass}
+        >
+          X<span className="sr-only"> (opens in a new tab)</span>
+        </a>
         <button type="button" onClick={copyLink} className={buttonClass}>Copy link</button>
       </div>
       <p role="status" aria-live="polite" className="text-sm text-[var(--muted)]">{status}</p>
