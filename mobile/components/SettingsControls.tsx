@@ -7,6 +7,7 @@ import { useLanguage } from "../language-context.ts";
 import { TourTarget } from "../tour/Tour";
 import { FONT_SCALE_STEPS, SUPPORTED_LANGUAGES, type LanguageCode } from "../content-lib/preferences.ts";
 import { settingChangedAnnouncement, translateUi, useT, type UiStringKey } from "../ui-strings.ts";
+import { EkadasiReminderSettings } from "./EkadasiReminderSettings";
 
 /**
  * The Appearance (theme override), Text size, and Language controls --
@@ -18,7 +19,8 @@ import { settingChangedAnnouncement, translateUi, useT, type UiStringKey } from 
  * language is chosen once up front and stays changeable later from the
  * same place -- no behavior change to the existing two: still the same
  * persisted ThemeProvider/ReadingPreferencesProvider/LanguageProvider
- * state.
+ * state. The Ekadasi reminder block (EkadasiReminderSettings) sits under
+ * the announcement-notifications block.
  */
 export function SettingsControls() {
   const { override, setOverride } = useThemeControls();
@@ -35,6 +37,7 @@ export function SettingsControls() {
   return (
     <View style={styles.container}>
       <PushNotificationSettings />
+      <EkadasiReminderSettings />
       <TourTarget id="settings-language">
         <PillGroup label={t("settingsLanguageLabel")} options={LANGUAGE_OPTIONS} selectedValue={language} onChange={setLanguage} />
       </TourTarget>
