@@ -26,6 +26,22 @@ export function messageFor(announcement, subscriber) {
   const body = (t?.body ?? announcement.body).replace(/\s+/g, ' ').trim();
   return { to: subscriber.token, title: (t?.title ?? announcement.title).slice(0, 120),
     body: body.length > 220 ? body.slice(0, 217) + '…' : body,
-    sound: 'default', channelId: 'announcements', ttl: 86400,
+    // Expo's default priority is "normal" on Android, which FCM holds back
+    // while the phone dozes; "high" delivers promptly (iOS already uses it).
+    sound: 'default', channelId: 'announcements', ttl: 86400, priority: 'high',
     data: { announcementId: announcement.id } };
+}
+
+/**
+ * Expo errors that say nothing about the device: the project's push
+ * credentials (FCM V1 key missing, or from another Firebase project) or a
+ * rate limit. The message is kept and retried, without using up its
+ * attempts, until it is too old to be news, so fixing the credentials also
+ * delivers what was queued meanwhile.
+ */
+export const RETRYABLE_ERRORS = new Set(['InvalidCredentials', 'MismatchSenderId', 'MessageRateExceeded']);
+export const RETRY_DELAY_MS = 30 * 60_000;
+export const RETRY_WINDOW_MS = 12 * 3_600_000;
+export function retryable(error, created, now) {
+  return RETRYABLE_ERRORS.has(error) && now - created < RETRY_WINDOW_MS;
 }

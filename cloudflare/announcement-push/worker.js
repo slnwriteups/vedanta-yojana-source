@@ -1,5 +1,5 @@
 import { parseAnnouncements } from '../../content-lib/announcements.ts';
-import { PUSH_TOKEN, subscription, targets, messageFor, publicationInstant, eligibleForPush } from './core.js';
+import { PUSH_TOKEN, subscription, targets, messageFor, publicationInstant, eligibleForPush, retryable, RETRY_DELAY_MS } from './core.js';
 
 const JSON_HEADERS = { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' };
 const response = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: JSON_HEADERS });
@@ -8,7 +8,16 @@ const SOURCE = 'https://vedantayojana.org/announcements.json';
 export default {
   async fetch(request, env) {
     const path = new URL(request.url).pathname;
-    if (path === '/_push/status' && request.method === 'GET') return response({ available: true });
+    if (path === '/_push/status' && request.method === 'GET') {
+      // Per-platform outcome of the latest deliveries: error categories and
+      // times only, never tokens or counts, so a failing platform shows here.
+      let delivery = {};
+      try {
+        const r = await env.PUSH_STORE.get(env.PUSH_STORE.idFromName('announcements')).fetch(new Request('https://internal/status'));
+        if (r.ok) delivery = (await r.json()).delivery ?? {};
+      } catch {}
+      return response({ available: true, delivery });
+    }
     if (path !== '/_push/subscription' || !['POST', 'DELETE'].includes(request.method)) return response({ error: 'Not found' }, 404);
     if (Number(request.headers.get('Content-Length') ?? 0) > 4096) return response({ error: 'Too large' }, 413);
     const origin = request.headers.get('Origin');
@@ -43,6 +52,7 @@ export class AnnouncementPushStore {
   }
   async fetch(request) {
     const result = this.processing.then(async () => {
+      if (new URL(request.url).pathname === '/status') return response({ delivery: this.delivery() });
       if (new URL(request.url).pathname === '/tick') {
         try { await this.tick(); return response({ ok: true }); }
         catch (error) { console.error('push.tick.failed', { stage: this.stage ?? 'unknown', reason: error instanceof Error ? error.message : 'unknown error' }); return response({ error: 'Push processing failed' }, 503); }
@@ -96,7 +106,20 @@ export class AnnouncementPushStore {
     this.sql.exec('DELETE FROM queue WHERE created < ?', now - 2 * 86400000);
     // Receipt checks precede sends. Expo accepting a ticket is not device delivery.
     this.stage = 'receipt-check';
-    const receipts = this.sql.exec("SELECT * FROM queue WHERE status='ticket' AND next_try <= ? LIMIT 100", now).toArray();
+    const outcomes = this.delivery();
+    const note = (platform, error) => {
+      const entry = outcomes[platform ?? 'unknown'] ??= {};
+      if (error) { entry.lastError = error; entry.lastErrorAt = new Date(now).toISOString(); }
+      else entry.lastAcceptedAt = new Date(now).toISOString();
+    };
+    const retry = (row, error) => {
+      // Credential/rate errors are the project's, not the device's: try again later without using an attempt.
+      if (!retryable(error, row.created, now)) return false;
+      this.sql.exec("UPDATE queue SET status='pending', receipt=NULL, attempts=MAX(attempts-1,0), next_try=? WHERE announcement=? AND token=?", now + RETRY_DELAY_MS, row.announcement, row.token);
+      return true;
+    };
+    const WITH_PLATFORM = 'SELECT q.*, s.platform AS platform FROM queue q LEFT JOIN subscribers s ON s.token = q.token';
+    const receipts = this.sql.exec(`${WITH_PLATFORM} WHERE q.status='ticket' AND q.next_try <= ? LIMIT 100`, now).toArray();
     if (receipts.length) {
       const result = await this.expo('getReceipts', { ids: receipts.map(x => x.receipt) });
       for (const row of receipts) {
@@ -104,13 +127,15 @@ export class AnnouncementPushStore {
         if (!receipt) { this.sql.exec('UPDATE queue SET next_try=? WHERE announcement=? AND token=?', now + 900000, row.announcement, row.token); continue; }
         if (receipt.details?.error === 'DeviceNotRegistered') this.remove(row.token);
         else {
-          if (receipt.status !== 'ok') console.error('push.receipt.rejected', { error: receipt.details?.error ?? 'unknown', status: receipt.status ?? 'unknown' });
-          this.sql.exec("UPDATE queue SET status=? WHERE announcement=? AND token=?", receipt.status === 'ok' ? 'accepted' : 'failed', row.announcement, row.token);
+          const error = receipt.status === 'ok' ? null : receipt.details?.error ?? 'unknown';
+          note(row.platform, error);
+          if (error) console.error('push.receipt.rejected', { platform: row.platform ?? 'unknown', error, status: receipt.status ?? 'unknown' });
+          if (!error || !retry(row, error)) this.sql.exec("UPDATE queue SET status=? WHERE announcement=? AND token=?", error ? 'failed' : 'accepted', row.announcement, row.token);
         }
       }
     }
     this.stage = 'ticket-send';
-    const pending = this.sql.exec("SELECT * FROM queue WHERE status='pending' AND attempts < 5 AND next_try <= ? LIMIT 100", now).toArray();
+    const pending = this.sql.exec(`${WITH_PLATFORM} WHERE q.status='pending' AND q.attempts < 5 AND q.next_try <= ? LIMIT 100`, now).toArray();
     if (pending.length) {
       const result = await this.expo('send', pending.map(row => JSON.parse(row.payload)));
       if (!Array.isArray(result.data) || result.data.length !== pending.length) throw new Error('Invalid Expo ticket response');
@@ -119,15 +144,21 @@ export class AnnouncementPushStore {
         if (ticket.details?.error === 'DeviceNotRegistered') this.remove(row.token);
         else if (ticket.status === 'ok' && ticket.id) this.sql.exec("UPDATE queue SET status='ticket', receipt=?, next_try=? WHERE announcement=? AND token=?", ticket.id, now + 900000, row.announcement, row.token);
         else {
-          console.error('push.ticket.rejected', { error: ticket.details?.error ?? 'unknown', status: ticket.status ?? 'unknown' });
-          this.sql.exec("UPDATE queue SET status='failed' WHERE announcement=? AND token=?", row.announcement, row.token);
+          const error = ticket.details?.error ?? 'unknown';
+          note(row.platform, error);
+          console.error('push.ticket.rejected', { platform: row.platform ?? 'unknown', error, status: ticket.status ?? 'unknown' });
+          if (!retry(row, error)) this.sql.exec("UPDATE queue SET status='failed' WHERE announcement=? AND token=?", row.announcement, row.token);
         }
       });
     }
+    this.sql.exec("INSERT INTO meta (key,value) VALUES ('delivery',?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", JSON.stringify(outcomes));
     const counts = this.sql.exec("SELECT status, COUNT(*) AS count FROM queue GROUP BY status").toArray();
     console.info('push.tick.summary', { initialized, subscribers: this.sql.exec('SELECT COUNT(*) AS count FROM subscribers').toArray()[0]?.count ?? 0, discovered, enqueued, receiptsChecked: receipts.length, pendingSent: pending.length, queue: Object.fromEntries(counts.map(x => [x.status, x.count])) });
     this.sql.exec("DELETE FROM queue WHERE status IN ('accepted','failed') OR attempts >= 5");
     this.stage = 'complete';
+  }
+  delivery() {
+    try { return JSON.parse(this.sql.exec("SELECT value FROM meta WHERE key='delivery'").toArray()[0]?.value ?? '{}'); } catch { return {}; }
   }
   remove(token) {
     this.sql.exec('DELETE FROM subscribers WHERE token=?', token);
