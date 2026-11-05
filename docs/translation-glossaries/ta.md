@@ -449,3 +449,17 @@ imparted (by a sage or the Lord) = அருளிச்செய்யப்ப
 bondage = தளை
 counsel = ஆலோசனை
 Lord Krishna = பகவான் ஸ்ரீ கிருஷ்ணர்
+# --- Āzhwār Vaibhavam: Bhāgavatam 11.5.38–40 and the traditional dates (owner correction, 2026-11-05)
+Tāmraparṇī = தாமிரபரணி
+Kritamālā (Vaigai) = கிருதமாலை (வைகை)
+Payasvinī (Pālār) = பயஸ்வினி (பாலாறு)
+Pratīchī Mahānadī (Periyār / Bhārathappuzha) = பிரதீசீ மகாநதி (பெரியாறு / பாரதப்புழா)
+Draviḍa lands = திராவிட தேசம்
+skandham = ஸ்கந்தம்
+Divyasūri Charitam = திவ்யஸூரி சரிதம்
+Guru Paramparā Prabhāvam (6000 paḍi) = குருபரம்பரா ப்ரபாவம் (6000 படி)
+Satya Yuga = சத்திய யுகம்
+BCE / CE = கி.மு. / கி.பி.
+Īshvara / Krodhana / Parābhava / Durmati (year) = ஈஸ்வர / குரோதன / பராபவ / துர்மதி
+Chithirai / Vaikāsi / Āni / Āḍi (month) = சித்திரை / வைகாசி / ஆனி / ஆடி
+Magham / Chithirai / Svāti / Pūram (nakshatram) = மகம் / சித்திரை / சுவாதி / பூரம்

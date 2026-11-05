@@ -57,3 +57,15 @@ Next, one step at a time:
 - Step 1, spelling, applied per the author's rule for each language: Tamil follows the Tamil roots, Kannada the Sanskrit forms, Hindi the Sanskrit-rooted forms (the Hindi-book alignment was reverted), and Telugu the Sanskrit roots.
 - Step 2, side-by-side reviews, done: Tamil Āzhwār Vaibhavam (26 of 34 chapters fixed), Hindi Temples and Festivals + Nityasūri (7 fixed) and Telugu Temples and Festivals + Nityasūri (13 fixed). Every other batch was re-read side by side by its translator.
 - All the verse questions are now resolved.
+
+## Owner correction, 5 November 2026: Āzhwār Vaibhavam chronology
+
+Source: the owner's direction of 5 November 2026, giving Srimad Bhāgavatam 11.5.38–40 with its translation and the traditional dates of the twelve Āzhwārs (from the Divyasūri Charitam and the 6000-paḍi Guru Paramparā Prabhāvam, counted from the start of the Kali Yuga in 3102 BCE). Applied under the source-first editorial rule: English first, then ta / kn / hi / te.
+
+- `an-introduction-to-the-azhwars`: added the three verses (Devanagari, with the owner's translation), the traditional date of each Āzhwār, the river of each Āzhwār's land, and the sampradāya's position on the seventh-to-ninth-century dating.
+- `pey-azhwar`: "around the seventh century" → "at the close of the Dvāpara Yuga".
+- `nilan-commander-of-the-cholas`: "around the eighth century" → "in the 398th year of the Kali Yuga".
+- `before-the-kings-court`: "Around the ninth century" → "In those days".
+- `the-chera-prince`: Kulasekhara Āzhwār's birth year Prabhava → Parābhava, the 27th year of the Kali Yuga.
+- Verse 39 reads पयस्विनी (payasvinī), matching the owner's translation ("Payasvinī").
+- Still open, waiting on the owner: the specific commentary passages for the named commentators (Śrīdhara Svāmin, Jīva Gosvāmī, Piḷḷai Lokācārya, Maṇavāḷa Māmuni). Until then the text says only that the Sri Vaishṇava Āchāryas identify the Āzhwārs in these verses.

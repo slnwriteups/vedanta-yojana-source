@@ -337,3 +337,17 @@ upadesha / teaching / advice (of a sage) = ఉపదేశం
 bed of arrows = అంపశయ్య
 better rulers / able rulers = ఉత్తమ పరిపాలనా దక్షులు
 best (of means) = శ్రేష్ఠ
+# --- Āzhwār Vaibhavam: Bhāgavatam 11.5.38–40 and the traditional dates (owner correction, 2026-11-05)
+Tāmraparṇī = తామ్రపర్ణీ
+Kritamālā (Vaigai) = కృతమాలా (వైగై)
+Payasvinī (Pālār) = పయస్వినీ (పాలార్)
+Pratīchī Mahānadī (Periyār / Bhārathappuzha) = ప్రతీచీ మహానది (పెరియార్ / భారతప్పుళ)
+Draviḍa lands = ద్రావిడ దేశాలు
+skandham = స్కంధం
+Divyasūri Charitam = దివ్యసూరి చరితం
+Guru Paramparā Prabhāvam (6000 paḍi) = గురుపరంపరా ప్రభావం (6000 పడి)
+Satya Yuga = సత్యయుగం
+BCE / CE = క్రీ.పూ. / క్రీ.శ.
+Īshvara / Krodhana / Parābhava / Durmati / Naḷa (year) = ఈశ్వర / క్రోధన / పరాభవ / దుర్మతి / నళ సంవత్సరం
+Chithirai / Vaikāsi / Āni / Āḍi (month) = చిత్తిరై / వైకాసి / ఆని / ఆడి
+Magham / Chithirai / Svāti / Pūram (nakshatram) = మగం / చిత్తిరై / స్వాతి / పూరం

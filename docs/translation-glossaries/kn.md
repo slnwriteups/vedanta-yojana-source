@@ -410,3 +410,17 @@ pārāyaṇam (chanting) = ಪಾರಾಯಣ
 # --- reviewer's preferences, Sahasranaama batch 1 review
 upadesha / teaching / advice (of a sage) = ಉಪದೇಶ
 bed of arrows = ಶರಶಯ್ಯೆ
+# --- Āzhwār Vaibhavam: Bhāgavatam 11.5.38–40 and the traditional dates (owner correction, 2026-11-05)
+Tāmraparṇī = ತಾಮ್ರಪರ್ಣೀ
+Kritamālā (Vaigai) = ಕೃತಮಾಲಾ (ವೈಗೈ)
+Payasvinī (Pālār) = ಪಯಸ್ವಿನೀ (ಪಾಲಾರ್)
+Pratīchī Mahānadī (Periyār / Bhārathappuzha) = ಪ್ರತೀಚೀ ಮಹಾನದಿ (ಪೆರಿಯಾರ್ / ಭಾರತಪ್ಪುೞ)
+Draviḍa lands = ದ್ರಾವಿಡ ದೇಶಗಳು
+skandham = ಸ್ಕಂಧ
+Divyasūri Charitam = ದಿವ್ಯಸೂರಿ ಚರಿತಂ
+Guru Paramparā Prabhāvam (6000 paḍi) = ಗುರುಪರಂಪರಾ ಪ್ರಭಾವಂ (6000 ಪಡಿ)
+Satya Yuga = ಸತ್ಯಯುಗ
+BCE / CE = ಕ್ರಿ.ಪೂ. / ಕ್ರಿ.ಶ.
+Īshvara / Krodhana / Parābhava / Durmati / Naḷa (year) = ಈಶ್ವರ / ಕ್ರೋಧನ / ಪರಾಭವ / ದುರ್ಮತಿ / ನಳ ಸಂವತ್ಸರ
+Chithirai / Vaikāsi / Āni / Āḍi (month) = ಚಿತ್ತಿರೈ / ವೈಕಾಸಿ / ಆನಿ / ಆಡಿ
+Magham / Chithirai / Svāti / Pūram (nakshatram) = ಮಗಂ / ಚಿತ್ತಿರೈ / ಸ್ವಾತಿ / ಪೂರಂ

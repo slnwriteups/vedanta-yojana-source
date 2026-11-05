@@ -462,3 +462,17 @@ prologue (book chapter) = प्रस्तावना
 perception, inference, comparison = प्रत्यक्ष, अनुमान, उपमान
 karma-indriya = कर्मेंद्रिय
 ordinals for naamas = 8वाँ नाम / 428वें नाम (oblique)
+# --- Āzhwār Vaibhavam: Bhāgavatam 11.5.38–40 and the traditional dates (owner correction, 2026-11-05)
+Tāmraparṇī = ताम्रपर्णी
+Kritamālā (Vaigai) = कृतमाला (वैगै)
+Payasvinī (Pālār) = पयस्विनी (पालार्)
+Pratīchī Mahānadī (Periyār / Bhārathappuzha) = प्रतीची महानदी (पेरियार् / भारतप्पुऴा)
+Draviḍa lands = द्रविड देश
+skandham = स्कंध
+Divyasūri Charitam = दिव्यसूरि चरितम्
+Guru Paramparā Prabhāvam (6000 paḍi) = गुरु परंपरा प्रभावम् (6000 पडि)
+Satya Yuga = सत्ययुग
+BCE / CE = ई.पू. / ईस्वी
+Īshvara / Krodhana / Parābhava / Durmati (year) = ईश्वर / क्रोधन / पराभव / दुर्मति संवत्सर
+Chithirai / Vaikāsi / Āni / Āḍi (month) = चित्तिरै / वैकासि / आनि / आडि (मास)
+Magham / Chithirai / Svāti / Pūram (nakshatram) = मगम् / चित्तिरै / स्वाति / पूरम्
