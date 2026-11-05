@@ -1070,6 +1070,22 @@
       "batch": 257,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-171-181.9",
+      "english": "The one who loves to create the universe and does not because He is ordained to do so but as a sport.",
+      "note": "'and does not because He is ordained' is missing its verb; corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as meant.",
+      "batch": 258,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-182-187.1",
+      "english": "The one who supported the Manthara Parvatham during the Samudra Mathanam. (Kurma Avataram)",
+      "note": "'Manthara Parvatham' should be Mandara (the next item uses Mandara); translated as మంథర per the English. Also 'ksheerasaagram' (item 18) is a misspelling of ksheerasaagaram.",
+      "batch": 259,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
