@@ -81,6 +81,15 @@
       "batch": 276,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Yama",
+      "forms": {
+        "te": "యముడు"
+      },
+      "batch": 278,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
