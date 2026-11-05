@@ -1038,6 +1038,14 @@
       "batch": 246,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-21-64.165",
+      "english": "The one who brings about pralayam, and it is He in which all creation dissolves.",
+      "note": "'it is He in which all creation dissolves' (in whom); corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as meant.",
+      "batch": 251,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
