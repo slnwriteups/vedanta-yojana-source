@@ -90,6 +90,24 @@
       "batch": 278,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Hayagriva",
+      "forms": {
+        "te": "హయగ్రీవుడు"
+      },
+      "batch": 279,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Valmiki",
+      "forms": {
+        "te": "వాల్మీకి"
+      },
+      "batch": 279,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
