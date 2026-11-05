@@ -10,6 +10,8 @@ import { loadPending, savePending, writeApproved } from "./pending-terms.ts";
 import { chapterHash, loadLedger, ownerGuard, owners, readiness, recordReview, reviewPacket, saveLedger, translatorsOf, type ReviewReply } from "./review.ts";
 import { blocking, checkRecord, formatIssue, type Issue } from "./validate.ts";
 import { repairVerses } from "./verses.ts";
+import { generate, iastToDeva } from "../../scripts/translation/mechanical.ts";
+import { itransToDeva } from "../../scripts/translation/itrans.ts";
 
 /**
  * Vedanta Yojana translation engine. No network, no API, no dependencies.
@@ -29,6 +31,9 @@ import { repairVerses } from "./verses.ts";
  *   record-review   --book= --reply=<reply.json> [--experiment=] [--file=<candidate>]
  *   approve-theology --book= --chapter= --lang=  (owner, interactive)
  *   status          --book= [--chapter=] [--langs=]  READY or the reasons not
+ *   transliterate   --text=<verse> | --file=<path or - for stdin>  [--from=itrans|iast|deva] [--langs=]
+ *                   A Sanskrit verse as the Devanagari block and each language's
+ *                   romanised-slot line, by the same rules merge uses. Writes nothing.
  */
 
 const a = args();
@@ -365,7 +370,21 @@ switch (command) {
     break;
   }
 
+  case "transliterate": {
+    const from = a.from ?? "itrans";
+    if (!["itrans", "iast", "deva"].includes(from)) throw new Error("--from must be itrans, iast or deva");
+    // args() reads one line per flag; a verse spans several, so take --text whole.
+    const textArg = process.argv.find((x) => x.startsWith("--text="))?.slice("--text=".length);
+    const input = a.file ? fs.readFileSync(a.file === "-" ? 0 : a.file, "utf8") : textArg;
+    if (!input?.trim()) throw new Error("Give --text=<verse> or --file=<path> (- for stdin)");
+    const text = input.trim().replace(/\r\n/g, "\n");
+    const deva = from === "itrans" ? itransToDeva(text) : from === "iast" ? iastToDeva(text) : text;
+    console.log(`Devanagari (the verse block in the English body):\n${deva}`);
+    for (const lang of langs) console.log(`\n[${lang}]\n${generate("roman", "", deva, lang)}`);
+    break;
+  }
+
   default:
-    console.error("Commands: check, baseline, remediation, glossary, terms, approve-terms, repair-verses, certify, review-packet, record-review, approve-theology, status (see the header of tools/translation-engine/cli.ts)");
+    console.error("Commands: check, baseline, remediation, glossary, terms, approve-terms, repair-verses, certify, review-packet, record-review, approve-theology, status, transliterate (see the header of tools/translation-engine/cli.ts)");
     process.exit(2);
 }

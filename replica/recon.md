@@ -100,6 +100,8 @@ Our converter and Aksharamukha agree on every letter, and the only
 differences are house conventions. Every letter disagreement is in content
 translated before or outside that engine:
 
+All of these were fixed on 5 November 2026 (see "Fixed" below).
+
 | chapter | lang | shipped | Devanagari / expected | issue |
 |---|---|---|---|---|
 | nityasuri-vaibhavam/the-sudarsana-ashtakam ¶12 | ta | ஸத்**கு**ண | सद्**ग**ण → ஸத்கண | wrong vowel (guṇa for gaṇa) |
@@ -112,6 +114,37 @@ translated before or outside that engine:
 
 Word-break-only findings (वस्तत्परं shown as वस्तत् परं, pada-split Telugu
 in the invocations) are reported for information and do not fail the check.
+
+## Fixed (5 November 2026)
+
+- Sudarsana Ashtakam: the 7 letters above in Tamil and Kannada, plus the two
+  defects the engine's baseline already listed in the same chapter (a Devanagari
+  ऽ in Tamil ¶22, a Kannada ಽ in the kept Devanagari of Kannada ¶21). The space
+  in நிகிலஶக்தே ஜகன்மய is restored to match the Devanagari.
+- Varaha Charama Shlokam: the missing romanised verse paragraph restored in
+  hi/kn/ta from the Devanagari with the engine's own `generate()`, the split
+  prose paragraph rejoined (paragraph parity with the English), the Telugu
+  verse line regenerated from the Devanagari (it had been typed from the
+  hyphenated IAST, మామ్ అజమ్ for मामजं), and the Devanagari block that kn/ta/te
+  had converted to their own scripts restored with `repair-verses`.
+- `baseline.json` pruned of the 5 fixed entries; `REMEDIATION.md` updated.
+  The cross-check now reports 0 letter differences and 0 missing verse lines.
+- Not changed: the English ¶5 of the Varaha chapter still lacks `|` / `||`
+  (`source-verse-layout`, an owner decision on the English), and the
+  Sudarsana Ashtakam's English romanisation still writes `sh` for both ś and
+  ṣ (vishvag for विष्वग्), which is how the Kannada and Tamil error crept in.
+
+## ITRANS (added 5 November 2026)
+
+Aksharamukha reads and writes ITRANS. Instead of depending on it, the engine
+now has its own `scripts/translation/itrans.ts` (ITRANS → Devanagari, no
+dependencies) and a `transliterate` command, so a verse copied from an ITRANS
+source goes through the same rules as everything else. Aksharamukha served as
+the oracle: it wrote all 176 Devanagari verse paragraphs in the Library as
+ITRANS, and every one converts back to exactly the published Devanagari. Two
+places where Aksharamukha's ITRANS departs from the standard are documented in
+the fixture: ॐ written `oM` (the standard's `OM`; `oM` is ओं), and र्ऋ written
+`rR^i` (which is रृ; the standard spelling is `r_R^i`).
 
 ## What it cannot do (skip)
 

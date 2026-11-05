@@ -39,6 +39,7 @@ node tools/translation-engine/cli.ts record-review --book=<slug> --reply=<reply.
 node tools/translation-engine/cli.ts status --book=<slug> [--chapter=<slug>]
 node tools/translation-engine/cli.ts certify --book=<slug> --chapter=<slug>
 node tools/translation-engine/cli.ts remediation                # rewrites REMEDIATION.md
+node tools/translation-engine/cli.ts transliterate --text='<verse>' [--from=itrans|iast|deva] [--langs=]
 npm run test:translation-engine
 
 # Owner only, at their own terminal (refused in agent sessions, CI and non-interactive shells):
@@ -122,3 +123,25 @@ The first controlled experiment and its findings are in `translation-work/sri-vi
 - **Glossary misses are only a signal.** A missing glossary form may be a correct paraphrase.
 - **Tamil pāsurams (§3.3):** generating pāsuram text into kn/hi/te from the Tamil is not implemented; their mappings are partly undocumented ("per model file").
 - **Library only.** Divya Desams, Knowledge, What's New and interface strings are not checked by this engine.
+
+## Sanskrit input in ITRANS
+
+`transliterate` takes a verse in ITRANS (the default), IAST or Devanagari and
+prints the Devanagari block for the English body and each language's
+romanised-slot line, by the same rules merge uses. It writes nothing. Use it
+when adding a verse copied from an ITRANS source (sanskritdocuments.org and
+most stotra collections), instead of typing the Devanagari by hand:
+
+```sh
+node tools/translation-engine/cli.ts transliterate --text='shuklAmbaradharaM viShNuM shashivarNaM chaturbhujam |
+prasannavadanaM dhyAyet sarvavighnopashAntaye ||'
+node tools/translation-engine/cli.ts transliterate --file=- --langs=ta < verse.itx
+```
+
+The converter is `scripts/translation/itrans.ts` (ITRANS 5.3 with its common
+alternative spellings; the full table is at the top of the file). ITRANS is
+case-sensitive (`t` त, `T` ट; `sh` श, `Sh` ष); ॐ is `OM` (`oM` is ओं); write
+`r_R^i` for र्ऋ. Any letter outside ITRANS, including IAST diacritics, is
+refused rather than passed through. Every Devanagari verse in `content/library`
+(176 paragraphs) round-trips exactly through ITRANS written by an independent
+converter (Aksharamukha); `tests/itrans.test.ts` keeps 30 of them as a fixture.

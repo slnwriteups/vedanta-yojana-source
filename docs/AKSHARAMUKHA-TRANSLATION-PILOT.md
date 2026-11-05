@@ -28,7 +28,9 @@ python scripts/aksharamukha-crosscheck.py                 # every book
 python scripts/aksharamukha-crosscheck.py --book=nityasuri-vaibhavam --langs=ta
 ```
 
-Read-only. It converts every Devanagari verse with Aksharamukha and compares it with the shipped script line, after normalising our documented conventions, and reports letter differences, missing verse lines and word-break-only differences. On 5 November 2026 it found 0 letter differences in the Sahasranaama book and 7 letter errors plus 1 paragraph shift elsewhere (listed in `replica/recon.md`). The full recon of the API is also in `replica/recon.md`.
+Read-only. It converts every Devanagari verse with Aksharamukha and compares it with the shipped script line, after normalising our documented conventions, and reports letter differences, missing verse lines and word-break-only differences. On 5 November 2026 it found 0 letter differences in the Sahasranaama book and 7 letter errors plus 1 paragraph shift elsewhere; all are fixed, and the check is now clean (details in `replica/recon.md`).
+
+For ITRANS input, use the engine's own `node tools/translation-engine/cli.ts transliterate` (no Aksharamukha needed; see `tools/translation-engine/README.md`). The full recon of the API is also in `replica/recon.md`.
 
 ## Pilot acceptance criteria
 

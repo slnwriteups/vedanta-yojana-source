@@ -11,7 +11,8 @@ Tamil ந/ன by position,house style,must,partial,yes,TamilpredictDentaNa uses 
 Independent cross-check of shipped verses,quality,must,n/a,yes,scripts/aksharamukha-crosscheck.py (new)
 Script auto-detection,import,could,yes,no,auto_detect(); useful for owner-supplied source texts
 Other Indic scripts (Malayalam/Bengali/Gujarati/Odia/Grantha),conversion,could,yes,no,only if a fifth language is added
-Romanisation schemes (HK/ITRANS/Velthuis/ISO),conversion,could,yes,no,only for importing source material
+ITRANS input,conversion,should,yes,yes,scripts/translation/itrans.ts + cli transliterate; all 176 Library verses round-trip
+Other romanisation schemes (HK/Velthuis/SLP1),conversion,could,yes,no,only for importing source material
 Public HTTP endpoint,integration,skip,yes,no,ignores nativize/postOptions; shared free service; not for bulk or runtime use
 Meaning translation,translation,skip,no,no,out of scope for a script converter
 Runtime use in app or website,integration,skip,n/a,no,AGPL-3.0 and Python; keep it a local optional tool

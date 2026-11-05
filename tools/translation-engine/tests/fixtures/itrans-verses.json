@@ -1,0 +1,125 @@
+{
+ "source": "Devanagari verse paragraphs from content/library, written as ITRANS by Aksharamukha 2.3 (5 Nov 2026), chosen to cover the most distinct letter sequences. Two hand corrections to standard ITRANS: ॐ as OM (Aksharamukha writes oM, which is ओं), and r_R^i for र्ऋ (rR^i is रृ).",
+ "verses": [
+  {
+   "itrans": "kR^itAdiShu prajA rAjan kalAvichChanti sambhavam .\nkalau khalu bhaviShyanti nArAyaNaparAyaNAH .\nkvachit kvachinmahArAja draviDeShu cha bhUrishaH .. 38 ..",
+   "deva": "कृतादिषु प्रजा राजन् कलाविच्छन्ति सम्भवम् ।\nकलौ खलु भविष्यन्ति नारायणपरायणाः ।\nक्वचित् क्वचिन्महाराज द्रविडेषु च भूरिशः ॥ ३८ ॥"
+  },
+  {
+   "itrans": "tAmraparNI nadI yatra kR^itamAlA payasvinI .\nkAverI cha mahApuNyA pratIchI cha mahAnadI .. 39 ..",
+   "deva": "ताम्रपर्णी नदी यत्र कृतमाला पयस्विनी ।\nकावेरी च महापुण्या प्रतीची च महानदी ॥ ३९ ॥"
+  },
+  {
+   "itrans": "shrImAn ve~NkaTanAthAryaH kavitArkikakesarI .\nvedAntAchAryavaryo me sannidhattAM sadA hR^idi ..",
+   "deva": "श्रीमान् वेङ्कटनाथार्यः कवितार्किककेसरी ।\nवेदान्ताचार्यवर्यो मे सन्निधत्तां सदा हृदि ॥"
+  },
+  {
+   "itrans": "sphuTataTijjAlapi~njara pR^ithutarajvAlapa~njara\nparigatapratnavigraha paTutarapraj~nadurgraha .\npraharaNagrAmamaNDita parijanatrANapaNDita\njaya jaya shrIsudarshana jaya jaya shrIsudarshana .. 3 ..",
+   "deva": "स्फुटतटिज्जालपिञ्जर पृथुतरज्वालपञ्जर\nपरिगतप्रत्नविग्रह पटुतरप्रज्ञदुर्ग्रह ।\nप्रहरणग्राममण्डित परिजनत्राणपण्डित\nजय जय श्रीसुदर्शन जय जय श्रीसुदर्शन ॥ ३ ॥"
+  },
+  {
+   "itrans": "nijapadaprItasadgaNa nirupadhisphItaShaDguNa\nnigamanirvyUDhavaibhava nijaparavyUhavaibhava .\nharihayadveShidAraNa harapuraploShakAraNa\njaya jaya shrIsudarshana jaya jaya shrIsudarshana .. 4 ..",
+   "deva": "निजपदप्रीतसद्गण निरुपधिस्फीतषड्गुण\nनिगमनिर्व्यूढवैभव निजपरव्यूहवैभव ।\nहरिहयद्वेषिदारण हरपुरप्लोषकारण\nजय जय श्रीसुदर्शन जय जय श्रीसुदर्शन ॥ ४ ॥"
+  },
+  {
+   "itrans": "danujavistArakartana janitamisrAvikartana\ndanujavidyAnikartana bhajadavidyAnivartana .\namaradR^iShTasvavikrama samarajuShTabhramikrama\njaya jaya shrIsudarshana jaya jaya shrIsudarshana .. 5 ..",
+   "deva": "दनुजविस्तारकर्तन जनितमिस्राविकर्तन\nदनुजविद्यानिकर्तन भजदविद्यानिवर्तन ।\nअमरदृष्टस्वविक्रम समरजुष्टभ्रमिक्रम\nजय जय श्रीसुदर्शन जय जय श्रीसुदर्शन ॥ ५ ॥"
+  },
+  {
+   "itrans": "pratimukhAlIDhabandhura pR^ithumahAhetidantura\nvikaTamAyAbahiShkR^ita vividhamAlApariShkR^ita .\nsthiramahAyantratantrita dR^iDhadayAtantrayantrita\njaya jaya shrIsudarshana jaya jaya shrIsudarshana .. 6 ..",
+   "deva": "प्रतिमुखालीढबन्धुर पृथुमहाहेतिदन्तुर\nविकटमायाबहिष्कृत विविधमालापरिष्कृत ।\nस्थिरमहायन्त्रतन्त्रित दृढदयातन्त्रयन्त्रित\nजय जय श्रीसुदर्शन जय जय श्रीसुदर्शन ॥ ६ ॥"
+  },
+  {
+   "itrans": "svakShaH sva~NgaH shatAnando nandirjyotirgaNeshvaraH .\nvijitAtmA vidheyAtmA satkIrtishChinnasaMshayaH .. 66 ..",
+   "deva": "स्वक्षः स्वङ्गः शतानन्दो नन्दिर्ज्योतिर्गणेश्वरः ।\nविजितात्मा विधेयात्मा सत्कीर्तिश्छिन्नसंशयः ॥ ६६ ॥"
+  },
+  {
+   "itrans": "iShTo.avishiShTashshiShTeShTaH shikhaNDI nahuSho vR^iShaH .\nkrodhahA krodhakR^itkartA vishvabAhurmahIdharaH .. 34 ..",
+   "deva": "इष्टोऽविशिष्टश्शिष्टेष्टः शिखण्डी नहुषो वृषः ।\nक्रोधहा क्रोधकृत्कर्ता विश्वबाहुर्महीधरः ॥ ३४ ॥"
+  },
+  {
+   "itrans": "OM vishvaM viShNurvaShaTkAro bhUtabhavyabhavatprabhuH .\nbhUtakR^id bhUtabhR^idbhAvo bhUtAtmA bhUtabhAvanaH .. 1 ..",
+   "deva": "ॐ विश्वं विष्णुर्वषट्कारो भूतभव्यभवत्प्रभुः ।\nभूतकृद् भूतभृद्भावो भूतात्मा भूतभावनः ॥ १ ॥"
+  },
+  {
+   "itrans": "padmanAbho.aravindAkShaH padmagarbhaH sharIrabhR^it .\nmaharddhir_R^iddho vR^iddhAtmA mahAkSho garuDadhvajaH .. 38 ..",
+   "deva": "पद्मनाभोऽरविन्दाक्षः पद्मगर्भः शरीरभृत् ।\nमहर्द्धिर्ऋद्धो वृद्धात्मा महाक्षो गरुडध्वजः ॥ ३८ ॥"
+  },
+  {
+   "itrans": "amAnI mAnado mAnyo lokasvAmI trilokadhR^it .\nsumedhA medhajo dhanyaH satyamedhA dharAdharaH .. 80 ..",
+   "deva": "अमानी मानदो मान्यो लोकस्वामी त्रिलोकधृत् ।\nसुमेधा मेधजो धन्यः सत्यमेधा धराधरः ॥ ८० ॥"
+  },
+  {
+   "itrans": "sulabhaH suvrataH siddhaH shatrujichChatrutApanaH .\nnyagrodhodumbaro.ashvatthaH chANUrAndhraniShUdanaH .. 88 ..",
+   "deva": "सुलभः सुव्रतः सिद्धः शत्रुजिच्छत्रुतापनः ।\nन्यग्रोधोदुम्बरोऽश्वत्थः चाणूरान्ध्रनिषूदनः ॥ ८८ ॥"
+  },
+  {
+   "itrans": "anAdirbhUrbhuvo lakShmIH suvIro ruchirA~NgadaH .\njanano janajanmAdiH bhImo bhImaparAkramaH .. 101 ..",
+   "deva": "अनादिर्भूर्भुवो लक्ष्मीः सुवीरो रुचिराङ्गदः ।\nजननो जनजन्मादिः भीमो भीमपराक्रमः ॥ १०१ ॥"
+  },
+  {
+   "itrans": "anirviNNaH sthaviShTho bhUrdharmayUpo mahAmakhaH .\nnakShatranemirnakShatrI kShamaH kShAmassamIhanaH .. 47 ..",
+   "deva": "अनिर्विण्णः स्थविष्ठो भूर्धर्मयूपो महामखः ।\nनक्षत्रनेमिर्नक्षत्री क्षमः क्षामस्समीहनः ॥ ४७ ॥"
+  },
+  {
+   "itrans": "viShNornAmasahasrasya vedavyAso mahAmuniH .\nChando.anuShTup tathA devo bhagavAn devakIsutaH ..",
+   "deva": "विष्णोर्नामसहस्रस्य वेदव्यासो महामुनिः ।\nछन्दोऽनुष्टुप् तथा देवो भगवान् देवकीसुतः ॥"
+  },
+  {
+   "itrans": "kShIrodanvatpradeshe shuchimaNivilasatsaikate mauktikAnAM mAlAkL^iptAsanasthaH sphaTikamaNinibhairmauktikairmaNDitA~NgaH .\nshubhrairabhrairadabhrairupari virachitairmuktapIyUShavarShaiH AnandI naH punIyAdarinalinagadAsha~NkhapANirmukundaH ..",
+   "deva": "क्षीरोदन्वत्प्रदेशे शुचिमणिविलसत्सैकते मौक्तिकानां मालाकॢप्तासनस्थः स्फटिकमणिनिभैर्मौक्तिकैर्मण्डिताङ्गः ।\nशुभ्रैरभ्रैरदभ्रैरुपरि विरचितैर्मुक्तपीयूषवर्षैः आनन्दी नः पुनीयादरिनलिनगदाशङ्खपाणिर्मुकुन्दः ॥"
+  },
+  {
+   "itrans": "bhUH pAdau yasya nAbhirviyadasuranilashchandrasUryau cha netre karNAvAshAH shiro dyaurmukhamapi dahano yasya vAsteyamabdhiH .\nantaHsthaM yasya vishvaM suranarakhagagobhogigandharvadaityaiH chitraM raMramyate taM tribhuvanavapuShaM viShNumIshaM namAmi ..",
+   "deva": "भूः पादौ यस्य नाभिर्वियदसुरनिलश्चन्द्रसूर्यौ च नेत्रे कर्णावाशाः शिरो द्यौर्मुखमपि दहनो यस्य वास्तेयमब्धिः ।\nअन्तःस्थं यस्य विश्वं सुरनरखगगोभोगिगन्धर्वदैत्यैः चित्रं रंरम्यते तं त्रिभुवनवपुषं विष्णुमीशं नमामि ॥"
+  },
+  {
+   "itrans": "OM namo bhagavate vAsudevAya ..",
+   "deva": "ॐ नमो भगवते वासुदेवाय ॥"
+  },
+  {
+   "itrans": "shAntAkAraM bhujagashayanaM padmanAbhaM sureshaM vishvAdhAraM gaganasadR^ishaM meghavarNaM shubhA~Ngam .\nlakShmIkAntaM kamalanayanaM yogihR^iddhyAnagamyaM vande viShNuM bhavabhayaharaM sarvalokaikanAtham ..",
+   "deva": "शान्ताकारं भुजगशयनं पद्मनाभं सुरेशं विश्वाधारं गगनसदृशं मेघवर्णं शुभाङ्गम् ।\nलक्ष्मीकान्तं कमलनयनं योगिहृद्ध्यानगम्यं वन्दे विष्णुं भवभयहरं सर्वलोकैकनाथम् ॥"
+  },
+  {
+   "itrans": "sasha~NkhachakraM sakirITakuNDalaM sapItavastraM sarasIruhekShaNam .\nsahAravakShaHsthalashobhikaustubhaM namAmi viShNuM shirasA chaturbhujam ..",
+   "deva": "सशङ्खचक्रं सकिरीटकुण्डलं सपीतवस्त्रं सरसीरुहेक्षणम् ।\nसहारवक्षःस्थलशोभिकौस्तुभं नमामि विष्णुं शिरसा चतुर्भुजम् ॥"
+  },
+  {
+   "itrans": "ChAyAyAM pArijAtasya hemasiMhAsanopari AsInamambudashyAmamAyatAkShamala~NkR^itam .\nchandrAnanaM chaturbAhuM shrIvatsA~NkitavakShasam rukmiNIsatyabhAmAbhyAM sahitaM kR^iShNamAshraye ..",
+   "deva": "छायायां पारिजातस्य हेमसिंहासनोपरि आसीनमम्बुदश्याममायताक्षमलङ्कृतम् ।\nचन्द्राननं चतुर्बाहुं श्रीवत्साङ्कितवक्षसम् रुक्मिणीसत्यभामाभ्यां सहितं कृष्णमाश्रये ॥"
+  },
+  {
+   "itrans": "ya idaM shR^iNuyAnnityaM yashchApi parikIrtayet .\nnAshubhaM prApnuyAt ki~nchit so.amutreha cha mAnavaH .. 2 ..",
+   "deva": "य इदं शृणुयान्नित्यं यश्चापि परिकीर्तयेत् ।\nनाशुभं प्राप्नुयात् किञ्चित् सोऽमुत्रेह च मानवः ॥ २ ॥"
+  },
+  {
+   "itrans": "na bhayaM kvachidApnoti vIryaM tejashcha vindati .\nbhavatyarogo dyutimAn balarUpaguNAnvitaH .. 7 ..",
+   "deva": "न भयं क्वचिदाप्नोति वीर्यं तेजश्च विन्दति ।\nभवत्यरोगो द्युतिमान् बलरूपगुणान्वितः ॥ ७ ॥"
+  },
+  {
+   "itrans": "namo.astvanantAya sahasramUrtaye sahasrapAdAkShishirorubAhave .\nsahasranAmne puruShAya shAshvate sahasrakoTIyugadhAriNe namaH .. 6 ..",
+   "deva": "नमोऽस्त्वनन्ताय सहस्रमूर्तये सहस्रपादाक्षिशिरोरुबाहवे ।\nसहस्रनाम्ने पुरुषाय शाश्वते सहस्रकोटीयुगधारिणे नमः ॥ ६ ॥"
+  },
+  {
+   "itrans": "ArtA viShaNNAH shithilAshcha bhItAH ghoreShu cha vyAdhiShu vartamAnAH .\nsa~NkIrtya nArAyaNashabdamAtraM vimuktaduHkhAH sukhino bhavanti .. 10 ..",
+   "deva": "आर्ता विषण्णाः शिथिलाश्च भीताः घोरेषु च व्याधिषु वर्तमानाः ।\nसङ्कीर्त्य नारायणशब्दमात्रं विमुक्तदुःखाः सुखिनो भवन्ति ॥ १० ॥"
+  },
+  {
+   "itrans": "kAyena vAchA manasendriyairvA buddhyA.atmanA vA prakR^iteH svabhAvAt .\nkaromi yadyat sakalaM parasmai nArAyaNAyeti samarpayAmi .. 11 ..",
+   "deva": "कायेन वाचा मनसेन्द्रियैर्वा बुद्ध्याऽत्मना वा प्रकृतेः स्वभावात् ।\nकरोमि यद्यत् सकलं परस्मै नारायणायेति समर्पयामि ॥ ११ ॥"
+  },
+  {
+   "itrans": "vedAntalakShmaNamunIndrakR^ipAttabodhaM tatpAdayugmasarasIruhabhR^i~NgarAjam .\ntrayyantayugmakR^itabhUriparishramaM taM shrIra~NgalakShmaNamuniM sharaNaM prapadye ..",
+   "deva": "वेदान्तलक्ष्मणमुनीन्द्रकृपात्तबोधं तत्पादयुग्मसरसीरुहभृङ्गराजम् ।\nत्रय्यन्तयुग्मकृतभूरिपरिश्रमं तं श्रीरङ्गलक्ष्मणमुनिं शरणं प्रपद्ये ॥"
+  },
+  {
+   "itrans": "nigamakalpatarorgalitaM phalaM\nshukamukhAdamR^itadravasaMyutam .\npibata bhAgavataM rasamAlayaM\nmuhuraho rasikA bhuvi bhAvukAH ..",
+   "deva": "निगमकल्पतरोर्गलितं फलं\nशुकमुखादमृतद्रवसंयुतम् ।\nपिबत भागवतं रसमालयं\nमुहुरहो रसिका भुवि भावुकाः ॥"
+  },
+  {
+   "itrans": "sthite manasi susvasthe sharIre sati yo naraH .\ndhAtusAmye sthite smartA vishvarUpaM cha mAmajaM ..\ntatastaM mriyamANaM tu kAShTha pAShANa sannibham .\nahaM smarAmi madbhaktaM nayAmi paramAM gatim ..",
+   "deva": "स्थिते मनसि सुस्वस्थे शरीरे सति यो नरः ।\nधातुसाम्ये स्थिते स्मर्ता विश्वरूपं च मामजं ॥\nततस्तं म्रियमाणं तु काष्ठ पाषाण सन्निभम् ।\nअहं स्मरामि मद्भक्तं नयामि परमां गतिम् ॥"
+  }
+ ]
+}
