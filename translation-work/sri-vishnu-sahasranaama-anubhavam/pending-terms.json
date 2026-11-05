@@ -252,6 +252,33 @@
       "batch": 290,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Dattatreya",
+      "forms": {
+        "te": "దత్తాత్రేయుడు"
+      },
+      "batch": 291,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Sage Bhrigu",
+      "forms": {
+        "te": "భృగు మహర్షి"
+      },
+      "batch": 291,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Itihasa Samuccaya",
+      "forms": {
+        "te": "ఇతిహాస సముచ్చయం"
+      },
+      "batch": 291,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
