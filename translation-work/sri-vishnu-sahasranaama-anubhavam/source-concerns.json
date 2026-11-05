@@ -1134,6 +1134,22 @@
       "batch": 273,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-544-563.56",
+      "english": "The Maulas say about Him, \"In this world, He draws within Himself both the cit and the acit in the same way. He is Sankarshana; His power of attraction is uniform.\" He also draws His devotees towards Himself with His qualities, such as His love for them (vātsalyam) and His beauty.",
+      "note": "'The Maulas say about Him' — unclear who 'the Maulas' are (perhaps a garbled name in Sri Bhattar's source on saṅkarṣaṇa). Transliterated as మౌలులు.",
+      "batch": 283,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-564-567.5",
+      "english": "The one who had Nandagopa as His father. The Lord who was Sankarshana in the vyuha form became Balarama in the vibhava form and had Nandagopa as His father.",
+      "note": "Says Sankarshana as Balarama 'had Nandagopa as His father'; Balarama was born to Vasudeva and Rohini and raised in Nandagopa's household. Translated as written.",
+      "batch": 283,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }

@@ -135,6 +135,24 @@
       "batch": 281,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Bhagavad Dhyana Sopanam",
+      "forms": {
+        "te": "భగవద్ధ్యాన సోపానం"
+      },
+      "batch": 283,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Dasavatara Stotram",
+      "forms": {
+        "te": "దశావతార స్తోత్రం"
+      },
+      "batch": 283,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
