@@ -72,6 +72,15 @@
       "batch": 272,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Nara-Narayana",
+      "forms": {
+        "te": "నర నారాయణ"
+      },
+      "batch": 276,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
