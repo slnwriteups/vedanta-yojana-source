@@ -1046,6 +1046,22 @@
       "batch": 251,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-87-122.117",
+      "english": "The one who is the medicine to any fever or disease as He is the physical embodiment of nectar (amrutham).",
+      "note": "Name 114 vṛṣākṛtiḥ: this meaning line (medicine, embodiment of nectar) fits name 120 amṛtaḥ; the explanation that follows is about dharma. Translated as written.",
+      "batch": 254,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-87-122.123",
+      "english": "The one who begets tears of joy when He hears His devotees singing praises of His name.",
+      "note": "'begets tears of joy' (evokes/brings forth); corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as meant.",
+      "batch": 254,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
