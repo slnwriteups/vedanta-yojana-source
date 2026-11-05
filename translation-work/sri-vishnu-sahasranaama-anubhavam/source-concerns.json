@@ -1198,6 +1198,14 @@
       "batch": 308,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-993-1000.17",
+      "english": "Andal sings in the Thiruppavai of \"the Lord who rained arrows from the Saarnga bow\" (śārṅgam udaitta sara mazhai pōl).",
+      "note": "The Tiruppavai line (pasuram 4, 'śārṅgam udaitta sara mazhai pōl') asks the rain to pour 'like the shower of arrows from the Saarnga bow'; the English gloss 'the Lord who rained arrows from the Saarnga bow' paraphrases it as a description of the Lord. Telugu follows the English; owner may wish to tighten the gloss.",
+      "batch": 309,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
