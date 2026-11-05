@@ -189,6 +189,24 @@
       "batch": 285,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Srinivasa",
+      "forms": {
+        "te": "శ్రీనివాసుడు"
+      },
+      "batch": 287,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Sri Suktam",
+      "forms": {
+        "te": "శ్రీ సూక్తం"
+      },
+      "batch": 287,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
