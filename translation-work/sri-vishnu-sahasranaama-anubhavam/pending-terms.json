@@ -153,6 +153,24 @@
       "batch": 283,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Khanda-parasu",
+      "forms": {
+        "te": "ఖండపరశుడు"
+      },
+      "batch": 284,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Vaishnava Dharma (text)",
+      "forms": {
+        "te": "వైష్ణవ ధర్మం"
+      },
+      "batch": 284,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
