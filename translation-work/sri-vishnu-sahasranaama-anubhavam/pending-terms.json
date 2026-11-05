@@ -423,6 +423,15 @@
       "batch": 304,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Adimoolame (Gajendra's cry)",
+      "forms": {
+        "te": "ఆదిమూలమా"
+      },
+      "batch": 305,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
