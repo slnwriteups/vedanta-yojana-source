@@ -1174,6 +1174,14 @@
       "batch": 294,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-839-846.title",
+      "english": "Naama 839-846: The Lord's eight superhuman powers (ashTa aisvaryas)",
+      "note": "Title uses non-IAST 'ashTa aisvaryas'; item 21 'dahara AkAsa'; item 29 'Isitvam' (aṣṭa aiśvarya, dahara ākāśa, īśitvam). Rendered in Telugu from the correct forms.",
+      "batch": 301,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
