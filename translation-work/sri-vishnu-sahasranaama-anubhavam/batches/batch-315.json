@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 315,
+  "langs": [
+    "te"
+  ],
+  "items": [
+    {
+      "id": "birth-star-makha.title",
+      "en": "37d8d05506"
+    },
+    {
+      "id": "birth-star-makha.0",
+      "en": "f67c2f0ae5"
+    },
+    {
+      "id": "birth-star-makha.1",
+      "en": "8fc8cb856c"
+    },
+    {
+      "id": "birth-star-makha.4",
+      "en": "8971a88245"
+    },
+    {
+      "id": "birth-star-makha.5",
+      "en": "9fea96911b"
+    },
+    {
+      "id": "birth-star-makha.8",
+      "en": "566a2780cb"
+    },
+    {
+      "id": "birth-star-makha.9",
+      "en": "2f30eed5b2"
+    },
+    {
+      "id": "birth-star-makha.12",
+      "en": "f1113b4ae0"
+    },
+    {
+      "id": "birth-star-makha.13",
+      "en": "39ea59e39e"
+    },
+    {
+      "id": "birth-star-makha.16",
+      "en": "3a029c7ef5"
+    },
+    {
+      "id": "birth-star-purva-phalguni.title",
+      "en": "dd220c1233"
+    },
+    {
+      "id": "birth-star-purva-phalguni.0",
+      "en": "0bcfa15ac4"
+    },
+    {
+      "id": "birth-star-purva-phalguni.1",
+      "en": "718fe0091f"
+    },
+    {
+      "id": "birth-star-purva-phalguni.4",
+      "en": "6cdc239f41"
+    },
+    {
+      "id": "birth-star-purva-phalguni.5",
+      "en": "c1ea0bb4e8"
+    },
+    {
+      "id": "birth-star-purva-phalguni.8",
+      "en": "f8f2ccc1c1"
+    },
+    {
+      "id": "birth-star-purva-phalguni.9",
+      "en": "8e0ca8ef2b"
+    },
+    {
+      "id": "birth-star-purva-phalguni.12",
+      "en": "12b9ac0577"
+    },
+    {
+      "id": "birth-star-purva-phalguni.13",
+      "en": "5cb6523204"
+    },
+    {
+      "id": "birth-star-purva-phalguni.16",
+      "en": "f7180e056d"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.title",
+      "en": "03ff039a04"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.0",
+      "en": "3c10adc532"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.1",
+      "en": "2081f89bdd"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.4",
+      "en": "02784bc37c"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.5",
+      "en": "f42b595641"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.8",
+      "en": "5636132b67"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.9",
+      "en": "7692bd346a"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.12",
+      "en": "fd215290f3"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.13",
+      "en": "4b0696cff0"
+    },
+    {
+      "id": "birth-star-uttara-phalguni.16",
+      "en": "0f023f57fe"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-te-2026-11-05"
+}

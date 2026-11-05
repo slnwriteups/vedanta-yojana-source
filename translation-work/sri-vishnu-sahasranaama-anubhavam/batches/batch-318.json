@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 318,
+  "langs": [
+    "te"
+  ],
+  "items": [
+    {
+      "id": "birth-star-moola.title",
+      "en": "cd1a88076c"
+    },
+    {
+      "id": "birth-star-moola.0",
+      "en": "eabcc6f83e"
+    },
+    {
+      "id": "birth-star-moola.1",
+      "en": "c4389902d8"
+    },
+    {
+      "id": "birth-star-moola.4",
+      "en": "bbb5a7a696"
+    },
+    {
+      "id": "birth-star-moola.5",
+      "en": "3167464b85"
+    },
+    {
+      "id": "birth-star-moola.8",
+      "en": "cf6fbe239e"
+    },
+    {
+      "id": "birth-star-moola.9",
+      "en": "9ccb49d400"
+    },
+    {
+      "id": "birth-star-moola.12",
+      "en": "b832e95430"
+    },
+    {
+      "id": "birth-star-moola.13",
+      "en": "4d90a4bfb2"
+    },
+    {
+      "id": "birth-star-moola.16",
+      "en": "0f4ed323a7"
+    },
+    {
+      "id": "birth-star-purva-ashadha.title",
+      "en": "9f6048ae8f"
+    },
+    {
+      "id": "birth-star-purva-ashadha.0",
+      "en": "525713d5dc"
+    },
+    {
+      "id": "birth-star-purva-ashadha.1",
+      "en": "862ccde26f"
+    },
+    {
+      "id": "birth-star-purva-ashadha.4",
+      "en": "ccde66ea20"
+    },
+    {
+      "id": "birth-star-purva-ashadha.5",
+      "en": "c83c582660"
+    },
+    {
+      "id": "birth-star-purva-ashadha.8",
+      "en": "8610c55b66"
+    },
+    {
+      "id": "birth-star-purva-ashadha.9",
+      "en": "8a9a0a8270"
+    },
+    {
+      "id": "birth-star-purva-ashadha.12",
+      "en": "1e799fb1d1"
+    },
+    {
+      "id": "birth-star-purva-ashadha.13",
+      "en": "259422d89c"
+    },
+    {
+      "id": "birth-star-purva-ashadha.16",
+      "en": "f40cce387a"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.title",
+      "en": "d75f960b63"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.0",
+      "en": "f4a15932c5"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.1",
+      "en": "2cba6564cc"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.4",
+      "en": "482bc1cbf4"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.5",
+      "en": "0f6228acce"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.8",
+      "en": "c415bf5426"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.9",
+      "en": "01864b9774"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.12",
+      "en": "37a1d69225"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.13",
+      "en": "ecb95f0fe1"
+    },
+    {
+      "id": "birth-star-uttara-ashadha.16",
+      "en": "f1e1adce5e"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-te-2026-11-05"
+}

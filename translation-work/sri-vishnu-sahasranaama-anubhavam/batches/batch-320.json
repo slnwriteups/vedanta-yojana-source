@@ -1,0 +1,131 @@
+{
+  "book": "sri-vishnu-sahasranaama-anubhavam",
+  "batch": 320,
+  "langs": [
+    "te"
+  ],
+  "items": [
+    {
+      "id": "birth-star-purva-badra.title",
+      "en": "65fd7b42f6"
+    },
+    {
+      "id": "birth-star-purva-badra.0",
+      "en": "437529259a"
+    },
+    {
+      "id": "birth-star-purva-badra.1",
+      "en": "cddc61c7b5"
+    },
+    {
+      "id": "birth-star-purva-badra.4",
+      "en": "0cbc0f7902"
+    },
+    {
+      "id": "birth-star-purva-badra.5",
+      "en": "e12b8c63c9"
+    },
+    {
+      "id": "birth-star-purva-badra.8",
+      "en": "440f54ee93"
+    },
+    {
+      "id": "birth-star-purva-badra.9",
+      "en": "9d01568b24"
+    },
+    {
+      "id": "birth-star-purva-badra.12",
+      "en": "16cb5fa0f9"
+    },
+    {
+      "id": "birth-star-purva-badra.13",
+      "en": "cee366ebbc"
+    },
+    {
+      "id": "birth-star-purva-badra.16",
+      "en": "a59c156b95"
+    },
+    {
+      "id": "birth-star-uttara-badra.title",
+      "en": "8716beffe3"
+    },
+    {
+      "id": "birth-star-uttara-badra.0",
+      "en": "2da288c818"
+    },
+    {
+      "id": "birth-star-uttara-badra.1",
+      "en": "b46ad62766"
+    },
+    {
+      "id": "birth-star-uttara-badra.4",
+      "en": "0c3983b59e"
+    },
+    {
+      "id": "birth-star-uttara-badra.5",
+      "en": "2357012491"
+    },
+    {
+      "id": "birth-star-uttara-badra.8",
+      "en": "72159b7a82"
+    },
+    {
+      "id": "birth-star-uttara-badra.9",
+      "en": "9cf7d4c129"
+    },
+    {
+      "id": "birth-star-uttara-badra.12",
+      "en": "06badd56f6"
+    },
+    {
+      "id": "birth-star-uttara-badra.13",
+      "en": "c93c56f6dc"
+    },
+    {
+      "id": "birth-star-uttara-badra.16",
+      "en": "6e1d50bb44"
+    },
+    {
+      "id": "birth-star-revathi.title",
+      "en": "19077169cf"
+    },
+    {
+      "id": "birth-star-revathi.0",
+      "en": "8b2ff31713"
+    },
+    {
+      "id": "birth-star-revathi.1",
+      "en": "180b717a36"
+    },
+    {
+      "id": "birth-star-revathi.4",
+      "en": "b42e2982d6"
+    },
+    {
+      "id": "birth-star-revathi.5",
+      "en": "42e3089ee3"
+    },
+    {
+      "id": "birth-star-revathi.8",
+      "en": "5e2ae93d3a"
+    },
+    {
+      "id": "birth-star-revathi.9",
+      "en": "b04e5441f8"
+    },
+    {
+      "id": "birth-star-revathi.12",
+      "en": "02461d0bba"
+    },
+    {
+      "id": "birth-star-revathi.13",
+      "en": "661da0100b"
+    },
+    {
+      "id": "birth-star-revathi.16",
+      "en": "304f4e849f"
+    }
+  ],
+  "merged": true,
+  "translator": "claude-te-2026-11-05"
+}

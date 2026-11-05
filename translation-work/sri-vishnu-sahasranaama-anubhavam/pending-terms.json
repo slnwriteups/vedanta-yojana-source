@@ -9,6 +9,438 @@
       "batch": 150,
       "proposedAt": "2026-11-01",
       "status": "pending"
+    },
+    {
+      "en": "Bhagavad Guṇa Darpaṇa",
+      "forms": {
+        "te": "భగవద్ గుణ దర్పణ"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Pāñcarātra Āgamas",
+      "forms": {
+        "te": "పాంచరాత్ర ఆగమాలు"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Ksheerabdhi",
+      "forms": {
+        "te": "క్షీరాబ్ధి"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Vishwaroopam",
+      "forms": {
+        "te": "విశ్వరూపం"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "vyuha moorthis",
+      "forms": {
+        "te": "వ్యూహ మూర్తులు"
+      },
+      "batch": 256,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Daya Satakam",
+      "forms": {
+        "te": "దయా శతకం"
+      },
+      "batch": 263,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Dhruva",
+      "forms": {
+        "te": "ధ్రువుడు"
+      },
+      "batch": 272,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Nara-Narayana",
+      "forms": {
+        "te": "నర నారాయణ"
+      },
+      "batch": 276,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Yama",
+      "forms": {
+        "te": "యముడు"
+      },
+      "batch": 278,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Hayagriva",
+      "forms": {
+        "te": "హయగ్రీవుడు"
+      },
+      "batch": 279,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Valmiki",
+      "forms": {
+        "te": "వాల్మీకి"
+      },
+      "batch": 279,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Saatvatas",
+      "forms": {
+        "te": "సాత్వతులు"
+      },
+      "batch": 280,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Kapila",
+      "forms": {
+        "te": "కపిలుడు"
+      },
+      "batch": 281,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Varaha Charama Shloka",
+      "forms": {
+        "te": "వరాహ చరమ శ్లోకం"
+      },
+      "batch": 281,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Bhagavad Dhyana Sopanam",
+      "forms": {
+        "te": "భగవద్ధ్యాన సోపానం"
+      },
+      "batch": 283,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Dasavatara Stotram",
+      "forms": {
+        "te": "దశావతార స్తోత్రం"
+      },
+      "batch": 283,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Khanda-parasu",
+      "forms": {
+        "te": "ఖండపరశుడు"
+      },
+      "batch": 284,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Vaishnava Dharma (text)",
+      "forms": {
+        "te": "వైష్ణవ ధర్మం"
+      },
+      "batch": 284,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Bhishma Stava Raja",
+      "forms": {
+        "te": "భీష్మ స్తవరాజం"
+      },
+      "batch": 285,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Saarasvata",
+      "forms": {
+        "te": "సారస్వతుడు"
+      },
+      "batch": 285,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Srinivasa",
+      "forms": {
+        "te": "శ్రీనివాసుడు"
+      },
+      "batch": 287,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Sri Suktam",
+      "forms": {
+        "te": "శ్రీ సూక్తం"
+      },
+      "batch": 287,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Thiruvekka",
+      "forms": {
+        "te": "తిరువెక్కా"
+      },
+      "batch": 288,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Trijata",
+      "forms": {
+        "te": "త్రిజట"
+      },
+      "batch": 288,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Saranagati Gadyam",
+      "forms": {
+        "te": "శరణాగతి గద్యం"
+      },
+      "batch": 289,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Thiruvanandapuram",
+      "forms": {
+        "te": "తిరువనంతపురం"
+      },
+      "batch": 289,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Thiruvallikeni",
+      "forms": {
+        "te": "తిరువల్లిక్కేణి"
+      },
+      "batch": 290,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Dattatreya",
+      "forms": {
+        "te": "దత్తాత్రేయుడు"
+      },
+      "batch": 291,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Sage Bhrigu",
+      "forms": {
+        "te": "భృగు మహర్షి"
+      },
+      "batch": 291,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Itihasa Samuccaya",
+      "forms": {
+        "te": "ఇతిహాస సముచ్చయం"
+      },
+      "batch": 291,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Laghu Atri Smriti",
+      "forms": {
+        "te": "లఘు అత్రి స్మృతి"
+      },
+      "batch": 292,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Ghantakarna",
+      "forms": {
+        "te": "ఘంటాకర్ణుడు"
+      },
+      "batch": 292,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Uparicharavasu",
+      "forms": {
+        "te": "ఉపరిచర వసువు"
+      },
+      "batch": 292,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Ramanuja Nootrandadi",
+      "forms": {
+        "te": "రామానుజ నూట్రందాది"
+      },
+      "batch": 294,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Charaka Samhita",
+      "forms": {
+        "te": "చరక సంహిత"
+      },
+      "batch": 295,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Vidura",
+      "forms": {
+        "te": "విదురుడు"
+      },
+      "batch": 296,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Kubja",
+      "forms": {
+        "te": "కుబ్జ"
+      },
+      "batch": 296,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Mayamoha",
+      "forms": {
+        "te": "మాయామోహుడు"
+      },
+      "batch": 298,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Rama Charama Shloka",
+      "forms": {
+        "te": "రామ చరమ శ్లోకం"
+      },
+      "batch": 300,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Jitante Stotram",
+      "forms": {
+        "te": "జితంతే స్తోత్రం"
+      },
+      "batch": 302,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "bhara nyāsa",
+      "forms": {
+        "te": "భర న్యాసం"
+      },
+      "batch": 302,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Archiraadi Gati",
+      "forms": {
+        "te": "అర్చిరాది గతి"
+      },
+      "batch": 303,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "aativaahika",
+      "forms": {
+        "te": "ఆతివాహికుడు"
+      },
+      "batch": 303,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Amaanava Purusha",
+      "forms": {
+        "te": "అమానవ పురుషుడు"
+      },
+      "batch": 304,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Paryanka Vidya",
+      "forms": {
+        "te": "పర్యంక విద్య"
+      },
+      "batch": 304,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Viraja (river)",
+      "forms": {
+        "te": "విరజా నది"
+      },
+      "batch": 304,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Adimoolame (Gajendra's cry)",
+      "forms": {
+        "te": "ఆదిమూలమా"
+      },
+      "batch": 305,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "horoscope (jātakam)",
+      "forms": {
+        "te": "జాతకం"
+      },
+      "batch": 311,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }

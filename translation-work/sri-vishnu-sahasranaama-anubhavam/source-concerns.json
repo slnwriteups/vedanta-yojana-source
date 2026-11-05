@@ -1006,6 +1006,230 @@
         "reviewer": "codex-source-editorial-2026-11-01",
         "note": "English volume 2, naama 370, printed p. 35 (PDF p. 39), identifies the pasuram and its subject; volume 3, naama 626, printed pp. 34–35 (PDF pp. 38–39), explicitly attributes six-month loss of external awareness to Nammazhwar. Volume 4, naama 823, printed pp. 105–106 (PDF pp. 109–110), corroborates it. Corrected Ramanuja to Nammazhwar, retaining the quoted pasuram. Source-based editorial correction, not independent linguistic review or owner theological approval."
       }
+    },
+    {
+      "id": "dhyana-shlokam.3",
+      "english": "The Lord resides in Sri Vaikuntham, situated in the centre of the milky ocean (Ksheerabdhi). Just as our earthly ocean has sand at the shore, the shore of Ksheerabdhi is studded with various riches such as diamonds, jewels, pearls, etc., which have originated from the Lord coming in contact with Ksheerabdhi. Zooming in on the Lord, Mukunda, the Lord, is seen wearing the holy garland. The Lord is seen reclining on Adisesha, above whom is said to be a cloud continuously showering the Lord gently with drops of Amritam or nectar, which ensures eternal happiness in His abode.",
+      "note": "Places Sri Vaikuntham in the centre of the milky ocean; Sri Vaikuntham (Paramapadam) and the Ksheerabdhi are usually distinct abodes. Translated as written.",
+      "batch": 245,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.14",
+      "english": "He who is the consort of Sri Mahalakshmi has eyes like that of a freshly bloomed lotus; who is worshipped by all the sage and preservers of all that is good; the one who is the destroyer of all fears; I ask for refuge at your holy feet oh Lord of all Lords.",
+      "note": "Dhyana shloka 3 commentary: 'all the sage' (sages) and a shift from third person to 'your holy feet'. The owner's audit corrected this English on the unmerged branch feature/vsn-hindi-batch-5 (commit 7709e98); translated as written here.",
+      "batch": 246,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.17",
+      "english": "He who sports the holy gem Kaustubha in his heart. (this divine gem is said to signify all the jeevaatmas, in turn, meaning He keeps all of His devotees close to Him)",
+      "note": "Kaustubha 'in his heart' (on His chest) and an unterminated parenthesis; corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as written.",
+      "batch": 246,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.23",
+      "english": "The one who holds the Panchajanya Shankam, Sudarshana Chakram, adorns a royal crown, wears a yellow-coloured attire and adorns the great Kausthubha; I seek refuge within You.",
+      "note": "Same audit: fragment with mixed third/second person; corrected on branch feature/vsn-hindi-batch-5. Translated as written.",
+      "batch": 246,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-21-64.165",
+      "english": "The one who brings about pralayam, and it is He in which all creation dissolves.",
+      "note": "'it is He in which all creation dissolves' (in whom); corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as meant.",
+      "batch": 251,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-87-122.117",
+      "english": "The one who is the medicine to any fever or disease as He is the physical embodiment of nectar (amrutham).",
+      "note": "Name 114 vṛṣākṛtiḥ: this meaning line (medicine, embodiment of nectar) fits name 120 amṛtaḥ; the explanation that follows is about dharma. Translated as written.",
+      "batch": 254,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-87-122.123",
+      "english": "The one who begets tears of joy when He hears His devotees singing praises of His name.",
+      "note": "'begets tears of joy' (evokes/brings forth); corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as meant.",
+      "batch": 254,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-153-164.23",
+      "english": "He who can overpower His enemy and keep them in check. When Namuchi, the son of Bali, held the leg of the Lord in an attempt to stop Him from growing, the Lord continued to grow and overpowered Namuchi.",
+      "note": "'Namuchi, the son of Bali' holding the Lord's leg: the identification needs checking against Sri Bhattar's commentary on this name. Translated as written.",
+      "batch": 257,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-171-181.9",
+      "english": "The one who loves to create the universe and does not because He is ordained to do so but as a sport.",
+      "note": "'and does not because He is ordained' is missing its verb; corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as meant.",
+      "batch": 258,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-182-187.1",
+      "english": "The one who supported the Manthara Parvatham during the Samudra Mathanam. (Kurma Avataram)",
+      "note": "'Manthara Parvatham' should be Mandara (the next item uses Mandara); translated as మంథర per the English. Also 'ksheerasaagram' (item 18) is a misspelling of ksheerasaagaram.",
+      "batch": 259,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-226-247.69",
+      "english": "He who worships those with a very simple lifestyle and who believes that knowledge is the only attractive factor. In contrast, all other material aspects of the world are seen to be null and void.",
+      "note": "Name 242 satkartā: 'He who worships those with a very simple lifestyle and who believes...' (honours those who... believe); corrected in the owner's audit on branch feature/vsn-hindi-batch-5 to 'He who honours those who lead a very simple life...'. Translated as written.",
+      "batch": 263,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-257-265.22",
+      "english": "Sri Bhattar's words are \"bhaktaiḥ yathālabdha havirādibhiḥ supūratvēna sarvātisvēna dhārmikōdaratvāt vṛṣōdaraḥ\", \"His belly is easily filled by whatever offerings His devotees are able to make.\" Lord Krishna was satisfied by a single leaf from Draupadi's vessel, and through that one leaf, Sage Durvasa and his thousands of disciples felt full.",
+      "note": "The quoted Sanskrit of Sri Bhattar for vṛṣōdaraḥ contains 'sarvātisvēna', which looks garbled; check against the Bhagavad Guna Darpana. Converted as written.",
+      "batch": 265,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-301-314.29",
+      "english": "Markandeya says in the Mahabharata, \"For as long as a thousand yugas revolve, I sleep\" (yāvad yugānāṃ viprarṣē sahasraṃ parivartatē), which shows that the Lord, as the child on the banyan leaf, outlasts time itself.",
+      "note": "The quotation is attributed to Markandeya ('Markandeya says ... I sleep'), but in the cited Aranya Parva passage the words 'I sleep' are spoken by the Lord to Markandeya. Translated as written.",
+      "batch": 267,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-334-345.38",
+      "english": "Sri Bhattar explains that this special quality of valour, inherited from His father Vasudeva (who is also called Sura), makes Him go towards His devotees to help them.",
+      "note": "'His father Vasudeva (who is also called Sura)' contradicts item 28 'Vasudeva, the son of Soora'; Sura (Shura) is Vasudeva's father. Translated as written.",
+      "batch": 269,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-346-351.21",
+      "english": "The familiar description of the Lord as \"seated on a lotus\" (sarasijāsana sannivishṭaḥ) refers to this. The Taittiriya Narayaniyam says, \"The lotus of the heart, which is subtle, flawless, and the seat of the Supreme Being\" (daharaṃ vipāpmaṃ paravēśmabhūtam yatpuṇḍarīkam).",
+      "note": "'sannivishṭaḥ' is not IAST (sanniviṣṭaḥ); written in Telugu from the correct form. The owner's audit corrected this English on branch feature/vsn-hindi-batch-5.",
+      "batch": 270,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-391-421.67",
+      "english": "The Lord says in the Mahabharata, \"I united the earth with water, space with air, and air with fire. So I am called Vaikuntha.\" This quality was seen when He came as Sri Rama. The people of His kingdom, remembering Him, never harmed one another. When Rama left for the forest, they no longer enjoyed one another's company. The elephants gave up their fodder, the cows would not feed their calves, and mothers felt no joy even at the birth of a son. Children longing for their mothers' milk, husbands, and brothers abandoned everything and followed Sri Rama.",
+      "note": "'Children longing for their mothers' milk, husbands, and brothers abandoned everything and followed Sri Rama' reads as if the children, husbands and brothers followed Rama; probably people left their children, husbands and brothers to follow Him. Translated as written.",
+      "batch": 273,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-544-563.56",
+      "english": "The Maulas say about Him, \"In this world, He draws within Himself both the cit and the acit in the same way. He is Sankarshana; His power of attraction is uniform.\" He also draws His devotees towards Himself with His qualities, such as His love for them (vātsalyam) and His beauty.",
+      "note": "'The Maulas say about Him' — unclear who 'the Maulas' are (perhaps a garbled name in Sri Bhattar's source on saṅkarṣaṇa). Transliterated as మౌలులు.",
+      "batch": 283,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-564-567.5",
+      "english": "The one who had Nandagopa as His father. The Lord who was Sankarshana in the vyuha form became Balarama in the vibhava form and had Nandagopa as His father.",
+      "note": "Says Sankarshana as Balarama 'had Nandagopa as His father'; Balarama was born to Vasudeva and Rohini and raised in Nandagopa's household. Translated as written.",
+      "batch": 283,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-644-660.23",
+      "english": "The one who, as Lord Krishna, the son of Vasudeva (who is also called Soora), lives in the shrine of Utpalavartaka by the name of Sauri.",
+      "note": "'the son of Vasudeva (who is also called Soora)': Soora (Shura) is Vasudeva's father; Krishna is called Sauri as Shura's descendant. Translated as written.",
+      "batch": 290,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-697-786.64",
+      "english": "Andal begins the Thiruppavai by remembering the Lord as \"the son of Nandagopa\" and later sings of \"the pure Yamuna of North Mathura\" (vada madurai maindanai thūya peru nīr yamunai thuṟaivanai). The Yamuna, which witnessed so many of His childhood pastimes, is especially dear to Him.",
+      "note": "Tiruppavai 5 line 'vada madurai maindanai thūya peru nīr yamunai thuṟaivanai' means 'the son of North Mathura, the Lord of the ghats of the pure, great Yamuna'; the English gloss 'the pure Yamuna of North Mathura' does not match it. Translated as written.",
+      "batch": 294,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-697-786.94",
+      "english": "Sri Bhattar quotes the Sabha Parva of the Mahabharata: \"Even after doing so many such deeds, the Lord who rides on Garuda did not feel any pride, because of His supreme majesty.\" If the name is read as drupta:, Sri Bhattar explains it as the one who was delighted by the love and care given by Yasoda and Nandagopa.",
+      "note": "'drupta:' — the colon is a garbled visarga (dṛptaḥ); written as ద్రుప్త.",
+      "batch": 294,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-839-846.title",
+      "english": "Naama 839-846: The Lord's eight superhuman powers (ashTa aisvaryas)",
+      "note": "Title uses non-IAST 'ashTa aisvaryas'; item 21 'dahara AkAsa'; item 29 'Isitvam' (aṣṭa aiśvarya, dahara ākāśa, īśitvam). Rendered in Telugu from the correct forms.",
+      "batch": 301,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-897-911.19",
+      "english": "Sri Bhattar's words are \"ēvaṃ mahanmaṅgaḻaṃ dadāti iti svastidaḥ\", \"in this way, He gives the great auspiciousness.\" The next five naamas all contain the word svasti (auspiciousness), and Sri Bhattar explains each of them as a different aspect of the bliss that the Lord grants to the released souls.",
+      "note": "The quoted Sanskrit uses Tamil-style ḻ ('mahanmaṅgaḻaṃ'; also item 28 'maṅgaḻasyaiva'); should be ḷ or l. Rendered from maṅgaḷa.",
+      "batch": 304,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-946-992.91",
+      "english": "The one who is like the celestial Parijata tree for all beings living in the three worlds, bhU (the earth), bhuva: (the sky), and sva: (the heavens).",
+      "note": "English writes the three worlds as 'bhU', 'bhuva:' and 'sva:' (ad hoc romanisation, not IAST). Telugu renders the standard forms భూః, భువః, స్వః. Suggest the English use bhūḥ, bhuvaḥ, svaḥ.",
+      "batch": 308,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-993-1000.17",
+      "english": "Andal sings in the Thiruppavai of \"the Lord who rained arrows from the Saarnga bow\" (śārṅgam udaitta sara mazhai pōl).",
+      "note": "The Tiruppavai line (pasuram 4, 'śārṅgam udaitta sara mazhai pōl') asks the rain to pour 'like the shower of arrows from the Saarnga bow'; the English gloss 'the Lord who rained arrows from the Saarnga bow' paraphrases it as a description of the Lord. Telugu follows the English; owner may wish to tighten the gloss.",
+      "batch": 309,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "phala-shruti.15",
+      "english": "One who is devoted, who rises early, purifies themselves, and with a mind fixed on Him recites these thousand names of Vasudeva,.",
+      "note": "English ends this verse paragraph with a stray comma followed by a full stop ('names of Vasudeva,.'); the sentence continues into the next paragraph ('attains great fame…'). Telugu ends the paragraph with a comma so the sentence runs on. Suggest removing the full stop in the English.",
+      "batch": 310,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "birth-star-hasta.8",
+      "english": "As Mohini, He lulled the asuras to sleep with Her smiles, then played with the devas as He wished. He gave His strength to all who churned, took many forms, and did many wonders. He lives in all beings to give each the right fruit. Full of affection for those who seek refuge, He tends the countless souls as His children, and quickly gives His devotees the wealth they seek.",
+      "note": "English 'As Mohini, He lulled the asuras to sleep with Her smiles' mixes He/Her. Telugu uses ఆయన తన చిరునవ్వులతో. Suggest 'His smiles' or consistent wording.",
+      "batch": 316,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "birth-star-swathi.16",
+      "english": "He is supremely worthy of worship, free from every defect and full of every good quality, possessing all six divine qualities. As Balarama, son of Nandagopa, He wears the garland and holds the plough, and as Krishna He was born to Devaki. His radiance outshines the sun. He forgave Rudra's wrong, and He is the most trustworthy guide on the path of dharma.",
+      "note": "'As Balarama, son of Nandagopa': Balarama is the son of Vasudeva and Rohini, raised in Nandagopa's household; same issue as the earlier Balarama/Nandagopa concern in the main chapters. Telugu follows the English.",
+      "batch": 316,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
