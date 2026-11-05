@@ -1150,6 +1150,14 @@
       "batch": 283,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-644-660.23",
+      "english": "The one who, as Lord Krishna, the son of Vasudeva (who is also called Soora), lives in the shrine of Utpalavartaka by the name of Sauri.",
+      "note": "'the son of Vasudeva (who is also called Soora)': Soora (Shura) is Vasudeva's father; Krishna is called Sauri as Shura's descendant. Translated as written.",
+      "batch": 290,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }

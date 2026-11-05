@@ -243,6 +243,15 @@
       "batch": 289,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Thiruvallikeni",
+      "forms": {
+        "te": "తిరువల్లిక్కేణి"
+      },
+      "batch": 290,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
