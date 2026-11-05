@@ -1190,6 +1190,14 @@
       "batch": 304,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-946-992.91",
+      "english": "The one who is like the celestial Parijata tree for all beings living in the three worlds, bhU (the earth), bhuva: (the sky), and sva: (the heavens).",
+      "note": "English writes the three worlds as 'bhU', 'bhuva:' and 'sva:' (ad hoc romanisation, not IAST). Telugu renders the standard forms భూః, భువః, స్వః. Suggest the English use bhūḥ, bhuvaḥ, svaḥ.",
+      "batch": 308,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
