@@ -117,6 +117,24 @@
       "batch": 280,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Kapila",
+      "forms": {
+        "te": "కపిలుడు"
+      },
+      "batch": 281,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Varaha Charama Shloka",
+      "forms": {
+        "te": "వరాహ చరమ శ్లోకం"
+      },
+      "batch": 281,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
