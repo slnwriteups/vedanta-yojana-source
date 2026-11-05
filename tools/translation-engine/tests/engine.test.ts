@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 import type { LanguageCode } from "../../../content-lib/schemas/language.ts";
 import { blocking, checkBook, checkRecord, englishDrift, latinFindings, untransliterable, type Issue } from "../validate.ts";
 import { repairVerses } from "../verses.ts";
+import { loadBaseline } from "../baseline.ts";
 import { devaToTamil } from "../../../scripts/translation/mechanical.ts";
 
 /**
@@ -36,12 +37,27 @@ const setPara = (r: any, lang: LanguageCode, n: number, text: string) => {
 };
 const errors = (issues: Issue[]) => blocking(issues).map((i) => `${i.lang} ${i.field} ¶${i.paragraph ?? "-"} ${i.rule}`);
 
-/** Defects already in the live file, found by this engine; they are reported, not fixed, here. */
+/**
+ * Two defects this engine found in the live file and that were fixed on
+ * 5 November 2026 (a Devanagari ऽ inside Tamil, a Kannada ಽ inside the kept
+ * Devanagari). Tests seed them back into an in-memory copy.
+ */
 const KNOWN = ["ta body ¶22 devanagari-in-prose", "kn body ¶21 devanagari-changed"];
+function seedKnownDefects(r: any): any {
+  const swap = (lang: LanguageCode, from: string, to: string) => {
+    assert.ok(r.translations[lang].body.includes(from), `${lang}: ${from}`);
+    r.translations[lang].body = r.translations[lang].body.replace(from, to);
+  };
+  swap("ta", "விஷமே'பி", "விஷமேऽபி");
+  swap("kn", "विषमेऽपि", "विषमेಽपि");
+  return r;
+}
 
-test("the approved chapter passes in hi and te, and only its two known live defects block ta and kn", () => {
+test("the approved chapter passes in all four languages, and the two defects it once had block ta and kn", () => {
   const issues = checkRecord(model(), { ...opts, original: model(), require: true });
-  assert.deepEqual(errors(issues).sort(), [...KNOWN].sort());
+  assert.deepEqual(errors(issues), []);
+  const seeded = checkRecord(seedKnownDefects(model()), { ...opts, original: model(), require: true });
+  assert.deepEqual(errors(seeded).sort(), [...KNOWN].sort());
   // Hand-spaced live Tamil verses differ from the generated form: reported for review, never blocking.
   assert.ok(issues.some((i) => i.lang === "ta" && i.rule === "verse-drift" && i.level === "warning"));
 });
@@ -65,9 +81,7 @@ for (const lang of LANGS) {
     assert.ok(errors(checkRecord(r, opts)).includes(`${lang} body ¶4 romanized-sanskrit`));
 
     const fixed = repairVerses(r.body, r.translations[lang].body, lang);
-    // Kannada ¶21 is the live defect where ಽ replaced ऽ in the kept Devanagari; repair restores it from the English.
-    const restored = lang === "kn" ? [21] : [];
-    assert.deepEqual(fixed.changed.map((c) => c.paragraph), [4, ...restored]);
+    assert.deepEqual(fixed.changed.map((c) => c.paragraph), [4]);
     assert.deepEqual(fixed.unresolved, []);
     const verse = paras(fixed.body)[3];
     assert.doesNotMatch(verse, /\p{Script=Latin}/u);
@@ -80,9 +94,9 @@ for (const lang of LANGS) {
     }[lang];
     assert.equal(verse, want);
     // Every other paragraph, prose included, is untouched.
-    paras(fixed.body).forEach((p, i) => i !== 3 && !restored.includes(i + 1) && assert.equal(p, paras(r.translations[lang].body)[i]));
+    paras(fixed.body).forEach((p, i) => i !== 3 && assert.equal(p, paras(r.translations[lang].body)[i]));
     r.translations[lang].body = fixed.body;
-    assert.deepEqual(errors(checkRecord(r, opts)).sort(), KNOWN.filter((k) => !(lang === "kn" && k.startsWith("kn"))).sort());
+    assert.deepEqual(errors(checkRecord(r, opts)), []);
   });
 
   test(`[${lang}] dropping or altering the Devanagari verse blocks`, () => {
@@ -107,6 +121,13 @@ for (const lang of LANGS) {
     assert.ok(errors(checkRecord(r, opts)).includes(`${lang} title ¶- missing-field`));
   });
 }
+
+test("[kn] repair restores the kept Devanagari where a Kannada ಽ replaced ऽ", () => {
+  const r = seedKnownDefects(model());
+  const fixed = repairVerses(r.body, r.translations.kn.body, "kn");
+  assert.deepEqual(fixed.changed.map((c) => c.paragraph), [21]);
+  assert.equal(paras(fixed.body)[20], paras(r.body)[20]);
+});
 
 test("[ta] ś written ச (iastToScript's Sankalpam mode) breaks the Tamil Grantha rule", () => {
   const r = model();
@@ -207,7 +228,7 @@ test("the gate: check exits 1 on a blocking error, certify refuses and records n
   const bad = model();
   setPara(bad, "hi", 2, `${paras(bad.translations.hi.body)[1]} This line was never translated.`);
   fs.writeFileSync(path.join(dir, "bad.json"), JSON.stringify(bad, null, 2));
-  const run = (...a: string[]) => spawnSync(process.execPath, [cli, ...a], { cwd: ROOT, encoding: "utf8" });
+  const run = (...a: string[]) => spawnSync(process.execPath, [...process.execArgv, cli, ...a], { cwd: ROOT, encoding: "utf8" });
 
   const failed = run("check", `--file=${path.join(dir, "bad.json")}`, `--english=${MODEL}`, "--langs=hi,te");
   assert.equal(failed.status, 1, failed.stdout + failed.stderr);
@@ -216,12 +237,18 @@ test("the gate: check exits 1 on a blocking error, certify refuses and records n
   const passed = run("check", `--file=${MODEL}`, `--english=${MODEL}`, "--langs=hi,te");
   assert.equal(passed.status, 0, passed.stdout + passed.stderr);
 
-  const ledger = path.join(ROOT, "translation-work/nityasuri-vaibhavam/certification.json");
+  // certify reads content/, so refusal is shown on a chapter the baseline still lists as defective.
+  const entry = loadBaseline()?.entries.find((e) => /^content\/library\/[^/]+\/chapters\//.test(e.file));
+  if (!entry) return; // every historical defect fixed: nothing left on disk to refuse
+  const [, book, chapter] = entry.file.match(/^content\/library\/([^/]+)\/chapters\/(.+)\.json$/)!;
+  const ledger = path.join(ROOT, "translation-work", book, "certification.json");
   const existed = fs.existsSync(ledger);
-  const refused = run("certify", "--book=nityasuri-vaibhavam", "--chapter=the-sudarsana-ashtakam");
-  assert.equal(refused.status, 1);
-  assert.match(refused.stdout, /Not certified: 2 blocking error/);
+  const before = existed ? fs.readFileSync(ledger, "utf8") : null;
+  const refused = run("certify", `--book=${book}`, `--chapter=${chapter}`);
+  assert.equal(refused.status, 1, refused.stdout + refused.stderr);
+  assert.match(refused.stdout, /Not certified: \d+ blocking error/);
   assert.equal(fs.existsSync(ledger), existed, "no ledger written on refusal");
+  if (existed) assert.equal(fs.readFileSync(ledger, "utf8"), before, "ledger unchanged on refusal");
   fs.rmSync(dir, { recursive: true });
 });
 

@@ -23,10 +23,18 @@ const bookRecord = () => load(`content/library/${BOOK}/book.json`);
 const paras = (s: string) => s.split(/\n\s*\n/);
 const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
+/** The chapter's two historical defects (fixed in content on 5 November 2026), seeded into a copy. */
+const defective = () => {
+  const r = record();
+  r.translations.ta.body = r.translations.ta.body.replace("விஷமே'பி", "விஷமேऽபி");
+  r.translations.kn.body = r.translations.kn.body.replace("विषमेऽपि", "विषमेಽपि");
+  return r;
+};
+
 // ---------------------------------------------------------------- baseline
 
 test("historical defects are known, new ones block, and editing the text un-excuses them", () => {
-  const r = record();
+  const r = defective();
   const issues = checkRecord(r, { file: FILE, book: BOOK, kind: "chapter" });
   const records = new Map([[FILE, r]]);
   const base = baselineFrom(issues, records);
@@ -34,7 +42,7 @@ test("historical defects are known, new ones block, and editing the text un-excu
   assert.deepEqual(applyBaseline(issues, records, base).blocking, []);
 
   // A new defect elsewhere is not excused.
-  const edited = record();
+  const edited = defective();
   const te = paras(edited.translations.te.body);
   te[1] += " This sentence is new.";
   edited.translations.te.body = te.join("\n\n");
@@ -43,7 +51,7 @@ test("historical defects are known, new ones block, and editing the text un-excu
   assert.equal(after.known.length, 2);
 
   // Editing the defective Kannada paragraph without fixing it: no longer excused.
-  const touched = record();
+  const touched = defective();
   const kn = paras(touched.translations.kn.body);
   kn[20] = kn[20].replace("॥", " ॥");
   touched.translations.kn.body = kn.join("\n\n");
@@ -52,7 +60,7 @@ test("historical defects are known, new ones block, and editing the text un-excu
   assert.equal(t2.stale.length, 1, "the old entry no longer matches: reported stale, not silently dropped");
 
   // Fixing it: no error, and the entry is stale until pruned.
-  const fixed = record();
+  const fixed = defective();
   const kn2 = paras(fixed.translations.kn.body);
   kn2[20] = paras(fixed.body)[20];
   fixed.translations.kn.body = kn2.join("\n\n");
@@ -68,7 +76,7 @@ test("the committed baseline pins file, language, field and rule, and refuses to
     assert.match(e.file, /^content\/library\//);
     assert.ok(e.lang && e.field && e.rule && e.fingerprint, JSON.stringify(e));
   }
-  assert.ok(b.entries.some((e) => e.file === FILE && e.lang === "kn" && e.paragraph === 21 && e.rule === "devanagari-changed"));
+  assert.ok(!b.entries.some((e) => e.file === FILE), "the model chapter's defects were fixed and pruned");
   const r = spawnSync(process.execPath, [path.join(ROOT, "tools/translation-engine/cli.ts"), "baseline", "--init"], { cwd: ROOT, encoding: "utf8" });
   assert.equal(r.status, 1);
   assert.match(r.stderr, /never grows/);
@@ -136,8 +144,8 @@ test("READY needs mechanical pass, linguistic and owner theological approval of 
   assert.equal(after.ready, false);
   assert.match(after.linguistic, /void/);
   assert.match(after.theological, /void/);
-  // The Tamil and Kannada of this chapter carry known defects: never ready while they remain.
-  const ta = readiness({ ...base, lang: "ta" });
+  // A chapter with a blocking defect is never ready.
+  const ta = readiness({ ...base, record: defective(), lang: "ta" });
   assert.equal(ta.mechanical, "fail");
 });
 

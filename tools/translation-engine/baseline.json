@@ -123,24 +123,6 @@
       "detail": "4 English paragraphs, 1 translated; never merge or split (Standard §1 rule 5)"
     },
     {
-      "file": "content/library/nityasuri-vaibhavam/chapters/the-sudarsana-ashtakam.json",
-      "lang": "ta",
-      "field": "body",
-      "paragraph": 22,
-      "rule": "devanagari-in-prose",
-      "fingerprint": "203c1751d5",
-      "detail": "Devanagari inside Tamil text: \"விஷமேऽபி\""
-    },
-    {
-      "file": "content/library/nityasuri-vaibhavam/chapters/the-sudarsana-ashtakam.json",
-      "lang": "kn",
-      "field": "body",
-      "paragraph": 21,
-      "rule": "devanagari-changed",
-      "fingerprint": "56804ad495",
-      "detail": "the Devanagari verse must be kept character for character (1/2 lines unchanged)"
-    },
-    {
       "file": "content/library/sri-rama-charithram/chapters/intrigue-wasted.json",
       "lang": "ta",
       "field": "body",
@@ -1068,33 +1050,6 @@
       "rule": "source-verse-layout",
       "fingerprint": "2a2744ab95",
       "detail": "looks like a romanised verse but does not end with | / ||, so it would be sent to a translator as prose (Standard §3.1, §6.2)"
-    },
-    {
-      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
-      "lang": "ta",
-      "field": "body",
-      "paragraph": 4,
-      "rule": "devanagari-changed",
-      "fingerprint": "58513c4195",
-      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
-    },
-    {
-      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
-      "lang": "kn",
-      "field": "body",
-      "paragraph": 4,
-      "rule": "devanagari-changed",
-      "fingerprint": "4431356089",
-      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
-    },
-    {
-      "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
-      "lang": "te",
-      "field": "body",
-      "paragraph": 4,
-      "rule": "devanagari-changed",
-      "fingerprint": "00b8a8c74e",
-      "detail": "the Devanagari verse must be kept character for character (0/4 lines unchanged)"
     },
     {
       "file": "content/library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
