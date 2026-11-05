@@ -225,6 +225,24 @@
       "batch": 288,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Saranagati Gadyam",
+      "forms": {
+        "te": "శరణాగతి గద్యం"
+      },
+      "batch": 289,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Thiruvanandapuram",
+      "forms": {
+        "te": "తిరువనంతపురం"
+      },
+      "batch": 289,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
