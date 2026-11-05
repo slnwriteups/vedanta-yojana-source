@@ -39,6 +39,23 @@ const DESCRIPTION_WARN_LENGTH = 200;
 /** A sitemap that suddenly shrinks this much usually means a content loader broke. */
 const MIN_SITEMAP_URLS = 100;
 const LIVE_CONCURRENCY = 8;
+/**
+ * Live only: how long to wait before each retry of a transient failure.
+ * GitHub Pages occasionally answers one request in a few hundred with a
+ * 503, or drops the connection ("fetch failed"), especially just after a
+ * deploy. Those are not indexing problems -- the same page answers 200
+ * moments later -- so the audit retries them, and only a page that still
+ * fails after every retry is reported. SEO_AUDIT_RETRY_DELAYS_MS (a
+ * comma-separated list) overrides the delays, for the tests.
+ */
+const RETRY_DELAYS_MS = (process.env.SEO_AUDIT_RETRY_DELAYS_MS ?? "2000,5000,15000")
+  .split(",")
+  .map(Number)
+  .filter((ms) => Number.isFinite(ms) && ms >= 0);
+/** Server answers worth asking again; anything else is the real answer. */
+const TRANSIENT_STATUSES = new Set([429, 500, 502, 503, 504]);
+/** A Retry-After longer than this is capped, so one page can't stall the run. */
+const MAX_RETRY_AFTER_MS = 30_000;
 
 // ---------------------------------------------------------------------------
 // Arguments
@@ -117,20 +134,50 @@ async function get(sitePath: string): Promise<Fetched> {
   }
   const target = new URL(sitePath, `${URL_BASE}/`);
   if (target.origin !== new URL(URL_BASE!).origin) return NOT_FOUND;
-  // redirect: "manual" -- a redirect IS the finding for a sitemap URL.
-  const response = await fetch(target, {
-    redirect: "manual",
-    signal: AbortSignal.timeout(30000),
-    headers: { "User-Agent": "vedanta-yojana-seo-audit (+https://github.com/slnwriteups/vedanta-yojana-source)" },
-  });
-  const buffer = Buffer.from(await response.arrayBuffer());
-  return {
-    robotsHeader: response.headers.get("x-robots-tag") ?? undefined,
-    status: response.status,
-    location: response.headers.get("location") ?? undefined,
-    body: buffer.toString("utf8"),
-    bytes: buffer.length,
-  };
+  for (let attempt = 0; ; attempt++) {
+    const retryDelay = RETRY_DELAYS_MS[attempt];
+    let fetched: Fetched;
+    let retryAfterMs: number | undefined;
+    try {
+      // redirect: "manual" -- a redirect IS the finding for a sitemap URL.
+      const response = await fetch(target, {
+        redirect: "manual",
+        signal: AbortSignal.timeout(30000),
+        headers: { "User-Agent": "vedanta-yojana-seo-audit (+https://github.com/slnwriteups/vedanta-yojana-source)" },
+      });
+      const buffer = Buffer.from(await response.arrayBuffer());
+      fetched = {
+        robotsHeader: response.headers.get("x-robots-tag") ?? undefined,
+        status: response.status,
+        location: response.headers.get("location") ?? undefined,
+        body: buffer.toString("utf8"),
+        bytes: buffer.length,
+      };
+      retryAfterMs = parseRetryAfter(response.headers.get("retry-after"));
+    } catch (error) {
+      // Network failure or timeout: retry, then let the caller report it.
+      if (retryDelay === undefined) throw error;
+      console.log(`retrying ${target.pathname} after: ${(error as Error).message}`);
+      await sleep(retryDelay);
+      continue;
+    }
+    if (!TRANSIENT_STATUSES.has(fetched.status) || retryDelay === undefined) return fetched;
+    console.log(`retrying ${target.pathname} after: HTTP ${fetched.status}`);
+    await sleep(Math.max(retryDelay, Math.min(retryAfterMs ?? 0, MAX_RETRY_AFTER_MS)));
+  }
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/** Retry-After in milliseconds, from either of its forms (seconds or a date). */
+function parseRetryAfter(value: string | null): number | undefined {
+  if (!value) return undefined;
+  const seconds = Number(value);
+  if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000);
+  const date = Date.parse(value);
+  return Number.isNaN(date) ? undefined : Math.max(0, date - Date.now());
 }
 
 // ---------------------------------------------------------------------------
