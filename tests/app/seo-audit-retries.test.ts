@@ -30,6 +30,10 @@ test("live audit retries transient 503s and dropped connections, and still repor
   ]);
   const alwaysFailing = "/page-11/";
   let origin = "";
+  // Every page body is built ahead of time from the known paths and looked
+  // up by the request path, so nothing from the request is ever written
+  // into a response.
+  const pages = new Map<string, string>();
 
   const server = http.createServer((req, res) => {
     const url = req.url ?? "/";
@@ -57,15 +61,25 @@ test("live audit retries transient 503s and dropped connections, and still repor
       res.end("unavailable");
       return;
     }
+    const page = pages.get(url);
+    if (page === undefined) {
+      res.statusCode = 404;
+      res.end("not found");
+      return;
+    }
     res.setHeader("Content-Type", "text/html");
-    res.end(
-      `<html><head><title>${url}</title><meta name="description" content="A page about ${url}."><link rel="canonical" href="${origin}${url}"></head>` +
-        `<body><main><h1>Guide</h1>${"Temple history and travel information. ".repeat(15)}</main></body></html>`,
-    );
+    res.end(page);
   });
   await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
   t.after(() => server.close());
   origin = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  for (const p of paths) {
+    pages.set(
+      p,
+      `<html><head><title>${p}</title><meta name="description" content="A page about ${p}."><link rel="canonical" href="${origin}${p}"></head>` +
+        `<body><main><h1>Guide</h1>${"Temple history and travel information. ".repeat(15)}</main></body></html>`,
+    );
+  }
 
   const result = await runAudit(origin);
 
