@@ -378,6 +378,24 @@
       "batch": 302,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Archiraadi Gati",
+      "forms": {
+        "te": "అర్చిరాది గతి"
+      },
+      "batch": 303,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "aativaahika",
+      "forms": {
+        "te": "ఆతివాహికుడు"
+      },
+      "batch": 303,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
