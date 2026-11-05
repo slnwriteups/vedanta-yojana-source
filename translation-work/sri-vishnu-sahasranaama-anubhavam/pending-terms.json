@@ -360,6 +360,24 @@
       "batch": 300,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Jitante Stotram",
+      "forms": {
+        "te": "జితంతే స్తోత్రం"
+      },
+      "batch": 302,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "bhara nyāsa",
+      "forms": {
+        "te": "భర న్యాసం"
+      },
+      "batch": 302,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
