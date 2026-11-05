@@ -279,6 +279,33 @@
       "batch": 291,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Laghu Atri Smriti",
+      "forms": {
+        "te": "లఘు అత్రి స్మృతి"
+      },
+      "batch": 292,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Ghantakarna",
+      "forms": {
+        "te": "ఘంటాకర్ణుడు"
+      },
+      "batch": 292,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Uparicharavasu",
+      "forms": {
+        "te": "ఉపరిచర వసువు"
+      },
+      "batch": 292,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
