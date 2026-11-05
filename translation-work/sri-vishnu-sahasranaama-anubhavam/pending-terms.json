@@ -342,6 +342,15 @@
       "batch": 296,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Mayamoha",
+      "forms": {
+        "te": "మాయామోహుడు"
+      },
+      "batch": 298,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
