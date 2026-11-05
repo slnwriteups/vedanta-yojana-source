@@ -1094,6 +1094,14 @@
       "batch": 263,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-257-265.22",
+      "english": "Sri Bhattar's words are \"bhaktaiḥ yathālabdha havirādibhiḥ supūratvēna sarvātisvēna dhārmikōdaratvāt vṛṣōdaraḥ\", \"His belly is easily filled by whatever offerings His devotees are able to make.\" Lord Krishna was satisfied by a single leaf from Draupadi's vessel, and through that one leaf, Sage Durvasa and his thousands of disciples felt full.",
+      "note": "The quoted Sanskrit of Sri Bhattar for vṛṣōdaraḥ contains 'sarvātisvēna', which looks garbled; check against the Bhagavad Guna Darpana. Converted as written.",
+      "batch": 265,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
