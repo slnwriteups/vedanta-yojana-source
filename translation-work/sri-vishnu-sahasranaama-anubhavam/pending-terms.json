@@ -207,6 +207,24 @@
       "batch": 287,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Thiruvekka",
+      "forms": {
+        "te": "తిరువెక్కా"
+      },
+      "batch": 288,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Trijata",
+      "forms": {
+        "te": "త్రిజట"
+      },
+      "batch": 288,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
