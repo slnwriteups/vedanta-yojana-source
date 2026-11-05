@@ -1062,6 +1062,14 @@
       "batch": 254,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-153-164.23",
+      "english": "He who can overpower His enemy and keep them in check. When Namuchi, the son of Bali, held the leg of the Lord in an attempt to stop Him from growing, the Lord continued to grow and overpowered Namuchi.",
+      "note": "'Namuchi, the son of Bali' holding the Lord's leg: the identification needs checking against Sri Bhattar's commentary on this name. Translated as written.",
+      "batch": 257,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }

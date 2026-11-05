@@ -45,6 +45,15 @@
       "batch": 245,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "vyuha moorthis",
+      "forms": {
+        "te": "వ్యూహ మూర్తులు"
+      },
+      "batch": 256,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
