@@ -8,7 +8,7 @@ The website's fonts are stored here and loaded with `next/font/local` in
 with fonts. With the files in the repository the build makes no font
 requests at all.
 
-All six are Noto fonts under the SIL Open Font License 1.1 (`OFL.txt`; every
+All seven are Noto fonts under the SIL Open Font License 1.1 (`OFL.txt`; every
 family's licence has the same text, only the copyright line names its own
 notofonts project). They are variable fonts, so one file serves every
 weight the site uses.
@@ -21,6 +21,7 @@ weight the site uses.
 | `noto-serif-telugu.woff2` | Noto Serif Telugu 2.005 | Google's `telugu` subset | The file Google Fonts serves |
 | `noto-serif-devanagari.woff2` | Noto Serif Devanagari 2.006 | Google's `devanagari` subset | The file Google Fonts serves |
 | `noto-sans-devanagari.woff2` | Noto Sans Devanagari 2.007 | Google's `devanagari` subset | The file Google Fonts serves |
+| `noto-sans-telugu.woff2` | Noto Sans Telugu 2.005 | Google's `telugu` subset | The file Google Fonts serves |
 
 ## Why Noto Serif is one merged file
 

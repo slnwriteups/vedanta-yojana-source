@@ -36,7 +36,7 @@ import {
  *
  * UI/UX pass: paragraph text renders in the serif reading face
  * (theme.ts's readingFontFamily -- a system font, Georgia on iOS, no
- * new asset; Kannada uses the bundled Noto Serif Kannada, see
+ * new asset; Kannada and Telugu use their own faces, see
  * reading-font.ts). Headings stay in the app's regular sans, matching the
  * common reading-app convention of a sans UI chrome around serif body
  * prose (Apple Books, Kindle) rather than one typeface everywhere.

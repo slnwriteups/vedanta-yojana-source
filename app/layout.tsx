@@ -65,6 +65,24 @@ const notoSansDevanagari = localFont({
 });
 
 /**
+ * The same fallback for Telugu UI text (headings, chapter titles, menus
+ * when Telugu is selected): Noto Sans Telugu, Google's `telugu` subset.
+ * Phones and most computers already have a Telugu system font, which
+ * comes first in globals.css's `body` stack, and the unicode-range keeps
+ * this file from being downloaded unless a page shows Telugu that no
+ * earlier font in the stack can draw. Without it, a system with no
+ * Telugu font drew titles in a font that cannot join Telugu letters.
+ */
+const notoSansTelugu = localFont({
+  src: [{ path: "./fonts/noto-sans-telugu.woff2", weight: "400" }, { path: "./fonts/noto-sans-telugu.woff2", weight: "600" }, { path: "./fonts/noto-sans-telugu.woff2", weight: "700" }],
+  variable: "--font-telugu",
+  display: "swap",
+  preload: false,
+  adjustFontFallback: "Arial",
+  declarations: [{ prop: "unicode-range", value: "U+0951-0952, U+0964-0965, U+0B83, U+0C00-0C7F, U+1CD5-1CD6, U+1CD8, U+1CDA, U+1CF2, U+200C-200D, U+25CC" }],
+});
+
+/**
  * The reading face: long-form text (chapters, Sthala Puranam, Knowledge)
  * is set in Noto Serif, matching the app's serif reader
  * (mobile/theme.ts's readingFontFamily), with the Noto Serif face for
@@ -207,7 +225,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${notoSansDevanagari.variable} ${readingFontVariables}`}>
+    <html lang="en" className={`${notoSansDevanagari.variable} ${notoSansTelugu.variable} ${readingFontVariables}`}>
       <body className="flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)] antialiased">
         <AppProviders>
           {/*
