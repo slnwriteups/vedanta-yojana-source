@@ -31,6 +31,11 @@ Low-value pages are kept out of the index on purpose: `/settings/` and the
   HTML. A bad change can't deploy unnoticed.
 - **After every deploy and every Monday (`seo-health.yml`):** audits the
   live site, including real redirects and the `www.`/`http://` addresses.
+  A page that answers with a momentary server error (429, 500, 502, 503,
+  504) or drops the connection is asked again up to three times, over
+  about 20 seconds, before it counts as unreachable. GitHub Pages now and
+  then fails a few of the ~540 requests, and those blips used to open an
+  issue on their own.
   If anything fails, it opens a GitHub issue labelled `seo-health`, and
   GitHub emails you. It keeps that one issue updated and closes it by itself
   once the site passes again. **A passing audit means these technical checks passed; it does not
