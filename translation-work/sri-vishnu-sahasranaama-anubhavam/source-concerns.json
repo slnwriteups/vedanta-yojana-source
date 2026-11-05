@@ -1118,6 +1118,14 @@
       "batch": 269,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-346-351.21",
+      "english": "The familiar description of the Lord as \"seated on a lotus\" (sarasijāsana sannivishṭaḥ) refers to this. The Taittiriya Narayaniyam says, \"The lotus of the heart, which is subtle, flawless, and the seat of the Supreme Being\" (daharaṃ vipāpmaṃ paravēśmabhūtam yatpuṇḍarīkam).",
+      "note": "'sannivishṭaḥ' is not IAST (sanniviṣṭaḥ); written in Telugu from the correct form. The owner's audit corrected this English on branch feature/vsn-hindi-batch-5.",
+      "batch": 270,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
