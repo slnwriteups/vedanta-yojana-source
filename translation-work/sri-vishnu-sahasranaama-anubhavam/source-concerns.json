@@ -1006,6 +1006,38 @@
         "reviewer": "codex-source-editorial-2026-11-01",
         "note": "English volume 2, naama 370, printed p. 35 (PDF p. 39), identifies the pasuram and its subject; volume 3, naama 626, printed pp. 34–35 (PDF pp. 38–39), explicitly attributes six-month loss of external awareness to Nammazhwar. Volume 4, naama 823, printed pp. 105–106 (PDF pp. 109–110), corroborates it. Corrected Ramanuja to Nammazhwar, retaining the quoted pasuram. Source-based editorial correction, not independent linguistic review or owner theological approval."
       }
+    },
+    {
+      "id": "dhyana-shlokam.3",
+      "english": "The Lord resides in Sri Vaikuntham, situated in the centre of the milky ocean (Ksheerabdhi). Just as our earthly ocean has sand at the shore, the shore of Ksheerabdhi is studded with various riches such as diamonds, jewels, pearls, etc., which have originated from the Lord coming in contact with Ksheerabdhi. Zooming in on the Lord, Mukunda, the Lord, is seen wearing the holy garland. The Lord is seen reclining on Adisesha, above whom is said to be a cloud continuously showering the Lord gently with drops of Amritam or nectar, which ensures eternal happiness in His abode.",
+      "note": "Places Sri Vaikuntham in the centre of the milky ocean; Sri Vaikuntham (Paramapadam) and the Ksheerabdhi are usually distinct abodes. Translated as written.",
+      "batch": 245,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.14",
+      "english": "He who is the consort of Sri Mahalakshmi has eyes like that of a freshly bloomed lotus; who is worshipped by all the sage and preservers of all that is good; the one who is the destroyer of all fears; I ask for refuge at your holy feet oh Lord of all Lords.",
+      "note": "Dhyana shloka 3 commentary: 'all the sage' (sages) and a shift from third person to 'your holy feet'. The owner's audit corrected this English on the unmerged branch feature/vsn-hindi-batch-5 (commit 7709e98); translated as written here.",
+      "batch": 246,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.17",
+      "english": "He who sports the holy gem Kaustubha in his heart. (this divine gem is said to signify all the jeevaatmas, in turn, meaning He keeps all of His devotees close to Him)",
+      "note": "Kaustubha 'in his heart' (on His chest) and an unterminated parenthesis; corrected in the owner's audit on branch feature/vsn-hindi-batch-5, not yet on main. Translated as written.",
+      "batch": 246,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "dhyana-shlokam.23",
+      "english": "The one who holds the Panchajanya Shankam, Sudarshana Chakram, adorns a royal crown, wears a yellow-coloured attire and adorns the great Kausthubha; I seek refuge within You.",
+      "note": "Same audit: fragment with mixed third/second person; corrected on branch feature/vsn-hindi-batch-5. Translated as written.",
+      "batch": 246,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }

@@ -9,6 +9,42 @@
       "batch": 150,
       "proposedAt": "2026-11-01",
       "status": "pending"
+    },
+    {
+      "en": "Bhagavad Guṇa Darpaṇa",
+      "forms": {
+        "te": "భగవద్ గుణ దర్పణ"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Pāñcarātra Āgamas",
+      "forms": {
+        "te": "పాంచరాత్ర ఆగమాలు"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Ksheerabdhi",
+      "forms": {
+        "te": "క్షీరాబ్ధి"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Vishwaroopam",
+      "forms": {
+        "te": "విశ్వరూపం"
+      },
+      "batch": 245,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
