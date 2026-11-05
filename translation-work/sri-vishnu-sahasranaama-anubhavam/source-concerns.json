@@ -1102,6 +1102,14 @@
       "batch": 265,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-301-314.29",
+      "english": "Markandeya says in the Mahabharata, \"For as long as a thousand yugas revolve, I sleep\" (yāvad yugānāṃ viprarṣē sahasraṃ parivartatē), which shows that the Lord, as the child on the banyan leaf, outlasts time itself.",
+      "note": "The quotation is attributed to Markandeya ('Markandeya says ... I sleep'), but in the cited Aranya Parva passage the words 'I sleep' are spoken by the Lord to Markandeya. Translated as written.",
+      "batch": 267,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
