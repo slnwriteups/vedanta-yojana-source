@@ -1086,6 +1086,14 @@
       "batch": 259,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-226-247.69",
+      "english": "He who worships those with a very simple lifestyle and who believes that knowledge is the only attractive factor. In contrast, all other material aspects of the world are seen to be null and void.",
+      "note": "Name 242 satkartā: 'He who worships those with a very simple lifestyle and who believes...' (honours those who... believe); corrected in the owner's audit on branch feature/vsn-hindi-batch-5 to 'He who honours those who lead a very simple life...'. Translated as written.",
+      "batch": 263,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }

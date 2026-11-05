@@ -54,6 +54,15 @@
       "batch": 256,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Daya Satakam",
+      "forms": {
+        "te": "దయా శతకం"
+      },
+      "batch": 263,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
