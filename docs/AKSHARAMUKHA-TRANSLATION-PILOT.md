@@ -17,7 +17,18 @@ python scripts/aksharamukha-pilot.py --text 'viśvam' --lang kn --json
 python scripts/aksharamukha-pilot.py --text 'viśvam' --lang te --json
 ```
 
-The tool performs script conversion, **not meaning translation**. Feed it only verified Sanskrit IAST; do not feed whole English chapter bodies. Keep the original Devanagari verse block untouched. Tamil requires a dedicated Grantha-assisted validation/postprocessing pass, notably ś → ஶ, and cannot be approved automatically. Tamil pāsurams must start from authoritative Tamil text, not Sanskrit IAST.
+The tool performs script conversion, **not meaning translation**. Feed it only verified Sanskrit (IAST, or the Devanagari block with `--source deva`, which is the better source); do not feed whole English chapter bodies. Keep the original Devanagari verse block untouched. Aksharamukha's Tamil already writes ś as ஶ, but our house rules (ஸ்ரீ, ந/ன by position, class nasals, ஃ) still differ, so Tamil output cannot be approved automatically. Tamil pāsurams must start from authoritative Tamil text, not Sanskrit IAST.
+
+The script maps the corpus's ē/ō to e/o (Aksharamukha's `IAST` scheme otherwise leaves them unconverted: `kṣētrajñaḥ` → `क्ष्ēत्रज्ञः`), passes `nativize=False` so word-final म् stays a consonant, and applies the Tamil post-options `TamilRemoveApostrophe`, `TamilRemoveNumbers` and `TamilOmDisable`.
+
+## Cross-checking published verses
+
+```bash
+python scripts/aksharamukha-crosscheck.py                 # every book
+python scripts/aksharamukha-crosscheck.py --book=nityasuri-vaibhavam --langs=ta
+```
+
+Read-only. It converts every Devanagari verse with Aksharamukha and compares it with the shipped script line, after normalising our documented conventions, and reports letter differences, missing verse lines and word-break-only differences. On 5 November 2026 it found 0 letter differences in the Sahasranaama book and 7 letter errors plus 1 paragraph shift elsewhere (listed in `replica/recon.md`). The full recon of the API is also in `replica/recon.md`.
 
 ## Pilot acceptance criteria
 
@@ -30,4 +41,4 @@ The tool performs script conversion, **not meaning translation**. Feed it only v
 
 ## Licensing and operations
 
-Aksharamukha is a separate optional local build-time dependency. Review its GPL-3.0 license before vendoring or distributing it within MIT-licensed code. Do not call the public API in bulk. ChatGPT Plus does not provide unlimited unattended API translation credits.
+Aksharamukha is a separate optional local build-time dependency. Its Python package (2.3) is licensed **AGPL-3.0**: do not vendor it, bundle it into the app or website, or run it as a service. Do not call the public API (`https://aksharamukha-plugin.appspot.com/api/public?source=&target=&text=`) in bulk; it also ignores `nativize` and post-options, so it cannot produce house-style output. ChatGPT Plus does not provide unlimited unattended API translation credits.

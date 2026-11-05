@@ -1,0 +1,17 @@
+feature,area,priority,original,clone,notes
+Devanagari to Kannada/Telugu verse conversion,conversion,must,yes,yes,scripts/translation/mechanical.ts devaToBrahmic; 0 letter disagreements on 264 Sahasranaama verses
+Devanagari to Tamil Grantha-assisted conversion,conversion,must,yes,yes,devaToTamil; ś as ஶ in both; we add house rules (ஸ்ரீ / ந-ன / class nasal)
+IAST (with ē/ō) to Devanagari,conversion,must,yes,yes,iastToDeva; Aksharamukha needs ē/ō mapped to e/o first
+Homorganic nasal as anusvara (kn/te),house style,must,partial,yes,nativize=True also turns final म् into anusvara which we do not want
+Word-final म् kept (kn/te),house style,must,yes,yes,nativize=False
+Tamil superscript numerals removed,house style,must,yes,yes,TamilRemoveNumbers
+Tamil ॐ as ஓம்,house style,must,yes,yes,TamilOmDisable
+Tamil visarga as ஃ,house style,must,no,yes,Aksharamukha gives ꞉ or Grantha 𑌃; replace
+Tamil ந/ன by position,house style,must,partial,yes,TamilpredictDentaNa uses a different rule from tamilDentalN
+Independent cross-check of shipped verses,quality,must,n/a,yes,scripts/aksharamukha-crosscheck.py (new)
+Script auto-detection,import,could,yes,no,auto_detect(); useful for owner-supplied source texts
+Other Indic scripts (Malayalam/Bengali/Gujarati/Odia/Grantha),conversion,could,yes,no,only if a fifth language is added
+Romanisation schemes (HK/ITRANS/Velthuis/ISO),conversion,could,yes,no,only for importing source material
+Public HTTP endpoint,integration,skip,yes,no,ignores nativize/postOptions; shared free service; not for bulk or runtime use
+Meaning translation,translation,skip,no,no,out of scope for a script converter
+Runtime use in app or website,integration,skip,n/a,no,AGPL-3.0 and Python; keep it a local optional tool
