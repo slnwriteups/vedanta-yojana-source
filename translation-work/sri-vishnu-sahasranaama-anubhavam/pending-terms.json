@@ -306,6 +306,15 @@
       "batch": 292,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Ramanuja Nootrandadi",
+      "forms": {
+        "te": "రామానుజ నూట్రందాది"
+      },
+      "batch": 294,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }

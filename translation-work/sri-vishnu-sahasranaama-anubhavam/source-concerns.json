@@ -1158,6 +1158,22 @@
       "batch": 290,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-697-786.64",
+      "english": "Andal begins the Thiruppavai by remembering the Lord as \"the son of Nandagopa\" and later sings of \"the pure Yamuna of North Mathura\" (vada madurai maindanai thūya peru nīr yamunai thuṟaivanai). The Yamuna, which witnessed so many of His childhood pastimes, is especially dear to Him.",
+      "note": "Tiruppavai 5 line 'vada madurai maindanai thūya peru nīr yamunai thuṟaivanai' means 'the son of North Mathura, the Lord of the ghats of the pure, great Yamuna'; the English gloss 'the pure Yamuna of North Mathura' does not match it. Translated as written.",
+      "batch": 294,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "naama-697-786.94",
+      "english": "Sri Bhattar quotes the Sabha Parva of the Mahabharata: \"Even after doing so many such deeds, the Lord who rides on Garuda did not feel any pride, because of His supreme majesty.\" If the name is read as drupta:, Sri Bhattar explains it as the one who was delighted by the love and care given by Yasoda and Nandagopa.",
+      "note": "'drupta:' — the colon is a garbled visarga (dṛptaḥ); written as ద్రుప్త.",
+      "batch": 294,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
