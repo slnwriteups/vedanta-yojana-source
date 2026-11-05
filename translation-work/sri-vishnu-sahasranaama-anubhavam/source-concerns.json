@@ -1214,6 +1214,22 @@
       "batch": 310,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "birth-star-hasta.8",
+      "english": "As Mohini, He lulled the asuras to sleep with Her smiles, then played with the devas as He wished. He gave His strength to all who churned, took many forms, and did many wonders. He lives in all beings to give each the right fruit. Full of affection for those who seek refuge, He tends the countless souls as His children, and quickly gives His devotees the wealth they seek.",
+      "note": "English 'As Mohini, He lulled the asuras to sleep with Her smiles' mixes He/Her. Telugu uses ఆయన తన చిరునవ్వులతో. Suggest 'His smiles' or consistent wording.",
+      "batch": 316,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
+    },
+    {
+      "id": "birth-star-swathi.16",
+      "english": "He is supremely worthy of worship, free from every defect and full of every good quality, possessing all six divine qualities. As Balarama, son of Nandagopa, He wears the garland and holds the plough, and as Krishna He was born to Devaki. His radiance outshines the sun. He forgave Rudra's wrong, and He is the most trustworthy guide on the path of dharma.",
+      "note": "'As Balarama, son of Nandagopa': Balarama is the son of Vasudeva and Rohini, raised in Nandagopa's household; same issue as the earlier Balarama/Nandagopa concern in the main chapters. Telugu follows the English.",
+      "batch": 316,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
