@@ -108,6 +108,15 @@
       "batch": 279,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Saatvatas",
+      "forms": {
+        "te": "సాత్వతులు"
+      },
+      "batch": 280,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
