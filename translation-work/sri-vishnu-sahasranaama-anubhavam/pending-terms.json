@@ -432,6 +432,15 @@
       "batch": 305,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "horoscope (jātakam)",
+      "forms": {
+        "te": "జాతకం"
+      },
+      "batch": 311,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
