@@ -1206,6 +1206,14 @@
       "batch": 309,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "phala-shruti.15",
+      "english": "One who is devoted, who rises early, purifies themselves, and with a mind fixed on Him recites these thousand names of Vasudeva,.",
+      "note": "English ends this verse paragraph with a stray comma followed by a full stop ('names of Vasudeva,.'); the sentence continues into the next paragraph ('attains great fame…'). Telugu ends the paragraph with a comma so the sentence runs on. Suggest removing the full stop in the English.",
+      "batch": 310,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
