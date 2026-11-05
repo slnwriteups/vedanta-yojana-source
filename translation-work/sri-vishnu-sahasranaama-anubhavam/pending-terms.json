@@ -351,6 +351,15 @@
       "batch": 298,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Rama Charama Shloka",
+      "forms": {
+        "te": "రామ చరమ శ్లోకం"
+      },
+      "batch": 300,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
