@@ -1110,6 +1110,14 @@
       "batch": 267,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-334-345.38",
+      "english": "Sri Bhattar explains that this special quality of valour, inherited from His father Vasudeva (who is also called Sura), makes Him go towards His devotees to help them.",
+      "note": "'His father Vasudeva (who is also called Sura)' contradicts item 28 'Vasudeva, the son of Soora'; Sura (Shura) is Vasudeva's father. Translated as written.",
+      "batch": 269,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }
