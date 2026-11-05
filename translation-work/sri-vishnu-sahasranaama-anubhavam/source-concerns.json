@@ -1182,6 +1182,14 @@
       "batch": 301,
       "translator": "claude-te-2026-11-05",
       "status": "open"
+    },
+    {
+      "id": "naama-897-911.19",
+      "english": "Sri Bhattar's words are \"ēvaṃ mahanmaṅgaḻaṃ dadāti iti svastidaḥ\", \"in this way, He gives the great auspiciousness.\" The next five naamas all contain the word svasti (auspiciousness), and Sri Bhattar explains each of them as a different aspect of the bliss that the Lord grants to the released souls.",
+      "note": "The quoted Sanskrit uses Tamil-style ḻ ('mahanmaṅgaḻaṃ'; also item 28 'maṅgaḻasyaiva'); should be ḷ or l. Rendered from maṅgaḷa.",
+      "batch": 304,
+      "translator": "claude-te-2026-11-05",
+      "status": "open"
     }
   ]
 }

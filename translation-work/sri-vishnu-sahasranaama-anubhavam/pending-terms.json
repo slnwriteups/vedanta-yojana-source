@@ -396,6 +396,33 @@
       "batch": 303,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Amaanava Purusha",
+      "forms": {
+        "te": "అమానవ పురుషుడు"
+      },
+      "batch": 304,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Paryanka Vidya",
+      "forms": {
+        "te": "పర్యంక విద్య"
+      },
+      "batch": 304,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Viraja (river)",
+      "forms": {
+        "te": "విరజా నది"
+      },
+      "batch": 304,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
