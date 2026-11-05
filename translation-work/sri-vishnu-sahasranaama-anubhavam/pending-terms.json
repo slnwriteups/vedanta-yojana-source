@@ -171,6 +171,24 @@
       "batch": 284,
       "proposedAt": "2026-11-05",
       "status": "pending"
+    },
+    {
+      "en": "Bhishma Stava Raja",
+      "forms": {
+        "te": "భీష్మ స్తవరాజం"
+      },
+      "batch": 285,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
+    },
+    {
+      "en": "Saarasvata",
+      "forms": {
+        "te": "సారస్వతుడు"
+      },
+      "batch": 285,
+      "proposedAt": "2026-11-05",
+      "status": "pending"
     }
   ]
 }
