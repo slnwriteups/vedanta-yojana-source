@@ -64,7 +64,7 @@ test("sitemap chapter URLs use the correct real book slug", () => {
   assert.ok(chapterUrl);
   assert.equal(
     chapterUrl?.url,
-    "/library/untitled-recovered-book-pending-editorial-title/rama-charama-shlokam/"
+    "/library/a-brief-insight-to-visishtadvaita-philosophy/rama-charama-shlokam/"
   );
 });
 

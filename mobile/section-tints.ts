@@ -29,7 +29,7 @@ const SECTION_TINTS: Record<string, SectionTint> = {
   "sri-rama-charithram": { light: "#855932", dark: "#d4b69b" },
   "srimad-bhagavata-kathasagaram": { light: "#883a47", dark: "#d19ea6" },
   jaya: { light: "#7f6334", dark: "#d0ba95" },
-  "untitled-recovered-book-pending-editorial-title": { light: "#80594d", dark: "#c7b0a8" },
+  "a-brief-insight-to-visishtadvaita-philosophy": { light: "#80594d", dark: "#c7b0a8" },
 };
 
 export function sectionTint(slug: string, scheme: "light" | "dark"): string {

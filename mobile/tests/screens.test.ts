@@ -20,7 +20,7 @@ import type { BookPayload } from "../../content-lib/mobile-content.ts";
  * correct, which is the part that can actually break silently.
  */
 
-const BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 
 // Book-bundle-removal: resolveLastRead/resolveAllLastRead now take
 // loadOfflineBook as an explicit parameter (see reading-position.ts's

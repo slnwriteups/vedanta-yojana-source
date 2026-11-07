@@ -39,7 +39,7 @@ test("28: a Book result links to /library/[book]", () => {
   const results = search("Visishtadvaita Philosophy");
   const result = results.find((r) => r.type === "book");
   assert.ok(result);
-  assert.equal(result?.href, "/library/untitled-recovered-book-pending-editorial-title");
+  assert.equal(result?.href, "/library/a-brief-insight-to-visishtadvaita-philosophy");
 });
 
 test("29: a Chapter result links to /library/[book]/[chapter]", () => {
@@ -48,7 +48,7 @@ test("29: a Chapter result links to /library/[book]/[chapter]", () => {
   assert.ok(result);
   assert.equal(
     result?.href,
-    "/library/untitled-recovered-book-pending-editorial-title/rama-charama-shlokam"
+    "/library/a-brief-insight-to-visishtadvaita-philosophy/rama-charama-shlokam"
   );
 });
 

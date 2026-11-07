@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { groupByPart } from "@/content-lib/library-parts.ts";
 import { notFound } from "next/navigation";
+import { MovedPage } from "@/components/shared/MovedPage";
+import { RENAMED_BOOK_SLUGS } from "@/content-lib/book-slug-aliases";
 import { loadBook, loadBooks, loadChapters } from "@/content-lib/loader";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { DraftBadge } from "@/components/shared/DraftBadge";
@@ -26,7 +28,8 @@ import { toChapterListEntry, toPublicBook } from "@/lib/public-content";
 
 /** Every Book URL to pre-render -- see the Divya Desam page for why. */
 export function generateStaticParams() {
-  return loadBooks().map((book) => ({ book: book.slug }));
+  // Renamed books keep their old URL as a redirect (content-lib/book-slug-aliases.ts).
+  return [...loadBooks().map((book) => ({ book: book.slug })), ...Object.keys(RENAMED_BOOK_SLUGS).map((book) => ({ book }))];
 }
 
 export async function generateMetadata({
@@ -35,6 +38,8 @@ export async function generateMetadata({
   params: Promise<{ book: string }>;
 }): Promise<Metadata> {
   const { book: bookSlug } = await params;
+  const renamed = RENAMED_BOOK_SLUGS[bookSlug];
+  if (renamed) return { robots: { index: false }, alternates: { canonical: siteUrl(`/library/${renamed}/`) } };
   const book = loadBook(bookSlug);
   if (!book) return { title: "Library" };
 
@@ -51,6 +56,8 @@ export default async function LibraryBookPage({
   params: Promise<{ book: string }>;
 }) {
   const { book: bookSlug } = await params;
+  const renamed = RENAMED_BOOK_SLUGS[bookSlug];
+  if (renamed) return <MovedPage path={`/library/${renamed}/`} />;
   const book = loadBook(bookSlug);
   if (!book) notFound();
   const chapters = loadChapters(bookSlug);

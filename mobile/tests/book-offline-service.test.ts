@@ -7,6 +7,7 @@ import {
   getOfflineBookImageUri,
   isBookAvailable,
   loadOfflineBook,
+  migrateRenamedBookDownloads,
   type BookFileSystem,
 } from "../services/bookOfflineCore.ts";
 import { sha256Hex } from "../services/sha256.ts";
@@ -146,6 +147,35 @@ test("downloadBook: also downloads every referenced image and makes it resolvabl
   const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
   assert.equal(result.success, true);
   assert.equal(getOfflineBookImageUri("test-book", "ABCD1234", fs), "file:///document/books/test-book/images/abcd1234.jpg");
+});
+
+test("migrateRenamedBookDownloads: a book downloaded under its old slug stays available offline under the new one", async () => {
+  const OLD = "untitled-recovered-book-pending-editorial-title";
+  const NEW = "a-brief-insight-to-visishtadvaita-philosophy";
+  const fs = makeFakeFileSystem();
+  const base = validPayload();
+  const payload = validPayload({
+    book: { ...base.book, slug: OLD },
+    chapters: [{ ...base.chapters[0], images: [{ assetId: "a1", sourceAssetUuid: "ABCD1234", alt: null, altStatus: "needs-review" }] }],
+    imageFiles: { abcd1234: "abcd1234.jpg" },
+  });
+  fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(payload));
+  fs.remoteResponses.set(`${IMAGE_BASE_URL}/abcd1234.jpg`, "<fake image bytes>");
+  assert.equal((await downloadBook(OLD, BOOK_JSON_URL, IMAGE_BASE_URL, fs)).success, true);
+  const hashBefore = getLocalBookContentHash(OLD, fs);
+
+  migrateRenamedBookDownloads(fs);
+
+  assert.equal(isBookAvailable(NEW, fs), true);
+  assert.equal(loadOfflineBook(NEW, fs)?.chapters[0].body, "Once upon a time.");
+  assert.equal(getOfflineBookImageUri(NEW, "ABCD1234", fs), `file:///document/books/${NEW}/images/abcd1234.jpg`);
+  // Kept, so the next catalog sync sees the stale content and refreshes it.
+  assert.equal(getLocalBookContentHash(NEW, fs), hashBefore);
+  assert.equal(isBookAvailable(OLD, fs), false);
+
+  // Safe to run again, and never overwrites a copy already under the new slug.
+  migrateRenamedBookDownloads(fs);
+  assert.equal(isBookAvailable(NEW, fs), true);
 });
 
 test("downloadBook: a malformed JSON response is rejected and never becomes available", async () => {

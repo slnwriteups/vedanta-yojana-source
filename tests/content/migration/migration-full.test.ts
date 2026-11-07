@@ -44,7 +44,7 @@ const ddOutputRecords = ddOutputFiles.map((f) => readJson(path.join(CONTENT_DD_D
 // book directory is located by its known slug, never by array index,
 // and this file's checks apply only to that one book, not to
 // content/library/ as a whole.
-const ORIGINAL_BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const ORIGINAL_BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 const bookDirs = fs.readdirSync(CONTENT_LIBRARY_DIR, { withFileTypes: true }).filter((e) => e.isDirectory());
 const bookDir = bookDirs.find((d) => d.name === ORIGINAL_BOOK_SLUG);
 const bookRecord = bookDir ? readJson(path.join(CONTENT_LIBRARY_DIR, bookDir.name, "book.json")) : null;

@@ -17,7 +17,7 @@ import { loadBooks, loadBook, loadChapters, loadChapter } from "../../content-li
  */
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 const BOOK_JSON_PATH = path.join(
   REPO_ROOT,
   "content/library",

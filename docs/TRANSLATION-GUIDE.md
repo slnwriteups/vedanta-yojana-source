@@ -269,7 +269,7 @@ Fix every line it prints, or explain it in the commit message. Some older chapte
 
 - **Prose quality:** any `content/divya-desams/*.json`, the benchmark.
 - **Sanskrit verse blocks in all four languages:** `content/library/nityasuri-vaibhavam/chapters/the-sudarsana-ashtakam.json`.
-- **Tamil verse transliterated into kn/hi/te:** `content/library/untitled-recovered-book-pending-editorial-title/chapters/the-moksha-virodhi.json`, and the `azhwar-vaibhavam` posts.
+- **Tamil verse transliterated into kn/hi/te:** `content/library/a-brief-insight-to-visishtadvaita-philosophy/chapters/the-moksha-virodhi.json`, and the `azhwar-vaibhavam` posts.
 - **Book and part titles:** `content/library/azhwar-vaibhavam/book.json`.
 - **Terms:** `docs/translation-glossaries/{ta,kn,hi,te}.md`.
 - **History and past decisions:** `DOCUMENTATION.md` §9 and `docs/BLOG-TRANSLATION-PROGRESS.md`.

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { MovedPage } from "@/components/shared/MovedPage";
+import { RENAMED_BOOK_SLUGS } from "@/content-lib/book-slug-aliases";
 import { loadBook, loadBooks, loadChapter, loadChapters } from "@/content-lib/loader";
 import { findAdjacentChapters } from "@/content-lib/chapter-navigation.ts";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
@@ -32,9 +34,14 @@ import { toPublicBook, toPublicChapter } from "@/lib/public-content";
  * only unique within its own book.
  */
 export function generateStaticParams() {
-  return loadBooks().flatMap((book) =>
+  const current = loadBooks().flatMap((book) =>
     loadChapters(book.slug).map((chapter) => ({ book: book.slug, chapter: chapter.slug }))
   );
+  // Renamed books keep their old chapter URLs as redirects (content-lib/book-slug-aliases.ts).
+  const renamed = Object.entries(RENAMED_BOOK_SLUGS).flatMap(([oldSlug, newSlug]) =>
+    loadChapters(newSlug).map((chapter) => ({ book: oldSlug, chapter: chapter.slug }))
+  );
+  return [...current, ...renamed];
 }
 
 /** Chapter titles used in more than one book, computed once per build. */
@@ -57,6 +64,8 @@ export async function generateMetadata({
   params: Promise<{ book: string; chapter: string }>;
 }): Promise<Metadata> {
   const { book: bookSlug, chapter: chapterSlug } = await params;
+  const renamed = RENAMED_BOOK_SLUGS[bookSlug];
+  if (renamed) return { robots: { index: false }, alternates: { canonical: siteUrl(`/library/${renamed}/${chapterSlug}/`) } };
   const chapter = loadChapter(bookSlug, chapterSlug);
   if (!chapter) return { title: "Chapter" };
 
@@ -78,6 +87,8 @@ export default async function LibraryChapterPage({
   params: Promise<{ book: string; chapter: string }>;
 }) {
   const { book: bookSlug, chapter: chapterSlug } = await params;
+  const renamed = RENAMED_BOOK_SLUGS[bookSlug];
+  if (renamed) return <MovedPage path={`/library/${renamed}/${chapterSlug}/`} />;
   const book = loadBook(bookSlug);
   if (!book) notFound();
   const chapter = loadChapter(bookSlug, chapterSlug);
