@@ -152,7 +152,10 @@ function devanagariShare(text: string): number {
  * not make the line Devanagari.
  */
 function isDevanagariLine(paragraph: string): boolean {
-  return devanagariShare(paragraph) >= 0.5;
+  const share = devanagariShare(paragraph);
+  // A long paragraph must be (almost) all Devanagari: Tamil prose quoting
+  // an Upanishad inline is still prose.
+  return share >= 0.5 && (paragraph.length <= MAX_TRANSLITERATED_PADA_LENGTH || share >= 0.9);
 }
 
 const devanagariDocumentCache = new WeakMap<string[], boolean>();
@@ -219,7 +222,12 @@ export function isVerseLine(paragraphs: string[], index: number, text?: string):
     // "॥" (or "||") marks a verse: that line, and its first half above it.
     const closesCouplet = (line: string | undefined) =>
       line !== undefined && /॥|\|\|/.test(line) && line.length <= MAX_TRANSLITERATED_PADA_LENGTH;
-    return closesCouplet(paragraph) || (/[।|]\s*$/.test(paragraph) && closesCouplet(paragraphs[index + 1]));
+    return (
+      closesCouplet(paragraph) ||
+      (/[।|]\s*$/.test(paragraph) &&
+        paragraph.length <= MAX_TRANSLITERATED_PADA_LENGTH &&
+        closesCouplet(paragraphs[index + 1]))
+    );
   }
   return (
     isDevanagariLine(paragraph) ||

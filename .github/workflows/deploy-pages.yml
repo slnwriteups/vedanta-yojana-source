@@ -36,6 +36,13 @@ jobs:
       - name: Install dependencies (reproducible)
         run: npm ci
 
+      - name: Check reader-facing formatting
+        # Stops the publish if readers would see a formatting mistake:
+        # a long paragraph drawn bold, a list drawn half bold, a word
+        # mixing two scripts, or a sentence broken across two lines.
+        # See tests/content/reader-formatting.test.ts for each check.
+        run: node --test tests/content/reader-formatting.test.ts
+
       - name: Build
         # Runs prebuild (scripts/build-search-index.ts) first, then
         # `next build`, which exports to out/.

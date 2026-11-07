@@ -62,3 +62,13 @@ Owner direction, 31 October 2026:
 - Supplementary information is exceptional: only when an essential point cannot be understood or responsibly explained from the supplied material. Tell the owner the precise missing point and request the specific passage needed before seeking an alternative interpretation. Do not browse elsewhere for routine corroboration.
 - Record the supplied source and correction, then close the concern when supported. Do not fabricate human reviews, theological approvals or waivers. This rule does not itself authorize merges, deployments, OTA updates or announcements.
 
+## Reader-facing formatting check
+
+`tests/content/reader-formatting.test.ts` scans every text readers see, in
+every language, for: long paragraphs drawn bold, lists drawn partly bold,
+words mixing Devanagari with another script, and English sentences broken
+across two lines (PDF hard-wraps). The website deploy and the app OTA update
+run it before publishing, so a failure blocks the release. After editing
+content, run `node --test tests/content/reader-formatting.test.ts`; fix the
+content (join broken lines in English and every translation that keeps the
+same line), rather than loosening the check.
