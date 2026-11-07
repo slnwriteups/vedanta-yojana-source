@@ -33,7 +33,7 @@ import { resolveTheme } from "../theme.ts";
 
 const MOBILE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const IMAGES_ROOT = path.resolve(MOBILE_ROOT, "..", "public", "images");
-const BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 
 test("Navigation: the (tabs) group contains a real file for every route Phase 6B established", () => {
   const expected = [

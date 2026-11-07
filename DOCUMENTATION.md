@@ -460,7 +460,7 @@ same image asset may legitimately appear on more than one record.
 | JAYA: A Journey of the Mahabharata | 69 chapters | `content/library/jaya/` |
 | Sri Rama Charithram | 7 chapters | `content/library/sri-rama-charithram/` |
 | Srimad Bhagavata Kathasagaram | 31 chapters | `content/library/srimad-bhagavata-kathasagaram/` |
-| A Brief Insight to Visishtadvaita Philosophy | 51 chapters | `content/library/untitled-recovered-book-pending-editorial-title/` |
+| A Brief Insight to Visishtadvaita Philosophy | 51 chapters | `content/library/a-brief-insight-to-visishtadvaita-philosophy/` |
 | Knowledge records | 1 | `content/knowledge/` |
 | **Total** | **266 content records** | |
 

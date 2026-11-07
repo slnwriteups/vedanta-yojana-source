@@ -544,6 +544,7 @@ const UI_STRINGS = {
   filterKnowledge: { en: "Knowledge", ta: "அறிவு", kn: "ಜ್ಞಾನ", hi: "ज्ञान", te: "జ్ఞానం" },
 
   settingsConnectLabel: { en: "Connect", ta: "இணைப்பு", kn: "ಸಂಪರ್ಕಿಸಿ", hi: "जुड़ें", te: "కలవండి" },
+  settingsPrivacyPolicy: { en: "Privacy Policy", ta: "தனியுரிமைக் கொள்கை", kn: "ಗೌಪ್ಯತಾ ನೀತಿ", hi: "गोपनीयता नीति", te: "గోప్యతా విధానం" },
   settingsLanguageLabel: { en: "Language", ta: "மொழி", kn: "ಭಾಷೆ", hi: "भाषा", te: "భాష" },
   settingsAppearanceLabel: { en: "Appearance", ta: "தோற்றம்", kn: "ನೋಟ", hi: "रूप", te: "స్వరూపం" },
   settingsTextSizeLabel: { en: "Text size", ta: "எழுத்து அளவு", kn: "ಅಕ್ಷರ ಗಾತ್ರ", hi: "अक्षर आकार", te: "అక్షర పరిమాణం" },

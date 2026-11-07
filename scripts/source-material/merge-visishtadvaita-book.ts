@@ -40,7 +40,7 @@ const CHARAMA_SHLOKAS_SPECIAL_CASE_SLUGS = [
 
 const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const PDF_PATH = path.join(REPO_ROOT, "source-material/Books/A Brief Insight to Visishtadvaita Philosophy.pdf");
-const BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 const BOOK_JSON_PATH = path.join(REPO_ROOT, "content/library", BOOK_SLUG, "book.json");
 const PROVENANCE_DIR = path.join(REPO_ROOT, "content/_provenance/library");
 const SOURCE_FILE = "A Brief Insight to Visishtadvaita Philosophy.pdf";

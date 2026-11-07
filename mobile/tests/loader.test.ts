@@ -48,7 +48,7 @@ test("the recovered Book resolves with its real title and full chapter set", () 
   const books = loadBooks().filter((b) => b.kind === "book");
   assert.equal(books.length, 5);
 
-  const book = loadBook("untitled-recovered-book-pending-editorial-title");
+  const book = loadBook("a-brief-insight-to-visishtadvaita-philosophy");
   assert.ok(book, "the book did not resolve");
   // Phase 6E confirmed "A Brief Insight to Visishtadvaita Philosophy.pdf"
   // as the source for 17 of this book's chapters and supplemented the
@@ -56,7 +56,7 @@ test("the recovered Book resolves with its real title and full chapter set", () 
   // fragment chapters were later removed, leaving 51 (61 once two were split into sub-chapters).
   assert.equal(book?.title, "A Brief Insight to Visishtadvaita Philosophy");
 
-  const chapters = loadChapters("untitled-recovered-book-pending-editorial-title");
+  const chapters = loadChapters("a-brief-insight-to-visishtadvaita-philosophy");
   assert.equal(chapters.length, 61);
 
   const ramaBook = loadBook("sri-rama-charithram");
@@ -76,7 +76,7 @@ test("the recovered Book resolves with its real title and full chapter set", () 
 });
 
 test("chapters are ordered ascending by their own `order` field, not manifest/filesystem order", () => {
-  const chapters = loadChapters("untitled-recovered-book-pending-editorial-title");
+  const chapters = loadChapters("a-brief-insight-to-visishtadvaita-philosophy");
   for (let i = 1; i < chapters.length; i++) {
     assert.ok(chapters[i].order > chapters[i - 1].order);
   }

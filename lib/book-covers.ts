@@ -16,7 +16,7 @@ const bookCovers: Record<string, string> = {
   "sri-rama-charithram": `${BASE_PATH}/book-covers/sri-rama-charithram.jpg`,
   jaya: `${BASE_PATH}/book-covers/jaya.jpg`,
   "srimad-bhagavata-kathasagaram": `${BASE_PATH}/book-covers/srimad-bhagavata-kathasagaram.jpg`,
-  "untitled-recovered-book-pending-editorial-title": `${BASE_PATH}/book-covers/untitled-recovered-book-pending-editorial-title.jpg`,
+  "a-brief-insight-to-visishtadvaita-philosophy": `${BASE_PATH}/book-covers/a-brief-insight-to-visishtadvaita-philosophy.jpg`,
   "azhwar-vaibhavam": `${BASE_PATH}/book-covers/azhwar-vaibhavam.jpg`,
   "nityasuri-vaibhavam": `${BASE_PATH}/book-covers/nityasuri-vaibhavam.jpg`,
   "temples-and-festivals": `${BASE_PATH}/book-covers/temples-and-festivals.jpg`,

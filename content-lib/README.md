@@ -164,7 +164,7 @@ Migration is no longer a future phase — it has run. `/content` holds:
 - **107** Divya Desam records (`content/divya-desams/`)
 - **4** Books (`content/library/`): *A Brief Insight to Visishtadvaita
   Philosophy* (the original recovered book, slug
-  `untitled-recovered-book-pending-editorial-title`, 51 chapters), *Sri
+  `a-brief-insight-to-visishtadvaita-philosophy`, 51 chapters), *Sri
   Rama Charithram* (75), *Srimad Bhagavata Kathasagaram* (31), and
   *JAYA: A Journey of the Mahabharata* (70) — **227 chapters total**
 - **1** Knowledge record (`content/knowledge/`)

@@ -1,4 +1,5 @@
 import { BookPayloadSchema, BOOK_PAYLOAD_SCHEMA_VERSION, type BookPayload } from "../../content-lib/mobile-content.ts";
+import { RENAMED_BOOK_SLUGS, canonicalBookSlug } from "../../content-lib/book-slug-aliases.ts";
 import { mapWithConcurrency } from "./concurrencyPool.ts";
 import { sha256Hex } from "./sha256.ts";
 
@@ -107,8 +108,41 @@ function readValidBookPayload(bookSlug: string, path: string, fs: BookFileSystem
   const result = BookPayloadSchema.safeParse(raw);
   if (!result.success) return null;
   if (result.data.contentSchemaVersion !== BOOK_PAYLOAD_SCHEMA_VERSION) return null;
-  if (result.data.book.slug !== bookSlug) return null;
+  // canonicalBookSlug: a copy downloaded before its book was renamed (moved
+  // by migrateRenamedBookDownloads) still carries the old slug inside.
+  const payloadSlug = result.data.book.slug;
+  if (payloadSlug !== bookSlug && canonicalBookSlug(payloadSlug) !== bookSlug) return null;
   return result.data;
+}
+
+/**
+ * Moves books downloaded under a slug that has since been renamed
+ * (content-lib/book-slug-aliases.ts) to the new slug, so the reader keeps
+ * the book offline. The content hash moves too, so the next catalog sync
+ * sees the copy as stale and refreshes it. Idempotent; never overwrites a
+ * copy that already exists under the new slug.
+ */
+export function migrateRenamedBookDownloads(fs: BookFileSystem): void {
+  for (const [oldSlug, newSlug] of Object.entries(RENAMED_BOOK_SLUGS)) {
+    const payload = readValidBookPayload(newSlug, localBookJsonPath(oldSlug, fs), fs);
+    if (!payload) continue;
+    if (!isBookAvailable(newSlug, fs)) {
+      try {
+        fs.deleteDirectory(localBookDir(newSlug, fs));
+        fs.ensureDirectoryExists(localBookImageDir(newSlug, fs));
+        for (const filename of Object.values(payload.imageFiles)) {
+          fs.moveFile(`${localBookImageDir(oldSlug, fs)}/${filename}`, `${localBookImageDir(newSlug, fs)}/${filename}`);
+        }
+        if (fs.fileExists(localBookHashPath(oldSlug, fs))) fs.moveFile(localBookHashPath(oldSlug, fs), localBookHashPath(newSlug, fs));
+        // Last, so the book only counts as available once everything moved.
+        fs.moveFile(localBookJsonPath(oldSlug, fs), localBookJsonPath(newSlug, fs));
+      } catch {
+        // A half-moved copy is worse than none: the reader can download again.
+        fs.deleteDirectory(localBookDir(newSlug, fs));
+      }
+    }
+    fs.deleteDirectory(localBookDir(oldSlug, fs));
+  }
 }
 
 /**

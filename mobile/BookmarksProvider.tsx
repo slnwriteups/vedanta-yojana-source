@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { BOOKMARKS_STORAGE_KEY, isValidBookmarkList, type BookmarkEntry } from "./content-lib/preferences.ts";
 import { BookmarksContext, type BookmarksContextValue } from "./bookmarks-context.ts";
 import { readJSON, writeJSON } from "./storage.ts";
+import { withCanonicalBookSlugs } from "../content-lib/book-slug-aliases.ts";
 
 /**
  * Same shape as ReadingPositionProvider.tsx: loads the persisted
@@ -17,7 +18,8 @@ export function BookmarksProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     readJSON(BOOKMARKS_STORAGE_KEY, isValidBookmarkList).then((stored) => {
-      if (!cancelled && stored !== null) setBookmarks(stored);
+      // Renamed books (content-lib/book-slug-aliases.ts) keep their bookmarks.
+      if (!cancelled && stored !== null) setBookmarks(withCanonicalBookSlugs(stored, (entry) => `${entry.bookSlug}/${entry.chapterSlug}`));
     });
     return () => {
       cancelled = true;

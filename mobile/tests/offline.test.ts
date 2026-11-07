@@ -30,7 +30,7 @@ import {
  */
 
 const MOBILE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 
 test("Offline: no screen or shared module in mobile/ references fetch, XMLHttpRequest, or a network client", () => {
   const roots = ["app", "components", "content-lib"].map((dir) => path.join(MOBILE_ROOT, dir));

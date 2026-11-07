@@ -20,7 +20,7 @@ import type { BookPayload } from "../../content-lib/mobile-content.ts";
  * correct, which is the part that can actually break silently.
  */
 
-const BOOK_SLUG = "untitled-recovered-book-pending-editorial-title";
+const BOOK_SLUG = "a-brief-insight-to-visishtadvaita-philosophy";
 
 // Book-bundle-removal: resolveLastRead/resolveAllLastRead now take
 // loadOfflineBook as an explicit parameter (see reading-position.ts's
@@ -113,6 +113,16 @@ test("Library: the recovered Book resolves for the book screen", () => {
   // as the source for 17 of this book's chapters and supplemented the
   // book's title/author accordingly.
   assert.equal(book?.title, "A Brief Insight to Visishtadvaita Philosophy");
+});
+
+test("Library: the chapter screen resolves its book through the merged catalog, like the book screen", () => {
+  // A book that arrives only through the remote content manifest is in the
+  // catalog (mergeCatalog) but not in the bundled loadBook() list; resolving
+  // it from loadBook() showed "Not found" as the chapter screen's title.
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const source = fs.readFileSync(path.join(here, "../app/(tabs)/library/[book]/[chapter].tsx"), "utf8");
+  assert.match(source, /getLibraryCatalogEntry\(bookSlug\)/, "chapter screen must resolve the book via getLibraryCatalogEntry");
+  assert.doesNotMatch(source, /\bloadBook\(/, "chapter screen must not use the bundled-only loadBook()");
 });
 
 test("Library: 61 chapters are available for the book screen, in ascending order", () => {

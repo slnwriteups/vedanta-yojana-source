@@ -130,13 +130,13 @@
       "containment": 0.77,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/varaha-charama-shlokam.json",
           "kind": "chapter",
           "title": "Varāha Charama Shlokam",
           "overlap": 0.58
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/charama-shlokams.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/charama-shlokams.json",
           "kind": "chapter",
           "title": "Charama Shlokams",
           "overlap": 0.19
@@ -152,13 +152,13 @@
       "containment": 0.77,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/varaha-charama-shlokam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/varaha-charama-shlokam.json",
           "kind": "chapter",
           "title": "Varāha Charama Shlokam",
           "overlap": 0.58
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/charama-shlokams.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/charama-shlokams.json",
           "kind": "chapter",
           "title": "Charama Shlokams",
           "overlap": 0.19
@@ -174,13 +174,13 @@
       "containment": 0.78,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/krishna-charama-shlokam.json",
           "kind": "chapter",
           "title": "Krishna Charama Shlokam",
           "overlap": 0.4
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/rama-charama-shlokam.json",
           "kind": "chapter",
           "title": "Rama Charama Shlokam",
           "overlap": 0.39
@@ -196,13 +196,13 @@
       "containment": 0.78,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/krishna-charama-shlokam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/krishna-charama-shlokam.json",
           "kind": "chapter",
           "title": "Krishna Charama Shlokam",
           "overlap": 0.4
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/rama-charama-shlokam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/rama-charama-shlokam.json",
           "kind": "chapter",
           "title": "Rama Charama Shlokam",
           "overlap": 0.39
@@ -590,7 +590,7 @@
           "overlap": 0.21
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nathamunigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nathamunigal.json",
           "kind": "chapter",
           "title": "Nathamunigal",
           "overlap": 0.14
@@ -618,7 +618,7 @@
           "overlap": 0.2
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nathamunigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nathamunigal.json",
           "kind": "chapter",
           "title": "Nathamunigal",
           "overlap": 0.13
@@ -1670,7 +1670,7 @@
       "containment": 0.77,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/artha-panchakam.json",
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.59
@@ -1682,7 +1682,7 @@
           "overlap": 0.54
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/childhood-and-education-of-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/childhood-and-education-of-swami-desikan.json",
           "kind": "chapter",
           "title": "Childhood and Education of Swami Deshikan",
           "overlap": 0.25
@@ -1698,7 +1698,7 @@
       "containment": 0.67,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/artha-panchakam.json",
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.51
@@ -1710,7 +1710,7 @@
           "overlap": 0.47
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/childhood-and-education-of-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/childhood-and-education-of-swami-desikan.json",
           "kind": "chapter",
           "title": "Childhood and Education of Swami Deshikan",
           "overlap": 0.22
@@ -3008,7 +3008,7 @@
           "overlap": 0.55
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nammazhwar.json",
           "kind": "chapter",
           "title": "Nam Āzhwār",
           "overlap": 0.43
@@ -3030,7 +3030,7 @@
           "overlap": 0.59
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nammazhwar.json",
           "kind": "chapter",
           "title": "Nam Āzhwār",
           "overlap": 0.48
@@ -3236,7 +3236,7 @@
           "overlap": 0.38
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/meeting-with-tirukkotiyur-nambigal.json",
           "kind": "chapter",
           "title": "Meeting with Tirukkotiyur Nambigal",
           "overlap": 0.05
@@ -3722,7 +3722,7 @@
       "containment": 0.56,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nammazhwar.json",
           "kind": "chapter",
           "title": "Nam Āzhwār",
           "overlap": 0.54
@@ -3744,7 +3744,7 @@
       "containment": 0.65,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nammazhwar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nammazhwar.json",
           "kind": "chapter",
           "title": "Nam Āzhwār",
           "overlap": 0.62
@@ -3766,7 +3766,7 @@
       "containment": 0.81,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nathamunigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nathamunigal.json",
           "kind": "chapter",
           "title": "Nathamunigal",
           "overlap": 0.81
@@ -3788,7 +3788,7 @@
       "containment": 0.81,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/nathamunigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/nathamunigal.json",
           "kind": "chapter",
           "title": "Nathamunigal",
           "overlap": 0.81
@@ -3810,7 +3810,7 @@
       "containment": 0.72,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/manakkal-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/manakkal-nambigal.json",
           "kind": "chapter",
           "title": "Manakkaal Nambigal",
           "overlap": 0.72
@@ -3826,7 +3826,7 @@
       "containment": 0.78,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/manakkal-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/manakkal-nambigal.json",
           "kind": "chapter",
           "title": "Manakkaal Nambigal",
           "overlap": 0.78
@@ -3842,7 +3842,7 @@
       "containment": 0.76,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/yamunacharyar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/yamunacharyar.json",
           "kind": "chapter",
           "title": "Yamunacharyar",
           "overlap": 0.76
@@ -3858,7 +3858,7 @@
       "containment": 0.76,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/yamunacharyar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/yamunacharyar.json",
           "kind": "chapter",
           "title": "Yamunacharyar",
           "overlap": 0.76
@@ -3874,7 +3874,7 @@
       "containment": 0.82,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-ramanujar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/birth-of-swami-ramanujar.json",
           "kind": "chapter",
           "title": "Birth of Swami Ramanujar",
           "overlap": 0.82
@@ -3890,7 +3890,7 @@
       "containment": 0.82,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-ramanujar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/birth-of-swami-ramanujar.json",
           "kind": "chapter",
           "title": "Birth of Swami Ramanujar",
           "overlap": 0.82
@@ -3906,13 +3906,13 @@
       "containment": 0.84,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/education-under-yadava-prakashar.json",
           "kind": "chapter",
           "title": "Education under Yādava Prakashar",
           "overlap": 0.84
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-s-digvijaya-yatra.json",
           "kind": "chapter",
           "title": "Swami Ramanujar's Digvijaya Yātrā",
           "overlap": 0.1
@@ -3928,13 +3928,13 @@
       "containment": 0.84,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/education-under-yadava-prakashar.json",
           "kind": "chapter",
           "title": "Education under Yādava Prakashar",
           "overlap": 0.84
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-s-digvijaya-yatra.json",
           "kind": "chapter",
           "title": "Swami Ramanujar's Digvijaya Yātrā",
           "overlap": 0.1
@@ -3950,7 +3950,7 @@
       "containment": 0.7,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-kanchipuram.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-in-kanchipuram.json",
           "kind": "chapter",
           "title": "Swami Ramanujar in Kanchipuram",
           "overlap": 0.7
@@ -3966,7 +3966,7 @@
       "containment": 0.7,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-kanchipuram.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-in-kanchipuram.json",
           "kind": "chapter",
           "title": "Swami Ramanujar in Kanchipuram",
           "overlap": 0.7
@@ -3982,7 +3982,7 @@
       "containment": 0.74,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/ramanujar-s-journey-to-sri-rangam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/ramanujar-s-journey-to-sri-rangam.json",
           "kind": "chapter",
           "title": "Ramanujar's Journey to Sri Rangam",
           "overlap": 0.74
@@ -3998,7 +3998,7 @@
       "containment": 0.74,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/ramanujar-s-journey-to-sri-rangam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/ramanujar-s-journey-to-sri-rangam.json",
           "kind": "chapter",
           "title": "Ramanujar's Journey to Sri Rangam",
           "overlap": 0.74
@@ -4014,7 +4014,7 @@
       "containment": 0.71,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/encounter-with-tirukacchi-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/encounter-with-tirukacchi-nambigal.json",
           "kind": "chapter",
           "title": "Encounter with Tirukacchi Nambigal",
           "overlap": 0.71
@@ -4030,7 +4030,7 @@
       "containment": 0.71,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/encounter-with-tirukacchi-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/encounter-with-tirukacchi-nambigal.json",
           "kind": "chapter",
           "title": "Encounter with Tirukacchi Nambigal",
           "overlap": 0.71
@@ -4046,7 +4046,7 @@
       "containment": 0.84,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-takes-up-sanyasam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-takes-up-sanyasam.json",
           "kind": "chapter",
           "title": "Swami Ramanujar takes up Sanyasam",
           "overlap": 0.83
@@ -4062,7 +4062,7 @@
       "containment": 0.84,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-takes-up-sanyasam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-takes-up-sanyasam.json",
           "kind": "chapter",
           "title": "Swami Ramanujar takes up Sanyasam",
           "overlap": 0.83
@@ -4078,7 +4078,7 @@
       "containment": 0.66,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/gaining-of-disciples.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/gaining-of-disciples.json",
           "kind": "chapter",
           "title": "Gaining of Disciples",
           "overlap": 0.65
@@ -4094,7 +4094,7 @@
       "containment": 0.66,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/gaining-of-disciples.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/gaining-of-disciples.json",
           "kind": "chapter",
           "title": "Gaining of Disciples",
           "overlap": 0.65
@@ -4110,7 +4110,7 @@
       "containment": 0.68,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/meeting-with-tirukkotiyur-nambigal.json",
           "kind": "chapter",
           "title": "Meeting with Tirukkotiyur Nambigal",
           "overlap": 0.68
@@ -4126,7 +4126,7 @@
       "containment": 0.68,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/meeting-with-tirukkotiyur-nambigal.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/meeting-with-tirukkotiyur-nambigal.json",
           "kind": "chapter",
           "title": "Meeting with Tirukkotiyur Nambigal",
           "overlap": 0.68
@@ -4142,7 +4142,7 @@
       "containment": 0.63,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-sri-rangam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-in-sri-rangam.json",
           "kind": "chapter",
           "title": "Swami Ramanujar in Sri Rangam",
           "overlap": 0.63
@@ -4158,7 +4158,7 @@
       "containment": 0.63,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-in-sri-rangam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-in-sri-rangam.json",
           "kind": "chapter",
           "title": "Swami Ramanujar in Sri Rangam",
           "overlap": 0.63
@@ -4174,7 +4174,7 @@
       "containment": 0.65,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/reforming-periya-kovil-nambi.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/reforming-periya-kovil-nambi.json",
           "kind": "chapter",
           "title": "Reforming Periya Kovil Nambi",
           "overlap": 0.65
@@ -4190,7 +4190,7 @@
       "containment": 0.65,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/reforming-periya-kovil-nambi.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/reforming-periya-kovil-nambi.json",
           "kind": "chapter",
           "title": "Reforming Periya Kovil Nambi",
           "overlap": 0.65
@@ -4206,7 +4206,7 @@
       "containment": 0.72,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/ananthazhwan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/ananthazhwan.json",
           "kind": "chapter",
           "title": "Ananthazhwan",
           "overlap": 0.72
@@ -4222,7 +4222,7 @@
       "containment": 0.72,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/ananthazhwan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/ananthazhwan.json",
           "kind": "chapter",
           "title": "Ananthazhwan",
           "overlap": 0.72
@@ -4238,7 +4238,7 @@
       "containment": 0.75,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-reaches-tirupati.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-reaches-tirupati.json",
           "kind": "chapter",
           "title": "Swami Ramanujar Reaches Tirupati",
           "overlap": 0.75
@@ -4254,7 +4254,7 @@
       "containment": 0.75,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-reaches-tirupati.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-reaches-tirupati.json",
           "kind": "chapter",
           "title": "Swami Ramanujar Reaches Tirupati",
           "overlap": 0.75
@@ -4270,13 +4270,13 @@
       "containment": 0.72,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-s-digvijaya-yatra.json",
           "kind": "chapter",
           "title": "Swami Ramanujar's Digvijaya Yātrā",
           "overlap": 0.67
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/education-under-yadava-prakashar.json",
           "kind": "chapter",
           "title": "Education under Yādava Prakashar",
           "overlap": 0.18
@@ -4292,13 +4292,13 @@
       "containment": 0.72,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-digvijaya-yatra.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-s-digvijaya-yatra.json",
           "kind": "chapter",
           "title": "Swami Ramanujar's Digvijaya Yātrā",
           "overlap": 0.67
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/education-under-yadava-prakashar.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/education-under-yadava-prakashar.json",
           "kind": "chapter",
           "title": "Education under Yādava Prakashar",
           "overlap": 0.18
@@ -4314,7 +4314,7 @@
       "containment": 0.8,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
           "kind": "chapter",
           "title": "Kulothunga Chola and the migration to Melukote",
           "overlap": 0.8
@@ -4330,7 +4330,7 @@
       "containment": 0.8,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/kulothunga-chola-and-the-migration-to-melukote.json",
           "kind": "chapter",
           "title": "Kulothunga Chola and the migration to Melukote",
           "overlap": 0.8
@@ -4346,7 +4346,7 @@
       "containment": 0.76,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/tirunarayanapuram-vaibhavam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/tirunarayanapuram-vaibhavam.json",
           "kind": "chapter",
           "title": "Tirunarayanapuram Vaibhavam",
           "overlap": 0.76
@@ -4362,7 +4362,7 @@
       "containment": 0.74,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/tirunarayanapuram-vaibhavam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/tirunarayanapuram-vaibhavam.json",
           "kind": "chapter",
           "title": "Tirunarayanapuram Vaibhavam",
           "overlap": 0.74
@@ -4378,7 +4378,7 @@
       "containment": 0.81,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
           "kind": "chapter",
           "title": "Swami Ramanujar's return to Sri Rangam and attaining Paramapadam",
           "overlap": 0.79
@@ -4394,7 +4394,7 @@
       "containment": 0.81,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-ramanujar-s-return-to-sri-rangam-and-attaining-paramapadam.json",
           "kind": "chapter",
           "title": "Swami Ramanujar's return to Sri Rangam and attaining Paramapadam",
           "overlap": 0.79
@@ -4442,7 +4442,7 @@
       "containment": 0.75,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/birth-of-swami-desikan.json",
           "kind": "chapter",
           "title": "Birth of Swami Deshikan",
           "overlap": 0.75
@@ -4458,7 +4458,7 @@
       "containment": 0.75,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/birth-of-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/birth-of-swami-desikan.json",
           "kind": "chapter",
           "title": "Birth of Swami Deshikan",
           "overlap": 0.75
@@ -4474,13 +4474,13 @@
       "containment": 0.76,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/childhood-and-education-of-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/childhood-and-education-of-swami-desikan.json",
           "kind": "chapter",
           "title": "Childhood and Education of Swami Deshikan",
           "overlap": 0.65
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/artha-panchakam.json",
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.48
@@ -4502,13 +4502,13 @@
       "containment": 0.76,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/childhood-and-education-of-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/childhood-and-education-of-swami-desikan.json",
           "kind": "chapter",
           "title": "Childhood and Education of Swami Deshikan",
           "overlap": 0.65
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/artha-panchakam.json",
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.48
@@ -4530,13 +4530,13 @@
       "containment": 0.79,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-kanchipuram.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-return-to-kanchipuram.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Return to Kanchipuram",
           "overlap": 0.79
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/artha-panchakam.json",
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.16
@@ -4552,13 +4552,13 @@
       "containment": 0.79,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-kanchipuram.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-return-to-kanchipuram.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Return to Kanchipuram",
           "overlap": 0.79
         },
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/artha-panchakam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/artha-panchakam.json",
           "kind": "chapter",
           "title": "Artha Panchakam",
           "overlap": 0.16
@@ -4574,7 +4574,7 @@
       "containment": 0.79,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-yatra-of-vadu-nadu-kshethrams.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-yatra-of-vadu-nadu-kshethrams.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Yātrā of Vadu Nadu Kshethrams",
           "overlap": 0.79
@@ -4590,7 +4590,7 @@
       "containment": 0.79,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-yatra-of-vadu-nadu-kshethrams.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-yatra-of-vadu-nadu-kshethrams.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Yātrā of Vadu Nadu Kshethrams",
           "overlap": 0.79
@@ -4606,7 +4606,7 @@
       "containment": 0.83,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/miracles-performed-by-swami-desikan.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/miracles-performed-by-swami-desikan.json",
           "kind": "chapter",
           "title": "Miracles Performed by Swami Deshikan",
           "overlap": 0.83
@@ -4622,7 +4622,7 @@
       "containment": 0.7,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/getting-the-title-of-vedanta-desikan-and-brahma-tantra-swatantra.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/getting-the-title-of-vedanta-desikan-and-brahma-tantra-swatantra.json",
           "kind": "chapter",
           "title": "Getting the title of Vedānta Deshikan and Brahma Tantra Swatantra",
           "overlap": 0.7
@@ -4638,7 +4638,7 @@
       "containment": 0.73,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-move-to-sathyagala.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-move-to-sathyagala.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Move to Sathyagala",
           "overlap": 0.73
@@ -4654,7 +4654,7 @@
       "containment": 0.67,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-move-to-sathyagala.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-move-to-sathyagala.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Move to Sathyagala",
           "overlap": 0.67
@@ -4670,7 +4670,7 @@
       "containment": 0.8,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-sri-rangam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-return-to-sri-rangam.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Return to Sri Rangam",
           "overlap": 0.8
@@ -4686,7 +4686,7 @@
       "containment": 0.8,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-return-to-sri-rangam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-return-to-sri-rangam.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Return to Sri Rangam",
           "overlap": 0.8
@@ -4702,7 +4702,7 @@
       "containment": 0.85,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-attainment-of-paramapadam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-attainment-of-paramapadam.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Attainment of Paramapadam",
           "overlap": 0.85
@@ -4718,7 +4718,7 @@
       "containment": 0.85,
       "matches": [
         {
-          "file": "library/untitled-recovered-book-pending-editorial-title/chapters/swami-desikan-s-attainment-of-paramapadam.json",
+          "file": "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/swami-desikan-s-attainment-of-paramapadam.json",
           "kind": "chapter",
           "title": "Swami Deshikan's Attainment of Paramapadam",
           "overlap": 0.85

@@ -87,15 +87,34 @@ const realFileSystem: BookFileSystem = {
 export type { BookDownloadResult, BookFileSystem } from "./bookOfflineCore.ts";
 export type { BookPayload } from "../../content-lib/mobile-content.ts";
 
+/**
+ * Moves downloads of renamed books to their new slug, once per app run,
+ * before the first read (see core.migrateRenamedBookDownloads). Lazy rather
+ * than at import time, and never throws, so it cannot break app start.
+ */
+let renamedDownloadsMigrated = false;
+function migrateOnce(): void {
+  if (renamedDownloadsMigrated) return;
+  renamedDownloadsMigrated = true;
+  try {
+    core.migrateRenamedBookDownloads(realFileSystem);
+  } catch {
+    // Worst case the reader downloads the book again.
+  }
+}
+
 export function isBookAvailable(bookSlug: string): boolean {
+  migrateOnce();
   return core.isBookAvailable(bookSlug, realFileSystem);
 }
 
 export function loadOfflineBook(bookSlug: string) {
+  migrateOnce();
   return core.loadOfflineBook(bookSlug, realFileSystem);
 }
 
 export function getOfflineBookImageUri(bookSlug: string, imageUuid: string): string | null {
+  migrateOnce();
   return core.getOfflineBookImageUri(bookSlug, imageUuid, realFileSystem);
 }
 
@@ -116,6 +135,7 @@ export function getOfflineBookImageUri(bookSlug: string, imageUuid: string): str
 const inFlightDownloads = new Map<string, Promise<BookDownloadResult>>();
 
 export function downloadBook(bookSlug: string): Promise<BookDownloadResult> {
+  migrateOnce();
   const existing = inFlightDownloads.get(bookSlug);
   if (existing) return existing;
 
@@ -132,5 +152,6 @@ export function deleteBook(bookSlug: string): void {
 
 /** The locally-recorded content hash for a downloaded book, or null if it isn't downloaded. Used by libraryCatalogService.ts to detect a stale copy against contentManifest.json. */
 export function getLocalBookContentHash(bookSlug: string): string | null {
+  migrateOnce();
   return core.getLocalBookContentHash(bookSlug, realFileSystem);
 }

@@ -13,7 +13,6 @@ import {
   type NativeSyntheticEvent,
   type NativeScrollEvent,
 } from "react-native";
-import { loadBook } from "../../../../content-lib/loader.ts";
 import { findAdjacentChapters } from "../../../../content-lib/chapter-navigation.ts";
 import { partLabelFor } from "../../../../../content-lib/library-parts.ts";
 import { placeInlineImages } from "../../../../../content-lib/inline-images.ts";
@@ -34,6 +33,7 @@ import { reportDepth } from "../../../../services/readingPingService.ts";
 import { useBookmarks } from "../../../../bookmarks-context.ts";
 import { chapterPositionLabel, minReadLabel, nowReadingAnnouncement, useT } from "../../../../ui-strings.ts";
 import { getOfflineBookImageUri, isBookAvailable, loadOfflineBook } from "../../../../services/bookOfflineService.ts";
+import { getLibraryCatalogEntry } from "../../../../services/libraryCatalogService.ts";
 import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile-content.ts";
 
 /**
@@ -112,7 +112,9 @@ export default function LibraryChapterScreen() {
   const [progress, setProgress] = useState(0);
   /** Furthest point reached in the chapter currently open, for read depth. */
   const deepest = useRef(0);
-  const loadedBook = loadBook(bookSlug);
+  // The merged catalog, as the book screen uses: it also knows books that
+  // arrived through the remote manifest after this build was bundled.
+  const loadedBook = useMemo(() => getLibraryCatalogEntry(bookSlug)?.book ?? null, [bookSlug]);
   const book = loadedBook ? localizeBook(loadedBook, language) : null;
   // Memoized on bookSlug alone (not re-run on every scroll-driven
   // re-render, which setProgress below causes constantly): reads and
