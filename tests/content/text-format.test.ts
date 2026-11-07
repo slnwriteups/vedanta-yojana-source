@@ -7,6 +7,7 @@ import {
   estimateReadingMinutes,
   extractSpecialNote,
   findNamedSections,
+  isBoldParagraph,
   isListItemLine,
   isVerseLine,
   iastVerseParagraphIndexes,
@@ -339,21 +340,6 @@ test("O: a numbered list item is recognized so a renderer can keep it plain, mat
   assert.equal(isListItemLine("The word charama in Sanskrit translates to ultimate."), false);
 });
 
-test("O: a bullet ('●'/'•') list item is recognized too, so a whole bulleted list renders alike", () => {
-  // Real, reported case: the Divya Desams introduction's regional list.
-  // Six short "● Chola Nādu: 40 Divya Desams" items passed
-  // looksLikeSubheading() and rendered bold, while the longer
-  // "● Vinnulaga Tirupatigal (Celestial): ..." item (over 70 chars)
-  // rendered plain -- the same list, inconsistently styled.
-  assert.equal(isListItemLine("● Chola Nādu: 40 Divya Desams"), true);
-  assert.equal(
-    isListItemLine("● Vinnulaga Tirupatigal (Celestial): 2 Divya Desams (Thiruppārkadal and Paramapadam)"),
-    true,
-  );
-  assert.equal(isListItemLine("• London: 5:36–6:27 AM"), true);
-  assert.equal(isListItemLine("Geographical Classification of Divya Desams:"), false);
-});
-
 test("O: a '1.'-style (period, not closing paren) numbered list item is recognized too", () => {
   // Real, reported case: swami-desikan-s-return-to-kanchipuram's 5-item
   // doctrine list uses "1. ... 2. ... 3. ... 4. ... 5. ...". Items 1-2
@@ -475,4 +461,101 @@ test("Q: a long special note split across multiple readable paragraphs stays ent
 test("Q: a special note with no following content has a span of zero", () => {
   const paragraphs = paragraphsForReading("*A standalone note with nothing after it.");
   assert.equal(specialNoteListItemSpan(paragraphs, 0), 0);
+});
+
+// ---------------------------------------------------------------------------
+// isBoldParagraph -- the one rule every renderer (web and app) draws bold by
+// ---------------------------------------------------------------------------
+
+function boldFlags(text: string): boolean[] {
+  const paragraphs = paragraphsForReading(text);
+  return paragraphs.map((_, index) => isBoldParagraph(paragraphs, index, text));
+}
+
+function realField(file: string, pick: (json: any) => string): string {
+  return pick(JSON.parse(fs.readFileSync(path.join(REPO_ROOT, "content", file), "utf8")));
+}
+
+test("P: a bulleted list renders every item alike -- the Divya Desams introduction's regions are all bold", () => {
+  // Real, reported case: six short "● Chola Nādu: 40 Divya Desams" items
+  // were bold while "● Vinnulaga Tirupatigal (Celestial): ..." (over 70
+  // characters) rendered plain.
+  const text = realField("knowledge/introduction.json", (j) => j.body);
+  const paragraphs = paragraphsForReading(text);
+  const flags = boldFlags(text);
+  const items = paragraphs.flatMap((p, i) => (p.startsWith("●") ? [i] : []));
+  assert.equal(items.length, 10); // 3 postures, then the 7 regions
+  assert.ok(paragraphs[items[9]].startsWith("● Vinnulaga Tirupatigal"));
+  for (const i of items) assert.equal(flags[i], true, paragraphs[i]);
+});
+
+test("P: a run of 'Label: value' lines renders alike -- Tiruvellarai's pāsuram counts and Prathyaksham line", () => {
+  const text = realField("divya-desams/tiruvellarai.json", (j) => j.azhwarPasuram);
+  assert.deepEqual(boldFlags(text), [true, true, true, true]);
+  const tamil = realField("divya-desams/tiruvellarai.json", (j) => j.translations.ta.azhwarPasuram);
+  assert.deepEqual(boldFlags(tamil), [true, true, true, true]);
+});
+
+test("P: a run of mostly long 'Label: value' lines renders plain, not half-bold", () => {
+  const text = [
+    "Meaning: the Lord grants refuge to all who surrender to Him, regardless of birth, learning or conduct",
+    "Context: spoken by Sri Rama on the seashore when Vibhishana arrived seeking His protection",
+    "Source: Yuddha Kanda",
+  ].join("\n");
+  assert.deepEqual(boldFlags(text), [false, false, false]);
+});
+
+test("P: a numbered list still renders plain (unchanged)", () => {
+  assert.deepEqual(boldFlags("1) Hayagrīva Stotram\n2) Dasavatara Stotram\n3) Kamasikashatakam"), [false, false, false]);
+});
+
+test("P: Hindi prose is not mistaken for a Sanskrit verse -- it renders plain", () => {
+  // Real, reported case: every Hindi paragraph contained Devanagari, so
+  // every one was treated as a verse line and drawn bold.
+  const text = realField(
+    "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/performance-of-panchasamskaram.json",
+    (j) => j.translations.hi.body,
+  );
+  const paragraphs = paragraphsForReading(text);
+  const flags = boldFlags(text);
+  const longProse = paragraphs.flatMap((p, i) => (p.length > 100 ? [i] : []));
+  assert.ok(longProse.length >= 5);
+  for (const i of longProse) assert.equal(flags[i], false, paragraphs[i].slice(0, 60));
+});
+
+test("P: a meaning paragraph after a daṇḍa-marked verse in Tamil/Kannada/Telugu renders plain", () => {
+  // Real, reported case: krishna-charama-shlokam's Tamil meaning paragraph
+  // sat two positions after a Tamil-script verse line ending in "॥", so
+  // it was taken for a verse transliteration line and drawn bold.
+  for (const lang of ["ta", "kn", "te"]) {
+    const text = realField(
+      "library/a-brief-insight-to-visishtadvaita-philosophy/chapters/krishna-charama-shlokam.json",
+      (j) => j.translations[lang].body,
+    );
+    const paragraphs = paragraphsForReading(text);
+    const flags = boldFlags(text);
+    paragraphs.forEach((p, i) => {
+      if (p.length > 150) assert.equal(flags[i], false, `${lang}: ${p.slice(0, 60)}`);
+      if (/[।॥]/.test(p) && p.length <= 90) assert.equal(flags[i], true, `${lang} verse: ${p}`);
+    });
+  }
+});
+
+test("P: an English paragraph quoting one Sanskrit name in Devanagari renders plain", () => {
+  const prose =
+    "The name माधवः means the consort of Lakshmi. Parasara Bhattar explains that the Lord is never apart from Her, and that every act of grace flows from that union. The same idea returns in several later names of the Sahasranāma.";
+  assert.deepEqual(boldFlags(prose), [false]);
+});
+
+test("P: a Devanagari couplet and its IAST transliteration still render bold", () => {
+  const text = [
+    "सर्वधर्मान्परित्यज्य मामेकं शरणं व्रज।",
+    "अहं त्वा सर्वपापेभ्यो मोक्षयिष्यामि मा शुचः॥",
+    "",
+    "sarvadharmān parityajya mām ekaṁ śaraṇaṁ vraja",
+    "ahaṁ tvā sarvapāpebhyo mokṣayiṣyāmi mā śucaḥ",
+    "",
+    "Leaving aside all other dharmas, surrender unto Me alone. I shall release you from all sins; do not grieve. This is the final teaching of the Gita, given to Arjuna on the battlefield.",
+  ].join("\n");
+  assert.deepEqual(boldFlags(text), [true, true, true, true, false]);
 });

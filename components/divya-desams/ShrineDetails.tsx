@@ -1,9 +1,7 @@
 import type { Shrine } from "@/content-lib/schemas";
 import {
   extractSpecialNote,
-  isListItemLine,
-  isVerseLine,
-  looksLikeSubheading,
+  isBoldParagraph,
   paragraphsForReading,
   specialNoteListItemSpan,
 } from "@/content-lib/text-format";
@@ -57,7 +55,7 @@ function ProseBlock({ text, language }: { text: string; language: LanguageCode |
       index += span;
       continue;
     }
-    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index, text);
+    const bold = isBoldParagraph(paragraphs, index, text);
     nodes.push(
       <p key={index} className={bold ? "mt-2 font-bold" : undefined}>
         {paragraph}

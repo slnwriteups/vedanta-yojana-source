@@ -12,7 +12,7 @@ import { PasuramResource } from "../../../components/PasuramResource";
 import { layout, radius, spacing, typography, useTheme } from "../../../theme";
 import {
   extractSpecialNote,
-  isListItemLine,
+  isBoldParagraph,
   isVerseLine,
   looksLikeSubheading,
   paragraphsForReading,
@@ -152,7 +152,7 @@ function ParagraphsWithNotes({ text, keyPrefix }: { text: string; keyPrefix: str
       index += span;
       continue;
     }
-    const bold = (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index, text);
+    const bold = isBoldParagraph(paragraphs, index, text);
     nodes.push(
       <Text
         key={`${keyPrefix}-${index}`}

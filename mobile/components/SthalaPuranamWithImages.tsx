@@ -11,6 +11,7 @@ import { FadeInImage, IMAGE_SIZE } from "./ContentImage";
 import { ImageViewerModal } from "./ImageViewerModal";
 import {
   extractSpecialNote,
+  isBoldParagraph,
   isListItemLine,
   looksLikeSubheading,
   specialNoteListItemSpan,
@@ -187,10 +188,10 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
               key={`${segment.key}-${i}`}
               style={[
                 styles.paragraph,
-                looksLikeSubheading(paragraph) && !isListItemLine(paragraph) && styles.subheading,
+                isBoldParagraph(segmentParagraphs, i, segment.text) && styles.subheading,
                 {
                   color: theme.colors.foreground,
-                  ...readingFont(language, looksLikeSubheading(paragraph) && !isListItemLine(paragraph)),
+                  ...readingFont(language, isBoldParagraph(segmentParagraphs, i, segment.text)),
                   fontSize: typography.body * preferences.fontScale,
                   lineHeight: typography.body * preferences.fontScale * typography.readingLineHeight,
                 },

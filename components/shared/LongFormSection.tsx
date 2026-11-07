@@ -1,7 +1,6 @@
 import {
   extractSpecialNote,
-  isListItemLine,
-  isVerseLine,
+  isBoldParagraph,
   looksLikeSubheading,
   paragraphsForReading,
   specialNoteListItemSpan,
@@ -84,7 +83,7 @@ export function LongFormSection({
               continue;
             }
             const classNames = [
-              (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) || isVerseLine(paragraphs, index, text)
+              isBoldParagraph(paragraphs, index, text)
                 ? "mt-2 font-bold"
                 : null,
             ]

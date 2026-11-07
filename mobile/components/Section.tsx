@@ -7,8 +7,7 @@ import { readingFont } from "../reading-font.ts";
 import { translateUi } from "../ui-strings.ts";
 import {
   extractSpecialNote,
-  isListItemLine,
-  isVerseLine,
+  isBoldParagraph,
   looksLikeSubheading,
   paragraphsForReading,
   specialNoteListItemSpan,
@@ -135,8 +134,7 @@ export function Section({
                 continue;
               }
               const subheading =
-                (looksLikeSubheading(paragraph) && !isListItemLine(paragraph)) ||
-                isVerseLine(paragraphs, index, text);
+                isBoldParagraph(paragraphs, index, text);
               nodes.push(
                 <Text
                   key={index}

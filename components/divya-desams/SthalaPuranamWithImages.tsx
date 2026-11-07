@@ -2,7 +2,7 @@ import type { PublicImageEntry } from "@/lib/public-content";
 import type { LanguageCode } from "@/lib/preferences";
 import {
   extractSpecialNote,
-  isListItemLine,
+  isBoldParagraph,
   looksLikeSubheading,
   specialNoteListItemSpan,
   splitIntoReadableParagraphs,
@@ -174,7 +174,7 @@ export function SthalaPuranamWithImages({
                 key={`${segment.key}-${i}`}
                 className={
                   "prose-body whitespace-pre-line" +
-                  (looksLikeSubheading(paragraph) && !isListItemLine(paragraph) ? " mt-2 font-bold" : "")
+                  (isBoldParagraph(segmentParagraphs, i, segment.text) ? " mt-2 font-bold" : "")
                 }
               >
                 {paragraph}

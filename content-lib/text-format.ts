@@ -134,6 +134,44 @@ export interface NamedSection {
 }
 
 const DEVANAGARI_SCRIPT = /[ऀ-ॿ]/;
+/** Devanagari letters and vowel signs -- NOT the daṇḍas (। ॥), which Tamil, Kannada and Telugu verses use too. */
+const DEVANAGARI_LETTER = /[\u0900-\u0963\u0966-\u097F]/gu;
+const ANY_LETTER = /[\p{L}\p{M}]/gu;
+/** A long sloka pada (e.g. a Sragdharā line), transliterated -- still well under a prose paragraph. */
+const MAX_TRANSLITERATED_PADA_LENGTH = 160;
+
+function devanagariShare(text: string): number {
+  const letters = text.match(ANY_LETTER)?.length ?? 0;
+  return letters === 0 ? 0 : (text.match(DEVANAGARI_LETTER)?.length ?? 0) / letters;
+}
+
+/**
+ * A line written in Devanagari script -- a Sanskrit verse pada. Mostly
+ * Devanagari, not merely containing some: a daṇḍa closing a Tamil-script
+ * verse line, or one Sanskrit name quoted inside an English sentence, does
+ * not make the line Devanagari.
+ */
+function isDevanagariLine(paragraph: string): boolean {
+  return devanagariShare(paragraph) >= 0.5;
+}
+
+const devanagariDocumentCache = new WeakMap<string[], boolean>();
+
+/**
+ * Hindi text is written in Devanagari, so "this line is Devanagari" says
+ * nothing about it being a quoted verse there -- it is just the language.
+ * Reported directly: 9,860 of 9,862 Hindi paragraphs rendered bold.
+ * Verse detection is skipped for such text. Memoized per paragraphs array,
+ * since renderers call this once per paragraph.
+ */
+function isDevanagariDocument(paragraphs: string[]): boolean {
+  let cached = devanagariDocumentCache.get(paragraphs);
+  if (cached === undefined) {
+    cached = devanagariShare(paragraphs.join(" ")) >= 0.5;
+    devanagariDocumentCache.set(paragraphs, cached);
+  }
+  return cached;
+}
 
 /**
  * True when `paragraphs[index]` is a line of a quoted verse's IAST
@@ -150,7 +188,14 @@ const DEVANAGARI_SCRIPT = /[ऀ-ॿ]/;
  * below (and findNamedSections()) can both build on the same detection.
  */
 export function isVerseTransliterationLine(paragraphs: string[], index: number): boolean {
-  return index >= 2 && DEVANAGARI_SCRIPT.test(paragraphs[index - 2]);
+  // Only a short, non-Devanagari line two below a Devanagari pada: a long
+  // meaning paragraph that merely follows a verse is prose, not a pada.
+  return (
+    index >= 2 &&
+    isDevanagariLine(paragraphs[index - 2]) &&
+    !isDevanagariLine(paragraphs[index]) &&
+    paragraphs[index].length <= MAX_TRANSLITERATED_PADA_LENGTH
+  );
 }
 
 /**
@@ -168,8 +213,20 @@ export function isVerseTransliterationLine(paragraphs: string[], index: number):
  * across every shlokam in the app instead of an accident of punctuation.
  */
 export function isVerseLine(paragraphs: string[], index: number, text?: string): boolean {
+  const paragraph = paragraphs[index];
+  if (isDevanagariDocument(paragraphs)) {
+    // In Hindi "।" ends ordinary sentences, so only a couplet closed by
+    // "॥" (or "||") marks a verse: that line, and its first half above it.
+    const closesCouplet = (line: string | undefined) =>
+      line !== undefined && /॥|\|\|/.test(line) && line.length <= MAX_TRANSLITERATED_PADA_LENGTH;
+    return closesCouplet(paragraph) || (/[।|]\s*$/.test(paragraph) && closesCouplet(paragraphs[index + 1]));
+  }
   return (
-    DEVANAGARI_SCRIPT.test(paragraphs[index]) ||
+    isDevanagariLine(paragraph) ||
+    // A verse pada in Tamil, Kannada or Telugu script carrying a daṇḍa
+    // or avagraha, or a heading quoting a Sanskrit name ("92. saṃvatsaraḥ
+    // · संवत्सरः"). Long prose quoting one Sanskrit word stays plain.
+    (DEVANAGARI_SCRIPT.test(paragraph) && paragraph.length <= MAX_TRANSLITERATED_PADA_LENGTH) ||
     isVerseTransliterationLine(paragraphs, index) ||
     (text !== undefined && iastVerseParagraphIndexes(text).has(index))
   );
@@ -286,10 +343,7 @@ export function iastVerseParagraphIndexes(text: string, targetLength: number = D
  * character of the source text -- it only decides which existing
  * paragraphs are worth a shortcut.
  */
-// Numbered ("1)", "(iii)", "1.") or bulleted ("●", "•") -- the Divya
-// Desams introduction's regional list is bulleted, and its short items
-// otherwise rendered bold while its one long item did not.
-const LIST_MARKER = /^(\(?(\d+|[ivxlcdm]+)[.)]|[●•])/i;
+const LIST_MARKER = /^\(?(\d+|[ivxlcdm]+)[.)]/i;
 const MIN_LABEL_LENGTH = 10;
 const MIN_FOLLOWING_LENGTH = 150;
 
@@ -316,6 +370,60 @@ const MIN_FOLLOWING_LENGTH = 150;
  */
 export function isListItemLine(paragraph: string): boolean {
   return LIST_MARKER.test(paragraph);
+}
+
+const BULLET_MARKER = /^[●•▪◦]\s*/;
+/** "Tirumangai Āzhwār: 13 pāsurams" -- a short label, a colon, then its value. */
+const LABEL_LINE = /^[^:.!?।]{2,45}:\s*\S/;
+const MAX_GROUP_LINE_LENGTH = 120;
+
+function listGroupKind(paragraph: string): "bullet" | "label" | null {
+  if (BULLET_MARKER.test(paragraph)) return "bullet";
+  if (!isListItemLine(paragraph) && paragraph.length <= MAX_GROUP_LINE_LENGTH && LABEL_LINE.test(paragraph)) return "label";
+  return null;
+}
+
+/**
+ * The one rule every renderer (web and app) uses to decide which paragraph
+ * to draw bold. Reported directly: lines of one list came out partly bold,
+ * partly plain, purely by length -- the Divya Desams introduction's
+ * "● Vinnulaga Tirupatigal (Celestial): ..." was plain beside six bold
+ * "● Chola Nādu: 40 Divya Desams" items. So:
+ *
+ * - a verse line (see isVerseLine) is bold;
+ * - an item of a numbered list ("1)", "(iii)", "1.") is plain, as before;
+ *   a lone numbered line followed by prose is a numbered heading, and
+ *   follows the last rule below;
+ * - consecutive bulleted lines, or consecutive "Label: value" lines, are
+ *   one group, drawn alike: bold when most of them would be bold on their
+ *   own (looksLikeSubheading), plain otherwise;
+ * - anything else is bold when it looksLikeSubheading.
+ *
+ * Presentation only: never changes the text.
+ */
+export function isBoldParagraph(paragraphs: string[], index: number, text?: string): boolean {
+  if (isVerseLine(paragraphs, index, text)) return true;
+  const paragraph = paragraphs[index];
+  if (isListItemLine(paragraph)) {
+    // Part of a numbered list: plain. A lone numbered line followed by
+    // prose is a numbered heading instead (the Sahasranāma's "87. शरणम्").
+    const inList = isListItemLine(paragraphs[index - 1] ?? "") || isListItemLine(paragraphs[index + 1] ?? "");
+    if (inList) return false;
+    return looksLikeSubheading(paragraph);
+  }
+  const kind = listGroupKind(paragraph);
+  if (kind !== null) {
+    let start = index;
+    while (start > 0 && listGroupKind(paragraphs[start - 1]) === kind) start--;
+    let end = index;
+    while (end < paragraphs.length - 1 && listGroupKind(paragraphs[end + 1]) === kind) end++;
+    if (end > start) {
+      const group = paragraphs.slice(start, end + 1);
+      const boldOnOwn = group.filter((line) => looksLikeSubheading(line.replace(BULLET_MARKER, ""))).length;
+      return boldOnOwn * 2 > group.length;
+    }
+  }
+  return looksLikeSubheading(paragraph);
 }
 
 /**
@@ -399,7 +507,10 @@ export function findNamedSections(text: string, title: string): NamedSection[] {
     // Devanagari script, this one is the tail end of that same verse
     // block, not a standalone heading -- Devanagari appears nowhere
     // else in the corpus today.
-    if (isVerseTransliterationLine(paragraphs, index)) return;
+    // Kept as the original, broader structural check (any Devanagari
+    // two back): it only ever removes candidates from a table of
+    // contents, where a missed entry costs nothing.
+    if (index >= 2 && DEVANAGARI_SCRIPT.test(paragraphs[index - 2])) return;
 
     const next = paragraphs[index + 1] ?? "";
     if (isListItemLine(next) || looksLikeSubheading(next)) return;
