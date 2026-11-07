@@ -7,6 +7,8 @@ import { useT } from "../../ui-strings.ts";
 import { TourTarget, useTour, useTourScroller } from "../../tour/Tour";
 
 const INSTAGRAM_URL = "https://www.instagram.com/vedantayojana/";
+// App Store Review Guideline 5.1.1(i): the privacy policy must be reachable inside the app.
+const PRIVACY_POLICY_URL = "https://vedantayojana.org/privacy-policy.html";
 
 /**
  * A bottom tab, alongside Home/Divya Desams/Library/Search (see
@@ -63,6 +65,7 @@ export default function SettingsScreen() {
         <Text style={[styles.sectionLabel, { color: theme.colors.muted }]}>{t("settingsConnectLabel")}</Text>
         <SocialButton icon="logo-instagram" label="Instagram" url={INSTAGRAM_URL} />
       </View>
+      <SocialButton icon="shield-checkmark-outline" label={t("settingsPrivacyPolicy")} url={PRIVACY_POLICY_URL} />
     </ScrollView>
   );
 }
