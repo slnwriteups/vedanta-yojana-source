@@ -339,6 +339,21 @@ test("O: a numbered list item is recognized so a renderer can keep it plain, mat
   assert.equal(isListItemLine("The word charama in Sanskrit translates to ultimate."), false);
 });
 
+test("O: a bullet ('●'/'•') list item is recognized too, so a whole bulleted list renders alike", () => {
+  // Real, reported case: the Divya Desams introduction's regional list.
+  // Six short "● Chola Nādu: 40 Divya Desams" items passed
+  // looksLikeSubheading() and rendered bold, while the longer
+  // "● Vinnulaga Tirupatigal (Celestial): ..." item (over 70 chars)
+  // rendered plain -- the same list, inconsistently styled.
+  assert.equal(isListItemLine("● Chola Nādu: 40 Divya Desams"), true);
+  assert.equal(
+    isListItemLine("● Vinnulaga Tirupatigal (Celestial): 2 Divya Desams (Thiruppārkadal and Paramapadam)"),
+    true,
+  );
+  assert.equal(isListItemLine("• London: 5:36–6:27 AM"), true);
+  assert.equal(isListItemLine("Geographical Classification of Divya Desams:"), false);
+});
+
 test("O: a '1.'-style (period, not closing paren) numbered list item is recognized too", () => {
   // Real, reported case: swami-desikan-s-return-to-kanchipuram's 5-item
   // doctrine list uses "1. ... 2. ... 3. ... 4. ... 5. ...". Items 1-2

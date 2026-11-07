@@ -286,7 +286,10 @@ export function iastVerseParagraphIndexes(text: string, targetLength: number = D
  * character of the source text -- it only decides which existing
  * paragraphs are worth a shortcut.
  */
-const LIST_MARKER = /^\(?(\d+|[ivxlcdm]+)[.)]/i;
+// Numbered ("1)", "(iii)", "1.") or bulleted ("●", "•") -- the Divya
+// Desams introduction's regional list is bulleted, and its short items
+// otherwise rendered bold while its one long item did not.
+const LIST_MARKER = /^(\(?(\d+|[ivxlcdm]+)[.)]|[●•])/i;
 const MIN_LABEL_LENGTH = 10;
 const MIN_FOLLOWING_LENGTH = 150;
 
