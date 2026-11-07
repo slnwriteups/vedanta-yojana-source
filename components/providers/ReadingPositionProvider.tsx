@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { LAST_READ_STORAGE_KEY, isValidLastReadPositionList, type LastReadPosition } from "@/lib/preferences";
 import { ReadingPositionContext, type ReadingPositionContextValue } from "@/lib/reading-position-context";
 import { readJSON, writeJSON } from "@/lib/storage";
+import { withCanonicalBookSlugs } from "@/content-lib/book-slug-aliases";
 
 /**
  * Web port of mobile/ReadingPositionProvider.tsx. Loads the persisted
@@ -20,7 +21,8 @@ export function ReadingPositionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false;
     readJSON(LAST_READ_STORAGE_KEY, isValidLastReadPositionList).then((stored) => {
-      if (!cancelled && stored !== null) setLastReadByBook(stored);
+      // Renamed books (content-lib/book-slug-aliases.ts) keep their saved place.
+      if (!cancelled && stored !== null) setLastReadByBook(withCanonicalBookSlugs(stored, (entry) => entry.bookSlug));
     });
     return () => {
       cancelled = true;
