@@ -69,7 +69,8 @@
         "expo-audio",
         {
           "microphonePermission": false,
-          "recordAudioAndroid": false
+          "recordAudioAndroid": false,
+          "enableBackgroundPlayback": false
         }
       ],
       "expo-asset",
@@ -77,7 +78,11 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "Vedanta Yojana uses your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are."
+          "locationWhenInUsePermission": "Vedanta Yojana uses your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are.",
+          "locationAlwaysAndWhenInUsePermission": "Vedanta Yojana uses your approximate location only while you use the app, to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are. It never tracks your location in the background.",
+          "locationAlwaysPermission": "Vedanta Yojana uses your approximate location only while you use the app, to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are. It never tracks your location in the background.",
+          "locationFullAccuracyPermission": "Vedanta Yojana only needs your approximate location to show today's Panchangam (tithi, nakshatram, Ekadashi) for where you are.",
+          "motionUsagePermission": false
         }
       ],
       [
