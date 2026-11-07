@@ -206,6 +206,8 @@ export const BookPayloadSchema = z.object({
   book: MobileBookSchema,
   chapters: z.array(MobileChapterSchema),
   /** sourceAssetUuid (lowercased) -> the exact filename (with real extension) to fetch alongside this book's JSON. Every uuid any chapter or the cover references appears here exactly once. */
-  imageFiles: z.record(z.string(), z.string().min(1)),
+  // Filenames become local file paths in the app, so only plain names such as
+  // "<uuid>.jpg" are accepted: no slashes, no leading dot, no "..".
+  imageFiles: z.record(z.string(), z.string().regex(/^[\w-]+(\.[\w-]+)*$/)),
 });
 export type BookPayload = z.infer<typeof BookPayloadSchema>;

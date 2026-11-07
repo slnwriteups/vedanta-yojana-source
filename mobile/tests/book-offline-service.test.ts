@@ -167,6 +167,18 @@ test("downloadBook: a payload for the wrong book slug is rejected", async () => 
   assert.equal(isBookAvailable("test-book", fs), false);
 });
 
+test("downloadBook: an image filename that could escape the book's folder is rejected before any file is written", async () => {
+  for (const filename of ["../evil.jpg", "images/../../evil.jpg", "/abs.jpg", ".hidden", "a\\b.jpg"]) {
+    const fs = makeFakeFileSystem();
+    fs.remoteResponses.set(BOOK_JSON_URL, JSON.stringify(validPayload({ imageFiles: { abcd1234: filename } })));
+    fs.remoteResponses.set(`${IMAGE_BASE_URL}/${filename}`, "IMAGE-BYTES");
+
+    const result = await downloadBook("test-book", BOOK_JSON_URL, IMAGE_BASE_URL, fs);
+    assert.equal(result.success, false, `accepted unsafe filename ${filename}`);
+    assert.equal(isBookAvailable("test-book", fs), false);
+  }
+});
+
 test("downloadBook: an incompatible contentSchemaVersion is rejected", async () => {
   const fs = makeFakeFileSystem();
   const payload = validPayload();

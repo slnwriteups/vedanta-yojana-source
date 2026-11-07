@@ -115,6 +115,16 @@ test("Library: the recovered Book resolves for the book screen", () => {
   assert.equal(book?.title, "A Brief Insight to Visishtadvaita Philosophy");
 });
 
+test("Library: the chapter screen resolves its book through the merged catalog, like the book screen", () => {
+  // A book that arrives only through the remote content manifest is in the
+  // catalog (mergeCatalog) but not in the bundled loadBook() list; resolving
+  // it from loadBook() showed "Not found" as the chapter screen's title.
+  const here = path.dirname(fileURLToPath(import.meta.url));
+  const source = fs.readFileSync(path.join(here, "../app/(tabs)/library/[book]/[chapter].tsx"), "utf8");
+  assert.match(source, /getLibraryCatalogEntry\(bookSlug\)/, "chapter screen must resolve the book via getLibraryCatalogEntry");
+  assert.doesNotMatch(source, /\bloadBook\(/, "chapter screen must not use the bundled-only loadBook()");
+});
+
 test("Library: 61 chapters are available for the book screen, in ascending order", () => {
   const chapters = loadChapters(BOOK_SLUG);
   assert.equal(chapters.length, 61);
