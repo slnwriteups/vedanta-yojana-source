@@ -5,6 +5,7 @@ import { WelcomeGate } from "@/components/WelcomeGate";
 import { OnboardingGate } from "@/components/OnboardingGate";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { SitePing } from "@/components/SitePing";
+import { ServiceWorkerRegistration } from "@/components/shared/ServiceWorkerRegistration";
 import { getSiteOrigin, siteUrl, SITE_DESCRIPTION, SITE_NAME } from "@/lib/site";
 import { defaultShareImage } from "@/lib/metadata";
 import { resolveImageHref } from "@/lib/image-file";
@@ -218,6 +219,8 @@ export default function RootLayout({
             host -- see components/SitePing.tsx.
           */}
           <SitePing />
+          {/* Offline Pasurams that follow Prapatti.com's corrections, same as the app -- see public/sw.js. */}
+          <ServiceWorkerRegistration />
           <WelcomeGate imageHref={resolveImageHref(WELCOME_IMAGE_UUID)} audioHref={`${BASE_PATH}/audio/vy-welcome.mp3`}>
             <OnboardingGate>
               <a href="#main-content" className="skip-link">

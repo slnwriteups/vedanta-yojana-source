@@ -1,4 +1,9 @@
+"use client";
+
+import type { MouseEvent } from "react";
 import type { ResourceEntry } from "@/content-lib/schemas";
+import { pasuramMirrorHref } from "@/lib/pasuram-mirror";
+import { keepPasuramForOffline } from "@/components/shared/ServiceWorkerRegistration";
 import { resourceLabel, translateUi } from "@/lib/ui-strings";
 import type { LanguageCode } from "@/lib/preferences";
 
@@ -19,7 +24,23 @@ import type { LanguageCode } from "@/lib/preferences";
  * Also used on a Library book's page for its stotram PDFs (BookSchema.
  * resources): the heading and labels then read "Stotram" instead of
  * "Pasuram", decided by the resources' own `type`.
+ *
+ * Same mechanics as the app (mobile/services/pasuramLatest.ts): online,
+ * a link opens Prapatti.com's current file and the site's copy is kept
+ * for offline reading; offline, it opens that kept copy instead (see
+ * lib/pasuram-mirror.ts and public/sw.js).
  */
+function onResourceClick(event: MouseEvent<HTMLAnchorElement>, url: string) {
+  const mirror = pasuramMirrorHref(url);
+  if (!mirror) return;
+  if (navigator.onLine === false) {
+    event.preventDefault();
+    window.open(mirror, "_blank", "noopener,noreferrer");
+    return;
+  }
+  keepPasuramForOffline(mirror);
+}
+
 export function ResourceLinks({ resources, language }: { resources: ResourceEntry[]; language: LanguageCode | null }) {
   if (resources.length === 0) return null;
   const heading = resources.every((resource) => resource.type === "stotram-pdf") ? "stotramResourcesHeading" : "pasuramResourcesHeading";
@@ -36,6 +57,7 @@ export function ResourceLinks({ resources, language }: { resources: ResourceEntr
               href={resource.url}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={(event) => onResourceClick(event, resource.url)}
               className="inline-block rounded-md border border-[var(--border)] px-3 py-2 hover:border-[var(--accent)] hover:underline"
             >
               {resourceLabel(language, resource)} ↗
