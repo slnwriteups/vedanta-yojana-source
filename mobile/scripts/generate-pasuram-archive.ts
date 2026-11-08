@@ -192,6 +192,10 @@ export { pasuramArchiveAsset };
       `${path.relative(path.join(MOBILE_ROOT, ".."), MANIFEST_OUTPUT)}, and ` +
       `${path.relative(path.join(MOBILE_ROOT, ".."), ASSET_OUTPUT)}: ${filenames.length} Pasuram PDF(s) archived (${missing} missing).`
   );
+
+  // Record the original PDFs' sizes too, so the app can notice when
+  // Prapatti.com publishes a corrected version (see generate-pasuram-origin.ts).
+  execFileSync(process.execPath, [path.join(MOBILE_ROOT, "scripts", "generate-pasuram-origin.ts")], { stdio: "inherit" });
 }
 
 main();

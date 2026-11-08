@@ -454,8 +454,11 @@ Everything below reflects what is actually implemented, not planned:
   reading
 - **Offline Pasurams** — Pasuram PDFs for all 108 Divya Desams in
   Sanskrit, English, Tamil, Kannada, and Telugu (540 in total, sourced
-  from Prapatti.com), bundled directly into the app; no network
-  connection required
+  from Prapatti.com), bundled directly into the app so they open with
+  no connection. Because Prapatti.com corrects its PDFs over time, the
+  app fetches the current version when a Pasuram is opened online, and
+  checks for corrections whenever it comes online (at most daily),
+  keeping each updated copy for offline reading
 - **Search** — across Divya Desams, the Library, and Knowledge records
 - **Daily Panchangam** — daily Panchangam and Sankalpam for the place
   you are in, named on screen ("Chennai"), not an assumed fixed city.
