@@ -40,6 +40,14 @@ export function ReadingPositionProvider({ children }: { children: ReactNode }) {
         setLastReadByBook(next);
         void writeJSON(LAST_READ_STORAGE_KEY, next);
       },
+      markBookFinished: (bookSlug: string, chapterSlug: string) => {
+        const current = lastReadByBook.find((entry) => entry.bookSlug === bookSlug);
+        // Only the chapter being read, and only once (this is called from scroll handlers).
+        if (!current || current.chapterSlug !== chapterSlug || current.finished) return;
+        const next = lastReadByBook.map((entry) => (entry === current ? { ...entry, finished: true } : entry));
+        setLastReadByBook(next);
+        void writeJSON(LAST_READ_STORAGE_KEY, next);
+      },
     }),
     [lastReadByBook]
   );

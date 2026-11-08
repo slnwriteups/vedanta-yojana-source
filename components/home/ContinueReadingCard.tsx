@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useLanguage } from "@/lib/language-context";
 import { continueReadingProgressLabel, useT } from "@/lib/ui-strings";
+import { continueReadingPercent } from "@/content-lib/reading-progress.ts";
 
 /**
  * Web port of mobile/components/ContinueReadingCard.tsx -- Home's hero
@@ -40,7 +41,7 @@ export function ContinueReadingCard({
 }) {
   const t = useT();
   const { language } = useLanguage();
-  const percentComplete = total > 0 ? Math.round((position / total) * 100) : 0;
+  const percentComplete = continueReadingPercent(position, total);
   const progressLabel = continueReadingProgressLabel(language, position, total, percentComplete, minutesLeft, kind);
 
   return (

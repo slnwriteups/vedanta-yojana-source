@@ -93,6 +93,14 @@ export interface LastReadPosition {
   chapterSlug: string;
   /** Date.now() at save time -- not shown to the reader, but lets a future screen sort/prune multiple saved positions if that's ever added. */
   savedAt: number;
+  /**
+   * Set when the reader reached the end of the book's last chapter: the
+   * book then leaves "Continue Reading". Cleared by opening any chapter
+   * of the book again (recordChapterView writes a fresh entry), and
+   * ignored if chapters are later added after this one -- see
+   * resolveAllLastRead().
+   */
+  finished?: boolean;
 }
 
 export function isValidLastReadPosition(value: unknown): value is LastReadPosition {
@@ -103,7 +111,8 @@ export function isValidLastReadPosition(value: unknown): value is LastReadPositi
     candidate.bookSlug.length > 0 &&
     typeof candidate.chapterSlug === "string" &&
     candidate.chapterSlug.length > 0 &&
-    typeof candidate.savedAt === "number"
+    typeof candidate.savedAt === "number" &&
+    (candidate.finished === undefined || typeof candidate.finished === "boolean")
   );
 }
 

@@ -1,6 +1,7 @@
 import { loadBook } from "./loader.ts";
 import { localizeBook, localizeChapter } from "../../content-lib/i18n.ts";
 import { estimateReadingMinutes } from "../../content-lib/text-format.ts";
+import { isFinishedPosition } from "../../content-lib/reading-progress.ts";
 import type { LanguageCode } from "../../content-lib/schemas/index.ts";
 import type { BookPayload } from "../../content-lib/mobile-content.ts";
 import type { LastReadPosition } from "./preferences.ts";
@@ -58,6 +59,8 @@ export function resolveLastRead(
   if (!book || !offlineBook || !chapter) return null;
   const chapters = offlineBook.chapters;
   const chapterPosition = chapters.findIndex((c) => c.slug === chapter.slug) + 1;
+  // A finished book leaves "Continue Reading" (content-lib/reading-progress.ts).
+  if (isFinishedPosition(position, chapterPosition, chapters.length)) return null;
   const localizedChapter = localizeChapter(chapter, language);
   return {
     bookSlug: position.bookSlug,
@@ -78,7 +81,7 @@ export function resolveLastRead(
  * read first. Reuses resolveLastRead() per entry rather than
  * duplicating its resolution/null-handling logic; a book whose saved
  * chapter no longer resolves is silently dropped, exactly like the
- * single-position case.
+ * single-position case, and so is a book the reader has finished.
  */
 export function resolveAllLastRead(
   positions: LastReadPosition[],
