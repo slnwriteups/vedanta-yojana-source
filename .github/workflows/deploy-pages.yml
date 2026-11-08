@@ -7,6 +7,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Daily, so the site's copies of the Pasuram PDFs pick up corrections
+  # Prapatti.com publishes (see "Mirror Pasuram PDFs" below and
+  # lib/pasuram-mirror.ts). The app checks daily too.
+  schedule:
+    - cron: "17 21 * * *" # 02:47 IST
 
 permissions:
   contents: read
@@ -64,6 +69,14 @@ jobs:
           NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
           NEXT_PUBLIC_BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
 
+      - name: Mirror Pasuram PDFs from Prapatti.com
+        # Downloads every Pasuram/Stotram PDF fresh from Prapatti.com into
+        # out/pasurams/, so the site carries Prapatti's latest corrections
+        # and readers can keep them for offline reading (public/sw.js).
+        # Any file that can't be fetched falls back to the copy bundled
+        # with the app, with a warning on the run; never fails the deploy.
+        run: node scripts/sync-pasuram-mirror.ts
+
       - name: Disable Jekyll processing
         # Next.js emits _next/, and Jekyll strips underscore-prefixed
         # paths. The Pages Actions pipeline does not run Jekyll today, so
@@ -101,6 +114,9 @@ jobs:
         uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
 
       - name: Notify search engines (IndexNow)
+        # Skipped on the daily scheduled run: only the Pasuram PDFs are
+        # refreshed then, so there are no changed pages to report.
+        if: github.event_name != 'schedule'
         # Tells Bing (and through it DuckDuckGo, Yahoo and Copilot/ChatGPT
         # search), Yandex, Naver and Seznam that the sitemap's URLs
         # changed, so they recrawl within hours instead of whenever they

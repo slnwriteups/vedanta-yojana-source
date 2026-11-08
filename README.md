@@ -458,7 +458,10 @@ Everything below reflects what is actually implemented, not planned:
   no connection. Because Prapatti.com corrects its PDFs over time, the
   app fetches the current version when a Pasuram is opened online, and
   checks for corrections whenever it comes online (at most daily),
-  keeping each updated copy for offline reading
+  keeping each updated copy for offline reading. The website works the
+  same way: it opens Prapatti's current file online, keeps the Pasurams
+  you open (and the pages you visit) for offline reading, and refreshes
+  them when Prapatti publishes a correction
 - **Search** — across Divya Desams, the Library, and Knowledge records
 - **Daily Panchangam** — daily Panchangam and Sankalpam for the place
   you are in, named on screen ("Chennai"), not an assumed fixed city.

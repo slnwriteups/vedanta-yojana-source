@@ -1,6 +1,16 @@
 {
   "announcements": [
     {
+      "id": "2026-11-08-pasurams-stay-up-to-date",
+      "date": "2026-11-08",
+      "platforms": [
+        "app",
+        "website"
+      ],
+      "title": "Pasurams stay up to date",
+      "body": "When Prapatti.com publishes corrections to a Pasuram, the app and website now pick them up automatically whenever you're online, and keep them for offline reading."
+    },
+    {
       "id": "2026-11-05-sahasranaama-five-languages",
       "date": "2026-11-05",
       "platforms": [
