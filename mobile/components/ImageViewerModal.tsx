@@ -1,9 +1,17 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useRef } from "react";
 import { Animated, Modal, PanResponder, Pressable, StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { layout, radius, spacing, useTheme } from "../theme";
 import { useT } from "../ui-strings.ts";
-import { clamp, maxPanOffset, pinchDistance, type ViewerTouch } from "./image-viewer-math.ts";
+import {
+  classifyRelease,
+  clamp,
+  DOUBLE_TAP_WINDOW_MS,
+  maxPanOffset,
+  pinchDistance,
+  type ViewerTouch,
+} from "./image-viewer-math.ts";
 
 /**
  * Full-screen image viewer with pinch-to-zoom, pan-while-zoomed, and
@@ -27,20 +35,26 @@ import { clamp, maxPanOffset, pinchDistance, type ViewerTouch } from "./image-vi
  * whether the gesture layer responds to their input method. Android
  * back (`onRequestClose`) is unaffected by any of this.
  *
- * There is deliberately no tap-anywhere-to-close: a single tap used to
- * dismiss the viewer (after a short delay, to leave room for a second
- * tap to land as a double-tap-to-zoom instead), but that delay window
- * put every double-tap's first half in a race with the pinch/pan
- * gesture recognizer, making zoom feel unreliable. Closing is now only
- * ever the explicit top-left button (or Android back), so a tap is
- * always free to mean "maybe the start of a double-tap" with no
- * competing close-timer.
+ * Ways to close: tap anywhere, swipe the picture down, the close button
+ * (top right, below the status bar), or Android back.
+ *
+ * Tap-to-close without clashing with zoom: one gesture recognizer covers
+ * the whole screen, so taps, pinches and double-taps are all decided in
+ * one place. A single tap only schedules the close, after the double-tap
+ * window; ANY new touch landing in that window (the second half of a
+ * double-tap, or a pinch starting) cancels it outright. An earlier
+ * version removed tap-to-close because its timer, checked against a
+ * timestamp the double-tap had already reset, still fired after a
+ * double-tap and closed the picture mid-zoom; cancelling the timer
+ * itself removes that race. While zoomed in, a single tap never closes
+ * (the reader is exploring the picture); double-tap zooms back out.
+ *
+ * Swipe-down-to-close applies only when not zoomed in -- zoomed in, a
+ * drag pans the picture.
  */
 
 const MAX_SCALE = 4;
 const DOUBLE_TAP_ZOOM = 2.5;
-const DOUBLE_TAP_WINDOW_MS = 250;
-const TAP_MOVE_THRESHOLD = 6;
 
 export function ImageViewerModal({
   visible,
@@ -56,6 +70,7 @@ export function ImageViewerModal({
 }) {
   const theme = useTheme();
   const t = useT();
+  const insets = useSafeAreaInsets();
   const { width, height } = useWindowDimensions();
   const boxWidth = width * 0.92;
   const boxHeight = height * 0.7;
@@ -63,6 +78,9 @@ export function ImageViewerModal({
   const scale = useRef(new Animated.Value(1)).current;
   const translateX = useRef(new Animated.Value(0)).current;
   const translateY = useRef(new Animated.Value(0)).current;
+  /** Downward drag of the un-zoomed picture while swiping to close; also fades the backdrop. */
+  const dismissY = useRef(new Animated.Value(0)).current;
+  const backdropOpacity = dismissY.interpolate({ inputRange: [0, 300], outputRange: [1, 0.35], extrapolate: "clamp" });
 
   // PanResponder callbacks run outside React's render cycle and need to
   // read the CURRENT transform synchronously (to compute a pinch/pan
@@ -78,6 +96,20 @@ export function ImageViewerModal({
     hadMultitouch: false,
   });
   const lastTapAt = useRef(0);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  function cancelPendingClose() {
+    if (closeTimer.current) {
+      clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  }
+
+  // Never leave a close scheduled across opens, or after unmount.
+  useEffect(() => {
+    if (!visible) cancelPendingClose();
+    return cancelPendingClose;
+  }, [visible]);
 
   useEffect(() => {
     const scaleId = scale.addListener(({ value }) => {
@@ -106,7 +138,10 @@ export function ImageViewerModal({
   }
 
   function handleClose() {
+    cancelPendingClose();
+    lastTapAt.current = 0;
     animateTo(1, 0, 0);
+    dismissY.setValue(0);
     onClose();
   }
 
@@ -116,6 +151,9 @@ export function ImageViewerModal({
       onMoveShouldSetPanResponder: () => true,
       onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (evt) => {
+        // A new touch inside the double-tap window means a double-tap or a
+        // pinch is starting: the single tap before it must not close.
+        cancelPendingClose();
         const touches = evt.nativeEvent.touches as readonly ViewerTouch[];
         gestureStart.current.scale = current.current.scale;
         gestureStart.current.x = current.current.x;
@@ -129,6 +167,7 @@ export function ImageViewerModal({
         if (touches.length >= 2) {
           gestureStart.current.hadMultitouch = true;
           gestureStart.current.panOrigin = null;
+          dismissY.setValue(0);
           if (gestureStart.current.pinchDistance === 0) {
             // The second finger just landed (or landed a beat after the
             // first, which is the common case) -- there was no 2-touch
@@ -153,7 +192,11 @@ export function ImageViewerModal({
             gestureStart.current.y = current.current.y;
             gestureStart.current.panOrigin = { pageX: touches[0].pageX, pageY: touches[0].pageY };
           }
-          if (gestureStart.current.scale > 1 && gestureStart.current.panOrigin) {
+          if (gestureStart.current.scale <= 1 && gestureStart.current.panOrigin) {
+            // Not zoomed in: the picture follows a downward drag (swipe to close).
+            const dy = touches[0].pageY - gestureStart.current.panOrigin.pageY;
+            dismissY.setValue(Math.max(0, dy));
+          } else if (gestureStart.current.scale > 1 && gestureStart.current.panOrigin) {
             const dx = touches[0].pageX - gestureStart.current.panOrigin.pageX;
             const dy = touches[0].pageY - gestureStart.current.panOrigin.pageY;
             const maxX = maxPanOffset(boxWidth, gestureStart.current.scale);
@@ -163,53 +206,95 @@ export function ImageViewerModal({
           }
         }
       },
-      onPanResponderRelease: (evt, gestureState) => {
-        const wasTap =
-          !gestureStart.current.hadMultitouch &&
-          Math.abs(gestureState.dx) < TAP_MOVE_THRESHOLD &&
-          Math.abs(gestureState.dy) < TAP_MOVE_THRESHOLD;
+      onPanResponderRelease: (_evt, gestureState) => {
+        const kind = classifyRelease({
+          dx: gestureState.dx,
+          dy: gestureState.dy,
+          vy: gestureState.vy,
+          hadMultitouch: gestureStart.current.hadMultitouch,
+          scale: current.current.scale,
+        });
 
-        if (wasTap) {
+        if (kind === "dismiss") {
+          handleClose();
+          return;
+        }
+        Animated.spring(dismissY, { toValue: 0, useNativeDriver: true, friction: 8 }).start();
+
+        if (kind === "tap") {
           const now = Date.now();
-          const isDoubleTap = now - lastTapAt.current < DOUBLE_TAP_WINDOW_MS;
-          lastTapAt.current = isDoubleTap ? 0 : now;
-
-          if (isDoubleTap) {
+          if (now - lastTapAt.current < DOUBLE_TAP_WINDOW_MS) {
+            lastTapAt.current = 0;
             animateTo(current.current.scale > 1 ? 1 : DOUBLE_TAP_ZOOM);
             return;
           }
+          lastTapAt.current = now;
+          if (current.current.scale <= 1) {
+            closeTimer.current = setTimeout(() => {
+              closeTimer.current = null;
+              handleClose();
+            }, DOUBLE_TAP_WINDOW_MS);
+          }
+          return;
         }
 
         if (current.current.scale <= 1) animateTo(1, 0, 0);
+      },
+      onPanResponderTerminate: () => {
+        Animated.spring(dismissY, { toValue: 0, useNativeDriver: true, friction: 8 }).start();
       },
     })
   ).current;
 
   return (
-    <Modal visible={visible && asset !== null} transparent animationType="fade" onRequestClose={handleClose}>
-      <View style={[styles.backdrop, { backgroundColor: theme.colors.overlay }]} accessibilityViewIsModal>
-        <View style={styles.gestureArea} {...panResponder.panHandlers}>
+    <Modal
+      visible={visible && asset !== null}
+      transparent
+      animationType="fade"
+      statusBarTranslucent
+      navigationBarTranslucent
+      onRequestClose={handleClose}
+    >
+      <View style={styles.root} accessibilityViewIsModal>
+        <Animated.View
+          pointerEvents="none"
+          style={[StyleSheet.absoluteFill, { backgroundColor: theme.colors.overlay, opacity: backdropOpacity }]}
+        />
+        {/* The whole screen is one gesture area, so a tap anywhere -- on the picture or around it -- is handled the same way. */}
+        <View style={[StyleSheet.absoluteFill, styles.gestureArea]} {...panResponder.panHandlers}>
           {asset !== null ? (
             <Animated.Image
               source={asset}
               accessibilityLabel={label ?? undefined}
               style={[
                 { width: boxWidth, height: boxHeight },
-                { transform: [{ scale }, { translateX }, { translateY }] },
+                { transform: [{ translateY: dismissY }, { scale }, { translateX }, { translateY }] },
               ]}
               resizeMode="contain"
             />
           ) : null}
         </View>
 
+        <Text
+          pointerEvents="none"
+          style={[styles.hint, { bottom: insets.bottom + spacing.xl }]}
+          importantForAccessibility="no"
+        >
+          {t("tapAnywhereToClose")}
+        </Text>
+
+        {/* Top right, clear of the status bar and notch, with a generous touch area. */}
         <Pressable
           onPress={handleClose}
           accessibilityRole="button"
           accessibilityLabel={t("closeImage")}
-          hitSlop={spacing.sm}
-          style={[styles.closeButton, { backgroundColor: theme.colors.overlay }]}
+          hitSlop={spacing.md}
+          style={({ pressed }) => [
+            styles.closeButton,
+            { top: insets.top + spacing.sm, right: insets.right + spacing.md, opacity: pressed ? 0.7 : 1 },
+          ]}
         >
-          <Ionicons name="close" size={22} color="#fffaf5" />
+          <Ionicons name="close" size={26} color="#fffaf5" />
         </Pressable>
       </View>
     </Modal>
@@ -217,23 +302,29 @@ export function ImageViewerModal({
 }
 
 const styles = StyleSheet.create({
-  backdrop: {
+  root: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
   gestureArea: {
     alignItems: "center",
     justifyContent: "center",
   },
+  hint: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    textAlign: "center",
+    fontSize: 13,
+    color: "#fffaf5",
+    opacity: 0.8,
+  },
   closeButton: {
     position: "absolute",
-    top: spacing.xl,
-    left: spacing.lg,
     width: layout.minTouchTarget,
     height: layout.minTouchTarget,
     borderRadius: radius.lg,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.45)",
   },
 });

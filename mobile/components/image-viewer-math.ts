@@ -31,3 +31,32 @@ export function clamp(value: number, min: number, max: number): number {
 export function maxPanOffset(boxSize: number, scale: number): number {
   return (boxSize * (scale - 1)) / 2;
 }
+
+/** A finger that moved less than this (px) on release was a tap, not a drag. */
+export const TAP_MOVE_THRESHOLD = 6;
+/** Two taps released within this window (ms) are a double-tap; a single tap closes only after it passes. */
+export const DOUBLE_TAP_WINDOW_MS = 300;
+/** Dragging the un-zoomed picture down at least this far (px) closes it on release... */
+export const DISMISS_DISTANCE = 120;
+/** ...as does a quick downward flick (px/ms) that has moved at least DISMISS_MIN_FLICK_DISTANCE. */
+export const DISMISS_VELOCITY = 0.9;
+export const DISMISS_MIN_FLICK_DISTANCE = 40;
+
+export type ReleaseKind = "tap" | "dismiss" | "none";
+
+/**
+ * What a finished one-gesture touch meant. A pinch (any second finger)
+ * is never a tap or a dismiss. Swipe-to-close only applies when the
+ * picture isn't zoomed in -- zoomed in, a drag pans the picture instead.
+ */
+export function classifyRelease(gesture: { dx: number; dy: number; vy: number; hadMultitouch: boolean; scale: number }): ReleaseKind {
+  const { dx, dy, vy, hadMultitouch, scale } = gesture;
+  if (hadMultitouch) return "none";
+  if (Math.abs(dx) < TAP_MOVE_THRESHOLD && Math.abs(dy) < TAP_MOVE_THRESHOLD) return "tap";
+  const notZoomed = scale <= 1.01;
+  const mostlyDown = dy > 0 && Math.abs(dy) > Math.abs(dx) * 1.5;
+  if (notZoomed && mostlyDown && (dy >= DISMISS_DISTANCE || (vy >= DISMISS_VELOCITY && dy >= DISMISS_MIN_FLICK_DISTANCE))) {
+    return "dismiss";
+  }
+  return "none";
+}
