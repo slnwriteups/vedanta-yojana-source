@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { clamp, maxPanOffset, pinchDistance } from "../components/image-viewer-math.ts";
+import { clamp, classifyRelease, DISMISS_DISTANCE, maxPanOffset, pinchDistance, TAP_MOVE_THRESHOLD } from "../components/image-viewer-math.ts";
 
 /**
  * Unit tests for ImageViewerModal.tsx's pure pinch/pan math. The
@@ -56,4 +56,33 @@ test("maxPanOffset: scales linearly with how far past 1x the image is zoomed", (
 
 test("maxPanOffset: a wider box allows proportionally more pan at the same zoom level", () => {
   assert.equal(maxPanOffset(400, 2) > maxPanOffset(200, 2), true);
+});
+
+
+const still = { dx: 0, dy: 0, vy: 0, hadMultitouch: false, scale: 1 };
+
+test("Release: a barely-moving single finger is a tap, zoomed or not", () => {
+  assert.equal(classifyRelease(still), "tap");
+  assert.equal(classifyRelease({ ...still, dx: TAP_MOVE_THRESHOLD - 1, dy: -(TAP_MOVE_THRESHOLD - 1) }), "tap");
+  assert.equal(classifyRelease({ ...still, scale: 2.5 }), "tap");
+});
+
+test("Release: a pinch is never a tap or a close", () => {
+  assert.equal(classifyRelease({ ...still, hadMultitouch: true }), "none");
+  assert.equal(classifyRelease({ ...still, hadMultitouch: true, dy: 400, vy: 3 }), "none");
+});
+
+test("Release: swiping the un-zoomed picture down far enough, or flicking it, closes", () => {
+  assert.equal(classifyRelease({ ...still, dy: DISMISS_DISTANCE }), "dismiss");
+  assert.equal(classifyRelease({ ...still, dy: 50, vy: 1.2 }), "dismiss");
+  assert.equal(classifyRelease({ ...still, dy: 50, vy: 0.2 }), "none");
+});
+
+test("Release: swiping while zoomed in pans instead of closing", () => {
+  assert.equal(classifyRelease({ ...still, dy: 400, vy: 3, scale: 2 }), "none");
+});
+
+test("Release: sideways or upward drags don't close", () => {
+  assert.equal(classifyRelease({ ...still, dx: 200, dy: 130 }), "none");
+  assert.equal(classifyRelease({ ...still, dy: -300, vy: -3 }), "none");
 });
