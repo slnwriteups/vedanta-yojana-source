@@ -3,15 +3,18 @@ import { File } from "expo-file-system";
 import * as Sharing from "expo-sharing";
 import { Platform } from "react-native";
 import { ensurePasuramsUnpacked, isPasuramAvailable, localPasuramPath } from "./pasuramArchive.ts";
+import { latestLocalPasuramPath, refreshBeforeOpen } from "./pasuramLatest.ts";
 
 /**
  * Every Pasuram PDF Prapatti.com resource referenced by the content
  * corpus is bundled directly into the app as a single compressed
  * archive (see mobile/scripts/generate-pasuram-archive.ts and
- * mobile/services/pasuramArchive.ts) -- there is no download step,
- * online or offline, and never has been for a reader: a Pasuram is
- * available the instant the app is installed, exactly like a Divya
- * Desam image. This file is the one place mobile/ is allowed to touch
+ * mobile/services/pasuramArchive.ts), so a Pasuram is available the
+ * instant the app is installed, with no connection. Because Prapatti.com
+ * publishes corrections over time, opening a Pasuram while online first
+ * fetches the current version from Prapatti.com and keeps it for offline
+ * use (see services/pasuramLatest.ts); the newest copy on the device is
+ * what opens, falling back to the bundled one. This file is the one place mobile/ is allowed to touch
  * expo-intent-launcher/expo-sharing for this feature -- see
  * mobile/tests/offline.test.ts, which fails the build if app/,
  * components/, or content-lib/ reference fetch/XMLHttpRequest/axios.
@@ -59,8 +62,9 @@ export async function openOfflinePasuram(url: string): Promise<PasuramOpenResult
   }
 
   try {
-    await ensurePasuramsUnpacked();
-    const localUri = localPasuramPath(url);
+    // Fetch the current version first when online; never fails the open.
+    await Promise.all([ensurePasuramsUnpacked(), refreshBeforeOpen(url)]);
+    const localUri = latestLocalPasuramPath(url) ?? localPasuramPath(url);
     if (!localUri) {
       return { success: false, error: "Could not resolve the bundled Pasuram file." };
     }

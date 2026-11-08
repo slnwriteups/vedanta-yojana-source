@@ -21,6 +21,7 @@ import { TourProvider, useTour } from "../tour/Tour";
 import { ONBOARDED_STORAGE_KEY, isValidCompletedFlag } from "../content-lib/preferences.ts";
 import { readJSON, writeJSON } from "../storage.ts";
 import { ensurePasuramsUnpacked } from "../services/pasuramArchive.ts";
+import { startCorrectionChecks } from "../services/pasuramLatest.ts";
 import { askForLocationUpFront } from "../services/panchangamService.ts";
 import { autoEnableNotifications } from "../services/pushNotifications.ts";
 import { READING_FONT_ASSETS } from "../reading-font.ts";
@@ -95,6 +96,13 @@ function RootStack() {
   useEffect(() => {
     ensurePasuramsUnpacked().catch(() => {});
   }, []);
+
+  // Keeps Pasurams current with Prapatti.com, where scholars publish
+  // corrections: whenever the app comes online (launch, back to the
+  // foreground, or the connection returning while it's open), checks for
+  // corrected PDFs and downloads them for offline reading. At most once
+  // a day; see services/pasuramLatest.ts.
+  useEffect(() => startCorrectionChecks(), []);
 
   if (!seenWelcome) {
     return <WelcomeScreen onDone={() => setSeenWelcome(true)} />;
