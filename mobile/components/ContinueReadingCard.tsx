@@ -4,6 +4,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { useLanguage } from "../language-context.ts";
 import { continueReadingProgressLabel, useT } from "../ui-strings.ts";
+import { continueReadingPercent } from "../../content-lib/reading-progress.ts";
 
 const COVER_SIZE = { width: 64, height: 96 };
 
@@ -43,7 +44,7 @@ export function ContinueReadingCard({
   const theme = useTheme();
   const t = useT();
   const { language } = useLanguage();
-  const percentComplete = total > 0 ? Math.round((position / total) * 100) : 0;
+  const percentComplete = continueReadingPercent(position, total);
   const progressLabel = continueReadingProgressLabel(language, position, total, percentComplete, minutesLeft, kind);
 
   return (

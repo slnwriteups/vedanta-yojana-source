@@ -35,6 +35,7 @@ import { chapterPositionLabel, minReadLabel, nowReadingAnnouncement, useT } from
 import { getOfflineBookImageUri, isBookAvailable, loadOfflineBook } from "../../../../services/bookOfflineService.ts";
 import { getLibraryCatalogEntry } from "../../../../services/libraryCatalogService.ts";
 import type { MobileChapter as Chapter } from "../../../../../content-lib/mobile-content.ts";
+import { CHAPTER_END_THRESHOLD } from "../../../../../content-lib/reading-progress.ts";
 
 /**
  * Phase 6C -- the reading-comfort pass the brief asks for: a capped
@@ -107,11 +108,16 @@ export default function LibraryChapterScreen() {
   const theme = useTheme();
   const { language } = useLanguage();
   const t = useT();
-  const { recordChapterView } = useReadingPosition();
+  const { recordChapterView, markBookFinished } = useReadingPosition();
   const { isBookmarked, toggleBookmark } = useBookmarks();
   const [progress, setProgress] = useState(0);
   /** Furthest point reached in the chapter currently open, for read depth. */
   const deepest = useRef(0);
+  /** Whether the end of this chapter has been reached -- on the book's last chapter, that finishes the book. */
+  const endReached = useRef(false);
+  /** Visible height of the ScrollView, to tell when a short chapter fits on screen without scrolling. */
+  const viewportHeight = useRef(0);
+  const contentHeight = useRef(0);
   // The merged catalog, as the book screen uses: it also knows books that
   // arrived through the remote manifest after this build was bundled.
   const loadedBook = useMemo(() => getLibraryCatalogEntry(bookSlug)?.book ?? null, [bookSlug]);
@@ -140,6 +146,22 @@ export default function LibraryChapterScreen() {
     // to re-read a passage does not un-read the chapter. Held in a ref so
     // it costs no re-render on a handler that fires constantly.
     deepest.current = Math.max(deepest.current, reached);
+    if (reached >= CHAPTER_END_THRESHOLD) noteEndReached();
+  }
+
+  // Reaching the end of the LAST chapter finishes the book: it leaves
+  // Home's "Continue Reading" (content-lib/reading-progress.ts). Same as
+  // the website's components/library/BookFinishedTracker.tsx.
+  function noteEndReached() {
+    if (endReached.current) return;
+    endReached.current = true;
+    if (!adjacentRef.current.next) markBookFinished(bookSlug, chapterSlug);
+  }
+
+  // A chapter short enough to fit on screen is read without any scroll
+  // event. Layout and content size can arrive in either order.
+  function checkFitsOnScreen() {
+    if (viewportHeight.current > 0 && contentHeight.current > 0 && contentHeight.current <= viewportHeight.current + 1) noteEndReached();
   }
 
   // How far this chapter was read, reported when the reader leaves it:
@@ -148,6 +170,8 @@ export default function LibraryChapterScreen() {
   // services/readingPingService.ts.
   useEffect(() => {
     deepest.current = 0;
+    endReached.current = false;
+    contentHeight.current = 0;
     return () => {
       reportDepth(`/library/${bookSlug}/${chapterSlug}`, deepest.current);
     };
@@ -190,6 +214,12 @@ export default function LibraryChapterScreen() {
     // Reading" save, which is itself triggered by this same effect.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bookSlug, chapterSlug, loadedChapter]);
+
+  // The saved position can land just after the end was reached (a short
+  // chapter on open); markBookFinished is a no-op once marked.
+  useEffect(() => {
+    if (endReached.current && !adjacentRef.current.next) markBookFinished(bookSlug, chapterSlug);
+  }, [markBookFinished, bookSlug, chapterSlug]);
 
   if (!offlineBook) {
     // The book itself hasn't been downloaded (or was deleted since this
@@ -268,6 +298,14 @@ export default function LibraryChapterScreen() {
         showsVerticalScrollIndicator={false}
         onScroll={handleScroll}
         scrollEventThrottle={32}
+        onLayout={(event) => {
+          viewportHeight.current = event.nativeEvent.layout.height;
+          checkFitsOnScreen();
+        }}
+        onContentSizeChange={(_width, height) => {
+          contentHeight.current = height;
+          checkFitsOnScreen();
+        }}
       >
         <View style={styles.header}>
           <View style={styles.headerTop}>

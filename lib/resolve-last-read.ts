@@ -2,6 +2,7 @@ import type { Chapter, LanguageCode } from "@/content-lib/schemas";
 import type { PublicBook } from "./public-content";
 import { localizeBook, localizeChapterSummary } from "@/content-lib/i18n.ts";
 import { estimateReadingMinutes } from "@/content-lib/text-format.ts";
+import { isFinishedPosition } from "@/content-lib/reading-progress.ts";
 import type { LastReadPosition } from "./preferences";
 
 /**
@@ -87,6 +88,8 @@ function resolveLastRead(
   if (!entry || !chapter) return null;
 
   const chapterPosition = entry.chapters.findIndex((c) => c.slug === chapter.slug) + 1;
+  // A finished book leaves "Continue Reading" (content-lib/reading-progress.ts).
+  if (isFinishedPosition(position, chapterPosition, entry.chapters.length)) return null;
   const localizedChapter = localizeChapterSummary(chapter, language);
   const minutesLeft = (language ? chapter.translations?.[language]?.readingMinutes : undefined) ?? chapter.readingMinutes;
   return {
@@ -107,7 +110,7 @@ function resolveLastRead(
  * localized cards -- one per book that still resolves, most-recently-
  * read first. A book whose saved chapter no longer resolves (or isn't
  * in `catalog`) is silently dropped, exactly like the single-position
- * case.
+ * case, and so is a book the reader has finished.
  */
 export function resolveAllLastRead(
   positions: LastReadPosition[],

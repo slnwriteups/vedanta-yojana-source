@@ -9,6 +9,7 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
 import { resolveImageHref } from "@/lib/image-file";
 import { LocalizedChapterBody } from "@/components/library/LocalizedChapterBody";
 import { ReadingPositionTracker } from "@/components/library/ReadingPositionTracker";
+import { BookFinishedTracker } from "@/components/library/BookFinishedTracker";
 import { BookmarkButton } from "@/components/library/BookmarkButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata, truncateForDescription } from "@/lib/metadata";
@@ -143,6 +144,9 @@ export default async function LibraryChapterPage({
             : [];
         })}
       />
+
+      {/* End of the book: reaching this leaves "Continue Reading". */}
+      {next ? null : <BookFinishedTracker bookSlug={book.slug} chapterSlug={chapter.slug} />}
     </div>
   );
 }
