@@ -1,6 +1,16 @@
 {
   "announcements": [
     {
+      "id": "2026-11-08-finished-books-step-aside",
+      "date": "2026-11-08",
+      "platforms": [
+        "app",
+        "website"
+      ],
+      "title": "Finished books step aside",
+      "body": "Once you reach the end of a book, it leaves Continue Reading, so the books you're still reading stay up front. Open any chapter again to bring it back."
+    },
+    {
       "id": "2026-11-08-pasurams-stay-up-to-date",
       "date": "2026-11-08",
       "platforms": [
