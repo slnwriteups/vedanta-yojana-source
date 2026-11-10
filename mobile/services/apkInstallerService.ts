@@ -2,6 +2,7 @@ import { Linking, Platform } from "react-native";
 import { File, Paths } from "expo-file-system";
 import * as FileSystem from "expo-file-system";
 import * as IntentLauncher from "expo-intent-launcher";
+import { isTrustedApkUrl } from "./apkUrlPolicy.ts";
 
 /**
  * Handles in-app downloading and triggering of the Android Package Installer
@@ -25,6 +26,10 @@ export async function downloadAndInstallApk(
   downloadUrl: string,
   onProgress?: (percent: number) => void
 ): Promise<boolean> {
+  // Defence in depth: checkForUpdate() already filters the manifest, but
+  // this function must never download, install or open any other source.
+  if (!isTrustedApkUrl(downloadUrl)) return false;
+
   if (Platform.OS !== "android") {
     await Linking.openURL(downloadUrl);
     return true;
