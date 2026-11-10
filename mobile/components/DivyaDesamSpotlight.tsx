@@ -1,10 +1,11 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "expo-router";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { AppState, Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { loadDivyaDesams, type DivyaDesam } from "../content-lib/loader.ts";
 import { divyaDesamNumberLabels } from "../content-lib/ordering.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { localizeDivyaDesam } from "../../content-lib/i18n.ts";
+import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightRecord } from "../../content-lib/divya-desam-spotlight.ts";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { sectionTint } from "../section-tints.ts";
 import { regionLabel } from "../divya-desam-region-labels.ts";
@@ -20,47 +21,33 @@ function firstImageAsset(images: DivyaDesam["images"]): number | null {
   return null;
 }
 
-/** Whole calendar days since the Unix epoch, local device date -- a day counter that advances by exactly 1 each day. */
-function daysSinceEpoch(date: Date): number {
-  const utcMidnight = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-  return Math.floor(utcMidnight / 86400000);
-}
-
 /**
- * A Wang/Murmur3-style integer finalizer: three multiply-xor-shift
- * rounds give strong avalanche even for near-identical inputs. Used
- * below to drive a seeded Fisher-Yates shuffle -- Math.imul keeps every
- * step in 32-bit integer arithmetic, matching the reference Wang hash
- * exactly.
+ * Today's date, refreshed at local midnight and whenever the app returns
+ * to the foreground -- so an app left open (or suspended) overnight
+ * never keeps showing yesterday's temple. Timers pause while the app is
+ * in the background; the AppState check covers that. Only changes state
+ * when the calendar day actually changes.
  */
-function hashInt(x: number): number {
-  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
-  x = Math.imul(x ^ (x >>> 16), 0x45d9f3b);
-  x = x ^ (x >>> 16);
-  return x >>> 0;
-}
-
-/** Fixed seed for the spotlight's shuffle order -- change only if a deliberately different rotation order is wanted. */
-const SPOTLIGHT_SHUFFLE_SEED = 0x5d1f4a;
-
-/**
- * A fixed, deterministic shuffle of [0, length) via seeded Fisher-Yates.
- * Walking this permutation one index per calendar day (see
- * `daysSinceEpoch` above, indexed with `% length`) visits every record
- * exactly once per length-day cycle before repeating -- so with ~107
- * records, no temple repeats within any 7-day window, and none repeats
- * until all 108 (counting the merged #36-37 record as two) have been
- * shown, at which point the same shuffled cycle restarts.
- */
-function seededShuffle(length: number, seed: number): number[] {
-  const indices = Array.from({ length }, (_, i) => i);
-  let state = seed;
-  for (let i = length - 1; i > 0; i--) {
-    state = hashInt(state);
-    const j = state % (i + 1);
-    [indices[i], indices[j]] = [indices[j], indices[i]];
-  }
-  return indices;
+function useToday(): Date {
+  const [today, setToday] = useState(() => new Date());
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const refresh = () => {
+      const now = new Date();
+      setToday((prev) => (daysSinceEpoch(prev) === daysSinceEpoch(now) ? prev : now));
+      clearTimeout(timer);
+      timer = setTimeout(refresh, msUntilNextLocalMidnight(now) + 1000);
+    };
+    refresh();
+    const subscription = AppState.addEventListener("change", (state) => {
+      if (state === "active") refresh();
+    });
+    return () => {
+      clearTimeout(timer);
+      subscription.remove();
+    };
+  }, []);
+  return today;
 }
 
 /**
@@ -69,7 +56,7 @@ function seededShuffle(length: number, seed: number): number[] {
  * same dataset and traditional pilgrimage ordering the Divya Desams tab
  * itself uses -- each record's own `sourceOrder`, see
  * content-lib/mobile-content.ts), rotated one-per-calendar-day through a
- * fixed shuffled order (seededShuffle() above) rather than walked in
+ * fixed shuffled order (content-lib/divya-desam-spotlight.ts, shared with the website) rather than walked in
  * sequence or picked independently at random each day, and pushing to
  * the exact detail route (/divya-desams/[slug]) the Divya Desams tab's
  * own list uses.
@@ -80,15 +67,15 @@ export function DivyaDesamSpotlight() {
   const { language } = useLanguage();
   const t = useT();
 
-  const sortedRecords = useMemo(() => [...loadDivyaDesams()].sort((a, b) => a.sourceOrder - b.sourceOrder), []);
+  const today = useToday();
 
-  if (sortedRecords.length === 0) return null;
+  const sortedRecords = useMemo(() => [...loadDivyaDesams()].sort((a, b) => a.sourceOrder - b.sourceOrder), []);
+  const picked = pickSpotlightRecord(sortedRecords, today);
+
+  if (!picked) return null;
 
   const numberLabels = divyaDesamNumberLabels(sortedRecords.map((r) => r.slug));
-  const shuffleOrder = seededShuffle(sortedRecords.length, SPOTLIGHT_SHUFFLE_SEED);
-  const cycleIndex = daysSinceEpoch(new Date()) % sortedRecords.length;
-  const index = shuffleOrder[cycleIndex];
-  const record = localizeDivyaDesam(sortedRecords[index], language);
+  const record = localizeDivyaDesam(picked, language);
   const tint = sectionTint("divya-desams", theme.scheme);
   const image = firstImageAsset(record.images);
   const numberLabel = numberLabels.get(record.slug) ?? "";

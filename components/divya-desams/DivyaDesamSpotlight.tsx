@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { PublicDivyaDesam } from "@/lib/public-content";
 import { localizeDivyaDesam } from "@/content-lib/i18n.ts";
-import { pickSpotlightRecord } from "@/content-lib/divya-desam-spotlight.ts";
+import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightRecord } from "@/content-lib/divya-desam-spotlight.ts";
 import { regionLabel } from "@/content-lib/divya-desam-region-labels.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -45,8 +45,27 @@ export function DivyaDesamSpotlight({ entries }: { entries: SpotlightEntry[] }) 
   const t = useT();
   const [today, setToday] = useState<Date | null>(null);
 
+  // Re-pick at local midnight and whenever the tab becomes visible again,
+  // so a tab left open overnight never keeps showing yesterday's temple
+  // (background tabs can delay or skip the timer; the visibility check
+  // covers that).
   useEffect(() => {
-    setToday(new Date());
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const refresh = () => {
+      const now = new Date();
+      setToday((prev) => (prev && daysSinceEpoch(prev) === daysSinceEpoch(now) ? prev : now));
+      clearTimeout(timer);
+      timer = setTimeout(refresh, msUntilNextLocalMidnight(now) + 1000);
+    };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === "visible") refresh();
+    };
+    refresh();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
   }, []);
 
   const entry = useMemo(() => (today ? pickSpotlightRecord(entries, today) : null), [entries, today]);
