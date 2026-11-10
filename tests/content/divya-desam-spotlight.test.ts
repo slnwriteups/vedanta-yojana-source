@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { daysSinceEpoch, pickSpotlightRecord, seededShuffle } from "../../content-lib/divya-desam-spotlight.ts";
+import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightRecord, seededShuffle } from "../../content-lib/divya-desam-spotlight.ts";
 
 // Constructed via the local-time Date constructor (year, month, day, ...),
 // matching daysSinceEpoch()'s own documented semantics ("local device
@@ -50,4 +50,15 @@ test("seededShuffle: a fixed-length, fixed-seed shuffle is a permutation of [0, 
   const shuffled = seededShuffle(107, 0x5d1f4a);
   assert.equal(shuffled.length, 107);
   assert.deepEqual([...shuffled].sort((a, b) => a - b), Array.from({ length: 107 }, (_, i) => i));
+});
+
+test("msUntilNextLocalMidnight: counts down to the next local calendar day", () => {
+  assert.equal(msUntilNextLocalMidnight(new Date(2026, 10, 10, 23, 59, 0)), 60_000);
+  assert.equal(msUntilNextLocalMidnight(new Date(2026, 10, 10, 0, 0, 0)), new Date(2026, 10, 11).getTime() - new Date(2026, 10, 10).getTime());
+});
+
+test("msUntilNextLocalMidnight: waking after it fires lands on a new spotlight day", () => {
+  const now = new Date(2026, 10, 10, 18, 30);
+  const wake = new Date(now.getTime() + msUntilNextLocalMidnight(now));
+  assert.equal(daysSinceEpoch(wake), daysSinceEpoch(now) + 1);
 });

@@ -23,6 +23,16 @@ export function daysSinceEpoch(date: Date): number {
 }
 
 /**
+ * Milliseconds from `date` until the next local midnight -- when the
+ * spotlight's day changes. Both platforms schedule a re-pick with this so
+ * a page or app left open overnight never keeps showing yesterday's temple.
+ */
+export function msUntilNextLocalMidnight(date: Date): number {
+  const nextMidnight = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+  return nextMidnight.getTime() - date.getTime();
+}
+
+/**
  * A Wang/Murmur3-style integer finalizer: three multiply-xor-shift
  * rounds give strong avalanche even for near-identical inputs. Used
  * below to drive a seeded Fisher-Yates shuffle -- Math.imul keeps every
