@@ -1,5 +1,6 @@
 import Constants from "expo-constants";
 import { Platform } from "react-native";
+import { isTrustedApkUrl } from "./apkUrlPolicy.ts";
 
 /**
  * Vedanta Yojana is distributed as a direct-download APK, not through
@@ -78,6 +79,8 @@ export async function checkForUpdate(): Promise<UpdateInfo | null> {
     const data: unknown = await response.json();
     if (!isValidManifest(data)) return null;
     if (data.android.versionCode <= currentVersionCode) return null;
+    // Never offer an APK from anywhere but the official releases repository.
+    if (!isTrustedApkUrl(data.android.url)) return null;
     return {
       latestVersionCode: data.android.versionCode,
       latestVersion: data.android.version,
