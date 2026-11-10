@@ -6,6 +6,7 @@ import { useLanguage } from "@/lib/language-context";
 import { timesInZoneLabel, useT } from "@/lib/ui-strings";
 import {
   localizeSankalpamText,
+  sankalpamNamesPlace,
   localizeUpcomingEkadashi,
   nakshatramLabel,
   nakshatramOfDayLabel,
@@ -444,6 +445,9 @@ function SankalpamSection({
               <p className="prose-body text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
                 {localizeSankalpamText(dailyText, language)}
               </p>
+              {sankalpamNamesPlace(dailyText) ? null : (
+                <p className="pt-1 text-xs text-[var(--muted)]">{t("sankalpamPlaceNote")}</p>
+              )}
             </div>
           ) : null}
           {tarpanam ? (

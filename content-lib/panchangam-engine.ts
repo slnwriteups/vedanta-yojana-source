@@ -1100,6 +1100,56 @@ function samvatsaraIndexAt(ms: number, timeZone: string): number {
   return (((solarYear - 1987) % 60) + 60) % 60;
 }
 
+// The Mahāsaṅkalpam around the date: Sunder Kidāmbi, Yajur Upākarma
+// prayogaḥ (prapatti.com), pp. 2-3, in standard IAST (his ē/ō as e/o).
+// Its place words are given for India and, as an option, for the United
+// States; the owner extended the US wording to Canada (10 Nov 2026).
+// Elsewhere no source has been supplied, so the place words and the Meru
+// clause are left out (see sankalpamNamesPlace) rather than guessed.
+const SANKALPAM_OPENING =
+  "hariḥ oṁ tat śrīgovinda govinda govinda | asya śrībhagavato mahāpuruṣasya śrī viṣṇoḥ ājñayā pravartamānasya " +
+  "adya brahmaṇaḥ dvitīyaparārdhe śrīśvetavarāhakalpe vaivasvatamanvantare kaliyuge prathamapāde";
+const SANKALPAM_PLACE: Record<SankalpamRegion, string> = {
+  india: "jambūdvīpe bhāratavarṣe bharatakhaṇḍe śakābde merordakṣiṇe pārśve",
+  "north-america": "krauñca dvīpe ramaṇakavarṣe uttara (gotīrtha) khaṇḍe śakābde merordakṣiṇe pārśve",
+};
+const SANKALPAM_ERA = "asmin vartamāne vyāvahārike prabhavādi ṣaṣṭhi saṁvatsarāṇāṁ madhye";
+const SANKALPAM_CLOSE =
+  "śubhayoga śubhakaraṇa evaṅguṇa viśeṣaṇa viśiṣṭāyām asyām vartamānāyām śubha tithau, " +
+  "śrī bhagavadājñayā śrīman nārāyaṇa prītyartham.";
+
+type SankalpamRegion = "india" | "north-america";
+
+// IANA zones (and their old aliases) of India, the United States and Canada.
+const INDIA_ZONES = new Set(["Asia/Kolkata", "Asia/Calcutta"]);
+const NORTH_AMERICA_ZONES = new Set(
+  [
+    // United States
+    "New_York", "Detroit", "Kentucky/Louisville", "Kentucky/Monticello", "Louisville", "Indianapolis", "Fort_Wayne",
+    "Indiana/Indianapolis", "Indiana/Vincennes", "Indiana/Winamac", "Indiana/Marengo", "Indiana/Petersburg",
+    "Indiana/Vevay", "Indiana/Tell_City", "Indiana/Knox", "Knox_IN", "Chicago", "Menominee", "North_Dakota/Center",
+    "North_Dakota/New_Salem", "North_Dakota/Beulah", "Denver", "Shiprock", "Boise", "Phoenix", "Los_Angeles",
+    "Anchorage", "Juneau", "Sitka", "Metlakatla", "Yakutat", "Nome", "Adak", "Atka",
+    // Canada
+    "St_Johns", "Halifax", "Glace_Bay", "Moncton", "Goose_Bay", "Blanc-Sablon", "Toronto", "Montreal", "Nipigon",
+    "Thunder_Bay", "Iqaluit", "Pangnirtung", "Atikokan", "Coral_Harbour", "Winnipeg", "Rainy_River", "Resolute",
+    "Rankin_Inlet", "Regina", "Swift_Current", "Edmonton", "Cambridge_Bay", "Yellowknife", "Inuvik", "Creston",
+    "Dawson_Creek", "Fort_Nelson", "Whitehorse", "Dawson", "Vancouver",
+  ].map((zone) => `America/${zone}`).concat("Pacific/Honolulu")
+);
+
+/** Which supplied place wording, if any, applies to a reader whose clock is in `timeZone`. */
+function sankalpamRegion(timeZone: string): SankalpamRegion | null {
+  if (INDIA_ZONES.has(timeZone)) return "india";
+  if (NORTH_AMERICA_ZONES.has(timeZone) || /^(US|Canada)\//.test(timeZone)) return "north-america";
+  return null;
+}
+
+/** Whether a Sankalpam names the reader's place (false outside India, the US and Canada). */
+export function sankalpamNamesPlace(sankalpamText: string): boolean {
+  return sankalpamText.includes("dvīpe");
+}
+
 function sankalpamDeclaration(cal: SunCalendar, ms: number): string {
   const rasi = rasiIndexAt(ms);
   const tithi = tithiAt(ms).index;
@@ -1107,7 +1157,11 @@ function sankalpamDeclaration(cal: SunCalendar, ms: number): string {
   const vasara = weekdayOf(cal.hinduDayOf(ms));
   const tithiWord = tithi === 14 ? "paurṇamāsyām" : tithi === 29 ? "amāvāsyāyām" : TITHI_LOCATIVE_IAST[tithi % 15];
   const ayana = rasi >= 3 && rasi <= 8 ? "dakṣiṇāyane" : "uttarāyaṇe";
+  const region = sankalpamRegion(cal.place.timeZone);
+  const place = region ? SANKALPAM_PLACE[region] : "śakābde";
+  const preamble = `${SANKALPAM_OPENING} ${place} ${SANKALPAM_ERA}`;
   return [
+    preamble,
     `${SAMVATSARA_IAST[samvatsaraIndexAt(ms, cal.place.timeZone)]} nāma saṁvatsare`,
     ayana,
     `${RITU_IAST[Math.floor(rasi / 2)]} ṛtau`,
@@ -1116,13 +1170,13 @@ function sankalpamDeclaration(cal: SunCalendar, ms: number): string {
     `${tithiWord} śubha tithau`,
     `${VASARA_IAST[vasara]} vāsara yuktāyām`,
     `${NAKSHATRA_IAST[nakshatra]} nakṣatra yuktāyām`,
-    "evaṅguṇa viśeṣaṇa viśiṣṭāyām asyām vartamānāyām śubha tithau.",
+    SANKALPAM_CLOSE,
   ].join(", ");
 }
 
 /**
  * "Sankalpam for Chennai on 8th Oct 2026 At 10:00 AM IST and valid
- * through 10:31:24 PM: Parābhava nāma saṁvatsare, …" -- the declaration
+ * through 10:31:24 PM: hariḥ oṁ tat śrīgovinda … Parābhava nāma saṁvatsare, …" -- the declaration
  * for the moment `ms`, and how long it stays true: until the tithi,
  * nakshatram, solar month or (at sunrise) weekday it names next changes.
  */

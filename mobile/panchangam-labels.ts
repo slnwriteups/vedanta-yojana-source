@@ -1,5 +1,6 @@
 import type { LanguageCode } from "./content-lib/preferences.ts";
-import { iastToScript } from "../content-lib/sanskrit-script.ts";
+import { sankalpamToScript } from "../content-lib/sanskrit-script.ts";
+export { sankalpamNamesPlace } from "../content-lib/panchangam-engine.ts";
 import { localizeEnglishDates } from "../content-lib/panchangam-dates.ts";
 import { formatPanchangamTime } from "./services/panchangamTimings.ts";
 
@@ -248,5 +249,5 @@ export function localizeSankalpamText(text: string, language: LanguageCode | nul
     validUntil,
     Boolean(followingDayPhrase)
   );
-  return declaration ? `${intro} ${iastToScript(declaration, language)}` : intro;
+  return declaration ? `${intro} ${sankalpamToScript(declaration, language)}` : intro;
 }

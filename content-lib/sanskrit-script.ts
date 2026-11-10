@@ -97,3 +97,15 @@ export function iastToScript(iast: string, language: LanguageCode | null): strin
   }
   return out;
 }
+
+/**
+ * The daily Sankalpam in the reader's script: iastToScript, plus the two
+ * printed forms the Sankalpam uses -- Tamil ஸ்ரீ (glossary, not ச்ரீ) and
+ * Hindi ॐ for oṁ (owner decision, 10 Nov 2026).
+ */
+export function sankalpamToScript(iast: string, language: LanguageCode | null): string {
+  const text = iastToScript(iast, language);
+  if (language === "ta") return text.replace(/ச்ரீ/g, "ஸ்ரீ");
+  if (language === "hi") return text.replace(/(^|\s)ओं(?=\s|$)/g, "$1ॐ");
+  return text;
+}

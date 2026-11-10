@@ -185,6 +185,14 @@ const UI_STRINGS = {
   calendarUpcoming: { en: "Upcoming", ta: "வரவிருக்கும்", kn: "ಮುಂಬರುವ", hi: "आगामी", te: "రాబోయే" },
   /** Labels the computed daily sankalpam inside the Sankalpam box on the days a Tarpana Sankalpam is shown beneath it. */
   sankalpamDailyLabel: { en: "Daily", ta: "தினசரி", kn: "ದೈನಂದಿನ", hi: "दैनिक", te: "రోజువారీ" },
+  // Shown under the daily Sankalpam outside India, the US and Canada, where no place wording has been supplied.
+  sankalpamPlaceNote: {
+    en: "The place words for your location are not included here. Use the words your ācārya or temple gives.",
+    ta: "உங்கள் இடத்தைக் குறிக்கும் சொற்கள் இங்கு சேர்க்கப்படவில்லை. உங்கள் ஆசார்யர் அல்லது கோயில் கூறும் சொற்களைப் பயன்படுத்தவும்.",
+    kn: "ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಸೂಚಿಸುವ ಪದಗಳನ್ನು ಇಲ್ಲಿ ಸೇರಿಸಲಾಗಿಲ್ಲ. ನಿಮ್ಮ ಆಚಾರ್ಯರು ಅಥವಾ ದೇವಾಲಯ ತಿಳಿಸುವ ಪದಗಳನ್ನು ಬಳಸಿ.",
+    hi: "आपके स्थान को सूचित करने वाले शब्द यहाँ शामिल नहीं हैं। अपने आचार्य या मंदिर द्वारा बताए गए शब्दों का प्रयोग करें।",
+    te: "మీ ప్రదేశాన్ని సూచించే పదాలు ఇక్కడ చేర్చబడలేదు. మీ ఆచార్యులు లేదా ఆలయం సూచించే పదాలను ఉపయోగించండి.",
+  },
   padukaTarpanamLabel: {
     en: "Tarpana Sankalpam",
     ta: "தர்ப்பண சங்கல்பம்",

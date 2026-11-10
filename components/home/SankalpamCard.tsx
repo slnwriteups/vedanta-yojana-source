@@ -2,7 +2,7 @@
 
 import { useLanguage } from "@/lib/language-context";
 import { useT } from "@/lib/ui-strings";
-import { localizeSankalpamText } from "@/lib/panchangam-labels";
+import { localizeSankalpamText, sankalpamNamesPlace } from "@/lib/panchangam-labels";
 import type { PanchangamData } from "@/lib/panchangam-service";
 
 /**
@@ -36,6 +36,9 @@ export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | nul
         <p className="prose-body whitespace-pre-line">
           {localizeSankalpamText(panchangam.sankalpamText, language)}
         </p>
+        {sankalpamNamesPlace(panchangam.sankalpamText) ? null : (
+          <p className="pt-2 text-sm text-[var(--muted)]">{t("sankalpamPlaceNote")}</p>
+        )}
       </div>
     </div>
   );

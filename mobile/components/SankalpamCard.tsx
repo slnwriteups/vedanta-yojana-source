@@ -3,7 +3,7 @@ import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { useT } from "../ui-strings.ts";
 import { useLanguage } from "../language-context.ts";
 import { readingFont } from "../reading-font.ts";
-import { localizeSankalpamText } from "../panchangam-labels.ts";
+import { localizeSankalpamText, sankalpamNamesPlace } from "../panchangam-labels.ts";
 import type { PanchangamData } from "../services/panchangamService.ts";
 
 /**
@@ -43,6 +43,9 @@ export function SankalpamCard({ panchangam }: { panchangam: PanchangamData | nul
         >
           {localizeSankalpamText(panchangam.sankalpamText, language)}
         </Text>
+        {sankalpamNamesPlace(panchangam.sankalpamText) ? null : (
+          <Text style={[styles.note, { color: theme.colors.muted }]}>{t("sankalpamPlaceNote")}</Text>
+        )}
       </View>
     </View>
   );
@@ -67,6 +70,10 @@ const styles = StyleSheet.create({
   // a Sankalpam is dense, comma-separated Sanskrit, and read at
   // typography.small with the default UI line-height it collapsed into
   // one hard-to-parse block.
+  note: {
+    fontSize: typography.small,
+    paddingTop: spacing.sm,
+  },
   text: {
     fontSize: typography.body,
     lineHeight: typography.body * typography.readingLineHeight,

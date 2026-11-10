@@ -185,14 +185,43 @@ ones.
 
 The Sankalpam sentence names the reader's place, the present moment and the
 reader's own time zone ("IST", "EDT", …). It runs: samvatsara, ayana, ritu,
-solar māsa, paksha, tithi, vāsara, nakshatram. It holds until the tithi,
+solar māsa, paksha, tithi, vāsara, nakshatram.
+
+Around those it carries the Mahāsaṅkalpam of Sunder Kidāmbi's *Yajur
+Upākarma prayogaḥ* (prapatti.com, pp. 2–3), written in standard IAST (his
+ē/ō as e/o):
+
+- **Opening:** *hariḥ oṁ tat śrīgovinda govinda govinda | asya
+  śrībhagavato … kaliyuge prathamapāde*.
+- **Place:** chosen by the time zone of the place the Panchangam is for.
+  - India: *jambūdvīpe bhāratavarṣe bharatakhaṇḍe śakābde merordakṣiṇe
+    pārśve*.
+  - United States, and Canada (owner decision, 10 Nov 2026): *krauñca dvīpe
+    ramaṇakavarṣe uttara (gotīrtha) khaṇḍe śakābde merordakṣiṇe pārśve*,
+    with the source's alternative kept as printed until reviewed.
+  - Elsewhere no wording has been supplied, so only *śakābde* stays, and a
+    note under the Sankalpam asks the reader to use the words their ācārya
+    or temple gives. Wording for another region is added only from a named,
+    supplied text.
+- **Era:** *asmin vartamāne vyāvahārike prabhavādi ṣaṣṭhi saṁvatsarāṇāṁ
+  madhye*, then the computed part.
+- **Close:** *śubhayoga śubhakaraṇa evaṅguṇa viśeṣaṇa viśiṣṭāyām asyām
+  vartamānāyām śubha tithau, śrī bhagavadājñayā śrīman nārāyaṇa
+  prītyartham*. The rite-specific purpose (the Upākarma japam in the
+  source) is left out: the card is the daily Sankalpam.
+
+In the reader's script, Tamil writes Sri as ஸ்ரீ and Hindi writes oṁ as ॐ
+(`sankalpamToScript`, `content-lib/sanskrit-script.ts`); book text keeps
+`iastToScript` unchanged. Ayana and ṛtu are the same calculation
+everywhere, Southern Hemisphere included, as in the source's tables. It holds until the tithi,
 nakshatram, solar month or (at sunrise) weekday next changes, and the Home
 screen recomputes it then (and at midnight), so a screen left open never
 shows an expired Sankalpam as the present one.
 
-It does not name the yoga and karana. The Ashramam's Tarpaṇa Saṅkalpams
-do ("viṣkambha yoga, taitula karaṇa"), but its daily wording has not been
-established, and a Tarpaṇa form is not taken as the wording for every rite.
+It does not name the day's yoga and karana. It uses the source's general
+*śubhayoga śubhakaraṇa* instead. The Ashramam's Tarpaṇa Saṅkalpams name
+them ("viṣkambha yoga, taitula karaṇa"), but a Tarpaṇa form is not taken as
+the wording for every rite.
 
 ## Verification
 

@@ -7,6 +7,7 @@ import { useLanguage } from "../language-context.ts";
 import { readingFont } from "../reading-font.ts";
 import {
   localizeSankalpamText,
+  sankalpamNamesPlace,
   localizeUpcomingEkadashi,
   nakshatramLabel,
   nakshatramOfDayLabel,
@@ -511,6 +512,9 @@ function SankalpamSection({
                 <Text style={[styles.sankalpamPartLabel, { color: theme.colors.accent }]}>{t("sankalpamDailyLabel")}</Text>
               ) : null}
               <Text style={bodyStyle}>{localizeSankalpamText(dailyText, language)}</Text>
+              {sankalpamNamesPlace(dailyText) ? null : (
+                <Text style={[styles.sankalpamNote, { color: theme.colors.muted }]}>{t("sankalpamPlaceNote")}</Text>
+              )}
             </View>
           ) : null}
           {tarpanam ? (
@@ -699,6 +703,10 @@ const styles = StyleSheet.create({
   sankalpamPartDivider: {
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: spacing.sm,
+  },
+  sankalpamNote: {
+    fontSize: typography.small,
+    paddingTop: spacing.xs,
   },
   sankalpamBody: {
     fontSize: typography.body,

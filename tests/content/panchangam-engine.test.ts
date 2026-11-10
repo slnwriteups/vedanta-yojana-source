@@ -17,7 +17,7 @@ import {
 import { sunLongitude } from "../../content-lib/panchangam-astronomy.ts";
 import { formatPanchangamTime } from "../../lib/panchangam-timings.ts";
 import { PADUKA_PANCHANGAM_ISSUES } from "../../content-lib/paduka-panchangam.ts";
-import { localizeSankalpamText, nakshatramLabel, nakshatramOfDayLabel, pakshaLabel, tithiLabel, tithiOfDayLabel } from "../../lib/panchangam-labels.ts";
+import { localizeSankalpamText, sankalpamNamesPlace, nakshatramLabel, nakshatramOfDayLabel, pakshaLabel, tithiLabel, tithiOfDayLabel } from "../../lib/panchangam-labels.ts";
 
 /**
  * The reference values below are the published ones, never this engine's
@@ -426,7 +426,7 @@ test("the Sankalpam names the moment, the place and how long it holds", () => {
   const p = day(CHENNAI, "2026-10-08", Date.UTC(2026, 9, 8, 4, 30));
   assert.match(
     p.sankalpamText,
-    /^Sankalpam for Chennai on 8th Oct 2026 At 10:00 AM IST and valid through 10:3[0-3]:\d\d PM: Parābhava nāma saṁvatsare, dakṣiṇāyane, varṣa ṛtau, kanyā māse, kṛṣṇa pakṣe, trayodaśyām śubha tithau, guru vāsara yuktāyām, pūrvaphalgunī nakṣatra yuktāyām, /
+    /^Sankalpam for Chennai on 8th Oct 2026 At 10:00 AM IST and valid through 10:3[0-3]:\d\d PM: hariḥ oṁ tat śrīgovinda govinda govinda \| .* kaliyuge prathamapāde jambūdvīpe bhāratavarṣe bharatakhaṇḍe śakābde merordakṣiṇe pārśve asmin vartamāne vyāvahārike prabhavādi ṣaṣṭhi saṁvatsarāṇāṁ madhye, Parābhava nāma saṁvatsare, dakṣiṇāyane, varṣa ṛtau, kanyā māse, kṛṣṇa pakṣe, trayodaśyām śubha tithau, guru vāsara yuktāyām, pūrvaphalgunī nakṣatra yuktāyām, /
   );
   assert.match(localizeSankalpamText(p.sankalpamText, "ta"), /^Chennai க்கான சங்கல்பம் — 8 அக்டோபர் 2026, 10:00 AM IST முதல் 10:/);
 });
@@ -439,6 +439,39 @@ test("the Sankalpam reads on the reader's own clock outside India", () => {
   assert.match(p.sankalpamText, /^Sankalpam for New York on 4th Jul 2026 At 10:00 AM EDT and valid through .* of following day: /);
   assert.match(p.sankalpamText, /uttarāyaṇe, grīṣma ṛtau, mithuna māse/);
   assert.match(localizeSankalpamText(p.sankalpamText, "hi"), /^New York के लिए संकल्प — 4 जुलाई 2026, 10:00 AM EDT से अगले दिन /);
+});
+
+test("the Sankalpam's place words follow the source for India, the US and Canada, and are left out elsewhere", () => {
+  const sankalpam = (place: PanchangamPlace) => day(place, "2026-11-10").sankalpamText;
+  const india = sankalpam(CHENNAI);
+  assert.match(india, /nakṣatra yuktāyām, śubhayoga śubhakaraṇa evaṅguṇa viśeṣaṇa viśiṣṭāyām asyām vartamānāyām śubha tithau, śrī bhagavadājñayā śrīman nārāyaṇa prītyartham\.$/);
+  assert.ok(sankalpamNamesPlace(india));
+  const us = "krauñca dvīpe ramaṇakavarṣe uttara (gotīrtha) khaṇḍe śakābde merordakṣiṇe pārśve asmin vartamāne";
+  for (const place of [NEW_YORK, { latitude: 43.65, longitude: -79.38, timeZone: "America/Toronto" }]) {
+    assert.ok(sankalpam(place).includes(` prathamapāde ${us}`), place.timeZone);
+  }
+  for (const place of [LONDON, SYDNEY, SINGAPORE]) {
+    const text = sankalpam(place);
+    assert.ok(text.includes(" kaliyuge prathamapāde śakābde asmin vartamāne "), place.timeZone);
+    assert.doesNotMatch(text, /dvīpe|merordakṣiṇe/);
+    assert.equal(sankalpamNamesPlace(text), false);
+  }
+});
+
+test("the Sankalpam writes Sri as ஸ்ரீ in Tamil and oṁ as ॐ in Hindi, in any script with no Roman letters left", () => {
+  const text = day(CHENNAI, "2026-11-10").sankalpamText;
+  const body = (language: "ta" | "kn" | "hi" | "te") => {
+    const localized = localizeSankalpamText(text, language);
+    return localized.slice(localized.indexOf(": ") + 2);
+  };
+  assert.match(body("ta"), /^ஹரிஃ ஓம் தத் ஸ்ரீகோவிந்த /);
+  assert.doesNotMatch(body("ta"), /ச்ரீ/);
+  assert.match(body("hi"), /^हरिः ॐ तत् श्रीगोविन्द /);
+  assert.match(body("kn"), /^ಹರಿಃ ಓಂ ತತ್ ಶ್ರೀಗೋವಿನ್ದ /);
+  assert.match(body("te"), /^హరిః ఓం తత్ శ్రీగోవిన్ద /);
+  for (const language of ["ta", "kn", "hi", "te"] as const) {
+    assert.doesNotMatch(body(language), /[a-zāīūṛṝṁḥśṣṭḍṇñṅēō]/i, language);
+  }
 });
 
 test("today's Sankalpam is for now; another day's is for its sunrise", () => {
