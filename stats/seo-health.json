@@ -790,6 +790,19 @@
           "warnings": 15
         }
       }
+    },
+    {
+      "checkedAt": "2026-11-10T15:25:13.976Z",
+      "trigger": "deploy",
+      "pages": 541,
+      "errors": 0,
+      "warnings": 15,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 15
+        }
+      }
     }
   ]
 }
