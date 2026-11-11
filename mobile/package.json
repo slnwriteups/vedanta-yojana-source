@@ -33,7 +33,7 @@
     "@types/node": "^26.2.0",
     "@types/react": "~19.3.0",
     "patch-package": "^8.0.1",
-    "typescript": "~6.0.3"
+    "typescript": "~7.0.2"
   },
   "overrides": {
     "react-dom": "19.3.0",
