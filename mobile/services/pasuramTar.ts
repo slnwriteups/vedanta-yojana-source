@@ -79,3 +79,71 @@ export function parseUstar(bytes: Uint8Array): TarEntry[] {
 
   return entries;
 }
+
+/**
+ * The same ustar layout as parseUstar(), read incrementally: push() each
+ * chunk of decompressed bytes as it arrives and get back the entries it
+ * completed. Lets the app unpack the Pasuram archive a slice at a time,
+ * handing the JS thread back between slices, without ever holding the
+ * whole 40 MB decompressed tar in memory. Chunks may split a header or a
+ * file body at any byte; every returned entry owns its bytes, so callers
+ * (and the decompressor) may reuse the chunks they pushed.
+ */
+export class UstarStream {
+  private header = new Uint8Array(HEADER_SIZE);
+  private headerFilled = 0;
+  private body: Uint8Array | null = null;
+  private bodyFilled = 0;
+  private name = "";
+  private keep = false;
+  private padding = 0;
+  private ended = false;
+
+  push(chunk: Uint8Array): TarEntry[] {
+    const done: TarEntry[] = [];
+    let offset = 0;
+    while (offset < chunk.length && !this.ended) {
+      if (this.padding > 0) {
+        const skip = Math.min(this.padding, chunk.length - offset);
+        this.padding -= skip;
+        offset += skip;
+      } else if (this.body) {
+        const take = Math.min(this.body.length - this.bodyFilled, chunk.length - offset);
+        this.body.set(chunk.subarray(offset, offset + take), this.bodyFilled);
+        this.bodyFilled += take;
+        offset += take;
+        if (this.bodyFilled === this.body.length) this.finishEntry(done);
+      } else {
+        const take = Math.min(HEADER_SIZE - this.headerFilled, chunk.length - offset);
+        this.header.set(chunk.subarray(offset, offset + take), this.headerFilled);
+        this.headerFilled += take;
+        offset += take;
+        if (this.headerFilled === HEADER_SIZE) this.startEntry(done);
+      }
+    }
+    return done;
+  }
+
+  private startEntry(done: TarEntry[]): void {
+    this.headerFilled = 0;
+    if (this.header.every((byte) => byte === 0)) {
+      this.ended = true;
+      return;
+    }
+    this.name = readNullTerminatedAscii(this.header, NAME_OFFSET, NAME_SIZE);
+    const size = readOctalSize(this.header, SIZE_OFFSET, SIZE_SIZE);
+    const typeflag = String.fromCharCode(this.header[TYPEFLAG_OFFSET]);
+    this.keep = TYPEFLAG_REGULAR.includes(typeflag) && this.name !== "";
+    this.padding = 0;
+    this.body = new Uint8Array(size);
+    this.bodyFilled = 0;
+    if (size === 0) this.finishEntry(done);
+  }
+
+  private finishEntry(done: TarEntry[]): void {
+    const body = this.body as Uint8Array;
+    if (this.keep) done.push({ name: this.name, bytes: body });
+    this.padding = Math.ceil(body.length / HEADER_SIZE) * HEADER_SIZE - body.length;
+    this.body = null;
+  }
+}
