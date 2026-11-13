@@ -89,7 +89,10 @@ export function autoEnableNotifications(language: LanguageCode | null): Promise<
       const saved = await readJSON(STORAGE_KEY, valid);
       if (saved && !saved.enabled) return;
       if (!saved) await writeJSON(STORAGE_KEY, { enabled: true, token: null });
-      await registerPush(language, false);
+      // Not awaited: onboarding waits on this function before opening the
+      // app, and registration needs the network (Expo's token call has no
+      // timeout). Queued so it still runs in order with later changes.
+      void serial(() => registerPush(language, false));
     } catch {}
   });
 }
