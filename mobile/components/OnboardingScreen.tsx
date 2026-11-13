@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SettingsControls } from "./SettingsControls";
 import { spacing, typography, useTheme } from "../theme";
@@ -18,7 +18,7 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.colors.background }]}>
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.textBlock}>
           <Text style={[styles.title, { color: theme.colors.foreground }]}>{t("onboardingTitle")}</Text>
           <Text style={[styles.subtitle, { color: theme.colors.muted }]}>{t("onboardingSubtitle")}</Text>
@@ -29,7 +29,7 @@ export function OnboardingScreen({ onDone }: { onDone: () => void }) {
         <TouchableOpacity onPress={onDone} style={[styles.button, { backgroundColor: theme.colors.accent }]} accessibilityRole="button">
           <Text style={[styles.buttonLabel, { color: theme.colors.surface }]}>{t("onboardingContinue")}</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -38,8 +38,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  // flexGrow, not flex: centred when it fits, scrolls when it is taller
+  // than the screen (small phones, large text, longer scripts).
   content: {
-    flex: 1,
+    flexGrow: 1,
     justifyContent: "center",
     gap: spacing.xxl,
     padding: spacing.xl,
