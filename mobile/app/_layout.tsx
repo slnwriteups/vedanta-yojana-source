@@ -93,9 +93,14 @@ function RootStack() {
   // swallowed here -- a failure just means the next tap's own await
   // surfaces it as a real "not available" result instead of an unhandled
   // rejection with nothing listening.
+  //
+  // It waits until the welcome and setup screens are done: on a budget
+  // phone the unpack still takes a while, and a reader's first taps
+  // (language, text size, Continue) must never compete with it.
   useEffect(() => {
+    if (!seenWelcome || onboarded !== true) return;
     ensurePasuramsUnpacked().catch(() => {});
-  }, []);
+  }, [seenWelcome, onboarded]);
 
   // Keeps Pasurams current with Prapatti.com, where scholars publish
   // corrections: whenever the app comes online (launch, back to the

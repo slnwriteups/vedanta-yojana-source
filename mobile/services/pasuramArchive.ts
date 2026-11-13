@@ -1,10 +1,10 @@
 import { Asset } from "expo-asset";
 import { Directory, File, Paths } from "expo-file-system";
-import { decompress } from "fzstd";
+import { Decompress } from "fzstd";
 import { PASURAM_ARCHIVE_VERSION, pasuramFileHashes, pasuramFilenameByUrl } from "../content-lib/pasuram-manifest.generated.ts";
 import { pasuramArchiveAsset } from "../content-lib/pasuram-archive-asset.generated.ts";
 import { PASURAM_DIRECTORY_NAME, sha256HexBytes } from "./pasuramResourceId.ts";
-import { parseUstar } from "./pasuramTar.ts";
+import { UstarStream } from "./pasuramTar.ts";
 
 /**
  * Unpacks mobile/assets/pasurams-archive.generated.zst -- the single
@@ -31,8 +31,7 @@ const VERSION_MARKER_FILENAME = ".archive-version";
  * Hands control back to the JS event loop for one tick. React Native's
  * bridge/JSI dispatches touch events (including a Pressable's onPress)
  * through the SAME single JS thread this unpack loop runs on -- without
- * periodic yields, 432 synchronous File.write() calls plus a SHA-256
- * over ~29MB (see unpackArchive()) would monopolize that thread long
+ * periodic yields, the unpack (see unpackArchive()) would monopolize that thread long
  * enough to make the whole app visibly unresponsive to touch for the
  * entire unpack, not just slow. Verified this was a real, not
  * theoretical, problem: a physical-device test hung on the very first
@@ -42,8 +41,17 @@ function yieldToEventLoop(): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, 0));
 }
 
-/** Files written between each yieldToEventLoop() call. */
-const WRITE_BATCH_SIZE = 12;
+/**
+ * The unpack runs in slices: it feeds the decompressor PUSH_BYTES of the
+ * archive at a time and hands the JS thread back once a slice has run for
+ * SLICE_MS. Yielding every 12 files was not enough on budget Android
+ * phones: the archive was decompressed in one synchronous call (20 MB into
+ * 40 MB) and every file was hashed in pure JS, which froze the very first
+ * screens for a minute or more (no JIT in Hermes; ~23 s even on a server
+ * CPU with V8's JIT off).
+ */
+const PUSH_BYTES = 32 * 1024;
+const SLICE_MS = 12;
 
 function localPasuramDir(): Directory {
   return new Directory(Paths.document, PASURAM_DIRECTORY_NAME);
@@ -65,44 +73,45 @@ function isUnpackCurrent(): boolean {
 }
 
 /**
- * Decompresses the bundled archive and writes every entry to app-private
- * document storage, verifying each file's bytes against the digest
- * recorded at build time before trusting it. Throws (rather than
- * silently succeeding) if any entry fails that check or the archive is
- * missing an entry the manifest expects -- a corrupted unpack must not
- * be mistaken for a working one.
+ * Streams the bundled archive into app-private document storage, one
+ * slice at a time (see SLICE_MS), and writes the version marker only once
+ * every file the manifest expects has been written. Files are not hashed
+ * here: the build already checks every archived file against its recorded
+ * SHA-256 (tests/pasuram-archive.test.ts), and localPasuramPath() checks
+ * each one again on the phone when it is opened.
  */
 async function unpackArchive(): Promise<void> {
   const asset = await Asset.fromModule(pasuramArchiveAsset).downloadAsync();
   if (!asset.localUri) {
     throw new Error("Could not resolve the bundled Pasuram archive.");
   }
-
   const compressed = new File(asset.localUri).bytesSync();
-  const decompressed = decompress(compressed);
-  const entries = parseUstar(decompressed);
-  const byName = new Map(entries.map((entry) => [entry.name, entry]));
 
   const dir = localPasuramDir();
   if (dir.exists) dir.delete();
   dir.create({ intermediates: true, idempotent: true });
 
-  let written = 0;
-  for (const [filename, expectedHash] of Object.entries(pasuramFileHashes)) {
-    const entry = byName.get(filename);
-    if (!entry) {
-      throw new Error(`Pasuram archive is missing an expected file: ${filename}`);
+  const missing = new Set(Object.keys(pasuramFileHashes));
+  const tar = new UstarStream();
+  const zstd = new Decompress((chunk) => {
+    for (const entry of tar.push(chunk)) {
+      if (missing.delete(entry.name)) new File(dir, entry.name).write(entry.bytes);
     }
-    const actualHash = sha256HexBytes(entry.bytes);
-    if (actualHash !== expectedHash) {
-      throw new Error(`Pasuram archive entry ${filename} failed integrity verification.`);
-    }
-    new File(dir, filename).write(entry.bytes);
+  });
 
-    written++;
-    if (written % WRITE_BATCH_SIZE === 0) await yieldToEventLoop();
+  let sliceStart = Date.now();
+  for (let offset = 0; offset < compressed.length; offset += PUSH_BYTES) {
+    const end = offset + PUSH_BYTES;
+    zstd.push(compressed.subarray(offset, end), end >= compressed.length);
+    if (Date.now() - sliceStart >= SLICE_MS) {
+      await yieldToEventLoop();
+      sliceStart = Date.now();
+    }
   }
 
+  if (missing.size > 0) {
+    throw new Error(`Pasuram archive is missing ${missing.size} expected file(s).`);
+  }
   versionMarkerFile().write(PASURAM_ARCHIVE_VERSION);
 }
 
@@ -142,7 +151,19 @@ export function localPasuramPath(url: string): string | null {
   const filename = pasuramFilenameByUrl[url];
   if (filename === undefined) return null;
   const file = new File(localPasuramDir(), filename);
-  return file.exists ? file.uri : null;
+  if (!file.exists) return null;
+  // One file (tens of KB) is hashed here, when it is opened, instead of
+  // all of them during the unpack. A copy damaged on the phone is removed
+  // with the version marker, so the next ensurePasuramsUnpacked() unpacks
+  // the archive again.
+  if (sha256HexBytes(file.bytesSync()) !== pasuramFileHashes[filename]) {
+    file.delete();
+    const marker = versionMarkerFile();
+    if (marker.exists) marker.delete();
+    unpackPromise = null;
+    return null;
+  }
+  return file.uri;
 }
 
 export function isPasuramAvailable(url: string): boolean {
