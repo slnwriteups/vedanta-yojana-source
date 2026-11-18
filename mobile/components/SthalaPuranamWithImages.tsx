@@ -1,4 +1,5 @@
 import { useState, type ReactElement } from "react";
+import { anchorFor } from "../../content-lib/inline-images.ts";
 import { StyleSheet, Text, View } from "react-native";
 import type { MobileImageEntry } from "../../content-lib/mobile-content.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
@@ -48,7 +49,7 @@ interface Segment {
   images?: ResolvedImage[];
 }
 
-function buildSegments(text: string, images: ResolvedImage[]): Segment[] {
+function buildSegments(text: string, images: ResolvedImage[], language: string | null): Segment[] {
   const paragraphs = text.split(/\n{2,}/);
   const segments: Segment[] = [];
   const usedAssetIds = new Set<string>();
@@ -59,7 +60,7 @@ function buildSegments(text: string, images: ResolvedImage[]): Segment[] {
     lines.forEach((line, lIdx) => {
       const trimmed = line.trim();
       const matched = images.filter(
-        ({ image }) => image.placementAnchor === trimmed && !usedAssetIds.has(image.assetId)
+        ({ image }) => anchorFor(image, language)?.trim() === trimmed && !usedAssetIds.has(image.assetId)
       );
       if (matched.length === 0) return;
 
@@ -92,7 +93,7 @@ export function SthalaPuranamWithImages({ text, images }: { text: string; images
     return asset !== undefined ? [{ image, asset }] : [];
   });
 
-  const segments = buildSegments(text, resolved);
+  const segments = buildSegments(text, resolved, language);
 
   // Whether the special note being rendered runs past the end of the
   // CURRENT segment's own paragraphs, into whatever text segment comes

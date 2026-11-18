@@ -33,6 +33,14 @@ function squash(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
+/** An image's anchor for `language`: its own translated anchor when it has one, otherwise the English one. */
+export function anchorFor(
+  image: { placementAnchor?: string | null; placementAnchorTranslations?: Partial<Record<string, string>> | null },
+  language: string | null
+): string | null {
+  return (language && image.placementAnchorTranslations?.[language]) || image.placementAnchor || null;
+}
+
 export function placeInlineImages<
   T extends { placementAnchor?: string | null; placementAnchorTranslations?: Partial<Record<string, string>> | null },
 >(paragraphs: string[], images: T[], language: string | null = null): InlineImagePlacement<T> {
@@ -40,7 +48,7 @@ export function placeInlineImages<
   const placement: InlineImagePlacement<T> = { top: [], after: new Map() };
   for (const image of images) {
     // In a translation, the anchor in that language (when there is one).
-    const raw = (language && image.placementAnchorTranslations?.[language]) || image.placementAnchor;
+    const raw = anchorFor(image, language);
     const anchor = raw ? squash(raw) : "";
     // A block split at a sentence boundary may end with only part of the
     // anchor, so the previous block is considered together with it too.

@@ -48,7 +48,14 @@
       "sourceOriginalName": "108-78Temp.jpg",
       "alt": null,
       "altStatus": "needs-review",
-      "placement": "after-sthala-puranam"
+      "placement": "after-sthala-puranam",
+      "placementAnchor": "praṇāmaṁ ye'pi kurvanti teshāmapi namo namaḥ ||",
+      "placementAnchorTranslations": {
+        "ta": "ப்ரணாமம் யே'பி குர்வந்தி தேஷாமபி நமோ நமஃ ||",
+        "kn": "ಪ್ರಣಾಮಂ ಯೇಽಪಿ ಕುರ್ವಂತಿ ತೇಷಾಮಪಿ ನಮೋ ನಮಃ ||",
+        "hi": "प्रणामं येऽपि कुर्वन्ति तेषामपि नमो नमः ||",
+        "te": "ప్రణామం యేఽపి కుర్వంతి తేషామపి నమో నమః ||"
+      }
     },
     {
       "assetId": "tirukurungudi-4",
@@ -57,7 +64,13 @@
       "alt": null,
       "altStatus": "needs-review",
       "placement": "after-sthala-puranam",
-      "placementAnchor": "Vaishṇava Nambi Temple"
+      "placementAnchor": "Vaishṇava Nambi Temple",
+      "placementAnchorTranslations": {
+        "ta": "வைஷ்ணவ நம்பி கோயில்",
+        "kn": "ವೈಷ್ಣವ ನಂಬಿ ದೇವಾಲಯ",
+        "hi": "वैष्णव नंबि मंदिर",
+        "te": "వైష్ణవ నంబి ఆలయం"
+      }
     },
     {
       "assetId": "tirukurungudi-5",
@@ -66,7 +79,13 @@
       "alt": null,
       "altStatus": "needs-review",
       "placement": "after-sthala-puranam",
-      "placementAnchor": "Mahendragiri"
+      "placementAnchor": "3) This is the kshethram where Tirumangai Āzhwār attained Paramapadam. There is a shrine here for Tirumangai Āzhwār.",
+      "placementAnchorTranslations": {
+        "ta": "3) திருமங்கை ஆழ்வார் பரமபதம் அடைந்த க்ஷேத்திரம் இதுவே. திருமங்கை ஆழ்வாருக்கு இங்கு ஒரு சன்னிதி உள்ளது.",
+        "kn": "3) ತಿರುಮಂಗೈ ಆಳ್ವಾರ್ ಪರಮಪದ ಪಡೆದ ಕ್ಷೇತ್ರ ಇದೇ ಆಗಿದೆ. ತಿರುಮಂಗೈ ಆಳ್ವಾರರಿಗೆ ಇಲ್ಲಿ ಒಂದು ಸನ್ನಿಧಿ ಇದೆ.",
+        "hi": "3) यही वह क्षेत्र है जहाँ तिरुमंगै आळ्वार ने परमपद प्राप्त किया। तिरुमंगै आळ्वार के लिए यहाँ एक सन्निधि है।",
+        "te": "3) తిరుమంగై ఆళ్వార్ పరమపదాన్ని పొందిన క్షేత్రం ఇదే. ఇక్కడ తిరుమంగై ఆళ్వార్‌కు ఒక సన్నిధి ఉంది."
+      }
     }
   ],
   "resources": [
