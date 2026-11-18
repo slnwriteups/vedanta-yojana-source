@@ -256,3 +256,23 @@ test("Kannada/Telugu: no anusvara after an avagraha (it has no vowel to sit on)"
   assert.equal(devaToBrahmic("महोदधिशयोऽन्तकः", "te"), "మహోదధిశయోఽన్తకః");
   assert.equal(devaToBrahmic("अनन्तात्मा", "kn"), "ಅನಂತಾತ್ಮಾ");
 });
+
+test("the gate covers a Divya Desam: its Sthala Puranam is checked like a chapter body", () => {
+  const cli = path.join(ROOT, "tools/translation-engine/cli.ts");
+  const live = path.join(ROOT, "content/divya-desams/tirukurungudi.json");
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "vyte-dd-"));
+  const bad = JSON.parse(fs.readFileSync(live, "utf8"));
+  const hi = bad.translations.hi.sthalaPuranam.split("\n\n");
+  hi[1] = `${hi[1]} This line was never translated.`;
+  bad.translations.hi.sthalaPuranam = hi.join("\n\n");
+  fs.writeFileSync(path.join(dir, "tirukurungudi.json"), JSON.stringify(bad, null, 2));
+  const run = (...a: string[]) => spawnSync(process.execPath, [cli, ...a], { cwd: ROOT, encoding: "utf8" });
+
+  const failed = run("check", `--file=${path.join(dir, "tirukurungudi.json")}`, `--english=${live}`, "--langs=hi");
+  assert.equal(failed.status, 1, failed.stdout + failed.stderr);
+  assert.match(failed.stdout, /\[hi\] body ¶2 untranslated-english/);
+
+  const passed = run("check", `--file=${live}`, `--english=${live}`);
+  assert.equal(passed.status, 0, passed.stdout + passed.stderr);
+  fs.rmSync(dir, { recursive: true });
+});

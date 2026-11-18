@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { PublicDivyaDesam } from "@/lib/public-content";
 import { localizeDivyaDesam } from "@/content-lib/i18n.ts";
-import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightRecord } from "@/content-lib/divya-desam-spotlight.ts";
+import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightForDay } from "@/content-lib/divya-desam-spotlight.ts";
 import { regionLabel } from "@/content-lib/divya-desam-region-labels.ts";
 import { useLanguage } from "@/lib/language-context";
 import { useTheme } from "@/lib/theme";
@@ -68,7 +68,7 @@ export function DivyaDesamSpotlight({ entries }: { entries: SpotlightEntry[] }) 
     };
   }, []);
 
-  const entry = useMemo(() => (today ? pickSpotlightRecord(entries, today) : null), [entries, today]);
+  const entry = useMemo(() => (today ? pickSpotlightForDay(entries, today, (e) => e.record.slug) : null), [entries, today]);
   const localized = useMemo(
     () => (entry ? localizeDivyaDesam(entry.record, language) : null),
     [entry, language]

@@ -5,7 +5,7 @@ import { loadDivyaDesams, type DivyaDesam } from "../content-lib/loader.ts";
 import { divyaDesamNumberLabels } from "../content-lib/ordering.ts";
 import { imagesByUuid } from "../content-lib/image-manifest.generated.ts";
 import { localizeDivyaDesam } from "../../content-lib/i18n.ts";
-import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightRecord } from "../../content-lib/divya-desam-spotlight.ts";
+import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightForDay } from "../../content-lib/divya-desam-spotlight.ts";
 import { layout, radius, spacing, typography, useTheme } from "../theme";
 import { sectionTint } from "../section-tints.ts";
 import { regionLabel } from "../divya-desam-region-labels.ts";
@@ -70,7 +70,7 @@ export function DivyaDesamSpotlight() {
   const today = useToday();
 
   const sortedRecords = useMemo(() => [...loadDivyaDesams()].sort((a, b) => a.sourceOrder - b.sourceOrder), []);
-  const picked = pickSpotlightRecord(sortedRecords, today);
+  const picked = pickSpotlightForDay(sortedRecords, today, (r) => r.slug);
 
   if (!picked) return null;
 

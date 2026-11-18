@@ -61,6 +61,8 @@ node tools/translation-engine/cli.ts approve-terms --book=<slug>
 | `source-*` | §6.3 | English placeholder, `needsReview`, verse block that cannot be generated, romanised verse not in the §3.1 layout |
 | from `checks.ts` | §3 | script leaks, Devanagari inside target text, native digits, broken glyphs, gloss echo |
 
+**Divya Desams.** A `content/divya-desams/<slug>.json` record (any record with a `sthalaPuranam`) is checked as a chapter: `displayName` as the title and `sthalaPuranam` as the body, so findings name them `title` and `body`. `check --changed` includes these files.
+
 **Permitted Latin**: list and section markers in marker shape (`(i)`, `a)`, `iii.ii)`), URLs and acronyms, each only when the same token is in the English; plus tokens reviewed into `latin-allowlist.json`. Every finding names file, language, field and paragraph (1-based, English numbering).
 
 **Warnings** go to the reviewer: verse drift from the generated form (hand-spaced live verses), glossary terms not found, list markers, punctuation, Perso-Arabic Hindi.

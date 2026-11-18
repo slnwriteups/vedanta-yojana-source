@@ -35,7 +35,20 @@ const a = args();
 const command = process.argv[2];
 const langs: LanguageCode[] = parseLangs(a.langs);
 const rel = (f: string) => path.relative(ROOT, path.resolve(f));
-const CONTENT_FILE = /^content\/library\/[^/]+\/(book\.json|chapters\/[^/]+\.json)$/;
+const CONTENT_FILE = /^content\/(library\/[^/]+\/(book\.json|chapters\/[^/]+\.json)|divya-desams\/[^/]+\.json)$/;
+
+/**
+ * A Divya Desam record read as a chapter, so every chapter rule applies to
+ * its Sthala Puranam: displayName is checked as the title and sthalaPuranam
+ * as the body (findings name them "title" and "body").
+ */
+function divyaDesamAsChapter(record: any): any {
+  if (!record) return record;
+  const translations = Object.fromEntries(
+    Object.entries(record.translations ?? {}).map(([lang, t]: [string, any]) => [lang, { title: t?.displayName, body: t?.sthalaPuranam }])
+  );
+  return { title: record.displayName, body: record.sthalaPuranam, translations };
+}
 
 function committed(file: string): any | undefined {
   try {
@@ -55,6 +68,10 @@ interface Target {
 
 function target(file: string, english?: string): Target {
   const record = readJson(file);
+  if (typeof record.sthalaPuranam === "string") {
+    const original = english ? readJson(english) : committed(file);
+    return { file: rel(file), kind: "chapter", record: divyaDesamAsChapter(record), original: divyaDesamAsChapter(original) };
+  }
   const kind: Target["kind"] = (a.kind as Target["kind"]) ?? (Array.isArray(record.chapterOrder) ? "book" : "chapter");
   const book = rel(file).match(/^content\/library\/([^/]+)\//)?.[1] ?? a.book;
   return { file: rel(file), kind, book, record, original: english ? readJson(english) : committed(file) };
