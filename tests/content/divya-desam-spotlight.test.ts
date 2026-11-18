@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { daysSinceEpoch, msUntilNextLocalMidnight, pickSpotlightRecord, seededShuffle } from "../../content-lib/divya-desam-spotlight.ts";
+import { daysSinceEpoch, isKaisikaEkadasi, isKaisikaSpotlightDay, msUntilNextLocalMidnight, pickSpotlightForDay, pickSpotlightRecord, seededShuffle } from "../../content-lib/divya-desam-spotlight.ts";
 
 // Constructed via the local-time Date constructor (year, month, day, ...),
 // matching daysSinceEpoch()'s own documented semantics ("local device
@@ -61,4 +61,26 @@ test("msUntilNextLocalMidnight: waking after it fires lands on a new spotlight d
   const now = new Date(2026, 10, 10, 18, 30);
   const wake = new Date(now.getTime() + msUntilNextLocalMidnight(now));
   assert.equal(daysSinceEpoch(wake), daysSinceEpoch(now) + 1);
+});
+
+test("isKaisikaEkadasi: true on the Ashramam's published Kaisika Ekadasi (20 Nov 2026), false the day before and after", () => {
+  assert.equal(isKaisikaEkadasi(new Date(2026, 10, 20)), true);
+  assert.equal(isKaisikaEkadasi(new Date(2026, 10, 19)), false);
+  assert.equal(isKaisikaEkadasi(new Date(2026, 10, 21)), false);
+});
+
+test("isKaisikaEkadasi: falls back to the calendar engine for a year the journal does not cover", () => {
+  assert.equal(isKaisikaEkadasi(new Date(2027, 11, 9)), true);
+  assert.equal(isKaisikaEkadasi(new Date(2027, 11, 8)), false);
+});
+
+test("pickSpotlightForDay: Tirukurungudi on Kaisika Ekadasi and the Dvadasi after it, the normal rotation on other days", () => {
+  const entries = ["tirumala", "tirukurungudi", "srirangam", "kanchi"].map((slug) => ({ slug }));
+  const slugOf = (e: { slug: string }) => e.slug;
+  for (let i = 0; i < 3; i++) assert.equal(pickSpotlightForDay(entries, new Date(2026, 10, 20, 6 + i * 6), slugOf)?.slug, "tirukurungudi");
+  assert.equal(pickSpotlightForDay(entries, new Date(2026, 10, 21), slugOf)?.slug, "tirukurungudi");
+  assert.equal(isKaisikaSpotlightDay(new Date(2026, 10, 19)), false);
+  assert.equal(isKaisikaSpotlightDay(new Date(2026, 10, 22)), false);
+  const ordinary = new Date(2026, 10, 25);
+  assert.equal(pickSpotlightForDay(entries, ordinary, slugOf), pickSpotlightRecord(entries, ordinary));
 });

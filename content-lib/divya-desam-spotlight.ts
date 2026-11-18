@@ -16,6 +16,9 @@
  * already-server-resolved display entries, not raw DivyaDesam records.
  */
 
+import { padukaPanchangamFor } from "./paduka-panchangam.ts";
+import { computePanchangam, dayNumberOf, type PanchangamPlace } from "./panchangam-engine.ts";
+
 /** Whole calendar days since the Unix epoch, local device date -- a day counter that advances by exactly 1 each day. */
 export function daysSinceEpoch(date: Date): number {
   const utcMidnight = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
@@ -84,4 +87,50 @@ export function pickSpotlightRecord<T>(sortedRecords: readonly T[], date: Date =
   const shuffleOrder = seededShuffle(sortedRecords.length, SPOTLIGHT_SHUFFLE_SEED);
   const cycleIndex = daysSinceEpoch(date) % sortedRecords.length;
   return sortedRecords[shuffleOrder[cycleIndex]];
+}
+
+/** The Divya Desam whose Sthala Puranam is the Kaisika Mahatmyam: featured on Kaisika Ekadasi (owner, 2026-11-18). */
+export const KAISIKA_EKADASI_SPOTLIGHT_SLUG = "tirukurungudi";
+
+/** Srirangam: the calendar engine's reference place when the Ashramam's journal does not cover a date. */
+const SRIRANGAM: PanchangamPlace = { latitude: 10.8625, longitude: 78.6896, timeZone: "Asia/Kolkata" };
+
+/**
+ * Whether `date` (the reader's local calendar day) is Kaisika Ekadasi.
+ * The Ashramam's published Panchangam (paduka-panchangam.ts) governs the
+ * days it covers; for any other day the calendar engine decides, computed
+ * for Srirangam.
+ */
+export function isKaisikaEkadasi(date: Date): boolean {
+  const published = padukaPanchangamFor(date)?.day;
+  if (published) return published.festival.includes("Kaisika Ekadasi");
+  try {
+    const day = dayNumberOf(date.getFullYear(), date.getMonth() + 1, date.getDate());
+    return computePanchangam(day, SRIRANGAM, { placeName: "Srirangam" }).festival.includes("Kaisika Ekadasi");
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Kaisika Ekadasi or the Kaisika Dvadasi after it, when the Kaisika
+ * Mahatmyam is read. Both days, because readers east of India (Singapore,
+ * Australia, New Zealand, ...) keep Kaisika Ekadasi a day after India.
+ */
+export function isKaisikaSpotlightDay(date: Date): boolean {
+  const dayBefore = new Date(date.getFullYear(), date.getMonth(), date.getDate() - 1);
+  return isKaisikaEkadasi(date) || isKaisikaEkadasi(dayBefore);
+}
+
+/**
+ * The day's spotlight: Tirukurungudi on Kaisika Ekadasi and Dvadasi,
+ * otherwise the ordinary rotation of pickSpotlightRecord(). `slugOf`
+ * reads each entry's slug, since callers pass differently shaped entries.
+ */
+export function pickSpotlightForDay<T>(sortedRecords: readonly T[], date: Date, slugOf: (entry: T) => string): T | null {
+  if (isKaisikaSpotlightDay(date)) {
+    const kaisika = sortedRecords.find((entry) => slugOf(entry) === KAISIKA_EKADASI_SPOTLIGHT_SLUG);
+    if (kaisika) return kaisika;
+  }
+  return pickSpotlightRecord(sortedRecords, date);
 }
