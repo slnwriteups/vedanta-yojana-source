@@ -84,3 +84,20 @@ test("pickSpotlightForDay: Tirukurungudi on Kaisika Ekadasi and the Dvadasi afte
   const ordinary = new Date(2026, 10, 25);
   assert.equal(pickSpotlightForDay(entries, ordinary, slugOf), pickSpotlightRecord(entries, ordinary));
 });
+
+test("pickSpotlightForDay: when the rotation lands on Tirukurungudi the day before Kaisika Ekadasi, that day shows the temple tomorrow's Kaisika spotlight displaces", async () => {
+  const fs = await import("node:fs");
+  const path = await import("node:path");
+  const { sourcePageNumber } = await import("../../content-lib/ordering.ts");
+  const dir = path.join(path.dirname(new URL(import.meta.url).pathname), "../../content/divya-desams");
+  const records = fs.readdirSync(dir).filter((f: string) => f.endsWith(".json"))
+    .map((f: string) => JSON.parse(fs.readFileSync(path.join(dir, f), "utf8")))
+    .sort((a: any, b: any) => sourcePageNumber(a.migration.sourcePageId) - sourcePageNumber(b.migration.sourcePageId));
+  const slugOf = (r: { slug: string }) => r.slug;
+  const eve = new Date(2026, 10, 19, 9);
+  assert.equal(pickSpotlightRecord(records, eve)?.slug, "tirukurungudi", "the plain rotation lands on Tirukurungudi on 19 Nov 2026");
+  assert.equal(pickSpotlightForDay(records, eve, slugOf)?.slug, pickSpotlightRecord(records, new Date(2026, 10, 20, 9))?.slug);
+  assert.notEqual(pickSpotlightForDay(records, eve, slugOf)?.slug, "tirukurungudi");
+  assert.equal(pickSpotlightForDay(records, new Date(2026, 10, 20, 9), slugOf)?.slug, "tirukurungudi");
+  assert.equal(pickSpotlightForDay(records, new Date(2026, 10, 21, 9), slugOf)?.slug, "tirukurungudi");
+});

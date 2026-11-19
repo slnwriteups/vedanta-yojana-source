@@ -1,4 +1,5 @@
 import type { PublicImageEntry } from "@/lib/public-content";
+import { anchorFor } from "@/content-lib/inline-images.ts";
 import type { LanguageCode } from "@/lib/preferences";
 import {
   extractSpecialNote,
@@ -50,7 +51,7 @@ interface Segment {
   images?: ResolvedImage[];
 }
 
-function buildSegments(text: string, images: ResolvedImage[]): Segment[] {
+function buildSegments(text: string, images: ResolvedImage[], language: string | null): Segment[] {
   const paragraphs = text.split(/\n{2,}/);
   const segments: Segment[] = [];
   const usedAssetIds = new Set<string>();
@@ -61,7 +62,7 @@ function buildSegments(text: string, images: ResolvedImage[]): Segment[] {
     lines.forEach((line, lIdx) => {
       const trimmed = line.trim();
       const matched = images.filter(
-        ({ image }) => image.placementAnchor === trimmed && !usedAssetIds.has(image.assetId)
+        ({ image }) => anchorFor(image, language)?.trim() === trimmed && !usedAssetIds.has(image.assetId)
       );
       if (matched.length === 0) return;
 
@@ -118,7 +119,7 @@ export function SthalaPuranamWithImages({
   heading: string;
   language: LanguageCode | null;
 }) {
-  const segments = buildSegments(text, images);
+  const segments = buildSegments(text, images, language);
 
   // See mobile/components/SthalaPuranamWithImages.tsx's identical
   // `carryingNote` for the full "why": an image's placementAnchor can

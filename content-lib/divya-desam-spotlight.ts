@@ -132,5 +132,14 @@ export function pickSpotlightForDay<T>(sortedRecords: readonly T[], date: Date, 
     const kaisika = sortedRecords.find((entry) => slugOf(entry) === KAISIKA_EKADASI_SPOTLIGHT_SLUG);
     if (kaisika) return kaisika;
   }
-  return pickSpotlightRecord(sortedRecords, date);
+  const ordinary = pickSpotlightRecord(sortedRecords, date);
+  // The rotation can land on Tirukurungudi the day before Kaisika Ekadasi
+  // (it did on 19 Nov 2026), which would feature it three days running.
+  // Show instead the temple the Kaisika days displace tomorrow, so no
+  // temple is skipped from the rotation.
+  if (ordinary && slugOf(ordinary) === KAISIKA_EKADASI_SPOTLIGHT_SLUG) {
+    const tomorrow = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1, 12);
+    if (isKaisikaSpotlightDay(tomorrow)) return pickSpotlightRecord(sortedRecords, tomorrow);
+  }
+  return ordinary;
 }
