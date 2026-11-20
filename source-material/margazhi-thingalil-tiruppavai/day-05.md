@@ -23,3 +23,6 @@ Slides: Drive "Margazhi Thingalil Tiruppavai- Day 5 - 1…9" (whole pāsuram in 
 - Quoted words in the commentary spelt as in the verse: "tāyaikkuḍal viḻakkam" → "tāyai kkuḍal viḷakkam", "aṇi viḻakku" → "aṇi viḷakku", "tturaivan" → "ttuṟaivan", "ttozudu" → "ttoḻudu", "pōya pizaiyum, pugudaruvān ninṟa navum" → "pōya piḻaiyum, pugudaruvān ninṟanavum".
 - "beings.In" → "beings. In" (missing space); "śrī-bhāṣya" → "Śrī Bhāṣya" (title of the work); "Vishnu’s" → "Vishṇu’s" (as earlier in the series).
 - Questions for the owner: the commentary credits the Godāvarī reading to "many Āchāryas" and the tattva–hita–puruṣārtha structure to Rāmānuja's Śrī Bhāṣya; both are kept as written (the owner's own commentary).
+
+Source check (sadagopan.org Tiruppāvai e-books):
+- Confirmed: the Godāvarī that out of fear of Rāvaṇa did not reveal Sītā's abduction, contrasted with the Yamunā (Thiruppavai - AR Swamy, Pasuram 5).

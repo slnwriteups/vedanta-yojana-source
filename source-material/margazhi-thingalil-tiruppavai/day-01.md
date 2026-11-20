@@ -43,3 +43,6 @@ Verses (all checked against the Kidāmbi edition; the slides' verse text is not 
 
 Prose:
 - Commentary on Pāsuram 1: "iḻam siṅgam" → "iḷam siṅgam"; "Margazhi" → "Mārgazhi" (as in the rest of the series).
+
+Source check (sadagopan.org Tiruppāvai e-books):
+- Confirmed: Parāśara Bhaṭṭar composed the taniyan nīḷātuṅga… (Thiruppavai - VS, p. 9, 'composed by ParAsara Bhattar … in Sanskrit (NeeLA Thunga Sthana Giri--)').
