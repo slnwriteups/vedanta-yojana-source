@@ -265,7 +265,12 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
   // A kept chapter that moves has only its order number rewritten.
   const renumbered = kept.filter((slug) => readChapter(slug).order !== orderOf(slug));
   const keptParts = existing ? existing.parts.filter((part) => part.chapters.every((slug) => kept.includes(slug))) : [];
-  const allParts = [...keptParts, ...parts].map((part, i) => ({ ...part, order: i + 1 }));
+  // A part this spec publishes again keeps the translations added to it since (same title).
+  const previousPart = (title: string) => existing?.parts.find((p) => p.title === title && !keptParts.includes(p));
+  const allParts = [...keptParts, ...parts.map((part) => {
+    const translations = previousPart(part.title)?.translations;
+    return translations ? { ...part, translations } : part;
+  })].map((part, i) => ({ ...part, order: i + 1 }));
 
   const groupTitles = (spec.groups ?? []).map((g) => g.title);
   for (const { group, chapter } of chapters) {

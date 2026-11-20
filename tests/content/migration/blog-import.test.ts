@@ -567,3 +567,21 @@ test("publishBlog append puts a new post at the end of its own place, renumberin
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("publishBlog append re-run keeps translations added to the spec's own parts", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, bookDir, appendSpec } = await blogWithTranslations(root);
+    publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    const bookFile = path.join(bookDir, "book.json");
+    const bookJson = JSON.parse(fs.readFileSync(bookFile, "utf8"));
+    bookJson.parts[1].translations = { ta: { title: "பயணம்" } };
+    fs.writeFileSync(bookFile, `${JSON.stringify(bookJson, null, 2)}\n`);
+    const { book } = publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    assert.equal(book.parts[1].title, "The Journey");
+    assert.equal(book.parts[1].translations?.ta?.title, "பயணம்");
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
