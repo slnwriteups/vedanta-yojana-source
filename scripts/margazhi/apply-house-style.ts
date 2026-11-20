@@ -75,7 +75,7 @@ function prose(text: string): string {
 }
 
 let changed = 0;
-for (const file of fs.readdirSync(DIR).filter((f) => /^day-\d\d\.md$/.test(f)).sort()) {
+for (const file of fs.readdirSync(DIR).filter((f) => /^day-\d\d(-[a-z]+)?\.md$/.test(f)).sort()) {
   const p = path.join(DIR, file);
   const raw = fs.readFileSync(p, "utf8");
   // Front matter lines (the "# Day" title is prose; "Source:" lines are notes) and
