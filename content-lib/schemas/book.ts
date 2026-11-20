@@ -2,7 +2,7 @@ import { z } from "zod";
 import { ImageEntrySchema, MigrationMetadataSchema } from "./shared.ts";
 import { ResourceEntrySchema } from "./divya-desam-parts.ts";
 import { SlugSchema, StatusSchema } from "./shared-safe.ts";
-import { BookPartSchema, BookTranslationsSchema, LibraryKindSchema } from "./book-parts.ts";
+import { BookGroupSchema, BookPartSchema, BookTranslationsSchema, LibraryKindSchema } from "./book-parts.ts";
 
 export * from "./book-parts.ts";
 
@@ -31,6 +31,8 @@ export const BookSchema = z.object({
   status: StatusSchema,
   migration: MigrationMetadataSchema,
   parts: z.array(BookPartSchema).default([]),
+  /** Places above parts (see BookGroupSchema); empty for most books. */
+  groups: z.array(BookGroupSchema).default([]),
   /** Ordered list of chapter slugs. Chapter records themselves live separately. */
   chapterOrder: z.array(SlugSchema).default([]),
   /**

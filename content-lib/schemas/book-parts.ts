@@ -42,6 +42,15 @@ export const BookPartSchema = z.object({
 export type BookPart = z.infer<typeof BookPartSchema>;
 
 /**
+ * An optional grouping above parts -- a *place* in Temples and Festivals.
+ * Same shape and rules as a part: a contiguous run of chapterOrder, each
+ * chapter in at most one group, and a part never straddles two groups.
+ * Parts nest inside groups; a chapter may be in a group without a part.
+ */
+export const BookGroupSchema = BookPartSchema;
+export type BookGroup = z.infer<typeof BookGroupSchema>;
+
+/**
  * What a Library entry is: a "book" (a published book, read chapter by
  * chapter) or a "blog" (a series of the author's blog posts, migrated
  * from the old WordPress/Wix blogs and edited to book standard, each

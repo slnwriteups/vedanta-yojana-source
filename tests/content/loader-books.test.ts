@@ -338,3 +338,88 @@ test("partLabelFor hides a part named after the chapter itself", async () => {
   assert.equal(partLabelFor(book, "sudarshana-ashtakam", "Sudarshana Ashtakam"), "Narasimha Avataram");
   assert.equal(partLabelFor(book, "other", "Other"), null);
 });
+
+const placesBook = {
+  groups: [
+    { title: "Tirumala", order: 1, chapters: ["a", "b", "c"] },
+    { title: "Guruvāyūr", order: 2, chapters: ["d", "e"] },
+  ],
+  parts: [
+    { title: "Brahmotsavam", order: 1, chapters: ["a", "b"] },
+    { title: "Guruvāyūr", order: 2, chapters: ["d", "e"] },
+  ],
+};
+
+test("groupByPlace nests parts inside places and keeps overall numbering", async () => {
+  const { groupByPlace } = await import("../../content-lib/library-parts.ts");
+  const items = ["a", "b", "c", "d", "e", "f"].map((slug) => ({ slug }));
+  const places = groupByPlace(placesBook, items);
+  assert.deepEqual(
+    places.map((pl) => [pl.title, pl.parts.map((g) => [g.title, g.items.map((x) => `${x.item.slug}${x.index}`)])]),
+    [
+      ["Tirumala", [["Brahmotsavam", ["a0", "b1"]], [null, ["c2"]]]],
+      ["Guruvāyūr", [[null, ["d3", "e4"]]]],
+      [null, [[null, ["f5"]]]],
+    ]
+  );
+  assert.equal(places[1].parts[0].part?.title, "Guruvāyūr", "the hidden part heading keeps its part");
+  assert.deepEqual(groupByPlace({ parts: [] }, items).map((pl) => pl.title), [null], "a book without places is one untitled place");
+});
+
+test("partLabelFor joins place and part, dropping repeats", async () => {
+  const { partLabelFor, placeTitleFor } = await import("../../content-lib/library-parts.ts");
+  assert.equal(partLabelFor(placesBook, "a", "The Festival"), "Tirumala · Brahmotsavam");
+  assert.equal(partLabelFor(placesBook, "c", "Jyeshtabhishekam"), "Tirumala");
+  assert.equal(partLabelFor(placesBook, "d", "The Vow"), "Guruvāyūr");
+  assert.equal(partLabelFor(placesBook, "f", "Other"), null);
+  assert.equal(partLabelFor(placesBook, "b", "Brahmotsavam"), "Tirumala", "a part named after the chapter is dropped");
+  assert.equal(placeTitleFor(placesBook, "e"), "Guruvāyūr");
+  assert.equal(placeTitleFor(placesBook, "f"), null);
+});
+
+test("every book's groups list real chapters, each in at most one group, as contiguous runs, and no part straddles two groups", async () => {
+  const { loadBooks: loadRealBooks } = await import("../../content-lib/loader/index.ts");
+  for (const book of loadRealBooks()) {
+    const groupOf = new Map<string, string>();
+    for (const group of book.groups) {
+      assert.ok(group.chapters.length > 0, `${book.slug}: place "${group.title}" has no chapters`);
+      const positions = group.chapters.map((slug) => book.chapterOrder.indexOf(slug));
+      for (const [i, slug] of group.chapters.entries()) {
+        assert.ok(positions[i] !== -1, `${book.slug}: place "${group.title}" lists unknown chapter ${slug}`);
+        assert.ok(!groupOf.has(slug), `${book.slug}: ${slug} is in more than one place`);
+        groupOf.set(slug, group.title);
+        if (i > 0) assert.equal(positions[i], positions[i - 1] + 1, `${book.slug}: place "${group.title}" is not a contiguous run`);
+      }
+    }
+    for (const part of book.parts) {
+      const places = new Set(part.chapters.map((slug) => groupOf.get(slug) ?? null));
+      assert.ok(places.size === 1, `${book.slug}: part "${part.title}" straddles places`);
+    }
+  }
+});
+
+test("localizeBook translates place titles", async () => {
+  const { localizeBook } = await import("../../content-lib/i18n.ts");
+  const book = {
+    slug: "b",
+    title: "Book",
+    parts: [],
+    groups: [
+      { title: "Puri", order: 1, chapters: ["a"], translations: { ta: { title: "பூரி" } } },
+      { title: "Pandharpur", order: 2, chapters: ["b"] },
+    ],
+  };
+  const localized = localizeBook(book as never, "ta") as unknown as typeof book;
+  assert.deepEqual(localized.groups.map((g) => g.title), ["பூரி", "Pandharpur"]);
+  assert.equal(localizeBook(book as never, "kn"), book);
+});
+
+test("BookSchema and MobileBookSchema accept groups and default them to []", async () => {
+  const { BookSchema } = await import("../../content-lib/schemas/index.ts");
+  const { MobileBookSchema } = await import("../../content-lib/mobile-content.ts");
+  const base = { slug: "b", title: "B", status: "published", migration: { sourcePageId: "x", extractionConfidence: "high", needsReview: false } };
+  assert.deepEqual(BookSchema.parse(base).groups, []);
+  const withGroups = { ...base, groups: [{ title: "Puri", order: 1, chapters: ["a"] }] };
+  assert.equal(BookSchema.parse(withGroups).groups[0].title, "Puri");
+  assert.equal(MobileBookSchema.parse({ ...withGroups, migration: { needsReview: false } }).groups[0].title, "Puri");
+});

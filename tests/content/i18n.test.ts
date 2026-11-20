@@ -128,6 +128,7 @@ test("I: localizeBook applies title/description, never touches author", () => {
     status: "published",
     migration: { sourcePageId: "aggregate:x", extractionConfidence: "medium", needsReview: false },
     parts: [],
+    groups: [],
     chapterOrder: [],
     resources: [],
     translations: { kn: { title: "ಕನ್ನಡ ಪುಸ್ತಕ" } },
