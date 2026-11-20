@@ -36,7 +36,7 @@ test("padukaPanchangamFor returns a tarpanam-only entry for the day before the t
 
 test("padukaPanchangamFor returns null for dates no transcribed issue covers", () => {
   assert.equal(padukaPanchangamFor(new Date(2026, 8, 16)), null);
-  assert.equal(padukaPanchangamFor(new Date(2026, 10, 25)), null);
+  assert.equal(padukaPanchangamFor(new Date(2026, 11, 23)), null);
 });
 
 test("the Aippasi issue continues the calendar from 25 October to 24 November", () => {
@@ -48,6 +48,16 @@ test("the Aippasi issue continues the calendar from 25 October to 24 November", 
   assert.equal(padukaPanchangamFor(new Date(2026, 10, 24))?.day?.tithi, "Pournami");
   // 18-24 October appear in both issues; the earlier transcription is the one returned.
   assert.equal(padukaPanchangamFor(new Date(2026, 9, 24))?.day?.festival, "Srimad Tirutturaippundi Andavan Srinivasa Ramanuja Mahadesikan Tirunakshatram");
+});
+
+test("the Karthikai issue continues the calendar from 25 November to 22 December", () => {
+  const first = padukaPanchangamFor(new Date(2026, 10, 25))?.day;
+  assert.equal(first?.festival, "Tiruppanazhvar Tirunakshatram");
+  assert.equal(padukaPanchangamFor(new Date(2026, 11, 9))?.day?.tithi, "Amavasya");
+  assert.equal(padukaPanchangamFor(new Date(2026, 11, 20))?.day?.festival, "Sarva Vaikuntha Ekadasi");
+  const margazhi1 = padukaPanchangamFor(new Date(2026, 11, 16));
+  assert.equal(margazhi1?.tarpanam?.title.startsWith("Parābhava Mārgazhi 1"), true);
+  assert.equal(padukaPanchangamFor(new Date(2026, 11, 22))?.day?.tithi, "Trayodasi");
 });
 
 test("every day uses the computed calendar's paksha/tithi/nakshatram vocabulary, so it localizes identically", () => {
@@ -67,7 +77,8 @@ test("every issue lists consecutive dates, with paksha turning only after Pourna
       const cur = issue.days[i];
       const [y, m, d] = prev.date.split("-").map(Number);
       assert.equal(cur.date, padukaDateKey(new Date(y, m - 1, d + 1)), `gap after ${prev.date}`);
-      const turns = prev.tithi === "Pournami" || prev.tithi === "Amavasya";
+      // A Pournami/Amavasya prevailing at two sunrises (8-9 Dec 2026) turns the paksha only after the second.
+      const turns = (prev.tithi === "Pournami" || prev.tithi === "Amavasya") && cur.tithi !== prev.tithi;
       assert.equal(cur.paksha !== prev.paksha, turns, cur.date);
     }
   }

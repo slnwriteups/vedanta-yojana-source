@@ -92,15 +92,21 @@ const EQUIVALENTS: Record<string, string> = {
   "Thula Ravi": "Tula Ravi",
   "Vruschika Ravi": "Vrischika Ravi",
   "Vruschika Masa Punyakalam": "Vishnupati Punya Kalam",
+  Thiruppanazhvar: "Tiruppanazhvar Tirunakshatram",
+  "Vaikunta Ekadasi": "Sarva Vaikuntha Ekadasi",
+  "Dhanur Ravi": "Dhanur Ravi",
+  "Dhanur Masa Punyakalam": "Shadasiti Punya Kalam",
 };
 
 /**
  * Engine names that match a published name only on the same day as a
  * given sankramanam: the engine's plain "Punyakalam" is the Tula
- * sankramanam's Visuva Punya Kalam on the day of Tula Ravi.
+ * sankramanam's Visuva Punya Kalam on the day of Tula Ravi, and the Dhanus
+ * sankramanam's Shadasiti Punya Kalam on the day of Dhanur Ravi.
  */
 const SAME_DAY_EQUIVALENTS: Array<{ name: string; published: string; when: string }> = [
   { name: "Punyakalam", published: "Visuva Punya Kalam", when: "Tula Ravi" },
+  { name: "Punyakalam", published: "Shadasiti Punya Kalam", when: "Dhanur Ravi" },
 ];
 
 /**
@@ -124,6 +130,8 @@ export const ASHRAMAM_ONLY_OBSERVANCES: ReadonlySet<string> = new Set([
   "Tula Sukla Ashtami",
   "Tula Sukla Saptami",
   "Vrischika Sukla Ashtami",
+  "Vrischika Sukla Shashthi",
+  "Chapa Sukla Ashtami",
   "Bhanu Saptami",
   "Sravana Dvadasi",
   "Mahavyatipatam",
@@ -132,6 +140,8 @@ export const ASHRAMAM_ONLY_OBSERVANCES: ReadonlySet<string> = new Set([
   "Chandra Darsanam",
   "Aippasi Masa Pravesa Tarpanam",
   "Karthikai Masa Pravesa Tarpanam",
+  "Margazhi Masa Pravesa Tarpanam",
+  "Commencement of Dhanur Masa Aradhanam",
   "Commencement of Tula Snanam",
   "Conclusion of Tula Snanam",
   "Kadai Mugam",
@@ -140,6 +150,7 @@ export const ASHRAMAM_ONLY_OBSERVANCES: ReadonlySet<string> = new Set([
   "Srimad Akkur Andavan Sri Srinivasa Mahadesikan Tirunakshatram",
   "Tirukkudantai Desikan Srigopalarya Mahadesikan Tirunakshatram",
   "Srimad Tirutturaippundi Andavan Srinivasa Ramanuja Mahadesikan Tirunakshatram",
+  "Srimad Chinnandavan Sri Paduka Sevaka Ramanuja Mahadesikan Tirunakshatram",
 ]);
 
 /**

@@ -241,6 +241,101 @@ export const PADUKA_PANCHANGAM_ISSUES: PadukaPanchangamIssue[] = [
     ],
     tarpanams: [],
   },
+  {
+    issue: "Sri Ranganātha Pādukā (English), Volume 64 Issue 8 (2026 November)",
+    // The issue's table opens on Kārttikai 1 (17 November); 17-24 November match the previous
+    // issue's transcription above, which padukaPanchangamFor already finds first, so this entry
+    // starts on 25 November. As in the earlier issues, the harivāsaram end times (21 Nov,
+    // 5 Dec) are timings, not observances, and are not carried.
+    days: [
+      { date: "2026-11-25", paksha: "Krishna Paksha", tithi: "Prathama", nakshatram: "Rohini", festival: "Tiruppanazhvar Tirunakshatram" },
+      { date: "2026-11-26", paksha: "Krishna Paksha", tithi: "Dvithiya", nakshatram: "Mrigasira", festival: "" },
+      { date: "2026-11-27", paksha: "Krishna Paksha", tithi: "Trithiya", nakshatram: "Ardra", festival: "" },
+      { date: "2026-11-28", paksha: "Krishna Paksha", tithi: "Chaturthi", nakshatram: "Punarvasu", festival: "" },
+      { date: "2026-11-29", paksha: "Krishna Paksha", tithi: "Panchami", nakshatram: "Pushyami", festival: "" },
+      { date: "2026-11-30", paksha: "Krishna Paksha", tithi: "Shashthi", nakshatram: "Aslesha", festival: "" },
+      { date: "2026-12-01", paksha: "Krishna Paksha", tithi: "Ashtami", nakshatram: "Makha", festival: "Srimad Chinnandavan Sri Paduka Sevaka Ramanuja Mahadesikan Tirunakshatram" },
+      { date: "2026-12-02", paksha: "Krishna Paksha", tithi: "Navami", nakshatram: "Purva Phalguni", festival: "" },
+      { date: "2026-12-03", paksha: "Krishna Paksha", tithi: "Dasami", nakshatram: "Uttara Phalguni", festival: "" },
+      { date: "2026-12-04", paksha: "Krishna Paksha", tithi: "Ekadasi", nakshatram: "Hasta", festival: "Sarva Ekadasi" },
+      { date: "2026-12-05", paksha: "Krishna Paksha", tithi: "Dvadasi", nakshatram: "Chitra", festival: "" },
+      { date: "2026-12-06", paksha: "Krishna Paksha", tithi: "Trayodasi", nakshatram: "Swathi", festival: "Mahapradosham" },
+      { date: "2026-12-07", paksha: "Krishna Paksha", tithi: "Chaturdasi", nakshatram: "Visakha", festival: "" },
+      { date: "2026-12-08", paksha: "Krishna Paksha", tithi: "Amavasya", nakshatram: "Anuradha", festival: "Sarva Amavasya" },
+      { date: "2026-12-09", paksha: "Krishna Paksha", tithi: "Amavasya", nakshatram: "Jyeshta", festival: "" },
+      { date: "2026-12-10", paksha: "Shukla Paksha", tithi: "Prathama", nakshatram: "Moola", festival: "Chandra Darsanam" },
+      { date: "2026-12-11", paksha: "Shukla Paksha", tithi: "Dvithiya", nakshatram: "Purva Ashadha", festival: "" },
+      { date: "2026-12-12", paksha: "Shukla Paksha", tithi: "Trithiya", nakshatram: "Uttara Ashadha", festival: "" },
+      { date: "2026-12-13", paksha: "Shukla Paksha", tithi: "Chaturthi", nakshatram: "Shravana", festival: "Sravana Vratam" },
+      { date: "2026-12-14", paksha: "Shukla Paksha", tithi: "Panchami", nakshatram: "Shravana", festival: "" },
+      { date: "2026-12-15", paksha: "Shukla Paksha", tithi: "Shashthi", nakshatram: "Dhanishta", festival: "Vrischika Sukla Shashthi" },
+      { date: "2026-12-16", paksha: "Shukla Paksha", tithi: "Saptami", nakshatram: "Satabhisha", festival: "Dhanur Ravi, Shadasiti Punya Kalam, Margazhi Masa Pravesa Tarpanam, Commencement of Dhanur Masa Aradhanam" },
+      { date: "2026-12-17", paksha: "Shukla Paksha", tithi: "Ashtami", nakshatram: "Purva Badra", festival: "Chapa Sukla Ashtami" },
+      { date: "2026-12-18", paksha: "Shukla Paksha", tithi: "Navami", nakshatram: "Uttara Badra", festival: "" },
+      { date: "2026-12-19", paksha: "Shukla Paksha", tithi: "Dasami", nakshatram: "Revathi", festival: "" },
+      { date: "2026-12-20", paksha: "Shukla Paksha", tithi: "Ekadasi", nakshatram: "Aswini", festival: "Sarva Vaikuntha Ekadasi" },
+      { date: "2026-12-21", paksha: "Shukla Paksha", tithi: "Dvadasi", nakshatram: "Bharani", festival: "Mahapradosham" },
+      { date: "2026-12-22", paksha: "Shukla Paksha", tithi: "Trayodasi", nakshatram: "Krittika", festival: "" },
+    ],
+    tarpanams: [
+      {
+        date: "2026-12-08",
+        title: "Parābhava Kārttikai 22, Tuesday, sarva amāvāsyai",
+        sankalpam:
+          "Parābhava nāma samvatsare, dakṣiṇāyane, śarad ṛtau, vṛścika māse, kṛṣṇa pakṣe, amāvāsyāyām puṇya tithau, bhauma vāsara yuktāyām, anuṣā nakṣatra yuktāyām, dhṛti (sukarma till 08.39) yoga, catuṣpāda karaṇa, amāvāsyā puṇya kale, darśa śrāddham, tila tarpaṇa rūpeṇa.",
+        translations: {
+          ta: {
+            title: "பராபவ கார்த்திகை 22, செவ்வாய், ஸர்வ அமாவாசை",
+            sankalpam:
+              "பராபவ நாம ஸம்வத்ஸரே, தக்ஷிணாயநே, சரத் ருதௌ, வ்ருச்சிக மாஸே, க்ருஷ்ண பக்ஷே, அமாவாஸ்யாயாம் புண்ய திதௌ, பௌம வாஸர யுக்தாயாம், அநுஷா நக்ஷத்ர யுக்தாயாம், த்ருதி (ஸுகர்ம 08.39 வரை) யோக, சதுஷ்பாத கரண, அமாவாஸ்யா புண்ய கலே, தர்ச ச்ராத்தம், தில தர்பண ரூபேண.",
+          },
+          kn: {
+            title: "ಪರಾಭವ ಕಾರ್ತಿಕೈ 22, ಮಂಗಳವಾರ, ಸರ್ವ ಅಮಾವಾಸ್ಯೆ",
+            sankalpam:
+              "ಪರಾಭವ ನಾಮ ಸಮ್ವತ್ಸರೇ, ದಕ್ಷಿಣಾಯನೇ, ಶರದ್ ಋತೌ, ವೃಶ್ಚಿಕ ಮಾಸೇ, ಕೃಷ್ಣ ಪಕ್ಷೇ, ಅಮಾವಾಸ್ಯಾಯಾಮ್ ಪುಣ್ಯ ತಿಥೌ, ಭೌಮ ವಾಸರ ಯುಕ್ತಾಯಾಮ್, ಅನುಷಾ ನಕ್ಷತ್ರ ಯುಕ್ತಾಯಾಮ್, ಧೃತಿ (ಸುಕರ್ಮ 08.39 ವರೆಗೆ) ಯೋಗ, ಚತುಷ್ಪಾದ ಕರಣ, ಅಮಾವಾಸ್ಯಾ ಪುಣ್ಯ ಕಲೇ, ದರ್ಶ ಶ್ರಾದ್ಧಮ್, ತಿಲ ತರ್ಪಣ ರೂಪೇಣ.",
+          },
+          hi: {
+            title: "पराभव कार्तिकै 22, मंगलवार, सर्व अमावस्या",
+            sankalpam:
+              "पराभव नाम सम्वत्सरे, दक्षिणायने, शरद् ऋतौ, वृश्चिक मासे, कृष्ण पक्षे, अमावास्यायाम् पुण्य तिथौ, भौम वासर युक्तायाम्, अनुषा नक्षत्र युक्तायाम्, धृति (सुकर्म 08.39 तक) योग, चतुष्पाद करण, अमावास्या पुण्य कले, दर्श श्राद्धम्, तिल तर्पण रूपेण.",
+          },
+          te: {
+            title: "పరాభవ కార్తికై 22, మంగళవారం, సర్వ అమావాస్య",
+            sankalpam:
+              "పరాభవ నామ సమ్వత్సరే, దక్షిణాయనే, శరద్ ఋతౌ, వృశ్చిక మాసే, కృష్ణ పక్షే, అమావాస్యాయామ్ పుణ్య తిథౌ, భౌమ వాసర యుక్తాయామ్, అనుషా నక్షత్ర యుక్తాయామ్, ధృతి (సుకర్మ 08.39 వరకు) యోగ, చతుష్పాద కరణ, అమావాస్యా పుణ్య కలే, దర్శ శ్రాద్ధమ్, తిల తర్పణ రూపేణ.",
+          },
+        },
+      },
+      {
+        date: "2026-12-16",
+        title: "Parābhava Mārgazhi 1, Wednesday, Mārgazhi māsa praveśam tarpaṇam, ṣaḍaśīti puṇya kālam",
+        sankalpam:
+          "Parābhava nāma samvatsare, dakṣiṇāyane, hemanta ṛtau, cāpa māse (śarad ṛtau, vṛścika māse till 25.04), śukla pakṣe, saptamyām puṇya tithau, saumya vāsara yuktāyām, pūrvaproṣṭhapada (śatabhiṣak till 10.41) nakṣatra yuktāyām, siddhi (vajra till 11.44) yoga, vaṇija karaṇa, ṣaḍaśīti puṇya kāle, cāpa saṅkramaṇa śrāddham, tila tarpaṇa rūpeṇa.",
+        translations: {
+          ta: {
+            title: "பராபவ மார்கழி 1, புதன், மார்கழி மாஸ ப்ரவேசம் தர்ப்பணம், ஷடசீதி புண்ய காலம்",
+            sankalpam:
+              "பராபவ நாம ஸம்வத்ஸரே, தக்ஷிணாயநே, ஹேமந்த ருதௌ, சாப மாஸே (சரத் ருதௌ, வ்ருச்சிக மாஸே 25.04 வரை), சுக்ல பக்ஷே, ஸப்தம்யாம் புண்ய திதௌ, ஸௌம்ய வாஸர யுக்தாயாம், பூர்வப்ரோஷ்டபத (சதபிஷக் 10.41 வரை) நக்ஷத்ர யுக்தாயாம், ஸித்தி (வஜ்ர 11.44 வரை) யோக, வணிஜ கரண, ஷடசீதி புண்ய காலே, சாப ஸங்க்ரமண ச்ராத்தம், தில தர்பண ரூபேண.",
+          },
+          kn: {
+            title: "ಪರಾಭವ ಮಾರ್ಗೞಿ 1, ಬುಧವಾರ, ಮಾರ್ಗೞಿ ಮಾಸ ಪ್ರವೇಶಮ್ ತರ್ಪಣಮ್, ಷಡಶೀತಿ ಪುಣ್ಯ ಕಾಲಮ್",
+            sankalpam:
+              "ಪರಾಭವ ನಾಮ ಸಮ್ವತ್ಸರೇ, ದಕ್ಷಿಣಾಯನೇ, ಹೇಮನ್ತ ಋತೌ, ಚಾಪ ಮಾಸೇ (ಶರದ್ ಋತೌ, ವೃಶ್ಚಿಕ ಮಾಸೇ 25.04 ವರೆಗೆ), ಶುಕ್ಲ ಪಕ್ಷೇ, ಸಪ್ತಮ್ಯಾಮ್ ಪುಣ್ಯ ತಿಥೌ, ಸೌಮ್ಯ ವಾಸರ ಯುಕ್ತಾಯಾಮ್, ಪೂರ್ವಪ್ರೋಷ್ಠಪದ (ಶತಭಿಷಕ್ 10.41 ವರೆಗೆ) ನಕ್ಷತ್ರ ಯುಕ್ತಾಯಾಮ್, ಸಿದ್ಧಿ (ವಜ್ರ 11.44 ವರೆಗೆ) ಯೋಗ, ವಣಿಜ ಕರಣ, ಷಡಶೀತಿ ಪುಣ್ಯ ಕಾಲೇ, ಚಾಪ ಸಙ್ಕ್ರಮಣ ಶ್ರಾದ್ಧಮ್, ತಿಲ ತರ್ಪಣ ರೂಪೇಣ.",
+          },
+          hi: {
+            title: "पराभव मार्गऴि 1, बुधवार, मार्गऴि मास प्रवेशम् तर्पणम्, षडशीति पुण्य कालम्",
+            sankalpam:
+              "पराभव नाम सम्वत्सरे, दक्षिणायने, हेमन्त ऋतौ, चाप मासे (शरद् ऋतौ, वृश्चिक मासे 25.04 तक), शुक्ल पक्षे, सप्तम्याम् पुण्य तिथौ, सौम्य वासर युक्तायाम्, पूर्वप्रोष्ठपद (शतभिषक् 10.41 तक) नक्षत्र युक्तायाम्, सिद्धि (वज्र 11.44 तक) योग, वणिज करण, षडशीति पुण्य काले, चाप सङ्क्रमण श्राद्धम्, तिल तर्पण रूपेण.",
+          },
+          te: {
+            title: "పరాభవ మార్గళి 1, బుధవారం, మార్గళి మాస ప్రవేశం తర్పణం, షడశీతి పుణ్య కాలం",
+            sankalpam:
+              "పరాభవ నామ సమ్వత్సరే, దక్షిణాయనే, హేమన్త ఋతౌ, చాప మాసే (శరద్ ఋతౌ, వృశ్చిక మాసే 25.04 వరకు), శుక్ల పక్షే, సప్తమ్యామ్ పుణ్య తిథౌ, సౌమ్య వాసర యుక్తాయామ్, పూర్వప్రోష్ఠపద (శతభిషక్ 10.41 వరకు) నక్షత్ర యుక్తాయామ్, సిద్ధి (వజ్ర 11.44 వరకు) యోగ, వణిజ కరణ, షడశీతి పుణ్య కాలే, చాప సఙ్క్రమణ శ్రాద్ధమ్, తిల తర్పణ రూపేణ.",
+          },
+        },
+      },
+    ],
+  },
 ];
 
 /** Every observance name used in `festival`, in each non-English language's script. */
@@ -345,6 +440,15 @@ const OBSERVANCE_LABELS: Record<string, Record<LanguageCode, string>> = {
   "Kaisika Ekadasi": { ta: "கைசிக ஏகாதசி", kn: "ಕೈಶಿಕ ಏಕಾದಶಿ", hi: "कैशिक एकादशी", te: "కైశిక ఏకాదశి" },
   "Vaikhanasa - Sri Pancharatra Deepam": { ta: "வைகானஸ - ஸ்ரீ பாஞ்சராத்ர தீபம்", kn: "ವೈಖಾನಸ - ಶ್ರೀ ಪಾಂಚರಾತ್ರ ದೀಪಮ್", hi: "वैखानस - श्री पाञ्चरात्र दीपम्", te: "వైఖానస - శ్రీ పాంచరాత్ర దీపం" },
   "Tirumangai Azhvar Tirunakshatram": { ta: "திருமங்கையாழ்வார் திருநக்ஷத்திரம்", kn: "ತಿರುಮಂಗೈಯಾಳ್ವಾರ್ ತಿರುನಕ್ಷತ್ರಮ್", hi: "तिरुमङ्गैयाऴ्वार् तिरुनक्षत्रम्", te: "తిరుమంగైయాళ్వార్ తిరునక్షత్రం" },
+  "Tiruppanazhvar Tirunakshatram": { ta: "திருப்பாணாழ்வார் திருநக்ஷத்திரம்", kn: "ತಿರುಪ್ಪಾಣಾಳ್ವಾರ್ ತಿರುನಕ್ಷತ್ರಮ್", hi: "तिरुप्पाणाऴ्वार् तिरुनक्षत्रम्", te: "తిరుప్పాణాళ్వార్ తిరునక్షత్రం" },
+  "Srimad Chinnandavan Sri Paduka Sevaka Ramanuja Mahadesikan Tirunakshatram": { ta: "ஸ்ரீமத் சின்னாண்டவன் ஸ்ரீ பாதுகா ஸேவக ராமானுஜ மஹாதேசிகன் திருநக்ஷத்திரம்", kn: "ಶ್ರೀಮದ್ ಚಿನ್ನಾಂಡವನ್ ಶ್ರೀ ಪಾದುಕಾ ಸೇವಕ ರಾಮಾನುಜ ಮಹಾದೇಶಿಕನ್ ತಿರುನಕ್ಷತ್ರಮ್", hi: "श्रीमद् चिन्नाण्डवन् श्री पादुका सेवक रामानुज महादेशिकन् तिरुनक्षत्रम्", te: "శ్రీమద్ చిన్నాండవన్ శ్రీ పాదుకా సేవక రామానుజ మహాదేశికన్ తిరునక్షత్రం" },
+  "Vrischika Sukla Shashthi": { ta: "வ்ருச்சிக சுக்ல ஷஷ்டி", kn: "ವೃಶ್ಚಿಕ ಶುಕ್ಲ ಷಷ್ಠಿ", hi: "वृश्चिक शुक्ल षष्ठी", te: "వృశ్చిక శుక్ల షష్ఠి" },
+  "Dhanur Ravi": { ta: "தநுர் ரவி", kn: "ಧನುರ್ ರವಿ", hi: "धनुर् रवि", te: "ధనుర్ రవి" },
+  "Shadasiti Punya Kalam": { ta: "ஷடசீதி புண்ய காலம்", kn: "ಷಡಶೀತಿ ಪುಣ್ಯ ಕಾಲಮ್", hi: "षडशीति पुण्य कालम्", te: "షడశీతి పుణ్య కాలం" },
+  "Margazhi Masa Pravesa Tarpanam": { ta: "மார்கழி மாஸ ப்ரவேச தர்ப்பணம்", kn: "ಮಾರ್ಗೞಿ ಮಾಸ ಪ್ರವೇಶ ತರ್ಪಣಮ್", hi: "मार्गऴि मास प्रवेश तर्पणम्", te: "మార్గళి మాస ప్రవేశ తర్పణం" },
+  "Commencement of Dhanur Masa Aradhanam": { ta: "தநுர் மாஸ ஆராதனம் ஆரம்பம்", kn: "ಧನುರ್ ಮಾಸ ಆರಾಧನ ಆರಂಭ", hi: "धनुर् मास आराधन आरम्भ", te: "ధనుర్ మాస ఆరాధన ఆరంభం" },
+  "Chapa Sukla Ashtami": { ta: "சாப சுக்ல அஷ்டமி", kn: "ಚಾಪ ಶುಕ್ಲ ಅಷ್ಟಮಿ", hi: "चाप शुक्ल अष्टमी", te: "చాప శుక్ల అష్టమి" },
+  "Sarva Vaikuntha Ekadasi": { ta: "ஸர்வ வைகுண்ட ஏகாதசி", kn: "ಸರ್ವ ವೈಕುಂಠ ಏಕಾದಶಿ", hi: "सर्व वैकुण्ठ एकादशी", te: "సర్వ వైకుంఠ ఏకాదశి" },
 };
 
 /** Whether `name` has an entry in OBSERVANCE_LABELS -- lets tests enforce that every observance translates. */
