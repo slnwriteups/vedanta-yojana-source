@@ -1,6 +1,19 @@
 {
   "announcements": [
     {
+      "id": "2026-11-20-iphone-app-link",
+      "date": "2026-11-20",
+      "platforms": [
+        "website"
+      ],
+      "title": "Get the app on iPhone and iPad",
+      "body": "Vedanta Yojana is now on the App Store. Tap Install App on the website and choose iPhone / iPad, or Android.",
+      "link": {
+        "href": "https://apps.apple.com/app/vedanta-yojana/id6817639347",
+        "label": "Open in the App Store"
+      }
+    },
+    {
       "id": "2026-11-18-kaisika-ekadasi",
       "date": "2026-11-18",
       "pinnedUntil": "2026-11-21",
