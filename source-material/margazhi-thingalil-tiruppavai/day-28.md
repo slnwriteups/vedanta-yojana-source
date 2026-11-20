@@ -1,10 +1,10 @@
-# Day 28: Kaṟavaigaḷ Pin Śenṟu
+# Day 28: Kaṟavaigaḷ Pin Shenṟu
 
 @verse 28
 
-Āṇḍāḷ speaks from the gopīs’ humble reality: “kaṟavaigaḷ pin śenṟu kānañjērnduṇbōm” – we follow the cattle to the forest and take our food there; we belong to an āy kulam (cowherd clan) where there is “aṟivonṟum illāda,” no learning at all. Into this unlettered world, Krishna took birth, making it their puṇyam (great fortune). They marvel at Govindā, complete without flaw, capable of removing all their lacks. Their relationship is unbreakable: “uṟavēl namakkiṅgoḻikka oḻiyādu” – this bond cannot be severed even if they wished. Despite their ignorance, love created an eternal connection with the perfect Lord.
+Āṇḍāl speaks from the gopīs’ humble reality: “kaṟavaigaḷ pin shenṟu kānañjērnduṇbōm” – we follow the cattle to the forest and take our food there; we belong to an āy kulam (cowherd clan) where there is “aṟivonṟum illāda,” no learning at all. Into this unlettered world, Krishna took birth, making it their puṇyam (great fortune). They marvel at Govindā, complete without flaw, capable of removing all their lacks. Their relationship is unbreakable: “uṟavēl namakkiṅgoḻikka oḻiyādu” – this bond cannot be severed even if they wished. Despite their ignorance, love created an eternal connection with the perfect Lord.
 
-The gopīs confess their childishness: “aṟiyāda piḷḷaigaḷōm” – unaware little children who called Him by pet names (“śiṟupēr aḻaittanavum”). They plead, “śīṟi aruḷādē” – do not get angry at our familiarity. Like small children tugging at a parent’s hand, their innocence disarms Krishna’s potential rebuke. The inner teaching addresses human spiritual ignorance: unaware of His paramātmatva, people chase worldly pleasures until glimpses of His omniscience awaken longing for union. Ego dissolves as they recognize inferiority, seeking pardon and refuge. Āṇḍāḷ shows love’s power transcends knowledge – childish familiarity becomes the very qualification for receiving paṟai (mokṣa).
+The gopīs confess their childishness: “aṟiyāda piḷḷaigaḷōm” – unaware little children who called Him by pet names (“shiṟupēr aḻaittanavum”). They plead, “shīṟi aruḷādē” – do not get angry at our familiarity. Like small children tugging at a parent’s hand, their innocence disarms Krishna’s potential rebuke. The inner teaching addresses human spiritual ignorance: unaware of His paramātmatva, people chase worldly pleasures until glimpses of His omniscience awaken longing for union. Ego dissolves as they recognize inferiority, seeking pardon and refuge. Āṇḍāl shows love’s power transcends knowledge – childish familiarity becomes the very qualification for receiving paṟai (moksha).
 
 ## Notes
 

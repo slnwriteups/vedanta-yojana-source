@@ -263,6 +263,13 @@ Fix every line it prints, or explain it in the commit message. Some older chapte
 - **Quoted Tamil pasurams** in the explanations are romanised in English. Render them in native Tamil script for `ta`, and transliterate them from that Tamil for kn/hi/te (§5.3).
 - The stotram PDFs on the book page (`resources`) are not translated.
 
+### Mārgazhi Thingalil Tiruppāvai (`margazhi-thingalil-tiruppavai`)
+
+- **The English follows the Library convention** (unlike Sri Vishnu Sahasranaama Anubhavam): ś/ṣ are "sh" everywhere, verses included; prose Sanskrit words write ṛ as "ri" and ṁ as "m"; Tamil words and Tamil verse keep ē/ō, ḷ, ḻ, ṟ. Names take the glossary form: Āṇḍāl, Āchārya, Keshava, Yashodā, Lakshmī, Sri Vaishṇava, Srivilliputtūr, Periyāzhwār, Kōdhai, Tamizh; Kallazhagar, Azhagar Kōyil and Tirumaalirancholai at the owner's request.
+- `scripts/margazhi/apply-house-style.ts` applies these rules to `source-material/margazhi-thingalil-tiruppavai/` (each day's text above its Notes, and the romanised lines of `verses.json`). Run it after adding or editing a day; it is safe to re-run.
+- **Verses** come only from `verses.json` (Sunder Kidāmbi's edition, rebuilt from prapatti.com). Tamil: native script; Kannada, Hindi, Telugu: transliterate from that Tamil (§5.3). The Sanskrit taniyan nīḷātuṅga… is a §5.1 verse block.
+- Quoted pāsuram words in the commentary are romanised in English; render them as in §10 for Sri Vishnu Sahasranaama Anubhavam (Tamil script for `ta`, transliterated from the Tamil for kn/hi/te).
+
 ---
 
 ## 11. Model files to imitate
