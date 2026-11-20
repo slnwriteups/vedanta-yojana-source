@@ -2,6 +2,7 @@ import { z } from "zod";
 import { ImageEntrySchema, MigrationMetadataSchema } from "./shared.ts";
 import { SlugSchema, StatusSchema } from "./shared-safe.ts";
 import { ChapterTranslationsSchema } from "./chapter-parts.ts";
+import { isIsoDate } from "../release.ts";
 
 export * from "./chapter-parts.ts";
 
@@ -32,5 +33,10 @@ export const ChapterSchema = z.object({
   body: z.string().min(1),
   images: z.array(ImageEntrySchema).default([]),
   translations: ChapterTranslationsSchema.optional(),
+  /**
+   * The India calendar date (YYYY-MM-DD) this chapter is published on.
+   * Before it, the chapter does not exist for readers (content-lib/release.ts).
+   */
+  releaseDate: z.string().refine(isIsoDate, "releaseDate must be a real date written YYYY-MM-DD").optional(),
 });
 export type Chapter = z.infer<typeof ChapterSchema>;

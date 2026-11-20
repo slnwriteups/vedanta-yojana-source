@@ -6,6 +6,7 @@ import { toMobileBook, toMobileChapterSummary } from "../content-lib/mobile-cont
 import { BOOK_PAYLOAD_SCHEMA_VERSION } from "../content-lib/mobile-content.ts";
 import { CONTENT_MANIFEST_VERSION, type ContentManifest, type ContentManifestBookEntry } from "../content-lib/content-manifest.ts";
 import { BookSchema, ChapterSchema } from "../content-lib/schemas/index.ts";
+import { releasedBookAndChapters, releaseToday } from "../content-lib/release.ts";
 
 /**
  * Emits public/content-manifest.json -- see content-lib/content-manifest.ts
@@ -81,10 +82,17 @@ function main(): void {
     const bookJsonPath = path.join(CONTENT_LIBRARY_ROOT, bookDir, "book.json");
     if (!fs.existsSync(bookJsonPath)) continue;
 
-    const book = toMobileBook(BookSchema.parse(readJson(bookJsonPath)));
-    const chapterFiles = listJsonFiles(path.join(CONTENT_LIBRARY_ROOT, bookDir, "chapters"));
-    const chapters = chapterFiles
-      .map((f) => toMobileChapterSummary(ChapterSchema.parse(readJson(f))))
+    // Unreleased chapters (content-lib/release.ts) are left out; a book
+    // with none released yet is not listed.
+    const released = releasedBookAndChapters(
+      BookSchema.parse(readJson(bookJsonPath)),
+      listJsonFiles(path.join(CONTENT_LIBRARY_ROOT, bookDir, "chapters")).map((f) => ChapterSchema.parse(readJson(f))),
+      releaseToday()
+    );
+    if (!released) continue;
+    const book = toMobileBook(released.book);
+    const chapters = released.chapters
+      .map((c) => toMobileChapterSummary(c))
       .sort((a, b) => a.order - b.order);
 
     const payloadPath = path.join(BOOKS_OUTPUT_ROOT, `${book.slug}.json`);

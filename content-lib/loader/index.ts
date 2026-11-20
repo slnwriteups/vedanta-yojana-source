@@ -19,6 +19,7 @@ import {
   DuplicateSlugError,
 } from "./errors.ts";
 import { listJsonFiles, listSubdirectories, readJsonFile } from "./fs-utils.ts";
+import { isReleased, pruneBookToChapters, releaseToday } from "../release.ts";
 
 /**
  * Content loader — Phase 5D.
@@ -207,7 +208,25 @@ function loadBookFrom(contentRoot: string, slug: string): Book | null {
   return discoverBooksFrom(contentRoot).find((d) => d.book.slug === slug)?.book ?? null;
 }
 
-function loadChaptersFrom(contentRoot: string, bookSlug: string): Chapter[] {
+/**
+ * Releases (content-lib/release.ts): a chapter whose releaseDate is after
+ * `today` does not exist yet, the book is cut down to its released chapters,
+ * and a book with none released does not exist yet either. A book with no
+ * chapters at all is left alone (unchanged behaviour for empty books).
+ */
+function releasedBook(contentRoot: string, book: Book, today: string): Book | null {
+  const all = loadAllChaptersFrom(contentRoot, book.slug);
+  const released = all.filter((c) => isReleased(c, today));
+  if (released.length === all.length) return book;
+  if (released.length === 0) return null;
+  return pruneBookToChapters(book, new Set(released.map((c) => c.slug)));
+}
+
+function loadChaptersFrom(contentRoot: string, bookSlug: string, today: string): Chapter[] {
+  return loadAllChaptersFrom(contentRoot, bookSlug).filter((c) => isReleased(c, today));
+}
+
+function loadAllChaptersFrom(contentRoot: string, bookSlug: string): Chapter[] {
   if (!isValidSlugShape(bookSlug)) return [];
 
   const match = discoverBooksFrom(contentRoot).find((d) => d.book.slug === bookSlug);
@@ -244,10 +263,11 @@ function loadChaptersFrom(contentRoot: string, bookSlug: string): Chapter[] {
 function loadChapterFrom(
   contentRoot: string,
   bookSlug: string,
-  chapterSlug: string
+  chapterSlug: string,
+  today: string
 ): Chapter | null {
   if (!isValidSlugShape(bookSlug) || !isValidSlugShape(chapterSlug)) return null;
-  return loadChaptersFrom(contentRoot, bookSlug).find((c) => c.slug === chapterSlug) ?? null;
+  return loadChaptersFrom(contentRoot, bookSlug, today).find((c) => c.slug === chapterSlug) ?? null;
 }
 
 // ---------------------------------------------------------------------------
@@ -278,16 +298,30 @@ export interface ContentLoader {
  * directory, without any shared mutable state, environment variables, or
  * weakening of the production path-safety behavior.
  */
-export function createContentLoader(contentRoot: string): ContentLoader {
+export function createContentLoader(
+  contentRoot: string,
+  options: { today?: () => string } = {}
+): ContentLoader {
+  const today = options.today ?? releaseToday;
   return {
     loadDivyaDesams: () => loadDivyaDesamsFrom(contentRoot),
     loadDivyaDesam: (slug) => loadDivyaDesamFrom(contentRoot, slug),
 
-    loadBooks: () => discoverBooksFrom(contentRoot).map((d) => d.book),
-    loadBook: (slug) => loadBookFrom(contentRoot, slug),
+    loadBooks: () => {
+      const t = today();
+      return discoverBooksFrom(contentRoot).flatMap((d) => releasedBook(contentRoot, d.book, t) ?? []);
+    },
+    loadBook: (slug) => {
+      const book = loadBookFrom(contentRoot, slug);
+      return book ? releasedBook(contentRoot, book, today()) : null;
+    },
 
-    loadChapters: (bookSlug) => loadChaptersFrom(contentRoot, bookSlug),
-    loadChapter: (bookSlug, chapterSlug) => loadChapterFrom(contentRoot, bookSlug, chapterSlug),
+    loadChapters: (bookSlug) => {
+      const t = today();
+      const book = loadBookFrom(contentRoot, bookSlug);
+      return book && releasedBook(contentRoot, book, t) ? loadChaptersFrom(contentRoot, bookSlug, t) : [];
+    },
+    loadChapter: (bookSlug, chapterSlug) => loadChapterFrom(contentRoot, bookSlug, chapterSlug, today()),
 
     loadKnowledge: () => loadKnowledgeFrom(contentRoot),
     loadKnowledgeRecord: (slug) => loadKnowledgeRecordFrom(contentRoot, slug),

@@ -1,6 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { releasedBookAndChapters, releaseToday } from "../content-lib/release.ts";
+
+const RELEASE_TODAY = releaseToday();
 import { toMobileBook, toMobileChapter } from "../content-lib/mobile-content-transform.ts";
 import { BOOK_PAYLOAD_SCHEMA_VERSION, type BookPayload } from "../content-lib/mobile-content.ts";
 import { BookSchema, ChapterSchema } from "../content-lib/schemas/index.ts";
@@ -89,8 +92,15 @@ function main(): void {
     const bookJsonPath = path.join(CONTENT_LIBRARY_ROOT, bookDir, "book.json");
     if (!fs.existsSync(bookJsonPath)) continue;
 
-    const book = toMobileBook(BookSchema.parse(readJson(bookJsonPath)));
-    const chapterFiles = listJsonFiles(path.join(CONTENT_LIBRARY_ROOT, bookDir, "chapters"));
+    // Unreleased chapters (content-lib/release.ts) are left out entirely;
+    // a book with none released yet gets no payload at all.
+    const released = releasedBookAndChapters(
+      BookSchema.parse(readJson(bookJsonPath)),
+      listJsonFiles(path.join(CONTENT_LIBRARY_ROOT, bookDir, "chapters")).map((f) => ChapterSchema.parse(readJson(f))),
+      RELEASE_TODAY
+    );
+    if (!released) continue;
+    const book = toMobileBook(released.book);
     // listJsonFiles() returns filesystem order (alphabetical by filename),
     // not reading order -- every consumer of this array (the chapter
     // screen's "Chapter X of Y" position, findAdjacentChapters()'s
@@ -100,8 +110,8 @@ function main(): void {
     // Previous/Next silently walked alphabetically-adjacent chapters
     // instead of narratively-adjacent ones, and the position counter
     // reported an alphabetical rank instead of the real chapter number.
-    const chapters = chapterFiles
-      .map((f) => toMobileChapter(ChapterSchema.parse(readJson(f))))
+    const chapters = released.chapters
+      .map((c) => toMobileChapter(c))
       .sort((a, b) => a.order - b.order);
 
     for (let i = 1; i < chapters.length; i++) {

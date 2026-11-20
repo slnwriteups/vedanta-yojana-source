@@ -9,6 +9,7 @@ import {
 } from "../../content-lib/mobile-content-transform.ts";
 import type { MobileBook, MobileChapterSummary, MobileDivyaDesam, MobileKnowledge } from "../../content-lib/mobile-content.ts";
 import { BookSchema, ChapterSchema, DivyaDesamSchema, KnowledgeSchema } from "../../content-lib/schemas/index.ts";
+import { releasedBookAndChapters, releaseToday } from "../../content-lib/release.ts";
 
 /**
  * Phase 6A, Step 3/4 -- the "build-time content export step" (Option C
@@ -146,18 +147,24 @@ function main(): Set<string> {
   for (const bookDir of bookDirs) {
     const bookJsonPath = path.join(libraryRoot, bookDir, "book.json");
     if (!fs.existsSync(bookJsonPath)) continue;
-    const mobileBook: MobileBook = toMobileBook(BookSchema.parse(readJson(bookJsonPath)));
+    // Unreleased chapters (content-lib/release.ts) are never bundled into
+    // the app; a book with none released yet is left out. Installed apps
+    // pick up each day's chapters from the site's daily content manifest.
+    const released = releasedBookAndChapters(
+      BookSchema.parse(readJson(bookJsonPath)),
+      listJsonFiles(path.join(libraryRoot, bookDir, "chapters")).map((f) => ChapterSchema.parse(readJson(f))),
+      releaseToday()
+    );
+    if (!released) continue;
+    const mobileBook: MobileBook = toMobileBook(released.book);
 
-    const chapterFiles = listJsonFiles(path.join(libraryRoot, bookDir, "chapters"));
     // Only the lightweight catalog projection is bundled -- no body, no
     // images, no translations. See MobileChapterSummarySchema's doc
     // comment (content-lib/mobile-content.ts) for why: the full chapter
     // is exactly the payload this task moves out of the initial APK,
     // fetched only after a reader downloads this book
     // (mobile/services/bookOfflineService.ts).
-    const chapterSummaries: MobileChapterSummary[] = chapterFiles.map((f) =>
-      toMobileChapterSummary(ChapterSchema.parse(readJson(f)))
-    );
+    const chapterSummaries: MobileChapterSummary[] = released.chapters.map((c) => toMobileChapterSummary(c));
 
     // "directory" is organizational only (matching the web loader's own
     // note in content-lib/loader/index.ts) -- callers key lookups off
