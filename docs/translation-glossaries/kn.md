@@ -170,6 +170,7 @@ Shishupāla, Dantavakra, Narakāsura = ಶಿಶುಪಾಲ, ದಂತವಕ್
 Gajendra / Gajendra Moksham = ಗಜೇಂದ್ರ / ಗಜೇಂದ್ರ ಮೋಕ್ಷ
 Indradyumna = ಇಂದ್ರದ್ಯುಮ್ನ
 Puri, Odisha = ಪುರಿ, ಒಡಿಶಾ
+Pandharpur = ಪಂಢರಪುರ
 Sri Jagannātha = ಶ್ರೀ ಜಗನ್ನಾಥ
 Agastya / Devala = ಅಗಸ್ತ್ಯ / ದೇವಲ
 Gandharva / Hūhū = ಗಂಧರ್ವ / ಹೂಹೂ

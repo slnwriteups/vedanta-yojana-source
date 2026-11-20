@@ -99,7 +99,7 @@ test("Images: Sri Rangam's sourceAssetUuid still matches a real file under publi
   assert.ok(withImage, "expected sri-rangam to have at least one image with a matching file on disk");
 });
 
-test("Images: public/images/ still has 257 real files for the manifest generator to enumerate", () => {
+test("Images: public/images/ still has 275 real files for the manifest generator to enumerate", () => {
   // 217 from the original migration + 174 added by Phase 6E from "108
   // Divyadesam 2nd Edition.pdf" (see content/_provenance/divya-desams/),
   // minus 149 removed as post-Phase-6E-C near-duplicates (same photo,
@@ -114,5 +114,7 @@ test("Images: public/images/ still has 257 real files for the manifest generator
   // WordPress blog then added 27 (1 Āzhwār Vaibhavam, 25 Tirumala
   // Brahmotsavam, 1 Guruvāyūr): 227 + 27 = 254. Nityasūri Vaibhavam added 3
   // (2 Garuḍa, 1 Sudarśana; its other verse images were transcribed as text): 257.
-  assert.equal(fs.readdirSync(IMAGES_ROOT).length, 257);
+  // The Wix festival posts then added 18 to Temples and Festivals (4 Jyeshthābhishekam,
+  // 2 Snāna Yātrā, 6 Ratha Yātrā, 3 Sri Rangam Narasimha shrines, 3 Pandharpur): 275.
+  assert.equal(fs.readdirSync(IMAGES_ROOT).length, 275);
 });

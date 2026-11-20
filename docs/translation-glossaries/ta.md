@@ -192,6 +192,7 @@ Gajendra Moksham = கஜேந்திர மோக்ஷம்
 Gajendra = கஜேந்திரன்
 Indradyumna = இந்திரத்யும்னன்
 Puri, Odisha = பூரி, ஒடிசா
+Pandharpur = பண்டரிபுரம்
 Sri Jagannātha = ஸ்ரீ ஜகந்நாதர்
 Agastya = அகஸ்தியர்
 Gandharva = கந்தர்வன்

@@ -1,0 +1,22 @@
+{
+  "title": "The Meaning of the Chariots",
+  "slug": "the-meaning-of-the-chariots",
+  "order": 21,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wix/2025-06-27-rath-yatra-the-sacred-journey-of-lord-jagannath",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "The Ratha Yātrā is rich in symbolism. The chariots represent the body, the ropes stand for devotion, and the pulling of the chariots is the soul's journey towards God. The festival is also a picture of the Lord leaving His own abode to bless all His devotees, breaking down the barriers of caste, creed and status, and the open sight of the deities affirms that the divine belongs to everyone and is not confined to the sanctum.\n\nThe Ratha Yātrā is no longer celebrated at Puri alone. Inspired by it, chariot processions are held across India and in great cities around the world, among them London, New York and Sydney, often organised by spiritual bodies such as ISKCON. This worldwide celebration reflects the universality of Lord Jagannātha's message of love, unity and devotion.",
+  "images": [
+    {
+      "assetId": "the-meaning-of-the-chariots-1",
+      "sourceAssetUuid": "854e7ee1-7931-59fd-a3d6-ae4f8920cf33",
+      "sourceOriginalName": "aec967_de429f84b6ae41e59a66455a35a2eb48~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "to everyone and is not confined to the sanctum."
+    }
+  ]
+}

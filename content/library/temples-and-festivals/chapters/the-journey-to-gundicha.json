@@ -1,0 +1,29 @@
+{
+  "title": "The Journey to Gundichā",
+  "slug": "the-journey-to-gundicha",
+  "order": 18,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wix/2025-06-27-rath-yatra-the-sacred-journey-of-lord-jagannath",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "The Ratha Yātrā, the Festival of Chariots, is one of the best-known festivals of India, celebrated above all at Puri in Odisha. It is the annual journey of Lord Jagannātha, with His elder brother Balabhadra and His sister Subhadrā, from the sanctum of the Jagannātha Temple to the Gundichā Temple, a festival that unites sacred story, devotion, culture and social values in one majestic celebration and draws devotees from across the world.\n\nIts roots lie deep in sacred tradition. It is said that Subhadrā once wished to visit the home of her mother's sister, and to fulfil her wish, Lord Jagannātha and Balabhadra took her to the Gundichā Temple. Every year the Ratha Yātrā celebrates this journey as a divine family reunion, and it also recalls Lord Krishna's childhood at Vrindavan, stirring feelings of love and longing.\n\nIn another understanding, the journey is the deities leaving their sacred abode to give darshan to devotees who cannot otherwise enter the temple, above all those from the margins of society. Carried out of the temple in grand chariots, the deities show the Lord reaching out to everyone.\n\nThe Ratha Yātrā is the last stage of a cycle that begins with the Snāna Yātrā, the bathing festival on the full moon of Jyeshtha, after which the deities, said to have fallen ill, rest for a fortnight out of public view in the Anavasara. During those days the rites pass to the Daitapatis, servitors believed to descend from the tribal devotee Vishvāvasu, for in their illness the deities are held to be closer to their original form, from before their enshrinement in the temple. While the deities are unseen, devotees receive darshan of painted cloths called the Anasara Paṭṭis, which represent them as they heal, and worshipping these is believed to bring the same blessings.\n\nAt the end of the Anavasara comes the Netrotsava, also called the Navayauvana Darshan, the sight of the renewed youth. On this day the Lord is held to have recovered fully and to appear in a new, youthful form. The eyes of the deities, symbolically closed during their illness, are repainted in an elaborate ceremony conducted in secrecy, and Lord Jagannātha regains His divine sight, renewing the exchange of glances between the Lord and His devotees. The Netrotsava, which falls on the day before the Ratha Yātrā, also completes the work of the temple artists, and the freshly painted deities stand resplendent, ready for their annual journey.",
+  "images": [
+    {
+      "assetId": "the-journey-to-gundicha-1",
+      "sourceAssetUuid": "d31576ff-b166-55e6-adc5-c935bda76c3b",
+      "sourceOriginalName": "aec967_dbd4b1b2826e4199926a95fa1955c3f2~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review"
+    },
+    {
+      "assetId": "the-journey-to-gundicha-2",
+      "sourceAssetUuid": "3e14b19c-aa59-5824-8537-6b1a141d06be",
+      "sourceOriginalName": "aec967_85e1adfad2004e58bea0dd00d77801d0~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "these is believed to bring the same blessings."
+    }
+  ]
+}
