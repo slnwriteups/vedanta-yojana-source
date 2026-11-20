@@ -1,8 +1,8 @@
 {
-  "postCount": 111,
+  "postCount": 107,
   "alreadyInAppCount": 275,
   "emptyCount": 16,
-  "removedCount": 70,
+  "removedCount": 74,
   "posts": [
     {
       "folder": "wordpress/2018-09-26-bhishma",
@@ -1235,66 +1235,6 @@
         "Desika Vaibhavam",
         "Guru Parampara",
         "Nadu Nadu Kshethrams"
-      ]
-    },
-    {
-      "folder": "wordpress/2021-02-25-untitled",
-      "platform": "wordpress",
-      "title": "(untitled)",
-      "publishedAt": "2021-02-25T05:44:08",
-      "sourceStatus": "draft",
-      "wordCount": 100,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [],
-      "categories": [
-        "108 Divyadesam"
-      ]
-    },
-    {
-      "folder": "wordpress/2021-03-05-untitled",
-      "platform": "wordpress",
-      "title": "(untitled)",
-      "publishedAt": "2021-03-05T08:24:06",
-      "sourceStatus": "draft",
-      "wordCount": 791,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [],
-      "categories": [
-        "108 Divyadesam"
-      ]
-    },
-    {
-      "folder": "wordpress/2021-03-19-auto-draft",
-      "platform": "wordpress",
-      "title": "Auto Draft",
-      "publishedAt": "2021-03-19T05:55:32",
-      "sourceStatus": "draft",
-      "wordCount": 1392,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [],
-      "categories": [
-        "108 Divyadesam"
-      ]
-    },
-    {
-      "folder": "wordpress/2021-03-22-untitled",
-      "platform": "wordpress",
-      "title": "(untitled)",
-      "publishedAt": "2021-03-22T07:57:30",
-      "sourceStatus": "draft",
-      "wordCount": 213,
-      "imageCount": 0,
-      "migrationStatus": "archived",
-      "possibleDuplicates": [],
-      "possiblyInApp": [],
-      "categories": [
-        "108 Divyadesam"
       ]
     },
     {

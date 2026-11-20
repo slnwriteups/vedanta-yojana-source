@@ -468,8 +468,8 @@ export function rebuildIndex(root: string): ArchiveIndexEntry[] {
       ? [
           `## Removed as copies or older versions (${removedPosts.length})`,
           "",
-          "Removed from the archive because another archived post is the same text or a newer, fuller",
-          "version. Re-imports skip these. Details in `removed.json`.",
+          "Removed from the archive by hand: another archived post is the same text or a newer, fuller",
+          "version, or the post is not blog material. Re-imports skip these. Details in `removed.json`.",
           "",
           "| Published | Title | Platform | Why | Kept copy |",
           "|---|---|---|---|---|",
