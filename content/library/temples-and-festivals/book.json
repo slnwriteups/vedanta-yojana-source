@@ -75,16 +75,6 @@
         "hera-panchami-and-the-return",
         "the-meaning-of-the-chariots"
       ]
-    },
-    {
-      "title": "Āshāḍha Ekādashi and Pandharpur",
-      "order": 4,
-      "chapters": [
-        "ashadha-ekadashi",
-        "chaturmasya",
-        "panduranga-of-pandharpur",
-        "the-wari"
-      ]
     }
   ],
   "groups": [
@@ -189,30 +179,6 @@
           "title": "శ్రీరంగం"
         }
       }
-    },
-    {
-      "title": "Pandharpur",
-      "order": 5,
-      "chapters": [
-        "ashadha-ekadashi",
-        "chaturmasya",
-        "panduranga-of-pandharpur",
-        "the-wari"
-      ],
-      "translations": {
-        "ta": {
-          "title": "பண்டரிபுரம்"
-        },
-        "kn": {
-          "title": "ಪಂಢರಪುರ"
-        },
-        "hi": {
-          "title": "पंढरपुर"
-        },
-        "te": {
-          "title": "పండరీపురం"
-        }
-      }
     }
   ],
   "chapterOrder": [
@@ -237,11 +203,7 @@
     "the-three-chariots",
     "hera-panchami-and-the-return",
     "the-meaning-of-the-chariots",
-    "three-narasimha-shrines-of-sri-rangam",
-    "ashadha-ekadashi",
-    "chaturmasya",
-    "panduranga-of-pandharpur",
-    "the-wari"
+    "three-narasimha-shrines-of-sri-rangam"
   ],
   "resources": [],
   "translations": {

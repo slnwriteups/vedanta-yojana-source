@@ -79,7 +79,7 @@ test("exactly 1 held-back unresolved record exists (Page150)", () => {
   assert.equal(unresolvedFiles.length, 1);
 });
 
-test("no unexpected content records: total /content file count matches exactly 107+61+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+34(srimad-bhagavata-kathasagaram: 1 book.json + 33 chapters)+71(jaya: 1 book.json + 70 chapters)+39(azhwar-vaibhavam blog: 1 book.json + 38 posts)+27(temples-and-festivals blog: 1 book.json + 26 posts)+12(nityasuri-vaibhavam blog: 1 book.json + 11 posts)+1(announcements.json)+89(sri-vishnu-sahasranaama-anubhavam: 1 book.json + 88 chapters)+28(sri-vishnu-sahasranaama-anubhavam birth-star appendix: 28 chapters) = 566", () => {
+test("no unexpected content records: total /content file count matches exactly 107+61+1(book.json)+1+1+1(README)+15(_provenance/divya-desams, post image-fixes)+1(_provenance/library, Phase 6E)+1(_provenance/library, chapter needsReview corrections)+76(sri-rama-charithram: 1 book.json + 75 chapters)+34(srimad-bhagavata-kathasagaram: 1 book.json + 33 chapters)+71(jaya: 1 book.json + 70 chapters)+39(azhwar-vaibhavam blog: 1 book.json + 38 posts)+23(temples-and-festivals blog: 1 book.json + 22 posts)+12(nityasuri-vaibhavam blog: 1 book.json + 11 posts)+1(announcements.json)+89(sri-vishnu-sahasranaama-anubhavam: 1 book.json + 88 chapters)+28(sri-vishnu-sahasranaama-anubhavam birth-star appendix: 28 chapters) = 562", () => {
   // Phase 6E added content/_provenance/ -- one small JSON file per Divya
   // Desam record that received a category-B text supplement and/or a
   // book-sourced image/shrine from "108 Divyadesam 2nd Edition.pdf" (101
@@ -153,8 +153,9 @@ test("no unexpected content records: total /content file count matches exactly 1
   // content/announcements.json, the What's New list (content-lib/announcements.ts): 437 -> 438.
   // Sri Vishnu Sahasranaama Anubhavam, the author's own book (1 book.json + 88 chapters): 438 -> 527.
   // Its birth-star appendix (28 chapters): 527 -> 555.
-  // The Wix festival posts added 11 Temples and Festivals chapters: 555 -> 566.
-  assert.equal(total, 566);
+  // The Wix festival posts added 11 Temples and Festivals chapters: 555 -> 566;
+  // the 4 Āshāḍha Ekādashi chapters were then unpublished: 566 -> 562.
+  assert.equal(total, 562);
 });
 
 function countFilesRecursive(dir: string): number {
