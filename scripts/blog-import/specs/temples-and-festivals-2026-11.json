@@ -89,23 +89,6 @@
           "title": "శ్రీరంగం"
         }
       }
-    },
-    {
-      "title": "Pandharpur",
-      "translations": {
-        "ta": {
-          "title": "பண்டரிபுரம்"
-        },
-        "kn": {
-          "title": "ಪಂಢರಪುರ"
-        },
-        "hi": {
-          "title": "पंढरपुर"
-        },
-        "te": {
-          "title": "పండరీపురం"
-        }
-      }
     }
   ],
   "posts": [
@@ -128,11 +111,6 @@
       "archive": "wix/2025-05-11-three-lesser-known-narasimha-temples-in-srirangam",
       "text": "temples-and-festivals/narasimha-shrines.txt",
       "group": "Sri Rangam"
-    },
-    {
-      "archive": "wix/2025-07-06-ashadha-ekadashi-chaturmasya-and-pandharpur",
-      "text": "temples-and-festivals/ashadha-ekadashi.txt",
-      "group": "Pandharpur"
     }
   ]
 }

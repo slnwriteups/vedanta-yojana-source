@@ -17,7 +17,7 @@ test("all four glossaries parse into rules, with annotations read", () => {
   for (const lang of ["ta", "kn", "hi", "te"] as const) assert.ok(loadGlossaryRules(lang).length > 300, lang);
   const kanchi = loadGlossaryRules("ta").find((e) => e.english === "Kanchi")!;
   assert.deepEqual([kanchi.forms, kanchi.verseForms], [["காஞ்சி"], ["கச்சி"]]);
-  const perumal = loadGlossaryRules("hi").find((e) => e.line === 200)!;
+  const perumal = loadGlossaryRules("hi").find((e) => e.english === "Perumāl")!;
   assert.deepEqual(perumal.wrong, ["पेरुमाळ्"]);
   const pasuram = loadGlossaryRules("kn").find((e) => e.english === "Pāsuram")!;
   assert.ok(pasuram.forms.includes("ಪಾಸುರಗಳು"), "plural from (pl. …) is an accepted form");

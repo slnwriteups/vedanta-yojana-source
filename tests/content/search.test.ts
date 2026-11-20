@@ -66,9 +66,10 @@ test("2: the Book is searchable", () => {
 
 test("3: all chapters across every book are searchable", () => {
   // Books' chapters, then the blogs' posts (34 Āzhwār Vaibhavam + 2 Temples and Festivals + 11 Nityasūri Vaibhavam;
-  // the Wix festival posts then added 11 Temples and Festivals chapters: 15 + 11).
+  // the Wix festival posts then added 11 Temples and Festivals chapters, 4 of them
+  // (Āshāḍha Ekādashi) since unpublished at the owner's request: 15 + 7).
   // Then Sri Vishnu Sahasranaama Anubhavam's 116 chapters (88 + the 28-chapter birth-star appendix).
-  assert.equal(corpus.filter((d) => d.type === "chapter").length, 61 + 75 + 33 + 70 + (38 + 15 + 11 + 11) + 116);
+  assert.equal(corpus.filter((d) => d.type === "chapter").length, 61 + 75 + 33 + 70 + (38 + 15 + 7 + 11) + 116);
 });
 
 test("4: the Knowledge record is searchable", () => {
@@ -78,7 +79,7 @@ test("4: the Knowledge record is searchable", () => {
 });
 
 test("5: Page150 is not included -- exact corpus size, no href/title referencing it", () => {
-  assert.equal(corpus.length, 107 + (5 + 3) + (61 + 75 + 33 + 70 + (38 + 15 + 11 + 11) + 116) + 1);
+  assert.equal(corpus.length, 107 + (5 + 3) + (61 + 75 + 33 + 70 + (38 + 15 + 7 + 11) + 116) + 1);
   for (const doc of corpus) {
     assert.ok(!doc.href.includes("Page150"));
     // The excluded Page150 was a Hayagriva page; Sri Vishnu Sahasranaama
