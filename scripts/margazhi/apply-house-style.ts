@@ -50,8 +50,9 @@ const NAMES: [RegExp, string][] = [
   [/Ācāry/g, "Āchāry"],
 ];
 
-/** Prose only: ṛ → ri, ṁ → m (Sanskrit verse keeps them). */
+/** Prose only: ṛ → ri, ṁ → m (Sanskrit verse keeps them); straight double quotes, as the Library's English uses. */
 const PROSE: [RegExp, string][] = [
+  [/[“”]/g, '"'],
   [/ṛ/g, "ri"],
   [/ṁ/g, "m"],
 ];

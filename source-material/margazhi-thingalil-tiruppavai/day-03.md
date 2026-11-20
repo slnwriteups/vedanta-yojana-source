@@ -2,7 +2,7 @@
 
 @verse 3:1-4
 
-This pāsuram shows what happens when a place receives Krishna and begins to live in rhythm with his presence in Āyarpāḍi Gokulam. Āṇḍāl first directs the girls’ attention to the Lord they are actually singing of: the One who once measured all the worlds in three strides, the same Vāmana–Trivikrama adored in divya-deshams like Tirukkōvalūr, Sīrgāzhi, and Kanchipuram. She hails him as Uttaman, the “best” and “purest,” utterly distinct from achetana tattvams (insentient matter), from chetana tattvams (bound souls like us), from mukta-ātmas (the liberated), and even from the nityasūrīs who eternally serve him in Sri Vaikuṇṭham, so that his very name itself stands out as the real treasure and security of their village.
+This pāsuram shows what happens when a place receives Krishna and begins to live in rhythm with his presence in Āyarpāḍi Gokulam. Āṇḍāl first directs the girls’ attention to the Lord they are actually singing of: the One who once measured all the worlds in three strides, the same Vāmana–Trivikrama adored in divya-deshams like Tirukkōvalūr, Sīrgāzhi, and Kanchipuram. She hails him as Uttaman, the "best" and "purest," utterly distinct from achetana tattvams (insentient matter), from chetana tattvams (bound souls like us), from mukta-ātmas (the liberated), and even from the nityasūrīs who eternally serve him in Sri Vaikuṇṭham, so that his very name itself stands out as the real treasure and security of their village.
 
 @verse 3:5-8
 
