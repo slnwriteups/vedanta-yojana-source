@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, type MouseEvent } from "react";
 import { useT } from "@/lib/ui-strings";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
@@ -14,13 +14,15 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
  * Search/Settings), same localized labels (lib/ui-strings.ts's tabX
  * keys) -- laid out as a top nav bar rather than mobile's fixed bottom
  * bar, which is a native-app convention with no direct web equivalent;
- * "Install App" is web-only chrome mobile has no tab for (mobile can't
+ * "Install App" (a no-JS <details> dropdown on desktop, a labelled
+ * group in the mobile menu) is web-only chrome mobile has no tab for (mobile can't
  * usefully link to its own APK download from inside itself), so it
- * keeps a plain English label and points straight at the GitHub
- * Releases page of the dedicated releases repository (the app's only
- * official download location -- not this source repository, whose
- * tag-triggered builds are debug-signed) -- the discovery path for
- * someone who found the app on the web and wants the Android APK.
+ * keeps a plain English label and offers two links: Android points
+ * straight at the GitHub Releases page of the dedicated releases
+ * repository (the official Android APK download location -- not this
+ * source repository, whose tag-triggered builds are debug-signed), and
+ * iPhone / iPad points at the App Store listing (no country segment, so
+ * Apple sends each visitor to their own storefront).
  *
  * A client component (not the Phase 5B server-rendered stub) so the
  * current route can be indicated (`usePathname`) and a mobile menu can be
@@ -33,6 +35,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const RELEASES_URL = "https://github.com/slnwriteups/vedanta-yojana-releases/releases";
+const APP_STORE_URL = "https://apps.apple.com/app/vedanta-yojana/id6817639347";
 
 const NAV_LINKS = [
   { href: "/", key: "tabHome" as const, icon: "navigation-icons_home.png" },
@@ -41,6 +44,11 @@ const NAV_LINKS = [
   { href: "/search", key: "tabSearch" as const, icon: "navigation-icons_search.png" },
   { href: "/settings", key: "tabSettings" as const, icon: "navigation-icons_settings.png" },
 ];
+
+/** Closes the desktop Install App dropdown once a store link is chosen. */
+function closeDetails(event: MouseEvent<HTMLAnchorElement>) {
+  event.currentTarget.closest("details")?.removeAttribute("open");
+}
 
 function isActiveRoute(pathname: string, href: string): boolean {
   if (href === "/") return pathname === "/";
@@ -103,9 +111,41 @@ export function SiteHeader() {
                 );
               })}
               <li>
-                <a href={RELEASES_URL} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                  Install App
-                </a>
+                <details className="relative">
+                  <summary
+                    className="cursor-pointer list-none hover:underline [&::-webkit-details-marker]:hidden"
+                    style={{ listStyle: "none" }}
+                  >
+                    Install App <span aria-hidden="true">▾</span>
+                  </summary>
+                  <ul
+                    role="list"
+                    className="absolute right-0 z-20 mt-2 flex min-w-40 flex-col rounded-md border border-[var(--border)] bg-[var(--background)] py-1 shadow-md"
+                  >
+                    <li>
+                      <a
+                        href={RELEASES_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeDetails}
+                        className="block whitespace-nowrap px-3 py-2 hover:underline"
+                      >
+                        Android
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href={APP_STORE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeDetails}
+                        className="block whitespace-nowrap px-3 py-2 hover:underline"
+                      >
+                        iPhone / iPad
+                      </a>
+                    </li>
+                  </ul>
+                </details>
               </li>
             </ul>
           </nav>
@@ -143,15 +183,27 @@ export function SiteHeader() {
               </li>
             );
           })}
+          <li className="px-2 pt-2 font-semibold">Install App</li>
           <li>
             <a
               href={RELEASES_URL}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center gap-2 rounded-md px-2 py-2 hover:underline"
+              className="flex items-center gap-2 rounded-md px-2 py-2 pl-4 hover:underline"
             >
-              Install App
+              Android
+            </a>
+          </li>
+          <li>
+            <a
+              href={APP_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2 rounded-md px-2 py-2 pl-4 hover:underline"
+            >
+              iPhone / iPad
             </a>
           </li>
         </ul>

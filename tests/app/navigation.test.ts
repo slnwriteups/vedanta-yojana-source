@@ -52,6 +52,17 @@ test("SiteHeader links to the GitHub Releases page for app installs", () => {
   assert.ok(source.includes("Install App"), "SiteHeader missing an Install App link");
 });
 
+test("SiteHeader Install App section links to both Android and the Apple App Store", () => {
+  const source = read("components/SiteHeader.tsx");
+  assert.ok(/APP_STORE_URL\s*=\s*"https:\/\/apps\.apple\.com\/app\/vedanta-yojana\/id6817639347"/.test(source), "SiteHeader APP_STORE_URL must point at the App Store listing");
+  for (const url of ["RELEASES_URL", "APP_STORE_URL"]) {
+    const uses = source.match(new RegExp(`href=\\{${url}\\}`, "g")) ?? [];
+    assert.equal(uses.length, 2, `${url} must be linked from both the desktop and mobile menus`);
+  }
+  assert.ok(source.includes(">Android<") || source.includes("Android\n"), "missing Android label");
+  assert.ok(source.includes("iPhone / iPad"), "missing iPhone / iPad label");
+});
+
 test("dynamic Divya Desam/Book/Chapter routes plus the introduction route use the content loader and call notFound() rather than reading /content JSON directly", () => {
   const dd = read("app/divya-desams/[slug]/page.tsx");
   const book = read("app/library/[book]/page.tsx");
