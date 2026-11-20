@@ -250,10 +250,20 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
         if (before?.alt) Object.assign(image, { alt: before.alt, altStatus: before.altStatus });
       }
     }
-    const lastOrder = Math.max(0, ...kept.map((slug) => readChapter(slug).order));
-    chapters.forEach((c, i) => { c.chapter.order = lastOrder + i + 1; });
   }
-  const chapterOrder = [...kept, ...slugs];
+  // Reading order: with places, each place's chapters in turn (its existing
+  // chapters, then its new posts), then any chapters in no place; without
+  // places, the existing chapters and then the new ones.
+  const inPlace = (slug: string, g: NonNullable<BlogSpec["groups"]>[number]) =>
+    (g.existingChapters ?? []).includes(slug) || chapters.some((c) => c.chapter.slug === slug && c.group === g.title);
+  const sequence = [...kept, ...slugs];
+  const chapterOrder = spec.groups?.length
+    ? [...spec.groups.flatMap((g) => sequence.filter((slug) => inPlace(slug, g))), ...sequence.filter((slug) => !spec.groups!.some((g) => inPlace(slug, g)))]
+    : sequence;
+  const orderOf = (slug: string) => chapterOrder.indexOf(slug) + 1;
+  for (const c of chapters) c.chapter.order = orderOf(c.chapter.slug);
+  // A kept chapter that moves has only its order number rewritten.
+  const renumbered = kept.filter((slug) => readChapter(slug).order !== orderOf(slug));
   const keptParts = existing ? existing.parts.filter((part) => part.chapters.every((slug) => kept.includes(slug))) : [];
   const allParts = [...keptParts, ...parts].map((part, i) => ({ ...part, order: i + 1 }));
 
@@ -264,7 +274,7 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
   const groups = (spec.groups ?? []).map((g, i) => ({
     title: g.title,
     order: i + 1,
-    chapters: chapterOrder.filter((slug) => (g.existingChapters ?? []).includes(slug) || chapters.some((c) => c.chapter.slug === slug && c.group === g.title)),
+    chapters: chapterOrder.filter((slug) => inPlace(slug, g)),
     ...(g.translations ? { translations: g.translations } : {}),
   })).filter((g) => g.chapters.length > 0);
   for (const g of groups) {
@@ -296,6 +306,11 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
   fs.writeFileSync(path.join(bookDir, "book.json"), `${JSON.stringify(book, null, 2)}\n`);
   for (const { chapter } of chapters) {
     fs.writeFileSync(path.join(chaptersDir, `${chapter.slug}.json`), `${JSON.stringify(chapter, null, 2)}\n`);
+  }
+  for (const slug of renumbered) {
+    const file = path.join(chaptersDir, `${slug}.json`);
+    const raw = JSON.parse(fs.readFileSync(file, "utf8"));
+    fs.writeFileSync(file, `${JSON.stringify({ ...raw, order: orderOf(slug) }, null, 2)}\n`);
   }
   for (const { archived, archive, firstSlug } of archivedPosts) {
     const file = path.join(chaptersDir, `${firstSlug}.json`);

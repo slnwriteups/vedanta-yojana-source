@@ -544,3 +544,26 @@ test("publishBlog append refuses a new post whose slug is an unrelated existing 
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+test("publishBlog append puts a new post at the end of its own place, renumbering later chapters but leaving their text and translations alone", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, bookDir, appendSpec } = await blogWithTranslations(root);
+    publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    fs.writeFileSync(path.join(root, "feast.txt"), "The Feast\nA feast at home.\n");
+    const spec = { ...appendSpec, posts: [...appendSpec.posts, { archive: appendSpec.posts[0].archive, text: "feast.txt", group: "Home" }] };
+    const arrivingBefore = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/arriving.json"), "utf8"));
+    const { book } = publishBlog(spec, root, { repoRoot: root, archiveRoot });
+    assert.deepEqual(book.chapterOrder, ["the-beginning", "the-end", "the-festival", "the-feast", "setting-out", "arriving"]);
+    assert.deepEqual(book.groups[0].chapters, ["the-beginning", "the-end", "the-festival", "the-feast"]);
+    const order = (slug: string) => JSON.parse(fs.readFileSync(path.join(bookDir, `chapters/${slug}.json`), "utf8")).order;
+    assert.deepEqual(book.chapterOrder.map(order), [1, 2, 3, 4, 5, 6]);
+    const arrivingAfter = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/arriving.json"), "utf8"));
+    assert.deepEqual({ ...arrivingAfter, order: 0 }, { ...arrivingBefore, order: 0 }, "only the order number changed");
+    const beginning = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/the-beginning.json"), "utf8"));
+    assert.equal(beginning.translations.ta.title, "தொடக்கம்");
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
