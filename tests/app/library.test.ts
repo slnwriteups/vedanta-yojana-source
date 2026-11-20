@@ -226,3 +226,14 @@ test("a book.json without a kind is a book", () => {
     assert.equal(book.kind, "book", book.slug);
   }
 });
+
+test("the Book detail page groups chapters by place, then part (groupByPlace), with place and part headings", () => {
+  const src = read("app/library/[book]/page.tsx");
+  assert.match(src, /groupByPlace\(book, chapters\)/);
+  assert.match(src, /<LocalizedPlaceHeading /);
+  assert.match(src, /<LocalizedPartHeading [^>]*level=/);
+  const heading = read("components/library/LocalizedPlaceHeading.tsx");
+  assert.match(heading, /<h2/);
+  const part = read("components/library/LocalizedPartHeading.tsx");
+  assert.match(part, /<h3/, "a part inside a place is one heading level down");
+});
