@@ -154,3 +154,31 @@ in the order listed), copies each post's archived images into
 marks the posts `migrated` in `blog-archive/` with a note pointing at the
 published chapter. Re-running a spec rewrites that blog. Image alt text is
 left for a person to write, as for every other image in the app.
+
+**Adding posts to a blog that is already published.** Add
+`"mode": "append"` to the spec. The blog's existing chapters, parts and
+translations are left exactly as they are and the spec's posts are added
+after them; re-running the spec rewrites only its own chapters, keeping
+any translations or alt text added to them since. A blog can group its
+chapters by *place* above its parts (Temples and Festivals: Tirumala,
+Puri, …): list the places in order under `groups`, naming the existing
+chapters each one holds, and give each new post the place it belongs to:
+
+```json
+{
+  "slug": "temples-and-festivals",
+  "title": "Temples and Festivals",
+  "mode": "append",
+  "groups": [
+    { "title": "Tirumala", "translations": { "ta": { "title": "திருமலை" } }, "existingChapters": ["the-festival-of-brahma"] },
+    { "title": "Puri" }
+  ],
+  "posts": [
+    { "archive": "wix/2025-06-11-snana-yatra-…", "text": "snana-yatra.txt", "group": "Puri" }
+  ]
+}
+```
+
+A place must be one unbroken run of chapters, and a part (a split post)
+can't belong to two places; the script stops with an error otherwise.
+

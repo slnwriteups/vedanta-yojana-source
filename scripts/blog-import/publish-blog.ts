@@ -54,7 +54,21 @@ export interface BlogSpec {
   title: string;
   author?: string;
   description?: string;
-  posts: { archive: string; text: string }[];
+  /**
+   * "replace" (the default) rewrites the whole blog from this spec.
+   * "append" adds this spec's posts after the blog's existing chapters and
+   * leaves those chapters, their parts and every translation untouched;
+   * re-running it rewrites only this spec's chapters, keeping any
+   * translations and alt text added to them since.
+   */
+  mode?: "replace" | "append";
+  /**
+   * Places above parts, in reading order. A place holds the existing
+   * chapters it names plus the chapters of every post whose `group` is its
+   * title.
+   */
+  groups?: { title: string; translations?: Record<string, { title: string }>; existingChapters?: string[] }[];
+  posts: { archive: string; text: string; group?: string }[];
 }
 
 export interface PublishPaths {
@@ -144,7 +158,7 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
   const bookDir = path.join(contentRoot, "library", spec.slug);
   const chaptersDir = path.join(bookDir, "chapters");
 
-  const chapters: { chapter: ReturnType<typeof ChapterSchema.parse>; archive: string }[] = [];
+  const chapters: { chapter: ReturnType<typeof ChapterSchema.parse>; archive: string; group?: string }[] = [];
   const parts: { title: string; order: number; chapters: string[] }[] = [];
   const archivedPosts: { archived: ArchivedPost; archive: string; firstSlug: string }[] = [];
 
@@ -206,7 +220,7 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
         body: text,
         images,
       });
-      chapters.push({ chapter, archive: post.archive });
+      chapters.push({ chapter, archive: post.archive, group: post.group });
       slugsForPost.push(slug);
     });
     if (partTitle) parts.push({ title: partTitle, order: parts.length + 1, chapters: slugsForPost });
@@ -217,19 +231,67 @@ export function publishBlog(spec: BlogSpec, specDir: string, paths: PublishPaths
   const duplicate = slugs.find((s, i) => slugs.indexOf(s) !== i);
   if (duplicate) throw new Error(`two chapters would share the slug "${duplicate}" -- give them different titles`);
 
+  const append = spec.mode === "append";
+  const existing = append ? BookSchema.parse(JSON.parse(fs.readFileSync(path.join(bookDir, "book.json"), "utf8"))) : null;
+  const readChapter = (slug: string) => ChapterSchema.parse(JSON.parse(fs.readFileSync(path.join(chaptersDir, `${slug}.json`), "utf8")));
+  // Append: existing chapters this spec doesn't publish are kept as they are.
+  const kept = existing ? existing.chapterOrder.filter((slug) => !slugs.includes(slug)) : [];
+  if (existing) {
+    for (const { chapter, archive } of chapters) {
+      if (!existing.chapterOrder.includes(chapter.slug)) continue;
+      const previous = readChapter(chapter.slug);
+      if (previous.migration.sourcePageId !== `blog-archive:${archive}`) {
+        throw new Error(`"${chapter.slug}" is already a chapter of ${spec.slug}, from another post -- give the new one a different title`);
+      }
+      // Keep what people added since the last run: translations and image alt text.
+      if (previous.translations) chapter.translations = previous.translations;
+      for (const image of chapter.images) {
+        const before = previous.images.find((p) => p.sourceAssetUuid === image.sourceAssetUuid);
+        if (before?.alt) Object.assign(image, { alt: before.alt, altStatus: before.altStatus });
+      }
+    }
+    const lastOrder = Math.max(0, ...kept.map((slug) => readChapter(slug).order));
+    chapters.forEach((c, i) => { c.chapter.order = lastOrder + i + 1; });
+  }
+  const chapterOrder = [...kept, ...slugs];
+  const keptParts = existing ? existing.parts.filter((part) => part.chapters.every((slug) => kept.includes(slug))) : [];
+  const allParts = [...keptParts, ...parts].map((part, i) => ({ ...part, order: i + 1 }));
+
+  const groupTitles = (spec.groups ?? []).map((g) => g.title);
+  for (const { group, chapter } of chapters) {
+    if (group && !groupTitles.includes(group)) throw new Error(`"${chapter.title}": no place titled "${group}" in the spec's groups`);
+  }
+  const groups = (spec.groups ?? []).map((g, i) => ({
+    title: g.title,
+    order: i + 1,
+    chapters: chapterOrder.filter((slug) => (g.existingChapters ?? []).includes(slug) || chapters.some((c) => c.chapter.slug === slug && c.group === g.title)),
+    ...(g.translations ? { translations: g.translations } : {}),
+  })).filter((g) => g.chapters.length > 0);
+  for (const g of groups) {
+    const positions = g.chapters.map((slug) => chapterOrder.indexOf(slug));
+    if (positions.some((p, i) => i > 0 && p !== positions[i - 1] + 1)) throw new Error(`place "${g.title}" is not a contiguous run of chapters`);
+  }
+  for (const part of allParts) {
+    const placesOfPart = new Set(part.chapters.map((slug) => groups.find((g) => g.chapters.includes(slug))?.title ?? null));
+    if (placesOfPart.size > 1) throw new Error(`part "${part.title}" straddles places`);
+  }
+
   const book = BookSchema.parse({
-    slug: spec.slug,
-    title: spec.title,
-    ...(spec.author ? { author: spec.author } : {}),
-    ...(spec.description ? { description: spec.description } : {}),
-    kind: "blog",
-    status: "published",
-    migration: { sourcePageId: `blog-archive:${spec.slug}`, extractionConfidence: "high", needsReview: false },
-    parts,
-    chapterOrder: slugs,
+    ...(existing ?? {
+      slug: spec.slug,
+      title: spec.title,
+      ...(spec.author ? { author: spec.author } : {}),
+      ...(spec.description ? { description: spec.description } : {}),
+      kind: "blog",
+      status: "published",
+      migration: { sourcePageId: `blog-archive:${spec.slug}`, extractionConfidence: "high", needsReview: false },
+    }),
+    parts: allParts,
+    groups,
+    chapterOrder,
   });
 
-  fs.rmSync(chaptersDir, { recursive: true, force: true });
+  if (!append) fs.rmSync(chaptersDir, { recursive: true, force: true });
   fs.mkdirSync(chaptersDir, { recursive: true });
   fs.writeFileSync(path.join(bookDir, "book.json"), `${JSON.stringify(book, null, 2)}\n`);
   for (const { chapter } of chapters) {
