@@ -96,3 +96,17 @@ export function groupByPlace<T extends { slug: string }>(book: PartsSource, item
   }
   return places;
 }
+
+/** One row of a flat chapter list (the app's book screen): a place heading, a part heading, or a chapter. */
+export type ChapterListRow<T> = { placeHeading: string } | { heading: string } | { item: T; index: number };
+
+/** groupByPlace flattened into list rows: each titled place's heading, each shown part's heading, then the chapters. */
+export function chapterRows<T extends { slug: string }>(book: PartsSource, items: T[]): ChapterListRow<T>[] {
+  return groupByPlace(book, items).flatMap((place) => [
+    ...(place.title ? [{ placeHeading: place.title }] : []),
+    ...place.parts.flatMap((group) => [
+      ...(group.title ? [{ heading: group.title }] : []),
+      ...group.items.map(({ item, index }) => ({ item, index })),
+    ]),
+  ]);
+}
