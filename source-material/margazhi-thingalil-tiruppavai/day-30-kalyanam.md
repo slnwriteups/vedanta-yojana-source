@@ -16,7 +16,7 @@ Temple tradition holds that Ranganātha accepted Āṇḍāl’s garlands with l
 
 ## The Sacred Wedding and Divine Merger
 
-After Āṇḍāl’s forty-day Mārgazhi vrata of Tiruppāvai, the Lord appeared in three sacred dreams: to her father Bhaṭṭarpirān, to the king of Sri Rangam, and to the temple priest. All received the same divine instruction to arrange Āṇḍāl’s marriage to Ranganātha at the Sri Rangam temple. On that blessed day, she was united with Sri Ranganātha in the inner sanctum. From that moment, she merged with the deity, transformed into an eternal form, worshipped as Āṇḍāl forever at His side. Thus the soul’s month-long vrata of surrender blossomed into divine union, and she became the eternal consort and intercessor for all who recite Tiruppāvai.
+After Āṇḍāl’s month-long Mārgazhi vrata of Tiruppāvai, the Lord appeared in three sacred dreams: to her father Bhaṭṭarpirān, to the king of Sri Rangam, and to the temple priest. All received the same divine instruction to arrange Āṇḍāl’s marriage to Ranganātha at the Sri Rangam temple. On that blessed day, she was united with Sri Ranganātha in the inner sanctum. From that moment, she merged with the deity, transformed into an eternal form, worshipped as Āṇḍāl forever at His side. Thus the soul’s month-long vrata of surrender blossomed into divine union, and she became the eternal consort and intercessor for all who recite Tiruppāvai.
 
 Sri Āṇḍāl Tiruvaḍigaḷē Sharaṇam.
 
@@ -33,5 +33,6 @@ Slides: owner upload IMG_1674–1678, 20 Nov 2026 ("Mārgazhi Thingalil Tiruppā
 
 Source check (sadagopan.org Tiruppāvai e-books): Āṇḍāl's resolve to marry only the Lord (Thiruppavai - CGB, p. 7: "If you get me married to mere mortals, I shall not wish to live … I shall get wed to Paraman alone") and her wedding to Ranganātha (Thiruppavai - VS, Taniyan: "She married (garlanded) Sri RanganAthan") are confirmed. The three dreams, the merger, and the garland traditions with Tirumala and Kallazhagar are not in these books; they are kept as the owner's account of temple tradition.
 
-QUESTION FOR THE OWNER:
-1. "After Āṇḍāl’s forty-day Mārgazhi vrata": Mārgazhi is a month (about 30 days), and the same paragraph later says "the soul’s month-long vrata". Proposed: "After Āṇḍāl’s month-long Mārgazhi vrata of Tiruppāvai, …" Left as written until you confirm.
+Owner decisions (20 Nov 2026):
+- "forty-day Mārgazhi vrata" → "month-long Mārgazhi vrata" (approved).
+- "Tirupati Venkateśvara Temple" → "the temple of Venkateshvara at Tirumala", "Tirupati sends" → "Tirumala sends" (approved).
