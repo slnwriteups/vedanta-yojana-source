@@ -442,3 +442,146 @@ test("publishBlog turns a post with '## ' headings into a part of sub-chapters, 
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+async function blogWithTranslations(root: string) {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const archiveRoot = path.join(root, "blog-archive");
+  const wp = parseWxr(WXR).slice(0, 1).map((p) => ({ ...p, html: p.html + FILLER }));
+  await archivePosts(wp, { root: archiveRoot, fetchBinary: async () => ({ bytes: new Uint8Array([7]), contentType: "image/jpeg" }) });
+  const folder = "wordpress/2019-05-01-example-post";
+  fs.writeFileSync(path.join(root, "story.txt"), "The Story\n## The Beginning\nFirst part.\n\n## The End\nSecond part.\n");
+  publishBlog({ slug: "places", title: "Places", posts: [{ archive: folder, text: "story.txt" }] }, root, { repoRoot: root, archiveRoot });
+  // A translator's later work on the published blog, which append must never touch.
+  const bookDir = path.join(root, "content/library/places");
+  const bookJson = JSON.parse(fs.readFileSync(path.join(bookDir, "book.json"), "utf8"));
+  bookJson.parts[0].translations = { ta: { title: "கதை" } };
+  bookJson.translations = { ta: { title: "இடங்கள்" } };
+  fs.writeFileSync(path.join(bookDir, "book.json"), `${JSON.stringify(bookJson, null, 2)}\n`);
+  const chapterFile = path.join(bookDir, "chapters/the-beginning.json");
+  const chapter = JSON.parse(fs.readFileSync(chapterFile, "utf8"));
+  chapter.translations = { ta: { title: "தொடக்கம்", body: "முதல் பகுதி." } };
+  fs.writeFileSync(chapterFile, `${JSON.stringify(chapter, null, 2)}\n`);
+  fs.writeFileSync(path.join(root, "festival.txt"), "The Festival\nA festival.\n");
+  fs.writeFileSync(path.join(root, "journey.txt"), "The Journey\n## Setting Out\nLeaving.\n\n## Arriving\nArrived.\n");
+  const appendSpec = {
+    slug: "places",
+    title: "Places",
+    mode: "append" as const,
+    groups: [
+      { title: "Home", translations: { ta: { title: "வீடு" } }, existingChapters: ["the-beginning", "the-end"] },
+      { title: "Away", existingChapters: [] },
+    ],
+    posts: [
+      { archive: folder, text: "festival.txt", group: "Home" },
+      { archive: folder, text: "journey.txt", group: "Away" },
+    ],
+  };
+  return { archiveRoot, bookDir, appendSpec, chapterBefore: fs.readFileSync(chapterFile, "utf8") };
+}
+
+test("publishBlog append keeps existing chapters, parts and translations, and adds the new posts after them under places", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, bookDir, appendSpec, chapterBefore } = await blogWithTranslations(root);
+    const { book } = publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    assert.equal(fs.readFileSync(path.join(bookDir, "chapters/the-beginning.json"), "utf8"), chapterBefore, "existing chapter byte-for-byte");
+    assert.deepEqual(book.chapterOrder, ["the-beginning", "the-end", "the-festival", "setting-out", "arriving"]);
+    assert.deepEqual(book.parts.map((p) => [p.title, p.order, p.chapters, p.translations?.ta?.title]), [
+      ["The Story", 1, ["the-beginning", "the-end"], "கதை"],
+      ["The Journey", 2, ["setting-out", "arriving"], undefined],
+    ]);
+    assert.deepEqual(book.groups.map((g) => [g.title, g.order, g.chapters]), [
+      ["Home", 1, ["the-beginning", "the-end", "the-festival"]],
+      ["Away", 2, ["setting-out", "arriving"]],
+    ]);
+    assert.equal(book.groups[0].translations?.ta?.title, "வீடு");
+    assert.equal(book.translations?.ta?.title, "இடங்கள்", "book translations kept");
+    const festival = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/the-festival.json"), "utf8"));
+    assert.equal(festival.order, 3);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("publishBlog append run twice changes nothing, and keeps translations added to appended chapters in between", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, bookDir, appendSpec } = await blogWithTranslations(root);
+    publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    const festivalFile = path.join(bookDir, "chapters/the-festival.json");
+    const festival = JSON.parse(fs.readFileSync(festivalFile, "utf8"));
+    festival.translations = { ta: { title: "திருவிழா" } };
+    fs.writeFileSync(festivalFile, `${JSON.stringify(festival, null, 2)}\n`);
+    const snapshot = () => Object.fromEntries(
+      fs.readdirSync(bookDir, { recursive: true }).map(String).sort().filter((f) => f.endsWith(".json")).map((f) => [f, fs.readFileSync(path.join(bookDir, f), "utf8")])
+    );
+    const before = snapshot();
+    publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    assert.deepEqual(snapshot(), before);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("publishBlog append refuses a new post whose slug is an unrelated existing chapter, and places that break the order", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, appendSpec } = await blogWithTranslations(root);
+    // Make the existing chapter come from a different archive folder, then append a post with the same title.
+    const chapterFile = path.join(root, "content/library/places/chapters/the-end.json");
+    const chapter = JSON.parse(fs.readFileSync(chapterFile, "utf8"));
+    chapter.migration.sourcePageId = "blog-archive:wix/other";
+    fs.writeFileSync(chapterFile, `${JSON.stringify(chapter, null, 2)}\n`);
+    fs.writeFileSync(path.join(root, "clash.txt"), "The End\nAnother ending.\n");
+    const clash = { ...appendSpec, posts: [{ archive: appendSpec.posts[0].archive, text: "clash.txt", group: "Home" }] };
+    assert.throws(() => publishBlog(clash, root, { repoRoot: root, archiveRoot }), /already a chapter/);
+    const split = { ...appendSpec, groups: [{ title: "Home", existingChapters: ["the-beginning"] }, { title: "Away", existingChapters: ["the-end"] }] };
+    assert.throws(() => publishBlog(split, root, { repoRoot: root, archiveRoot }), /straddles|contiguous/);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("publishBlog append puts a new post at the end of its own place, renumbering later chapters but leaving their text and translations alone", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, bookDir, appendSpec } = await blogWithTranslations(root);
+    publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    fs.writeFileSync(path.join(root, "feast.txt"), "The Feast\nA feast at home.\n");
+    const spec = { ...appendSpec, posts: [...appendSpec.posts, { archive: appendSpec.posts[0].archive, text: "feast.txt", group: "Home" }] };
+    const arrivingBefore = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/arriving.json"), "utf8"));
+    const { book } = publishBlog(spec, root, { repoRoot: root, archiveRoot });
+    assert.deepEqual(book.chapterOrder, ["the-beginning", "the-end", "the-festival", "the-feast", "setting-out", "arriving"]);
+    assert.deepEqual(book.groups[0].chapters, ["the-beginning", "the-end", "the-festival", "the-feast"]);
+    const order = (slug: string) => JSON.parse(fs.readFileSync(path.join(bookDir, `chapters/${slug}.json`), "utf8")).order;
+    assert.deepEqual(book.chapterOrder.map(order), [1, 2, 3, 4, 5, 6]);
+    const arrivingAfter = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/arriving.json"), "utf8"));
+    assert.deepEqual({ ...arrivingAfter, order: 0 }, { ...arrivingBefore, order: 0 }, "only the order number changed");
+    const beginning = JSON.parse(fs.readFileSync(path.join(bookDir, "chapters/the-beginning.json"), "utf8"));
+    assert.equal(beginning.translations.ta.title, "தொடக்கம்");
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test("publishBlog append re-run keeps translations added to the spec's own parts", async () => {
+  const { publishBlog } = await import("../../../scripts/blog-import/publish-blog.ts");
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), "publish-append-"));
+  try {
+    const { archiveRoot, bookDir, appendSpec } = await blogWithTranslations(root);
+    publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    const bookFile = path.join(bookDir, "book.json");
+    const bookJson = JSON.parse(fs.readFileSync(bookFile, "utf8"));
+    bookJson.parts[1].translations = { ta: { title: "பயணம்" } };
+    fs.writeFileSync(bookFile, `${JSON.stringify(bookJson, null, 2)}\n`);
+    const { book } = publishBlog(appendSpec, root, { repoRoot: root, archiveRoot });
+    assert.equal(book.parts[1].title, "The Journey");
+    assert.equal(book.parts[1].translations?.ta?.title, "பயணம்");
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+});

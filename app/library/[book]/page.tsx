@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { groupByPart } from "@/content-lib/library-parts.ts";
+import { groupByPlace } from "@/content-lib/library-parts.ts";
 import { notFound } from "next/navigation";
 import { MovedPage } from "@/components/shared/MovedPage";
 import { RENAMED_BOOK_SLUGS } from "@/content-lib/book-slug-aliases";
@@ -9,6 +9,7 @@ import { DraftBadge } from "@/components/shared/DraftBadge";
 import { ChapterListItem } from "@/components/library/ChapterListItem";
 import { LocalizedBookHeader } from "@/components/library/LocalizedBookHeader";
 import { LocalizedPartHeading } from "@/components/library/LocalizedPartHeading";
+import { LocalizedPlaceHeading } from "@/components/library/LocalizedPlaceHeading";
 import { LocalizedText } from "@/components/shared/LocalizedText";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pageMetadata, truncateForDescription } from "@/lib/metadata";
@@ -82,16 +83,23 @@ export default async function LibraryBookPage({
 
       <div className="space-y-3">
         {chapters.length > 0 ? (
-          // Chapters grouped under the book's parts, if it has any (a part's
-          // heading, then its chapters); numbering continues across parts.
-          groupByPart(book, chapters).map((group) => (
-            <section key={group.items[0].item.slug} className="space-y-3">
-              {group.part ? <LocalizedPartHeading part={group.part} /> : null}
-              <ol role="list" className="space-y-3" start={group.items[0].index + 1}>
-                {group.items.map(({ item: chapter, index }) => (
-                  <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toChapterListEntry(chapter)} position={index + 1} />
-                ))}
-              </ol>
+          // Chapters grouped by place, if the book has places, then by part
+          // (a heading for each, then the chapters); numbering continues
+          // across the whole book. A part titled like its place has no
+          // heading of its own (groupByPlace sets its title to null).
+          groupByPlace(book, chapters).map((place) => (
+            <section key={place.parts[0].items[0].item.slug} className="space-y-3">
+              {place.group ? <LocalizedPlaceHeading group={place.group} /> : null}
+              {place.parts.map((group) => (
+                <div key={group.items[0].item.slug} className="space-y-3">
+                  {group.part && group.title !== null ? <LocalizedPartHeading part={group.part} level={place.group ? 3 : 2} /> : null}
+                  <ol role="list" className="space-y-3" start={group.items[0].index + 1}>
+                    {group.items.map(({ item: chapter, index }) => (
+                      <ChapterListItem key={chapter.slug} bookSlug={book.slug} kind={book.kind} chapter={toChapterListEntry(chapter)} position={index + 1} />
+                    ))}
+                  </ol>
+                </div>
+              ))}
             </section>
           ))
         ) : (

@@ -1,0 +1,29 @@
+{
+  "title": "Pāṇḍuranga of Pandharpur",
+  "slug": "panduranga-of-pandharpur",
+  "order": 25,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wix/2025-07-06-ashadha-ekadashi-chaturmasya-and-pandharpur",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "Pandharpur lies on the banks of the Chandrabhāgā river in Maharashtra and is the principal centre of the worship of Viṭṭhala, who is held to be a manifestation of Krishna, of Vishnu. The temple is ancient, with architectural features that suggest Hoysala and Yādava contributions. It is not one of the hundred and eight Divya Desams, but many Vaishnava traditions honour it as an abhimāna kshetram, a place of deep experience of the Lord. The mūrti of Viṭṭhala is distinctive: He stands on a brick with His hands on His hips, facing the devotee directly, and this form is explained by the story of Puṇḍalīka, which remains central to the sanctity of the place.\n\nAccording to the traditional accounts, Puṇḍalīka was a householder who lived near the present Pandharpur. At first he cared little for dharma and neglected his parents, but in time he was transformed, some say after meeting pilgrims or sages, and he turned to a life of intense devotion to them. He served his aged parents with complete attention, treating them with reverence and seeing to their comfort at all times.\n\nOne day Lord Vishnu, pleased with this change in him, came to his home. Puṇḍalīka was attending to his parents at that moment and could not rise at once to welcome his divine guest. Instead he picked up a brick and asked the Lord to stand on it while he finished his service. Far from being displeased, the Lord stood patiently on the brick, moved by Puṇḍalīka's sincerity, and He remains there still, in the form we now know as Viṭṭhala, the Lord who waits for His devotee.\n\nSeen through Sri Vaishnava eyes, the story shows that kainkaryam done with a pure intention is itself worship of the Lord, and that even the duties of a householder, when they are joined to surrender and service, lead to the experience of Bhagavān.",
+  "images": [
+    {
+      "assetId": "panduranga-of-pandharpur-1",
+      "sourceAssetUuid": "75bc805c-a3e9-5865-9f4d-bda508cbe9b3",
+      "sourceOriginalName": "aec967_35ee400014b84990a0fa0c17104cf73d~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review"
+    },
+    {
+      "assetId": "panduranga-of-pandharpur-2",
+      "sourceAssetUuid": "9cff2221-b912-5e42-98cf-cf374a3849c5",
+      "sourceOriginalName": "aec967_fc32659dc824477aa3d33271cc3b60e7~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review",
+      "placementAnchor": "remains central to the sanctity of the place."
+    }
+  ]
+}

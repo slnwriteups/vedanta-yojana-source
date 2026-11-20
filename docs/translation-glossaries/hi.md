@@ -174,6 +174,7 @@ Shishupāla, Dantavakra, Narakāsura = शिशुपाल, दंतवक्
 Gajendra / Gajendra Moksham = गजेंद्र / गजेंद्र मोक्षम्
 Indradyumna = इंद्रद्युम्न
 Puri, Odisha = पुरी, ओडिशा
+Pandharpur = पंढरपुर
 Sri Jagannātha = श्री जगन्नाथ
 Agastya / Devala = अगस्त्य / देवल
 Gandharva / Hūhū = गंधर्व / हूहू

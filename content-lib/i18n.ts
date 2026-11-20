@@ -93,11 +93,15 @@ export function localizeBook<T extends Omit<Book, "migration" | "coverImage">>(
   const parts = language && record.parts?.some((part) => part.translations?.[language])
     ? record.parts.map((part) => ({ ...part, title: part.translations?.[language]?.title ?? part.title }))
     : record.parts;
-  if (!t && parts === record.parts) return record;
+  const groups = language && record.groups?.some((group) => group.translations?.[language])
+    ? record.groups.map((group) => ({ ...group, title: group.translations?.[language]?.title ?? group.title }))
+    : record.groups;
+  if (!t && parts === record.parts && groups === record.groups) return record;
   return {
     ...record,
     title: t?.title ?? record.title,
     description: t?.description ?? record.description,
     parts,
+    groups,
   } as T;
 }

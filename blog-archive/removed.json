@@ -1,5 +1,5 @@
 {
-  "count": 70,
+  "count": 74,
   "posts": [
     {
       "platform": "wordpress",
@@ -630,6 +630,42 @@
       "publishedAt": "2025-07-06T04:53:27.045Z",
       "reason": "word-for-word copy of another Wix post",
       "keptCopy": "wix/2025-07-06-ashadha-ekadashi-chaturmasya-and-pandharpur"
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "1776",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=1776",
+      "title": "(untitled)",
+      "publishedAt": "2021-02-25T05:44:08",
+      "reason": "not blog material (school assignment draft)",
+      "keptCopy": null
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "1785",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=1785",
+      "title": "(untitled)",
+      "publishedAt": "2021-03-05T08:24:06",
+      "reason": "not blog material (school assignment draft)",
+      "keptCopy": null
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "1792",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=1792",
+      "title": "Auto Draft",
+      "publishedAt": "2021-03-19T05:55:32",
+      "reason": "not blog material (school assignment draft)",
+      "keptCopy": null
+    },
+    {
+      "platform": "wordpress",
+      "sourceId": "1794",
+      "sourceUrl": "https://vedantayojana.wordpress.com/?p=1794",
+      "title": "(untitled)",
+      "publishedAt": "2021-03-22T07:57:30",
+      "reason": "not blog material (school assignment draft)",
+      "keptCopy": null
     }
   ]
 }

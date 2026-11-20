@@ -1,0 +1,35 @@
+{
+  "title": "The Three Chariots",
+  "slug": "the-three-chariots",
+  "order": 19,
+  "status": "published",
+  "migration": {
+    "sourcePageId": "blog-archive:wix/2025-06-27-rath-yatra-the-sacred-journey-of-lord-jagannath",
+    "extractionConfidence": "high",
+    "needsReview": false
+  },
+  "body": "The morning after the Netrotsava, amid chanting, the blowing of conches and folk performances, the deities are carried in a royal procession to their chariots in the ritual called the Pahandi Bije, and the chariot festival begins in full splendour as the renewed deities set out for their summer retreat at the Gundichā Temple.\n\nThe Ratha Yātrā begins on the second day, the dvitīyā, of the bright fortnight of Āshāḍha, which usually falls in June or July, and the festival spans nine days. The day before, the Gundichā Temple is ritually cleansed and made ready to receive the deities in the Gundichā Mārjana. On the day itself, after the Pahandi, the three chariots are pulled by thousands of devotees from the Jagannātha Temple to the Gundichā Temple, a distance of about three kilometres.\n\nEvery year new chariots are built from sacred wood brought from particular forests, a vast undertaking carried out by carpenters of hereditary families, and each chariot has its own name, design and meaning. Lord Jagannātha's chariot, the Nandighosha, is the tallest; it has sixteen wheels and red and yellow canopies. Balabhadra's chariot, the Tāladhvaja, has fourteen wheels and a blue and red canopy. Subhadrā's chariot, the Darpadalana, has twelve wheels and a red and black canopy, symbolic of Shakti. Each chariot has its charioteer, its flag, its guardian deities and the side deities known as the Pārshva Devatās, and even the ropes by which the chariots are pulled bear sacred names: the whole structure is filled with ritual meaning.\n\nBeyond its spiritual heart, the Ratha Yātrā is a great cultural celebration. Traditional music, dance, fire-spinning and folk chants fill the streets of Puri, and the Dahukas, the traditional bards, sing the bold yet symbolic verses called the Dahuka Boli, which are considered essential to move the chariots. One of the most touching rituals is the Chhera Pahanra, in which the king of Puri sweeps the chariots with a golden broom, an act of humility that reminds devotees that all are equal in the eyes of God, and a powerful picture of royal dignity bowing in service.",
+  "images": [
+    {
+      "assetId": "the-three-chariots-1",
+      "sourceAssetUuid": "5d313a0e-f89a-5507-8628-2857d758d8ef",
+      "sourceOriginalName": "aec967_844c551d9fab4b6a8cf9d9fc8a03e6c8~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review"
+    },
+    {
+      "assetId": "the-three-chariots-2",
+      "sourceAssetUuid": "9e5d15f4-6560-50f1-b3b4-c0e83008e3f8",
+      "sourceOriginalName": "aec967_a5ce1153c21948bea2fc3fd9e0e1a9c1~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review"
+    },
+    {
+      "assetId": "the-three-chariots-3",
+      "sourceAssetUuid": "ae8048c1-3b0c-550d-81ab-5700ba24055b",
+      "sourceOriginalName": "aec967_811afa21d0334d70adc7e7223dd8e0d7~mv2.png",
+      "alt": null,
+      "altStatus": "needs-review"
+    }
+  ]
+}

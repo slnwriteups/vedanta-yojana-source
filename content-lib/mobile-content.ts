@@ -11,7 +11,7 @@ import { DivyaDesamRegionSchema } from "./schemas/divya-desam-region.ts";
 import { DivyaDesamTranslationsSchema, ResourceEntrySchema, ShrineSchema, TempleInformationSchema } from "./schemas/divya-desam-parts.ts";
 import { ChapterSummaryTranslationsSchema, ChapterTranslationsSchema } from "./schemas/chapter-parts.ts";
 import { ContentTypeSchema, KnowledgeTranslationsSchema } from "./schemas/knowledge-parts.ts";
-import { BookPartSchema, BookTranslationsSchema, LibraryKindSchema } from "./schemas/book-parts.ts";
+import { BookGroupSchema, BookPartSchema, BookTranslationsSchema, LibraryKindSchema } from "./schemas/book-parts.ts";
 
 /**
  * The mobile public boundary: schemas and types ONLY.
@@ -156,6 +156,8 @@ export const MobileBookSchema = z.object({
   status: StatusSchema,
   migration: MobileMigrationSchema,
   parts: z.array(BookPartSchema).default([]),
+  /** Places above parts (see BookGroupSchema); empty for most books. */
+  groups: z.array(BookGroupSchema).default([]),
   chapterOrder: z.array(SlugSchema).default([]),
   /** See BookSchema.resources. */
   resources: z.array(ResourceEntrySchema).default([]),

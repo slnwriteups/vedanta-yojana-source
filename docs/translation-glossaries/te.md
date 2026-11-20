@@ -165,6 +165,7 @@ Shishupāla, Dantavakra, Narakāsura = శిశుపాలుడు, దంత
 Gajendra / Gajendra Moksham = గజేంద్రుడు / గజేంద్ర మోక్షం
 Indradyumna = ఇంద్రద్యుమ్నుడు
 Puri, Odisha = పూరీ, ఒడిశా
+Pandharpur = పండరీపురం
 Sri Jagannātha = శ్రీ జగన్నాథుడు
 Agastya / Devala = అగస్త్యుడు / దేవలుడు
 Gandharva / Hūhū = గంధర్వుడు / హూహూ
