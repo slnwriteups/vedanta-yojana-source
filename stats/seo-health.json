@@ -1128,6 +1128,19 @@
           "warnings": 15
         }
       }
+    },
+    {
+      "checkedAt": "2026-11-22T01:31:56.384Z",
+      "trigger": "deploy",
+      "pages": 548,
+      "errors": 0,
+      "warnings": 15,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 15
+        }
+      }
     }
   ]
 }
