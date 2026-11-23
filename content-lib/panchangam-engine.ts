@@ -1186,6 +1186,12 @@ export interface ComputedPanchangam {
   /** "Next Ekadasi: Thursday, 22nd Oct 2026." */
   upcomingEkadashiText: string;
   sankalpamText: string;
+  /**
+   * True when today's Sankalpam is declared before the day's sunrise, so
+   * it names the previous day's vāsara (the Hindu day runs sunrise to
+   * sunrise). Absent otherwise.
+   */
+  sankalpamBeforeSunrise?: true;
   /** 24-hour local "HH:MM" ("HH:MM (+1)" past midnight, near the poles), or "" where the Sun doesn't rise/set. */
   sunrise: string;
   sunset: string;
@@ -1376,5 +1382,6 @@ export function computePanchangamForDate(
   if (!isToday) return computed;
   const cal = new SunCalendar(place);
   const currentUntil = Math.min(sankalpamValidUntil(cal, now.getTime()), dayStart(dayNumber + 1, place.timeZone));
-  return { ...computed, currentUntil };
+  const beforeSunrise = cal.hinduDayOf(now.getTime()) < dayNumber;
+  return { ...computed, currentUntil, ...(beforeSunrise ? { sankalpamBeforeSunrise: true as const } : {}) };
 }

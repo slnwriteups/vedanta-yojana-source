@@ -325,6 +325,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
                 dailyText={data.sankalpamText || null}
+                beforeSunrise={Boolean(data.sankalpamBeforeSunrise)}
                 tarpanam={paduka?.tarpanam ?? null}
                 show={showSankalpam}
                 onToggle={() => setShowSankalpam((prev) => !prev)}
@@ -406,11 +407,14 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
  */
 function SankalpamSection({
   dailyText,
+  beforeSunrise = false,
   tarpanam,
   show,
   onToggle,
 }: {
   dailyText: string | null;
+  /** Today's Sankalpam is declared before sunrise: explain its previous-day vāsara. */
+  beforeSunrise?: boolean;
   tarpanam: PadukaTarpanam | null;
   show: boolean;
   onToggle: () => void;
@@ -444,6 +448,9 @@ function SankalpamSection({
               <p className="prose-body text-sm leading-relaxed text-[var(--foreground)] whitespace-pre-line">
                 {localizeSankalpamText(dailyText, language)}
               </p>
+              {beforeSunrise ? (
+                <p className="pt-2 text-xs italic text-[var(--muted)]">{t("sankalpamBeforeSunriseNote")}</p>
+              ) : null}
             </div>
           ) : null}
           {tarpanam ? (

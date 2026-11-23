@@ -63,6 +63,8 @@ export interface PanchangamData {
   upcomingEkadashiText: string;
   /** The full Sankalpam declaration sentence for the current moment, or "" if unavailable. */
   sankalpamText: string;
+  /** True when the Sankalpam is declared before today's sunrise, so it names the previous day's vāsara. */
+  sankalpamBeforeSunrise?: true;
   /**
    * When this Panchangam of the present moment stops being current (its
    * Sankalpam's validity ends, or midnight), as epoch ms; the screen
@@ -276,6 +278,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       upcomingEkadashiText: computed.upcomingEkadashiText,
       sankalpamText: computed.sankalpamText,
       currentUntil: computed.currentUntil,
+      sankalpamBeforeSunrise: computed.sankalpamBeforeSunrise,
       sunrise: computed.sunrise,
       sunset: computed.sunset,
       rahuKaalam: computed.rahuKaalam,

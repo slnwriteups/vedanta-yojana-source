@@ -363,6 +363,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
             {data.sankalpamText || paduka?.tarpanam ? (
               <SankalpamSection
                 dailyText={data.sankalpamText || null}
+                beforeSunrise={Boolean(data.sankalpamBeforeSunrise)}
                 tarpanam={paduka?.tarpanam ?? null}
                 show={showSankalpam}
                 onToggle={() => setShowSankalpam((prev) => !prev)}
@@ -468,11 +469,14 @@ function PadukaFallbackRows({ day }: { day: PadukaPanchangamDay }) {
  */
 function SankalpamSection({
   dailyText,
+  beforeSunrise = false,
   tarpanam,
   show,
   onToggle,
 }: {
   dailyText: string | null;
+  /** Today's Sankalpam is declared before sunrise: explain its previous-day vāsara. */
+  beforeSunrise?: boolean;
   tarpanam: PadukaTarpanam | null;
   show: boolean;
   onToggle: () => void;
@@ -511,6 +515,9 @@ function SankalpamSection({
                 <Text style={[styles.sankalpamPartLabel, { color: theme.colors.accent }]}>{t("sankalpamDailyLabel")}</Text>
               ) : null}
               <Text style={bodyStyle}>{localizeSankalpamText(dailyText, language)}</Text>
+              {beforeSunrise ? (
+                <Text style={[styles.sankalpamNote, { color: theme.colors.muted }]}>{t("sankalpamBeforeSunriseNote")}</Text>
+              ) : null}
             </View>
           ) : null}
           {tarpanam ? (
@@ -699,6 +706,11 @@ const styles = StyleSheet.create({
   sankalpamPartDivider: {
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: spacing.sm,
+  },
+  sankalpamNote: {
+    fontSize: typography.small,
+    fontStyle: "italic",
+    paddingTop: spacing.xs,
   },
   sankalpamBody: {
     fontSize: typography.body,
