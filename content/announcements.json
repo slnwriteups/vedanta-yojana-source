@@ -1,6 +1,16 @@
 {
   "announcements": [
     {
+      "id": "2026-11-23-sankalpam-before-sunrise",
+      "date": "2026-11-23",
+      "platforms": [
+        "app",
+        "website"
+      ],
+      "title": "A note on the Sankalpam before sunrise",
+      "body": "Before sunrise, the Sankalpam names the previous day's weekday, because the Hindu day begins at sunrise. A short note under the Sankalpam now explains this."
+    },
+    {
       "id": "2026-11-20-iphone-app-link",
       "date": "2026-11-20",
       "platforms": [
