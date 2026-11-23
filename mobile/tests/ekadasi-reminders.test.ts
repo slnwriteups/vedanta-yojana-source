@@ -20,6 +20,10 @@ function ist(year: number, month: number, day: number, hour: number): number {
   return Date.UTC(year, month - 1, day, hour) - IST_MINUTES * 60_000;
 }
 
+test("the reminder hour is 10 AM (owner decision, 23 Nov 2026)", () => {
+  assert.equal(EKADASI_REMINDER_HOUR, 10);
+});
+
 test("each reminder fires on the eve of the fast, at the reminder hour on the place's clock", () => {
   const reminders = planEkadasiReminders(SRIRANGAM, ist(2026, 10, 24, 12), null);
   // Krishna Ekadasi on Thursday 5 Nov 2026 (the Pādukā's Sarva Ekadasi): reminded on Wednesday 4 Nov.
@@ -36,12 +40,12 @@ test("a named Ekadasi is reminded under its own name", () => {
 });
 
 test("an eve whose reminder hour has passed is skipped, and today's fast has no eve left", () => {
-  // 4 Nov after 07:00: the 5 Nov reminder is already past.
-  const afterHour = planEkadasiReminders(SRIRANGAM, ist(2026, 11, 4, 9), null);
-  assert.ok(afterHour.every((r) => r.fireAt > ist(2026, 11, 4, 9)));
+  // 4 Nov after 10:00: the 5 Nov reminder is already past.
+  const afterHour = planEkadasiReminders(SRIRANGAM, ist(2026, 11, 4, 11), null);
+  assert.ok(afterHour.every((r) => r.fireAt > ist(2026, 11, 4, 11)));
   assert.notEqual(afterHour[0].id, `${EKADASI_REMINDER_ID_PREFIX}${dayNumberOf(2026, 11, 5)}`);
-  // 4 Nov before 07:00: still to come.
-  const beforeHour = planEkadasiReminders(SRIRANGAM, ist(2026, 11, 4, 5), null);
+  // 4 Nov before 10:00: still to come.
+  const beforeHour = planEkadasiReminders(SRIRANGAM, ist(2026, 11, 4, 9), null);
   assert.equal(beforeHour[0].id, `${EKADASI_REMINDER_ID_PREFIX}${dayNumberOf(2026, 11, 5)}`);
 });
 

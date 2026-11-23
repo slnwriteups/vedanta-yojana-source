@@ -105,6 +105,27 @@ export function nakshatramLabel(nakshatram: string, language: LanguageCode | nul
   return NAKSHATRAM_LABELS[nakshatram]?.[language] ?? nakshatram;
 }
 
+/** The 12 rāśis, keyed by the engine's RASI_NAMES spelling. */
+const RASI_LABELS: Record<string, Record<LanguageCode, string>> = {
+  Mesha: { ta: "மேஷம்", kn: "ಮೇಷ", hi: "मेष", te: "మేషం" },
+  Vrishabha: { ta: "ரிஷபம்", kn: "ವೃಷಭ", hi: "वृषभ", te: "వృషభం" },
+  Mithuna: { ta: "மிதுனம்", kn: "ಮಿಥುನ", hi: "मिथुन", te: "మిథునం" },
+  Kataka: { ta: "கடகம்", kn: "ಕರ್ಕಾಟಕ", hi: "कर्क", te: "కర్కాటకం" },
+  Simha: { ta: "சிம்மம்", kn: "ಸಿಂಹ", hi: "सिंह", te: "సింహం" },
+  Kanya: { ta: "கன்னி", kn: "ಕನ್ಯಾ", hi: "कन्या", te: "కన్య" },
+  Thula: { ta: "துலாம்", kn: "ತುಲಾ", hi: "तुला", te: "తుల" },
+  Vruschika: { ta: "விருச்சிகம்", kn: "ವೃಶ್ಚಿಕ", hi: "वृश्चिक", te: "వృశ్చికం" },
+  Dhanur: { ta: "தனுசு", kn: "ಧನು", hi: "धनु", te: "ధనుస్సు" },
+  Makara: { ta: "மகரம்", kn: "ಮಕರ", hi: "मकर", te: "మకరం" },
+  Kumbha: { ta: "கும்பம்", kn: "ಕುಂಭ", hi: "कुम्भ", te: "కుంభం" },
+  Meena: { ta: "மீனம்", kn: "ಮೀನ", hi: "मीन", te: "మీనం" },
+};
+
+export function rasiLabel(rasi: string, language: LanguageCode | null): string {
+  if (!language || !rasi) return rasi;
+  return RASI_LABELS[rasi]?.[language] ?? rasi;
+}
+
 const CHANGE_TILL: Record<LanguageCode | "en", (name: string, time: string) => string> = {
   en: (name, time) => `${name} till ${time}`,
   ta: (name, time) => `${name} ${time} வரை`,

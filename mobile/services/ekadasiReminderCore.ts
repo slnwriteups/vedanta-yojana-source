@@ -17,8 +17,8 @@ import type { LanguageCode } from "../content-lib/preferences.ts";
  * expo-notifications.
  */
 
-/** Local hour on the eve the reminder is shown: early, so the day's meals can be planned around the fast. */
-export const EKADASI_REMINDER_HOUR = 7;
+/** Local hour on the eve the reminder is shown (owner decision, 23 Nov 2026: 10 AM, moved from 7 AM). */
+export const EKADASI_REMINDER_HOUR = 10;
 
 /** How far ahead reminders are scheduled; rescheduled on every launch, so this only has to outlast a long gap between uses. */
 export const EKADASI_REMINDER_HORIZON_DAYS = 120;

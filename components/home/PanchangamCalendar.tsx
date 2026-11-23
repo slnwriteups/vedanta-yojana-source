@@ -10,9 +10,12 @@ import {
   nakshatramLabel,
   nakshatramOfDayLabel,
   pakshaLabel,
+  rasiLabel,
   tithiLabel,
   tithiOfDayLabel,
 } from "@/lib/panchangam-labels";
+import type { LanguageCode } from "@/lib/preferences";
+import type { GrahanamSummary } from "@/content-lib/panchangam-eclipses.ts";
 import { fetchPanchangam, type PanchangamData } from "@/lib/panchangam-service";
 import {
   localizePadukaFestival,
@@ -295,6 +298,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 <p className="text-sm font-bold text-[var(--accent)]">{observances}</p>
               </div>
             ) : null}
+            {data.grahanam ? <GrahanamBlock grahanam={data.grahanam} /> : null}
 
             {pakshaTithi ? <Row label={t("homeCalendarTithiLabel")} value={pakshaTithi} /> : null}
             {nakshatram ? <Row label={t("homeCalendarNakshatramLabel")} value={nakshatram} /> : null}
@@ -360,6 +364,55 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
           />
         ) : null}
       </div>
+    </div>
+  );
+}
+
+const GRAHANAM_KIND_KEYS = {
+  total: "grahanamKindTotal",
+  partial: "grahanamKindPartial",
+  annular: "grahanamKindAnnular",
+  penumbral: "grahanamKindPenumbral",
+} as const;
+
+/** The day's eclipse as rows: kind, contacts, the part seen here, nakshatram and rāśi. */
+function grahanamRows(g: GrahanamSummary, t: ReturnType<typeof useT>, language: LanguageCode | null, locale: string) {
+  const time = (value: string) => formatPanchangamTime(value, locale);
+  const rows: Array<{ label: string; value: string }> = [];
+  if (g.globalKind !== g.kind) rows.push({ label: t("grahanamElsewhereLabel"), value: t(GRAHANAM_KIND_KEYS[g.globalKind]) });
+  rows.push({ label: t("grahanamSparsamLabel"), value: time(g.labels.sparsam) });
+  if (g.labels.totalBegin && g.labels.totalEnd) {
+    rows.push({ label: t("grahanamTotalPhaseLabel"), value: time(`${g.labels.totalBegin}-${g.labels.totalEnd}`) });
+  }
+  rows.push({ label: t("grahanamMadhyamLabel"), value: time(g.labels.madhyam) });
+  rows.push({ label: t("grahanamMokshamLabel"), value: time(g.labels.moksham) });
+  rows.push({ label: t("grahanamVisibleLabel"), value: time(`${g.labels.visibleFrom}-${g.labels.visibleTo}`) });
+  rows.push({ label: t("homeCalendarNakshatramLabel"), value: nakshatramLabel(g.nakshatram, language) });
+  rows.push({ label: t("grahanamRasiLabel"), value: rasiLabel(g.rasi, language) });
+  const lunar = g.body === "lunar";
+  const notes = [
+    ...(g.underwayAtRise ? [t(lunar ? "grahanamMoonUnderway" : "grahanamSunUnderway")] : []),
+    ...(g.setsDuring ? [t(lunar ? "grahanamMoonSets" : "grahanamSunSets")] : []),
+  ];
+  const title = `${t(lunar ? "grahanamLunarTitle" : "grahanamSolarTitle")} · ${t(GRAHANAM_KIND_KEYS[g.kind])}`;
+  return { title, rows, notes, guidance: t("grahanamGuidance") };
+}
+
+/** The day's eclipse: what it is, its times here, and the owner's guidance. */
+function GrahanamBlock({ grahanam }: { grahanam: GrahanamSummary }) {
+  const t = useT();
+  const { language } = useLanguage();
+  const { title, rows, notes, guidance } = grahanamRows(grahanam, t, language, language || "en-US");
+  return (
+    <div className="space-y-1.5 rounded-md border border-[var(--accent)]/40 bg-[var(--background)] p-3">
+      <p className="text-sm font-bold text-[var(--accent)]">{title}</p>
+      {rows.map(({ label, value }) => (
+        <Row key={label} label={label} value={value} />
+      ))}
+      {notes.map((note) => (
+        <p key={note} className="text-sm italic text-[var(--muted)]">{note}</p>
+      ))}
+      <p className="pt-1 text-sm text-[var(--foreground)]">{guidance}</p>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import type { PanchangamPlace } from "../../content-lib/panchangam-engine.ts";
 import type { LanguageCode } from "../content-lib/preferences.ts";
 import { useLanguage } from "../language-context.ts";
 import { EKADASI_REMINDER_ID_PREFIX, ekadasiReminderChannelName, planEkadasiReminders } from "./ekadasiReminderCore.ts";
+import { GRAHANAM_REMINDER_ID_PREFIX, grahanamReminderChannelName, planGrahanamReminders } from "./grahanamReminderCore.ts";
 import { usePanchangamPlace } from "./panchangamPlaceStore.ts";
 import { useDevicePanchangamPlace } from "./panchangamService.ts";
 
@@ -41,6 +42,8 @@ import { useDevicePanchangamPlace } from "./panchangamService.ts";
  */
 
 const ANDROID_CHANNEL_ID = "ekadasi-reminders";
+/** Grahaṇam reminders (grahanamReminderCore.ts) are scheduled alongside, on their own channel. */
+const GRAHANAM_CHANNEL_ID = "grahanam-reminders";
 
 /** Bumped when notification permission may have changed, so the reminders reschedule. */
 let permissionVersion = 0;
@@ -84,7 +87,7 @@ async function cancelScheduled(Notifications: NotificationsModule): Promise<void
   const scheduled = await Notifications.getAllScheduledNotificationsAsync();
   await Promise.all(
     scheduled
-      .filter((request) => request.identifier.startsWith(EKADASI_REMINDER_ID_PREFIX))
+      .filter((request) => request.identifier.startsWith(EKADASI_REMINDER_ID_PREFIX) || request.identifier.startsWith(GRAHANAM_REMINDER_ID_PREFIX))
       .map((request) => Notifications.cancelScheduledNotificationAsync(request.identifier))
   );
 }
@@ -98,6 +101,10 @@ async function ensureChannel(Notifications: NotificationsModule, language: Langu
   if (Platform.OS !== "android") return;
   await Notifications.setNotificationChannelAsync(ANDROID_CHANNEL_ID, {
     name: ekadasiReminderChannelName(language),
+    importance: Notifications.AndroidImportance.DEFAULT,
+  });
+  await Notifications.setNotificationChannelAsync(GRAHANAM_CHANNEL_ID, {
+    name: grahanamReminderChannelName(language),
     importance: Notifications.AndroidImportance.DEFAULT,
   });
 }
@@ -136,6 +143,17 @@ export async function refreshEkadasiReminders(place: PanchangamPlace | null, lan
           type: Notifications.SchedulableTriggerInputTypes.DATE,
           date: reminder.fireAt,
           channelId: ANDROID_CHANNEL_ID,
+        },
+      });
+    }
+    for (const reminder of planGrahanamReminders(place, Date.now(), language)) {
+      await Notifications.scheduleNotificationAsync({
+        identifier: reminder.id,
+        content: { title: reminder.title, body: reminder.body },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.DATE,
+          date: reminder.fireAt,
+          channelId: GRAHANAM_CHANNEL_ID,
         },
       });
     }

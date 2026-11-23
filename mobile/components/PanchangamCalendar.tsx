@@ -11,9 +11,12 @@ import {
   nakshatramLabel,
   nakshatramOfDayLabel,
   pakshaLabel,
+  rasiLabel,
   tithiLabel,
   tithiOfDayLabel,
 } from "../panchangam-labels.ts";
+import type { LanguageCode } from "../content-lib/preferences.ts";
+import type { GrahanamSummary } from "../../content-lib/panchangam-eclipses.ts";
 import { fetchPanchangam, type PanchangamData } from "../services/panchangamService.ts";
 import {
   localizePadukaFestival,
@@ -309,6 +312,7 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
                 <Text style={[styles.festival, { color: theme.colors.accent }]}>{observances}</Text>
               </View>
             ) : null}
+            {data.grahanam ? <GrahanamBlock grahanam={data.grahanam} /> : null}
             {pakshaTithi ? (
               <Row
                 label={t("homeCalendarTithiLabel")}
@@ -418,6 +422,56 @@ export function PanchangamCalendar({ initialPanchangam }: { initialPanchangam?: 
         }}
         onClose={() => setPickerOpen(false)}
       />
+    </View>
+  );
+}
+
+const GRAHANAM_KIND_KEYS = {
+  total: "grahanamKindTotal",
+  partial: "grahanamKindPartial",
+  annular: "grahanamKindAnnular",
+  penumbral: "grahanamKindPenumbral",
+} as const;
+
+/** The day's eclipse as rows: kind, contacts, the part seen here, nakshatram and rāśi. */
+function grahanamRows(g: GrahanamSummary, t: ReturnType<typeof useT>, language: LanguageCode | null, locale: string) {
+  const time = (value: string) => formatPanchangamTime(value, locale);
+  const rows: Array<{ label: string; value: string }> = [];
+  if (g.globalKind !== g.kind) rows.push({ label: t("grahanamElsewhereLabel"), value: t(GRAHANAM_KIND_KEYS[g.globalKind]) });
+  rows.push({ label: t("grahanamSparsamLabel"), value: time(g.labels.sparsam) });
+  if (g.labels.totalBegin && g.labels.totalEnd) {
+    rows.push({ label: t("grahanamTotalPhaseLabel"), value: time(`${g.labels.totalBegin}-${g.labels.totalEnd}`) });
+  }
+  rows.push({ label: t("grahanamMadhyamLabel"), value: time(g.labels.madhyam) });
+  rows.push({ label: t("grahanamMokshamLabel"), value: time(g.labels.moksham) });
+  rows.push({ label: t("grahanamVisibleLabel"), value: time(`${g.labels.visibleFrom}-${g.labels.visibleTo}`) });
+  rows.push({ label: t("homeCalendarNakshatramLabel"), value: nakshatramLabel(g.nakshatram, language) });
+  rows.push({ label: t("grahanamRasiLabel"), value: rasiLabel(g.rasi, language) });
+  const lunar = g.body === "lunar";
+  const notes = [
+    ...(g.underwayAtRise ? [t(lunar ? "grahanamMoonUnderway" : "grahanamSunUnderway")] : []),
+    ...(g.setsDuring ? [t(lunar ? "grahanamMoonSets" : "grahanamSunSets")] : []),
+  ];
+  const title = `${t(lunar ? "grahanamLunarTitle" : "grahanamSolarTitle")} · ${t(GRAHANAM_KIND_KEYS[g.kind])}`;
+  return { title, rows, notes, guidance: t("grahanamGuidance") };
+}
+
+/** The day's eclipse: what it is, its times here, and the owner's guidance. */
+function GrahanamBlock({ grahanam }: { grahanam: GrahanamSummary }) {
+  const theme = useTheme();
+  const t = useT();
+  const { language } = useLanguage();
+  const { title, rows, notes, guidance } = grahanamRows(grahanam, t, language, language || "en-US");
+  return (
+    <View style={[styles.grahanamBox, { borderColor: theme.colors.accent, backgroundColor: theme.colors.background }]}>
+      <Text style={[styles.festival, { color: theme.colors.accent }]}>{title}</Text>
+      {rows.map(({ label, value }) => (
+        <Row key={label} label={label} value={value} muted={theme.colors.muted} fg={theme.colors.foreground} />
+      ))}
+      {notes.map((note) => (
+        <Text key={note} style={[styles.zoneNote, { color: theme.colors.muted }]}>{note}</Text>
+      ))}
+      <Text style={[styles.grahanamGuidance, { color: theme.colors.foreground }]}>{guidance}</Text>
     </View>
   );
 }
@@ -706,6 +760,16 @@ const styles = StyleSheet.create({
   sankalpamPartDivider: {
     borderTopWidth: StyleSheet.hairlineWidth,
     paddingTop: spacing.sm,
+  },
+  grahanamBox: {
+    borderWidth: StyleSheet.hairlineWidth,
+    borderRadius: radius.md,
+    padding: spacing.sm,
+    gap: spacing.xs,
+  },
+  grahanamGuidance: {
+    fontSize: typography.small,
+    paddingTop: spacing.xs,
   },
   sankalpamNote: {
     fontSize: typography.small,
