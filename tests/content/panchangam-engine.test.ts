@@ -174,6 +174,22 @@ test("the present moment's Panchangam says when it stops being current", () => {
   assert.equal(computePanchangamForDate(ist(12, 0, 20), BENGALURU, "Bengaluru", ist(12, 27)).currentUntil, undefined);
 });
 
+test("a Sankalpam declared before sunrise is flagged, since it names the previous day's vāsara", () => {
+  const BENGALURU: PanchangamPlace = { latitude: 12.97, longitude: 77.59, timeZone: "Asia/Kolkata" };
+  const ist = (h: number, m: number) => new Date(Date.UTC(2026, 10, 23, h, m) - 330 * 60_000);
+  // Monday 23 Nov 2026, 5:09 AM IST: sunrise is 6:25, so the vāra is still Sunday's.
+  const early = computePanchangamForDate(ist(5, 9), BENGALURU, "Bengaluru", ist(5, 9));
+  assert.match(early.sankalpamText, /bhānu vāsara/);
+  assert.equal(early.sankalpamBeforeSunrise, true);
+  // After sunrise it names Monday, with no flag.
+  const later = computePanchangamForDate(ist(6, 30), BENGALURU, "Bengaluru", ist(6, 30));
+  assert.match(later.sankalpamText, /indu vāsara/);
+  assert.equal(later.sankalpamBeforeSunrise, undefined);
+  // Any other day's Sankalpam is declared at its sunrise: never flagged.
+  const dayBefore = new Date(ist(5, 9).getTime() - 86_400_000);
+  assert.equal(computePanchangamForDate(ist(5, 9), BENGALURU, "Bengaluru", dayBefore).sankalpamBeforeSunrise, undefined);
+});
+
 test("the present moment's Panchangam expires at each change the Sankalpam names", () => {
   const ist = (d: number, h: number, m: number) => new Date(Date.UTC(2026, 9, d, h, m) - 330 * 60_000);
   const at = (place: PanchangamPlace, now: Date) => computePanchangamForDate(now, place, "x", now);

@@ -184,6 +184,14 @@ const UI_STRINGS = {
   calendarPastPassed: { en: "Past", ta: "முடிந்தது", kn: "ಕಳೆದ", hi: "व्यतीत", te: "గడచిన" },
   calendarUpcoming: { en: "Upcoming", ta: "வரவிருக்கும்", kn: "ಮುಂಬರುವ", hi: "आगामी", te: "రాబోయే" },
   /** Labels the computed daily sankalpam inside the Sankalpam box on the days a Tarpana Sankalpam is shown beneath it. */
+  /** Shown under today's Sankalpam before sunrise, when it names the previous day's vāsara. */
+  sankalpamBeforeSunriseNote: {
+    en: "Before sunrise, the Sankalpam gives the previous day's weekday (vāsara): the Hindu day begins at sunrise, not at midnight.",
+    ta: "சூரிய உதயத்திற்கு முன், சங்கல்பம் முந்தைய நாளின் கிழமையை (வாசரம்) கூறுகிறது: இந்து நாள் நள்ளிரவில் அல்ல, சூரிய உதயத்தில் தொடங்குகிறது.",
+    kn: "ಸೂರ್ಯೋದಯಕ್ಕೆ ಮುಂಚೆ, ಸಂಕಲ್ಪವು ಹಿಂದಿನ ದಿನದ ವಾರವನ್ನು (ವಾಸರ) ಹೇಳುತ್ತದೆ: ಹಿಂದೂ ದಿನವು ಮಧ್ಯರಾತ್ರಿಯಲ್ಲಲ್ಲ, ಸೂರ್ಯೋದಯದಲ್ಲಿ ಆರಂಭವಾಗುತ್ತದೆ.",
+    hi: "सूर्योदय से पहले संकल्प पिछले दिन का वार (वासर) बताता है: हिन्दू दिन आधी रात से नहीं, सूर्योदय से आरम्भ होता है।",
+    te: "సూర్యోదయానికి ముందు, సంకల్పం మునుపటి రోజు వారాన్ని (వాసరం) చెబుతుంది: హిందూ దినం అర్ధరాత్రి నుండి కాదు, సూర్యోదయం నుండి మొదలవుతుంది.",
+  },
   sankalpamDailyLabel: { en: "Daily", ta: "தினசரி", kn: "ದೈನಂದಿನ", hi: "दैनिक", te: "రోజువారీ" },
   padukaTarpanamLabel: {
     en: "Tarpana Sankalpam",
