@@ -27,11 +27,13 @@ test("a visible eclipse is reminded at 10 AM the day before, with the owner's gu
   assert.match(first.body, /darbha grass in the fridge/);
 });
 
-test("penumbral eclipses get no reminder; past reminder times are skipped", () => {
-  // 21 Feb 2027 is penumbral only; the next reminded one in Bengaluru is the 2 Aug 2027 solar eclipse.
+test("every visible eclipse is reminded, penumbral included; past reminder times are skipped", () => {
+  // 2027 in Bengaluru: penumbral 21 Feb (early hours, IST) and 18 Jul, then the 2 Aug solar eclipse.
   const reminders = planGrahanamReminders(BENGALURU, ist(2027, 1, 1, 12), null);
-  assert.equal(reminders[0].fireAt, ist(2027, 8, 1, 10));
-  assert.match(reminders[0].body, /^Solar eclipse/);
+  assert.match(reminders[0].body, /^Lunar eclipse, visible here 2:41 AM – 6:43 AM\./);
+  assert.equal(reminders[1].fireAt, ist(2027, 7, 17, 10));
+  assert.equal(reminders[2].fireAt, ist(2027, 8, 1, 10));
+  assert.match(reminders[2].body, /^Solar eclipse/);
   // After 10 AM on 2 Mar 2026, that eclipse's reminder has passed.
   const after = planGrahanamReminders(BENGALURU, ist(2026, 3, 2, 11), null);
   assert.ok(after.every((r) => r.id !== `${GRAHANAM_REMINDER_ID_PREFIX}${dayNumberOf(2026, 3, 3)}`));

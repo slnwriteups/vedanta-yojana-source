@@ -63,9 +63,8 @@ to 10 AM.
 ## Calls made by the builder (owner can change)
 
 - An eclipse is listed only where some part of it can be seen.
-- Penumbral lunar eclipses are shown on the calendar, labelled penumbral,
-  but get no reminder (they are barely noticeable to the eye). The owner
-  may want them dropped or reminded.
+- Every eclipse that can be seen gets the reminder, penumbral ones
+  included (owner decision, 24 Nov 2026).
 - The eclipse is listed on the local day it is first seen; contacts after
   midnight carry "(+1)".
 - If 10 AM the day before has already passed when reminders are scheduled,

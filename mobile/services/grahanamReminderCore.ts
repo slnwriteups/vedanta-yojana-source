@@ -11,8 +11,8 @@ import { formatPanchangamTime } from "./panchangamTimings.ts";
  * owner's guidance: chant Sri Vishnu Sahasranamam, and place darbha grass
  * in the fridge and on perishable food before it begins.
  *
- * Penumbral lunar eclipses are shown on the calendar but not reminded:
- * the Moon barely dims.
+ * Every eclipse that can be seen is reminded, penumbral ones included
+ * (owner decision, 24 Nov 2026).
  *
  * Pure: no React Native, so it runs under the plain Node tests.
  * services/ekadasiReminderService.ts schedules the result.
@@ -86,7 +86,6 @@ export function grahanamReminderChannelName(language: LanguageCode | null): stri
 export function planGrahanamReminders(place: PanchangamPlace, now: number, language: LanguageCode | null): GrahanamReminder[] {
   const today = dayNumberAt(now, place.timeZone);
   return grahanamsBetween(place, today + 1, today + GRAHANAM_REMINDER_HORIZON_DAYS)
-    .filter((g) => g.kind !== "penumbral")
     .map((g) => ({
       id: `${GRAHANAM_REMINDER_ID_PREFIX}${g.dayNumber}`,
       fireAt: dayStart(g.dayNumber - 1, place.timeZone) + GRAHANAM_REMINDER_HOUR * MS_PER_HOUR,
