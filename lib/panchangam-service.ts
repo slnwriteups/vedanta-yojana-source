@@ -1,5 +1,6 @@
 import { readJSON, writeJSON } from "./storage.ts";
-import { computePanchangamForDate, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type TithiChange, type YogaChange } from "../content-lib/panchangam-engine.ts";
+import { computePanchangamForDate, dayNumberAt, timeZoneLabel, utcOffsetMinutes, type KaranaChange, type NakshatramChange, type TithiChange, type YogaChange } from "../content-lib/panchangam-engine.ts";
+import { grahanamOnDay, grahanamSummary, type GrahanamSummary } from "../content-lib/panchangam-eclipses.ts";
 import type { ChosenPlace } from "../content-lib/panchangam-place.ts";
 
 /**
@@ -84,6 +85,8 @@ export interface PanchangamData {
   sankalpamText: string;
   /** True when the Sankalpam is declared before today's sunrise, so it names the previous day's vāsara. */
   sankalpamBeforeSunrise?: true;
+  /** The eclipse that can be seen from the place on this day, if any. */
+  grahanam?: GrahanamSummary;
   /**
    * When this Panchangam of the present moment stops being current (its
    * Sankalpam's validity ends, or midnight), as epoch ms; the screen
@@ -298,11 +301,9 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
     // `day` is a calendar date (its year/month/date); it means that date at the
     // place, so it is taken at noon there. With no day, the place's own today.
     const when = day ? noonAt(day, location.timezone) : new Date();
-    const computed = computePanchangamForDate(
-      when,
-      { latitude: location.latitude, longitude: location.longitude, timeZone: location.timezone },
-      location.city
-    );
+    const place = { latitude: location.latitude, longitude: location.longitude, timeZone: location.timezone };
+    const computed = computePanchangamForDate(when, place, location.city);
+    const eclipse = grahanamOnDay(place, dayNumberAt(when.getTime(), location.timezone));
     const now = Date.now();
     const deviceZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
     const sameClock = utcOffsetMinutes(now, location.timezone) === utcOffsetMinutes(now, deviceZone);
@@ -321,6 +322,7 @@ export async function fetchPanchangam(day?: Date, chosen: ChosenPlace | null = n
       sankalpamText: computed.sankalpamText,
       currentUntil: computed.currentUntil,
       sankalpamBeforeSunrise: computed.sankalpamBeforeSunrise,
+      ...(eclipse ? { grahanam: grahanamSummary(eclipse) } : {}),
       sunrise: computed.sunrise,
       sunset: computed.sunset,
       rahuKaalam: computed.rahuKaalam,

@@ -230,7 +230,7 @@ export function dayNumberOf(year: number, month: number, day: number): number {
 }
 
 /** Epoch ms of local midnight that starts civil day `dayNumber` in `timeZone`. */
-function dayStart(dayNumber: number, timeZone: string): number {
+export function dayStart(dayNumber: number, timeZone: string): number {
   const nominal = dayNumber * MS_PER_DAY;
   let guess = nominal - utcOffsetMinutes(nominal, timeZone) * MS_PER_MINUTE;
   guess = nominal - utcOffsetMinutes(guess, timeZone) * MS_PER_MINUTE;
@@ -665,7 +665,7 @@ function dayOfMostCoverage(cal: SunCalendar, segment: Segment, from = 0, to = 1)
   return best;
 }
 
-const RASI_NAMES = ["Mesha", "Vrishabha", "Mithuna", "Kataka", "Simha", "Kanya", "Thula", "Vruschika", "Dhanur", "Makara", "Kumbha", "Meena"];
+export const RASI_NAMES = ["Mesha", "Vrishabha", "Mithuna", "Kataka", "Simha", "Kanya", "Thula", "Vruschika", "Dhanur", "Makara", "Kumbha", "Meena"];
 const LUNAR_MONTH_NAMES = [
   "Chaitram", "Vaisakham", "Jyeshtham", "Aashaadham", "Sraavanam", "Bhaadrapadam",
   "Aashvayujam", "Kaartikam", "Maargasirsham", "Pushyam", "Maagham", "Phaalgunam",
@@ -1235,7 +1235,8 @@ const GULIKA_PART = [6, 5, 4, 3, 2, 1, 0];
  * and the last eighth running on to sunset.
  */
 /** "HH:MM", or "HH:MM (+1)" when `ms` falls after midnight of day `d` (summer near the poles). */
-function clockOnDay(ms: number, d: number, timeZone: string): string {
+/** "HH:MM" on `timeZone`'s clock, with " (+1)" when `ms` falls after civil day `d`. */
+export function clockOnDay(ms: number, d: number, timeZone: string): string {
   return `${clock24(ms, timeZone)}${localTime(ms, timeZone).dayNumber > d ? " (+1)" : ""}`;
 }
 

@@ -278,7 +278,8 @@ test("no new SEO-related file references content-extraction/ or scripts/migratio
 test("no new dependency was introduced for Phase 5N", () => {
   const pkg = JSON.parse(read("package.json"));
   const allDeps = { ...pkg.dependencies, ...pkg.devDependencies };
-  const expectedDeps = ["next", "react", "react-dom", "zod"];
+  // astronomy-engine: eclipse calculation for the Grahaṇam feature (owner approved, 23 Nov 2026).
+  const expectedDeps = ["astronomy-engine", "next", "react", "react-dom", "zod"];
   const expectedDevDeps = [
     "@playwright/test",
     "@tailwindcss/postcss",
