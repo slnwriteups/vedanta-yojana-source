@@ -65,7 +65,8 @@ to 10 AM.
 - An eclipse is listed only where some part of it can be seen.
 - Every eclipse that can be seen gets the reminder, penumbral ones
   included (owner decision, 24 Nov 2026).
-- The eclipse is listed on the local day it is first seen; contacts after
-  midnight carry "(+1)".
+- The eclipse is listed on the local calendar date it is first seen, not
+  the Hindu day (owner decision, 24 Nov 2026); contacts after midnight
+  carry "(+1)". The reminder comes at 10 AM on the calendar day before.
 - If 10 AM the day before has already passed when reminders are scheduled,
   no reminder is sent for that eclipse.
