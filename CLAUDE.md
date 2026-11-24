@@ -52,6 +52,12 @@ read `docs/TRANSLATION-GUIDE.md` and follow it, together with that
 language's glossary in `docs/translation-glossaries/`. To translate a whole
 book, use the scripted workflow in `docs/TRANSLATION-WORKFLOW.md`.
 
+## Writing agent
+
+`docs/WRITING-AGENT.md` sets up the Vedanta Yojana Writing Agent Claude
+Project: its standing instructions for drafting in the owner's voice, and
+how translation-engine batches pass between that Project and this repository.
+
 ## Owner-supplied scholarly sources: source-first editorial rule
 
 Owner direction, 31 October 2026:
