@@ -1245,6 +1245,19 @@
           "warnings": 15
         }
       }
+    },
+    {
+      "checkedAt": "2026-11-27T03:47:42.755Z",
+      "trigger": "deploy",
+      "pages": 548,
+      "errors": 0,
+      "warnings": 15,
+      "byCheck": {
+        "title": {
+          "errors": 0,
+          "warnings": 15
+        }
+      }
     }
   ]
 }
